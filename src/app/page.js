@@ -1,95 +1,53 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+import Image from "next/image";
+import { Box, Stack, Typography } from "@mui/material";
+
+import LogoSisva from "@/assets/Sisva-LogoType-White.png";
+import Link from "next/link";
+
+
+export const metadata = {
+  title: 'Demonstrasi Aplikasi | SISVA',
+  description: 'Demo aplikasi Sisva',
+}
+
 
 export default function Home() {
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
+    <Box
+      component={"main"}
+      sx={{
+        backgroundColor: "#11003e",
+        minHeight: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+        color: "white",
+      }}
+    >
+      <Box sx={{ height: 200, width: 300, position: "relative" }}>
+        <Image alt="Web Image" src={LogoSisva} layout={"fill"} objectFit={"contain"} />
+      </Box>
+      <Stack flexDirection={"row"} width={450}>
+        <Box
+          component={Link}
+          href="/administration"
+          sx={{ flex: 1, mr: 2, backgroundColor: "#1f8cd3", padding:1, borderRadius:1, display:"flex", justifyContent:"center" }}
         >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
+          <Typography sx={{ fontWeight: 600, fontSize: 18 }}>
+            Sisva Administration
+          </Typography>
+        </Box>
+        <Box
+          component={Link}
+          href="/classroom"
+          sx={{ flex: 1, backgroundColor: "#f96756", padding:1, borderRadius:1, display:"flex", justifyContent:"center" }}
         >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+          <Typography sx={{ fontWeight: 600, fontSize: 18 }}>
+            Sisva Classroom
+          </Typography>
+        </Box>
+      </Stack>
+    </Box>
+  );
 }

@@ -134,7 +134,7 @@
   .grid {
     grid-template-columns: 1fr;
     margin-bottom: 120px;
-    max-width: 320px;
+    max-width: 280px;
     text-align: center;
   }
 
