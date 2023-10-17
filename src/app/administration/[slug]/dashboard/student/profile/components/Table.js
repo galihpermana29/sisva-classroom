@@ -365,6 +365,9 @@ export default function DataTable({ data }) {
         `}</style>
       ) : (
         <style jsx global>{`
+          .MuiDataGrid-row.Mui-even {
+            background-color: #f9fafb;
+          }
           .MuiDataGrid-row.Mui-odd {
             background-color: #f2f4f7;
           }

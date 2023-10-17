@@ -5,6 +5,7 @@ import {
   Avatar,
   Box,
   Button,
+  ButtonGroup,
   Chip,
   Divider,
   IconButton,
@@ -17,9 +18,10 @@ import {
 } from "@mui/material";
 import { BorderColorRounded, DeleteForeverRounded } from "@mui/icons-material";
 import Link from "next/link";
-import { types, permissions } from "@/globalcomponents/Variable";
+import { types, permissions, subject_types } from "@/globalcomponents/Variable";
 import { useState } from "react";
-import { FormAddStudyProgram } from "./FormAddStudyProgram";
+import { FormAddCurriculum, FormAddSubject } from "./FormAddSubject";
+import { FormAddSyllabus } from "./FormAddSyllabus";
 
 const columns = [
   {
@@ -28,6 +30,12 @@ const columns = [
     flex: 1,
     sortable: false,
     renderCell: (params) => {
+      let tempType;
+      subject_types.map((item) => {
+        if (item.slug === params.value.data.subject_type) {
+          tempType = item.title;
+        }
+      });
       return (
         <Box sx={{ width: "100%", mx: 2, py: 0.5 }}>
           <Stack
@@ -54,10 +62,49 @@ const columns = [
                 <Typography
                   sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
                 >
-                  Program Studi
+                  Kurikulum
                 </Typography>
                 <Typography sx={{ fontSize: 14, textAlign: "right" }}>
                   {params.value.data.name}
+                </Typography>
+              </Stack>
+
+              <Stack
+                sx={{
+                  width: "100%",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  borderBottom: "1px solid rgb(0,0,0,0.12)",
+                  px: 1,
+                  py: "10px",
+                  backgroundColor: "base.base20",
+                }}
+              >
+                <Typography
+                  sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
+                >
+                  Program Studi
+                </Typography>
+                {params.value.data.study_program}
+              </Stack>
+              <Stack
+                sx={{
+                  width: "100%",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  borderBottom: "1px solid rgb(0,0,0,0.12)",
+                  px: 1,
+                  py: "10px",
+                  backgroundColor: "base.base10",
+                }}
+              >
+                <Typography
+                  sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
+                >
+                  Mata Pelajaran
+                </Typography>
+                <Typography sx={{ fontSize: 14, textAlign: "right" }}>
+                  {params.value.data.subject}
                 </Typography>
               </Stack>
               <Stack
@@ -74,10 +121,10 @@ const columns = [
                 <Typography
                   sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
                 >
-                  Kode
+                  Tingkatan
                 </Typography>
                 <Typography sx={{ fontSize: 14, textAlign: "right" }}>
-                  {params.value.data.code}
+                  {params.value.data.grade}
                 </Typography>
               </Stack>
               <Stack
@@ -94,11 +141,18 @@ const columns = [
                 <Typography
                   sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
                 >
-                  Jumlah Tingkatan
+                  Tingkatan
                 </Typography>
-                <Typography sx={{ fontSize: 14, textAlign: "right" }}>
-                  {params.value.data.grades.length}
-                </Typography>
+                <Button small variant="outlined" sx={{ fontSize: 13 }}>
+                  {" "}
+                  <a
+                    href="/Silabus Matematika-Kurikulum Merdeka-IPA-X.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Lihat
+                  </a>
+                </Button>
               </Stack>
             </Stack>
             <ActionButton params={params} />
@@ -107,9 +161,38 @@ const columns = [
       );
     },
   },
-  { field: "name", headerName: "Program Studi", flex: 2 },
-  { field: "code", headerName: "Kode", flex: 1 },
-  { field: "grades", headerName: "Jumlah Tingkatan", flex: 1 },
+  { field: "name", headerName: "Kurikulum", flex: 1.3 },
+  {
+    field: "study_program",
+    headerName: "Program Studi",
+    flex: 1,
+  },
+  { field: "subject", headerName: "Mata Pelajaran", flex: 1.5 },
+  {
+    field: "grade",
+    headerName: "Tingkatan",
+    flex: 1,
+  },
+  {
+    field: "syllabus_uri",
+    headerName: "Silabus",
+    sortable: false,
+    flex: 1,
+    renderCell: (params) => {
+      return (
+        <Button small variant="outlined" sx={{ fontSize: 13 }}>
+          {" "}
+          <a
+            href="/Silabus Matematika-Kurikulum Merdeka-IPA-X.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Lihat
+          </a>
+        </Button>
+      );
+    },
+  },
   {
     field: "action",
     headerName: "Aksi",
@@ -146,7 +229,10 @@ function ActionButton({ params }) {
           params.value.setActiveRow(params.value.data);
           params.value.formik.setValues({
             name: params.value.data.name,
-            code: params.value.data.code,
+            study_program: params.value.data.study_program,
+            subject: params.value.data.subject,
+            subject_type: params.value.data.subject_type,
+            grade: params.value.data.grade,
           });
         }}
       >
@@ -192,7 +278,34 @@ function ActionButton({ params }) {
   );
 }
 
-export default function StudyProgramTable({ data, formik }) {
+function PermissionChips({ params }) {
+  return (
+    <Stack
+      sx={{
+        flexDirection: "row",
+        flexWrap: "wrap",
+        overflow: "hidden",
+        m: "8px 0",
+      }}
+    >
+      {params.map((studyProgram, index) => {
+        return (
+          <Chip
+            key={index}
+            sx={{
+              m: { xs: "2px 0px 2px 4px", lg: "2px" },
+              fontSize: 12,
+            }}
+            label={studyProgram}
+            color="primary"
+          />
+        );
+      })}
+    </Stack>
+  );
+}
+
+export default function SyllabusTable({ data, formik }) {
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down("lg"));
 
   const [openEditModal, setOpenEditModal] = useState(false);
@@ -205,8 +318,10 @@ export default function StudyProgramTable({ data, formik }) {
     let tempObject = {
       id: data.id,
       name: data.name,
-      code: data.code,
-      grades: data.grades.length,
+      study_program: data.study_program,
+      subject: data.subject,
+      grade: data.grade,
+      syllabus_uri: data.syllabus_uri,
       action: {
         data: data,
         setActiveRow: setActiveRow,
@@ -231,7 +346,7 @@ export default function StudyProgramTable({ data, formik }) {
         open={openEditModal}
         onClose={() => {
           setOpenEditModal(false);
-          formik.setValues({ name: "", code: "" });
+          formik.setValues({ name: "" });
         }}
       >
         <Stack
@@ -257,12 +372,12 @@ export default function StudyProgramTable({ data, formik }) {
             }}
           >
             <Typography fontWeight={600} fontSize={16}>
-              Edit Program Studi
+              Edit Tingkatan
             </Typography>
           </Box>
           <Divider />
           <Box sx={{ maxHeight: "70vh", overflowY: "auto", px: 2 }}>
-            <FormAddStudyProgram formik={formik} />
+            <FormAddSyllabus formik={formik} editing={true} />
           </Box>
           <Divider />
           <Stack
@@ -315,12 +430,12 @@ export default function StudyProgramTable({ data, formik }) {
         >
           <Box>
             <Typography fontWeight={600} fontSize={16}>
-              Hapus Program Studi
+              Hapus Tingkatan
             </Typography>
           </Box>
 
           <Typography sx={{ mt: 1, fontSize: 14 }}>
-            Anda akan menghapus program studi berikut:
+            Anda akan menghapus tingkatan berikut:
           </Typography>
           <Stack
             sx={{ width: "100%", my: 1, overflow: "hidden", borderRadius: 2 }}
@@ -337,10 +452,10 @@ export default function StudyProgramTable({ data, formik }) {
               }}
             >
               <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
-                Program Studi
+                Tingkatan
               </Typography>
               <Typography sx={{ fontSize: 14, textAlign: "right" }}>
-                {activeRow.name}
+                {activeRow.grade}
               </Typography>
             </Stack>
             <Stack
@@ -355,10 +470,46 @@ export default function StudyProgramTable({ data, formik }) {
               }}
             >
               <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
-                Kode
+                Mata Pelajaran
               </Typography>
               <Typography sx={{ fontSize: 14, textAlign: "right" }}>
-                {activeRow.code}
+                {activeRow.subject}
+              </Typography>
+            </Stack>
+            <Stack
+              sx={{
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                borderBottom: "1px solid rgb(0,0,0,0.12)",
+                px: 1,
+                py: "10px",
+                backgroundColor: "base.base10",
+              }}
+            >
+              <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
+                Program Studi
+              </Typography>
+              <Typography sx={{ fontSize: 14, textAlign: "right" }}>
+                {activeRow.study_program}
+              </Typography>
+            </Stack>
+            <Stack
+              sx={{
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                borderBottom: "1px solid rgb(0,0,0,0.12)",
+                px: 1,
+                py: "10px",
+                backgroundColor: "base.base20",
+              }}
+            >
+              <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
+                Kurikulum
+              </Typography>
+              <Typography sx={{ fontSize: 14, textAlign: "right" }}>
+                {activeRow.name}
               </Typography>
             </Stack>
           </Stack>
@@ -428,6 +579,9 @@ export default function StudyProgramTable({ data, formik }) {
           .MuiDataGrid-row.Mui-odd {
             background-color: #f2f4f7;
           }
+          .MuiDataGrid-row.Mui-odd {
+            background-color: #f2f4f7;
+          }
           .MuiDataGrid-root .MuiDataGrid-cell {
             padding: 16px 0;
             padding-left: 10px;
@@ -449,10 +603,10 @@ export default function StudyProgramTable({ data, formik }) {
         columns={columns}
         initialState={{
           pagination: {
-            paginationModel: { page: 0, pageSize: 20 },
+            paginationModel: { page: 0, pageSize: 50 },
           },
         }}
-        pageSizeOptions={[10, 20, 50]}
+        pageSizeOptions={[20, 50, 100]}
         getRowClassName={(params) =>
           params.indexRelativeToCurrentPage % 2 === 0 ? "Mui-even" : "Mui-odd"
         }
@@ -465,8 +619,10 @@ export default function StudyProgramTable({ data, formik }) {
               }
             : {
                 name: false,
-                code: false,
-                grades: false,
+                study_program: false,
+                subject: false,
+                grade: false,
+                syllabus_uri: false,
                 action: false,
               }
         }

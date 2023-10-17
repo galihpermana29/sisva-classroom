@@ -65,5 +65,20 @@ export const themeConfig = {
         },
       },
     },
+    // MuiTextField: {
+    //   styleOverrides: {
+    //     root: {
+    //       width:"100%",
+    //       backgroundColor:"red"
+    //     },
+    //   },
+    // },MuiFormControl: {
+    //   styleOverrides: {
+    //     root: {
+    //       width:"100px!important",
+    //       backgroundColor:"blue"
+    //     },
+    //   },
+    // },
   },
 };

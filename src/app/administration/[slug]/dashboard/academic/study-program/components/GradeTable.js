@@ -54,12 +54,15 @@ const columns = [
                   borderBottom: "1px solid rgb(0,0,0,0.12)",
                   px: 1,
                   py: "10px",
+                  backgroundColor: "base.base10",
                 }}
               >
-                <Typography sx={{ fontSize: 14, fontWeight: 600 }}>
+                <Typography
+                  sx={{ fontSize: 14, fontWeight: 600, minWidth: 110 }}
+                >
                   Program Studi
                 </Typography>
-                <Typography sx={{ fontSize: 14 }}>
+                <Typography sx={{ fontSize: 14, textAlign: "right" }}>
                   {params.value.data.name}
                 </Typography>
               </Stack>
@@ -74,10 +77,12 @@ const columns = [
                   backgroundColor: "base.base20",
                 }}
               >
-                <Typography sx={{ fontSize: 14, fontWeight: 600 }}>
+                <Typography
+                  sx={{ fontSize: 14, fontWeight: 600, minWidth: 110 }}
+                >
                   Kode
                 </Typography>
-                <Typography sx={{ fontSize: 14 }}>
+                <Typography sx={{ fontSize: 14, textAlign: "right" }}>
                   {params.value.data.code}
                 </Typography>
               </Stack>
@@ -89,12 +94,15 @@ const columns = [
                   borderBottom: "1px solid rgb(0,0,0,0.12)",
                   px: 1,
                   py: "10px",
+                  backgroundColor: "base.base10",
                 }}
               >
-                <Typography sx={{ fontSize: 14, fontWeight: 600 }}>
+                <Typography
+                  sx={{ fontSize: 14, fontWeight: 600, minWidth: 110 }}
+                >
                   Tingkatan
                 </Typography>
-                <Typography sx={{ fontSize: 14 }}>
+                <Typography sx={{ fontSize: 14, textAlign: "right" }}>
                   {params.value.grade}
                 </Typography>
               </Stack>
@@ -286,51 +294,50 @@ export default function GradeTable({ data, formik }) {
         >
           <Box>
             <Typography fontWeight={600} fontSize={16}>
-              Hapus Karyawan
+              Hapus Tingkatan
             </Typography>
           </Box>
 
           <Typography sx={{ mt: 1, fontSize: 14 }}>
-            Anda akan menghapus karyawan berikut:
+            Anda akan menghapus tingkatan berikut:
           </Typography>
           <Stack
-            sx={{
-              backgroundColor: "base.base20",
-              p: 1,
-              borderRadius: 2,
-              flexDirection: "row",
-              alignItems: "center",
-              mt: 1,
-              mb: 2,
-            }}
+            sx={{ width: "100%", my: 1, overflow: "hidden", borderRadius: 2 }}
           >
-            <Avatar
+            <Stack
               sx={{
-                width: "40px",
-                height: "40px",
-                position: "relative",
-                mr: 1,
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                borderBottom: "1px solid rgb(0,0,0,0.12)",
+                px: 1,
+                py: "10px",
+                backgroundColor: "base.base10",
               }}
             >
-              <Image
-                alt="Web Image"
-                fill
-                sizes="100%"
-                style={{ objectFit: "cover" }}
-                src={activeRow.profile_image_uri}
-              />
-            </Avatar>
-            <Stack justifyContent={"center"}>
-              <Typography
-                sx={{
-                  color: "black",
-                  fontWeight: 600,
-                }}
-              >
-                {activeRow.name}
+              <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
+                Tingkatan
               </Typography>
-              <Typography sx={{ fontSize: 14, lineHeight: "16px" }}>
-                {activeRow.username}
+              <Typography sx={{ fontSize: 14, textAlign: "right" }}>
+                {activeRow.grade}
+              </Typography>
+            </Stack>
+            <Stack
+              sx={{
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                borderBottom: "1px solid rgb(0,0,0,0.12)",
+                px: 1,
+                py: "10px",
+                backgroundColor: "base.base20",
+              }}
+            >
+              <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
+                Program Studi
+              </Typography>
+              <Typography sx={{ fontSize: 14, textAlign: "right" }}>
+                {activeRow.name}
               </Typography>
             </Stack>
           </Stack>
@@ -394,6 +401,9 @@ export default function GradeTable({ data, formik }) {
         `}</style>
       ) : (
         <style jsx global>{`
+          .MuiDataGrid-row.Mui-even {
+            background-color: #f9fafb;
+          }
           .MuiDataGrid-row.Mui-odd {
             background-color: #f2f4f7;
           }

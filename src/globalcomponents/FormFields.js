@@ -9,9 +9,254 @@ import {
   permissions,
   relationships,
   religions,
+  subject_types,
   types,
 } from "@/globalcomponents/Variable";
 
+export const formAddCurriculumFields = [
+  {
+    name: "period_name",
+    label: "Periode",
+    placeholder: "Periode",
+    md: 6,
+    type: "select",
+    data: [
+      { slug: "IPA 2024/2025", title: "IPA 2024/2025" },
+      { slug: "IPA 2023/2024", title: "IPA 2023/2024" },
+      { slug: "IPS 2023/2024", title: "IPS 2023/2024" },
+      { slug: "IPA-U 2023/2024", title: "IPA-U 2023/2024" },
+      { slug: "IPS-U 2023/2024", title: "IPS-U 2023/2024" },
+    ],
+  },
+  {
+    name: "study_program",
+    label: "Program Studi",
+    placeholder: "Program Studi",
+    md: 6,
+    type: "select",
+    data: [
+      { slug: "IPA", title: "IPA" },
+      { slug: "IPS", title: "IPS" },
+      { slug: "IPA-U", title: "IPA-U" },
+      { slug: "IPS-U", title: "IPS-U" },
+    ],
+  },
+  {
+    name: "grade",
+    label: "Tingkatan",
+    placeholder: "Tingkatan",
+    md: 6,
+    type: "select",
+    data: [
+      { slug: "X", title: "X" },
+      { slug: "XI", title: "XI" },
+      { slug: "XII", title: "XII" },
+      
+    ],
+  },
+  {
+    name: "curriculum",
+    label: "Kurikulum",
+    placeholder: "Kurikulum",
+    md: 6,
+    type: "select",
+    data: [
+      { slug: "Kurikulum Merdeka", title: "Kurikulum Merdeka" },
+      { slug: "Kurikulum 2013", title: "Kurikulum 2013" },
+      { slug: "Kurikulum Sekolah SISVA", title: "Kurikulum Sekolah SISVA" },
+    ],
+  },
+];
+export const formEditPeriodFields = [
+  {
+    name: "period_name",
+    label: "Periode",
+    placeholder: "Periode",
+    md: 6,
+    type: "text",
+  },
+  {
+    name: "study_program",
+    label: "Program Studi",
+    placeholder: "Program Studi",
+    md: 6,
+    type: "select",
+    data: [
+      { slug: "IPA", title: "IPA" },
+      { slug: "IPS", title: "IPS" },
+      { slug: "IPA-U", title: "IPA-U" },
+      { slug: "IPS-U", title: "IPS-U" },
+    ],
+  },
+  {
+    name: "period",
+    label: "Rentang Waktu",
+    placeholder: "Rentang Waktu",
+    md: 6,
+    type: "month-range",
+  },
+  {
+    name: "status",
+    label: "Status",
+    placeholder: "Status",
+    md: 6,
+    type: "select",
+    data: [
+      { slug: "Tidak Aktif", title: "Tidak Aktif" },
+      { slug: "Aktif", title: "Aktif" },
+    ],
+  },
+];
+export const formAddPeriodFields = [
+  {
+    name: "period_name",
+    label: "Periode",
+    placeholder: "Periode",
+    md: 6,
+    type: "text",
+  },
+  {
+    name: "study_program",
+    label: "Program Studi",
+    placeholder: "Program Studi",
+    md: 6,
+    type: "select",
+    data: [
+      { slug: "IPA", title: "IPA" },
+      { slug: "IPS", title: "IPS" },
+      { slug: "IPA-U", title: "IPA-U" },
+      { slug: "IPS-U", title: "IPS-U" },
+    ],
+  },
+  {
+    name: "period",
+    label: "Rentang Waktu",
+    placeholder: "Rentang Waktu",
+    md: 6,
+    type: "month-range",
+  },
+];
+export const formAddSyllabusFields = [
+  {
+    name: "name",
+    label: "Nama",
+    placeholder: "Nama",
+    md: 6,
+    type: "select",
+    data: [
+      { slug: "Kurikulum Merdeka", title: "Kurikulum Merdeka" },
+      { slug: "Kurikulum 2013", title: "Kurikulum 2013" },
+      { slug: "Kurikulum Sekolah SISVA", title: "Kurikulum Sekolah SISVA" },
+    ],
+  },
+  {
+    name: "study_program",
+    label: "Program Studi",
+    placeholder: "Program Studi",
+    md: 6,
+    type: "select",
+    data: [
+      { slug: "IPA", title: "IPA" },
+      { slug: "IPS", title: "IPS" },
+      { slug: "IPA-U", title: "IPA-U" },
+      { slug: "IPS-U", title: "IPS-U" },
+    ],
+  },
+  {
+    name: "subject",
+    label: "Mata Pelajaran",
+    placeholder: "Mata Pelajaran",
+    md: 6,
+    type: "select",
+    data: [
+      { slug: "Matematika", title: "Matematika" },
+      { slug: "Fisika", title: "Fisika" },
+      { slug: "Kimia", title: "Kimia" },
+      { slug: "Biologi", title: "Biologi" },
+      { slug: "Bahasa Inggris", title: "Bahasa Inggris" },
+      { slug: "Bahasa Indonesia", title: "Bahasa Indonesia" },
+      {
+        slug: "Pendidikan Agama dan Budi Pekerti",
+        title: "Pendidikan Agama dan Budi Pekerti",
+      },
+      {
+        slug: "Pendidikan Pancasila dan Kewarganegaraan (PPKn)",
+        title: "Pendidikan Pancasila dan Kewarganegaraan (PPKn)",
+      },
+      { slug: "Seni dan Budaya", title: "Seni dan Budaya" },
+      {
+        slug: "Pendidikan Jasmani, Olahraga, dan Kesehatan (PJOK)",
+        title: "Pendidikan Jasmani, Olahraga, dan Kesehatan (PJOK)",
+      },
+      { slug: "Kewirausahaan", title: "Kewirausahaan" },
+      {
+        slug: "Teknologi Informasi dan Komunikasi (TIK)",
+        title: "Teknologi Informasi dan Komunikasi (TIK)",
+      },
+    ],
+  },
+  {
+    name: "grade",
+    label: "Tingkatan",
+    placeholder: "Tingkatan",
+    md: 6,
+    type: "select",
+    data: [
+      { slug: "X", title: "X" },
+      { slug: "XI", title: "XI" },
+      { slug: "XII", title: "XII" },
+    ],
+  },
+  {
+    name: "syllabus_uri",
+    label: "Silabus",
+    placeholder: "Silabus",
+    md: 6,
+    type: "file",
+  },
+];
+export const formAddSubjectFields = [
+  {
+    name: "name",
+    label: "Nama",
+    placeholder: "Nama",
+    md: 6,
+    type: "select",
+    data: [
+      { slug: "Kurikulum Merdeka", title: "Kurikulum Merdeka" },
+      { slug: "Kurikulum 2013", title: "Kurikulum 2013" },
+      { slug: "Kurikulum Sekolah SISVA", title: "Kurikulum Sekolah SISVA" },
+    ],
+  },
+  {
+    name: "study_program",
+    label: "Program Studi",
+    placeholder: "Program Studi",
+    md: 6,
+    type: "select",
+    data: [
+      { slug: "IPA", title: "IPA" },
+      { slug: "IPS", title: "IPS" },
+      { slug: "IPA-U", title: "IPA-U" },
+      { slug: "IPS-U", title: "IPS-U" },
+    ],
+  },
+  {
+    name: "subject",
+    label: "Mata Pelajaran",
+    placeholder: "Mata Pelajaran",
+    md: 6,
+    type: "text",
+  },
+  {
+    name: "subject_type",
+    label: "Tipe",
+    placeholder: "Tipe",
+    md: 6,
+    type: "select",
+    data: subject_types,
+  },
+];
 export const formAddStudyProgramFields = [
   {
     name: "name",
@@ -28,7 +273,6 @@ export const formAddStudyProgramFields = [
     type: "text",
   },
 ];
-
 
 export const formAddStaffFields = [
   {

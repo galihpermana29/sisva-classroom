@@ -2,6 +2,10 @@ export const types = [
   { slug: "staff", title: "Staf" },
   { slug: "teacher", title: "Guru" },
 ];
+export const subject_types = [
+  { slug: "mandatory", title: "Wajib" },
+  { slug: "elective", title: "Pilihan" },
+];
 export const nationalities = [
   { slug: "wni", title: "Warga Negara Indonesia" },
   { slug: "wna", title: "Warga Negara Asing" },
@@ -32,7 +36,7 @@ export const educationLevels = [
   { slug: "undergraduate", title: "S1/D3/D4" },
   { slug: "graduate", title: "S2" },
   { slug: "doctorate", title: "S3" },
-  { slug: "others", title: "Lainnya" }
+  { slug: "others", title: "Lainnya" },
 ];
 export const incomeLevels = [
   { slug: "0-1", title: "0 - Rp1.000.000" },
@@ -56,7 +60,6 @@ export const relationships = [
   { slug: "spouse", title: "Suami/Istri" },
   { slug: "others", title: "Lainnya" },
 ];
-
 
 export const permissions = [
   {

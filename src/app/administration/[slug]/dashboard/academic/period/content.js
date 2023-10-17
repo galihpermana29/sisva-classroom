@@ -22,16 +22,16 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import StudyProgramTable from "./components/StudyProgramTable";
-import GradeTable from "./components/GradeTable";
+import PeriodTable from "./components/PeriodTable";
 import { ExcelIcon, ExportIcon, SortIcon } from "@/assets/SVGs";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { permissions, types } from "@/globalcomponents/Variable";
-import { FormAddStudyProgram } from "./components/FormAddStudyProgram";
-import { FormAddGrade } from "./components/FormAddGrade";
+import { FormAddPeriod } from "./components/FormAddPeriod";
 
 import { useFormik } from "formik";
+import CurriculumTable from "./components/CurriculumTable";
+import { FormAddCurriculum } from "./components/FormAddCurriculum";
 export default function StaffProfileContent() {
   const [emptyData, setEmptyData] = useState({
     name: "",
@@ -51,32 +51,76 @@ export default function StaffProfileContent() {
 
   let data = [
     {
+      id: 99,
+      period_name: "IPA 2024/2025",
+      study_program: "IPA",
+      start_time: "2024-07-16T17:00:00.000Z",
+      end_time: "2025-06-16T17:00:00.000Z",
+      status: "Tidak Aktif",
+    },
+    {
       id: 1,
-      name: "Ilmu Pengetahuan Sosial",
-      code: "IPS",
-      status: "active",
-      grades: ["X", "XI", "XII"],
+      period_name: "IPA 2023/2024",
+      study_program: "IPA",
+      start_time: "2023-07-16T17:00:00.000Z",
+      end_time: "2024-06-16T17:00:00.000Z",
+      status: "Aktif",
     },
     {
       id: 2,
-      name: "Ilmu Pengetahuan Alam",
-      code: "IPA",
-      status: "active",
-      grades: ["X", "XI", "XII"],
+      period_name: "IPS 2023/2024",
+      study_program: "IPS",
+      start_time: "2023-07-16T17:00:00.000Z",
+      end_time: "2024-06-16T17:00:00.000Z",
+      status: "Aktif",
     },
     {
       id: 3,
-      name: "Ilmu Pengetahuan Sosial Unggulan",
-      code: "IPS-U",
-      status: "active",
-      grades: ["X", "XI", "XII"],
+      period_name: "IPA-U 2023/2024",
+      study_program: "IPA-U",
+      start_time: "2023-07-16T17:00:00.000Z",
+      end_time: "2024-06-16T17:00:00.000Z",
+      status: "Aktif",
     },
     {
       id: 4,
-      name: "Ilmu Pengetahuan Alam Unggulan",
-      code: "IPA-U",
-      status: "active",
-      grades: ["X", "XI", "XII"],
+      period_name: "IPS-U 2023/2024",
+      study_program: "IPS-U",
+      start_time: "2023-07-16T17:00:00.000Z",
+      end_time: "2024-06-16T17:00:00.000Z",
+      status: "Aktif",
+    },
+    {
+      id: 5,
+      period_name: "IPA 2022/2023",
+      study_program: "IPA",
+      start_time: "2022-07-16T17:00:00.000Z",
+      end_time: "2023-06-16T17:00:00.000Z",
+      status: "Selesai",
+    },
+    {
+      id: 6,
+      period_name: "IPS 2022/2023",
+      study_program: "IPS",
+      start_time: "2022-07-16T17:00:00.000Z",
+      end_time: "2023-06-16T17:00:00.000Z",
+      status: "Selesai",
+    },
+    {
+      id: 7,
+      period_name: "IPA-U 2022/2023",
+      study_program: "IPA-U",
+      start_time: "2022-07-16T17:00:00.000Z",
+      end_time: "2023-06-16T17:00:00.000Z",
+      status: "Selesai",
+    },
+    {
+      id: 8,
+      period_name: "IPS-U 2022/2023",
+      study_program: "IPA-U",
+      start_time: "2022-07-16T17:00:00.000Z",
+      end_time: "2023-06-16T17:00:00.000Z",
+      status: "Selesai",
     },
   ];
 
@@ -99,72 +143,105 @@ export default function StaffProfileContent() {
   const [sortSettings, setSortSettings] = useState("");
   const [openSortModal, setOpenSortModal] = useState(false);
 
-  const [openCreateStudyProgramModal, setOpenCreateStudyProgramModal] =
+  const [openCreatePeriodModal, setOpenCreatePeriodModal] = useState(false);
+  const [openCreateCurriculumModal, setOpenCreateCurriculumModal] =
     useState(false);
-  const [openCreateGradeModal, setOpenCreateGradeModal] = useState(false);
 
   const [activeTab, setActiveTab] = useState(0);
   let tabs = [
     {
-      title: "Program Studi",
-      component: <StudyProgramTable formik={formik} data={filteredData} />,
+      title: "Periode",
+      component: <PeriodTable formik={formik} data={filteredData} />,
     },
     {
-      title: "Tingkatan",
-      component: <GradeTable formik={formik} data={filteredData} />,
+      title: "Kurikulum",
+      component: <CurriculumTable formik={formik} data={filteredData} />,
     },
   ];
 
+  let [dataCurriculum, setDataCurriculum] = useState([]);
   useEffect(() => {
     let temp = [];
-    data.map((studyProgram) => {
-      studyProgram.grades.map((grade) => {
+    let id = 1;
+    data.map((period) => {
+      ["X", "XI", "XII"].map((grade) => {
         let tempObject = {
-          id: grade + "-" + studyProgram.code,
-          name: studyProgram.name,
-          code: studyProgram.code,
+          id: id,
+          period_name: period.period_name,
+          study_program: period.study_program,
           grade: grade,
+          curriculum: period.period_name.endsWith("2025")
+            ? "Kurikulum Merdeka"
+            : period.period_name.endsWith("2024")
+            ? grade !== "XII"
+              ? "Kurikulum Merdeka"
+              : "Kurikulum 2013"
+            : grade === "X"
+            ? "Kurikulum Merdeka"
+            : "Kurikulum 2013",
         };
         temp.push(tempObject);
+        id++;
       });
     });
-    setDataTingkatan(temp);
+    setDataCurriculum(temp);
   }, []);
 
   useEffect(() => {
     let temp = [];
-    if (activeTab === 0) {
-      temp = data.filter((item) => {
-        return (
-          item.name.toLowerCase().includes(search.toLowerCase()) ||
-          item.code.toLowerCase().includes(search.toLowerCase())
-        );
-      });
-    } else if (activeTab === 1) {
-      temp = dataTingkatan.filter((item) => {
-        return (
-          item.grade.toLowerCase().includes(search.toLowerCase()) &&
-          (item.code.toLowerCase() === studyProgramFilter.toLowerCase() ||
-            !studyProgramFilter)
-        );
-      });
-    }
+    activeTab === 0
+      ? (temp = data.filter((item) => {
+          return item.period_name.toLowerCase().includes(search.toLowerCase());
+        }))
+      : (temp = dataCurriculum.filter((item) => {
+          return (
+            item.curriculum.toLowerCase().includes(search.toLowerCase()) &&
+            (item.period_name.toLowerCase() ===
+              studyProgramFilter.toLowerCase() ||
+              !studyProgramFilter)
+          );
+        }));
     if (sortSettings && sortSettings.sortBy) {
       temp = temp.sort(function (a, b) {
         let x, y;
-        if (sortSettings.sortBy === "name") {
-          x = a.name.toLowerCase();
-          y = b.name.toLowerCase();
-        }
-        if (sortSettings.sortBy === "code") {
-          x = a.code.toLowerCase();
-          y = b.code.toLowerCase();
+        if (activeTab === 0) {
+          if (sortSettings.sortBy === "period_name") {
+            x = a.period_name.toLowerCase();
+            y = b.period_name.toLowerCase();
+          }
+          if (sortSettings.sortBy === "study_program") {
+            x = a.study_program.toLowerCase();
+            y = b.study_program.toLowerCase();
+          }
+          if (sortSettings.sortBy === "start_time") {
+            x = a.start_time.toLowerCase();
+            y = b.start_time.toLowerCase();
+          }
+          if (sortSettings.sortBy === "status") {
+            x = a.status.toLowerCase();
+            y = b.status.toLowerCase();
+          }
         }
 
-        if (activeTab === 1 && sortSettings.sortBy === "grade") {
-          x = a.grade.toLowerCase();
-          y = b.grade.toLowerCase();
+        if (activeTab === 1) {
+          if (sortSettings.sortBy === "period_name") {
+            x = a.period_name.toLowerCase();
+            y = b.period_name.toLowerCase();
+          }
+          if (sortSettings.sortBy === "study_program") {
+            x = a.study_program.toLowerCase();
+            y = b.study_program.toLowerCase();
+          }
+          if (sortSettings.sortBy === "grade") {
+            x = a.grade.toLowerCase();
+            y = b.grade.toLowerCase();
+          }
+          if (sortSettings.sortBy === "curriculum") {
+            x = a.curriculum.toLowerCase();
+            y = b.curriculum.toLowerCase();
+          }
         }
+
         if (sortSettings.sortType === "ascending") {
           if (x < y) {
             return -1;
@@ -197,10 +274,9 @@ export default function StaffProfileContent() {
             flex: 1,
             overflowX: "auto",
             height: 54,
-            px:{xs:0,lg:1}
+            px: { xs: 0, lg: 1 },
           }}
         >
-
           <Stack
             sx={{
               flexDirection: "row",
@@ -211,7 +287,7 @@ export default function StaffProfileContent() {
             <TextField
               select
               size="small"
-              label="Program Studi"
+              label="Periode"
               value={studyProgramFilter}
               onChange={(e) => setStudyProgramFilter(e.target.value)}
               sx={{
@@ -239,14 +315,22 @@ export default function StaffProfileContent() {
                 ),
               }}
             >
-              {data.map((option) => (
-                <MenuItem key={option.code} value={option.code}>
-                  <Typography fontSize={14}>{option.name}</Typography>
+              {[
+                "IPA 2023/2024",
+                "IPS 2023/2024",
+                "IPA-U 2023/2024",
+                "IPS-U 2023/2024",
+                "IPA 2022/2023",
+                "IPS 2022/2023",
+                "IPA-U 2022/2023",
+                "IPS-U 2022/2023",
+              ].map((option, index) => (
+                <MenuItem key={index} value={option}>
+                  <Typography fontSize={14}>{option}</Typography>
                 </MenuItem>
               ))}
             </TextField>
           </Stack>
-
         </Stack>
       );
     }
@@ -255,10 +339,10 @@ export default function StaffProfileContent() {
   return (
     <Stack sx={{ height: "100%", width: "100%", p: { xs: 0, lg: 4 } }}>
       <Modal
-        open={openCreateGradeModal}
+        open={openCreateCurriculumModal}
         onClose={() => {
-          setOpenCreateGradeModal(false);
-          formik.setValues({ code: "", grades: [] });
+          setOpenCreateCurriculumModal(false);
+          formik.setValues({});
         }}
       >
         <Stack
@@ -284,12 +368,12 @@ export default function StaffProfileContent() {
             }}
           >
             <Typography fontWeight={600} fontSize={16}>
-              Tambah Tingkatan
+              Tambah Kurikulum
             </Typography>
           </Box>
           <Divider />
-          <Box sx={{ maxHeight: "70vh", px: 2 }}>
-            <FormAddGrade formik={formik} />
+          <Box sx={{ maxHeight: "70vh", overflowY: "auto", px: 2 }}>
+            <FormAddCurriculum formik={formik} />
           </Box>
           <Divider />
           <Stack
@@ -302,8 +386,8 @@ export default function StaffProfileContent() {
               variant="outlined"
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
-                setOpenCreateGradeModal(false);
-                formik.setValues(emptyData);
+                setOpenCreateCurriculumModal(false);
+                formik.setValues({});
               }}
             >
               Batal
@@ -312,8 +396,8 @@ export default function StaffProfileContent() {
               variant="contained"
               sx={{ flex: 1 }}
               onClick={() => {
-                setOpenCreateGradeModal(false);
-                formik.setValues(emptyData);
+                setOpenCreateCurriculumModal(false);
+                formik.setValues({});
               }}
             >
               Simpan
@@ -322,8 +406,8 @@ export default function StaffProfileContent() {
         </Stack>
       </Modal>
       <Modal
-        open={openCreateStudyProgramModal}
-        onClose={() => setOpenCreateStudyProgramModal(false)}
+        open={openCreatePeriodModal}
+        onClose={() => setOpenCreatePeriodModal(false)}
       >
         <Stack
           component={Paper}
@@ -348,12 +432,12 @@ export default function StaffProfileContent() {
             }}
           >
             <Typography fontWeight={600} fontSize={16}>
-              Tambah Program Studi
+              Tambah Periode
             </Typography>
           </Box>
           <Divider />
           <Box sx={{ maxHeight: "70vh", overflowY: "auto", px: 2 }}>
-            <FormAddStudyProgram formik={formik} />
+            <FormAddPeriod formik={formik} />
           </Box>
           <Divider />
           <Stack
@@ -366,7 +450,7 @@ export default function StaffProfileContent() {
               variant="outlined"
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
-                setOpenCreateStudyProgramModal(false);
+                setOpenCreatePeriodModal(false);
                 formik.setValues(emptyData);
               }}
             >
@@ -376,7 +460,7 @@ export default function StaffProfileContent() {
               variant="contained"
               sx={{ flex: 1 }}
               onClick={() => {
-                setOpenCreateStudyProgramModal(false);
+                setOpenCreatePeriodModal(false);
                 formik.setValues(emptyData);
               }}
             >
@@ -434,13 +518,16 @@ export default function StaffProfileContent() {
           >
             {(activeTab === 1
               ? [
-                  { title: "Program Studi", slug: "name" },
-                  { title: "Kode", slug: "code" },
+                  { title: "Periode", slug: "period_name" },
+                  { title: "Program Studi", slug: "study_program" },
                   { title: "Tingkatan", slug: "grade" },
+                  { title: "Kurikulum", slug: "curriculum" },
                 ]
               : [
-                  { title: "Program Studi", slug: "name" },
-                  { title: "Kode", slug: "code" },
+                  { title: "Periode", slug: "period_name" },
+                  { title: "Program Studi", slug: "study_program" },
+                  { title: "Rentang Waktu", slug: "start_time" },
+                  { title: "Status", slug: "status" },
                 ]
             ).map((option) => (
               <MenuItem key={option.slug} value={option.slug}>
@@ -503,9 +590,7 @@ export default function StaffProfileContent() {
           alignItems: "center",
         }}
       >
-        <Typography sx={{ fontSize: 20, fontWeight: 600 }}>
-          Program Studi
-        </Typography>
+        <Typography sx={{ fontSize: 20, fontWeight: 600 }}>Periode</Typography>
       </Stack>
 
       <Stack
@@ -619,7 +704,10 @@ export default function StaffProfileContent() {
             <Hidden lgDown>
               <Box
                 sx={{
-                  display: { lg: activeTab!==0? "flex":"none", xs: "none" },
+                  display: {
+                    lg: activeTab !== 0 ? "flex" : "none",
+                    xs: "none",
+                  },
                   borderRight: { xs: "none", lg: "1px solid rgb(0,0,0,0.12)" },
 
                   my: 1,
@@ -630,7 +718,10 @@ export default function StaffProfileContent() {
               <Filters />
               <Box
                 sx={{
-                  display: { lg: activeTab!==0? "flex":"none", xs: "none" },
+                  display: {
+                    lg: activeTab !== 0 ? "flex" : "none",
+                    xs: "none",
+                  },
                   borderRight: { xs: "none", lg: "1px solid rgb(0,0,0,0.12)" },
                   // ml: 1,
                   my: 1,
@@ -727,9 +818,9 @@ export default function StaffProfileContent() {
               }}
               onClick={() =>
                 activeTab === 0
-                  ? setOpenCreateStudyProgramModal(true)
+                  ? setOpenCreatePeriodModal(true)
                   : activeTab === 1
-                  ? setOpenCreateGradeModal(true)
+                  ? setOpenCreateCurriculumModal(true)
                   : null
               }
             >

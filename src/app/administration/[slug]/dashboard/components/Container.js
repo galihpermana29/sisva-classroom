@@ -52,6 +52,109 @@ export default function Container(props) {
   }, [pathname]);
 
   function Header() {
+    function renderTitle() {
+      let nav =
+        activePathname.split("/").slice(-1)[0] !== "dashboard"
+          ? activePathname.split("/").slice(-2, -1) +
+            "/" +
+            activePathname.split("/").slice(-1)
+          : activePathname.split("/").slice(-1)[0];
+
+      let title;
+
+      let titleList = [
+        {
+          title: "Beranda",
+          slug: "dashboard",
+        },
+        {
+          title: "Profil Sekolah",
+          slug: "school/profile",
+        },
+        {
+          title: "Daftar Karyawan",
+          slug: "staff/profile",
+        },
+        {
+          title: "Kehadiran Karyawan",
+          slug: "staff/attendance",
+        },
+        {
+          title: "Program Studi",
+          slug: "academic/study-program",
+        },
+        {
+          title: "Kurikulum",
+          slug: "academic/curriculum",
+        },
+        {
+          title: "Periode",
+          slug: "academic/period",
+        },
+        {
+          title: "Teacher",
+          slug: "academic/teacher",
+        },
+        {
+          title: "Kelas",
+          slug: "academic/class",
+        },
+        {
+          title: "Jadwal Pelajaran",
+          slug: "academic/schedule",
+        },
+        {
+          title: "Ekstrakurikuler",
+          slug: "academic/extracurricular",
+        },
+        {
+          title: "Daftar Siswa",
+          slug: "student/profile",
+        },
+        {
+          title: "Kehadiran Siswa",
+          slug: "student/attendance",
+        },
+        {
+          title: "Alumni",
+          slug: "student/alumni",
+        },
+
+        {
+          title: "Template Rapot",
+          slug: "report/template",
+        },
+        {
+          title: "Buat Rapot",
+          slug: "report/create",
+        },
+        {
+          title: "Edit Rapot",
+          slug: "report/edit",
+        },
+        {
+          title: "Lihat Rapot",
+          slug: "report/view",
+        },
+        {
+          title: "Pengumuman",
+          slug: "information/announcement",
+        },
+        {
+          title: "Invoice",
+          slug: "finance/invoice",
+        },
+      ];
+
+      titleList.map((item) => {
+        if (item.slug === nav) {
+          title = item.title;
+          // setActiveTitle(item.title);
+        }
+      });
+      return title;
+    }
+
     function UserMenu() {
       const [anchorEl, setAnchorEl] = React.useState(null);
       const open = Boolean(anchorEl);
@@ -184,13 +287,14 @@ export default function Container(props) {
         </Box>
       );
     }
+
     return (
       <Stack
         component={Paper}
         elevation={1}
         sx={{
           height: 70,
-          padding: "0 32px",
+          padding: { xs: 1, md: "0 32px" },
           flexDirection: "row",
           justifyContent: "space-between",
           width: "100%",
@@ -229,8 +333,8 @@ export default function Container(props) {
           >
             <MenuIcon />
           </Box>
-          <Typography fontWeight="700" ml={1} fontSize={18}>
-            Beranda
+          <Typography fontWeight="700" ml={1} fontSize={{ xs: 16, md: 18 }}>
+            {renderTitle()}
           </Typography>
         </Stack>
         <UserMenu />
@@ -274,6 +378,25 @@ export default function Container(props) {
           ],
         },
         {
+          title: "Siswa",
+          slug: "student",
+          icon: <StudentIcon />,
+          children: [
+            {
+              title: "Profil Siswa",
+              slug: "profile",
+            },
+            {
+              title: "Kehadiran Siswa",
+              slug: "attendance",
+            },
+            {
+              title: "Alumni",
+              slug: "alumni",
+            },
+          ],
+        },
+        {
           title: "Akademik",
           slug: "academic",
           icon: <AcademicIcon />,
@@ -305,25 +428,6 @@ export default function Container(props) {
             {
               title: "Ekstrakurikuler",
               slug: "extracurricular",
-            },
-          ],
-        },
-        {
-          title: "Siswa",
-          slug: "student",
-          icon: <StudentIcon />,
-          children: [
-            {
-              title: "Profil Siswa",
-              slug: "profile",
-            },
-            {
-              title: "Kehadiran Siswa",
-              slug: "attendance",
-            },
-            {
-              title: "Alumni",
-              slug: "alumni",
             },
           ],
         },

@@ -19,7 +19,7 @@ import { BorderColorRounded, DeleteForeverRounded } from "@mui/icons-material";
 import Link from "next/link";
 import { types, permissions } from "@/globalcomponents/Variable";
 import { useState } from "react";
-import { FormAddStudyProgram } from "./FormAddStudyProgram";
+import { FormAddCurriculum } from "./FormAddCurriculum";
 
 const columns = [
   {
@@ -54,10 +54,10 @@ const columns = [
                 <Typography
                   sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
                 >
-                  Program Studi
+                  Periode
                 </Typography>
                 <Typography sx={{ fontSize: 14, textAlign: "right" }}>
-                  {params.value.data.name}
+                  {params.value.data.period_name}
                 </Typography>
               </Stack>
               <Stack
@@ -74,10 +74,10 @@ const columns = [
                 <Typography
                   sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
                 >
-                  Kode
+                  Program Studi
                 </Typography>
                 <Typography sx={{ fontSize: 14, textAlign: "right" }}>
-                  {params.value.data.code}
+                  {params.value.data.study_program}
                 </Typography>
               </Stack>
               <Stack
@@ -94,10 +94,30 @@ const columns = [
                 <Typography
                   sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
                 >
-                  Jumlah Tingkatan
+                  Tingkatan
                 </Typography>
                 <Typography sx={{ fontSize: 14, textAlign: "right" }}>
-                  {params.value.data.grades.length}
+                  {params.value.data.grade}
+                </Typography>
+              </Stack>
+              <Stack
+                sx={{
+                  width: "100%",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  borderBottom: "1px solid rgb(0,0,0,0.12)",
+                  px: 1,
+                  py: "10px",
+                  backgroundColor: "base.base20",
+                }}
+              >
+                <Typography
+                  sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
+                >
+                  Kurikulum
+                </Typography>
+                <Typography sx={{ fontSize: 14, textAlign: "right" }}>
+                  {params.value.data.curriculum}
                 </Typography>
               </Stack>
             </Stack>
@@ -107,9 +127,10 @@ const columns = [
       );
     },
   },
-  { field: "name", headerName: "Program Studi", flex: 2 },
-  { field: "code", headerName: "Kode", flex: 1 },
-  { field: "grades", headerName: "Jumlah Tingkatan", flex: 1 },
+  { field: "period_name", headerName: "Periode", flex: 1 },
+  { field: "study_program", headerName: "Program Studi", flex: 1 },
+  { field: "grade", headerName: "Tingkatan", flex: 1 },
+  { field: "curriculum", headerName: "Kurikulum", flex: 1 },
   {
     field: "action",
     headerName: "Aksi",
@@ -145,8 +166,10 @@ function ActionButton({ params }) {
           params.value.setOpenEditModal(true);
           params.value.setActiveRow(params.value.data);
           params.value.formik.setValues({
-            name: params.value.data.name,
-            code: params.value.data.code,
+            period_name: params.value.data.period_name,
+            study_program: params.value.data.study_program,
+            grade: params.value.data.grade,
+            curriculum: params.value.data.curriculum,
           });
         }}
       >
@@ -192,7 +215,7 @@ function ActionButton({ params }) {
   );
 }
 
-export default function StudyProgramTable({ data, formik }) {
+export default function CurriculumTable({ data, formik }) {
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down("lg"));
 
   const [openEditModal, setOpenEditModal] = useState(false);
@@ -204,9 +227,10 @@ export default function StudyProgramTable({ data, formik }) {
   data.map((data) => {
     let tempObject = {
       id: data.id,
-      name: data.name,
-      code: data.code,
-      grades: data.grades.length,
+      period_name: data.period_name,
+      study_program: data.study_program,
+      grade: data.grade,
+      curriculum: data.curriculum,
       action: {
         data: data,
         setActiveRow: setActiveRow,
@@ -231,7 +255,7 @@ export default function StudyProgramTable({ data, formik }) {
         open={openEditModal}
         onClose={() => {
           setOpenEditModal(false);
-          formik.setValues({ name: "", code: "" });
+          formik.setValues({});
         }}
       >
         <Stack
@@ -257,12 +281,12 @@ export default function StudyProgramTable({ data, formik }) {
             }}
           >
             <Typography fontWeight={600} fontSize={16}>
-              Edit Program Studi
+              Edit Kurikulum
             </Typography>
           </Box>
           <Divider />
           <Box sx={{ maxHeight: "70vh", overflowY: "auto", px: 2 }}>
-            <FormAddStudyProgram formik={formik} />
+            <FormAddCurriculum formik={formik} />
           </Box>
           <Divider />
           <Stack
@@ -276,7 +300,7 @@ export default function StudyProgramTable({ data, formik }) {
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenEditModal(false);
-                formik.setValues({ name: "", code: "" });
+                formik.setValues({});
               }}
             >
               Batal
@@ -286,7 +310,7 @@ export default function StudyProgramTable({ data, formik }) {
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenEditModal(false);
-                formik.setValues({ name: "", code: "" });
+                formik.setValues({});
               }}
             >
               Simpan
@@ -315,12 +339,12 @@ export default function StudyProgramTable({ data, formik }) {
         >
           <Box>
             <Typography fontWeight={600} fontSize={16}>
-              Hapus Program Studi
+              Hapus Kurikulum
             </Typography>
           </Box>
 
           <Typography sx={{ mt: 1, fontSize: 14 }}>
-            Anda akan menghapus program studi berikut:
+            Anda akan menghapus kurikulum berikut:
           </Typography>
           <Stack
             sx={{ width: "100%", my: 1, overflow: "hidden", borderRadius: 2 }}
@@ -337,10 +361,10 @@ export default function StudyProgramTable({ data, formik }) {
               }}
             >
               <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
-                Program Studi
+                Kurikulum
               </Typography>
               <Typography sx={{ fontSize: 14, textAlign: "right" }}>
-                {activeRow.name}
+                {activeRow.curriculum}
               </Typography>
             </Stack>
             <Stack
@@ -355,10 +379,28 @@ export default function StudyProgramTable({ data, formik }) {
               }}
             >
               <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
-                Kode
+                Tingkatan
               </Typography>
               <Typography sx={{ fontSize: 14, textAlign: "right" }}>
-                {activeRow.code}
+                {activeRow.grade}
+              </Typography>
+            </Stack>
+            <Stack
+              sx={{
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                borderBottom: "1px solid rgb(0,0,0,0.12)",
+                px: 1,
+                py: "10px",
+                backgroundColor: "base.base10",
+              }}
+            >
+              <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
+                Periode
+              </Typography>
+              <Typography sx={{ fontSize: 14, textAlign: "right" }}>
+                {activeRow.period_name}
               </Typography>
             </Stack>
           </Stack>
@@ -464,9 +506,10 @@ export default function StudyProgramTable({ data, formik }) {
                 card: false,
               }
             : {
-                name: false,
-                code: false,
-                grades: false,
+                period_name: false,
+                study_program: false,
+                grade: false,
+                curriculum: false,
                 action: false,
               }
         }

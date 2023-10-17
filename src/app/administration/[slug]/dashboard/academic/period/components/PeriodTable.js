@@ -19,7 +19,9 @@ import { BorderColorRounded, DeleteForeverRounded } from "@mui/icons-material";
 import Link from "next/link";
 import { types, permissions } from "@/globalcomponents/Variable";
 import { useState } from "react";
-import { FormAddStudyProgram } from "./FormAddStudyProgram";
+import { FormAddStudyProgram } from "./FormAddPeriod";
+import { FormEdiPeriod, FormEditPeriod } from "./FormEditPeriod";
+import dayjs from "dayjs";
 
 const columns = [
   {
@@ -54,10 +56,10 @@ const columns = [
                 <Typography
                   sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
                 >
-                  Program Studi
+                  Periode
                 </Typography>
                 <Typography sx={{ fontSize: 14, textAlign: "right" }}>
-                  {params.value.data.name}
+                  {params.value.data.period_name}
                 </Typography>
               </Stack>
               <Stack
@@ -74,10 +76,10 @@ const columns = [
                 <Typography
                   sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
                 >
-                  Kode
+                  Program Studi
                 </Typography>
                 <Typography sx={{ fontSize: 14, textAlign: "right" }}>
-                  {params.value.data.code}
+                  {params.value.data.study_program}
                 </Typography>
               </Stack>
               <Stack
@@ -94,10 +96,49 @@ const columns = [
                 <Typography
                   sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
                 >
-                  Jumlah Tingkatan
+                  Rentang Waktu
                 </Typography>
                 <Typography sx={{ fontSize: 14, textAlign: "right" }}>
-                  {params.value.data.grades.length}
+                  {dayjs(params.value.data.start_time).format("MMMM YYYY") +
+                    " - " +
+                    dayjs(params.value.data.end_time).format("MMMM YYYY")}
+                </Typography>
+              </Stack>
+            </Stack>
+            <Stack
+              sx={{
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                borderBottom: "1px solid rgb(0,0,0,0.12)",
+                px: 1,
+                py: "10px",
+                backgroundColor: "base.base20",
+              }}
+            >
+              <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
+                Status
+              </Typography>
+              <Stack sx={{ flexDirection: "row", alignItems: "center" }}>
+                <Box
+                  sx={{
+                    height: 8,
+                    width: 8,
+                    borderRadius: 10,
+                    mr: 0.5,
+                    backgroundColor: "green",
+                    display:
+                      params.value.data.status === "Aktif" ? "flex" : "none",
+                  }}
+                />
+                <Typography
+                  sx={{
+                    fontWeight:
+                      params.value.data.status === "Aktif" ? 500 : 400,
+                    fontSize: 13,
+                  }}
+                >
+                  {params.value.data.status}
                 </Typography>
               </Stack>
             </Stack>
@@ -107,9 +148,42 @@ const columns = [
       );
     },
   },
-  { field: "name", headerName: "Program Studi", flex: 2 },
-  { field: "code", headerName: "Kode", flex: 1 },
-  { field: "grades", headerName: "Jumlah Tingkatan", flex: 1 },
+  { field: "period_name", headerName: "Periode", flex: 1 },
+  { field: "study_program", headerName: "Program Studi", flex: 1 },
+  {
+    field: "period",
+    headerName: "Rentang Waktu",
+    flex: 1,
+  },
+  {
+    field: "status",
+    headerName: "Status",
+    flex: 1,
+    renderCell: (params) => {
+      return (
+        <Stack sx={{ flexDirection: "row", alignItems: "center" }}>
+          <Box
+            sx={{
+              height: 8,
+              width: 8,
+              borderRadius: 10,
+              mr: 0.5,
+              backgroundColor: "green",
+              display: params.value === "Aktif" ? "flex" : "none",
+            }}
+          />
+          <Typography
+            sx={{
+              fontWeight: params.value === "Aktif" ? 500 : 400,
+              fontSize: 13,
+            }}
+          >
+            {params.value}
+          </Typography>
+        </Stack>
+      );
+    },
+  },
   {
     field: "action",
     headerName: "Aksi",
@@ -140,13 +214,17 @@ function ActionButton({ params }) {
           },
           height: "fit-content",
           width: { xs: 90, lg: "fit-content" },
+          display: params.value.data.status === "Selesai" ? "none" : "flex",
         }}
         onClick={() => {
           params.value.setOpenEditModal(true);
           params.value.setActiveRow(params.value.data);
           params.value.formik.setValues({
-            name: params.value.data.name,
-            code: params.value.data.code,
+            period_name: params.value.data.period_name,
+            study_program: params.value.data.study_program,
+            start_time: dayjs(params.value.data.start_time),
+            end_time: dayjs(params.value.data.end_time),
+            status: params.value.data.status,
           });
         }}
       >
@@ -168,6 +246,7 @@ function ActionButton({ params }) {
             backgroundColor: "warning.dark",
           },
           width: { xs: 90, lg: "fit-content" },
+          display: params.value.data.status !== "Tidak Aktif" ? "none" : "flex",
         }}
         onClick={() => {
           params.value.setOpenDeleteModal(true);
@@ -204,9 +283,13 @@ export default function StudyProgramTable({ data, formik }) {
   data.map((data) => {
     let tempObject = {
       id: data.id,
-      name: data.name,
-      code: data.code,
-      grades: data.grades.length,
+      period_name: data.period_name,
+      study_program: data.study_program,
+      period:
+        dayjs(data.start_time).format("MMMM YYYY") +
+        " - " +
+        dayjs(data.end_time).format("MMMM YYYY"),
+      status: data.status,
       action: {
         data: data,
         setActiveRow: setActiveRow,
@@ -262,7 +345,7 @@ export default function StudyProgramTable({ data, formik }) {
           </Box>
           <Divider />
           <Box sx={{ maxHeight: "70vh", overflowY: "auto", px: 2 }}>
-            <FormAddStudyProgram formik={formik} />
+            <FormEditPeriod formik={formik} status={activeRow.status} />
           </Box>
           <Divider />
           <Stack
@@ -283,13 +366,25 @@ export default function StudyProgramTable({ data, formik }) {
             </Button>
             <Button
               variant="contained"
-              sx={{ flex: 1 }}
+              sx={{
+                flex: 1,
+                backgroundColor:
+                  formik.values["status"] === "Tidak Aktif"
+                    ? "primary.main"
+                    : "warning.main",
+                "&:hover": {
+                  backgroundColor:
+                    formik.values["status"] === "Aktif" ? "warning.dark" : "",
+                },
+              }}
               onClick={() => {
                 setOpenEditModal(false);
                 formik.setValues({ name: "", code: "" });
               }}
             >
-              Simpan
+              {formik.values["status"] === "Tidak Aktif"
+                ? "Simpan"
+                : "Akhiri Periode"}
             </Button>
           </Stack>
         </Stack>
@@ -315,12 +410,12 @@ export default function StudyProgramTable({ data, formik }) {
         >
           <Box>
             <Typography fontWeight={600} fontSize={16}>
-              Hapus Program Studi
+              Hapus Periode
             </Typography>
           </Box>
 
           <Typography sx={{ mt: 1, fontSize: 14 }}>
-            Anda akan menghapus program studi berikut:
+            Anda akan menghapus periode berikut:
           </Typography>
           <Stack
             sx={{ width: "100%", my: 1, overflow: "hidden", borderRadius: 2 }}
@@ -337,10 +432,10 @@ export default function StudyProgramTable({ data, formik }) {
               }}
             >
               <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
-                Program Studi
+                Periode
               </Typography>
               <Typography sx={{ fontSize: 14, textAlign: "right" }}>
-                {activeRow.name}
+                {activeRow.period_name}
               </Typography>
             </Stack>
             <Stack
@@ -355,10 +450,10 @@ export default function StudyProgramTable({ data, formik }) {
               }}
             >
               <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
-                Kode
+                Program Studi
               </Typography>
               <Typography sx={{ fontSize: 14, textAlign: "right" }}>
-                {activeRow.code}
+                {activeRow.study_program}
               </Typography>
             </Stack>
           </Stack>
@@ -464,9 +559,10 @@ export default function StudyProgramTable({ data, formik }) {
                 card: false,
               }
             : {
-                name: false,
-                code: false,
-                grades: false,
+                period_name: false,
+                study_program: false,
+                period: false,
+                status: false,
                 action: false,
               }
         }
