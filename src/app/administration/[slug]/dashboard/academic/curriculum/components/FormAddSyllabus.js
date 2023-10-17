@@ -29,7 +29,7 @@ import { Cancel, Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
 import { permissions } from "@/globalcomponents/Variable";
 
-import PDFIcon from "@/assets/Icon-PDF.svg";
+import PDFIcon from "@/assets/icon-PDF.svg";
 
 export const FormAddSyllabus = ({ formik, editing }) => {
   const [showPassword, setShowPassword] = useState(false);
