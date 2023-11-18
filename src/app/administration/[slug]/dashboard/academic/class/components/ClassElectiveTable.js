@@ -56,10 +56,10 @@ const columns = [
                 <Typography
                   sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
                 >
-                  Periode
+                  Tingkatan
                 </Typography>
                 <Typography sx={{ fontSize: 14, textAlign: "right" }}>
-                  {params.value.data.period_name}
+                  {params.value.data.grade}
                 </Typography>
               </Stack>
               <Stack
@@ -76,9 +76,13 @@ const columns = [
                 <Typography
                   sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
                 >
-                  Program Studi
+                  Kelas
                 </Typography>
-                <ChipList params={params.value.data.study_program} />
+
+                <Typography sx={{ fontSize: 14, textAlign: "right" }}>
+                  {params.value.data.class}
+                </Typography>
+                {/* <ChipList params={params.value.data.study_program} /> */}
               </Stack>
               <Stack
                 sx={{
@@ -94,105 +98,35 @@ const columns = [
                 <Typography
                   sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
                 >
-                  Rentang Waktu
+                  Jumlah Murid
                 </Typography>
+
                 <Typography sx={{ fontSize: 14, textAlign: "right" }}>
-                  {dayjs(params.value.data.start_time).format("MMMM YYYY") +
-                    " - " +
-                    dayjs(params.value.data.end_time).format("MMMM YYYY")}
+                  {params.value.data.students}
                 </Typography>
               </Stack>
             </Stack>
-            <Stack
-              sx={{
-                width: "100%",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                borderBottom: "1px solid rgb(0,0,0,0.12)",
-                px: 1,
-                py: "10px",
-                backgroundColor: "base.base20",
-              }}
-            >
-              <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
-                Status
-              </Typography>
-              <Stack sx={{ flexDirection: "row", alignItems: "center" }}>
-                <Box
-                  sx={{
-                    height: 8,
-                    width: 8,
-                    borderRadius: 10,
-                    mr: 0.5,
-                    backgroundColor: "green",
-                    display:
-                      params.value.data.status === "Aktif" ? "flex" : "none",
-                  }}
-                />
-                <Typography
-                  sx={{
-                    fontWeight:
-                      params.value.data.status === "Aktif" ? 500 : 400,
-                    fontSize: 13,
-                  }}
-                >
-                  {params.value.data.status}
-                </Typography>
-              </Stack>
-            </Stack>
+
             <ActionButton params={params} />
           </Stack>
         </Box>
       );
     },
   },
-  { field: "period_name", headerName: "Periode", flex: 1 },
   {
-    field: "study_program",
-    headerName: "Program Studi",
-    sortable: false,
-    flex: 1,
-    renderCell: (params) => {
-      return params.value.length > 0 ? (
-        <ChipList params={params.value} />
-      ) : (
-        "-"
-      );
-    },
+    field: "grade",
+    headerName: "Tingkatan",
+    flex: 0.5,
   },
   {
-    field: "period",
-    headerName: "Rentang Waktu",
+    field: "class",
+    headerName: "Kelas",
     flex: 1,
   },
   {
-    field: "status",
-    headerName: "Status",
+    field: "students",
+    headerName: "Jumlah Murid",
     flex: 1,
-    renderCell: (params) => {
-      return (
-        <Stack sx={{ flexDirection: "row", alignItems: "center" }}>
-          <Box
-            sx={{
-              height: 8,
-              width: 8,
-              borderRadius: 10,
-              mr: 0.5,
-              backgroundColor: "green",
-              display: params.value === "Aktif" ? "flex" : "none",
-            }}
-          />
-          <Typography
-            sx={{
-              fontWeight: params.value === "Aktif" ? 500 : 400,
-              fontSize: 13,
-            }}
-          >
-            {params.value}
-          </Typography>
-        </Stack>
-      );
-    },
   },
   {
     field: "action",
@@ -252,19 +186,18 @@ function ActionButton({ params }) {
           },
           height: "fit-content",
           width: { xs: 90, lg: "fit-content" },
-          display: params.value.data.status === "Selesai" ? "none" : "flex",
         }}
-        onClick={() => {
-          params.value.setOpenEditModal(true);
-          params.value.setActiveRow(params.value.data);
-          params.value.formik.setValues({
-            period_name: params.value.data.period_name,
-            study_program: params.value.data.study_program,
-            start_time: dayjs(params.value.data.start_time),
-            end_time: dayjs(params.value.data.end_time),
-            status: params.value.data.status,
-          });
-        }}
+        // onClick={() => {
+        //   params.value.setOpenEditModal(true);
+        //   params.value.setActiveRow(params.value.data);
+        //   params.value.formik.setValues({
+        //     period_name: params.value.data.period_name,
+        //     study_program: params.value.data.study_program,
+        //     start_time: dayjs(params.value.data.start_time),
+        //     end_time: dayjs(params.value.data.end_time),
+        //     status: params.value.data.status,
+        //   });
+        // }}
       >
         <BorderColorRounded
           sx={{ fontSize: { xs: 15, lg: 18 }, color: "base.base50" }}
@@ -284,12 +217,11 @@ function ActionButton({ params }) {
             backgroundColor: "warning.dark",
           },
           width: { xs: 90, lg: "fit-content" },
-          display: params.value.data.status !== "Tidak Aktif" ? "none" : "flex",
         }}
-        onClick={() => {
-          params.value.setOpenDeleteModal(true);
-          params.value.setActiveRow(params.value.data);
-        }}
+        // onClick={() => {
+        //   params.value.setOpenDeleteModal(true);
+        //   params.value.setActiveRow(params.value.data);
+        // }}
       >
         <DeleteForeverRounded
           sx={{ color: "white", fontSize: { xs: 16, lg: 18 } }}
@@ -309,7 +241,7 @@ function ActionButton({ params }) {
   );
 }
 
-export default function StudyProgramTable({ data, formik }) {
+export default function ClassElectiveTable({ data, formik }) {
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down("lg"));
 
   const [openEditModal, setOpenEditModal] = useState(false);
@@ -323,11 +255,12 @@ export default function StudyProgramTable({ data, formik }) {
       id: data.id,
       period_name: data.period_name,
       study_program: data.study_program,
-      period:
-        dayjs(data.start_time).format("MMMM YYYY") +
-        " - " +
-        dayjs(data.end_time).format("MMMM YYYY"),
-      status: data.status,
+
+      grade: data.grade,
+      class: data.class,
+      guardian: data.guardian,
+      students: data.students,
+
       action: {
         data: data,
         setActiveRow: setActiveRow,
@@ -491,7 +424,10 @@ export default function StudyProgramTable({ data, formik }) {
                 Program Studi
               </Typography>
 
-              <ChipList params={activeRow.study_program} compact/>
+              <Typography sx={{ fontSize: 14, textAlign: "right" }}>
+                {activeRow.study_program}
+              </Typography>
+              {/* <ChipList params={activeRow.study_program} compact/> */}
             </Stack>
           </Stack>
 
@@ -581,10 +517,10 @@ export default function StudyProgramTable({ data, formik }) {
         columns={columns}
         initialState={{
           pagination: {
-            paginationModel: { page: 0, pageSize: 20 },
+            paginationModel: { page: 0, pageSize: 50 },
           },
         }}
-        pageSizeOptions={[10, 20, 50]}
+        pageSizeOptions={[20, 50, 100]}
         getRowClassName={(params) =>
           params.indexRelativeToCurrentPage % 2 === 0 ? "Mui-even" : "Mui-odd"
         }
@@ -596,10 +532,10 @@ export default function StudyProgramTable({ data, formik }) {
                 card: false,
               }
             : {
-                period_name: false,
-                study_program: false,
-                period: false,
-                status: false,
+                grade: false,
+                class: false,
+                guardian: false,
+                students: false,
                 action: false,
               }
         }

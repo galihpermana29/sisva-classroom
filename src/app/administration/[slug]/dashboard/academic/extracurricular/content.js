@@ -22,7 +22,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import PeriodTable from "./components/PeriodTable";
+import TeacherTable from "./components/StudentTable";
 import { ExcelIcon, ExportIcon, SortIcon } from "@/assets/SVGs";
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -30,8 +30,10 @@ import { permissions, types } from "@/globalcomponents/Variable";
 import { FormAddPeriod } from "./components/FormAddPeriod";
 
 import { useFormik } from "formik";
-import CurriculumTable from "./components/CurriculumTable";
 import { FormAddCurriculum } from "./components/FormAddCurriculum";
+import SubjectTable from "./components/ClassTable";
+import ClassTable from "./components/ClassTable";
+import StudentTable from "./components/StudentTable";
 export default function StaffProfileContent() {
   const [emptyData, setEmptyData] = useState({
     name: "",
@@ -51,32 +53,309 @@ export default function StaffProfileContent() {
 
   let data = [
     {
-      id: 99,
-      period_name: "Tahun Ajaran 2024/2025",
-      study_program: ["IPA", "IPS", "IPA-U", "IPS-U"],
-      start_time: "2024-07-16T17:00:00.000Z",
-      end_time: "2025-06-16T17:00:00.000Z",
-      status: "Tidak Aktif",
-    },
-    {
       id: 1,
-      period_name: "Tahun Ajaran 2023/2024",
-      study_program: ["IPA", "IPS", "IPA-U", "IPS-U"],
-      start_time: "2023-07-16T17:00:00.000Z",
-      end_time: "2024-06-16T17:00:00.000Z",
-      status: "Aktif",
+      period_name: "Tahun Ajaran 2024/2025",
+      type: "mandatory",
+      study_program: "IPA",
+      guardian: "Rina Puspita",
+      grade: "X",
+      extracurricular: "Paskibra",
+      students: 15,
     },
     {
       id: 2,
-      period_name: "Tahun Ajaran 2022/2023",
-      study_program: ["IPA", "IPS", "IPA-U", "IPS-U"],
-      start_time: "2022-07-16T17:00:00.000Z",
-      end_time: "2023-06-16T17:00:00.000Z",
-      status: "Selesai",
+      period_name: "Tahun Ajaran 2024/2025",
+      type: "mandatory",
+      study_program: "IPA",
+      guardian: "Siti Rahayu",
+      grade: "X",
+      extracurricular: "Tari Tradisional",
+      students: 16,
+    },
+    {
+      id: 3,
+      period_name: "Tahun Ajaran 2024/2025",
+      type: "mandatory",
+      study_program: "IPA",
+      guardian: "Dewi Kusuma",
+      grade: "X",
+      extracurricular: "Pramuka",
+      students: 23,
+    },
+    {
+      id: 4,
+      period_name: "Tahun Ajaran 2024/2025",
+      type: "mandatory",
+      study_program: "IPA",
+      guardian: "Agus Setiawan",
+      grade: "X",
+      extracurricular: "Basket",
+      students: 15,
+    },
+    {
+      id: 5,
+      period_name: "Tahun Ajaran 2024/2025",
+      type: "mandatory",
+      study_program: "IPA",
+      guardian: "Joko Susanto",
+      grade: "X",
+      extracurricular: "Pecinta Alam",
+      students: 17,
+    },
+    {
+      id: 6,
+      period_name: "Tahun Ajaran 2024/2025",
+      type: "mandatory",
+      study_program: "IPA",
+      guardian: "Joko Susanto",
+      grade: "XI",
+      extracurricular: "Futsal",
+      students: 34,
+    },
+    {
+      id: 7,
+      period_name: "Tahun Ajaran 2024/2025",
+      type: "mandatory",
+      study_program: "IPA",
+      guardian: "Siti Rahayu",
+      grade: "XI",
+      extracurricular: "Film dan Fotografi",
+      students: 24,
+    },
+    {
+      id: 8,
+      period_name: "Tahun Ajaran 2024/2025",
+      type: "mandatory",
+      study_program: "IPA",
+      guardian: "Agus Setiawan",
+      grade: "XI",
+      extracurricular: "Musik",
+      students: 12,
+    },
+    {
+      id: 9,
+      period_name: "Tahun Ajaran 2024/2025",
+      type: "mandatory",
+      study_program: "IPA",
+      guardian: "Ani Cahyani",
+      grade: "XI",
+      extracurricular: "Olimpiade Sains",
+      students: 39,
     },
   ];
 
-  let [dataTingkatan, setDataTingkatan] = useState([]);
+  let [dataStudent, setDataStudent] = useState([
+    {
+      id: 1,
+      period_name: "Tahun Ajaran 2024/2025",
+      grade: "X",
+      extracurricular: "Paskibra",
+      class: "X IPA 1", student: "Widi Astuti",
+    },
+    {
+      id: 2,
+      period_name: "Tahun Ajaran 2024/2025",
+      grade: "X",
+      extracurricular: "Paskibra",
+      class: "XI IPA 2", student: "Desi Susanti",
+    },
+    {
+      id: 3,
+      period_name: "Tahun Ajaran 2024/2025",
+      grade: "X",
+      extracurricular: "Paskibra",
+      class: "XI IPA 2", student: "Rudi Hartono",
+    },
+    {
+      id: 4,
+      period_name: "Tahun Ajaran 2024/2025",
+      grade: "X",
+      extracurricular: "Paskibra",
+      class: "XI IPA 2", student: "Arifin Rahman",
+    },
+    {
+      id: 5,
+      period_name: "Tahun Ajaran 2024/2025",
+      grade: "X",
+      extracurricular: "Paskibra",
+      class: "X IPA 2", student: "Eko Lina",
+    },
+    {
+      id: 6,
+      period_name: "Tahun Ajaran 2024/2025",
+      grade: "X",
+      extracurricular: "Paskibra",
+      class: "X IPA 2", student: "Budi Santoso",
+    },
+    {
+      id: 7,
+      period_name: "Tahun Ajaran 2024/2025",
+      grade: "X",
+      extracurricular: "Paskibra",
+      class: "X IPA 3", student: "Sinta Amelia",
+    },
+    {
+      id: 8,
+      period_name: "Tahun Ajaran 2024/2025",
+      grade: "X",
+      extracurricular: "Pramuka",
+      class: "XI IPA 1", student: "Samsul Arifin",
+    },
+    {
+      id: 9,
+      period_name: "Tahun Ajaran 2024/2025",
+      grade: "X",
+      extracurricular: "Pramuka",
+      class: "X IPA 1", student: "Bambang Surya",
+    },
+    {
+      id: 10,
+      period_name: "Tahun Ajaran 2024/2025",
+      grade: "X",
+      extracurricular: "Pramuka",
+      class: "XII IPA 3", student: "Joko Susanto",
+    },
+    {
+      id: 11,
+      period_name: "Tahun Ajaran 2024/2025",
+      grade: "X",
+      extracurricular: "Pramuka",
+      class: "XI IPA 4", student: "Hadi Dini",
+    },
+    {
+      id: 12,
+      period_name: "Tahun Ajaran 2024/2025",
+      grade: "X",
+      extracurricular: "Pramuka",
+      class: "X IPA 4", student: "Adi Pratama",
+    },
+    {
+      id: 13,
+      period_name: "Tahun Ajaran 2024/2025",
+      grade: "X",
+      extracurricular: "Pramuka",
+      class: "XII IPA 3", student: "Ani Cahyani",
+    },
+    {
+      id: 14,
+      period_name: "Tahun Ajaran 2024/2025",
+      grade: "X",
+      extracurricular: "Pramuka",
+      class: "XII IPA 3", student: "Ratna Dewi",
+    },
+    {
+      id: 15,
+      period_name: "Tahun Ajaran 2024/2025",
+      grade: "X",
+      extracurricular: "Pramuka",
+      class: "XI IPA 2", student: "Achmad Faisal",
+    },
+    {
+      id: 16,
+      period_name: "Tahun Ajaran 2024/2025",
+      grade: "X",
+      extracurricular: "Pramuka",
+      class: "X IPA 1", student: "Putra Sari",
+    },
+    {
+      id: 17,
+      period_name: "Tahun Ajaran 2024/2025",
+      grade: "X",
+      extracurricular: "Pramuka",
+      class: "X IPA 1", student: "Sari Fitriani",
+    },
+    {
+      id: 18,
+      period_name: "Tahun Ajaran 2024/2025",
+      grade: "X",
+      extracurricular: "Musik",
+      class: "XI IPA 2", student: "Indra Wati",
+    },
+    {
+      id: 19,
+      period_name: "Tahun Ajaran 2024/2025",
+      grade: "X",
+      extracurricular: "Musik",
+      class: "X IPA 3", student: "Sari Indah",
+    },
+    {
+      id: 20,
+      period_name: "Tahun Ajaran 2024/2025",
+      grade: "X",
+      extracurricular: "Musik",
+      class: "XI IPA 3", student: "Hendra Gunawan",
+    },
+    {
+      id: 21,
+      period_name: "Tahun Ajaran 2024/2025",
+      grade: "X",
+      extracurricular: "Musik",
+      class: "XI IPA 3", student: "Arianto Susilo",
+    },
+    {
+      id: 22,
+      period_name: "Tahun Ajaran 2024/2025",
+      grade: "X",
+      extracurricular: "Musik",
+      class: "XII IPA 1", student: "Linda Wulandari",
+    },
+    {
+      id: 23,
+      period_name: "Tahun Ajaran 2024/2025",
+      grade: "X",
+      extracurricular: "Musik",
+      class: "XI IPA 1", student: "Ilham Saputra",
+    },
+    {
+      id: 24,
+      period_name: "Tahun Ajaran 2024/2025",
+      grade: "X",
+      extracurricular: "Musik",
+      class: "XI IPA 2", student: "Yuniarti",
+    },
+    {
+      id: 25,
+      period_name: "Tahun Ajaran 2024/2025",
+      grade: "X",
+      extracurricular: "Musik",
+      class: "X IPA 3", student: "Arief Dian",
+    },
+    {
+      id: 26,
+      period_name: "Tahun Ajaran 2024/2025",
+      grade: "X",
+      extracurricular: "Musik",
+      class: "X IPA 3", student: "Firman Maya",
+    },
+    {
+      id: 27,
+      period_name: "Tahun Ajaran 2024/2025",
+      grade: "X",
+      extracurricular: "Musik",
+      class: "XI IPA 1", student: "Hendra",
+    },
+    {
+      id: 28,
+      period_name: "Tahun Ajaran 2024/2025",
+      grade: "X",
+      extracurricular: "Musik",
+      class: "XI IPA 1", student: "Rina Wati",
+    },
+    {
+      id: 29,
+      period_name: "Tahun Ajaran 2024/2025",
+      grade: "X",
+      extracurricular: "Musik",
+      class: "X IPA 1", student: "Nurul Huda",
+    },
+    {
+      id: 30,
+      period_name: "Tahun Ajaran 2024/2025",
+      grade: "X",
+      extracurricular: "Musik",
+      class: "X IPA 1", student: "Yulia Susanti",
+    },
+  ]);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -102,184 +381,188 @@ export default function StaffProfileContent() {
   const [activeTab, setActiveTab] = useState(0);
   let tabs = [
     {
-      title: "Periode",
-      component: <PeriodTable formik={formik} data={filteredData} />,
+      title: "Ekstrakurikuler",
+      component: <ClassTable formik={formik} data={filteredData} />,
     },
     {
-      title: "Kurikulum",
-      component: <CurriculumTable formik={formik} data={filteredData} />,
+      title: "Anggota",
+      component: <StudentTable formik={formik} data={filteredData} />,
     },
   ];
 
   let [dataCurriculum, setDataCurriculum] = useState([]);
-  useEffect(() => {
-    let temp = [];
-    let id = 1;
-    data.map((period) => {
-      period.study_program.map((study_program) => {
-        ["X", "XI", "XII"].map((grade) => {
-          let tempObject = {
-            id: id,
-            period_name: period.period_name,
-            study_program: study_program,
-            grade: grade,
-            curriculum: period.period_name.endsWith("2025")
-              ? "Kurikulum Merdeka"
-              : period.period_name.endsWith("2024")
-              ? grade !== "XII"
-                ? "Kurikulum Merdeka"
-                : "Kurikulum 2013"
-              : grade === "X"
-              ? "Kurikulum Merdeka"
-              : "Kurikulum 2013",
-          };
-          temp.push(tempObject);
-          id++;
-        });
-      });
-    });
-    setDataCurriculum(temp);
-  }, [activeTab]);
+  // useEffect(() => {
+  //   let temp = [];
+  //   let id = 1;
+  //   data.map((period) => {
+  //     period.study_program.map((study_program) => {
+  //       ["X", "XI", "XII"].map((grade) => {
+  //         let tempObject = {
+  //           id: id,
+  //           period_name: period.period_name,
+  //           study_program: study_program,
+  //           grade: grade,
+  //           curriculum: period.period_name.endsWith("2025")
+  //             ? "Kurikulum Merdeka"
+  //             : period.period_name.endsWith("2024")
+  //             ? grade !== "XII"
+  //               ? "Kurikulum Merdeka"
+  //               : "Kurikulum 2013"
+  //             : grade === "X"
+  //             ? "Kurikulum Merdeka"
+  //             : "Kurikulum 2013",
+  //         };
+  //         temp.push(tempObject);
+  //         id++;
+  //       });
+  //     });
+  //   });
+  //   setDataCurriculum(temp);
+  // }, [activeTab]);
 
   useEffect(() => {
     let temp = [];
     activeTab === 0
       ? (temp = data.filter((item) => {
-          return item.period_name.toLowerCase().includes(search.toLowerCase());
-        }))
-      : (temp = dataCurriculum.filter((item) => {
           return (
-            item.curriculum.toLowerCase().includes(search.toLowerCase()) &&
-            (item.period_name.toLowerCase() ===
-              studyProgramFilter.toLowerCase() ||
-              !studyProgramFilter)
+            item.extracurricular.toLowerCase().includes(search.toLowerCase()) 
+          );
+        }))
+      : (temp = dataStudent.filter((item) => {
+          return (
+            item.student.toLowerCase().includes(search.toLowerCase())
           );
         }));
-    if (sortSettings && sortSettings.sortBy) {
-      temp = temp.sort(function (a, b) {
-        let x, y;
-        if (activeTab === 0) {
-          if (sortSettings.sortBy === "period_name") {
-            x = a.period_name.toLowerCase();
-            y = b.period_name.toLowerCase();
-          }
-          if (sortSettings.sortBy === "study_program") {
-            x = a.study_program.toLowerCase();
-            y = b.study_program.toLowerCase();
-          }
-          if (sortSettings.sortBy === "start_time") {
-            x = a.start_time.toLowerCase();
-            y = b.start_time.toLowerCase();
-          }
-          if (sortSettings.sortBy === "status") {
-            x = a.status.toLowerCase();
-            y = b.status.toLowerCase();
-          }
-        }
+    // if (sortSettings && sortSettings.sortBy) {
+    //   temp = temp.sort(function (a, b) {
+    //     let x, y;
+    //     if (activeTab === 0) {
+    //       if (sortSettings.sortBy === "period_name") {
+    //         x = a.period_name.toLowerCase();
+    //         y = b.period_name.toLowerCase();
+    //       }
+    //       if (sortSettings.sortBy === "study_program") {
+    //         x = a.study_program.toLowerCase();
+    //         y = b.study_program.toLowerCase();
+    //       }
+    //       if (sortSettings.sortBy === "start_time") {
+    //         x = a.start_time.toLowerCase();
+    //         y = b.start_time.toLowerCase();
+    //       }
+    //       if (sortSettings.sortBy === "status") {
+    //         x = a.status.toLowerCase();
+    //         y = b.status.toLowerCase();
+    //       }
+    //     }
 
-        if (activeTab === 1) {
-          if (sortSettings.sortBy === "period_name") {
-            x = a.period_name.toLowerCase();
-            y = b.period_name.toLowerCase();
-          }
-          if (sortSettings.sortBy === "study_program") {
-            x = a.study_program.toLowerCase();
-            y = b.study_program.toLowerCase();
-          }
-          if (sortSettings.sortBy === "grade") {
-            x = a.grade.toLowerCase();
-            y = b.grade.toLowerCase();
-          }
-          if (sortSettings.sortBy === "curriculum") {
-            x = a.curriculum.toLowerCase();
-            y = b.curriculum.toLowerCase();
-          }
-        }
+    //     if (activeTab === 1) {
+    //       if (sortSettings.sortBy === "period_name") {
+    //         x = a.period_name.toLowerCase();
+    //         y = b.period_name.toLowerCase();
+    //       }
+    //       if (sortSettings.sortBy === "study_program") {
+    //         x = a.study_program.toLowerCase();
+    //         y = b.study_program.toLowerCase();
+    //       }
+    //       if (sortSettings.sortBy === "grade") {
+    //         x = a.grade.toLowerCase();
+    //         y = b.grade.toLowerCase();
+    //       }
+    //       if (sortSettings.sortBy === "curriculum") {
+    //         x = a.curriculum.toLowerCase();
+    //         y = b.curriculum.toLowerCase();
+    //       }
+    //     }
 
-        if (sortSettings.sortType === "ascending") {
-          if (x < y) {
-            return -1;
-          }
-          if (x > y) {
-            return 1;
-          }
-          return 0;
-        } else if (sortSettings.sortType === "descending") {
-          if (x > y) {
-            return -1;
-          }
-          if (x < y) {
-            return 1;
-          }
-          return 0;
-        }
-      });
-    }
+    //     if (sortSettings.sortType === "ascending") {
+    //       if (x < y) {
+    //         return -1;
+    //       }
+    //       if (x > y) {
+    //         return 1;
+    //       }
+    //       return 0;
+    //     } else if (sortSettings.sortType === "descending") {
+    //       if (x > y) {
+    //         return -1;
+    //       }
+    //       if (x < y) {
+    //         return 1;
+    //       }
+    //       return 0;
+    //     }
+    //   });
+    // }
     setFilteredData(temp);
+    console.log(temp);
     formik.setValues(emptyData);
   }, [search, studyProgramFilter, sortSettings, activeTab]);
 
   function Filters() {
-    if (activeTab === 1) {
-      return (
+    return (
+      <Stack
+        sx={{
+          flexDirection: "row",
+          flex: 1,
+          overflowX: "auto",
+          height: 54,
+          px: { xs: 0, lg: 1 },
+          display:activeTab===0?"none":"flex"
+        }}
+      >
         <Stack
           sx={{
             flexDirection: "row",
             flex: 1,
-            overflowX: "auto",
-            height: 54,
-            px: { xs: 0, lg: 1 },
+            py: 1,
           }}
         >
-          <Stack
+          <TextField
+            select
+            size="small"
+            label="Ekstrakurikuler"
+            value={studyProgramFilter}
+            onChange={(e) => setStudyProgramFilter(e.target.value)}
             sx={{
-              flexDirection: "row",
-              flex: 1,
-              py: 1,
+              flex: { xs: 1, lg: 0 },
+              minWidth: "fit-content",
+            }}
+            InputProps={{
+              sx: { minWidth: 140, width: { xs: "100%", lg: "fit-content" } },
+              startAdornment: studyProgramFilter && (
+                <Cancel
+                  onClick={() => {
+                    setStudyProgramFilter("");
+                  }}
+                  sx={{
+                    fontSize: 14,
+                    color: "base.base50",
+                    cursor: "pointer",
+                    transform: "translateX(-4px)",
+                    "&:hover": {
+                      color: "base.base60",
+                    },
+                  }}
+                />
+              ),
             }}
           >
-            <TextField
-              select
-              size="small"
-              label="Periode"
-              value={studyProgramFilter}
-              onChange={(e) => setStudyProgramFilter(e.target.value)}
-              sx={{
-                flex: { xs: 1, lg: 0 },
-                minWidth: 140,
-                width: { xs: "100%", lg: "fit-content" },
-              }}
-              InputProps={{
-                sx: { minWidth: 140, width: { xs: "100%", lg: "fit-content" } },
-                startAdornment: studyProgramFilter && (
-                  <Cancel
-                    onClick={() => {
-                      setStudyProgramFilter("");
-                    }}
-                    sx={{
-                      fontSize: 14,
-                      color: "base.base50",
-                      cursor: "pointer",
-                      transform: "translateX(-4px)",
-                      "&:hover": {
-                        color: "base.base60",
-                      },
-                    }}
-                  />
-                ),
-              }}
-            >
-              {["Tahun Ajaran 2024/2025","Tahun Ajaran 2023/2024","Tahun Ajaran 2022/2023"
-              ].map((option, index) => (
-                <MenuItem key={index} value={option}>
-                  <Typography fontSize={14}>{option}</Typography>
-                </MenuItem>
-              ))}
-            </TextField>
-          </Stack>
+            {[
+              "Paskibra",
+              "Pramuka",
+              "Musik",
+              "Tari Tradisional",
+              "Olimpiade Sains",
+            ].map((option, index) => (
+              <MenuItem key={index} value={option}>
+                <Typography fontSize={14}>{option}</Typography>
+              </MenuItem>
+            ))}
+          </TextField>
+          
         </Stack>
-      );
-    }
+      </Stack>
+    );
   }
 
   return (
@@ -535,7 +818,7 @@ export default function StaffProfileContent() {
           alignItems: "center",
         }}
       >
-        <Typography sx={{ fontSize: 20, fontWeight: 600 }}>Periode</Typography>
+        <Typography sx={{ fontSize: 20, fontWeight: 600 }}>Ekstrakurikuler</Typography>
       </Stack>
 
       <Stack
@@ -761,13 +1044,13 @@ export default function StaffProfileContent() {
                 width: 100,
                 height: "100%",
               }}
-              onClick={() =>
-                activeTab === 0
-                  ? setOpenCreatePeriodModal(true)
-                  : activeTab === 1
-                  ? setOpenCreateCurriculumModal(true)
-                  : null
-              }
+              // onClick={() =>
+              //   activeTab === 0
+              //     ? setOpenCreatePeriodModal(true)
+              //     : activeTab === 1
+              //     ? setOpenCreateCurriculumModal(true)
+              //     : null
+              // }
             >
               <Typography sx={{ fontSize: 14 }}>Tambah</Typography>
             </Button>
@@ -783,20 +1066,15 @@ export default function StaffProfileContent() {
           }}
         >
           <Filters />
-          <Stack
-            sx={{ flexDirection: "row", py: 1, flex: activeTab === 0 ? 1 : 0 }}
-          >
-            <Divider
-              orientation="vertical"
-              sx={{ mx: 1, display: activeTab === 0 ? "none" : "flex" }}
-            />
+          <Stack sx={{ flexDirection: "row", py: 1 }}>
+            <Divider orientation="vertical" sx={{ mx: 1, display: "flex" }} />
             <Button
               sx={{
                 backgroundColor: "base.base30",
                 color: "base.base50",
                 fontSize: 18,
                 height: 38,
-                width: activeTab === 0 ? "100%" : "fit-content",
+                width: "fit-content",
                 "&:hover": {
                   backgroundColor: "base.base40",
                 },
@@ -806,15 +1084,6 @@ export default function StaffProfileContent() {
               }}
             >
               <SortIcon />
-              <Typography
-                sx={{
-                  fontSize: 14,
-                  ml: 1,
-                  display: activeTab === 0 ? "flex" : "none",
-                }}
-              >
-                Urutkan Data
-              </Typography>
             </Button>
           </Stack>
         </Stack>

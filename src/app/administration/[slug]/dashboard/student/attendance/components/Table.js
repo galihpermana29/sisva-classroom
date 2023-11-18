@@ -82,16 +82,47 @@ const columns = [
             >
               <Stack sx={{ flex: 1 }}>
                 <Typography sx={{ color: "base.base50", fontSize: 12 }}>
-                  Username
+                  Kelas
                 </Typography>
                 <Typography sx={{ fontSize: 14, lineHeight: "14px" }}>
-                  {params.value.data.username}
+                  {params.value.data.class}
                 </Typography>
               </Stack>
               {/* <Stack sx={{ flex: 1 }}> */}
               {/* <Typography sx={{ color: "base.base50", fontSize: 12 }}>
                   Status
                 </Typography> */}
+              {params.value.data.status === "sick" ? (
+                <Chip
+                  sx={{
+                    fontSize: 12,
+                    width: 60,
+                    color: "white",
+                    backgroundColor: "orange",
+                  }}
+                  label="Sakit"
+                />
+              ) : params.value.data.status === "absent" ? (
+                <Chip
+                  sx={{
+                    fontSize: 12,
+                    width: 60,
+                    color: "white",
+                    backgroundColor: "warning.main",
+                  }}
+                  label="Alpa"
+                />
+              ) : params.value.data.status === "sick" ? (
+                <Chip
+                  sx={{
+                    fontSize: 12,
+                    width: 60,
+                    color: "white",
+                    backgroundColor: "orange",
+                  }}
+                  label="Sakit"
+                />
+              ) : null}
             </Stack>
             {/* </Stack> */}
           </Stack>
@@ -128,7 +159,53 @@ const columns = [
     ),
   },
   { field: "name", headerName: "Nama", flex: 1 },
-  { field: "username", headerName: "Username", flex: 1 },
+  // { field: "username", headerName: "Username", flex: 1 },
+  { field: "class", headerName: "Kelas", flex: 1 },
+  {
+    field: "status",
+    headerName: "Status",
+    width: 70,
+    flex: 1,
+    renderCell: (params) => {
+      if (params.value === "sick") {
+        return (
+          <Chip
+            sx={{
+              fontSize: 12,
+              width: 60,
+              color: "white",
+              backgroundColor: "orange",
+            }}
+            label="Sakit"
+          />
+        );
+      } else if (params.value === "absent") {
+        return (
+          <Chip
+            sx={{
+              fontSize: 12,
+              width: 60,
+              color: "white",
+              backgroundColor: "warning.main",
+            }}
+            label="Alpa"
+          />
+        );
+      } else if (params.value === "leave") {
+        return (
+          <Chip
+            sx={{
+              fontSize: 12,
+              width: 60,
+              color: "white",
+              backgroundColor: "orange",
+            }}
+            label="Izin"
+          />
+        );
+      } else return null;
+    },
+  },
   {
     field: "action",
     headerName: "Aksi",
@@ -182,8 +259,6 @@ function ActionButton({ params }) {
       }}
     >
       <IconButton
-        component={Link}
-        href={`/administration/SEKOLAHSISVA/dashboard/student/profile/${params.value.data.username}`}
         sx={{
           borderRadius: 2,
           backgroundColor: "base.base30",
@@ -205,6 +280,7 @@ function ActionButton({ params }) {
           "&:hover": {
             backgroundColor: "warning.dark",
           },
+          display: "none",
         }}
         onClick={() => {
           params.value.setOpenDeleteModal(true);
@@ -232,8 +308,8 @@ export default function DataTable({ data }) {
       id: data.id,
       name: data.name,
       username: data.username,
-      type: data.type,
-      permissions: data.permissions,
+      status: data.status,
+      class: data.class,
       profile_image_uri: data.profile_image_uri,
       action: {
         data: data,
@@ -272,12 +348,12 @@ export default function DataTable({ data }) {
         >
           <Box>
             <Typography fontWeight={600} fontSize={16}>
-              Hapus Siswa
+              Hapus Karyawan
             </Typography>
           </Box>
 
           <Typography sx={{ mt: 1, fontSize: 14 }}>
-            Anda akan menghapus siswa berikut:
+            Anda akan menghapus karyawan berikut:
           </Typography>
           <Stack
             sx={{
@@ -424,8 +500,8 @@ export default function DataTable({ data }) {
             : {
                 profile_image_uri: false,
                 name: false,
-                username: false,
-                type: false,
+                class: false,
+                status: false,
                 permissions: false,
                 action: false,
               }

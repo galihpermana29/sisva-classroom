@@ -129,6 +129,7 @@ const columns = [
   },
   { field: "name", headerName: "Nama", flex: 1 },
   { field: "username", headerName: "Username", flex: 1 },
+  { field: "graduateYear", headerName: "Tahun Kelulusan", flex: 1 },
   {
     field: "action",
     headerName: "Aksi",
@@ -183,7 +184,7 @@ function ActionButton({ params }) {
     >
       <IconButton
         component={Link}
-        href={`/administration/SEKOLAHSISVA/dashboard/student/profile/${params.value.data.username}`}
+        href={`/administration/SEKOLAHSISVA/dashboard/student/alumni/${params.value.data.username}`}
         sx={{
           borderRadius: 2,
           backgroundColor: "base.base30",
@@ -233,6 +234,8 @@ export default function DataTable({ data }) {
       name: data.name,
       username: data.username,
       type: data.type,
+      studyProgram: data.studyProgram,
+      graduateYear: data.graduateYear,
       permissions: data.permissions,
       profile_image_uri: data.profile_image_uri,
       action: {

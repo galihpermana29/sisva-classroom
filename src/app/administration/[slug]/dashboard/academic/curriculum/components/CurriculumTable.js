@@ -77,7 +77,7 @@ const columns = [
                 >
                   Program Studi
                 </Typography>
-                <PermissionChips params={params.value.data.study_programs} />
+                <ChipList params={params.value.data.study_programs} />
               </Stack>
               {/* <Stack
                 sx={{
@@ -114,7 +114,7 @@ const columns = [
     flex: 1,
     renderCell: (params) => {
       return params.value.length > 0 ? (
-        <PermissionChips params={params.value} />
+        <ChipList params={params.value} />
       ) : (
         "-"
       );
@@ -203,7 +203,7 @@ function ActionButton({ params }) {
   );
 }
 
-function PermissionChips({ params }) {
+function ChipList({ params }) {
   return (
     <Stack
       sx={{

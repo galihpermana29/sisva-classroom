@@ -21,11 +21,9 @@ export const formAddCurriculumFields = [
     md: 6,
     type: "select",
     data: [
-      { slug: "IPA 2024/2025", title: "IPA 2024/2025" },
-      { slug: "IPA 2023/2024", title: "IPA 2023/2024" },
-      { slug: "IPS 2023/2024", title: "IPS 2023/2024" },
-      { slug: "IPA-U 2023/2024", title: "IPA-U 2023/2024" },
-      { slug: "IPS-U 2023/2024", title: "IPS-U 2023/2024" },
+      { slug: "Tahun Ajaran 2024/2025", title: "Tahun Ajaran 2024/2025" },
+      { slug: "Tahun Ajaran 2023/2024", title: "Tahun Ajaran 2023/2024" },
+      { slug: "Tahun Ajaran 2022/2023", title: "Tahun Ajaran 2022/2023" },
     ],
   },
   {
@@ -76,19 +74,6 @@ export const formEditPeriodFields = [
     type: "text",
   },
   {
-    name: "study_program",
-    label: "Program Studi",
-    placeholder: "Program Studi",
-    md: 6,
-    type: "select",
-    data: [
-      { slug: "IPA", title: "IPA" },
-      { slug: "IPS", title: "IPS" },
-      { slug: "IPA-U", title: "IPA-U" },
-      { slug: "IPS-U", title: "IPS-U" },
-    ],
-  },
-  {
     name: "period",
     label: "Rentang Waktu",
     placeholder: "Rentang Waktu",
@@ -115,19 +100,7 @@ export const formAddPeriodFields = [
     md: 6,
     type: "text",
   },
-  {
-    name: "study_program",
-    label: "Program Studi",
-    placeholder: "Program Studi",
-    md: 6,
-    type: "select",
-    data: [
-      { slug: "IPA", title: "IPA" },
-      { slug: "IPS", title: "IPS" },
-      { slug: "IPA-U", title: "IPA-U" },
-      { slug: "IPS-U", title: "IPS-U" },
-    ],
-  },
+ 
   {
     name: "period",
     label: "Rentang Waktu",

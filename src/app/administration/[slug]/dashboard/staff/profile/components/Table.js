@@ -95,7 +95,7 @@ const columns = [
               <Typography sx={{ color: "base.base50", fontSize: 12 }}>
                 Akses
               </Typography>
-              <PermissionChips params={params.value.data.permissions} />
+              <ChipList params={params.value.data.permissions} />
             </Stack>
           </Stack>
         </Box>
@@ -152,7 +152,7 @@ const columns = [
     sortable: false,
     flex: 1.5,
     renderCell: (params) => {
-      return <PermissionChips params={params.value} />;
+      return <ChipList params={params.value} />;
     },
   },
   {
@@ -166,7 +166,7 @@ const columns = [
   },
 ];
 
-function PermissionChips({ params }) {
+function ChipList({ params }) {
   return (
     <Stack
       sx={{

@@ -92,7 +92,7 @@ export default function Container(props) {
           slug: "academic/period",
         },
         {
-          title: "Teacher",
+          title: "Guru",
           slug: "academic/teacher",
         },
         {
@@ -368,7 +368,7 @@ export default function Container(props) {
           icon: <StaffIcon />,
           children: [
             {
-              title: "Profil Karyawan",
+              title: "Daftar Karyawan",
               slug: "profile",
             },
             {
@@ -383,7 +383,7 @@ export default function Container(props) {
           icon: <StudentIcon />,
           children: [
             {
-              title: "Profil Siswa",
+              title: "Daftar Siswa",
               slug: "profile",
             },
             {
@@ -414,7 +414,7 @@ export default function Container(props) {
               slug: "period",
             },
             {
-              title: "Teacher",
+              title: "Guru",
               slug: "teacher",
             },
             {

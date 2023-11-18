@@ -237,7 +237,7 @@ function ActionButton({ params }) {
   );
 }
 
-function PermissionChips({ params }) {
+function ChipList({ params }) {
   return (
     <Stack
       sx={{

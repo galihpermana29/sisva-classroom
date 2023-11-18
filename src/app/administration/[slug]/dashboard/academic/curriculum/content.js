@@ -918,7 +918,7 @@ export default function StaffProfileContent() {
         }}
       >
         <Typography sx={{ fontSize: 20, fontWeight: 600 }}>
-          Program Studi
+          Kurikulum
         </Typography>
       </Stack>
 
