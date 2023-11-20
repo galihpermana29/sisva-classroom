@@ -89,7 +89,7 @@ export default function Home() {
       </Stack>
       <Button
         component={Link}
-        href="/administration/SEKOLAHSISVA/dashboard"
+        href="/administration/SEKOLAHSISVA/dashboard/school/profile"
         variant="contained"
       >
         <Typography textTransform={"none"}>Masuk</Typography>

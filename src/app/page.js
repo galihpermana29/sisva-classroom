@@ -4,12 +4,10 @@ import { Box, Stack, Typography } from "@mui/material";
 import LogoSisva from "@/assets/Sisva-LogoType-White.png";
 import Link from "next/link";
 
-
 export const metadata = {
-  title: 'Demonstrasi Aplikasi | SISVA',
-  description: 'Demo aplikasi Sisva',
-}
-
+  title: "Demonstrasi Aplikasi | SISVA",
+  description: "Demo aplikasi Sisva",
+};
 
 export default function Home() {
   return (
@@ -26,13 +24,26 @@ export default function Home() {
       }}
     >
       <Box sx={{ height: 200, width: 300, position: "relative" }}>
-        <Image alt="Web Image" src={LogoSisva} layout={"fill"} objectFit={"contain"} />
+        <Image
+          alt="Web Image"
+          src={LogoSisva}
+          layout={"fill"}
+          objectFit={"contain"}
+        />
       </Box>
-      <Stack flexDirection={"row"} width={450}>
+      <Stack flexDirection={{ xs: "column", md: "row" }} width={450}>
         <Box
           component={Link}
           href="/administration"
-          sx={{ flex: 1, mr: 2, backgroundColor: "#1f8cd3", padding:1, borderRadius:1, display:"flex", justifyContent:"center" }}
+          sx={{
+            flex: 1,
+            mr: { xs: 0, md: 2 },
+            backgroundColor: "#1f8cd3",
+            padding: 1,
+            borderRadius: 1,
+            display: "flex",
+            justifyContent: "center",
+          }}
         >
           <Typography sx={{ fontWeight: 600, fontSize: 18 }}>
             Sisva Administration
@@ -40,8 +51,15 @@ export default function Home() {
         </Box>
         <Box
           component={Link}
-          href="/classroom"
-          sx={{ flex: 1, backgroundColor: "#f96756", padding:1, borderRadius:1, display:"flex", justifyContent:"center" }}
+          href="https://sisva-classroom-app.vercel.app"
+          sx={{
+            flex: 1,
+            backgroundColor: "#f96756",
+            padding: 1,
+            borderRadius: 1,
+            display: "flex",
+            justifyContent: "center",
+          }}
         >
           <Typography sx={{ fontWeight: 600, fontSize: 18 }}>
             Sisva Classroom

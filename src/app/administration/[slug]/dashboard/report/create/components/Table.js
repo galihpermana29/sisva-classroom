@@ -5,7 +5,6 @@ import {
   Avatar,
   Box,
   Button,
-  ButtonGroup,
   Chip,
   Divider,
   IconButton,
@@ -18,10 +17,8 @@ import {
 } from "@mui/material";
 import { BorderColorRounded, DeleteForeverRounded } from "@mui/icons-material";
 import Link from "next/link";
-import { types, permissions, subject_types } from "@/globalcomponents/Variable";
+import { types, permissions } from "@/globalcomponents/Variable";
 import { useState } from "react";
-import { FormAddCurriculum, FormAddSubject } from "./FormAddSubject";
-import { FormAddSyllabus } from "./FormAddSyllabus";
 
 const columns = [
   {
@@ -31,8 +28,8 @@ const columns = [
     sortable: false,
     renderCell: (params) => {
       let tempType;
-      subject_types.map((item) => {
-        if (item.slug === params.value.data.subject_type) {
+      types.map((item) => {
+        if (item.slug === params.value.data.type) {
           tempType = item.title;
         }
       });
@@ -62,13 +59,51 @@ const columns = [
                 <Typography
                   sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
                 >
-                  Kurikulum
+                  Nama
                 </Typography>
                 <Typography sx={{ fontSize: 14, textAlign: "right" }}>
-                  {params.value.data.name}
+                  {params.value.data.report}
                 </Typography>
               </Stack>
-
+              <Stack
+                sx={{
+                  width: "100%",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  borderBottom: "1px solid rgb(0,0,0,0.12)",
+                  px: 1,
+                  py: "10px",
+                  backgroundColor: "base.base20",
+                }}
+              >
+                <Typography
+                  sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
+                >
+                  Template
+                </Typography>
+                <Typography sx={{ fontSize: 14, textAlign: "right" }}>
+                  {params.value.data.template}
+                </Typography>
+              </Stack><Stack
+                sx={{
+                  width: "100%",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  borderBottom: "1px solid rgb(0,0,0,0.12)",
+                  px: 1,
+                  py: "10px",
+                  backgroundColor: "base.base10",
+                }}
+              >
+                <Typography
+                  sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
+                >
+                  Periode
+                </Typography>
+                <Typography sx={{ fontSize: 14, textAlign: "right" }}>
+                  {params.value.data.period}
+                </Typography>
+              </Stack>
               <Stack
                 sx={{
                   width: "100%",
@@ -85,74 +120,9 @@ const columns = [
                 >
                   Program Studi
                 </Typography>
-                {params.value.data.study_program}
-              </Stack>
-              <Stack
-                sx={{
-                  width: "100%",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  borderBottom: "1px solid rgb(0,0,0,0.12)",
-                  px: 1,
-                  py: "10px",
-                  backgroundColor: "base.base10",
-                }}
-              >
-                <Typography
-                  sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
-                >
-                  Mata Pelajaran
-                </Typography>
                 <Typography sx={{ fontSize: 14, textAlign: "right" }}>
-                  {params.value.data.subject}
+                  {params.value.data.studyProgram}
                 </Typography>
-              </Stack>
-              <Stack
-                sx={{
-                  width: "100%",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  borderBottom: "1px solid rgb(0,0,0,0.12)",
-                  px: 1,
-                  py: "10px",
-                  backgroundColor: "base.base20",
-                }}
-              >
-                <Typography
-                  sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
-                >
-                  Tingkatan
-                </Typography>
-                <Typography sx={{ fontSize: 14, textAlign: "right" }}>
-                  {params.value.data.grade}
-                </Typography>
-              </Stack>
-              <Stack
-                sx={{
-                  width: "100%",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  borderBottom: "1px solid rgb(0,0,0,0.12)",
-                  px: 1,
-                  py: "10px",
-                  backgroundColor: "base.base10",
-                }}
-              >
-                <Typography
-                  sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
-                >
-                  Silabus
-                </Typography>
-                <Button small variant="outlined" sx={{ fontSize: 13 }}>
-                  {" "}
-                  <a
-                    href="/Silabus Matematika-Kurikulum Merdeka-IPA-X.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Lihat
-                  </a>
-                </Button>
               </Stack>
             </Stack>
             <ActionButton params={params} />
@@ -161,38 +131,11 @@ const columns = [
       );
     },
   },
-  { field: "name", headerName: "Kurikulum", flex: 1.3 },
-  {
-    field: "study_program",
-    headerName: "Program Studi",
-    flex: 1,
-  },
-  { field: "subject", headerName: "Mata Pelajaran", flex: 1.5 },
-  {
-    field: "grade",
-    headerName: "Tingkatan",
-    flex: 1,
-  },
-  {
-    field: "syllabus_uri",
-    headerName: "Silabus",
-    sortable: false,
-    flex: 1,
-    renderCell: (params) => {
-      return (
-        <Button small variant="outlined" sx={{ fontSize: 13 }}>
-          {" "}
-          <a
-            href="/Silabus Matematika-Kurikulum Merdeka-IPA-X.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Lihat
-          </a>
-        </Button>
-      );
-    },
-  },
+  { field: "report", headerName: "Nama", flex: 1 },
+  { field: "template", headerName: "Template", flex: 1 },
+  { field: "period", headerName: "Periode", flex: 1 },
+  { field: "studyProgram", headerName: "Program Studi", flex: 1 },
+  // { field: "username", headerName: "Username", flex: 1 },
   {
     field: "action",
     headerName: "Aksi",
@@ -203,6 +146,39 @@ const columns = [
     },
   },
 ];
+
+function ChipList({ params }) {
+  return (
+    <Stack
+      sx={{
+        flexDirection: "row",
+        flexWrap: "wrap",
+        overflow: "hidden",
+        m: "8px 0",
+      }}
+    >
+      {params.map((permission, index) => {
+        let tempPermission;
+        permissions.map((item) => {
+          if (item.slug === permission) {
+            tempPermission = item.title;
+          }
+        });
+        return (
+          <Chip
+            key={index}
+            sx={{
+              m: { xs: "2px 4px 2px 0", lg: "2px" },
+              fontSize: 12,
+            }}
+            label={tempPermission}
+            color="primary"
+          />
+        );
+      })}
+    </Stack>
+  );
+}
 
 function ActionButton({ params }) {
   return (
@@ -223,16 +199,17 @@ function ActionButton({ params }) {
           },
           height: "fit-content",
           width: { xs: 90, lg: "fit-content" },
+          display: params.value.data.status === "Selesai" ? "none" : "flex",
         }}
         onClick={() => {
           params.value.setOpenEditModal(true);
           params.value.setActiveRow(params.value.data);
           params.value.formik.setValues({
-            name: params.value.data.name,
+            period_name: params.value.data.period_name,
             study_program: params.value.data.study_program,
-            subject: params.value.data.subject,
-            subject_type: params.value.data.subject_type,
-            grade: params.value.data.grade,
+            start_time: dayjs(params.value.data.start_time),
+            end_time: dayjs(params.value.data.end_time),
+            status: params.value.data.status,
           });
         }}
       >
@@ -254,6 +231,7 @@ function ActionButton({ params }) {
             backgroundColor: "warning.dark",
           },
           width: { xs: 90, lg: "fit-content" },
+          display: params.value.data.status !== "Tidak Aktif" ? "none" : "flex",
         }}
         onClick={() => {
           params.value.setOpenDeleteModal(true);
@@ -278,37 +256,9 @@ function ActionButton({ params }) {
   );
 }
 
-function ChipList({ params }) {
-  return (
-    <Stack
-      sx={{
-        flexDirection: "row",
-        flexWrap: "wrap",
-        overflow: "hidden",
-        m: "8px 0",
-      }}
-    >
-      {params.map((studyProgram, index) => {
-        return (
-          <Chip
-            key={index}
-            sx={{
-              m: { xs: "2px 0px 2px 4px", lg: "2px" },
-              fontSize: 12,
-            }}
-            label={studyProgram}
-            color="primary"
-          />
-        );
-      })}
-    </Stack>
-  );
-}
-
-export default function SyllabusTable({ data, formik }) {
+export default function DataTable({ data }) {
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down("lg"));
 
-  const [openEditModal, setOpenEditModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [activeRow, setActiveRow] = useState({});
 
@@ -317,24 +267,19 @@ export default function SyllabusTable({ data, formik }) {
   data.map((data) => {
     let tempObject = {
       id: data.id,
-      name: data.name,
-      study_program: data.study_program,
-      subject: data.subject,
-      grade: data.grade,
-      syllabus_uri: data.syllabus_uri,
+      report: data.report,
+      template: data.template,
+      period: data.period,
+      studyProgram: data.studyProgram,
       action: {
         data: data,
         setActiveRow: setActiveRow,
         setOpenDeleteModal: setOpenDeleteModal,
-        setOpenEditModal: setOpenEditModal,
-        formik: formik,
       },
       card: {
         data: data,
         setActiveRow: setActiveRow,
         setOpenDeleteModal: setOpenDeleteModal,
-        setOpenEditModal: setOpenEditModal,
-        formik: formik,
       },
     };
     rows.push(tempObject);
@@ -342,73 +287,6 @@ export default function SyllabusTable({ data, formik }) {
 
   return (
     <div style={{ height: "100%", width: "100%" }}>
-      <Modal
-        open={openEditModal}
-        onClose={() => {
-          setOpenEditModal(false);
-          formik.setValues({ name: "" });
-        }}
-      >
-        <Stack
-          component={Paper}
-          elevation={2}
-          sx={{
-            borderRadius: 2,
-            zIndex: 20,
-            margin: "auto",
-            position: "fixed",
-            height: "fit-content",
-            width: "360px",
-            maxWidth: "80%",
-            top: 0,
-            bottom: 0,
-            right: 0,
-            left: 0,
-          }}
-        >
-          <Box
-            sx={{
-              padding: 2,
-            }}
-          >
-            <Typography fontWeight={600} fontSize={16}>
-              Edit Tingkatan
-            </Typography>
-          </Box>
-          <Divider />
-          <Box sx={{ maxHeight: "70vh", overflowY: "auto", px: 2 }}>
-            <FormAddSyllabus formik={formik} editing={true} />
-          </Box>
-          <Divider />
-          <Stack
-            sx={{
-              flexDirection: "row",
-              p: 2,
-            }}
-          >
-            <Button
-              variant="outlined"
-              sx={{ flex: 1, mr: 1 }}
-              onClick={() => {
-                setOpenEditModal(false);
-                formik.setValues({ name: "", code: "" });
-              }}
-            >
-              Batal
-            </Button>
-            <Button
-              variant="contained"
-              sx={{ flex: 1 }}
-              onClick={() => {
-                setOpenEditModal(false);
-                formik.setValues({ name: "", code: "" });
-              }}
-            >
-              Simpan
-            </Button>
-          </Stack>
-        </Stack>
-      </Modal>
       <Modal open={openDeleteModal} onClose={() => setOpenDeleteModal(false)}>
         <Stack
           component={Paper}
@@ -430,86 +308,51 @@ export default function SyllabusTable({ data, formik }) {
         >
           <Box>
             <Typography fontWeight={600} fontSize={16}>
-              Hapus Tingkatan
+              Hapus Karyawan
             </Typography>
           </Box>
 
           <Typography sx={{ mt: 1, fontSize: 14 }}>
-            Anda akan menghapus tingkatan berikut:
+            Anda akan menghapus karyawan berikut:
           </Typography>
           <Stack
-            sx={{ width: "100%", my: 1, overflow: "hidden", borderRadius: 2 }}
+            sx={{
+              backgroundColor: "base.base20",
+              p: 1,
+              borderRadius: 2,
+              flexDirection: "row",
+              alignItems: "center",
+              mt: 1,
+              mb: 2,
+            }}
           >
-            <Stack
+            <Avatar
               sx={{
-                width: "100%",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                borderBottom: "1px solid rgb(0,0,0,0.12)",
-                px: 1,
-                py: "10px",
-                backgroundColor: "base.base10",
+                width: "40px",
+                height: "40px",
+                position: "relative",
+                mr: 1,
               }}
             >
-              <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
-                Tingkatan
-              </Typography>
-              <Typography sx={{ fontSize: 14, textAlign: "right" }}>
-                {activeRow.grade}
-              </Typography>
-            </Stack>
-            <Stack
-              sx={{
-                width: "100%",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                borderBottom: "1px solid rgb(0,0,0,0.12)",
-                px: 1,
-                py: "10px",
-                backgroundColor: "base.base20",
-              }}
-            >
-              <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
-                Mata Pelajaran
-              </Typography>
-              <Typography sx={{ fontSize: 14, textAlign: "right" }}>
-                {activeRow.subject}
-              </Typography>
-            </Stack>
-            <Stack
-              sx={{
-                width: "100%",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                borderBottom: "1px solid rgb(0,0,0,0.12)",
-                px: 1,
-                py: "10px",
-                backgroundColor: "base.base10",
-              }}
-            >
-              <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
-                Program Studi
-              </Typography>
-              <Typography sx={{ fontSize: 14, textAlign: "right" }}>
-                {activeRow.study_program}
-              </Typography>
-            </Stack>
-            <Stack
-              sx={{
-                width: "100%",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                borderBottom: "1px solid rgb(0,0,0,0.12)",
-                px: 1,
-                py: "10px",
-                backgroundColor: "base.base20",
-              }}
-            >
-              <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
-                Kurikulum
-              </Typography>
-              <Typography sx={{ fontSize: 14, textAlign: "right" }}>
+              <Image
+                alt="Web Image"
+                fill
+                sizes="100%"
+                style={{ objectFit: "cover" }}
+                src={activeRow.profile_image_uri}
+              />
+            </Avatar>
+            <Stack justifyContent={"center"}>
+              <Typography
+                sx={{
+                  color: "black",
+                  fontWeight: 600,
+                }}
+              >
                 {activeRow.name}
+              </Typography>
+              <Typography sx={{ fontSize: 14, lineHeight: "16px" }}>
+                {activeRow.username}
               </Typography>
             </Stack>
           </Stack>
@@ -603,10 +446,10 @@ export default function SyllabusTable({ data, formik }) {
         columns={columns}
         initialState={{
           pagination: {
-            paginationModel: { page: 0, pageSize: 50 },
+            paginationModel: { page: 0, pageSize: 20 },
           },
         }}
-        pageSizeOptions={[20, 50, 100]}
+        pageSizeOptions={[10, 20, 50]}
         getRowClassName={(params) =>
           params.indexRelativeToCurrentPage % 2 === 0 ? "Mui-even" : "Mui-odd"
         }
@@ -618,15 +461,13 @@ export default function SyllabusTable({ data, formik }) {
                 card: false,
               }
             : {
-                name: false,
-                study_program: false,
-                subject: false,
-                grade: false,
-                syllabus_uri: false,
+                template: false,
+                report: false,
+                period: false,
+                studyProgram: false,
                 action: false,
               }
         }
-        rowHeight={80}
       />
     </div>
   );
