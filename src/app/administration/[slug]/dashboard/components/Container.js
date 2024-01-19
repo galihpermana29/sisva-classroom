@@ -305,7 +305,7 @@ export default function Container(props) {
       >
         <Stack
           component={Link}
-          href="/administration/SEKOLAHSISVA/dashboard/school/profile"
+          href="/administration/SEKOLAHSISVA/dashboard"
           sx={{
             display: { xs: "none", lg: "flex" },
             flexDirection: "row",
@@ -345,12 +345,12 @@ export default function Container(props) {
   function Navigation() {
     function NavigationContent() {
       let navigationData = [
-        // {
-        //   title: "Beranda",
-        //   slug: "dashboard",
-        //   icon: <DashboardIcon />,
-        //   children: [],
-        // },
+        {
+          title: "Beranda",
+          slug: "dashboard",
+          icon: <DashboardIcon />,
+          children: [],
+        },
         {
           title: "Sekolah",
           slug: "school",
@@ -444,14 +444,14 @@ export default function Container(props) {
               title: "Buat Rapot",
               slug: "create",
             },
-            // {
-            //   title: "Edit Rapot",
-            //   slug: "edit",
-            // },
-            // {
-            //   title: "Lihat Rapot",
-            //   slug: "view",
-            // },
+            {
+              title: "Edit Rapot",
+              slug: "edit",
+            },
+            {
+              title: "Lihat Rapot",
+              slug: "view",
+            },
           ],
         },
         {
@@ -676,7 +676,7 @@ export default function Container(props) {
           >
             <Stack
               component={Link}
-              href="/administration/SEKOLAHSISVA/school/profile"
+              href="/administration/SEKOLAHSISVA/dashboard"
               sx={{
                 flexDirection: "row",
                 minHeight: 70,
