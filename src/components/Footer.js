@@ -137,13 +137,13 @@ export default function Footer() {
             <h3 className="font-semibold text-[1.7svh] lg:text-[1.9svh] mb-[.5svh] ">Sisva</h3>
             {/* <div className='d-flex flex-xs-flex flex-lg-column align-items-start'> */}
             <div className="flex items-center text-[1.7svh] lg:text-[1.9svh] ">
-              <a href="https://sisva.id/about">Tentang Sisva</a>
+              <a href="https://sisva.vercel.app/about">Tentang Sisva</a>
             </div>
             <div className="flex items-center text-[1.7svh] lg:text-[1.9svh] ">
-              <a href="https://sisva.id/product">Produk</a>
+              <a href="https://sisva.vercel.app/product">Produk</a>
             </div>{" "}
             <div className="flex items-center text-[1.7svh] lg:text-[1.9svh] ">
-              <a href="https://sisva.id/contact">Kontak</a>
+              <a href="https://sisva.vercel.app/contact">Kontak</a>
             </div>
             <div className="flex items-center text-[1.7svh] lg:text-[1.9svh] ">
               <a href="https://demo.sisva.id/">Coba Aplikasi</a>

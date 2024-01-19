@@ -40,7 +40,7 @@ export default function Header() {
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          <a href="https://sisva.id/" className="-m-1.5 p-1.5">
+          <a href="https://sisva.vercel.app/" className="-m-1.5 p-1.5">
             <img
               className="h-8 w-auto"
               src="/images/Sisva-LogoType-Black.png"
@@ -60,7 +60,7 @@ export default function Header() {
         </div>
         <Popover.Group className="hidden lg:flex items-center z-[1000]  ">
           <a
-            href="https://sisva.id/"
+            href="https://sisva.vercel.app/"
             className={`text-[2.1svh] mr-[5svh] leading-6 text-gray-900 ${
               pathname === "/" ? "font-medium" : ""
             }`}
@@ -68,7 +68,7 @@ export default function Header() {
             Beranda
           </a>
           <a
-            href="https://sisva.id/about"
+            href="https://sisva.vercel.app/about"
             className={`text-[2.1svh] mr-[5svh] leading-6 text-gray-900 ${
               pathname === "/about" ? "font-medium" : ""
             }`}
@@ -76,7 +76,7 @@ export default function Header() {
             Tentang Sisva
           </a>
           <a
-            href="https://sisva.id/product"
+            href="https://sisva.vercel.app/product"
             className={`text-[2.1svh] pr-[5svh] leading-6 text-gray-900 border-r-[rgb(0,0,0,0.3)] border-r-[1px] ${
               pathname === "/product" ? "font-medium" : ""
             }`}
@@ -91,7 +91,7 @@ export default function Header() {
                 Demo Aplikasi
               </button>
             </a>
-            <a href="https://sisva.id/contact">
+            <a href="https://sisva.vercel.app/contact">
               <button style={{border:"1.5px solid #208CD3"}} className="text-[1.9svh] font-semibold leading-6 text-[#208CD3]  px-[1.5svh] py-[.75svh] rounded-[.75svh] transition-all 2uration-300 hover:bg-[#208CD3] hover:text-white">
                 Hubungi Kami
               </button>
@@ -129,7 +129,7 @@ export default function Header() {
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-3">
                 <a
-                  href="https://sisva.id/"
+                  href="https://sisva.vercel.app/"
                   className={`-mx-3 block rounded-lg px-3 mb-2 text-[2svh] text-center ${
                     pathname === "/" ? "font-medium" : ""
                   } leading-7 text-gray-900 hover:bg-gray-50`}
@@ -137,7 +137,7 @@ export default function Header() {
                   Beranda
                 </a>
                 <a
-                  href="https://sisva.id/about"
+                  href="https://sisva.vercel.app/about"
                   className={`-mx-3 block rounded-lg px-3 mb-2 text-[2svh] text-center ${
                     pathname === "/about" ? "font-medium" : ""
                   } leading-7 text-gray-900 hover:bg-gray-50`}
@@ -145,7 +145,7 @@ export default function Header() {
                   Tentang Sisva
                 </a>
                 <a
-                  href="https://sisva.id/product"
+                  href="https://sisva.vercel.app/product"
                   className={`-mx-3 block rounded-lg px-3 text-[2svh] text-center ${
                     pathname === "/product" ? "font-medium" : ""
                   } leading-7 text-gray-900 hover:bg-gray-50`}
@@ -163,7 +163,7 @@ export default function Header() {
                   </button>
                 </a>
                 <a
-                  href="https://sisva.id/contact"
+                  href="https://sisva.vercel.app/contact"
                   className="-mx-3 block rounded-lg px-3 text-base font-semibold leading-7 text-gray-900"
                 >
                   <button className="text-[1.8svh] font-semibold leading-6 text-white bg-[#208CD3] border-[1.5px] px-[1.5svh] py-[.75svh] rounded-[.75svh] w-[100%]">
