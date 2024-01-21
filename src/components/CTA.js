@@ -23,15 +23,18 @@ export default function CTA() {
         <div className="flex text-white sm:mr-[4svh] my-[1svh] text-[2.2svh] lg:text-[2.4svh]">
           <i>Tunggu apa lagi? Ayo permudah semua urusan sekolah anda!</i>
         </div>
-        <button
-          className="mt-[1svh] px-[3svh] py-[1.25svh] text-[2svh] lg:text-[2.2svh] font-semibold text-white kumb-sans rounded-[8svh]"
-          style={{
-            background:
-              "linear-gradient(142deg, #F96756  11.11%, #F03721  86.15%)",
-          }}
-        >
-          Bergabung Sekarang
-        </button>
+        
+        <a href="https://www.sisva.id/contact">
+          <button
+            className="mt-[1svh] px-[3svh] py-[1.25svh] text-[2svh] lg:text-[2.2svh] font-semibold text-white kumb-sans rounded-[8svh]"
+            style={{
+              background:
+                "linear-gradient(142deg, #F96756  11.11%, #F03721  86.15%)",
+            }}
+          >
+            Bergabung Sekarang
+          </button>
+        </a>
       </div>
     </section>
   );
