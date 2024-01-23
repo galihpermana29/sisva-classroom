@@ -4,6 +4,11 @@ import Header from "@/components/Header";
 
 import Image from "next/image";
 
+export const metadata = {
+  title: "Demo Aplikasi | SISVA",
+  description: "SISVA | Solusi Digitalisasi dan Modernisasi Sekolah",
+};
+
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between overflow-x-hidden">
@@ -18,7 +23,7 @@ export default function Home() {
           />
         </div>
 
-        <div className="w-[100%] lg:w-[40vw] lg:ml-[4svh] mt-[2svh] lg:mt-0 flex flex-col items-center lg:items-start ">
+        <div className="w-[100%] lg:w-[30vw] lg:ml-[4svh] mt-[2svh] lg:mt-0 flex flex-col items-center lg:items-start ">
           <div
             className="text-[3.6svh]  lg:text-[6svh]  lg:max-w-[auto] text-center lg:text-left font-bold leading-[120%] kumbh-sans"
             style={{

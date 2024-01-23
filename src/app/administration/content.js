@@ -52,8 +52,6 @@ export default function InsertSchoolCode() {
         />
 
         <Button
-          component={Link}
-          href="/administration/SEKOLAHSISVA"
           sx={{ maxWidth: "280px", width: "100%", mt: 1 }}
           variant="contained"
         >

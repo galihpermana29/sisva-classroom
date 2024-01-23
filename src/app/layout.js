@@ -6,6 +6,7 @@ import { themeConfig } from "./theme";
 
 const theme = createTheme(themeConfig);
 
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">

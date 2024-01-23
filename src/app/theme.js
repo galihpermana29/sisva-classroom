@@ -1,3 +1,5 @@
+import { colors } from "@mui/material";
+
 export const themeConfig = {
   typography: {
     fontFamily: ["Kumbh Sans", "sans-serif"].join(","),

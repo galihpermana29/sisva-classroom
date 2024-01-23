@@ -36,7 +36,7 @@ export default function Header() {
   return (
     <header className="bg-[rgb(255,255,255,.90)]  w-screen fixed z-[1000] backdrop-blur">
       <nav
-        className="mx-auto flex max-w-7xl items-center justify-between p-5 lg:px-8"
+        className="mx-auto flex max-w-7xl items-center justify-between p-6"
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
@@ -61,9 +61,7 @@ export default function Header() {
         <Popover.Group className="hidden lg:flex items-center z-[1000]  ">
           <a
             href="https://www.sisva.id/"
-            className={`text-[2.1svh] mr-[5svh] leading-6 text-gray-900 ${
-              pathname === "/" ? "font-medium" : ""
-            }`}
+            className={`text-[2.1svh] mr-[5svh] leading-6 text-gray-900 `}
           >
             Beranda
           </a>
@@ -130,9 +128,7 @@ export default function Header() {
               <div className="space-y-2 py-3">
                 <a
                   href="https://www.sisva.id/"
-                  className={`-mx-3 block rounded-lg px-3 mb-2 text-[2svh] text-center ${
-                    pathname === "/" ? "font-medium" : ""
-                  } leading-7 text-gray-900 hover:bg-gray-50`}
+                  className={`-mx-3 block rounded-lg px-3 mb-2 text-[2svh] text-center  leading-7 text-gray-900 hover:bg-gray-50`}
                 >
                   Beranda
                 </a>
