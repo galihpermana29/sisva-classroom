@@ -84,7 +84,7 @@ export default function Footer() {
                   />
                 </g>
               </svg>
-              <a href="https://wa.me/62811265665?text=Halo%2C+saya+tertarik+dengan+produk+SISVA.">
+              <a href="https://wa.me/62811265665?text=Halo%2C+saya+tertarik+dengan+produk+Sisva.">
                 +62 811 265 665
               </a>
             </div>{" "}

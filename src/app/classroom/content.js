@@ -6,8 +6,14 @@ import useTheme from "@mui/material/styles/useTheme";
 
 import Link from "next/link";
 
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
 export default function InsertSchoolCode() {
   const theme = useTheme();
+  const router = useRouter();
+
+  let [code, setCode] = useState("");
   return (
     <Stack
       sx={{
@@ -28,7 +34,7 @@ export default function InsertSchoolCode() {
         }}
       >
         <SchoolCodeIllustration
-          color={theme.palette.warning.main}
+          color={theme.palette.primary.main}
           sx={{ maxWidth: "90%", objectFit: "cover", fontSize: 300 }}
         />
         <Typography
@@ -36,39 +42,34 @@ export default function InsertSchoolCode() {
             textAlign: "center",
             fontWeight: 700,
             fontSize: 24,
-            color: theme.palette.warning.main,
+            color: "primary.main",
             mt: 2,
           }}
         >
-          Hai, Selamat Datang di SISVA!
+          Hai, Selamat Datang di Sisva!
         </Typography>
         <Typography sx={{ textAlign: "center", mb: 3 }}>
           Masukkan kode sekolah untuk melanjutkan.
         </Typography>
 
         <OutlinedInput
+          value={code}
+          onChange={(e) => setCode(e.target.value)}
           sx={{ maxWidth: "280px", width: "100%" }}
           placeholder="Masukkan Kode Sekolah"
         />
 
-        <button
-          className="mt-[2svh] px-[3svh] text-[2svh] lg:text-[2.2svh] w-[100%] max-w-[280px] py-[1.25svh] font-semibold text-white kumb-sans rounded-[1svh]"
-          style={{
-            background:
-              "linear-gradient(142deg, #F96756  11.11%, #F03721  86.15%)",
-          }}
-        >
-          Lanjutkan
-        </button>
-        {/* <Button
-          component={Link}
-          href="/administration/SEKOLAHSISVA"
+        <Button
           sx={{ maxWidth: "280px", width: "100%", mt: 1 }}
           variant="contained"
-          color=""
+          onClick={() => {
+            if (code === "SEKOLAHSisva") {
+              router.push("/classroom/SEKOLAHSisva/auth/login");
+            }
+          }}
         >
           <Typography textTransform={"none"}>Lanjutkan</Typography>
-        </Button> */}
+        </Button>
       </Stack>
     </Stack>
   );

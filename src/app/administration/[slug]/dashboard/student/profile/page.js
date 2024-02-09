@@ -3,8 +3,8 @@ import { Box } from "@mui/material";
 import SchoolProfileListContent from "./content";
 
 export const metadata = {
-  title: "Daftar Siswa | SISVA",
-  description: "SISVA | Solusi Digitalisasi dan Modernisasi Sekolah",
+  title: "Daftar Siswa | Sisva",
+  description: "Sisva | Solusi Digitalisasi dan Modernisasi Sekolah",
 };
 
 export default function Home() {

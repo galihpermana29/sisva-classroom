@@ -61,7 +61,7 @@ export const formAddCurriculumFields = [
     data: [
       { slug: "Kurikulum Merdeka", title: "Kurikulum Merdeka" },
       { slug: "Kurikulum 2013", title: "Kurikulum 2013" },
-      { slug: "Kurikulum Sekolah SISVA", title: "Kurikulum Sekolah SISVA" },
+      { slug: "Kurikulum Sekolah Sisva", title: "Kurikulum Sekolah Sisva" },
     ],
   },
 ];
@@ -119,7 +119,7 @@ export const formAddSyllabusFields = [
     data: [
       { slug: "Kurikulum Merdeka", title: "Kurikulum Merdeka" },
       { slug: "Kurikulum 2013", title: "Kurikulum 2013" },
-      { slug: "Kurikulum Sekolah SISVA", title: "Kurikulum Sekolah SISVA" },
+      { slug: "Kurikulum Sekolah Sisva", title: "Kurikulum Sekolah Sisva" },
     ],
   },
   {
@@ -198,7 +198,7 @@ export const formAddSubjectFields = [
     data: [
       { slug: "Kurikulum Merdeka", title: "Kurikulum Merdeka" },
       { slug: "Kurikulum 2013", title: "Kurikulum 2013" },
-      { slug: "Kurikulum Sekolah SISVA", title: "Kurikulum Sekolah SISVA" },
+      { slug: "Kurikulum Sekolah Sisva", title: "Kurikulum Sekolah Sisva" },
     ],
   },
   {

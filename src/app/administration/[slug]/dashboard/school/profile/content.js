@@ -31,10 +31,10 @@ export default function SchoolProfileContent() {
   const containerRef = useRef(null);
 
   const [initialData, setinitialData] = useState({
-    name: "Sekolah SISVA",
+    name: "Sekolah Sisva",
     abbreviation: "-",
     identifier_value: "3276081105",
-    code: "SEKOLAHSISVA",
+    code: "SEKOLAHSisva",
     email: "sekolahsisva@sch.id",
     phone: "0811265665",
     address: "Perumahan Nuansa Telaga Kalibaru Blok E28, Depok, Jawa Barat",
@@ -86,10 +86,10 @@ export default function SchoolProfileContent() {
         </Box>
         <Stack>
           <Typography sx={{ fontSize: 18, fontWeight: 600 }}>
-            Sekolah SISVA
+            Sekolah Sisva
           </Typography>
           <Typography sx={{ fontSize: 14, fontWeight: 6500 }}>
-            SEKOLAHSISVA
+            SEKOLAHSisva
           </Typography>
         </Stack>
       </Stack>

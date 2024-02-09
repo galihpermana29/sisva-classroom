@@ -32,35 +32,35 @@ export default function Home() {
             display: "list-item",
           }}
         >
-          Akun SISVA hanya diberikan kepada sekolah yang telah bekerjasama
-          dengan aplikasi SISVA.
+          Akun Sisva hanya diberikan kepada sekolah yang telah bekerjasama
+          dengan aplikasi Sisva.
         </ListItem>
         <ListItem
           sx={{
             display: "list-item",
           }}
         >
-          Akun SISVA dibuat dan dikelola oleh administrator sekolah.
+          Akun Sisva dibuat dan dikelola oleh administrator sekolah.
         </ListItem>
         <ListItem
           sx={{
             display: "list-item",
           }}
         >
-          Untuk pembuatan akun SISVA, silakan menghubungi administrator sekolah.
+          Untuk pembuatan akun Sisva, silakan menghubungi administrator sekolah.
         </ListItem>
         <ListItem
           sx={{
             display: "list-item",
           }}
         >
-          Jika lupa password akun SISVA, silakan menghubungi administrator
+          Jika lupa password akun Sisva, silakan menghubungi administrator
           sekolah.
         </ListItem>
       </List>
       <Button
         component={Link}
-        href="/administration/SEKOLAHSISVA/auth/login"
+        href="/administration/SEKOLAHSisva/auth/login"
         variant="contained"
       >
         <Stack flexDirection={"row"} alignItems={"center"} width="100%">

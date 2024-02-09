@@ -82,7 +82,7 @@ export default function StaffProfileContent() {
     "Kewirausahaan",
     "Teknologi Informasi dan Komunikasi (TIK)",
   ];
-  const mataPelajaranSISVA = [
+  const mataPelajaranSisva = [
     "Arsiktektur",
     "Musik",
     "Teater",
@@ -106,9 +106,9 @@ export default function StaffProfileContent() {
     },
     {
       id: 3,
-      name: "Kurikulum Sekolah SISVA",
+      name: "Kurikulum Sekolah Sisva",
       study_programs: ["IPA", "IPS", "IPA-U", "IPS-U"],
-      subjects: mataPelajaranSISVA.length,
+      subjects: mataPelajaranSisva.length,
     },
   ];
 
@@ -166,11 +166,11 @@ export default function StaffProfileContent() {
       });
     });
 
-    mataPelajaranSISVA.map((subject) => {
+    mataPelajaranSisva.map((subject) => {
       ["IPA", "IPS", "IPA-U", "IPS-U"].map((item) => {
         let tempObject = {
           id: id,
-          name: "Kurikulum Sekolah SISVA",
+          name: "Kurikulum Sekolah Sisva",
           study_program: item,
           subject: subject,
           subject_type: "elective",
@@ -404,7 +404,7 @@ export default function StaffProfileContent() {
               {[
                 "Kurikulum Merdeka",
                 "Kurikulum 2013",
-                "Kurikulum Sekolah SISVA",
+                "Kurikulum Sekolah Sisva",
               ].map((option, index) => (
                 <MenuItem key={index} value={option}>
                   <Typography fontSize={14}>{option}</Typography>
@@ -504,7 +504,7 @@ export default function StaffProfileContent() {
               {[
                 "Kurikulum Merdeka",
                 "Kurikulum 2013",
-                "Kurikulum Sekolah SISVA",
+                "Kurikulum Sekolah Sisva",
               ].map((option, index) => (
                 <MenuItem key={index} value={option}>
                   <Typography fontSize={14}>{option}</Typography>

@@ -3,8 +3,8 @@ import { Box } from "@mui/material";
 import InsertSchoolCode from "./content";
 
 export const metadata = {
-  title: "Masukkan Kode Sekolah | SISVA",
-  description: "SISVA | Solusi Digitalisasi dan Modernisasi Sekolah",
+  title: "Masukkan Kode Sekolah | Sisva",
+  description: "Sisva | Solusi Digitalisasi dan Modernisasi Sekolah",
 };
 
 export default function Home() {

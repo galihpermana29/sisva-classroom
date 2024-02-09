@@ -102,7 +102,7 @@ export default function StaffProfileContent() {
       >
         <IconButton
           component={Link}
-          href="/administration/SEKOLAHSISVA/dashboard/staff/profile/"
+          href="/administration/SEKOLAHSisva/dashboard/staff/profile/"
           sx={{ borderRadius: 2, mr: 1 }}
         >
           <ArrowBackIosNewRounded />

@@ -5,8 +5,8 @@ import Header from "@/components/Header";
 import Image from "next/image";
 
 export const metadata = {
-  title: "Demo Aplikasi | SISVA",
-  description: "SISVA | Solusi Digitalisasi dan Modernisasi Sekolah",
+  title: "Demo Aplikasi | Sisva",
+  description: "Sisva | Solusi Digitalisasi dan Modernisasi Sekolah",
 };
 
 export default function Home() {

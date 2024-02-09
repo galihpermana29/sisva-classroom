@@ -6,8 +6,14 @@ import useTheme from "@mui/material/styles/useTheme";
 
 import Link from "next/link";
 
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
 export default function InsertSchoolCode() {
   const theme = useTheme();
+  const router = useRouter();
+
+  let [code, setCode] = useState("");
   return (
     <Stack
       sx={{
@@ -40,13 +46,15 @@ export default function InsertSchoolCode() {
             mt: 2,
           }}
         >
-          Hai, Selamat Datang di SISVA!
+          Hai, Selamat Datang di Sisva!
         </Typography>
         <Typography sx={{ textAlign: "center", mb: 3 }}>
           Masukkan kode sekolah untuk melanjutkan.
         </Typography>
 
         <OutlinedInput
+          value={code}
+          onChange={(e) => setCode(e.target.value)}
           sx={{ maxWidth: "280px", width: "100%" }}
           placeholder="Masukkan Kode Sekolah"
         />
@@ -54,6 +62,11 @@ export default function InsertSchoolCode() {
         <Button
           sx={{ maxWidth: "280px", width: "100%", mt: 1 }}
           variant="contained"
+          onClick={() => {
+            if (code === "SEKOLAHSisva") {
+              router.push("/administration/SEKOLAHSisva/auth/login");
+            }
+          }}
         >
           <Typography textTransform={"none"}>Lanjutkan</Typography>
         </Button>
