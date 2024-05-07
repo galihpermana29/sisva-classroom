@@ -63,8 +63,8 @@ export default function InsertSchoolCode() {
           sx={{ maxWidth: "280px", width: "100%", mt: 1 }}
           variant="contained"
           onClick={() => {
-            if (code === "SEKOLAHSisva") {
-              router.push("/administration/SEKOLAHSisva/auth/login");
+            if (code === "SEKOLAHSISVA") {
+              router.push("/administration/SEKOLAHSISVA/auth/login");
             }
           }}
         >

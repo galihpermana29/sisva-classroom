@@ -124,7 +124,7 @@ export default function SchoolProfileContent() {
       >
         <IconButton
           component={Link}
-          href="/administration/SEKOLAHSisva/dashboard/student/profile/"
+          href="/administration/SEKOLAHSISVA/dashboard/student/profile/"
           sx={{ borderRadius: 2, mr: 1 }}
         >
           <ArrowBackIosNewRounded />

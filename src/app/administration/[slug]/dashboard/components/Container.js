@@ -266,7 +266,7 @@ export default function Container(props) {
             <Divider />
             <MenuItem
               component={Link}
-              href="/administration/SEKOLAHSisva/dashboard/staff/profile/agung.prabowo"
+              href="/administration/SEKOLAHSISVA/dashboard/staff/profile/agung.prabowo"
               sx={{ maxWidth: 280 }}
             >
               <Stack flexDirection={"row"}>
@@ -276,7 +276,7 @@ export default function Container(props) {
             </MenuItem>
             <MenuItem
               component={Link}
-              href="/administration/SEKOLAHSisva/auth/login"
+              href="/administration/SEKOLAHSISVA/auth/login"
               sx={{ maxWidth: 280 }}
             >
               <Stack flexDirection={"row"}>
@@ -305,7 +305,7 @@ export default function Container(props) {
       >
         <Stack
           component={Link}
-          href="/administration/SEKOLAHSisva/dashboard"
+          href="/administration/SEKOLAHSISVA/dashboard"
           sx={{
             display: { xs: "none", lg: "flex" },
             flexDirection: "row",
@@ -345,12 +345,12 @@ export default function Container(props) {
   function Navigation() {
     function NavigationContent() {
       let navigationData = [
-        {
-          title: "Beranda",
-          slug: "dashboard",
-          icon: <DashboardIcon />,
-          children: [],
-        },
+        // {
+        //   title: "Beranda",
+        //   slug: "dashboard",
+        //   icon: <DashboardIcon />,
+        //   children: [],
+        // },
         {
           title: "Sekolah",
           slug: "school",
@@ -444,14 +444,14 @@ export default function Container(props) {
               title: "Buat Rapot",
               slug: "create",
             },
-            {
-              title: "Edit Rapot",
-              slug: "edit",
-            },
-            {
-              title: "Lihat Rapot",
-              slug: "view",
-            },
+            // {
+            //   title: "Edit Rapot",
+            //   slug: "edit",
+            // },
+            // {
+            //   title: "Lihat Rapot",
+            //   slug: "view",
+            // },
           ],
         },
         {
@@ -551,7 +551,7 @@ export default function Container(props) {
                   <Button
                     component={Link}
                     onClick={() => setNavigationOpen(false)}
-                    href={`/administration/SEKOLAHSisva/dashboard/${props.item.slug}/${child.slug}`}
+                    href={`/administration/SEKOLAHSISVA/dashboard/${props.item.slug}/${child.slug}`}
                     key={child.slug}
                     sx={{
                       maxWidth: "100%",
@@ -591,7 +591,7 @@ export default function Container(props) {
         return (
           <Button
             component={Link}
-            href={`/administration/SEKOLAHSisva/${props.item.slug}`}
+            href={`/administration/SEKOLAHSISVA/${props.item.slug}`}
             onClick={() => setNavigationOpen(false)}
             sx={{
               width: "100%",
@@ -676,7 +676,7 @@ export default function Container(props) {
           >
             <Stack
               component={Link}
-              href="/administration/SEKOLAHSisva/dashboard"
+              href="/administration/SEKOLAHSISVA/dashboard"
               sx={{
                 flexDirection: "row",
                 minHeight: 70,

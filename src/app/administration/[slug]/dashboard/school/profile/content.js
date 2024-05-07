@@ -34,7 +34,7 @@ export default function SchoolProfileContent() {
     name: "Sekolah Sisva",
     abbreviation: "-",
     identifier_value: "3276081105",
-    code: "SEKOLAHSisva",
+    code: "SEKOLAHSISVA",
     email: "sekolahsisva@sch.id",
     phone: "0811265665",
     address: "Perumahan Nuansa Telaga Kalibaru Blok E28, Depok, Jawa Barat",
@@ -89,7 +89,7 @@ export default function SchoolProfileContent() {
             Sekolah Sisva
           </Typography>
           <Typography sx={{ fontSize: 14, fontWeight: 6500 }}>
-            SEKOLAHSisva
+            SEKOLAHSISVA
           </Typography>
         </Stack>
       </Stack>

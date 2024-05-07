@@ -209,7 +209,7 @@ function ActionButton({ params }) {
     >
       <IconButton
         component={Link}
-        href={`/administration/SEKOLAHSisva/dashboard/staff/profile/${params.value.data.username}`}
+        href={`/administration/SEKOLAHSISVA/dashboard/staff/profile/${params.value.data.username}`}
         sx={{
           borderRadius: 2,
           backgroundColor: "base.base30",

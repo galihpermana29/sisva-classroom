@@ -6,6 +6,6 @@ import { useEffect } from "react";
 export default function Home() {
   const router = useRouter();
   useEffect(() => {
-    router.push("/administration/SEKOLAHSisva/auth/login");
+    router.push("/administration/SEKOLAHSISVA/auth/login");
   });
 }

@@ -60,7 +60,7 @@ export default function Home() {
       </List>
       <Button
         component={Link}
-        href="/administration/SEKOLAHSisva/auth/login"
+        href="/administration/SEKOLAHSISVA/auth/login"
         variant="contained"
       >
         <Stack flexDirection={"row"} alignItems={"center"} width="100%">

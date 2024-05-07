@@ -1,13 +1,11 @@
 "use client";
 
-import Image from "next/image";
-import { Box, Button, OutlinedInput, Stack, Typography } from "@mui/material";
-import SchoolCodeIllustration from "@/assets/SVGs";
-import useTheme from "@mui/material/styles/useTheme";
-
-import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Home() {
-  const theme = useTheme();
-  return <Stack>Dashboard</Stack>;
+  const router = useRouter();
+  useEffect(() => {
+    router.push("/administration/SEKOLAHSISVA/dashboard/school/profile");
+  });
 }
