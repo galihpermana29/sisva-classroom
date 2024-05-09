@@ -41,16 +41,20 @@ export default function Home() {
       school_id: schoolId,
     });
 
-    const {
-      data: { data },
-    } = await Auth.login(payload);
+    try {
+      const {
+        data: { data },
+      } = await Auth.login(payload);
 
-    if (data) {
-      localStorage.setItem('user', JSON.stringify(data));
+      if (data) {
+        localStorage.setItem('user', JSON.stringify(data));
 
-      if (JSON.parse(localStorage.getItem('user'))) {
-        router.push('/administration/SEKOLAHSISVA/dashboard');
+        if (JSON.parse(localStorage.getItem('user'))) {
+          router.push('/administration/SEKOLAHSISVA/dashboard');
+        }
       }
+    } catch (error) {
+      console.log(error);
     }
   }
 

@@ -1,6 +1,6 @@
-import { Grid, MenuItem, TextField, Typography } from "@mui/material";
+import { Grid, MenuItem, TextField, Typography } from '@mui/material';
 
-import { formSchoolTypeFields } from "@/globalcomponents/FormFields";
+import { formSchoolTypeFields } from '@/globalcomponents/FormFields';
 
 export const FormSchoolType = ({ formik, editing }) => {
   if (!editing) {
@@ -9,14 +9,14 @@ export const FormSchoolType = ({ formik, editing }) => {
         {formSchoolTypeFields.map((field) => {
           return (
             <Grid
-              sx={{ marginBottom: "8px" }}
+              sx={{ marginBottom: '8px' }}
               item
               xs={12}
               md={field.md}
               key={field.name}
             >
               <Grid item xs={12} md={12}>
-                <Typography variant="body2" fontWeight={500} fontSize={14}>
+                <Typography variant='body2' fontWeight={500} fontSize={14}>
                   {field.label}
                 </Typography>
               </Grid>
@@ -26,7 +26,7 @@ export const FormSchoolType = ({ formik, editing }) => {
                     return (
                       <Typography
                         key={data.value}
-                        variant="body2"
+                        variant='body2'
                         fontWeight={400}
                         fontSize={14}
                       >
@@ -46,7 +46,7 @@ export const FormSchoolType = ({ formik, editing }) => {
       <>
         {formSchoolTypeFields.map((field) => (
           <Grid item xs={12} md={field.md} key={field.name}>
-            <Typography variant="body2" fontWeight={600} sx={{ mb: "8px" }}>
+            <Typography variant='body2' fontWeight={600} sx={{ mb: '8px' }}>
               {field.label}
             </Typography>
 
@@ -54,7 +54,7 @@ export const FormSchoolType = ({ formik, editing }) => {
               select
               // value="general"
               name={field.name}
-              placeholder={"Pilih Jenis Sekolah"}
+              placeholder={'Pilih Jenis Sekolah'}
               fullWidth
               value={formik.values[field.name]}
               onChange={(e) => formik.setFieldValue(field.name, e.target.value)}
