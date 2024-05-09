@@ -187,7 +187,11 @@ export default function Container(props) {
         }
       };
 
-      useEffect(() => {}, getCurrentUser(), []);
+      useEffect(() => {
+        setTimeout(() => {
+          getCurrentUser();
+        }, 2000);
+      }, []);
 
       return (
         <Box>
@@ -300,6 +304,9 @@ export default function Container(props) {
               </Stack>
             </MenuItem>
             <MenuItem
+              onClick={() => {
+                localStorage.clear();
+              }}
               component={Link}
               href='/administration/SEKOLAHSISVA/auth/login'
               sx={{ maxWidth: 280 }}

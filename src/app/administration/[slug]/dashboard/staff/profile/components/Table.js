@@ -1,6 +1,6 @@
-import * as React from "react";
-import { DataGrid } from "@mui/x-data-grid";
-import Image from "next/image";
+import * as React from 'react';
+import { DataGrid } from '@mui/x-data-grid';
+import Image from 'next/image';
 import {
   Avatar,
   Box,
@@ -14,16 +14,16 @@ import {
   TextField,
   Typography,
   useMediaQuery,
-} from "@mui/material";
-import { BorderColorRounded, DeleteForeverRounded } from "@mui/icons-material";
-import Link from "next/link";
-import { types, permissions } from "@/globalcomponents/Variable";
-import { useState } from "react";
+} from '@mui/material';
+import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
+import Link from 'next/link';
+import { types, permissions } from '@/globalcomponents/Variable';
+import { useState } from 'react';
 
 const columns = [
   {
-    field: "card",
-    headerName: "",
+    field: 'card',
+    headerName: '',
     flex: 1,
     sortable: false,
     renderCell: (params) => {
@@ -34,37 +34,37 @@ const columns = [
         }
       });
       return (
-        <Box sx={{ width: "100%", mx: 2, py: 0.5 }}>
+        <Box sx={{ width: '100%', mx: 2, py: 0.5 }}>
           <Stack
             component={Paper}
-            variant="outlined"
+            variant='outlined'
             sx={{
-              justifyContent: "flex-start",
+              justifyContent: 'flex-start',
               borderRadius: 2,
               p: 2,
             }}
           >
-            <Stack direction={"row"} justifyContent={"space-between"} flex={1}>
-              <Stack direction={"row"} alignItems={"center"}>
+            <Stack direction={'row'} justifyContent={'space-between'} flex={1}>
+              <Stack direction={'row'} alignItems={'center'}>
                 <Avatar
                   sx={{
-                    width: "40px",
-                    height: "40px",
-                    position: "relative",
+                    width: '40px',
+                    height: '40px',
+                    position: 'relative',
                     mr: 1,
                   }}
                 >
                   <Image
-                    alt="Web Image"
+                    alt='Web Image'
                     fill
-                    sizes="100%"
-                    style={{ objectFit: "cover" }}
+                    sizes='100%'
+                    style={{ objectFit: 'cover' }}
                     src={params.value.data.profile_image_uri}
                   />
                 </Avatar>
                 <Typography
                   sx={{
-                    color: "black",
+                    color: 'black',
                   }}
                 >
                   {params.value.data.name}
@@ -73,26 +73,26 @@ const columns = [
               <ActionButton params={params} />
             </Stack>
 
-            <Stack sx={{ flexDirection: "row", mt: 2 }}>
+            <Stack sx={{ flexDirection: 'row', mt: 2 }}>
               <Stack sx={{ flex: 1 }}>
-                <Typography sx={{ color: "base.base50", fontSize: 12 }}>
+                <Typography sx={{ color: 'base.base50', fontSize: 12 }}>
                   Username
                 </Typography>
-                <Typography sx={{ fontSize: 14, lineHeight: "14px" }}>
+                <Typography sx={{ fontSize: 14, lineHeight: '14px' }}>
                   {params.value.data.username}
                 </Typography>
               </Stack>
-              <Stack sx={{ flex: 1, textAlign: "right" }}>
-                <Typography sx={{ color: "base.base50", fontSize: 12 }}>
+              <Stack sx={{ flex: 1, textAlign: 'right' }}>
+                <Typography sx={{ color: 'base.base50', fontSize: 12 }}>
                   Tipe
                 </Typography>
-                <Typography sx={{ fontSize: 14, lineHeight: "14px" }}>
+                <Typography sx={{ fontSize: 14, lineHeight: '14px' }}>
                   {tempType}
                 </Typography>
               </Stack>
             </Stack>
             <Stack sx={{ mt: 2, flex: 1 }}>
-              <Typography sx={{ color: "base.base50", fontSize: 12 }}>
+              <Typography sx={{ color: 'base.base50', fontSize: 12 }}>
                 Akses
               </Typography>
               <ChipList params={params.value.data.permissions} />
@@ -103,8 +103,8 @@ const columns = [
     },
   },
   {
-    field: "profile_image_uri",
-    headerName: "",
+    field: 'profile_image_uri',
+    headerName: '',
     width: 70,
     sortable: false,
     renderCell: (params) => (
@@ -114,27 +114,27 @@ const columns = [
           height: 40,
           my: 1.5,
           ml: 2,
-          position: "relative",
-          display: "flex",
-          justifyContent: "flex-end",
+          position: 'relative',
+          display: 'flex',
+          justifyContent: 'flex-end',
         }}
       >
         <Image
-          alt="Web Image"
+          alt='Web Image'
           fill
-          sizes="100%"
-          style={{ objectFit: "cover" }}
+          sizes='100%'
+          style={{ objectFit: 'cover' }}
           src={params.value}
         />
         {/* A */}
       </Avatar>
     ),
   },
-  { field: "name", headerName: "Nama", flex: 1 },
-  { field: "username", headerName: "Username", flex: 1 },
+  { field: 'name', headerName: 'Nama', flex: 1 },
+  { field: 'username', headerName: 'Username', flex: 1 },
   {
-    field: "type",
-    headerName: "Tipe",
+    field: 'type',
+    headerName: 'Tipe',
     width: 70,
     renderCell: (params) => {
       let tempType;
@@ -147,8 +147,8 @@ const columns = [
     },
   },
   {
-    field: "permissions",
-    headerName: "Akses",
+    field: 'permissions',
+    headerName: 'Akses',
     sortable: false,
     flex: 1.5,
     renderCell: (params) => {
@@ -156,8 +156,8 @@ const columns = [
     },
   },
   {
-    field: "action",
-    headerName: "Aksi",
+    field: 'action',
+    headerName: 'Aksi',
     sortable: false,
     width: 120,
     renderCell: (params) => {
@@ -170,10 +170,10 @@ function ChipList({ params }) {
   return (
     <Stack
       sx={{
-        flexDirection: "row",
-        flexWrap: "wrap",
-        overflow: "hidden",
-        m: "8px 0",
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        overflow: 'hidden',
+        m: '8px 0',
       }}
     >
       {params.map((permission, index) => {
@@ -187,11 +187,11 @@ function ChipList({ params }) {
           <Chip
             key={index}
             sx={{
-              m: { xs: "2px 4px 2px 0", lg: "2px" },
+              m: { xs: '2px 4px 2px 0', lg: '2px' },
               fontSize: 12,
             }}
             label={tempPermission}
-            color="primary"
+            color='primary'
           />
         );
       })}
@@ -203,33 +203,33 @@ function ActionButton({ params }) {
   return (
     <Stack
       sx={{
-        flexDirection: "row",
-        alignItems: "center",
+        flexDirection: 'row',
+        alignItems: 'center',
       }}
     >
       <IconButton
         component={Link}
-        href={`/administration/SEKOLAHSISVA/dashboard/staff/profile/${params.value.data.username}`}
+        href={`/administration/SEKOLAHSISVA/dashboard/staff/profile/${params.value.data.id}`}
         sx={{
           borderRadius: 2,
-          backgroundColor: "base.base30",
-          "&:hover": {
-            backgroundColor: "base.base40",
+          backgroundColor: 'base.base30',
+          '&:hover': {
+            backgroundColor: 'base.base40',
           },
-          height: "fit-content",
+          height: 'fit-content',
         }}
       >
         <BorderColorRounded
-          sx={{ fontSize: { xs: 15, lg: 18 }, color: "base.base50" }}
+          sx={{ fontSize: { xs: 15, lg: 18 }, color: 'base.base50' }}
         />
       </IconButton>
       <IconButton
         sx={{
           borderRadius: 2,
           ml: 1,
-          backgroundColor: "warning.main",
-          "&:hover": {
-            backgroundColor: "warning.dark",
+          backgroundColor: 'warning.main',
+          '&:hover': {
+            backgroundColor: 'warning.dark',
           },
         }}
         onClick={() => {
@@ -238,7 +238,7 @@ function ActionButton({ params }) {
         }}
       >
         <DeleteForeverRounded
-          sx={{ color: "white", fontSize: { xs: 16, lg: 18 } }}
+          sx={{ color: 'white', fontSize: { xs: 16, lg: 18 } }}
         />
       </IconButton>
     </Stack>
@@ -246,7 +246,7 @@ function ActionButton({ params }) {
 }
 
 export default function DataTable({ data }) {
-  const isMobile = useMediaQuery((theme) => theme.breakpoints.down("lg"));
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('lg'));
 
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [activeRow, setActiveRow] = useState({});
@@ -276,7 +276,7 @@ export default function DataTable({ data }) {
   });
 
   return (
-    <div style={{ height: "100%", width: "100%" }}>
+    <div style={{ height: '100%', width: '100%' }}>
       <Modal open={openDeleteModal} onClose={() => setOpenDeleteModal(false)}>
         <Stack
           component={Paper}
@@ -284,11 +284,11 @@ export default function DataTable({ data }) {
           sx={{
             borderRadius: 2,
             zIndex: 20,
-            margin: "auto",
-            position: "fixed",
-            height: "fit-content",
-            width: "360px",
-            maxWidth: "80%",
+            margin: 'auto',
+            position: 'fixed',
+            height: 'fit-content',
+            width: '360px',
+            maxWidth: '80%',
             top: 0,
             bottom: 0,
             right: 0,
@@ -307,41 +307,41 @@ export default function DataTable({ data }) {
           </Typography>
           <Stack
             sx={{
-              backgroundColor: "base.base20",
+              backgroundColor: 'base.base20',
               p: 1,
               borderRadius: 2,
-              flexDirection: "row",
-              alignItems: "center",
+              flexDirection: 'row',
+              alignItems: 'center',
               mt: 1,
               mb: 2,
             }}
           >
             <Avatar
               sx={{
-                width: "40px",
-                height: "40px",
-                position: "relative",
+                width: '40px',
+                height: '40px',
+                position: 'relative',
                 mr: 1,
               }}
             >
               <Image
-                alt="Web Image"
+                alt='Web Image'
                 fill
-                sizes="100%"
-                style={{ objectFit: "cover" }}
+                sizes='100%'
+                style={{ objectFit: 'cover' }}
                 src={activeRow.profile_image_uri}
               />
             </Avatar>
-            <Stack justifyContent={"center"}>
+            <Stack justifyContent={'center'}>
               <Typography
                 sx={{
-                  color: "black",
+                  color: 'black',
                   fontWeight: 600,
                 }}
               >
                 {activeRow.name}
               </Typography>
-              <Typography sx={{ fontSize: 14, lineHeight: "16px" }}>
+              <Typography sx={{ fontSize: 14, lineHeight: '16px' }}>
                 {activeRow.username}
               </Typography>
             </Stack>
@@ -349,11 +349,11 @@ export default function DataTable({ data }) {
 
           <Stack
             sx={{
-              flexDirection: "row",
+              flexDirection: 'row',
             }}
           >
             <Button
-              variant="outlined"
+              variant='outlined'
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenDeleteModal(false);
@@ -362,12 +362,12 @@ export default function DataTable({ data }) {
               Batal
             </Button>
             <Button
-              variant="contained"
+              variant='contained'
               sx={{
                 flex: 1,
-                backgroundColor: "warning.main",
-                "&:hover": {
-                  backgroundColor: "warning.dark",
+                backgroundColor: 'warning.main',
+                '&:hover': {
+                  backgroundColor: 'warning.dark',
                 },
               }}
               onClick={() => {
@@ -429,7 +429,7 @@ export default function DataTable({ data }) {
       )}
       <DataGrid
         rows={rows}
-        getRowHeight={() => "auto"}
+        getRowHeight={() => 'auto'}
         columns={columns}
         initialState={{
           pagination: {
@@ -438,7 +438,7 @@ export default function DataTable({ data }) {
         }}
         pageSizeOptions={[10, 20, 50]}
         getRowClassName={(params) =>
-          params.indexRelativeToCurrentPage % 2 === 0 ? "Mui-even" : "Mui-odd"
+          params.indexRelativeToCurrentPage % 2 === 0 ? 'Mui-even' : 'Mui-odd'
         }
         disableRowSelectionOnClick
         disableColumnMenu

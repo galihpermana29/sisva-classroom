@@ -14,10 +14,12 @@ import checklist from '@/assets/Checklist.png';
 
 import Image from 'next/image';
 
-export const FormSchoolIdentity = ({ formik, editing }) => {
+export const FormSchoolIdentity = ({
+  formik,
+  editing,
+  handleImageChange = () => {},
+}) => {
   const [openModal, setOpenModal] = useState(false);
-
-  console.log(formik.values['theme_json_text']);
 
   function ModalTema() {
     let [activeColor, setActiveColor] = useState(
@@ -249,7 +251,7 @@ export const FormSchoolIdentity = ({ formik, editing }) => {
                     opacity: '0',
                     border: '1px solid red',
                   }}
-                  // onChange={handleImageChange}
+                  onChange={handleImageChange}
                 />
               </Button>
             </label>

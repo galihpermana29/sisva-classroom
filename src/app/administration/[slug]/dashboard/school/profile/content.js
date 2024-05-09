@@ -27,33 +27,112 @@ import { FormSchoolType } from './components/FormSchoolType';
 import { FormSchoolIdentity } from './components/FormSchoolIdentity';
 import { schoolProfileFormValidation } from './components/FormValidation';
 import CmsAPI from '@/api/cms';
+import FilesAPI from '@/api/files';
 
 export default function SchoolProfileContent() {
   const containerRef = useRef(null);
 
-  const [initialData, setinitialData] = useState({
-    name: 'Sekolah Sisva',
-    abbreviation: '-',
-    identifier_value: '3276081105',
-    code: 'SEKOLAHSISVA',
-    email: 'sekolahsisva@sch.id',
-    phone: '0811265665',
-    address: 'Perumahan Nuansa Telaga Kalibaru Blok E28, Depok, Jawa Barat',
-    logo_uri: SchoolLogo,
-    education_type: 'public',
-    education_level: 'highschool',
-    ownership_type: 'private',
-    landing_image_uri: LandingImage,
-    theme_color: '#008CD5',
+  const [initialData, setinitialData] = useState({});
+  const { name = '', abbreviation = '' } = initialData ?? {};
+
+  const [editing, setEditing] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState({
+    visible: false,
+    message: '',
+    severity: '',
   });
-  const { name = '', abbreviation = '', logo_uri = '' } = initialData ?? {};
 
   const formik = useFormik({
     initialValues: { ...initialData },
     validationSchema: schoolProfileFormValidation,
+
+    onSubmit: async (values) => {
+      console.log('test');
+      const { email, nomorTelepon, alamat, kepemilikanSekolah } = values;
+      const payload = {
+        ...values,
+        additional_json_text: JSON.stringify({
+          email,
+          nomorTelepon,
+          alamat,
+          kepemilikanSekolah,
+        }),
+      };
+
+      delete payload.email;
+      delete payload.nomorTelepon;
+      delete payload.kepemilikanSekolah;
+      delete payload.alamat;
+      delete payload.id;
+
+      try {
+        await CmsAPI.editSchoolById(values.id, payload);
+
+        setSnackbarOpen({
+          visible: true,
+          message: 'Data is updated successfully',
+          severity: 'success',
+        });
+
+        window.location.reload();
+      } catch (error) {
+        console.log('Submitted', error);
+
+        if (error.code === 'ERR_BAD_REQUEST') {
+          setSnackbarOpen({
+            visible: true,
+            message: 'Unauthorized',
+            severity: 'error',
+          });
+        } else {
+          setSnackbarOpen({
+            visible: true,
+            message: 'Network Error',
+            severity: 'error',
+          });
+        }
+      }
+    },
   });
 
-  let [editing, setEditing] = useState(false);
+  const handleImageChange = async (e) => {
+    e.preventDefault();
+
+    const { name } = e.target;
+    const file = e.target.files[0];
+    const formData = new FormData();
+
+    formData.append('file', file);
+
+    try {
+      const {
+        data: { data },
+      } = await FilesAPI.uploadimage(formData);
+
+      formik.setFieldValue(name, 'file://' + data);
+
+      setSnackbarOpen({
+        visible: true,
+        message: 'Image uploaded successfully',
+        severity: 'success',
+      });
+    } catch (error) {
+      console.error('File upload failed:', error);
+      if (error.code === 'ERR_BAD_REQUEST') {
+        setSnackbarOpen({
+          visible: true,
+          message: 'Unauthorized',
+          severity: 'error',
+        });
+      } else {
+        setSnackbarOpen({
+          visible: true,
+          message: 'Error file is too large',
+          severity: 'error',
+        });
+      }
+    }
+  };
 
   useEffect(() => {
     const getProfileData = async () => {
@@ -66,12 +145,8 @@ export default function SchoolProfileContent() {
 
         const addtionalJson = JSON.parse(data.additional_json_text);
 
-        console.log(addtionalJson);
-
         formik.setValues({ ...data, ...addtionalJson });
         setinitialData({ ...data, ...addtionalJson });
-
-        console.log(initialData);
       } catch (error) {
         console.log(error, 'error fetch school profile');
       }
@@ -79,6 +154,7 @@ export default function SchoolProfileContent() {
 
     getProfileData();
   }, []);
+
   return (
     <Stack sx={{ height: '100%', width: '100%', p: { xs: 2, lg: 4 } }}>
       <Stack
@@ -189,6 +265,7 @@ export default function SchoolProfileContent() {
                           <FormSchoolDetails
                             formik={formik}
                             editing={editing}
+                            handleImageChange={handleImageChange}
                           />
                         </Grid>
                       </Grid>
@@ -305,6 +382,7 @@ export default function SchoolProfileContent() {
               setEditing(false);
               containerRef.current.scrollTo({ top: 0 });
             }}
+            type='submit'
           >
             Simpan
           </Button>
