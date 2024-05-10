@@ -40,13 +40,56 @@ export default function StaffProfileListContent() {
     password: '',
     password_confirm: '',
   });
+
   const formik = useFormik({
     initialValues: { ...initialData },
+
+    onSubmit: async (values) => {
+      const { name, password, type, username, password_confirm } = values;
+
+      if (password !== password_confirm) {
+        // setSnackbarOpen({
+        //   visible: true,
+        //   message: 'Password is not matched!',
+        //   severity: 'error',
+        // });
+        return;
+      }
+
+      let payload = {
+        user: {
+          nik: '122990874651927312', // need to be added into the form
+          name,
+          type,
+          detail: {
+            json_text: JSON.stringify({
+              username,
+            }),
+          },
+          profile_image_uri: '',
+          roles: [type],
+          permissions: ['update_user'],
+        },
+        password,
+      };
+
+      try {
+        const res = await UsersAPI.createUser(payload);
+
+        // setSnackbarOpen({
+        //   visible: true,
+        //   message: 'Data is updated successfully',
+        //   severity: 'success',
+        // });
+
+        window.location.reload();
+
+        formik.setValues(initialData);
+      } catch (error) {
+        console.log(error, 'error adding staff');
+      }
+    },
   });
-
-  const [staffData, setStaffData] = useState([]);
-
-  let data = [];
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -56,6 +99,8 @@ export default function StaffProfileListContent() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const [staffData, setStaffData] = useState([]);
 
   let [filteredData, setFilteredData] = useState([]);
   const [search, setSearch] = useState('');
@@ -68,7 +113,7 @@ export default function StaffProfileListContent() {
 
   const [openCreateModal, setOpenCreateModal] = useState(false);
 
-  const getAllUsers = async (params = 'staff,teacher') => {
+  const getAllUsers = async (params = 'staff') => {
     try {
       const {
         data: { data },
@@ -249,7 +294,7 @@ export default function StaffProfileListContent() {
           </Box>
           <Divider />
           <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
-            <FormAddStaff formik={formik} />
+            <FormAddStaff handleSubmit={formik.handleSubmit} formik={formik} />
           </Box>
           <Divider />
           <Stack
@@ -269,11 +314,12 @@ export default function StaffProfileListContent() {
               Batal
             </Button>
             <Button
+              type='submit'
               variant='contained'
               sx={{ flex: 1 }}
               onClick={() => {
+                formik.handleSubmit();
                 setOpenCreateModal(false);
-                formik.setValues(initialData);
               }}
             >
               Simpan

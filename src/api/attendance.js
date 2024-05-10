@@ -21,14 +21,14 @@ const AttendanceApi = {
     return api.get(`/staff?date_id=${date_id}`, { headers });
   },
 
-  getStudentAttendanceByDateId(date_id) {
+  getStudentClassAttendanceByDateId(date_id) {
     const headers = {
       'X-Sisva-Source': 'attendance.students.test',
       'X-Sisva-UserID': USER_ID,
       'X-Sisva-SchoolID': SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
-    return api.get(`/students?date_id=${date_id}`, { headers });
+    return api.get(`/classes/students?date_id=${date_id}`, { headers });
   },
 };
 

@@ -20,6 +20,7 @@ const UsersAPI = {
     };
     return api.post(`/users`, payload, { headers });
   },
+
   getAllUsers(params = 'staff,teacher,student') {
     const headers = {
       'X-Sisva-Source': 'test',
@@ -29,6 +30,7 @@ const UsersAPI = {
     };
     return api.get(`/users?types=${params}`, { headers });
   },
+
   getUserById(id, userId, schoolId, bearer) {
     const headers = {
       'X-Sisva-Source': 'test',
@@ -38,6 +40,7 @@ const UsersAPI = {
     };
     return api.get(`/users/${id}`, { headers });
   },
+
   updateUserById(payload, id) {
     const headers = {
       'X-Sisva-Source': 'tenant.user.test',

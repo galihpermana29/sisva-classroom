@@ -20,6 +20,7 @@ import { usePathname } from 'next/navigation';
 import SchoolLogoBlue from '@/assets/School-Logo-Blue.png';
 import {
   ArrowBackIosNewRounded,
+  Cookie,
   LogoutRounded,
   SettingsOutlined,
 } from '@mui/icons-material';

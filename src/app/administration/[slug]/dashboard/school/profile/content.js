@@ -33,7 +33,7 @@ export default function SchoolProfileContent() {
   const containerRef = useRef(null);
 
   const [initialData, setinitialData] = useState({});
-  const { name = '', abbreviation = '' } = initialData ?? {};
+  const { name = '', abbreviation = '', logo_uri = '' } = initialData ?? {};
 
   const [editing, setEditing] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState({
@@ -47,7 +47,6 @@ export default function SchoolProfileContent() {
     validationSchema: schoolProfileFormValidation,
 
     onSubmit: async (values) => {
-      console.log('test');
       const { email, nomorTelepon, alamat, kepemilikanSekolah } = values;
       const payload = {
         ...values,
@@ -111,26 +110,26 @@ export default function SchoolProfileContent() {
 
       formik.setFieldValue(name, 'file://' + data);
 
-      setSnackbarOpen({
-        visible: true,
-        message: 'Image uploaded successfully',
-        severity: 'success',
-      });
+      // setSnackbarOpen({
+      //   visible: true,
+      //   message: 'Image uploaded successfully',
+      //   severity: 'success',
+      // });
     } catch (error) {
       console.error('File upload failed:', error);
-      if (error.code === 'ERR_BAD_REQUEST') {
-        setSnackbarOpen({
-          visible: true,
-          message: 'Unauthorized',
-          severity: 'error',
-        });
-      } else {
-        setSnackbarOpen({
-          visible: true,
-          message: 'Error file is too large',
-          severity: 'error',
-        });
-      }
+      // if (error.code === 'ERR_BAD_REQUEST') {
+      //   setSnackbarOpen({
+      //     visible: true,
+      //     message: 'Unauthorized',
+      //     severity: 'error',
+      //   });
+      // } else {
+      //   setSnackbarOpen({
+      //     visible: true,
+      //     message: 'Error file is too large',
+      //     severity: 'error',
+      //   });
+      // }
     }
   };
 
@@ -183,7 +182,7 @@ export default function SchoolProfileContent() {
         <Box sx={{ height: 70, width: 70, position: 'relative', mr: 2 }}>
           <Image
             alt='Image'
-            src={SchoolLogo}
+            src={logo_uri}
             layout={'fill'}
             objectFit={'contain'}
           />
@@ -231,7 +230,13 @@ export default function SchoolProfileContent() {
         >
           <Box component={'span'}>Edit</Box>
         </Button>
-        <Stack direction={'row'} width='100%'>
+        <Stack
+          component='form'
+          onSubmit={formik.handleSubmit}
+          id='school_form'
+          direction={'row'}
+          width='100%'
+        >
           <Stack width='100%'>
             <Grid container>
               <Grid item xs={12}>
@@ -383,6 +388,7 @@ export default function SchoolProfileContent() {
               containerRef.current.scrollTo({ top: 0 });
             }}
             type='submit'
+            form='school_form'
           >
             Simpan
           </Button>

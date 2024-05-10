@@ -219,9 +219,7 @@ export default function StaffProfileListContent() {
       ).data.data;
 
       const newMappedData = data.map((user) => {
-        const userId = userDetailData.id;
-
-        if (userDetailData.find((detail) => detail.id === userId)) {
+        if (userDetailData.find((detail) => detail.id === user.staff_id)) {
           return { ...user, username: detail.username };
         }
       });
