@@ -68,7 +68,7 @@ export default function StaffProfileListContent() {
 
   const [openCreateModal, setOpenCreateModal] = useState(false);
 
-  const getAllUsers = async (params = 'staff,teacher,student') => {
+  const getAllUsers = async (params = 'staff,teacher') => {
     try {
       const {
         data: { data },

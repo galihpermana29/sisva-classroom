@@ -20,6 +20,7 @@ const AcademicAPI = {
     };
     return api.post(`/study-programs`, payload, { headers });
   },
+
   getDetailProdi(id) {
     const headers = {
       'X-Sisva-Source': 'academic.test',
@@ -29,6 +30,7 @@ const AcademicAPI = {
     };
     return api.get(`/study-programs/${id}`, { headers });
   },
+
   getAllProdi() {
     const headers = {
       'X-Sisva-Source': 'academic.test',
@@ -38,6 +40,7 @@ const AcademicAPI = {
     };
     return api.get(`/study-programs`, { headers });
   },
+
   editProdi(payload, id) {
     const headers = {
       'X-Sisva-Source': 'academic.test',
@@ -47,6 +50,7 @@ const AcademicAPI = {
     };
     return api.patch(`/study-programs/${id}`, payload, { headers });
   },
+
   getAllCurriculum() {
     const headers = {
       'X-Sisva-Source': 'academic.curriculum.test',
@@ -56,6 +60,7 @@ const AcademicAPI = {
     };
     return api.get(`/curriculums`, { headers });
   },
+
   createCurriculum(payload) {
     const headers = {
       'X-Sisva-Source': 'academic.curriculum.test',
@@ -65,6 +70,7 @@ const AcademicAPI = {
     };
     return api.post(`/curriculums`, payload, { headers });
   },
+
   getDetailCurriculum(id) {
     const headers = {
       'X-Sisva-Source': 'academic.curriculum.test',
@@ -74,6 +80,7 @@ const AcademicAPI = {
     };
     return api.get(`/curriculums/${id}`, { headers });
   },
+
   updateCurriculum(payload, id) {
     const headers = {
       'X-Sisva-Source': 'academic.curriculum.test',
@@ -83,6 +90,7 @@ const AcademicAPI = {
     };
     return api.patch(`/curriculums/${id}`, payload, { headers });
   },
+
   getAllSubject() {
     const headers = {
       'X-Sisva-Source': 'academic.curriculum.test',
@@ -92,6 +100,7 @@ const AcademicAPI = {
     };
     return api.get(`/subjects`, { headers });
   },
+
   createSubject(payload) {
     const headers = {
       'X-Sisva-Source': 'academic.curriculum.test',
@@ -101,6 +110,7 @@ const AcademicAPI = {
     };
     return api.post(`/subjects`, payload, { headers });
   },
+
   getDetailSubject(id) {
     const headers = {
       'X-Sisva-Source': 'academic.curriculum.test',
@@ -110,6 +120,7 @@ const AcademicAPI = {
     };
     return api.get(`/subjects/${id}`, { headers });
   },
+
   updateSubject(payload, id) {
     const headers = {
       'X-Sisva-Source': 'academic.curriculum.test',
@@ -119,6 +130,7 @@ const AcademicAPI = {
     };
     return api.patch(`/subjects/${id}`, payload, { headers });
   },
+
   getAllSilabus() {
     const headers = {
       'X-Sisva-Source': 'academic.curriculum.test',
@@ -128,6 +140,7 @@ const AcademicAPI = {
     };
     return api.get(`/syllabuses`, { headers });
   },
+
   createSilabus(payload) {
     const headers = {
       'X-Sisva-Source': 'academic.curriculum.test',
@@ -137,6 +150,7 @@ const AcademicAPI = {
     };
     return api.post(`/syllabuses`, payload, { headers });
   },
+
   getDetailSilabus(id) {
     const headers = {
       'X-Sisva-Source': 'academic.curriculum.test',
@@ -146,6 +160,7 @@ const AcademicAPI = {
     };
     return api.get(`/syllabuses/${id}`, { headers });
   },
+
   updateSilabus(payload, id) {
     const headers = {
       'X-Sisva-Source': 'academic.curriculum.test',

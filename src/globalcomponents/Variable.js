@@ -69,7 +69,7 @@ export const permissions = [
   },
   {
     title: 'Karyawan',
-    slug: 'staff',
+    slug: 'update_user',
   },
   {
     title: 'Akademik',

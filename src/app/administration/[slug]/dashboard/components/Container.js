@@ -188,9 +188,7 @@ export default function Container(props) {
       };
 
       useEffect(() => {
-        setTimeout(() => {
-          getCurrentUser();
-        }, 2000);
+        getCurrentUser();
       }, []);
 
       return (
@@ -295,7 +293,7 @@ export default function Container(props) {
             <Divider />
             <MenuItem
               component={Link}
-              href='/administration/SEKOLAHSISVA/dashboard/staff/profile/agung.prabowo'
+              href={`/administration/SEKOLAHSISVA/dashboard/staff/profile/${currentUser?.id}`}
               sx={{ maxWidth: 280 }}
             >
               <Stack flexDirection={'row'}>
