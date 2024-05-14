@@ -1,28 +1,28 @@
 export const types = [
   { slug: 'staff', title: 'Staf' },
-  { slug: 'student', title: 'Murid' },
   { slug: 'teacher', title: 'Guru' },
+  { slug: 'management', title: 'Manajemen' },
 ];
 export const subject_types = [
   { slug: 'mandatory', title: 'Wajib' },
   { slug: 'elective', title: 'Pilihan' },
 ];
 export const nationalities = [
-  { slug: 'warga negara indonesia', title: 'Warga Negara Indonesia' },
-  { slug: 'warga negara asing', title: 'Warga Negara Asing' },
+  { slug: 'wni', title: 'Warga Negara Indonesia' },
+  { slug: 'wna', title: 'Warga Negara Asing' },
 ];
 export const genders = [
-  { slug: 'laki-laki', title: 'Laki-laki' },
-  { slug: 'perempuan', title: 'Perempuan' },
+  { slug: 'male', title: 'Laki-laki' },
+  { slug: 'female', title: 'Perempuan' },
   { slug: 'others', title: 'Lainnya' },
 ];
 export const lifeStatus = [
-  { slug: 'masih hidup', title: 'Masih Hidup' },
-  { slug: 'meninggal', title: 'Meninggal Dunia' },
+  { slug: 'alive', title: 'Masih Hidup' },
+  { slug: 'dead', title: 'Meninggal Dunia' },
 ];
 
 export const religions = [
-  { slug: 'Islam', title: 'Islam' },
+  { slug: 'islam', title: 'Islam' },
   { slug: 'christian_protestant', title: 'Kristen Protestan' },
   { slug: 'christian_catholic', title: 'Kristen Katolik' },
   { slug: 'hindu', title: 'Hindu' },
@@ -69,7 +69,7 @@ export const permissions = [
   },
   {
     title: 'Karyawan',
-    slug: 'update_user',
+    slug: 'staff',
   },
   {
     title: 'Akademik',

@@ -45,7 +45,8 @@ export default function StaffProfileListContent() {
     initialValues: { ...initialData },
 
     onSubmit: async (values) => {
-      const { name, password, type, username, password_confirm } = values;
+      const { name, password, type, username, permissions, password_confirm } =
+        values;
 
       if (password !== password_confirm) {
         // setSnackbarOpen({
@@ -58,7 +59,7 @@ export default function StaffProfileListContent() {
 
       let payload = {
         user: {
-          nik: '122990874651927312', // need to be added into the form
+          nik: '1229908741927312', // need to be added into the form
           name,
           type,
           detail: {
@@ -68,10 +69,12 @@ export default function StaffProfileListContent() {
           },
           profile_image_uri: '',
           roles: [type],
-          permissions: ['update_user'],
+          permissions,
         },
         password,
       };
+
+      console.log(payload);
 
       try {
         const res = await UsersAPI.createUser(payload);
@@ -113,7 +116,7 @@ export default function StaffProfileListContent() {
 
   const [openCreateModal, setOpenCreateModal] = useState(false);
 
-  const getAllUsers = async (params = 'staff') => {
+  const getAllUsers = async (params = 'staff,teacher') => {
     try {
       const {
         data: { data },

@@ -44,10 +44,13 @@ export default function SchoolProfileContent() {
 
   const formik = useFormik({
     initialValues: { ...initialData },
-    validationSchema: schoolProfileFormValidation,
+    // validationSchema: schoolProfileFormValidation,
 
     onSubmit: async (values) => {
       const { email, nomorTelepon, alamat, kepemilikanSekolah } = values;
+
+      console.log(values);
+
       const payload = {
         ...values,
         additional_json_text: JSON.stringify({
@@ -67,29 +70,29 @@ export default function SchoolProfileContent() {
       try {
         await CmsAPI.editSchoolById(values.id, payload);
 
-        setSnackbarOpen({
-          visible: true,
-          message: 'Data is updated successfully',
-          severity: 'success',
-        });
+        // setSnackbarOpen({
+        //   visible: true,
+        //   message: 'Data is updated successfully',
+        //   severity: 'success',
+        // });
 
         window.location.reload();
       } catch (error) {
         console.log('Submitted', error);
 
-        if (error.code === 'ERR_BAD_REQUEST') {
-          setSnackbarOpen({
-            visible: true,
-            message: 'Unauthorized',
-            severity: 'error',
-          });
-        } else {
-          setSnackbarOpen({
-            visible: true,
-            message: 'Network Error',
-            severity: 'error',
-          });
-        }
+        // if (error.code === 'ERR_BAD_REQUEST') {
+        //   setSnackbarOpen({
+        //     visible: true,
+        //     message: 'Unauthorized',
+        //     severity: 'error',
+        //   });
+        // } else {
+        //   setSnackbarOpen({
+        //     visible: true,
+        //     message: 'Network Error',
+        //     severity: 'error',
+        //   });
+        // }
       }
     },
   });
@@ -230,13 +233,7 @@ export default function SchoolProfileContent() {
         >
           <Box component={'span'}>Edit</Box>
         </Button>
-        <Stack
-          component='form'
-          onSubmit={formik.handleSubmit}
-          id='school_form'
-          direction={'row'}
-          width='100%'
-        >
+        <Stack id='school_form' direction={'row'} width='100%'>
           <Stack width='100%'>
             <Grid container>
               <Grid item xs={12}>
@@ -385,10 +382,10 @@ export default function SchoolProfileContent() {
             sx={{ width: 120 }}
             onClick={() => {
               setEditing(false);
+              formik.handleSubmit();
               containerRef.current.scrollTo({ top: 0 });
             }}
             type='submit'
-            form='school_form'
           >
             Simpan
           </Button>

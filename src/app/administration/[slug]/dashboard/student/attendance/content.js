@@ -218,11 +218,15 @@ export default function StaffProfileListContent() {
 
   const getAllStudentAttendance = async () => {
     try {
-      const unixDate = dayjs(new Date(pickedDate)).unix();
+      const dateCode = dayjs(new Date(pickedDate))
+        .toISOString()
+        .split('T')[0]
+        .split('-')
+        .join('');
 
       const {
         data: { data },
-      } = await AttendanceApi.getStudentClassAttendanceByDateId(unixDate);
+      } = await AttendanceApi.getStudentClassAttendanceByDateId(dateCode);
 
       const newMappedData = data
         .map((user) => {
@@ -230,8 +234,6 @@ export default function StaffProfileListContent() {
           return { ...user, ...additionalJson };
         })
         .filter((user) => user.status === 'active');
-
-      console.log(data);
 
       setStudentAttendanceData(newMappedData);
     } catch (error) {

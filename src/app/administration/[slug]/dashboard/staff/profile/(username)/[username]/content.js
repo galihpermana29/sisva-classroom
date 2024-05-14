@@ -55,6 +55,16 @@ export default function StaffProfileContent({ user_id }) {
   });
   const formik = useFormik({
     initialValues: { ...initialData },
+
+    onSubmit: async (values) => {
+      console.log(values);
+
+      try {
+        await UsersAPI.updateUserById();
+      } catch (error) {
+        console.log(error, 'update user');
+      }
+    },
   });
 
   let [editing, setEditing] = useState(false);
@@ -282,6 +292,7 @@ export default function StaffProfileContent({ user_id }) {
                 sx={{ width: 120 }}
                 onClick={() => {
                   setEditing(false);
+                  formik.handleSubmit();
                   containerRef.current.scrollTo({ top: 0 });
                 }}
               >

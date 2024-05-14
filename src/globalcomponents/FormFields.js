@@ -349,14 +349,14 @@ export const formStudentBiodataFields = [
     type: 'text',
   },
   {
-    name: 'telepon',
+    name: 'phone',
     label: 'Nomor Telepon',
     placeholder: 'Nomor Telepon',
     md: 6,
     type: 'text',
   },
   {
-    name: 'jenisKelamin',
+    name: 'gender',
     label: 'Jenis Kelamin',
     placeholder: 'Jenis Kelamin',
     md: 6,
@@ -364,7 +364,7 @@ export const formStudentBiodataFields = [
     data: genders,
   },
   {
-    name: 'kebangsaan',
+    name: 'nationality',
     label: 'Kewarganegaraan',
     placeholder: 'Kewarganegaraan',
     md: 6,
@@ -379,14 +379,14 @@ export const formStudentBiodataFields = [
     type: 'text',
   },
   {
-    name: 'nisn',
+    name: 'education_id',
     label: 'NISN',
     placeholder: 'NISN',
     md: 6,
     type: 'text',
   },
   {
-    name: 'agama',
+    name: 'religion',
     label: 'Agama',
     placeholder: 'Agama',
     md: 12,
@@ -394,7 +394,7 @@ export const formStudentBiodataFields = [
     data: religions,
   },
   {
-    name: 'alamat',
+    name: 'address',
     label: 'Alamat',
     placeholder: 'Alamat',
     md: 12,
@@ -422,21 +422,21 @@ export const formStudentParentsFields = [
   { type: 'divider' },
   { type: 'title', label: 'Informasi Ayah' },
   {
-    name: 'namaLengkapAyah',
+    name: 'father_name',
     label: 'Nama',
     placeholder: 'Nama',
     md: 12,
     type: 'text',
   },
   {
-    name: 'emailAyah',
+    name: 'father_email',
     label: 'Email',
     placeholder: 'Email',
     md: 6,
     type: 'text',
   },
   {
-    name: 'teleponAyah',
+    name: 'father_phone',
     label: 'Nomor Telepon',
     placeholder: 'Nomor Telepon',
     md: 6,
@@ -466,14 +466,14 @@ export const formStudentParentsFields = [
     data: incomeLevels,
   },
   {
-    name: 'tahunLahirAyah',
+    name: 'father_birth_year',
     label: 'Tahun Lahir',
     placeholder: 'Tahun Lahir',
     md: 6,
     type: 'text',
   },
   {
-    name: 'keadaanAyah',
+    name: 'father_life_status',
     label: 'Status',
     placeholder: 'Status',
     md: 6,
@@ -481,7 +481,7 @@ export const formStudentParentsFields = [
     data: lifeStatus,
   },
   {
-    name: 'agamaAyah',
+    name: 'father_religion',
     label: 'Agama',
     placeholder: 'Agama',
     md: 12,
@@ -489,7 +489,7 @@ export const formStudentParentsFields = [
     data: religions,
   },
   {
-    name: 'alamatAyah',
+    name: 'father_address',
     label: 'Alamat',
     placeholder: 'Alamat',
     md: 12,
@@ -498,7 +498,7 @@ export const formStudentParentsFields = [
   { type: 'divider' },
   { type: 'title', label: 'Informasi Ibu' },
   {
-    name: 'namaLengkapIbu',
+    name: 'mother_name',
     label: 'Nama',
     placeholder: 'Nama',
     md: 12,
@@ -528,28 +528,28 @@ export const formStudentParentsFields = [
     data: incomeLevels,
   },
   {
-    name: 'emailIbu',
+    name: 'mother_email',
     label: 'Email',
     placeholder: 'Email',
     md: 6,
     type: 'text',
   },
   {
-    name: 'teleponIbu',
+    name: 'mother_phone',
     label: 'Nomor Telepon',
     placeholder: 'Nomor Telepon',
     md: 6,
     type: 'text',
   },
   {
-    name: 'tahunLahirIbu',
+    name: 'mother_birth_year',
     label: 'Tahun Lahir',
     placeholder: 'Tahun Lahir',
     md: 6,
     type: 'text',
   },
   {
-    name: 'keadaanIbu',
+    name: 'mother_life_status',
     label: 'Status',
     placeholder: 'Status',
     md: 6,
@@ -557,7 +557,7 @@ export const formStudentParentsFields = [
     data: lifeStatus,
   },
   {
-    name: 'agamaIbu',
+    name: 'mother_religion',
     label: 'Agama',
     placeholder: 'Agama',
     md: 12,
@@ -565,7 +565,7 @@ export const formStudentParentsFields = [
     data: religions,
   },
   {
-    name: 'alamatIbu',
+    name: 'mother_address',
     label: 'Alamat',
     placeholder: 'Alamat',
     md: 12,
@@ -708,14 +708,14 @@ export const formStaffBiodataFields = [
     type: 'text',
   },
   {
-    name: 'telepon',
+    name: 'phone',
     label: 'Nomor Telepon',
     placeholder: 'Nomor Telepon',
     md: 6,
     type: 'text',
   },
   {
-    name: 'jenisKelamin',
+    name: 'gender',
     label: 'Jenis Kelamin',
     placeholder: 'Jenis Kelamin',
     md: 6,
@@ -723,7 +723,7 @@ export const formStaffBiodataFields = [
     data: genders,
   },
   {
-    name: 'kebangsaan',
+    name: 'nationality',
     label: 'Kewarganegaraan',
     placeholder: 'Kewarganegaraan',
     md: 6,
@@ -753,7 +753,7 @@ export const formStaffBiodataFields = [
     data: religions,
   },
   {
-    name: 'alamat',
+    name: 'address',
     label: 'Alamat',
     placeholder: 'Alamat',
     md: 12,
@@ -845,14 +845,14 @@ export const formSchoolDetailsFields = [
     image: false,
   },
   {
-    name: 'nomorTelepon',
+    name: 'phone',
     label: 'Nomor Telepon',
     placeholder: 'Nomor Telepon',
     md: 6,
     image: false,
   },
   {
-    name: 'alamat',
+    name: 'address',
     label: 'Alamat',
     placeholder: 'Alamat Sekolah',
     md: 12,
@@ -897,19 +897,19 @@ export const formSchoolTypeFields = [
     image: false,
     data: [
       {
-        value: 'tk',
+        value: 'kindergarten',
         label: 'TK/RA',
       },
       {
-        value: 'sd',
+        value: 'elementary_school',
         label: 'SD/MI',
       },
       {
-        value: 'smp',
+        value: 'middle_school',
         label: 'SMP/MTS',
       },
       {
-        value: 'sma',
+        value: 'highschool',
         label: 'SMA/SMK/MA',
       },
       {
@@ -919,18 +919,18 @@ export const formSchoolTypeFields = [
     ],
   },
   {
-    name: 'kepemilikanSekolah',
+    name: 'ownership_type',
     label: 'Kepemilikan Sekolah',
     placeholder: 'Kepemilikan Sekolah',
     md: 6,
     image: false,
     data: [
       {
-        value: 'negeri',
+        value: 'state',
         label: 'Negeri',
       },
       {
-        value: 'swasta',
+        value: 'private',
         label: 'Swasta',
       },
     ],

@@ -208,11 +208,15 @@ export default function StaffProfileListContent() {
 
   const fetchStaffAttendance = async (pickedDate) => {
     try {
-      const unixDate = dayjs(new Date(pickedDate)).unix();
+      const dateCode = dayjs(new Date(pickedDate))
+        .toISOString()
+        .split('T')[0]
+        .split('-')
+        .join('');
 
       const {
         data: { data },
-      } = await AttendanceApi.getStaffAttendanceByDateId(unixDate);
+      } = await AttendanceApi.getStaffAttendanceByDateId(dateCode);
 
       const userDetailData = await (
         await UsersAPI.getAllUsers('staff,teacher')

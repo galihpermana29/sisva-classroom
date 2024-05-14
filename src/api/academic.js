@@ -170,6 +170,26 @@ const AcademicAPI = {
     };
     return api.patch(`/syllabuses/${id}`, payload, { headers });
   },
+
+  getAllPeriod() {
+    const headers = {
+      'X-Sisva-Source': 'academic.subjects.teachers.test',
+      'X-Sisva-UserID': USER_ID,
+      'X-Sisva-SchoolID': SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.get(`/periods`, { headers });
+  },
+
+  getAllSubjectTeacher() {
+    const headers = {
+      'X-Sisva-Source': 'academic.subjects.teachers.test',
+      'X-Sisva-UserID': USER_ID,
+      'X-Sisva-SchoolID': SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.get(`/subjects/teachers`, { headers });
+  },
 };
 
 export default AcademicAPI;
