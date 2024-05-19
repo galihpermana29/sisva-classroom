@@ -242,7 +242,7 @@ export const FormSchoolIdentity = ({
               >
                 Ubah Foto
                 <input
-                  name={'logo_uri'}
+                  name={'landing_image_uri'}
                   accept='image/*'
                   id='image-input'
                   type='file'

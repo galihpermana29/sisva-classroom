@@ -129,9 +129,9 @@ export const FormStudentParents = ({ formik, editing }) => {
               </Grid>
               <Grid item xs={12} md={11}>
                 <Typography variant='body2' fontWeight={400} fontSize={14}>
-                  {field.name === 'agamaAyah' ||
-                  field.name === 'agamaIbu' ||
-                  field.name === 'agamaGuardian' ? (
+                  {field.name === 'father_religion' ||
+                  field.name === 'mother_religion' ||
+                  field.name === 'guardian_religion' ? (
                     <RenderReligion value={formik.values[field.name]} />
                   ) : field.name === 'father_income' ||
                     field.name === 'mother_income' ||
@@ -141,8 +141,8 @@ export const FormStudentParents = ({ formik, editing }) => {
                     field.name === 'mother_education' ||
                     field.name === 'guardian_education' ? (
                     <RenderEducation value={formik.values[field.name]} />
-                  ) : field.name === 'keadaanAyah' ||
-                    field.name === 'keadaanIbu' ||
+                  ) : field.name === 'father_life_status' ||
+                    field.name === 'mother_life_status' ||
                     field.name === 'guardian_life_status' ? (
                     <RenderLifeStatus value={formik.values[field.name]} />
                   ) : field.name === 'guardian_type' ? (

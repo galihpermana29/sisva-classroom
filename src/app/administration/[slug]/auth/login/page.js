@@ -16,8 +16,8 @@ import {
 
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import Link from 'next/link';
-import Auth from '@/api/auth';
 import { useRouter } from 'next/navigation';
+import AuthAPI from '@/api/auth';
 
 export default function Home() {
   const router = useRouter();
@@ -44,7 +44,7 @@ export default function Home() {
     try {
       const {
         data: { data },
-      } = await Auth.login(payload);
+      } = await AuthAPI.login(payload);
 
       if (data) {
         localStorage.setItem('user', JSON.stringify(data));

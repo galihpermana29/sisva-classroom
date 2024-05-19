@@ -28,7 +28,11 @@ import {
   types,
 } from '@/globalcomponents/Variable';
 
-export const FormStudentBiodata = ({ formik, editing }) => {
+export const FormStudentBiodata = ({
+  formik,
+  editing,
+  handleImageChange = () => {},
+}) => {
   function RenderGender({ value }) {
     let tempType;
     genders.map((item) => {
@@ -94,11 +98,11 @@ export const FormStudentBiodata = ({ formik, editing }) => {
               </Grid>
               <Grid item xs={12} md={12}>
                 <Typography variant='body2' fontWeight={400} fontSize={14}>
-                  {field.name === 'jenisKelamin' ? (
+                  {field.name === 'gender' ? (
                     <RenderGender value={formik.values[field.name]} />
-                  ) : field.name === 'kebangsaan' ? (
+                  ) : field.name === 'nationality' ? (
                     <RenderNationality value={formik.values[field.name]} />
-                  ) : field.name === 'agama' ? (
+                  ) : field.name === 'religion' ? (
                     <RenderReligion value={formik.values[field.name]} />
                   ) : null}
                   {formik.values[field.name] ? '' : '-'}
@@ -227,7 +231,7 @@ export const FormStudentBiodata = ({ formik, editing }) => {
                   >
                     Ubah Foto
                     <input
-                      name={'logo_uri'}
+                      name={'profile_image_uri'}
                       accept='image/*'
                       id='image-input'
                       type='file'
@@ -236,6 +240,7 @@ export const FormStudentBiodata = ({ formik, editing }) => {
                         opacity: '0',
                         border: '1px solid red',
                       }}
+                      onChange={handleImageChange}
                     />
                   </Button>
                 </label>

@@ -1,6 +1,6 @@
-import * as React from "react";
-import { DataGrid } from "@mui/x-data-grid";
-import Image from "next/image";
+import * as React from 'react';
+import { DataGrid } from '@mui/x-data-grid';
+import Image from 'next/image';
 import {
   Avatar,
   Box,
@@ -14,16 +14,16 @@ import {
   TextField,
   Typography,
   useMediaQuery,
-} from "@mui/material";
-import { BorderColorRounded, DeleteForeverRounded } from "@mui/icons-material";
-import Link from "next/link";
-import { types, permissions } from "@/globalcomponents/Variable";
-import { useState } from "react";
+} from '@mui/material';
+import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
+import Link from 'next/link';
+import { types, permissions } from '@/globalcomponents/Variable';
+import { useState } from 'react';
 
 const columns = [
   {
-    field: "card",
-    headerName: "",
+    field: 'card',
+    headerName: '',
     flex: 1,
     sortable: false,
     renderCell: (params) => {
@@ -34,37 +34,37 @@ const columns = [
         }
       });
       return (
-        <Box sx={{ width: "100%", mx: 2, py: 0.5 }}>
+        <Box sx={{ width: '100%', mx: 2, py: 0.5 }}>
           <Stack
             component={Paper}
-            variant="outlined"
+            variant='outlined'
             sx={{
-              justifyContent: "flex-start",
+              justifyContent: 'flex-start',
               borderRadius: 2,
               p: 2,
             }}
           >
-            <Stack direction={"row"} justifyContent={"space-between"} flex={1}>
-              <Stack direction={"row"} alignItems={"center"}>
+            <Stack direction={'row'} justifyContent={'space-between'} flex={1}>
+              <Stack direction={'row'} alignItems={'center'}>
                 <Avatar
                   sx={{
-                    width: "40px",
-                    height: "40px",
-                    position: "relative",
+                    width: '40px',
+                    height: '40px',
+                    position: 'relative',
                     mr: 1,
                   }}
                 >
                   <Image
-                    alt="Web Image"
+                    alt='Web Image'
                     fill
-                    sizes="100%"
-                    style={{ objectFit: "cover" }}
+                    sizes='100%'
+                    style={{ objectFit: 'cover' }}
                     src={params.value.data.profile_image_uri}
                   />
                 </Avatar>
                 <Typography
                   sx={{
-                    color: "black",
+                    color: 'black',
                   }}
                 >
                   {params.value.data.name}
@@ -75,16 +75,16 @@ const columns = [
 
             <Stack
               sx={{
-                flexDirection: "row",
-                justifyContent: "space-between",
+                flexDirection: 'row',
+                justifyContent: 'space-between',
                 mt: 2,
               }}
             >
               <Stack sx={{ flex: 1 }}>
-                <Typography sx={{ color: "base.base50", fontSize: 12 }}>
+                <Typography sx={{ color: 'base.base50', fontSize: 12 }}>
                   Username
                 </Typography>
-                <Typography sx={{ fontSize: 14, lineHeight: "14px" }}>
+                <Typography sx={{ fontSize: 14, lineHeight: '14px' }}>
                   {params.value.data.username}
                 </Typography>
               </Stack>
@@ -92,39 +92,37 @@ const columns = [
               {/* <Typography sx={{ color: "base.base50", fontSize: 12 }}>
                   Status
                 </Typography> */}
-              {params.value.data.status === "sick" ? (
+              {params.value.data.status === 'sick' ? (
                 <Chip
                   sx={{
                     fontSize: 12,
                     width: 60,
-                    color: "white",
-                    backgroundColor: "orange",
+                    color: 'white',
+                    backgroundColor: 'orange',
                   }}
-                  label="Sakit"
+                  label='Sakit'
                 />
-              ) : params.value.data.status === "absent" ? (
+              ) : params.value.data.status === 'absent' ? (
                 <Chip
                   sx={{
                     fontSize: 12,
                     width: 60,
-                    color: "white",
-                    backgroundColor: "warning.main",
+                    color: 'white',
+                    backgroundColor: 'warning.main',
                   }}
-                  label="Alpa"
+                  label='Alpa'
                 />
-              ) : params.value.data.status === "sick" ? (
+              ) : params.value.data.status === 'sick' ? (
                 <Chip
                   sx={{
                     fontSize: 12,
                     width: 60,
-                    color: "white",
-                    backgroundColor: "orange",
+                    color: 'white',
+                    backgroundColor: 'orange',
                   }}
-                  label="Sakit"
+                  label='Sakit'
                 />
-              ) : (
-               null
-              )}
+              ) : null}
             </Stack>
             {/* </Stack> */}
           </Stack>
@@ -133,8 +131,8 @@ const columns = [
     },
   },
   {
-    field: "profile_image_uri",
-    headerName: "",
+    field: 'profile_image_uri',
+    headerName: '',
     width: 70,
     sortable: false,
     renderCell: (params) => (
@@ -144,72 +142,72 @@ const columns = [
           height: 40,
           my: 1.5,
           ml: 2,
-          position: "relative",
-          display: "flex",
-          justifyContent: "flex-end",
+          position: 'relative',
+          display: 'flex',
+          justifyContent: 'flex-end',
         }}
       >
         <Image
-          alt="Web Image"
+          alt='Web Image'
           fill
-          sizes="100%"
-          style={{ objectFit: "cover" }}
+          sizes='100%'
+          style={{ objectFit: 'cover' }}
           src={params.value}
         />
         {/* A */}
       </Avatar>
     ),
   },
-  { field: "name", headerName: "Nama", flex: 1 },
-  { field: "username", headerName: "Username", flex: 1 },
+  { field: 'name', headerName: 'Nama', flex: 1 },
+  { field: 'username', headerName: 'Username', flex: 1 },
   {
-    field: "status",
-    headerName: "Status",
+    field: 'status',
+    headerName: 'Status',
     width: 70,
     flex: 1,
     renderCell: (params) => {
-      if (params.value === "sick") {
+      if (params.value === 'sick') {
         return (
           <Chip
             sx={{
               fontSize: 12,
               width: 60,
-              color: "white",
-              backgroundColor: "orange",
+              color: 'white',
+              backgroundColor: 'orange',
             }}
-            label="Sakit"
+            label='Sakit'
           />
         );
-      } else if (params.value === "absent") {
+      } else if (params.value === 'absent') {
         return (
           <Chip
             sx={{
               fontSize: 12,
               width: 60,
-              color: "white",
-              backgroundColor: "warning.main",
+              color: 'white',
+              backgroundColor: 'warning.main',
             }}
-            label="Alpa"
+            label='Alpa'
           />
         );
-      } else if (params.value === "leave") {
+      } else if (params.value === 'leave') {
         return (
           <Chip
             sx={{
               fontSize: 12,
               width: 60,
-              color: "white",
-              backgroundColor: "orange",
+              color: 'white',
+              backgroundColor: 'orange',
             }}
-            label="Izin"
+            label='Izin'
           />
         );
       } else return null;
     },
   },
   {
-    field: "action",
-    headerName: "Aksi",
+    field: 'action',
+    headerName: 'Aksi',
     sortable: false,
     width: 120,
     renderCell: (params) => {
@@ -222,10 +220,10 @@ function ChipList({ params }) {
   return (
     <Stack
       sx={{
-        flexDirection: "row",
-        flexWrap: "wrap",
-        overflow: "hidden",
-        m: "8px 0",
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        overflow: 'hidden',
+        m: '8px 0',
       }}
     >
       {params.map((permission, index) => {
@@ -239,11 +237,11 @@ function ChipList({ params }) {
           <Chip
             key={index}
             sx={{
-              m: { xs: "2px 4px 2px 0", lg: "2px" },
+              m: { xs: '2px 4px 2px 0', lg: '2px' },
               fontSize: 12,
             }}
             label={tempPermission}
-            color="primary"
+            color='primary'
           />
         );
       })}
@@ -255,33 +253,33 @@ function ActionButton({ params }) {
   return (
     <Stack
       sx={{
-        flexDirection: "row",
-        alignItems: "center",
+        flexDirection: 'row',
+        alignItems: 'center',
       }}
     >
       <IconButton
         sx={{
           borderRadius: 2,
-          backgroundColor: "base.base30",
-          "&:hover": {
-            backgroundColor: "base.base40",
+          backgroundColor: 'base.base30',
+          '&:hover': {
+            backgroundColor: 'base.base40',
           },
-          height: "fit-content",
+          height: 'fit-content',
         }}
       >
         <BorderColorRounded
-          sx={{ fontSize: { xs: 15, lg: 18 }, color: "base.base50" }}
+          sx={{ fontSize: { xs: 15, lg: 18 }, color: 'base.base50' }}
         />
       </IconButton>
       <IconButton
         sx={{
           borderRadius: 2,
           ml: 1,
-          backgroundColor: "warning.main",
-          "&:hover": {
-            backgroundColor: "warning.dark",
+          backgroundColor: 'warning.main',
+          '&:hover': {
+            backgroundColor: 'warning.dark',
           },
-          display: "none",
+          display: 'none',
         }}
         onClick={() => {
           params.value.setOpenDeleteModal(true);
@@ -289,7 +287,7 @@ function ActionButton({ params }) {
         }}
       >
         <DeleteForeverRounded
-          sx={{ color: "white", fontSize: { xs: 16, lg: 18 } }}
+          sx={{ color: 'white', fontSize: { xs: 16, lg: 18 } }}
         />
       </IconButton>
     </Stack>
@@ -297,7 +295,7 @@ function ActionButton({ params }) {
 }
 
 export default function DataTable({ data }) {
-  const isMobile = useMediaQuery((theme) => theme.breakpoints.down("lg"));
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('lg'));
 
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [activeRow, setActiveRow] = useState({});
@@ -326,7 +324,7 @@ export default function DataTable({ data }) {
   });
 
   return (
-    <div style={{ height: "100%", width: "100%" }}>
+    <div style={{ height: '100%', width: '100%' }}>
       <Modal open={openDeleteModal} onClose={() => setOpenDeleteModal(false)}>
         <Stack
           component={Paper}
@@ -334,11 +332,11 @@ export default function DataTable({ data }) {
           sx={{
             borderRadius: 2,
             zIndex: 20,
-            margin: "auto",
-            position: "fixed",
-            height: "fit-content",
-            width: "360px",
-            maxWidth: "80%",
+            margin: 'auto',
+            position: 'fixed',
+            height: 'fit-content',
+            width: '360px',
+            maxWidth: '80%',
             top: 0,
             bottom: 0,
             right: 0,
@@ -357,41 +355,41 @@ export default function DataTable({ data }) {
           </Typography>
           <Stack
             sx={{
-              backgroundColor: "base.base20",
+              backgroundColor: 'base.base20',
               p: 1,
               borderRadius: 2,
-              flexDirection: "row",
-              alignItems: "center",
+              flexDirection: 'row',
+              alignItems: 'center',
               mt: 1,
               mb: 2,
             }}
           >
             <Avatar
               sx={{
-                width: "40px",
-                height: "40px",
-                position: "relative",
+                width: '40px',
+                height: '40px',
+                position: 'relative',
                 mr: 1,
               }}
             >
               <Image
-                alt="Web Image"
+                alt='Web Image'
                 fill
-                sizes="100%"
-                style={{ objectFit: "cover" }}
-                src={activeRow.profile_image_uri}
+                sizes='100%'
+                style={{ objectFit: 'cover' }}
+                src={`https://images.unsplash.com/flagged/photo-1595514191830-3e96a518989b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80`}
               />
             </Avatar>
-            <Stack justifyContent={"center"}>
+            <Stack justifyContent={'center'}>
               <Typography
                 sx={{
-                  color: "black",
+                  color: 'black',
                   fontWeight: 600,
                 }}
               >
                 {activeRow.name}
               </Typography>
-              <Typography sx={{ fontSize: 14, lineHeight: "16px" }}>
+              <Typography sx={{ fontSize: 14, lineHeight: '16px' }}>
                 {activeRow.username}
               </Typography>
             </Stack>
@@ -399,11 +397,11 @@ export default function DataTable({ data }) {
 
           <Stack
             sx={{
-              flexDirection: "row",
+              flexDirection: 'row',
             }}
           >
             <Button
-              variant="outlined"
+              variant='outlined'
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenDeleteModal(false);
@@ -412,12 +410,12 @@ export default function DataTable({ data }) {
               Batal
             </Button>
             <Button
-              variant="contained"
+              variant='contained'
               sx={{
                 flex: 1,
-                backgroundColor: "warning.main",
-                "&:hover": {
-                  backgroundColor: "warning.dark",
+                backgroundColor: 'warning.main',
+                '&:hover': {
+                  backgroundColor: 'warning.dark',
                 },
               }}
               onClick={() => {
@@ -479,7 +477,7 @@ export default function DataTable({ data }) {
       )}
       <DataGrid
         rows={rows}
-        getRowHeight={() => "auto"}
+        getRowHeight={() => 'auto'}
         columns={columns}
         initialState={{
           pagination: {
@@ -488,7 +486,7 @@ export default function DataTable({ data }) {
         }}
         pageSizeOptions={[10, 20, 50]}
         getRowClassName={(params) =>
-          params.indexRelativeToCurrentPage % 2 === 0 ? "Mui-even" : "Mui-odd"
+          params.indexRelativeToCurrentPage % 2 === 0 ? 'Mui-even' : 'Mui-odd'
         }
         disableRowSelectionOnClick
         disableColumnMenu

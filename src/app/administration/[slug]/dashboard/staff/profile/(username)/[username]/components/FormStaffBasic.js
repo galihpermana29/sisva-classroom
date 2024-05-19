@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Avatar,
@@ -14,13 +14,13 @@ import {
   Stack,
   TextField,
   Typography,
-} from "@mui/material";
-import Image from "next/image";
+} from '@mui/material';
+import Image from 'next/image';
 
-import { formStaffBasicFields } from "@/globalcomponents/FormFields";
-import { Cancel } from "@mui/icons-material";
-import { useState } from "react";
-import { permissions, types } from "@/globalcomponents/Variable";
+import { formStaffBasicFields } from '@/globalcomponents/FormFields';
+import { Cancel } from '@mui/icons-material';
+import { useState } from 'react';
+import { permissions, types } from '@/globalcomponents/Variable';
 
 export const FormStaffBasic = ({ formik, editing }) => {
   function RenderType({ type }) {
@@ -36,10 +36,10 @@ export const FormStaffBasic = ({ formik, editing }) => {
     return (
       <Stack
         sx={{
-          flexDirection: "row",
-          flexWrap: "wrap",
-          overflow: "hidden",
-          mt:.5
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+          overflow: 'hidden',
+          mt: 0.5,
         }}
       >
         {params.map((permission, index) => {
@@ -53,12 +53,12 @@ export const FormStaffBasic = ({ formik, editing }) => {
             <Chip
               key={index}
               sx={{
-                mr: "4px",
-                mb:"4px",
+                mr: '4px',
+                mb: '4px',
                 fontSize: 12,
               }}
               label={tempPermission}
-              color="primary"
+              color='primary'
             />
           );
         })}
@@ -69,54 +69,54 @@ export const FormStaffBasic = ({ formik, editing }) => {
     return (
       <>
         {formStaffBasicFields.map((field) =>
-          field.type === "text" ? (
+          field.type === 'text' ? (
             <Grid
-              sx={{ marginBottom: "8px" }}
+              sx={{ marginBottom: '8px' }}
               item
               xs={12}
               md={field.md}
               key={field.name}
             >
               <Grid item xs={12} md={12}>
-                <Typography variant="body2" fontWeight={500} fontSize={14}>
+                <Typography variant='body2' fontWeight={500} fontSize={14}>
                   {field.label}
                 </Typography>
               </Grid>
               <Grid item xs={12} md={12}>
-                <Typography variant="body2" fontWeight={400} fontSize={14}>
+                <Typography variant='body2' fontWeight={400} fontSize={14}>
                   {formik.values[field.name]}
                 </Typography>
               </Grid>
             </Grid>
-          ) : field.type === "select" ? (
+          ) : field.type === 'select' ? (
             <Grid
-              sx={{ marginBottom: "8px" }}
+              sx={{ marginBottom: '8px' }}
               item
               xs={12}
               md={field.md}
               key={field.name}
             >
               <Grid item xs={12} md={12}>
-                <Typography variant="body2" fontWeight={500} fontSize={14}>
+                <Typography variant='body2' fontWeight={500} fontSize={14}>
                   {field.label}
                 </Typography>
               </Grid>
               <Grid item xs={12} md={12}>
-                <Typography variant="body2" fontWeight={400} fontSize={14}>
+                <Typography variant='body2' fontWeight={400} fontSize={14}>
                   <RenderType type={formik.values[field.name]} />
                 </Typography>
               </Grid>
             </Grid>
-          ) : field.type === "multiple-select" ? (
+          ) : field.type === 'multiple-select' ? (
             <Grid
-              sx={{ marginBottom: "8px" }}
+              sx={{ marginBottom: '8px' }}
               item
               xs={12}
               md={field.md}
               key={field.name}
             >
               <Grid item xs={12} md={12}>
-                <Typography variant="body2" fontWeight={500} fontSize={14}>
+                <Typography variant='body2' fontWeight={500} fontSize={14}>
                   {field.label}
                 </Typography>
               </Grid>
@@ -132,9 +132,9 @@ export const FormStaffBasic = ({ formik, editing }) => {
     return (
       <>
         {formStaffBasicFields.map((field) =>
-          field.type === "text" ? (
+          field.type === 'text' ? (
             <Grid item xs={12} md={field.md} key={field.name}>
-              <Typography variant="body2" fontWeight={600} mb={1}>
+              <Typography variant='body2' fontWeight={600} mb={1}>
                 {field.label}
               </Typography>
               <TextField
@@ -147,9 +147,9 @@ export const FormStaffBasic = ({ formik, editing }) => {
                 }
               />
             </Grid>
-          ) : field.type === "select" ? (
+          ) : field.type === 'select' ? (
             <Grid item xs={12} md={field.md} key={field.name}>
-              <Typography variant="body2" fontWeight={600} mb={1}>
+              <Typography variant='body2' fontWeight={600} mb={1}>
                 {field.label}
               </Typography>
 
@@ -157,9 +157,9 @@ export const FormStaffBasic = ({ formik, editing }) => {
                 select
                 fullWidth
                 value={formik.values[field.name]}
-                onChange={(e) =>
-                  formik.setFieldValue(field.name, e.target.value)
-                }
+                onChange={(e) => {
+                  formik.setFieldValue(field.name, e.target.value);
+                }}
               >
                 {field.data.map((option) => (
                   <MenuItem key={option.slug} value={option.slug}>
@@ -168,13 +168,13 @@ export const FormStaffBasic = ({ formik, editing }) => {
                 ))}
               </TextField>
             </Grid>
-          ) : field.type === "multiple-select" ? (
+          ) : field.type === 'multiple-select' ? (
             <Grid item xs={12} md={field.md} key={field.name}>
-              <Typography variant="body2" fontWeight={600} mb={1}>
+              <Typography variant='body2' fontWeight={600} mb={1}>
                 {field.label}
               </Typography>
 
-              <FormControl sx={{ width: "100%" }}>
+              <FormControl sx={{ width: '100%' }}>
                 {/* <InputLabel id="demo-multiple-chip-label">Chip</InputLabel> */}
                 <Select
                   multiple
@@ -184,7 +184,7 @@ export const FormStaffBasic = ({ formik, editing }) => {
                   }
                   input={<OutlinedInput sx={{ p: 0 }} />}
                   renderValue={(selected) => (
-                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                       {selected.map((permission) => {
                         let tempPermission;
                         permissions.map((item) => {
@@ -196,17 +196,17 @@ export const FormStaffBasic = ({ formik, editing }) => {
                           <Chip
                             key={permission}
                             label={tempPermission}
-                            color="primary"
+                            color='primary'
                           />
                         );
                       })}
                     </Box>
                   )}
                   MenuProps={{
-                    anchorOrigin: { vertical: "top", horizontal: "center" },
+                    anchorOrigin: { vertical: 'top', horizontal: 'center' },
                     transformOrigin: {
-                      vertical: "bottom",
-                      horizontal: "center",
+                      vertical: 'bottom',
+                      horizontal: 'center',
                     },
                   }}
                 >

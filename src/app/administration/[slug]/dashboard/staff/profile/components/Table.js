@@ -54,13 +54,17 @@ const columns = [
                     mr: 1,
                   }}
                 >
-                  <Image
-                    alt='Web Image'
-                    fill
-                    sizes='100%'
-                    style={{ objectFit: 'cover' }}
-                    src={params.value.data.profile_image_uri}
-                  />
+                  {params.value.data.profile_image_uri !== '' ? (
+                    <Image
+                      alt='Web Image'
+                      fill
+                      sizes='100%'
+                      style={{ objectFit: 'cover' }}
+                      src={params.value.data.profile_image_uri}
+                    />
+                  ) : (
+                    params.value.name?.toUpperCase().slice(0, 1)
+                  )}
                 </Avatar>
                 <Typography
                   sx={{
@@ -116,17 +120,20 @@ const columns = [
           ml: 2,
           position: 'relative',
           display: 'flex',
-          justifyContent: 'flex-end',
+          // justifyContent: 'flex-end',
         }}
       >
-        <Image
-          alt='Web Image'
-          fill
-          sizes='100%'
-          style={{ objectFit: 'cover' }}
-          src={params.value}
-        />
-        {/* A */}
+        {params.value !== '' ? (
+          <Image
+            alt='Web Image'
+            fill
+            sizes='100%'
+            style={{ objectFit: 'cover' }}
+            src={params.value}
+          />
+        ) : (
+          params.value.name?.toUpperCase().slice(0, 1)
+        )}
       </Avatar>
     ),
   },
@@ -245,7 +252,7 @@ function ActionButton({ params }) {
   );
 }
 
-export default function DataTable({ data }) {
+export default function DataTable({ data, deleteUser = () => ({}) }) {
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('lg'));
 
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -324,13 +331,17 @@ export default function DataTable({ data }) {
                 mr: 1,
               }}
             >
-              <Image
-                alt='Web Image'
-                fill
-                sizes='100%'
-                style={{ objectFit: 'cover' }}
-                src={activeRow.profile_image_uri}
-              />
+              {activeRow.profile_image_uri !== '' ? (
+                <Image
+                  alt='Web Image'
+                  fill
+                  sizes='100%'
+                  style={{ objectFit: 'cover' }}
+                  src={activeRow.profile_image_uri}
+                />
+              ) : (
+                activeRow.name?.toUpperCase().slice(0, 1)
+              )}
             </Avatar>
             <Stack justifyContent={'center'}>
               <Typography
@@ -372,6 +383,7 @@ export default function DataTable({ data }) {
               }}
               onClick={() => {
                 setOpenDeleteModal(false);
+                deleteUser(activeRow);
               }}
             >
               Hapus

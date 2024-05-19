@@ -48,6 +48,14 @@ export default function StaffProfileContent() {
   });
   const formik = useFormik({
     initialValues: { emptyData },
+
+    onSubmit: async (values) => {
+      try {
+        console.log(values);
+
+        // await AcademicAPI.createPeriod
+      } catch (error) {}
+    },
   });
 
   let data = [
@@ -74,6 +82,17 @@ export default function StaffProfileContent() {
       start_time: '2022-07-16T17:00:00.000Z',
       end_time: '2023-06-16T17:00:00.000Z',
       status: 'Selesai',
+    },
+  ];
+
+  [
+    {
+      id: 1,
+      name: 'tes 11',
+      start_time: '01/07/2023 8:04 AM +00:00',
+      end_time: '07/07/2023 8:45 AM +00:00',
+      status: 'inactive',
+      study_programs: [{ id: 15, code: 'TSNL2' }],
     },
   ];
 
@@ -116,23 +135,22 @@ export default function StaffProfileContent() {
 
   let [dataCurriculum, setDataCurriculum] = useState([]);
 
-  const getAllPeriod = async () => {
-    const {
-      data: { data },
-    } = await AcademicAPI.getAllPeriod();
-
-    console.log(data);
-    setTableData(data);
-  };
-
   useEffect(() => {
+    const getAllPeriod = async () => {
+      const {
+        data: { data },
+      } = await AcademicAPI.getAllPeriod();
+
+      setTableData(data);
+    };
+
     getAllPeriod();
   }, []);
 
   useEffect(() => {
     let temp = [];
     let id = 1;
-    data.map((period) => {
+    tableData?.map((period) => {
       period.study_program?.map((study_program) => {
         ['X', 'XI', 'XII'].map((grade) => {
           let tempObject = {
@@ -363,7 +381,8 @@ export default function StaffProfileContent() {
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenCreateCurriculumModal(false);
-                formik.setValues({});
+                formik.handleSubmit();
+                // formik.setValues({});
               }}
             >
               Simpan
@@ -427,7 +446,8 @@ export default function StaffProfileContent() {
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenCreatePeriodModal(false);
-                formik.setValues(emptyData);
+                formik.handleSubmit();
+                // formik.setValues(emptyData);
               }}
             >
               Simpan

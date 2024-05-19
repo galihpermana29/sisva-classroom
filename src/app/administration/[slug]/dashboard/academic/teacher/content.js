@@ -26,7 +26,7 @@ import TeacherTable from './components/TeacherTable';
 import { ExcelIcon, ExportIcon, SortIcon } from '@/assets/SVGs';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { permissions, types } from '@/globalcomponents/Variable';
+import { permissions, subject_types, types } from '@/globalcomponents/Variable';
 import { FormAddPeriod } from './components/FormAddPeriod';
 
 import { useFormik } from 'formik';
@@ -1026,15 +1026,7 @@ export default function StaffProfileContent() {
     },
   ];
 
-  const [teachersData, setTeachersData] = useState([]);
-
-  const getAllTeachersData = async () => {
-    const {
-      data: { data },
-    } = await AcademicAPI.getAllSubjectTeacher();
-
-    setTeachersData(teachersData);
-  };
+  const [subjectData, setSubjectData] = useState([]);
 
   let [dataCurriculum, setDataCurriculum] = useState([]);
   // useEffect(() => {
@@ -1067,14 +1059,37 @@ export default function StaffProfileContent() {
   // }, [activeTab]);
 
   useEffect(() => {
+    const getAllTeachersData = async () => {
+      const resTeacher = await AcademicAPI.getAllSubjectTeacher();
+      const resSubject = await AcademicAPI.getAllSubject();
+
+      const dataTeacher = resTeacher.data.data;
+      const dataSubject = resSubject.data.data;
+
+      console.log(dataSubject);
+
+      const newMappedData = dataSubject.map((subject) => {
+        let teachers = [];
+
+        dataTeacher.map((teacher) => {
+          if (teacher.subject_detail.id == subject.id)
+            teachers.push(teacher.name);
+        });
+
+        return { ...subject, teachers };
+      });
+
+      setSubjectData(newMappedData);
+    };
+
     getAllTeachersData();
   }, []);
 
   useEffect(() => {
     let temp = [];
     activeTab === 0
-      ? (temp = data.filter((item) => {
-          return item.period_name.toLowerCase().includes(search.toLowerCase());
+      ? (temp = subjectData.filter((item) => {
+          return item.name.toLowerCase().includes(search.toLowerCase());
         }))
       : (temp = dataTeacher.filter((item) => {
           return item.teacher.toLowerCase().includes(search.toLowerCase());
@@ -1142,7 +1157,7 @@ export default function StaffProfileContent() {
     setFilteredData(temp);
     // console.log(temp)
     formik.setValues(emptyData);
-  }, [search, studyProgramFilter, sortSettings, activeTab]);
+  }, [search, studyProgramFilter, sortSettings, activeTab, subjectData]);
 
   function Filters() {
     return (

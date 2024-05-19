@@ -42,6 +42,39 @@ export default function SchoolProfileListContent() {
   });
   const formik = useFormik({
     initialValues: { ...initialData },
+
+    onSubmit: async (values) => {
+      const { name, password, type, username, password_confirm } = values;
+
+      if (password !== password_confirm) {
+        console.log('mismatched password');
+        return;
+      }
+
+      let payload = {
+        user: {
+          name,
+          type,
+          detail: {
+            json_text: JSON.stringify({
+              username,
+            }),
+          },
+          profile_image_uri: '',
+          roles: [type],
+        },
+        password,
+      };
+
+      try {
+        await UsersAPI.createUser(payload);
+
+        window.location.reload();
+        formik.setValues(initialData);
+      } catch (error) {
+        console.log(error, 'error adding staff');
+      }
+    },
   });
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -64,26 +97,38 @@ export default function SchoolProfileListContent() {
 
   const [openCreateModal, setOpenCreateModal] = useState(false);
 
-  const getAllStudent = async (params = 'student') => {
+  const deleteUser = async (userData) => {
     try {
-      const {
-        data: { data },
-      } = await UsersAPI.getAllUsers(params);
+      userData.status = 'deleted';
 
-      const newMappedData = data
-        .map((user) => {
-          const additionalJson = JSON.parse(user.detail.json_text);
-          return { ...user, ...additionalJson };
-        })
-        .filter((user) => user.status === 'active');
+      await UsersAPI.updateUserById(userData, userData.id);
 
-      setStudentData(newMappedData);
+      window.location.reload();
     } catch (error) {
-      console.log(error);
+      console.log(error, 'error delete staff');
     }
   };
 
   useEffect(() => {
+    const getAllStudent = async (params = 'student') => {
+      try {
+        const {
+          data: { data },
+        } = await UsersAPI.getAllUsers(params);
+
+        const newMappedData = data
+          .map((user) => {
+            const additionalJson = JSON.parse(user.detail.json_text);
+            return { ...user, ...additionalJson };
+          })
+          .filter((user) => user.status === 'active');
+
+        setStudentData(newMappedData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     getAllStudent();
   }, []);
 
@@ -182,7 +227,8 @@ export default function SchoolProfileListContent() {
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenCreateModal(false);
-                formik.setValues(initialData);
+                formik.handleSubmit();
+                // formik.setValues(initialData);
               }}
             >
               Simpan
@@ -501,7 +547,7 @@ export default function SchoolProfileListContent() {
         </Stack>
         <Divider />
         <Box sx={{ flex: 1, overflowY: 'hidden' }}>
-          <DataTable data={filteredData} />
+          <DataTable data={filteredData} deleteUser={deleteUser} />
         </Box>
       </Stack>
     </Stack>

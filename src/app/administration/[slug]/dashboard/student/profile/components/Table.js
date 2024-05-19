@@ -219,7 +219,7 @@ function ActionButton({ params }) {
   );
 }
 
-export default function DataTable({ data }) {
+export default function DataTable({ data, deleteUser = () => {} }) {
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('lg'));
 
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -346,6 +346,7 @@ export default function DataTable({ data }) {
               }}
               onClick={() => {
                 setOpenDeleteModal(false);
+                deleteUser(activeRow);
               }}
             >
               Hapus

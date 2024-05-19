@@ -28,7 +28,7 @@ const AttendanceApi = {
       'X-Sisva-SchoolID': SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
-    return api.get(`/classes/students?date_id=${date_id}`, { headers });
+    return api.get(`/students?date_id=${date_id}`, { headers });
   },
 };
 

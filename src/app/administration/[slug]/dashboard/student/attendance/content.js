@@ -35,6 +35,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import AttendanceApi from '@/api/attendance';
+import UsersAPI from '@/api/users';
 
 export default function StaffProfileListContent() {
   const [initialData, setinitialData] = useState({
@@ -228,12 +229,19 @@ export default function StaffProfileListContent() {
         data: { data },
       } = await AttendanceApi.getStudentClassAttendanceByDateId(dateCode);
 
-      const newMappedData = data
-        .map((user) => {
-          const additionalJson = JSON.parse(user.detail.json_text);
-          return { ...user, ...additionalJson };
-        })
-        .filter((user) => user.status === 'active');
+      const studentDetailData = await (
+        await UsersAPI.getAllUsers('student')
+      ).data.data;
+
+      const newMappedData = data.map((user) => {
+        const exists = studentDetailData.find(
+          (detail) => detail.id === user.student_id
+        );
+
+        if (exists) {
+          return { ...exists, status: user.status };
+        }
+      });
 
       setStudentAttendanceData(newMappedData);
     } catch (error) {
@@ -761,7 +769,7 @@ export default function StaffProfileListContent() {
               </MenuItem>
             </Menu>
 
-            <Button
+            {/* <Button
               variant='contained'
               color='primary'
               startIcon={<Add />}
@@ -772,7 +780,7 @@ export default function StaffProfileListContent() {
               onClick={() => setOpenCreateModal(true)}
             >
               <Typography sx={{ fontSize: 14 }}>Tambah</Typography>
-            </Button>
+            </Button> */}
           </Stack>
         </Stack>
 

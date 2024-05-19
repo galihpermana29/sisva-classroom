@@ -223,8 +223,12 @@ export default function StaffProfileListContent() {
       ).data.data;
 
       const newMappedData = data.map((user) => {
-        if (userDetailData.find((detail) => detail.id === user.staff_id)) {
-          return { ...user, username: detail.username };
+        const exists = userDetailData.find(
+          (detail) => detail.id === user.staff_id
+        );
+
+        if (exists) {
+          return { ...exists, status: user.status };
         }
       });
 
@@ -239,9 +243,9 @@ export default function StaffProfileListContent() {
   }, [pickedDate]);
 
   useEffect(() => {
-    let temp = tableData.filter((item) => {
+    let temp = tableData?.filter((item) => {
       return (
-        (item.name.toLowerCase().includes(search.toLowerCase()) ||
+        (item?.name.toLowerCase().includes(search.toLowerCase()) ||
           item.username.toLowerCase().includes(search.toLowerCase())) &&
         item.type.toLowerCase().includes(typeFilter.toLowerCase()) &&
         (!permissionFilter || item.permissions.includes(permissionFilter))
@@ -251,11 +255,11 @@ export default function StaffProfileListContent() {
       temp = temp.sort(function (a, b) {
         let x, y;
         if (sortSettings.sortBy === 'name') {
-          x = a.name.toLowerCase();
-          y = b.name.toLowerCase();
+          x = a.name?.toLowerCase();
+          y = b.name?.toLowerCase();
         } else if (sortSettings.sortBy === 'username') {
-          x = a.name.toLowerCase();
-          y = b.name.toLowerCase();
+          x = a.name?.toLowerCase();
+          y = b.name?.toLowerCase();
         }
 
         if (sortSettings.sortType === 'ascending') {
@@ -278,7 +282,7 @@ export default function StaffProfileListContent() {
       });
     }
     setFilteredData(temp);
-  }, [search, typeFilter, permissionFilter, sortSettings]);
+  }, [tableData, search, typeFilter, permissionFilter, sortSettings]);
 
   let [studyProgramFilter, setStudyProgramFilter] = useState('');
 

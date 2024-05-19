@@ -347,6 +347,7 @@ export default function SchoolProfileContent() {
                           <FormSchoolIdentity
                             formik={formik}
                             editing={editing}
+                            handleImageChange={handleImageChange}
                           />
                         </Grid>
                       </Grid>

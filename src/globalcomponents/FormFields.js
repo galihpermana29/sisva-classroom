@@ -770,7 +770,7 @@ export const formStaffBiodataFields = [
 
 export const formChangePasswordFields = [
   {
-    name: 'old_password',
+    name: 'current_password',
     label: 'Password Lama',
     placeholder: 'Password Lama',
     md: 12,
@@ -876,7 +876,7 @@ export const formSchoolTypeFields = [
     image: false,
     data: [
       {
-        value: 'public',
+        value: 'general',
         label: 'Umum',
       },
       {
@@ -901,25 +901,25 @@ export const formSchoolTypeFields = [
         label: 'TK/RA',
       },
       {
-        value: 'elementary_school',
+        value: 'elementary',
         label: 'SD/MI',
       },
       {
-        value: 'middle_school',
+        value: 'junior_high',
         label: 'SMP/MTS',
       },
       {
-        value: 'highschool',
+        value: 'senior_high',
         label: 'SMA/SMK/MA',
       },
       {
-        value: 'others',
+        value: 'other',
         label: 'Lainnya',
       },
     ],
   },
   {
-    name: 'ownership_type',
+    name: 'education_ownership_type',
     label: 'Kepemilikan Sekolah',
     placeholder: 'Kepemilikan Sekolah',
     md: 6,

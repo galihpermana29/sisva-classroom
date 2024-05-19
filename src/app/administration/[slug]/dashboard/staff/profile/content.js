@@ -59,7 +59,6 @@ export default function StaffProfileListContent() {
 
       let payload = {
         user: {
-          nik: '1229908741927312', // need to be added into the form
           name,
           type,
           detail: {
@@ -116,24 +115,38 @@ export default function StaffProfileListContent() {
 
   const [openCreateModal, setOpenCreateModal] = useState(false);
 
-  const getAllUsers = async (params = 'staff,teacher') => {
+  const deleteUser = async (userData) => {
     try {
-      const {
-        data: { data },
-      } = await UsersAPI.getAllUsers(params);
+      userData.status = 'deleted';
 
-      const newMappedData = data.map((user) => {
-        const additionalJson = JSON.parse(user.detail.json_text);
-        return { ...user, ...additionalJson };
-      });
+      await UsersAPI.updateUserById(userData, userData.id);
 
-      setStaffData(newMappedData);
+      window.location.reload();
     } catch (error) {
-      console.log(error);
+      console.log(error, 'error delete staff');
     }
   };
 
   useEffect(() => {
+    const getAllUsers = async (params = 'staff,teacher') => {
+      try {
+        const {
+          data: { data },
+        } = await UsersAPI.getAllUsers(params);
+
+        const newMappedData = data
+          .map((user) => {
+            const additionalJson = JSON.parse(user.detail.json_text);
+            return { ...user, ...additionalJson };
+          })
+          .filter((user) => user.status == 'active');
+
+        setStaffData(newMappedData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     getAllUsers();
   }, []);
 
@@ -644,7 +657,7 @@ export default function StaffProfileListContent() {
         </Stack>
         <Divider />
         <Box sx={{ flex: 1, overflowY: 'hidden' }}>
-          <DataTable data={filteredData} />
+          <DataTable data={filteredData} deleteUser={deleteUser} />
         </Box>
       </Stack>
     </Stack>

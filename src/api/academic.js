@@ -171,9 +171,19 @@ const AcademicAPI = {
     return api.patch(`/syllabuses/${id}`, payload, { headers });
   },
 
+  createPeriod(payload) {
+    const headers = {
+      'X-Sisva-Source': 'academic.periods.test',
+      'X-Sisva-UserID': USER_ID,
+      'X-Sisva-SchoolID': SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.post(`/periods`, payload, { headers });
+  },
+
   getAllPeriod() {
     const headers = {
-      'X-Sisva-Source': 'academic.subjects.teachers.test',
+      'X-Sisva-Source': 'academic.periods.test',
       'X-Sisva-UserID': USER_ID,
       'X-Sisva-SchoolID': SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,

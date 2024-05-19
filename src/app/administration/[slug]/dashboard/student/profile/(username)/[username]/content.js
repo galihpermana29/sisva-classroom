@@ -30,6 +30,8 @@ import { FormStudentParents } from './components/FormStudentParents';
 import { FormStudentPassword } from './components/FormStudentPassword';
 import Link from 'next/link';
 import UsersAPI from '@/api/users';
+import AuthAPI from '@/api/auth';
+import FilesAPI from '@/api/files';
 
 export default function SchoolProfileContent({ user_id }) {
   const containerRef = useRef(null);
@@ -38,7 +40,129 @@ export default function SchoolProfileContent({ user_id }) {
   const [initialData, setinitialData] = useState({});
   const formik = useFormik({
     initialValues: { ...initialData },
+
+    onSubmit: async (values) => {
+      let changePassData = {};
+
+      console.log(values);
+
+      let json_text = {
+        username: values.username,
+        email: values.email,
+        phone: values.phone,
+        gender: values.gender,
+        nationality: values.nationality,
+        address: values.address,
+        religion: values.religion,
+        education_id: values.education_id,
+        personal_id: values.personal_id,
+        guardian_type: values.guardian_type,
+        father_name: values.father_name,
+        father_email: values.father_email,
+        father_phone: values.father_phone,
+        father_occupation: values.father_occupation,
+        father_education: values.father_education,
+        father_income: values.father_income,
+        father_birth_year: values.father_birth_year,
+        father_life_status: values.father_life_status,
+        father_religion: values.father_religion,
+        father_address: values.father_address,
+        mother_name: values.mother_name,
+        mother_occupation: values.mother_occupation,
+        mother_email: values.mother_email,
+        mother_education: values.mother_education,
+        mother_income: values.mother_income,
+        mother_phone: values.mother_phone,
+        mother_life_status: values.mother_life_status,
+        mother_birth_year: values.mother_birth_year,
+        mother_religion: values.mother_religion,
+        mother_address: values.mother_address,
+        guardian_name: values.guardian_name,
+        guardian_gender: values.guardian_gender,
+        guardian_relationship: values.guardian_relationship,
+        guardian_occupation: values.guardian_occupation,
+        guardian_education: values.guardian_education,
+        guardian_income: values.guardian_income,
+        guardian_phone: values.guardian_phone,
+        guardian_email: values.guardian_email,
+        guardian_birth_year: values.guardian_birth_year,
+        guardian_life_status: values.guardian_life_status,
+        guardian_religion: values.guardian_religion,
+        guardian_address: values.guardian_address,
+      };
+
+      const formatedData = {
+        ...values,
+        detail: { json_text: JSON.stringify(json_text) },
+      };
+
+      for (const keys in values) {
+        if (keys.includes('password')) {
+          changePassData = { ...changePassData, [`${keys}`]: values[keys] };
+        }
+      }
+
+      if (!Object.keys(changePassData).length) {
+        try {
+          const data = await UsersAPI.updateUserById(formatedData, values.id);
+
+          window.location.reload();
+        } catch (error) {
+          console.log(error, 'update user');
+        }
+      } else {
+        try {
+          const user_id = values.id;
+          changePassData = { ...changePassData, user_id };
+
+          delete changePassData.id;
+          delete changePassData.new_password_confirm;
+
+          if (Object.keys(changePassData).includes('current_password')) {
+            try {
+              await AuthAPI.changeUserPass(changePassData);
+            } catch (error) {
+              console.log(error, 'change user password');
+            }
+          } else if (
+            Object.keys(changePassData).includes('new_password') &&
+            !Object.keys(changePassData).includes('current_password')
+          ) {
+            try {
+              await AuthAPI.resetUserPass(changePassData);
+            } catch (error) {
+              console.log(error, 'reset user password');
+            }
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
+      // window.location.reload();
+      formik.setValues(initialData);
+    },
   });
+
+  const handleImageChange = async (e) => {
+    try {
+      e.preventDefault();
+
+      const { name } = e.target;
+      const file = e.target.files[0];
+      const formData = new FormData();
+
+      formData.append('file', file);
+
+      const {
+        data: { data },
+      } = await FilesAPI.uploadimage(formData);
+
+      formik.setFieldValue(name, 'file://' + data);
+    } catch (error) {
+      console.log(error, 'error upload user profile');
+    }
+  };
 
   let [editing, setEditing] = useState(false);
 
@@ -49,7 +173,13 @@ export default function SchoolProfileContent({ user_id }) {
     },
     {
       title: 'Biodata',
-      component: <FormStudentBiodata formik={formik} editing={editing} />,
+      component: (
+        <FormStudentBiodata
+          formik={formik}
+          editing={editing}
+          handleImageChange={handleImageChange}
+        />
+      ),
     },
     {
       title: 'Wali Murid',
@@ -69,27 +199,27 @@ export default function SchoolProfileContent({ user_id }) {
     },
   ];
 
-  const fetchProfile = async (userId, updateCurrentUser = false) => {
-    try {
-      const {
-        data: { data },
-      } = await UsersAPI.getUserById(userId);
-
-      if (updateCurrentUser) {
-        localStorage.setItem('current_user', JSON.stringify(data));
-        return;
-      }
-
-      const additionalJson = JSON.parse(data.detail.json_text);
-
-      setinitialData({ ...data, ...additionalJson });
-      formik.setValues({ ...data, ...additionalJson });
-    } catch (error) {
-      console.log(error, 'error fetch profile');
-    }
-  };
-
   useEffect(() => {
+    const fetchProfile = async (userId, updateCurrentUser = false) => {
+      try {
+        const {
+          data: { data },
+        } = await UsersAPI.getUserById(userId);
+
+        if (updateCurrentUser) {
+          localStorage.setItem('current_user', JSON.stringify(data));
+          return;
+        }
+
+        const additionalJson = JSON.parse(data.detail.json_text);
+
+        setinitialData({ ...data, ...additionalJson });
+        formik.setValues({ ...data, ...additionalJson });
+      } catch (error) {
+        console.log(error, 'error fetch profile');
+      }
+    };
+
     fetchProfile(user_id);
   }, []);
 
@@ -273,6 +403,7 @@ export default function SchoolProfileContent({ user_id }) {
                 sx={{ width: 120 }}
                 onClick={() => {
                   setEditing(false);
+                  formik.handleSubmit();
                   containerRef.current.scrollTo({ top: 0 });
                 }}
               >

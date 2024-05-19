@@ -31,13 +31,13 @@ export const religions = [
   { slug: 'others', title: 'Lainnya' },
 ];
 export const educationLevels = [
-  { slug: 'elementary_school', title: 'SD' },
-  { slug: 'middle_school', title: 'SMP' },
-  { slug: 'highschool', title: 'SMA' },
+  { slug: 'elementary', title: 'SD' },
+  { slug: 'junior_high', title: 'SMP' },
+  { slug: 'senior_high', title: 'SMA/SMK/MA' },
   { slug: 'undergraduate', title: 'S1/D3/D4' },
   { slug: 'graduate', title: 'S2' },
   { slug: 'doctorate', title: 'S3' },
-  { slug: 'others', title: 'Lainnya' },
+  { slug: 'other', title: 'Lainnya' },
 ];
 export const incomeLevels = [
   { slug: '0-1', title: '0 - Rp1.000.000' },
@@ -65,19 +65,19 @@ export const relationships = [
 export const permissions = [
   {
     title: 'Sekolah',
-    slug: 'school',
+    slug: 'manage_school',
   },
   {
     title: 'Karyawan',
-    slug: 'staff',
+    slug: 'manage_staff',
   },
   {
     title: 'Akademik',
-    slug: 'academic',
+    slug: 'manage_academic',
   },
   {
     title: 'Siswa',
-    slug: 'student',
+    slug: 'manage_student',
   },
   {
     title: 'Rapot',
@@ -85,10 +85,10 @@ export const permissions = [
   },
   {
     title: 'Informasi',
-    slug: 'information',
+    slug: 'manage_information',
   },
   {
     title: 'Keuangan',
-    slug: 'finance',
+    slug: 'manage_finance',
   },
 ];
