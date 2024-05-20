@@ -27,8 +27,6 @@ const ModalTemplate = ({ children, title, subtitle, onClose, open, action }) => 
                     onClose={onClose}
                 />
                 {children}
-                <Divider />
-                {action}
             </Paper>
         </Modal>
     )
