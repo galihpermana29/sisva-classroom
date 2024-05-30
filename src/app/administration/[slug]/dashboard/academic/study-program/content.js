@@ -48,6 +48,10 @@ export default function StaffProfileContent() {
   });
   const formik = useFormik({
     initialValues: { emptyData },
+
+    onSubmit: async (values) => {
+      console.log(values);
+    },
   });
 
   let data = [
@@ -86,10 +90,27 @@ export default function StaffProfileContent() {
   const [openCreateGradeModal, setOpenCreateGradeModal] = useState(false);
 
   const [activeTab, setActiveTab] = useState(0);
+
+  const deleteStudyProgram = async (id) => {
+    try {
+      await AcademicAPI.deleteProdi(id);
+
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   let tabs = [
     {
       title: 'Program Studi',
-      component: <StudyProgramTable formik={formik} data={filteredData} />,
+      component: (
+        <StudyProgramTable
+          formik={formik}
+          data={filteredData}
+          deleteStudyProgram={deleteStudyProgram}
+        />
+      ),
     },
     {
       title: 'Tingkatan',
@@ -97,17 +118,19 @@ export default function StaffProfileContent() {
     },
   ];
 
-  const getAllStudyProgram = async () => {
-    const {
-      data: { data },
-    } = await AcademicAPI.getAllProdi();
-
-    const activeProgram = data.filter((program) => program.status === 'active');
-
-    setTabelData(activeProgram);
-  };
-
   useEffect(() => {
+    const getAllStudyProgram = async () => {
+      const {
+        data: { data },
+      } = await AcademicAPI.getAllProdi();
+
+      const activeProgram = data.filter(
+        (program) => program.status === 'active'
+      );
+
+      setTabelData(activeProgram);
+    };
+
     getAllStudyProgram();
   }, []);
 
@@ -308,7 +331,8 @@ export default function StaffProfileContent() {
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenCreateGradeModal(false);
-                formik.setValues(emptyData);
+                formik.handleSubmit();
+                // formik.setValues(emptyData);
               }}
             >
               Simpan
@@ -372,7 +396,8 @@ export default function StaffProfileContent() {
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenCreateStudyProgramModal(false);
-                formik.setValues(emptyData);
+                formik.handleSubmit();
+                // formik.setValues(emptyData);
               }}
             >
               Simpan

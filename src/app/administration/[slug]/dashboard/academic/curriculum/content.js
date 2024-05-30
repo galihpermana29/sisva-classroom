@@ -50,6 +50,23 @@ export default function StaffProfileContent() {
   });
   const formik = useFormik({
     initialValues: { emptyData },
+
+    onSubmit: async (values) => {
+      console.log(activeTab);
+      try {
+        if (activeTab == 0) {
+          const payload = { name: values.name };
+
+          // await AcademicAPI.createCurriculum(payload);
+        }
+
+        if (activeTab == 1) {
+          await AcademicAPI.createSubject(values);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
   });
 
   const mataPelajaranIPS = [
@@ -83,6 +100,7 @@ export default function StaffProfileContent() {
     'Kewirausahaan',
     'Teknologi Informasi dan Komunikasi (TIK)',
   ];
+
   const mataPelajaranSisva = [
     'Arsiktektur',
     'Musik',
@@ -92,6 +110,7 @@ export default function StaffProfileContent() {
     'Penelitian',
     'Digital Marketing',
   ];
+
   let data = [
     {
       id: 1,
@@ -115,18 +134,54 @@ export default function StaffProfileContent() {
 
   const [tableData, setTableData] = useState([]);
 
+  const deleteCurriculum = async (id) => {
+    try {
+      await AcademicAPI.deleteCurriculum(id);
+
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteSubject = async (id) => {
+    try {
+      await AcademicAPI.deleteSubject(id);
+
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   let [dataSubject, setDataSubject] = useState([]);
   let [dataSyllabus, setDataSyllabus] = useState([]);
 
-  const getAllCurriculum = async () => {
-    const {
-      data: { data },
-    } = await AcademicAPI.getAllCurriculum();
+  useEffect(() => {
+    const getAllCurriculum = async () => {
+      const {
+        data: { data },
+      } = await AcademicAPI.getAllCurriculum();
 
-    setTableData(data);
-  };
+      console.log(data);
+
+      setTableData(data);
+    };
+
+    getAllCurriculum();
+  }, []);
 
   useEffect(() => {
+    const getAllCurriculum = async () => {
+      const {
+        data: { data },
+      } = await AcademicAPI.getAllSubject();
+
+      console.log(data);
+
+      // setDataSubject(data);
+    };
+
     getAllCurriculum();
   }, []);
 
@@ -145,6 +200,7 @@ export default function StaffProfileContent() {
         temp.push(tempObject);
         id++;
       });
+
       mataPelajaranIPS.map((subject) => {
         let tempObject = {
           id: id,
@@ -168,6 +224,7 @@ export default function StaffProfileContent() {
         temp.push(tempObject);
         id++;
       });
+
       mataPelajaranIPS.map((subject) => {
         let tempObject = {
           id: id,
@@ -248,11 +305,23 @@ export default function StaffProfileContent() {
   let tabs = [
     {
       title: 'Kurikulum',
-      component: <CurriculumTable formik={formik} data={filteredData} />,
+      component: (
+        <CurriculumTable
+          formik={formik}
+          data={filteredData}
+          deleteCurriculum={deleteCurriculum}
+        />
+      ),
     },
     {
       title: 'Mata Pelajaran',
-      component: <SubjectTable formik={formik} data={filteredData} />,
+      component: (
+        <SubjectTable
+          formik={formik}
+          data={filteredData}
+          deleteSubject={deleteSubject}
+        />
+      ),
     },
     {
       title: 'Tingkatan',
@@ -667,6 +736,7 @@ export default function StaffProfileContent() {
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenCreateSyllabusModal(false);
+                formik.handleSubmit();
                 formik.setValues({});
               }}
             >
@@ -734,7 +804,7 @@ export default function StaffProfileContent() {
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenCreateSubjectModal(false);
-                formik.setValues({ name: '', code: '' });
+                formik.handleSubmit();
               }}
             >
               Simpan
@@ -801,7 +871,8 @@ export default function StaffProfileContent() {
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenCreateCurriculumModal(false);
-                formik.setValues(emptyData);
+                formik.handleSubmit();
+                // formik.setValues(emptyData);
               }}
             >
               Simpan

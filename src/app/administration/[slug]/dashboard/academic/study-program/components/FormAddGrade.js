@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Avatar,
@@ -16,8 +16,8 @@ import {
   Stack,
   TextField,
   Typography,
-} from "@mui/material";
-import Image from "next/image";
+} from '@mui/material';
+import Image from 'next/image';
 
 import {
   Add,
@@ -25,56 +25,56 @@ import {
   DragIndicatorRounded,
   Visibility,
   VisibilityOff,
-} from "@mui/icons-material";
-import { useEffect, useState } from "react";
-import { permissions } from "@/globalcomponents/Variable";
+} from '@mui/icons-material';
+import { useEffect, useState } from 'react';
+import { permissions } from '@/globalcomponents/Variable';
 
-import { DndProvider } from "react-dnd";
-import { DragAndDropContainer } from "./DragAndDropContainer";
-import { MultiBackend } from "react-dnd-multi-backend";
-import { HTML5toTouch } from "rdndmb-html5-to-touch"; // or any other pipeline
+import { DndProvider } from 'react-dnd';
+import { DragAndDropContainer } from './DragAndDropContainer';
+import { MultiBackend } from 'react-dnd-multi-backend';
+import { HTML5toTouch } from 'rdndmb-html5-to-touch'; // or any other pipeline
 
 export const FormAddGrade = ({ formik, editing }) => {
   let data = [
     {
       id: 1,
-      title: "Ilmu Pengetahuan Sosial",
-      slug: "IPS",
-      status: "active",
+      title: 'Ilmu Pengetahuan Sosial',
+      slug: 'IPS',
+      status: 'active',
       grades: [],
     },
     {
       id: 2,
-      title: "Ilmu Pengetahuan Alam",
-      slug: "IPA",
-      status: "active",
-      grades: ["X", "XI", "XII"],
+      title: 'Ilmu Pengetahuan Alam',
+      slug: 'IPA',
+      status: 'active',
+      grades: ['X', 'XI', 'XII'],
     },
     {
       id: 3,
-      title: "Ilmu Pengetahuan Sosial Unggulan",
-      slug: "IPS-U",
-      status: "active",
-      grades: ["X", "XI", "XII"],
+      title: 'Ilmu Pengetahuan Sosial Unggulan',
+      slug: 'IPS-U',
+      status: 'active',
+      grades: ['X', 'XI', 'XII'],
     },
     {
       id: 4,
-      title: "Ilmu Pengetahuan Alam Unggulan",
-      slug: "IPA-U",
-      status: "active",
-      grades: ["X", "XI", "XII"],
+      title: 'Ilmu Pengetahuan Alam Unggulan',
+      slug: 'IPA-U',
+      status: 'active',
+      grades: ['X', 'XI', 'XII'],
     },
   ];
 
-  let [gradeInput, setGradeInput] = useState("");
+  let [gradeInput, setGradeInput] = useState('');
 
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
     let temp = [];
-    formik.values["code"] &&
+    formik.values['code'] &&
       data
-        .find((x) => x.slug === formik.values["code"])
+        .find((x) => x.slug === formik.values['code'])
         .grades.map((grade, index) => {
           let tempObject = {
             id: index,
@@ -83,8 +83,8 @@ export const FormAddGrade = ({ formik, editing }) => {
           temp.push(tempObject);
         });
 
-    setCards(formik.values["code"] ? temp : cards);
-  }, [formik.values["code"]]);
+    setCards(formik.values['code'] ? temp : cards);
+  }, [formik.values['code']]);
 
   useEffect(() => {
     let temp = [];
@@ -92,7 +92,7 @@ export const FormAddGrade = ({ formik, editing }) => {
       cards.map((item) => {
         temp.push(item.text);
       });
-    formik.setFieldValue("grades", cards ? temp : formik.values["grades"]);
+    formik.setFieldValue('grades', cards ? temp : formik.values['grades']);
   }, [cards]);
 
   function DeleteGrade(index) {
@@ -107,17 +107,17 @@ export const FormAddGrade = ({ formik, editing }) => {
 
   return (
     <>
-      <Stack sx={{ my: 1 }} key={"name"}>
-        <Typography variant="body2" fontWeight={600} mb={0.5}>
+      <Stack sx={{ my: 1 }} key={'name'}>
+        <Typography variant='body2' fontWeight={600} mb={0.5}>
           Program Studi
         </Typography>
         <TextField
           select
-          value={formik.values["code"]}
+          value={formik.values['code']}
           onChange={(e) => {
-            formik.setFieldValue("code", e.target.value);
+            formik.setFieldValue('code', e.target.value);
             formik.setFieldValue(
-              "grades",
+              'grades',
               e.target.value
                 ? data.find((x) => x.slug === e.target.value).grades
                 : []
@@ -132,23 +132,23 @@ export const FormAddGrade = ({ formik, editing }) => {
           ))}
         </TextField>
       </Stack>
-      <Stack sx={{ my: 1 }} key={"grades"}>
-        <Typography variant="body2" fontWeight={600}>
+      <Stack sx={{ my: 1 }} key={'grades'}>
+        <Typography variant='body2' fontWeight={600}>
           Tingkatan
         </Typography>
-        <Stack flexDirection={"row"} sx={{ height: "100%" }} my="8px">
+        <Stack flexDirection={'row'} sx={{ height: '100%' }} my='8px'>
           <TextField
-            name={"Masukkan Tingkatan"}
-            placeholder={"Masukkan Tingkatan"}
-            disabled={!formik.values["code"]}
+            name={'Masukkan Tingkatan'}
+            placeholder={'Masukkan Tingkatan'}
+            disabled={!formik.values['code']}
             fullWidth
             value={gradeInput}
             onChange={(e) => setGradeInput(e.target.value)}
           />
           <Button
-            variant="contained"
-            color="primary"
-            disabled={!formik.values["code"]}
+            variant='contained'
+            color='primary'
+            disabled={!formik.values['code']}
             sx={{
               // width: 100,
               ml: 1,
@@ -157,20 +157,20 @@ export const FormAddGrade = ({ formik, editing }) => {
               let temp = cards;
               gradeInput && temp.push({ text: gradeInput, id: cards.length });
               setCards(temp);
-              setGradeInput("");
+              setGradeInput('');
             }}
           >
             <Add />
             {/* <Typography sx={{ fontSize: 14 }}>Tambah</Typography> */}
           </Button>
-        </Stack>{" "}
+        </Stack>{' '}
         <DndProvider backend={MultiBackend} options={HTML5toTouch}>
           {
             <DragAndDropContainer
               formik={formik}
               data={
-                data.find((x) => x.slug === formik.values["code"])
-                  ? data.find((x) => x.slug === formik.values["code"]).grades
+                data.find((x) => x.slug === formik.values['code'])
+                  ? data.find((x) => x.slug === formik.values['code']).grades
                   : []
               }
               cards={cards}

@@ -117,7 +117,7 @@ const columns = [
     flex: 1,
   },
   {
-    field: 'subject',
+    field: 'period_name',
     headerName: 'Mata Pelajaran',
     flex: 1,
   },
@@ -127,7 +127,7 @@ const columns = [
     flex: 1.5,
     sortable: false,
     renderCell: (params) => {
-      return params.value.length > 0 ? <ChipList params={params.value} /> : '-';
+      return params.length > 0 ? <ChipList params={params.value} /> : '-';
     },
   },
   {
@@ -257,7 +257,7 @@ export default function SubjectTable({ data, formik }) {
     let tempObject = {
       id: data.id,
       period_name: data.name,
-      study_program: data.study_program,
+      study_program: data.study_program_name,
 
       grade: data.grade,
       subject: data.subject,
@@ -280,6 +280,8 @@ export default function SubjectTable({ data, formik }) {
     };
     rows.push(tempObject);
   });
+
+  console.log(rows);
 
   return (
     <div style={{ height: '100%', width: '100%' }}>

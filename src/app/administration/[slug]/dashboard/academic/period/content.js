@@ -33,6 +33,7 @@ import { useFormik } from 'formik';
 import CurriculumTable from './components/CurriculumTable';
 import { FormAddCurriculum } from './components/FormAddCurriculum';
 import AcademicAPI from '@/api/academic';
+import dayjs from 'dayjs';
 export default function StaffProfileContent() {
   const [emptyData, setEmptyData] = useState({
     name: '',
@@ -50,11 +51,42 @@ export default function StaffProfileContent() {
     initialValues: { emptyData },
 
     onSubmit: async (values) => {
+      console.log(values);
       try {
-        console.log(values);
+        if (activeTab == 0) {
+          const start_time = dayjs(values.start_time).format(
+            'DD/MM/YYYY H:mm A Z'
+          );
+          const end_time = dayjs(values.end_time).format('DD/MM/YYYY H:mm A Z');
 
-        // await AcademicAPI.createPeriod
-      } catch (error) {}
+          const payload = {
+            name: values.period_name,
+            start_time: start_time,
+            end_time: end_time,
+          };
+
+          await AcademicAPI.createPeriod(payload);
+
+          window.location.reload();
+        } else if (activeTab == 1) {
+          console.log(values);
+
+          const payload = {
+            period_name: values.period_name,
+            study_program_id: values.study_program_id,
+            study_program_name: values.study_program_name,
+            grade: values.grade,
+            curriculum_id: values.curriculum_id,
+            curriculum_name: values.curriculum_name,
+          };
+
+          // await AcademicAPI.addCurriculumInPeriod(payload);
+
+          // window.location.reload();
+        }
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
 
@@ -141,6 +173,10 @@ export default function StaffProfileContent() {
         data: { data },
       } = await AcademicAPI.getAllPeriod();
 
+      console.log(data);
+
+      console.log(dataCurriculum);
+
       setTableData(data);
     };
 
@@ -179,8 +215,10 @@ export default function StaffProfileContent() {
   useEffect(() => {
     let temp = [];
     activeTab === 0
-      ? (temp = data.filter((item) => {
-          return item.period_name.toLowerCase().includes(search.toLowerCase());
+      ? (temp = tableData.filter((item) => {
+          return item?.period_name
+            ?.toLowerCase()
+            .includes(search.toLowerCase());
         }))
       : (temp = dataCurriculum.filter((item) => {
           return (

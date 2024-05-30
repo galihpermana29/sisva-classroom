@@ -51,945 +51,7 @@ export default function StaffProfileContent() {
     initialValues: { emptyData },
   });
 
-  let data = [
-    {
-      id: 1,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'X',
-      subject: 'Matematika',
-      teachers: ['Budi Santoso', 'Siti Rahayu'],
-    },
-    {
-      id: 2,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'X',
-      subject: 'Fisika',
-      teachers: ['Agus Setiawan', 'Rina Wati'],
-    },
-    {
-      id: 3,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'X',
-      subject: 'Kimia',
-      teachers: ['Joko Susanto', 'Dewi Kusuma'],
-    },
-    {
-      id: 4,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'X',
-      subject: 'Biologi',
-      teachers: ['Adi Pratama', 'Rina Puspita'],
-    },
-    {
-      id: 5,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'X',
-      subject: 'Bahasa Inggris',
-      teachers: ['Iwan Nugroho', 'Ani Cahyani'],
-    },
-    {
-      id: 6,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'X',
-      subject: 'Bahasa Indonesia',
-      teachers: ['Budi Santoso', 'Siti Rahayu'],
-    },
-    {
-      id: 7,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'X',
-      subject: 'Pendidikan Agama dan Budi Pekerti',
-      teachers: ['Agus Setiawan', 'Rina Wati'],
-    },
-    {
-      id: 8,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'X',
-      subject: 'Pendidikan Pancasila dan Kewarganegaraan (PPKn)',
-      teachers: ['Joko Susanto', 'Dewi Kusuma'],
-    },
-    {
-      id: 9,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'X',
-      subject: 'Seni dan Budaya',
-      teachers: ['Adi Pratama', 'Rina Puspita'],
-    },
-    {
-      id: 10,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'X',
-      subject: 'Pendidikan Jasmani, Olahraga, dan Kesehatan (PJOK)',
-      teachers: ['Iwan Nugroho', 'Ani Cahyani'],
-    },
-    {
-      id: 11,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'X',
-      subject: 'Kewirausahaan',
-      teachers: ['Budi Santoso', 'Siti Rahayu'],
-    },
-    {
-      id: 12,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'X',
-      subject: 'Teknologi Informasi dan Komunikasi (TIK)',
-      teachers: ['Agus Setiawan', 'Rina Wati'],
-    },
-    {
-      id: 13,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'X',
-      subject: 'Bahasa Indonesia',
-      teachers: ['Budi Santoso', 'Siti Rahayu'],
-    },
-    {
-      id: 14,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'X',
-      subject: 'Matematika',
-      teachers: ['Agus Setiawan', 'Rina Wati'],
-    },
-    {
-      id: 15,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'X',
-      subject: 'Bahasa Inggris',
-      teachers: ['Joko Susanto', 'Dewi Kusuma'],
-    },
-    {
-      id: 16,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'X',
-      subject: 'Sejarah',
-      teachers: ['Adi Pratama', 'Rina Puspita'],
-    },
-    {
-      id: 17,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'X',
-      subject: 'Geografi',
-      teachers: ['Iwan Nugroho', 'Ani Cahyani'],
-    },
-    {
-      id: 18,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'X',
-      subject: 'Ekonomi',
-      teachers: ['Budi Santoso', 'Siti Rahayu'],
-    },
-    {
-      id: 19,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'X',
-      subject: 'Sosiologi',
-      teachers: ['Agus Setiawan', 'Rina Wati'],
-    },
-    {
-      id: 20,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'X',
-      subject: 'Bahasa dan Sastra Asing',
-      teachers: ['Joko Susanto', 'Dewi Kusuma'],
-    },
-    {
-      id: 21,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'X',
-      subject: 'Seni dan Budaya',
-      teachers: ['Adi Pratama', 'Rina Puspita'],
-    },
-    {
-      id: 22,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'X',
-      subject: 'Pendidikan Jasmani, Olahraga, dan Kesehatan (PJOK)',
-      teachers: ['Iwan Nugroho', 'Ani Cahyani'],
-    },
-    {
-      id: 23,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'X',
-      subject: 'Kewirausahaan',
-      teachers: ['Budi Santoso', 'Siti Rahayu'],
-    },
-    {
-      id: 24,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'X',
-      subject: 'Pendidikan Agama dan Budi Pekerti',
-      teachers: ['Agus Setiawan', 'Rina Wati'],
-    },
-    {
-      id: 25,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'X',
-      subject: 'Pendidikan Pancasila dan Kewarganegaraan (PPKn)',
-      teachers: ['Joko Susanto', 'Dewi Kusuma'],
-    },
-    {
-      id: 26,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'X',
-      subject: 'Teknologi Informasi dan Komunikasi (TIK)',
-      teachers: ['Adi Pratama', 'Rina Puspita'],
-    },
-    {
-      id: 27,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XI',
-      subject: 'Matematika',
-      teachers: ['Budi Santoso', 'Siti Rahayu'],
-    },
-    {
-      id: 28,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XI',
-      subject: 'Fisika',
-      teachers: ['Agus Setiawan', 'Rina Wati'],
-    },
-    {
-      id: 29,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XI',
-      subject: 'Kimia',
-      teachers: ['Joko Susanto', 'Dewi Kusuma'],
-    },
-    {
-      id: 30,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XI',
-      subject: 'Biologi',
-      teachers: ['Adi Pratama', 'Rina Puspita'],
-    },
-    {
-      id: 31,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XI',
-      subject: 'Bahasa Inggris',
-      teachers: ['Iwan Nugroho', 'Ani Cahyani'],
-    },
-    {
-      id: 32,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XI',
-      subject: 'Bahasa Indonesia',
-      teachers: ['Budi Santoso', 'Siti Rahayu'],
-    },
-    {
-      id: 33,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XI',
-      subject: 'Pendidikan Agama dan Budi Pekerti',
-      teachers: ['Agus Setiawan', 'Rina Wati'],
-    },
-    {
-      id: 34,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XI',
-      subject: 'Pendidikan Pancasila dan Kewarganegaraan (PPKn)',
-      teachers: ['Joko Susanto', 'Dewi Kusuma'],
-    },
-    {
-      id: 35,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XI',
-      subject: 'Seni dan Budaya',
-      teachers: ['Adi Pratama', 'Rina Puspita'],
-    },
-    {
-      id: 36,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XI',
-      subject: 'Pendidikan Jasmani, Olahraga, dan Kesehatan (PJOK)',
-      teachers: ['Iwan Nugroho', 'Ani Cahyani'],
-    },
-    {
-      id: 37,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XI',
-      subject: 'Kewirausahaan',
-      teachers: ['Budi Santoso', 'Siti Rahayu'],
-    },
-    {
-      id: 38,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XI',
-      subject: 'Teknologi Informasi dan Komunikasi (TIK)',
-      teachers: ['Agus Setiawan', 'Rina Wati'],
-    },
-    {
-      id: 39,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XI',
-      subject: 'Bahasa Indonesia',
-      teachers: ['Budi Santoso', 'Siti Rahayu'],
-    },
-    {
-      id: 40,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XI',
-      subject: 'Matematika',
-      teachers: ['Agus Setiawan', 'Rina Wati'],
-    },
-    {
-      id: 41,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XI',
-      subject: 'Bahasa Inggris',
-      teachers: ['Joko Susanto', 'Dewi Kusuma'],
-    },
-    {
-      id: 42,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XI',
-      subject: 'Sejarah',
-      teachers: ['Adi Pratama', 'Rina Puspita'],
-    },
-    {
-      id: 43,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XI',
-      subject: 'Geografi',
-      teachers: ['Iwan Nugroho', 'Ani Cahyani'],
-    },
-    {
-      id: 44,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XI',
-      subject: 'Ekonomi',
-      teachers: ['Budi Santoso', 'Siti Rahayu'],
-    },
-    {
-      id: 45,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XI',
-      subject: 'Sosiologi',
-      teachers: ['Agus Setiawan', 'Rina Wati'],
-    },
-    {
-      id: 46,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XI',
-      subject: 'Bahasa dan Sastra Asing',
-      teachers: ['Joko Susanto', 'Dewi Kusuma'],
-    },
-    {
-      id: 47,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XI',
-      subject: 'Seni dan Budaya',
-      teachers: ['Adi Pratama', 'Rina Puspita'],
-    },
-    {
-      id: 48,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XI',
-      subject: 'Pendidikan Jasmani, Olahraga, dan Kesehatan (PJOK)',
-      teachers: ['Iwan Nugroho', 'Ani Cahyani'],
-    },
-    {
-      id: 49,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XI',
-      subject: 'Kewirausahaan',
-      teachers: ['Budi Santoso', 'Siti Rahayu'],
-    },
-    {
-      id: 50,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XI',
-      subject: 'Pendidikan Agama dan Budi Pekerti',
-      teachers: ['Agus Setiawan', 'Rina Wati'],
-    },
-    {
-      id: 51,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XI',
-      subject: 'Pendidikan Pancasila dan Kewarganegaraan (PPKn)',
-      teachers: ['Joko Susanto', 'Dewi Kusuma'],
-    },
-    {
-      id: 52,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XI',
-      subject: 'Teknologi Informasi dan Komunikasi (TIK)',
-      teachers: ['Adi Pratama', 'Rina Puspita'],
-    },
-    {
-      id: 53,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XII',
-      subject: 'Matematika',
-      teachers: ['Budi Santoso', 'Siti Rahayu'],
-    },
-    {
-      id: 54,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XII',
-      subject: 'Fisika',
-      teachers: ['Agus Setiawan', 'Rina Wati'],
-    },
-    {
-      id: 55,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XII',
-      subject: 'Kimia',
-      teachers: ['Joko Susanto', 'Dewi Kusuma'],
-    },
-    {
-      id: 56,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XII',
-      subject: 'Biologi',
-      teachers: ['Adi Pratama', 'Rina Puspita'],
-    },
-    {
-      id: 57,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XII',
-      subject: 'Bahasa Inggris',
-      teachers: ['Iwan Nugroho', 'Ani Cahyani'],
-    },
-    {
-      id: 58,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XII',
-      subject: 'Bahasa Indonesia',
-      teachers: ['Budi Santoso', 'Siti Rahayu'],
-    },
-    {
-      id: 59,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XII',
-      subject: 'Pendidikan Agama dan Budi Pekerti',
-      teachers: ['Agus Setiawan', 'Rina Wati'],
-    },
-    {
-      id: 60,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XII',
-      subject: 'Pendidikan Pancasila dan Kewarganegaraan (PPKn)',
-      teachers: ['Joko Susanto', 'Dewi Kusuma'],
-    },
-    {
-      id: 61,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XII',
-      subject: 'Seni dan Budaya',
-      teachers: ['Adi Pratama', 'Rina Puspita'],
-    },
-    {
-      id: 62,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XII',
-      subject: 'Pendidikan Jasmani, Olahraga, dan Kesehatan (PJOK)',
-      teachers: ['Iwan Nugroho', 'Ani Cahyani'],
-    },
-    {
-      id: 63,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XII',
-      subject: 'Kewirausahaan',
-      teachers: ['Budi Santoso', 'Siti Rahayu'],
-    },
-    {
-      id: 64,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPA',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XII',
-      subject: 'Teknologi Informasi dan Komunikasi (TIK)',
-      teachers: ['Agus Setiawan', 'Rina Wati'],
-    },
-    {
-      id: 65,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XII',
-      subject: 'Bahasa Indonesia',
-      teachers: ['Budi Santoso', 'Siti Rahayu'],
-    },
-    {
-      id: 66,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XII',
-      subject: 'Matematika',
-      teachers: ['Agus Setiawan', 'Rina Wati'],
-    },
-    {
-      id: 67,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XII',
-      subject: 'Bahasa Inggris',
-      teachers: ['Joko Susanto', 'Dewi Kusuma'],
-    },
-    {
-      id: 68,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XII',
-      subject: 'Sejarah',
-      teachers: ['Adi Pratama', 'Rina Puspita'],
-    },
-    {
-      id: 69,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XII',
-      subject: 'Geografi',
-      teachers: ['Iwan Nugroho', 'Ani Cahyani'],
-    },
-    {
-      id: 70,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XII',
-      subject: 'Ekonomi',
-      teachers: ['Budi Santoso', 'Siti Rahayu'],
-    },
-    {
-      id: 71,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XII',
-      subject: 'Sosiologi',
-      teachers: ['Agus Setiawan', 'Rina Wati'],
-    },
-    {
-      id: 72,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XII',
-      subject:
-        'Bahasa dan Sastra Asing (misalnya Bahasa Jerman, Perancis, dll.)',
-      teachers: ['Joko Susanto', 'Dewi Kusuma'],
-    },
-    {
-      id: 73,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XII',
-      subject: 'Seni dan Budaya (misalnya Seni Rupa, Seni Musik, Seni Tari)',
-      teachers: ['Adi Pratama', 'Rina Puspita'],
-    },
-    {
-      id: 74,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XII',
-      subject: 'Pendidikan Jasmani, Olahraga, dan Kesehatan (PJOK)',
-      teachers: ['Iwan Nugroho', 'Ani Cahyani'],
-    },
-    {
-      id: 75,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XII',
-      subject: 'Kewirausahaan',
-      teachers: ['Budi Santoso', 'Siti Rahayu'],
-    },
-    {
-      id: 76,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XII',
-      subject: 'Pendidikan Agama dan Budi Pekerti',
-      teachers: ['Agus Setiawan', 'Rina Wati'],
-    },
-    {
-      id: 77,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XII',
-      subject: 'Pendidikan Pancasila dan Kewarganegaraan (PPKn)',
-      teachers: ['Joko Susanto', 'Dewi Kusuma'],
-    },
-    {
-      id: 78,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: 'IPS',
-      teacher: '',
-      subjects: [],
-      grades: [],
-      grade: 'XII',
-      subject: 'Teknologi Informasi dan Komunikasi (TIK)',
-      teachers: ['Adi Pratama', 'Rina Puspita'],
-    },
-  ];
-
-  let [dataTeacher, setDataTeacher] = useState([
-    {
-      id: 865,
-      teacher: 'Budi Santoso',
-      grades: ['XII'],
-      subjects: ['Bahasa Indonesia', 'Seni dan Budaya', 'Matematika', 'Fisika'],
-    },
-    {
-      id: 592,
-      teacher: 'Siti Rahayu',
-      grades: ['X'],
-      subjects: ['Biologi', 'Pendidikan Pancasila dan Kewarganegaraan (PPKn)'],
-    },
-    {
-      id: 286,
-      teacher: 'Agus Setiawan',
-      grades: ['XI'],
-      subjects: [
-        'Bahasa Indonesia',
-        'Pendidikan Pancasila dan Kewarganegaraan (PPKn)',
-      ],
-    },
-    {
-      id: 750,
-      teacher: 'Rina Wati',
-      grades: ['XI'],
-      subjects: ['Fisika', 'Matematika', 'Kewirausahaan'],
-    },
-    {
-      id: 143,
-      teacher: 'Joko Susanto',
-      grades: ['XI'],
-      subjects: [
-        'Bahasa Inggris',
-        'Pendidikan Pancasila dan Kewarganegaraan (PPKn)',
-        'Kewirausahaan',
-      ],
-    },
-    {
-      id: 381,
-      teacher: 'Dewi Kusuma',
-      grades: ['X', 'XI', 'XII'],
-      subjects: ['Matematika', 'Fisika', 'Bahasa Indonesia'],
-    },
-    {
-      id: 980,
-      teacher: 'Adi Pratama',
-      grades: ['X', 'XI'],
-      subjects: [
-        'Bahasa Inggris',
-        'Kewirausahaan',
-        'Teknologi Informasi dan Komunikasi (TIK)',
-      ],
-    },
-    {
-      id: 440,
-      teacher: 'Rina Puspita',
-      grades: ['XI', 'XII'],
-      subjects: ['Fisika', 'Biologi', 'Kewirausahaan'],
-    },
-    {
-      id: 527,
-      teacher: 'Iwan Nugroho',
-      grades: ['X'],
-      subjects: [
-        'Biologi',
-        'Kewirausahaan',
-        'Pendidikan Jasmani, Olahraga, dan Kesehatan (PJOK)',
-      ],
-    },
-    {
-      id: 497,
-      teacher: 'Ani Cahyani',
-      grades: ['XII'],
-      subjects: ['Matematika', 'Fisika', 'Bahasa Inggris'],
-    },
-  ]);
+  let [dataTeacher, setDataTeacher] = useState([]);
 
   let [dataTingkatan, setDataTingkatan] = useState([]);
 
@@ -1059,19 +121,21 @@ export default function StaffProfileContent() {
   // }, [activeTab]);
 
   useEffect(() => {
-    const getAllTeachersData = async () => {
+    const getAllSubjectData = async () => {
       const resTeacher = await AcademicAPI.getAllSubjectTeacher();
       const resSubject = await AcademicAPI.getAllSubject();
+      const resProgram = await AcademicAPI.getAllProdi();
 
       const dataTeacher = resTeacher.data.data;
       const dataSubject = resSubject.data.data;
+      const dataProgram = resProgram.data.data;
 
-      console.log(dataSubject);
+      const mappedData = [];
 
-      const newMappedData = dataSubject.map((subject) => {
+      const firstMap = dataSubject.map((subject) => {
         let teachers = [];
 
-        dataTeacher.map((teacher) => {
+        dataTeacher.forEach((teacher) => {
           if (teacher.subject_detail.id == subject.id)
             teachers.push(teacher.name);
         });
@@ -1079,10 +143,161 @@ export default function StaffProfileContent() {
         return { ...subject, teachers };
       });
 
-      setSubjectData(newMappedData);
+      firstMap.forEach((subject) => {
+        dataProgram.forEach((program) => {
+          if (program.id == subject.study_program_id) {
+            program.grades.forEach((grade) => {
+              ``;
+              mappedData.push({ ...subject, grade });
+            });
+          }
+        });
+      });
+
+      setSubjectData(mappedData);
     };
 
-    getAllTeachersData();
+    getAllSubjectData();
+  }, []);
+
+  const dummyTeacherData = [
+    {
+      'teacher_id': '47ba6b3a-7e93-4b3b-a55d-31d5db0d7d54',
+      'teacher_name': 'User Test',
+      'subject_id': 2,
+      'subject_name': 'Matematika',
+      'grade': '1',
+      'subject_detail': {
+        'id': 2,
+        'name': 'Matematika',
+        'type': 'mandatory',
+        'study_program_id': 18,
+        'study_program_name': 'bahasa indo',
+        'curriculum_id': 1,
+        'curriculum_name': 'test',
+      },
+    },
+    {
+      'teacher_id': '47ba6b3a-7e93-4b3b-a55d-31d5db0d7d54',
+      'teacher_name': 'User Test',
+      'subject_id': 2,
+      'subject_name': 'Matematika',
+      'grade': '6',
+      'subject_detail': {
+        'id': 2,
+        'name': 'Matematika',
+        'type': 'mandatory',
+        'study_program_id': 18,
+        'study_program_name': 'bahasa indo',
+        'curriculum_id': 1,
+        'curriculum_name': 'test',
+      },
+    },
+    {
+      'teacher_id': '47ba6b3a-7e93-4b3b-a55d-31d5db0d7d54',
+      'teacher_name': 'User Test',
+      'subject_id': 2,
+      'subject_name': 'Komputer',
+      'grade': '8',
+      'subject_detail': {
+        'id': 2,
+        'name': 'Komputer',
+        'type': 'mandatory',
+        'study_program_id': 18,
+        'study_program_name': 'bahasa indo',
+        'curriculum_id': 1,
+        'curriculum_name': 'test',
+      },
+    },
+    {
+      'teacher_id': '47ba6b3a-7e93-4b3b-a55d-31d5db0d97354',
+      'teacher_name': 'Aditiya Test',
+      'subject_id': 2,
+      'subject_name': 'Bahasa Indonesia',
+      'grade': '8',
+      'subject_detail': {
+        'id': 2,
+        'name': 'Bahasa Indonesia',
+        'type': 'mandatory',
+        'study_program_id': 18,
+        'study_program_name': 'bahasa indo',
+        'curriculum_id': 1,
+        'curriculum_name': 'test',
+      },
+    },
+    {
+      'teacher_id': '47ba6b3a-7e93-4b3b-a55d-31d5db0d97354',
+      'teacher_name': 'Aditiya Test',
+      'subject_id': 2,
+      'subject_name': 'IPA',
+      'grade': '8',
+      'subject_detail': {
+        'id': 2,
+        'name': 'Bahasa Indonesia',
+        'type': 'mandatory',
+        'study_program_id': 18,
+        'study_program_name': 'bahasa indo',
+        'curriculum_id': 1,
+        'curriculum_name': 'test',
+      },
+    },
+    {
+      'teacher_id': '47ba6b3a-7e93-4b21b-a55d-31d5db0d97354',
+      'teacher_name': 'Third Test',
+      'subject_id': 2,
+      'subject_name': 'IPA',
+      'grade': '8',
+      'subject_detail': {
+        'id': 2,
+        'name': 'Bahasa Indonesia',
+        'type': 'mandatory',
+        'study_program_id': 18,
+        'study_program_name': 'bahasa indo',
+        'curriculum_id': 1,
+        'curriculum_name': 'test',
+      },
+    },
+  ];
+
+  useEffect(() => {
+    const getAllTeacher = async () => {
+      const {
+        data: { data },
+      } = await AcademicAPI.getAllSubjectTeacher();
+
+      let mappedData = [];
+
+      let grades = [];
+      let subjects = [];
+
+      data.forEach((datum, idx) => {
+        let next = idx + 1;
+        let teacher = datum.teacher_name;
+
+        if (!data[next] || data[next].teacher_id !== datum.teacher_id) {
+          grades.push(datum.grade);
+          subjects.push(datum.subject_name);
+          mappedData.push({ id: datum.teacher_id, teacher, grades, subjects });
+
+          grades = [];
+          subjects = [];
+        } else {
+          grades.push(datum.grade);
+          subjects.push(datum.subject_name);
+        }
+      });
+
+      mappedData = mappedData.map((datum) => {
+        grades = [...new Set(datum.grades)];
+        subjects = [...new Set(datum.subjects)];
+
+        return { id: datum.id, teacher: datum.teacher, grades, subjects };
+      });
+
+      setDataTeacher(mappedData);
+    };
+
+    getAllTeacher();
   }, []);
 
   useEffect(() => {
@@ -1154,10 +369,17 @@ export default function StaffProfileContent() {
     //     }
     //   });
     // }
+
     setFilteredData(temp);
-    // console.log(temp)
     formik.setValues(emptyData);
-  }, [search, studyProgramFilter, sortSettings, activeTab, subjectData]);
+  }, [
+    subjectData,
+    search,
+    studyProgramFilter,
+    sortSettings,
+    activeTab,
+    dataTeacher,
+  ]);
 
   function Filters() {
     return (
@@ -1593,7 +815,7 @@ export default function StaffProfileContent() {
                   setSortBy('');
                   setSortSettings('');
                   formik.setValues(emptyData);
-                  index === 0 ? setFilteredData(data) : null;
+                  index === 0 ? setFilteredData(subjectData) : null;
                 }}
               >
                 <Typography sx={{ fontWeight: 600, fontSize: 14 }}>

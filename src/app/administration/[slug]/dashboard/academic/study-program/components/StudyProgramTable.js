@@ -192,7 +192,11 @@ function ActionButton({ params }) {
   );
 }
 
-export default function StudyProgramTable({ data, formik }) {
+export default function StudyProgramTable({
+  data,
+  formik,
+  deleteStudyProgram = () => {},
+}) {
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('lg'));
 
   const [openEditModal, setOpenEditModal] = useState(false);
@@ -387,6 +391,7 @@ export default function StudyProgramTable({ data, formik }) {
                 },
               }}
               onClick={() => {
+                deleteStudyProgram(activeRow.id);
                 setOpenDeleteModal(false);
               }}
             >

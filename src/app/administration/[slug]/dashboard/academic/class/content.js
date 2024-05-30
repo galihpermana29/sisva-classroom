@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Add,
@@ -6,7 +6,7 @@ import {
   DownloadRounded,
   Search,
   UploadFileRounded,
-} from "@mui/icons-material";
+} from '@mui/icons-material';
 import {
   Box,
   Button,
@@ -21,32 +21,33 @@ import {
   Stack,
   TextField,
   Typography,
-} from "@mui/material";
-import TeacherTable from "./components/StudentTable";
-import { ExcelIcon, ExportIcon, SortIcon } from "@/assets/SVGs";
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import { permissions, types } from "@/globalcomponents/Variable";
-import { FormAddPeriod } from "./components/FormAddPeriod";
+} from '@mui/material';
+import TeacherTable from './components/StudentTable';
+import { ExcelIcon, ExportIcon, SortIcon } from '@/assets/SVGs';
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { permissions, types } from '@/globalcomponents/Variable';
+import { FormAddPeriod } from './components/FormAddPeriod';
 
-import { useFormik } from "formik";
-import { FormAddCurriculum } from "./components/FormAddCurriculum";
-import SubjectTable from "./components/ClassTable";
-import ClassTable from "./components/ClassTable";
-import StudentTable from "./components/StudentTable";
-import ClassElectiveTable from "./components/ClassElectiveTable";
+import { useFormik } from 'formik';
+import { FormAddCurriculum } from './components/FormAddCurriculum';
+import SubjectTable from './components/ClassTable';
+import ClassTable from './components/ClassTable';
+import StudentTable from './components/StudentTable';
+import ClassElectiveTable from './components/ClassElectiveTable';
+import AcademicAPI from '@/api/academic';
 export default function StaffProfileContent() {
   const [emptyData, setEmptyData] = useState({
-    name: "",
-    code: "",
-    status: "active",
+    name: '',
+    code: '',
+    status: 'active',
     grades: [],
   });
   const [filledData, setFilledData] = useState({
-    name: "Ilmu Pengetahuan Alam",
-    code: "IPA",
-    status: "active",
-    grades: ["X", "XI", "XII"],
+    name: 'Ilmu Pengetahuan Alam',
+    code: 'IPA',
+    status: 'active',
+    grades: ['X', 'XI', 'XII'],
   });
   const formik = useFormik({
     initialValues: { emptyData },
@@ -55,202 +56,202 @@ export default function StaffProfileContent() {
   let data = [
     {
       id: 1,
-      period_name: "Tahun Ajaran 2024/2025",
-      type: "mandatory",
-      study_program: "IPA",
-      guardian: "Rina Puspita",
-      grade: "X",
-      class: "X IPA 1",
+      period_name: 'Tahun Ajaran 2024/2025',
+      type: 'mandatory',
+      study_program: 'IPA',
+      guardian: 'Rina Puspita',
+      grade: 'X',
+      class: 'X IPA 1',
       students: 30,
     },
     {
       id: 2,
-      period_name: "Tahun Ajaran 2024/2025",
-      type: "mandatory",
-      study_program: "IPA",
-      guardian: "Siti Rahayu",
-      grade: "X",
-      class: "X IPA 2",
+      period_name: 'Tahun Ajaran 2024/2025',
+      type: 'mandatory',
+      study_program: 'IPA',
+      guardian: 'Siti Rahayu',
+      grade: 'X',
+      class: 'X IPA 2',
       students: 30,
     },
     {
       id: 3,
-      period_name: "Tahun Ajaran 2024/2025",
-      type: "mandatory",
-      study_program: "IPA",
-      guardian: "Dewi Kusuma",
-      grade: "X",
-      class: "X IPA 3",
+      period_name: 'Tahun Ajaran 2024/2025',
+      type: 'mandatory',
+      study_program: 'IPA',
+      guardian: 'Dewi Kusuma',
+      grade: 'X',
+      class: 'X IPA 3',
       students: 30,
     },
     {
       id: 4,
-      period_name: "Tahun Ajaran 2024/2025",
-      type: "mandatory",
-      study_program: "IPA",
-      guardian: "Agus Setiawan",
-      grade: "X",
-      class: "X IPA 4",
+      period_name: 'Tahun Ajaran 2024/2025',
+      type: 'mandatory',
+      study_program: 'IPA',
+      guardian: 'Agus Setiawan',
+      grade: 'X',
+      class: 'X IPA 4',
       students: 30,
     },
     {
       id: 5,
-      period_name: "Tahun Ajaran 2024/2025",
-      type: "mandatory",
-      study_program: "IPA",
-      guardian: "Joko Susanto",
-      grade: "X",
-      class: "X IPA 5",
+      period_name: 'Tahun Ajaran 2024/2025',
+      type: 'mandatory',
+      study_program: 'IPA',
+      guardian: 'Joko Susanto',
+      grade: 'X',
+      class: 'X IPA 5',
       students: 30,
     },
     {
       id: 6,
-      period_name: "Tahun Ajaran 2024/2025",
-      type: "mandatory",
-      study_program: "IPA",
-      guardian: "Joko Susanto",
-      grade: "XI",
-      class: "XI IPA 1",
+      period_name: 'Tahun Ajaran 2024/2025',
+      type: 'mandatory',
+      study_program: 'IPA',
+      guardian: 'Joko Susanto',
+      grade: 'XI',
+      class: 'XI IPA 1',
       students: 38,
     },
     {
       id: 7,
-      period_name: "Tahun Ajaran 2024/2025",
-      type: "mandatory",
-      study_program: "IPA",
-      guardian: "Siti Rahayu",
-      grade: "XI",
-      class: "XI IPA 2",
+      period_name: 'Tahun Ajaran 2024/2025',
+      type: 'mandatory',
+      study_program: 'IPA',
+      guardian: 'Siti Rahayu',
+      grade: 'XI',
+      class: 'XI IPA 2',
       students: 37,
     },
     {
       id: 8,
-      period_name: "Tahun Ajaran 2024/2025",
-      type: "mandatory",
-      study_program: "IPA",
-      guardian: "Agus Setiawan",
-      grade: "XI",
-      class: "XI IPA 3",
+      period_name: 'Tahun Ajaran 2024/2025',
+      type: 'mandatory',
+      study_program: 'IPA',
+      guardian: 'Agus Setiawan',
+      grade: 'XI',
+      class: 'XI IPA 3',
       students: 37,
     },
     {
       id: 9,
-      period_name: "Tahun Ajaran 2024/2025",
-      type: "mandatory",
-      study_program: "IPA",
-      guardian: "Ani Cahyani",
-      grade: "XI",
-      class: "XI IPA 4",
+      period_name: 'Tahun Ajaran 2024/2025',
+      type: 'mandatory',
+      study_program: 'IPA',
+      guardian: 'Ani Cahyani',
+      grade: 'XI',
+      class: 'XI IPA 4',
       students: 32,
     },
     {
       id: 10,
-      period_name: "Tahun Ajaran 2024/2025",
-      type: "mandatory",
-      study_program: "IPA",
-      guardian: "Iwan Nugroho",
-      grade: "XI",
-      class: "XI IPA 5",
+      period_name: 'Tahun Ajaran 2024/2025',
+      type: 'mandatory',
+      study_program: 'IPA',
+      guardian: 'Iwan Nugroho',
+      grade: 'XI',
+      class: 'XI IPA 5',
       students: 37,
     },
     {
       id: 11,
-      period_name: "Tahun Ajaran 2024/2025",
-      type: "mandatory",
-      study_program: "IPA",
-      guardian: "Dewi Kusuma",
-      grade: "XII",
-      class: "XII IPA 1",
+      period_name: 'Tahun Ajaran 2024/2025',
+      type: 'mandatory',
+      study_program: 'IPA',
+      guardian: 'Dewi Kusuma',
+      grade: 'XII',
+      class: 'XII IPA 1',
       students: 34,
     },
     {
       id: 12,
-      period_name: "Tahun Ajaran 2024/2025",
-      type: "mandatory",
-      study_program: "IPA",
-      guardian: "Rina Wati",
-      grade: "XII",
-      class: "XII IPA 2",
+      period_name: 'Tahun Ajaran 2024/2025',
+      type: 'mandatory',
+      study_program: 'IPA',
+      guardian: 'Rina Wati',
+      grade: 'XII',
+      class: 'XII IPA 2',
       students: 35,
     },
     {
       id: 13,
-      period_name: "Tahun Ajaran 2024/2025",
-      type: "mandatory",
-      study_program: "IPA",
-      guardian: "Rina Puspita",
-      grade: "XII",
-      class: "XII IPA 3",
+      period_name: 'Tahun Ajaran 2024/2025',
+      type: 'mandatory',
+      study_program: 'IPA',
+      guardian: 'Rina Puspita',
+      grade: 'XII',
+      class: 'XII IPA 3',
       students: 31,
     },
     {
       id: 14,
-      period_name: "Tahun Ajaran 2024/2025",
-      type: "mandatory",
-      study_program: "IPA",
-      guardian: "Iwan Nugroho",
-      grade: "XII",
-      class: "XII IPA 4",
+      period_name: 'Tahun Ajaran 2024/2025',
+      type: 'mandatory',
+      study_program: 'IPA',
+      guardian: 'Iwan Nugroho',
+      grade: 'XII',
+      class: 'XII IPA 4',
       students: 38,
     },
     {
       id: 15,
-      period_name: "Tahun Ajaran 2024/2025",
-      type: "mandatory",
-      study_program: "IPA",
-      guardian: "Budi Santoso",
-      grade: "XII",
-      class: "XII IPA 5",
+      period_name: 'Tahun Ajaran 2024/2025',
+      type: 'mandatory',
+      study_program: 'IPA',
+      guardian: 'Budi Santoso',
+      grade: 'XII',
+      class: 'XII IPA 5',
       students: 35,
     },
     {
       id: 21,
-      period_name: "Tahun Ajaran 2024/2025",
-      type: "elective",
-      study_program: "IPA",
-      guardian: "",
-      grade: "X",
-      class: "Student Day Arsitektur",
+      period_name: 'Tahun Ajaran 2024/2025',
+      type: 'elective',
+      study_program: 'IPA',
+      guardian: '',
+      grade: 'X',
+      class: 'Student Day Arsitektur',
       students: 30,
     },
     {
       id: 22,
-      period_name: "Tahun Ajaran 2024/2025",
-      type: "elective",
-      study_program: "IPA",
-      guardian: "",
-      grade: "X",
-      class: "Student Day Programming",
+      period_name: 'Tahun Ajaran 2024/2025',
+      type: 'elective',
+      study_program: 'IPA',
+      guardian: '',
+      grade: 'X',
+      class: 'Student Day Programming',
       students: 30,
     },
     {
       id: 23,
-      period_name: "Tahun Ajaran 2024/2025",
-      type: "elective",
-      study_program: "IPA",
-      guardian: "",
-      grade: "X",
-      class: "Student Day Fotografi",
+      period_name: 'Tahun Ajaran 2024/2025',
+      type: 'elective',
+      study_program: 'IPA',
+      guardian: '',
+      grade: 'X',
+      class: 'Student Day Fotografi',
       students: 33,
     },
     {
       id: 24,
-      period_name: "Tahun Ajaran 2024/2025",
-      type: "elective",
-      study_program: "IPA",
-      guardian: "",
-      grade: "X",
-      class: "Student Day Sejarah",
+      period_name: 'Tahun Ajaran 2024/2025',
+      type: 'elective',
+      study_program: 'IPA',
+      guardian: '',
+      grade: 'X',
+      class: 'Student Day Sejarah',
       students: 28,
     },
     {
       id: 25,
-      period_name: "Tahun Ajaran 2024/2025",
-      type: "elective",
-      study_program: "IPA",
-      guardian: "",
-      grade: "X",
-      class: "Student Day Bahasa Inggris",
+      period_name: 'Tahun Ajaran 2024/2025',
+      type: 'elective',
+      study_program: 'IPA',
+      guardian: '',
+      grade: 'X',
+      class: 'Student Day Bahasa Inggris',
       students: 30,
     },
   ];
@@ -258,213 +259,213 @@ export default function StaffProfileContent() {
   let [dataStudent, setDataStudent] = useState([
     {
       id: 1,
-      period_name: "Tahun Ajaran 2024/2025",
-      grade: "X",
-      class: "X IPA 1",
-      student: "Widi Astuti",
+      period_name: 'Tahun Ajaran 2024/2025',
+      grade: 'X',
+      class: 'X IPA 1',
+      student: 'Widi Astuti',
     },
     {
       id: 2,
-      period_name: "Tahun Ajaran 2024/2025",
-      grade: "X",
-      class: "X IPA 1",
-      student: "Desi Susanti",
+      period_name: 'Tahun Ajaran 2024/2025',
+      grade: 'X',
+      class: 'X IPA 1',
+      student: 'Desi Susanti',
     },
     {
       id: 3,
-      period_name: "Tahun Ajaran 2024/2025",
-      grade: "X",
-      class: "X IPA 1",
-      student: "Rudi Hartono",
+      period_name: 'Tahun Ajaran 2024/2025',
+      grade: 'X',
+      class: 'X IPA 1',
+      student: 'Rudi Hartono',
     },
     {
       id: 4,
-      period_name: "Tahun Ajaran 2024/2025",
-      grade: "X",
-      class: "X IPA 1",
-      student: "Arifin Rahman",
+      period_name: 'Tahun Ajaran 2024/2025',
+      grade: 'X',
+      class: 'X IPA 1',
+      student: 'Arifin Rahman',
     },
     {
       id: 5,
-      period_name: "Tahun Ajaran 2024/2025",
-      grade: "X",
-      class: "X IPA 1",
-      student: "Eko Lina",
+      period_name: 'Tahun Ajaran 2024/2025',
+      grade: 'X',
+      class: 'X IPA 1',
+      student: 'Eko Lina',
     },
     {
       id: 6,
-      period_name: "Tahun Ajaran 2024/2025",
-      grade: "X",
-      class: "X IPA 1",
-      student: "Budi Santoso",
+      period_name: 'Tahun Ajaran 2024/2025',
+      grade: 'X',
+      class: 'X IPA 1',
+      student: 'Budi Santoso',
     },
     {
       id: 7,
-      period_name: "Tahun Ajaran 2024/2025",
-      grade: "X",
-      class: "X IPA 1",
-      student: "Sinta Amelia",
+      period_name: 'Tahun Ajaran 2024/2025',
+      grade: 'X',
+      class: 'X IPA 1',
+      student: 'Sinta Amelia',
     },
     {
       id: 8,
-      period_name: "Tahun Ajaran 2024/2025",
-      grade: "X",
-      class: "X IPA 1",
-      student: "Samsul Arifin",
+      period_name: 'Tahun Ajaran 2024/2025',
+      grade: 'X',
+      class: 'X IPA 1',
+      student: 'Samsul Arifin',
     },
     {
       id: 9,
-      period_name: "Tahun Ajaran 2024/2025",
-      grade: "X",
-      class: "X IPA 1",
-      student: "Bambang Surya",
+      period_name: 'Tahun Ajaran 2024/2025',
+      grade: 'X',
+      class: 'X IPA 1',
+      student: 'Bambang Surya',
     },
     {
       id: 10,
-      period_name: "Tahun Ajaran 2024/2025",
-      grade: "X",
-      class: "X IPA 1",
-      student: "Joko Susanto",
+      period_name: 'Tahun Ajaran 2024/2025',
+      grade: 'X',
+      class: 'X IPA 1',
+      student: 'Joko Susanto',
     },
     {
       id: 11,
-      period_name: "Tahun Ajaran 2024/2025",
-      grade: "X",
-      class: "X IPA 1",
-      student: "Hadi Dini",
+      period_name: 'Tahun Ajaran 2024/2025',
+      grade: 'X',
+      class: 'X IPA 1',
+      student: 'Hadi Dini',
     },
     {
       id: 12,
-      period_name: "Tahun Ajaran 2024/2025",
-      grade: "X",
-      class: "X IPA 1",
-      student: "Adi Pratama",
+      period_name: 'Tahun Ajaran 2024/2025',
+      grade: 'X',
+      class: 'X IPA 1',
+      student: 'Adi Pratama',
     },
     {
       id: 13,
-      period_name: "Tahun Ajaran 2024/2025",
-      grade: "X",
-      class: "X IPA 1",
-      student: "Ani Cahyani",
+      period_name: 'Tahun Ajaran 2024/2025',
+      grade: 'X',
+      class: 'X IPA 1',
+      student: 'Ani Cahyani',
     },
     {
       id: 14,
-      period_name: "Tahun Ajaran 2024/2025",
-      grade: "X",
-      class: "X IPA 1",
-      student: "Ratna Dewi",
+      period_name: 'Tahun Ajaran 2024/2025',
+      grade: 'X',
+      class: 'X IPA 1',
+      student: 'Ratna Dewi',
     },
     {
       id: 15,
-      period_name: "Tahun Ajaran 2024/2025",
-      grade: "X",
-      class: "X IPA 1",
-      student: "Achmad Faisal",
+      period_name: 'Tahun Ajaran 2024/2025',
+      grade: 'X',
+      class: 'X IPA 1',
+      student: 'Achmad Faisal',
     },
     {
       id: 16,
-      period_name: "Tahun Ajaran 2024/2025",
-      grade: "X",
-      class: "X IPA 1",
-      student: "Putra Sari",
+      period_name: 'Tahun Ajaran 2024/2025',
+      grade: 'X',
+      class: 'X IPA 1',
+      student: 'Putra Sari',
     },
     {
       id: 17,
-      period_name: "Tahun Ajaran 2024/2025",
-      grade: "X",
-      class: "X IPA 1",
-      student: "Sari Fitriani",
+      period_name: 'Tahun Ajaran 2024/2025',
+      grade: 'X',
+      class: 'X IPA 1',
+      student: 'Sari Fitriani',
     },
     {
       id: 18,
-      period_name: "Tahun Ajaran 2024/2025",
-      grade: "X",
-      class: "X IPA 1",
-      student: "Indra Wati",
+      period_name: 'Tahun Ajaran 2024/2025',
+      grade: 'X',
+      class: 'X IPA 1',
+      student: 'Indra Wati',
     },
     {
       id: 19,
-      period_name: "Tahun Ajaran 2024/2025",
-      grade: "X",
-      class: "X IPA 1",
-      student: "Sari Indah",
+      period_name: 'Tahun Ajaran 2024/2025',
+      grade: 'X',
+      class: 'X IPA 1',
+      student: 'Sari Indah',
     },
     {
       id: 20,
-      period_name: "Tahun Ajaran 2024/2025",
-      grade: "X",
-      class: "X IPA 1",
-      student: "Hendra Gunawan",
+      period_name: 'Tahun Ajaran 2024/2025',
+      grade: 'X',
+      class: 'X IPA 1',
+      student: 'Hendra Gunawan',
     },
     {
       id: 21,
-      period_name: "Tahun Ajaran 2024/2025",
-      grade: "X",
-      class: "X IPA 1",
-      student: "Arianto Susilo",
+      period_name: 'Tahun Ajaran 2024/2025',
+      grade: 'X',
+      class: 'X IPA 1',
+      student: 'Arianto Susilo',
     },
     {
       id: 22,
-      period_name: "Tahun Ajaran 2024/2025",
-      grade: "X",
-      class: "X IPA 1",
-      student: "Linda Wulandari",
+      period_name: 'Tahun Ajaran 2024/2025',
+      grade: 'X',
+      class: 'X IPA 1',
+      student: 'Linda Wulandari',
     },
     {
       id: 23,
-      period_name: "Tahun Ajaran 2024/2025",
-      grade: "X",
-      class: "X IPA 1",
-      student: "Ilham Saputra",
+      period_name: 'Tahun Ajaran 2024/2025',
+      grade: 'X',
+      class: 'X IPA 1',
+      student: 'Ilham Saputra',
     },
     {
       id: 24,
-      period_name: "Tahun Ajaran 2024/2025",
-      grade: "X",
-      class: "X IPA 1",
-      student: "Yuniarti",
+      period_name: 'Tahun Ajaran 2024/2025',
+      grade: 'X',
+      class: 'X IPA 1',
+      student: 'Yuniarti',
     },
     {
       id: 25,
-      period_name: "Tahun Ajaran 2024/2025",
-      grade: "X",
-      class: "X IPA 1",
-      student: "Arief Dian",
+      period_name: 'Tahun Ajaran 2024/2025',
+      grade: 'X',
+      class: 'X IPA 1',
+      student: 'Arief Dian',
     },
     {
       id: 26,
-      period_name: "Tahun Ajaran 2024/2025",
-      grade: "X",
-      class: "X IPA 1",
-      student: "Firman Maya",
+      period_name: 'Tahun Ajaran 2024/2025',
+      grade: 'X',
+      class: 'X IPA 1',
+      student: 'Firman Maya',
     },
     {
       id: 27,
-      period_name: "Tahun Ajaran 2024/2025",
-      grade: "X",
-      class: "X IPA 1",
-      student: "Hendra",
+      period_name: 'Tahun Ajaran 2024/2025',
+      grade: 'X',
+      class: 'X IPA 1',
+      student: 'Hendra',
     },
     {
       id: 28,
-      period_name: "Tahun Ajaran 2024/2025",
-      grade: "X",
-      class: "X IPA 1",
-      student: "Rina Wati",
+      period_name: 'Tahun Ajaran 2024/2025',
+      grade: 'X',
+      class: 'X IPA 1',
+      student: 'Rina Wati',
     },
     {
       id: 29,
-      period_name: "Tahun Ajaran 2024/2025",
-      grade: "X",
-      class: "X IPA 1",
-      student: "Nurul Huda",
+      period_name: 'Tahun Ajaran 2024/2025',
+      grade: 'X',
+      class: 'X IPA 1',
+      student: 'Nurul Huda',
     },
     {
       id: 30,
-      period_name: "Tahun Ajaran 2024/2025",
-      grade: "X",
-      class: "X IPA 1",
-      student: "Yulia Susanti",
+      period_name: 'Tahun Ajaran 2024/2025',
+      grade: 'X',
+      class: 'X IPA 1',
+      student: 'Yulia Susanti',
     },
   ]);
 
@@ -478,11 +479,11 @@ export default function StaffProfileContent() {
   };
 
   let [filteredData, setFilteredData] = useState([]);
-  const [search, setSearch] = useState("");
-  const [studyProgramFilter, setStudyProgramFilter] = useState("");
-  const [sortBy, setSortBy] = useState("");
-  const [sortType, setSortType] = useState("ascending");
-  const [sortSettings, setSortSettings] = useState("");
+  const [search, setSearch] = useState('');
+  const [studyProgramFilter, setStudyProgramFilter] = useState('');
+  const [sortBy, setSortBy] = useState('');
+  const [sortType, setSortType] = useState('ascending');
+  const [sortSettings, setSortSettings] = useState('');
   const [openSortModal, setOpenSortModal] = useState(false);
 
   const [openCreatePeriodModal, setOpenCreatePeriodModal] = useState(false);
@@ -492,20 +493,39 @@ export default function StaffProfileContent() {
   const [activeTab, setActiveTab] = useState(0);
   let tabs = [
     {
-      title: "Kelas Wajib",
+      title: 'Kelas Wajib',
       component: <ClassTable formik={formik} data={filteredData} />,
     },
     {
-      title: "Kelas Pilihan",
+      title: 'Kelas Pilihan',
       component: <ClassElectiveTable formik={formik} data={filteredData} />,
     },
     {
-      title: "Murid",
+      title: 'Murid',
       component: <StudentTable formik={formik} data={filteredData} />,
     },
   ];
 
   let [dataCurriculum, setDataCurriculum] = useState([]);
+
+  useEffect(() => {
+    const getClassesData = async () => {
+      const resClass = await AcademicAPI.getAllClasses();
+      const resSubject = await AcademicAPI.getAllSubject();
+      const resPeriod = await AcademicAPI.getAllPeriod();
+
+      const classData = resClass.data.data;
+      const subjectData = resSubject.data.data;
+      const periodData = resPeriod.data.data;
+
+      console.log(classData);
+      console.log(subjectData);
+      console.log(periodData);
+    };
+
+    getClassesData();
+  }, []);
+
   // useEffect(() => {
   //   let temp = [];
   //   let id = 1;
@@ -541,20 +561,18 @@ export default function StaffProfileContent() {
       ? (temp = data.filter((item) => {
           return (
             item.class.toLowerCase().includes(search.toLowerCase()) &&
-            item.type === "mandatory"
+            item.type === 'mandatory'
           );
         }))
       : activeTab === 1
       ? (temp = data.filter((item) => {
           return (
             item.class.toLowerCase().includes(search.toLowerCase()) &&
-            item.type === "elective"
+            item.type === 'elective'
           );
         }))
       : (temp = dataStudent.filter((item) => {
-          return (
-            item.student.toLowerCase().includes(search.toLowerCase())
-          );
+          return item.student.toLowerCase().includes(search.toLowerCase());
         }));
     // if (sortSettings && sortSettings.sortBy) {
     //   temp = temp.sort(function (a, b) {
@@ -625,44 +643,44 @@ export default function StaffProfileContent() {
     return (
       <Stack
         sx={{
-          flexDirection: "row",
+          flexDirection: 'row',
           flex: 1,
-          overflowX: "auto",
+          overflowX: 'auto',
           height: 54,
           px: { xs: 0, lg: 1 },
         }}
       >
         <Stack
           sx={{
-            flexDirection: "row",
+            flexDirection: 'row',
             flex: 1,
             py: 1,
           }}
         >
           <TextField
             select
-            size="small"
-            label="Periode"
+            size='small'
+            label='Periode'
             value={studyProgramFilter}
             onChange={(e) => setStudyProgramFilter(e.target.value)}
             sx={{
               flex: { xs: 1, lg: 0 },
-              minWidth: "fit-content",
+              minWidth: 'fit-content',
             }}
             InputProps={{
-              sx: { minWidth: 140, width: { xs: "100%", lg: "fit-content" } },
+              sx: { minWidth: 140, width: { xs: '100%', lg: 'fit-content' } },
               startAdornment: studyProgramFilter && (
                 <Cancel
                   onClick={() => {
-                    setStudyProgramFilter("");
+                    setStudyProgramFilter('');
                   }}
                   sx={{
                     fontSize: 14,
-                    color: "base.base50",
-                    cursor: "pointer",
-                    transform: "translateX(-4px)",
-                    "&:hover": {
-                      color: "base.base60",
+                    color: 'base.base50',
+                    cursor: 'pointer',
+                    transform: 'translateX(-4px)',
+                    '&:hover': {
+                      color: 'base.base60',
                     },
                   }}
                 />
@@ -670,9 +688,9 @@ export default function StaffProfileContent() {
             }}
           >
             {[
-              "Tahun Ajaran 2024/2025",
-              "Tahun Ajaran 2023/2024",
-              "Tahun Ajaran 2022/2023",
+              'Tahun Ajaran 2024/2025',
+              'Tahun Ajaran 2023/2024',
+              'Tahun Ajaran 2022/2023',
             ].map((option, index) => (
               <MenuItem key={index} value={option}>
                 <Typography fontSize={14}>{option}</Typography>
@@ -681,36 +699,36 @@ export default function StaffProfileContent() {
           </TextField>
           <TextField
             select
-            size="small"
-            label="Program Studi"
+            size='small'
+            label='Program Studi'
             value={studyProgramFilter}
             onChange={(e) => setStudyProgramFilter(e.target.value)}
             sx={{
               flex: { xs: 1, lg: 0 },
-              minWidth: "fit-content",
+              minWidth: 'fit-content',
               ml: 1,
             }}
             InputProps={{
-              sx: { minWidth: 140, width: { xs: "100%", lg: "fit-content" } },
+              sx: { minWidth: 140, width: { xs: '100%', lg: 'fit-content' } },
               startAdornment: studyProgramFilter && (
                 <Cancel
                   onClick={() => {
-                    setStudyProgramFilter("");
+                    setStudyProgramFilter('');
                   }}
                   sx={{
                     fontSize: 14,
-                    color: "base.base50",
-                    cursor: "pointer",
-                    transform: "translateX(-4px)",
-                    "&:hover": {
-                      color: "base.base60",
+                    color: 'base.base50',
+                    cursor: 'pointer',
+                    transform: 'translateX(-4px)',
+                    '&:hover': {
+                      color: 'base.base60',
                     },
                   }}
                 />
               ),
             }}
           >
-            {["IPA", "IPS", "IPA-U", "IPS-U"].map((option, index) => (
+            {['IPA', 'IPS', 'IPA-U', 'IPS-U'].map((option, index) => (
               <MenuItem key={index} value={option}>
                 <Typography fontSize={14}>{option}</Typography>
               </MenuItem>
@@ -718,36 +736,36 @@ export default function StaffProfileContent() {
           </TextField>
           <TextField
             select
-            size="small"
-            label="Tingkatan"
+            size='small'
+            label='Tingkatan'
             value={studyProgramFilter}
             onChange={(e) => setStudyProgramFilter(e.target.value)}
             sx={{
               flex: { xs: 1, lg: 0 },
-              minWidth: "fit-content",
+              minWidth: 'fit-content',
               ml: 1,
             }}
             InputProps={{
-              sx: { minWidth: 140, width: { xs: "100%", lg: "fit-content" } },
+              sx: { minWidth: 140, width: { xs: '100%', lg: 'fit-content' } },
               startAdornment: studyProgramFilter && (
                 <Cancel
                   onClick={() => {
-                    setStudyProgramFilter("");
+                    setStudyProgramFilter('');
                   }}
                   sx={{
                     fontSize: 14,
-                    color: "base.base50",
-                    cursor: "pointer",
-                    transform: "translateX(-4px)",
-                    "&:hover": {
-                      color: "base.base60",
+                    color: 'base.base50',
+                    cursor: 'pointer',
+                    transform: 'translateX(-4px)',
+                    '&:hover': {
+                      color: 'base.base60',
                     },
                   }}
                 />
               ),
             }}
           >
-            {["X", "XI", "XII"].map((option, index) => (
+            {['X', 'XI', 'XII'].map((option, index) => (
               <MenuItem key={index} value={option}>
                 <Typography fontSize={14}>{option}</Typography>
               </MenuItem>
@@ -755,37 +773,37 @@ export default function StaffProfileContent() {
           </TextField>
           <TextField
             select
-            size="small"
-            label="Kelas"
+            size='small'
+            label='Kelas'
             value={studyProgramFilter}
             onChange={(e) => setStudyProgramFilter(e.target.value)}
             sx={{
               flex: { xs: 1, lg: 0 },
-              minWidth: "fit-content",
+              minWidth: 'fit-content',
               ml: 1,
-              display: activeTab === 2 ? "flex" : "none",
+              display: activeTab === 2 ? 'flex' : 'none',
             }}
             InputProps={{
-              sx: { minWidth: 140, width: { xs: "100%", lg: "fit-content" } },
+              sx: { minWidth: 140, width: { xs: '100%', lg: 'fit-content' } },
               startAdornment: studyProgramFilter && (
                 <Cancel
                   onClick={() => {
-                    setStudyProgramFilter("");
+                    setStudyProgramFilter('');
                   }}
                   sx={{
                     fontSize: 14,
-                    color: "base.base50",
-                    cursor: "pointer",
-                    transform: "translateX(-4px)",
-                    "&:hover": {
-                      color: "base.base60",
+                    color: 'base.base50',
+                    cursor: 'pointer',
+                    transform: 'translateX(-4px)',
+                    '&:hover': {
+                      color: 'base.base60',
                     },
                   }}
                 />
               ),
             }}
           >
-            {["X IPA 1", "X IPA 2", "X IPA 3", "X IPA 4", "X IPA 5"].map(
+            {['X IPA 1', 'X IPA 2', 'X IPA 3', 'X IPA 4', 'X IPA 5'].map(
               (option, index) => (
                 <MenuItem key={index} value={option}>
                   <Typography fontSize={14}>{option}</Typography>
@@ -799,7 +817,7 @@ export default function StaffProfileContent() {
   }
 
   return (
-    <Stack sx={{ height: "100%", width: "100%", p: { xs: 0, lg: 4 } }}>
+    <Stack sx={{ height: '100%', width: '100%', p: { xs: 0, lg: 4 } }}>
       <Modal
         open={openCreateCurriculumModal}
         onClose={() => {
@@ -813,11 +831,11 @@ export default function StaffProfileContent() {
           sx={{
             borderRadius: 2,
             zIndex: 20,
-            margin: "auto",
-            position: "fixed",
-            height: "fit-content",
-            width: "360px",
-            maxWidth: "80%",
+            margin: 'auto',
+            position: 'fixed',
+            height: 'fit-content',
+            width: '360px',
+            maxWidth: '80%',
             top: 0,
             bottom: 0,
             right: 0,
@@ -834,18 +852,18 @@ export default function StaffProfileContent() {
             </Typography>
           </Box>
           <Divider />
-          <Box sx={{ maxHeight: "70vh", overflowY: "auto", px: 2 }}>
+          <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
             <FormAddCurriculum formik={formik} />
           </Box>
           <Divider />
           <Stack
             sx={{
-              flexDirection: "row",
+              flexDirection: 'row',
               p: 2,
             }}
           >
             <Button
-              variant="outlined"
+              variant='outlined'
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenCreateCurriculumModal(false);
@@ -855,7 +873,7 @@ export default function StaffProfileContent() {
               Batal
             </Button>
             <Button
-              variant="contained"
+              variant='contained'
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenCreateCurriculumModal(false);
@@ -877,11 +895,11 @@ export default function StaffProfileContent() {
           sx={{
             borderRadius: 2,
             zIndex: 20,
-            margin: "auto",
-            position: "fixed",
-            height: "fit-content",
-            width: "360px",
-            maxWidth: "80%",
+            margin: 'auto',
+            position: 'fixed',
+            height: 'fit-content',
+            width: '360px',
+            maxWidth: '80%',
             top: 0,
             bottom: 0,
             right: 0,
@@ -898,18 +916,18 @@ export default function StaffProfileContent() {
             </Typography>
           </Box>
           <Divider />
-          <Box sx={{ maxHeight: "70vh", overflowY: "auto", px: 2 }}>
+          <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
             <FormAddPeriod formik={formik} />
           </Box>
           <Divider />
           <Stack
             sx={{
-              flexDirection: "row",
+              flexDirection: 'row',
               p: 2,
             }}
           >
             <Button
-              variant="outlined"
+              variant='outlined'
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenCreatePeriodModal(false);
@@ -919,7 +937,7 @@ export default function StaffProfileContent() {
               Batal
             </Button>
             <Button
-              variant="contained"
+              variant='contained'
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenCreatePeriodModal(false);
@@ -939,10 +957,10 @@ export default function StaffProfileContent() {
             padding: 2,
             borderRadius: 2,
             zIndex: 20,
-            margin: "auto",
-            position: "fixed",
-            height: "fit-content",
-            width: "240px",
+            margin: 'auto',
+            position: 'fixed',
+            height: 'fit-content',
+            width: '240px',
             top: 0,
             bottom: 0,
             right: 0,
@@ -954,8 +972,8 @@ export default function StaffProfileContent() {
           </Typography>
           <TextField
             select
-            size="small"
-            label="Data"
+            size='small'
+            label='Data'
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
             sx={{ flex: 1, mt: 2 }}
@@ -963,15 +981,15 @@ export default function StaffProfileContent() {
               startAdornment: sortBy && (
                 <Cancel
                   onClick={() => {
-                    setSortBy("");
+                    setSortBy('');
                   }}
                   sx={{
                     fontSize: 14,
-                    color: "base.base50",
-                    cursor: "pointer",
-                    transform: "translateX(-4px)",
-                    "&:hover": {
-                      color: "base.base60",
+                    color: 'base.base50',
+                    cursor: 'pointer',
+                    transform: 'translateX(-4px)',
+                    '&:hover': {
+                      color: 'base.base60',
                     },
                   }}
                 />
@@ -980,15 +998,15 @@ export default function StaffProfileContent() {
           >
             {(activeTab === 1
               ? [
-                  { title: "Periode", slug: "period_name" },
-                  { title: "Program Studi", slug: "study_program" },
-                  { title: "Tingkatan", slug: "grade" },
-                  { title: "Kurikulum", slug: "curriculum" },
+                  { title: 'Periode', slug: 'period_name' },
+                  { title: 'Program Studi', slug: 'study_program' },
+                  { title: 'Tingkatan', slug: 'grade' },
+                  { title: 'Kurikulum', slug: 'curriculum' },
                 ]
               : [
-                  { title: "Periode", slug: "period_name" },
-                  { title: "Rentang Waktu", slug: "start_time" },
-                  { title: "Status", slug: "status" },
+                  { title: 'Periode', slug: 'period_name' },
+                  { title: 'Rentang Waktu', slug: 'start_time' },
+                  { title: 'Status', slug: 'status' },
                 ]
             ).map((option) => (
               <MenuItem key={option.slug} value={option.slug}>
@@ -998,16 +1016,16 @@ export default function StaffProfileContent() {
           </TextField>
           <TextField
             select
-            size="small"
-            label="Jenis Urutan"
+            size='small'
+            label='Jenis Urutan'
             value={sortType}
             disabled={!sortBy}
             onChange={(e) => setSortType(e.target.value)}
             sx={{ flex: 1, mt: 2, mb: 2 }}
           >
             {[
-              { title: "A-Z", slug: "ascending" },
-              { title: "Z-A", slug: "descending" },
+              { title: 'A-Z', slug: 'ascending' },
+              { title: 'Z-A', slug: 'descending' },
             ].map((option) => (
               <MenuItem key={option.slug} value={option.slug}>
                 <Typography fontSize={14}>{option.title}</Typography>
@@ -1016,11 +1034,11 @@ export default function StaffProfileContent() {
           </TextField>
           <Stack
             sx={{
-              flexDirection: "row",
+              flexDirection: 'row',
             }}
           >
             <Button
-              variant="outlined"
+              variant='outlined'
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenSortModal(false);
@@ -1031,7 +1049,7 @@ export default function StaffProfileContent() {
               Batal
             </Button>
             <Button
-              variant="contained"
+              variant='contained'
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenSortModal(false);
@@ -1045,10 +1063,10 @@ export default function StaffProfileContent() {
       </Modal>
       <Stack
         sx={{
-          flexDirection: "row",
-          display: { xs: "none", lg: "flex" },
+          flexDirection: 'row',
+          display: { xs: 'none', lg: 'flex' },
           mb: 2,
-          alignItems: "center",
+          alignItems: 'center',
         }}
       >
         <Typography sx={{ fontSize: 20, fontWeight: 600 }}>Kelas</Typography>
@@ -1056,20 +1074,20 @@ export default function StaffProfileContent() {
 
       <Stack
         component={Paper}
-        variant="outlined"
+        variant='outlined'
         sx={{
           borderRadius: { xs: 0, lg: 2 },
           flex: 1,
-          overflowY: "hidden",
-          maxHeight: "100%",
+          overflowY: 'hidden',
+          maxHeight: '100%',
         }}
       >
         <Stack
           sx={{
-            flexDirection: "row",
-            borderBottom: "1px solid rgb(0,0,0,0.12)",
+            flexDirection: 'row',
+            borderBottom: '1px solid rgb(0,0,0,0.12)',
             // height: 54,
-            overflowX: "auto",
+            overflowX: 'auto',
           }}
         >
           {tabs.map((item, index) => {
@@ -1077,22 +1095,22 @@ export default function StaffProfileContent() {
               <Button
                 key={index}
                 sx={{
-                  p: { xs: "16px 8px", lg: 2 },
+                  p: { xs: '16px 8px', lg: 2 },
                   minWidth: 140,
                   flex: { xs: 1, lg: 0 },
                   // height: 54,
-                  borderBottom: "2px solid",
+                  borderBottom: '2px solid',
                   borderBottomLeftRadius: 0,
                   borderBottomRightRadius: 0,
                   borderColor:
-                    activeTab === index ? "primary.main" : "transparent",
+                    activeTab === index ? 'primary.main' : 'transparent',
                 }}
                 onClick={() => {
                   setActiveTab(index);
-                  setStudyProgramFilter("");
-                  setSearch("");
-                  setSortBy("");
-                  setSortSettings("");
+                  setStudyProgramFilter('');
+                  setSearch('');
+                  setSortBy('');
+                  setSortSettings('');
                   formik.setValues(emptyData);
                   index === 0 ? setFilteredData(data) : null;
                 }}
@@ -1106,11 +1124,11 @@ export default function StaffProfileContent() {
         </Stack>
         <Stack
           sx={{
-            flexDirection: "row",
-            height: { xs: "fit-content", lg: 70 },
-            width: "100%",
-            alignItems: "center",
-            justifyContent: "space-between",
+            flexDirection: 'row',
+            height: { xs: 'fit-content', lg: 70 },
+            width: '100%',
+            alignItems: 'center',
+            justifyContent: 'space-between',
             px: 2,
             pt: 1,
             pb: { lg: 1, xs: 0 },
@@ -1119,21 +1137,21 @@ export default function StaffProfileContent() {
         >
           <Stack
             sx={{
-              flexDirection: "row",
+              flexDirection: 'row',
               flex: 1,
-              alignItems: "center",
+              alignItems: 'center',
             }}
           >
             <TextField
               // id="outlined-search"
               placeholder={`Cari ${tabs[activeTab].title}`}
-              size="small"
-              type="text"
+              size='small'
+              type='text'
               sx={{
-                maxWidth: { xs: "100%", lg: "200px" },
+                maxWidth: { xs: '100%', lg: '200px' },
                 flex: 1,
-                width: "100%",
-                height: "100%",
+                width: '100%',
+                height: '100%',
                 pr: 1,
               }}
               value={search}
@@ -1142,21 +1160,21 @@ export default function StaffProfileContent() {
                 startAdornment: search && (
                   <Cancel
                     onClick={() => {
-                      setSearch("");
+                      setSearch('');
                     }}
                     sx={{
                       fontSize: 14,
-                      color: "base.base50",
-                      cursor: "pointer",
-                      transform: "translateX(-4px)",
-                      "&:hover": {
-                        color: "base.base60",
+                      color: 'base.base50',
+                      cursor: 'pointer',
+                      transform: 'translateX(-4px)',
+                      '&:hover': {
+                        color: 'base.base60',
                       },
                     }}
                   />
                 ),
                 endAdornment: (
-                  <InputAdornment position="end">
+                  <InputAdornment position='end'>
                     <Search />
                   </InputAdornment>
                 ),
@@ -1166,10 +1184,10 @@ export default function StaffProfileContent() {
               <Box
                 sx={{
                   display: {
-                    lg:"flex",
-                    xs: "none",
+                    lg: 'flex',
+                    xs: 'none',
                   },
-                  borderRight: { xs: "none", lg: "1px solid rgb(0,0,0,0.12)" },
+                  borderRight: { xs: 'none', lg: '1px solid rgb(0,0,0,0.12)' },
 
                   my: 1,
                   height: 36,
@@ -1180,10 +1198,10 @@ export default function StaffProfileContent() {
               <Box
                 sx={{
                   display: {
-                    lg: activeTab !== 0 ? "flex" : "none",
-                    xs: "none",
+                    lg: activeTab !== 0 ? 'flex' : 'none',
+                    xs: 'none',
                   },
-                  borderRight: { xs: "none", lg: "1px solid rgb(0,0,0,0.12)" },
+                  borderRight: { xs: 'none', lg: '1px solid rgb(0,0,0,0.12)' },
                   // ml: 1,
                   my: 1,
                   height: 36,
@@ -1194,73 +1212,73 @@ export default function StaffProfileContent() {
 
           <Stack
             sx={{
-              flexDirection: "row",
+              flexDirection: 'row',
               pl: { xs: 0, lg: 1 },
             }}
           >
             <Button
-              variant="outlined"
-              color="primary"
+              variant='outlined'
+              color='primary'
               startIcon={<ExcelIcon />}
               sx={{
-                display: { xs: "none", lg: "flex" },
-                width: "fit-content",
-                height: "100%",
+                display: { xs: 'none', lg: 'flex' },
+                width: 'fit-content',
+                height: '100%',
                 width: 100,
                 mr: 1,
-                borderColor: "green",
-                backgroundColor: "white",
-                "&:hover": {
-                  borderColor: "green",
-                  backgroundColor: "base:base20",
+                borderColor: 'green',
+                backgroundColor: 'white',
+                '&:hover': {
+                  borderColor: 'green',
+                  backgroundColor: 'base:base20',
                 },
               }}
-              id="profile-button"
-              aria-controls={open ? "profile-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
+              id='profile-button'
+              aria-controls={open ? 'profile-menu' : undefined}
+              aria-haspopup='true'
+              aria-expanded={open ? 'true' : undefined}
               onClick={handleClick}
             >
-              <Typography sx={{ color: "green", fontSize: 14 }}>
+              <Typography sx={{ color: 'green', fontSize: 14 }}>
                 Excel
               </Typography>
             </Button>
             <Menu
               elevation={2}
-              id="profile-menu"
-              aria-labelledby="profile-button"
+              id='profile-menu'
+              aria-labelledby='profile-button'
               anchorEl={anchorEl}
               open={open}
               onClose={handleClose}
               anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "center",
+                vertical: 'bottom',
+                horizontal: 'center',
               }}
               transformOrigin={{
-                vertical: "top",
-                horizontal: "center",
+                vertical: 'top',
+                horizontal: 'center',
               }}
             >
               <MenuItem onClick={handleClose} sx={{ padding: 1, width: 98 }}>
-                <Stack flexDirection={"row"} alignItems={"center"}>
+                <Stack flexDirection={'row'} alignItems={'center'}>
                   <DownloadRounded sx={{ fontSize: 18, mr: 1 }} />
                   <Typography sx={{ fontSize: 14 }}>Export</Typography>
                 </Stack>
               </MenuItem>
               <MenuItem onClick={handleClose} sx={{ padding: 1 }}>
-                <label htmlFor="import-csv">
-                  <Stack flexDirection={"row"} alignItems={"center"}>
+                <label htmlFor='import-csv'>
+                  <Stack flexDirection={'row'} alignItems={'center'}>
                     <UploadFileRounded sx={{ fontSize: 18, mr: 1 }} />
                     <Typography sx={{ fontSize: 14 }}>Import</Typography>
                     <input
-                      name={"import_csv"}
-                      accept="csv"
-                      id="import-csv"
-                      type="file"
+                      name={'import_csv'}
+                      accept='csv'
+                      id='import-csv'
+                      type='file'
                       style={{
-                        position: "absolute",
-                        opacity: "0",
-                        border: "1px solid red",
+                        position: 'absolute',
+                        opacity: '0',
+                        border: '1px solid red',
                       }}
                       // onChange={handleImageChange}
                     />
@@ -1270,12 +1288,12 @@ export default function StaffProfileContent() {
             </Menu>
 
             <Button
-              variant="contained"
-              color="primary"
+              variant='contained'
+              color='primary'
               startIcon={<Add />}
               sx={{
                 width: 100,
-                height: "100%",
+                height: '100%',
               }}
               // onClick={() =>
               //   activeTab === 0
@@ -1292,24 +1310,24 @@ export default function StaffProfileContent() {
 
         <Stack
           sx={{
-            flexDirection: "row",
+            flexDirection: 'row',
             px: 2,
             mb: 1,
-            display: { xs: "flex", lg: "none" },
+            display: { xs: 'flex', lg: 'none' },
           }}
         >
           <Filters />
-          <Stack sx={{ flexDirection: "row", py: 1 }}>
-            <Divider orientation="vertical" sx={{ mx: 1, display: "flex" }} />
+          <Stack sx={{ flexDirection: 'row', py: 1 }}>
+            <Divider orientation='vertical' sx={{ mx: 1, display: 'flex' }} />
             <Button
               sx={{
-                backgroundColor: "base.base30",
-                color: "base.base50",
+                backgroundColor: 'base.base30',
+                color: 'base.base50',
                 fontSize: 18,
                 height: 38,
-                width: "fit-content",
-                "&:hover": {
-                  backgroundColor: "base.base40",
+                width: 'fit-content',
+                '&:hover': {
+                  backgroundColor: 'base.base40',
                 },
               }}
               onClick={() => {
@@ -1321,7 +1339,7 @@ export default function StaffProfileContent() {
           </Stack>
         </Stack>
         <Divider />
-        <Box sx={{ flex: 1, overflowY: "hidden" }}>
+        <Box sx={{ flex: 1, overflowY: 'hidden' }}>
           {tabs[activeTab].component}
         </Box>
       </Stack>

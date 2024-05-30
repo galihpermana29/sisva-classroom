@@ -51,6 +51,16 @@ const AcademicAPI = {
     return api.patch(`/study-programs/${id}`, payload, { headers });
   },
 
+  deleteProdi(id) {
+    const headers = {
+      'X-Sisva-Source': 'academic.test',
+      'X-Sisva-UserID': USER_ID,
+      'X-Sisva-SchoolID': SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.delete(`/study-programs/${id}`, { headers });
+  },
+
   getAllCurriculum() {
     const headers = {
       'X-Sisva-Source': 'academic.curriculum.test',
@@ -91,6 +101,16 @@ const AcademicAPI = {
     return api.patch(`/curriculums/${id}`, payload, { headers });
   },
 
+  deleteCurriculum(id) {
+    const headers = {
+      'X-Sisva-Source': 'academic.curriculum.test',
+      'X-Sisva-UserID': USER_ID,
+      'X-Sisva-SchoolID': SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.delete(`/curriculums/${id}`, { headers });
+  },
+
   getAllSubject() {
     const headers = {
       'X-Sisva-Source': 'academic.curriculum.test',
@@ -129,6 +149,16 @@ const AcademicAPI = {
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.patch(`/subjects/${id}`, payload, { headers });
+  },
+
+  deleteSubject(id) {
+    const headers = {
+      'X-Sisva-Source': 'academic.curriculum.test',
+      'X-Sisva-UserID': USER_ID,
+      'X-Sisva-SchoolID': SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.delete(`/subjects/${id}`, { headers });
   },
 
   getAllSilabus() {
@@ -181,6 +211,16 @@ const AcademicAPI = {
     return api.post(`/periods`, payload, { headers });
   },
 
+  addCurriculumInPeriod(payload) {
+    const headers = {
+      'X-Sisva-Source': 'academic.periods.test',
+      'X-Sisva-UserID': USER_ID,
+      'X-Sisva-SchoolID': SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.post(`/periods/1/curriculums`, payload, { headers });
+  },
+
   getAllPeriod() {
     const headers = {
       'X-Sisva-Source': 'academic.periods.test',
@@ -199,6 +239,16 @@ const AcademicAPI = {
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.get(`/subjects/teachers`, { headers });
+  },
+
+  getAllClasses() {
+    const headers = {
+      'X-Sisva-Source': 'academic.classes.test',
+      'X-Sisva-UserID': USER_ID,
+      'X-Sisva-SchoolID': SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.get(`/classes`, { headers });
   },
 };
 
