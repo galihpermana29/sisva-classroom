@@ -36,6 +36,7 @@ import ClassTable from './components/ClassTable';
 import StudentTable from './components/StudentTable';
 import ClassElectiveTable from './components/ClassElectiveTable';
 import AcademicAPI from '@/api/academic';
+import UsersAPI from '@/api/users';
 export default function StaffProfileContent() {
   const [emptyData, setEmptyData] = useState({
     name: '',
@@ -510,17 +511,21 @@ export default function StaffProfileContent() {
 
   useEffect(() => {
     const getClassesData = async () => {
-      const resClass = await AcademicAPI.getAllClasses();
-      const resSubject = await AcademicAPI.getAllSubject();
-      const resPeriod = await AcademicAPI.getAllPeriod();
+      const resStudentGroup = await AcademicAPI.getAllStudentGroup();
+      const resTeacher = await UsersAPI.getAllUsers('teacher');
+      const resStudent = await AcademicAPI.getAllStudentInGroup();
 
-      const classData = resClass.data.data;
-      const subjectData = resSubject.data.data;
-      const periodData = resPeriod.data.data;
+      const studentGroupData = resStudentGroup.data.data;
+      const teacherData = resTeacher.data.data;
+      const studentData = resStudent.data.data;
 
-      console.log(classData);
-      console.log(subjectData);
-      console.log(periodData);
+      // const mappedData = studentGroupData.map(sgd => {
+      //   if (sgd.)
+      // })
+
+      console.log(studentData);
+      console.log(studentGroupData);
+      console.log(teacherData);
     };
 
     getClassesData();

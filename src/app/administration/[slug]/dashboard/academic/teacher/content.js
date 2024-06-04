@@ -147,7 +147,6 @@ export default function StaffProfileContent() {
         dataProgram.forEach((program) => {
           if (program.id == subject.study_program_id) {
             program.grades.forEach((grade) => {
-              ``;
               mappedData.push({ ...subject, grade });
             });
           }
@@ -270,7 +269,7 @@ export default function StaffProfileContent() {
       let grades = [];
       let subjects = [];
 
-      data.forEach((datum, idx) => {
+      dummyTeacherData.forEach((datum, idx) => {
         let next = idx + 1;
         let teacher = datum.teacher_name;
 
@@ -293,6 +292,8 @@ export default function StaffProfileContent() {
 
         return { id: datum.id, teacher: datum.teacher, grades, subjects };
       });
+
+      console.log(mappedData);
 
       setDataTeacher(mappedData);
     };

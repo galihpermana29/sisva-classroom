@@ -10,6 +10,7 @@ export const FormSchoolDetails = ({
   editing,
   handleImageChange = () => {},
 }) => {
+  console.log(formik);
   if (!editing) {
     return (
       <>

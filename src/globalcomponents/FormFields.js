@@ -845,14 +845,14 @@ export const formSchoolDetailsFields = [
     image: false,
   },
   {
-    name: 'phone',
+    name: 'nomorTelepon',
     label: 'Nomor Telepon',
     placeholder: 'Nomor Telepon',
     md: 6,
     image: false,
   },
   {
-    name: 'address',
+    name: 'alamat',
     label: 'Alamat',
     placeholder: 'Alamat Sekolah',
     md: 12,

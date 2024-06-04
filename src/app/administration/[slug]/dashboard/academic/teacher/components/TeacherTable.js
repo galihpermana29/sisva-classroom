@@ -263,9 +263,9 @@ export default function TeacherTable({ data, formik }) {
 
   let rows = [];
 
-  data.map((data) => {
+  data.map((data, idx) => {
     let tempObject = {
-      id: data.id,
+      id: idx,
 
       grades: data.grades,
       subjects: data.subjects,

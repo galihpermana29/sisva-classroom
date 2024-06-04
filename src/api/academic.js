@@ -111,6 +111,16 @@ const AcademicAPI = {
     return api.delete(`/curriculums/${id}`, { headers });
   },
 
+  getPeriodCurr() {
+    const headers = {
+      'X-Sisva-Source': 'academic.period.test',
+      'X-Sisva-UserID': USER_ID,
+      'X-Sisva-SchoolID': SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.get(`/periods/curriculums`, { headers });
+  },
+
   getAllSubject() {
     const headers = {
       'X-Sisva-Source': 'academic.curriculum.test',
@@ -231,6 +241,26 @@ const AcademicAPI = {
     return api.get(`/periods`, { headers });
   },
 
+  deletePeriod(id) {
+    const headers = {
+      'X-Sisva-Source': 'academic.periods.test',
+      'X-Sisva-UserID': USER_ID,
+      'X-Sisva-SchoolID': SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.delete(`/periods/${id}`, { headers });
+  },
+
+  deletePeriodCurr(id, payload) {
+    const headers = {
+      'X-Sisva-Source': 'academic.periods.test',
+      'X-Sisva-UserID': USER_ID,
+      'X-Sisva-SchoolID': SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.delete(`/periods/${id}/curriculums`, payload, { headers });
+  },
+
   getAllSubjectTeacher() {
     const headers = {
       'X-Sisva-Source': 'academic.subjects.teachers.test',
@@ -249,6 +279,26 @@ const AcademicAPI = {
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.get(`/classes`, { headers });
+  },
+
+  getAllStudentGroup() {
+    const headers = {
+      'X-Sisva-Source': 'academic.studentgroups.test',
+      'X-Sisva-UserID': USER_ID,
+      'X-Sisva-SchoolID': SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.get(`/student-groups`, { headers });
+  },
+
+  getAllStudentInGroup() {
+    const headers = {
+      'X-Sisva-Source': 'academic.period.test',
+      'X-Sisva-UserID': USER_ID,
+      'X-Sisva-SchoolID': SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.get(`/student-groups/students`, { headers });
   },
 };
 

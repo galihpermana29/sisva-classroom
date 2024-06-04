@@ -5,7 +5,7 @@ export const types = [
 ];
 export const subject_types = [
   { slug: 'mandatory', title: 'Wajib' },
-  { slug: 'elective', title: 'Pilihan' },
+  { slug: 'optional', title: 'Pilihan' },
 ];
 export const nationalities = [
   { slug: 'wni', title: 'Warga Negara Indonesia' },

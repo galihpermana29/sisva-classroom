@@ -52,12 +52,24 @@ export default function StaffProfileContent() {
     initialValues: { emptyData },
 
     onSubmit: async (values) => {
-      console.log(activeTab);
       try {
         if (activeTab == 0) {
-          const payload = { name: values.name };
+          try {
+            if (!values.id) {
+              const payload = { name: values.name };
 
-          // await AcademicAPI.createCurriculum(payload);
+              await AcademicAPI.createCurriculum(payload);
+
+              window.location.reload();
+            } else {
+              console.log(values);
+              const payload = { name: values.name };
+
+              // await AcademicAPI.createCurriculum(payload);
+
+              // window.location.reload();
+            }
+          } catch (error) {}
         }
 
         if (activeTab == 1) {
@@ -111,27 +123,6 @@ export default function StaffProfileContent() {
     'Digital Marketing',
   ];
 
-  let data = [
-    {
-      id: 1,
-      name: 'Kurikulum Merdeka',
-      study_programs: ['IPA', 'IPS', 'IPA-U', 'IPS-U'],
-      subjects: mataPelajaranIPA.length,
-    },
-    {
-      id: 2,
-      name: 'Kurikulum 2013',
-      study_programs: ['IPA', 'IPS', 'IPA-U', 'IPS-U'],
-      subjects: mataPelajaranIPS.length,
-    },
-    {
-      id: 3,
-      name: 'Kurikulum Sekolah Sisva',
-      study_programs: ['IPA', 'IPS', 'IPA-U', 'IPS-U'],
-      subjects: mataPelajaranSisva.length,
-    },
-  ];
-
   const [tableData, setTableData] = useState([]);
 
   const deleteCurriculum = async (id) => {
@@ -149,6 +140,8 @@ export default function StaffProfileContent() {
       await AcademicAPI.deleteSubject(id);
 
       window.location.reload();
+
+      setActiveTab(1);
     } catch (error) {
       console.log(error);
     }
@@ -163,119 +156,173 @@ export default function StaffProfileContent() {
         data: { data },
       } = await AcademicAPI.getAllCurriculum();
 
-      console.log(data);
+      const mappedData = data.map((datum) => {
+        const study_programs = [];
 
-      setTableData(data);
+        datum.study_programs?.forEach((programs) => {
+          study_programs.push(programs.code);
+        });
+
+        delete datum.study_program;
+        return { ...datum, study_programs };
+      });
+
+      setTableData(mappedData);
     };
 
     getAllCurriculum();
   }, []);
 
   useEffect(() => {
-    const getAllCurriculum = async () => {
+    const getAllSubject = async () => {
       const {
         data: { data },
       } = await AcademicAPI.getAllSubject();
 
-      console.log(data);
+      const mappedData = data.map((datum) => {
+        return {
+          id: datum.id,
+          name: datum.curriculum_name,
+          study_program: datum.study_program_name,
+          subject: datum.name,
+          subject_type: datum.type,
+        };
+      });
 
-      // setDataSubject(data);
+      setDataSubject(mappedData);
     };
 
-    getAllCurriculum();
+    getAllSubject();
   }, []);
 
   useEffect(() => {
-    let temp = [];
-    let id = 1;
-    tableData.map((item) => {
-      mataPelajaranIPA.map((subject) => {
-        let tempObject = {
-          id: id,
-          name: item,
-          study_program: 'IPA',
-          subject: subject,
-          subject_type: 'mandatory',
-        };
-        temp.push(tempObject);
-        id++;
+    const getAllSyllabus = async () => {
+      const {
+        data: { data },
+      } = await AcademicAPI.getAllSubject();
+
+      const resStudy = await AcademicAPI.getAllProdi();
+
+      const dataStudy = resStudy.data.data.filter(
+        (datum) => datum.status == 'active'
+      );
+
+      const mappedData = [];
+
+      data.forEach((datum) => {
+        dataStudy.forEach((study) => {
+          if (study.id == datum.study_program_id) {
+            study.grades.forEach((gd) =>
+              mappedData.push({
+                id: datum.id,
+                name: datum.curriculum_name,
+                study_program: datum.study_program_name,
+                subject: datum.name,
+                grade: gd,
+                syllabus_uri: '',
+              })
+            );
+          }
+        });
       });
 
-      mataPelajaranIPS.map((subject) => {
-        let tempObject = {
-          id: id,
-          name: item,
-          study_program: 'IPS',
-          subject: subject,
-          subject_type: 'mandatory',
-        };
-        temp.push(tempObject);
-        id++;
-      });
+      setDataSyllabus(mappedData);
+    };
 
-      mataPelajaranIPA.map((subject) => {
-        let tempObject = {
-          id: id,
-          name: item,
-          study_program: 'IPA-U',
-          subject: subject,
-          subject_type: 'mandatory',
-        };
-        temp.push(tempObject);
-        id++;
-      });
-
-      mataPelajaranIPS.map((subject) => {
-        let tempObject = {
-          id: id,
-          name: item,
-          study_program: 'IPS-U',
-          subject: subject,
-          subject_type: 'mandatory',
-        };
-        temp.push(tempObject);
-        id++;
-      });
-    });
-
-    mataPelajaranSisva.map((subject) => {
-      ['IPA', 'IPS', 'IPA-U', 'IPS-U'].map((item) => {
-        let tempObject = {
-          id: id,
-          name: 'Kurikulum Sekolah Sisva',
-          study_program: item,
-          subject: subject,
-          subject_type: 'elective',
-        };
-        temp.push(tempObject);
-        id++;
-      });
-    });
-
-    setDataSubject(temp);
-
-    id = 0;
-
-    let tempSyllabus = [];
-
-    temp.map((data) => {
-      ['X', 'XI', 'XII'].map((item) => {
-        let tempObject = {
-          id: id,
-          name: data.name,
-          study_program: data.study_program,
-          subject: data.subject,
-          grade: item,
-          syllabus_uri: '',
-        };
-
-        tempSyllabus.push(tempObject);
-        id++;
-      });
-    });
-
-    setDataSyllabus(tempSyllabus);
+    getAllSyllabus();
   }, []);
+
+  // useEffect(() => {
+  //   let temp = [];
+  //   let id = 1;
+  //   tableData.map((item) => {
+  //     mataPelajaranIPA.map((subject) => {
+  //       let tempObject = {
+  //         id: id,
+  //         name: item,
+  //         study_program: 'IPA',
+  //         subject: subject,
+  //         subject_type: 'mandatory',
+  //       };
+  //       temp.push(tempObject);
+  //       id++;
+  //     });
+
+  //     mataPelajaranIPS.map((subject) => {
+  //       let tempObject = {
+  //         id: id,
+  //         name: item,
+  //         study_program: 'IPS',
+  //         subject: subject,
+  //         subject_type: 'mandatory',
+  //       };
+  //       temp.push(tempObject);
+  //       id++;
+  //     });
+
+  //     mataPelajaranIPA.map((subject) => {
+  //       let tempObject = {
+  //         id: id,
+  //         name: item,
+  //         study_program: 'IPA-U',
+  //         subject: subject,
+  //         subject_type: 'mandatory',
+  //       };
+  //       temp.push(tempObject);
+  //       id++;
+  //     });
+
+  //     mataPelajaranIPS.map((subject) => {
+  //       let tempObject = {
+  //         id: id,
+  //         name: item,
+  //         study_program: 'IPS-U',
+  //         subject: subject,
+  //         subject_type: 'mandatory',
+  //       };
+  //       temp.push(tempObject);
+  //       id++;
+  //     });
+  //   });
+
+  //   mataPelajaranSisva.map((subject) => {
+  //     ['IPA', 'IPS', 'IPA-U', 'IPS-U'].map((item) => {
+  //       let tempObject = {
+  //         id: id,
+  //         name: 'Kurikulum Sekolah Sisva',
+  //         study_program: item,
+  //         subject: subject,
+  //         subject_type: 'elective',
+  //       };
+  //       temp.push(tempObject);
+  //       id++;
+  //     });
+  //   });
+
+  //   // setDataSubject(temp);
+
+  //   id = 0;
+
+  //   let tempSyllabus = [];
+
+  //   temp.map((data) => {
+  //     ['X', 'XI', 'XII'].map((item) => {
+  //       let tempObject = {
+  //         id: id,
+  //         name: data.name,
+  //         study_program: data.study_program,
+  //         subject: data.subject,
+  //         grade: item,
+  //         syllabus_uri: '',
+  //       };
+
+  //       tempSyllabus.push(tempObject);
+  //       id++;
+  //     });
+  //   });
+
+  //   // setDataSyllabus(tempSyllabus);
+  // }, []);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -331,8 +378,9 @@ export default function StaffProfileContent() {
 
   useEffect(() => {
     let temp = [];
+
     if (activeTab === 0) {
-      temp = data.filter((item) => {
+      temp = tableData.filter((item) => {
         return item.name.toLowerCase().includes(search.toLowerCase());
       });
     } else if (activeTab === 1) {
@@ -434,6 +482,9 @@ export default function StaffProfileContent() {
     studyProgramFilter,
     sortSettings,
     activeTab,
+    tableData,
+    dataSubject,
+    dataSyllabus,
   ]);
 
   function Filters() {
@@ -1048,7 +1099,7 @@ export default function StaffProfileContent() {
                   setSortBy('');
                   setSortSettings('');
                   // formik.setValues(emptyData);
-                  index === 0 ? setFilteredData(data) : null;
+                  index === 0 ? setFilteredData(tableData) : null;
                 }}
               >
                 <Typography sx={{ fontWeight: 600, fontSize: 14 }}>

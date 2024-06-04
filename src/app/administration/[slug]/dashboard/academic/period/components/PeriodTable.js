@@ -1,6 +1,6 @@
-import * as React from "react";
-import { DataGrid } from "@mui/x-data-grid";
-import Image from "next/image";
+import * as React from 'react';
+import { DataGrid } from '@mui/x-data-grid';
+import Image from 'next/image';
 import {
   Avatar,
   Box,
@@ -14,43 +14,43 @@ import {
   TextField,
   Typography,
   useMediaQuery,
-} from "@mui/material";
-import { BorderColorRounded, DeleteForeverRounded } from "@mui/icons-material";
-import Link from "next/link";
-import { types, permissions } from "@/globalcomponents/Variable";
-import { useState } from "react";
-import { FormAddStudyProgram } from "./FormAddPeriod";
-import { FormEdiPeriod, FormEditPeriod } from "./FormEditPeriod";
-import dayjs from "dayjs";
+} from '@mui/material';
+import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
+import Link from 'next/link';
+import { types, permissions } from '@/globalcomponents/Variable';
+import { useState } from 'react';
+import { FormAddStudyProgram } from './FormAddPeriod';
+import { FormEdiPeriod, FormEditPeriod } from './FormEditPeriod';
+import dayjs from 'dayjs';
 
 const columns = [
   {
-    field: "card",
-    headerName: "",
+    field: 'card',
+    headerName: '',
     flex: 1,
     sortable: false,
     renderCell: (params) => {
       return (
-        <Box sx={{ width: "100%", mx: 2, py: 0.5 }}>
+        <Box sx={{ width: '100%', mx: 2, py: 0.5 }}>
           <Stack
             component={Paper}
-            variant="outlined"
+            variant='outlined'
             sx={{
-              justifyContent: "flex-start",
+              justifyContent: 'flex-start',
               borderRadius: 2,
               p: 2,
             }}
           >
-            <Stack sx={{ width: "100%" }}>
+            <Stack sx={{ width: '100%' }}>
               <Stack
                 sx={{
-                  width: "100%",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  borderBottom: "1px solid rgb(0,0,0,0.12)",
+                  width: '100%',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  borderBottom: '1px solid rgb(0,0,0,0.12)',
                   px: 1,
-                  py: "10px",
-                  backgroundColor: "base.base10",
+                  py: '10px',
+                  backgroundColor: 'base.base10',
                 }}
               >
                 <Typography
@@ -58,19 +58,19 @@ const columns = [
                 >
                   Periode
                 </Typography>
-                <Typography sx={{ fontSize: 14, textAlign: "right" }}>
+                <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
                   {params.value.data.period_name}
                 </Typography>
               </Stack>
               <Stack
                 sx={{
-                  width: "100%",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  borderBottom: "1px solid rgb(0,0,0,0.12)",
+                  width: '100%',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  borderBottom: '1px solid rgb(0,0,0,0.12)',
                   px: 1,
-                  py: "10px",
-                  backgroundColor: "base.base20",
+                  py: '10px',
+                  backgroundColor: 'base.base20',
                 }}
               >
                 <Typography
@@ -82,13 +82,13 @@ const columns = [
               </Stack>
               <Stack
                 sx={{
-                  width: "100%",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  borderBottom: "1px solid rgb(0,0,0,0.12)",
+                  width: '100%',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  borderBottom: '1px solid rgb(0,0,0,0.12)',
                   px: 1,
-                  py: "10px",
-                  backgroundColor: "base.base10",
+                  py: '10px',
+                  backgroundColor: 'base.base10',
                 }}
               >
                 <Typography
@@ -96,43 +96,43 @@ const columns = [
                 >
                   Rentang Waktu
                 </Typography>
-                <Typography sx={{ fontSize: 14, textAlign: "right" }}>
-                  {dayjs(params.value.data.start_time).format("MMMM YYYY") +
-                    " - " +
-                    dayjs(params.value.data.end_time).format("MMMM YYYY")}
+                <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
+                  {dayjs(params.value.data.start_time).format('MMMM YYYY') +
+                    ' - ' +
+                    dayjs(params.value.data.end_time).format('MMMM YYYY')}
                 </Typography>
               </Stack>
             </Stack>
             <Stack
               sx={{
-                width: "100%",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                borderBottom: "1px solid rgb(0,0,0,0.12)",
+                width: '100%',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                borderBottom: '1px solid rgb(0,0,0,0.12)',
                 px: 1,
-                py: "10px",
-                backgroundColor: "base.base20",
+                py: '10px',
+                backgroundColor: 'base.base20',
               }}
             >
               <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
                 Status
               </Typography>
-              <Stack sx={{ flexDirection: "row", alignItems: "center" }}>
+              <Stack sx={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Box
                   sx={{
                     height: 8,
                     width: 8,
                     borderRadius: 10,
                     mr: 0.5,
-                    backgroundColor: "green",
+                    backgroundColor: 'green',
                     display:
-                      params.value.data.status === "Aktif" ? "flex" : "none",
+                      params.value.data.status === 'Aktif' ? 'flex' : 'none',
                   }}
                 />
                 <Typography
                   sx={{
                     fontWeight:
-                      params.value.data.status === "Aktif" ? 500 : 400,
+                      params.value.data.status === 'Aktif' ? 500 : 400,
                     fontSize: 13,
                   }}
                 >
@@ -146,45 +146,45 @@ const columns = [
       );
     },
   },
-  { field: "period_name", headerName: "Periode", flex: 1 },
+  { field: 'period_name', headerName: 'Periode', flex: 1 },
   {
-    field: "study_program",
-    headerName: "Program Studi",
+    field: 'study_program',
+    headerName: 'Program Studi',
     sortable: false,
     flex: 1,
     renderCell: (params) => {
-      return params.value.length > 0 ? (
-        <ChipList params={params.value} />
+      return params?.value?.length > 0 ? (
+        <ChipList params={params?.value} />
       ) : (
-        "-"
+        '-'
       );
     },
   },
   {
-    field: "period",
-    headerName: "Rentang Waktu",
+    field: 'period',
+    headerName: 'Rentang Waktu',
     flex: 1,
   },
   {
-    field: "status",
-    headerName: "Status",
+    field: 'status',
+    headerName: 'Status',
     flex: 1,
     renderCell: (params) => {
       return (
-        <Stack sx={{ flexDirection: "row", alignItems: "center" }}>
+        <Stack sx={{ flexDirection: 'row', alignItems: 'center' }}>
           <Box
             sx={{
               height: 8,
               width: 8,
               borderRadius: 10,
               mr: 0.5,
-              backgroundColor: "green",
-              display: params.value === "Aktif" ? "flex" : "none",
+              backgroundColor: 'green',
+              display: params.value === 'Aktif' ? 'flex' : 'none',
             }}
           />
           <Typography
             sx={{
-              fontWeight: params.value === "Aktif" ? 500 : 400,
+              fontWeight: params.value === 'Aktif' ? 500 : 400,
               fontSize: 13,
             }}
           >
@@ -195,8 +195,8 @@ const columns = [
     },
   },
   {
-    field: "action",
-    headerName: "Aksi",
+    field: 'action',
+    headerName: 'Aksi',
     sortable: false,
     width: 120,
     renderCell: (params) => {
@@ -209,11 +209,11 @@ function ChipList({ params, compact }) {
   return (
     <Stack
       sx={{
-        flexDirection: "row",
-        flexWrap: "wrap",
-        overflow: "hidden",
-        justifyContent: compact ? "flex-end" : "flex-start",
-        m: { xs: 0, lg: compact ? 0 : "8px 0" },
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        overflow: 'hidden',
+        justifyContent: compact ? 'flex-end' : 'flex-start',
+        m: { xs: 0, lg: compact ? 0 : '8px 0' },
       }}
     >
       {params.map((studyProgram, index) => {
@@ -221,11 +221,11 @@ function ChipList({ params, compact }) {
           <Chip
             key={index}
             sx={{
-              m: { xs: "2px 0px 2px 4px", lg: "2px" },
+              m: { xs: '2px 0px 2px 4px', lg: '2px' },
               fontSize: 12,
             }}
-            label={studyProgram}
-            color="primary"
+            label={studyProgram.code}
+            color='primary'
           />
         );
       })}
@@ -237,29 +237,29 @@ function ActionButton({ params }) {
   return (
     <Stack
       sx={{
-        flexDirection: "row",
-        alignItems: "center",
-        alignSelf: "flex-end",
+        flexDirection: 'row',
+        alignItems: 'center',
+        alignSelf: 'flex-end',
         mt: { xs: 2, lg: 0 },
       }}
     >
       <IconButton
         sx={{
           borderRadius: 2,
-          backgroundColor: "base.base30",
-          "&:hover": {
-            backgroundColor: "base.base40",
+          backgroundColor: 'base.base30',
+          '&:hover': {
+            backgroundColor: 'base.base40',
           },
-          height: "fit-content",
-          width: { xs: 90, lg: "fit-content" },
-          display: params.value.data.status === "Selesai" ? "none" : "flex",
+          height: 'fit-content',
+          width: { xs: 90, lg: 'fit-content' },
+          display: params.value.data.status === 'Selesai' ? 'none' : 'flex',
         }}
         onClick={() => {
           params.value.setOpenEditModal(true);
           params.value.setActiveRow(params.value.data);
           params.value.formik.setValues({
             period_name: params.value.data.period_name,
-            study_program: params.value.data.study_program,
+            study_program: params.value.data.study_programs.code,
             start_time: dayjs(params.value.data.start_time),
             end_time: dayjs(params.value.data.end_time),
             status: params.value.data.status,
@@ -267,10 +267,10 @@ function ActionButton({ params }) {
         }}
       >
         <BorderColorRounded
-          sx={{ fontSize: { xs: 15, lg: 18 }, color: "base.base50" }}
+          sx={{ fontSize: { xs: 15, lg: 18 }, color: 'base.base50' }}
         />
         <Typography
-          sx={{ fontSize: 14, ml: 1, display: { xs: "flex", lg: "none" } }}
+          sx={{ fontSize: 14, ml: 1, display: { xs: 'flex', lg: 'none' } }}
         >
           Edit
         </Typography>
@@ -279,12 +279,12 @@ function ActionButton({ params }) {
         sx={{
           borderRadius: 2,
           ml: 1,
-          backgroundColor: "warning.main",
-          "&:hover": {
-            backgroundColor: "warning.dark",
+          backgroundColor: 'warning.main',
+          '&:hover': {
+            backgroundColor: 'warning.dark',
           },
-          width: { xs: 90, lg: "fit-content" },
-          display: params.value.data.status !== "Tidak Aktif" ? "none" : "flex",
+          width: { xs: 90, lg: 'fit-content' },
+          display: params.value.data.status !== 'Tidak Aktif' ? 'none' : 'flex',
         }}
         onClick={() => {
           params.value.setOpenDeleteModal(true);
@@ -292,14 +292,14 @@ function ActionButton({ params }) {
         }}
       >
         <DeleteForeverRounded
-          sx={{ color: "white", fontSize: { xs: 16, lg: 18 } }}
+          sx={{ color: 'white', fontSize: { xs: 16, lg: 18 } }}
         />
         <Typography
           sx={{
             fontSize: 14,
             ml: 1,
-            display: { xs: "flex", lg: "none" },
-            color: "white",
+            display: { xs: 'flex', lg: 'none' },
+            color: 'white',
           }}
         >
           Delete
@@ -309,8 +309,12 @@ function ActionButton({ params }) {
   );
 }
 
-export default function StudyProgramTable({ data, formik }) {
-  const isMobile = useMediaQuery((theme) => theme.breakpoints.down("lg"));
+export default function StudyProgramTable({
+  data,
+  formik,
+  deletePeriod = () => {},
+}) {
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('lg'));
 
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -321,12 +325,12 @@ export default function StudyProgramTable({ data, formik }) {
   data.map((data) => {
     let tempObject = {
       id: data.id,
-      period_name: data.period_name,
-      study_program: data.study_program,
+      period_name: data.name,
+      study_program: data.study_programs,
       period:
-        dayjs(data.start_time).format("MMMM YYYY") +
-        " - " +
-        dayjs(data.end_time).format("MMMM YYYY"),
+        dayjs(data.start_time).format('MMMM YYYY') +
+        ' - ' +
+        dayjs(data.end_time).format('MMMM YYYY'),
       status: data.status,
       action: {
         data: data,
@@ -346,13 +350,15 @@ export default function StudyProgramTable({ data, formik }) {
     rows.push(tempObject);
   });
 
+  console.log(activeRow);
+
   return (
-    <div style={{ height: "100%", width: "100%" }}>
+    <div style={{ height: '100%', width: '100%' }}>
       <Modal
         open={openEditModal}
         onClose={() => {
           setOpenEditModal(false);
-          formik.setValues({ name: "", code: "" });
+          formik.setValues({ name: '', code: '' });
         }}
       >
         <Stack
@@ -361,11 +367,11 @@ export default function StudyProgramTable({ data, formik }) {
           sx={{
             borderRadius: 2,
             zIndex: 20,
-            margin: "auto",
-            position: "fixed",
-            height: "fit-content",
-            width: "360px",
-            maxWidth: "80%",
+            margin: 'auto',
+            position: 'fixed',
+            height: 'fit-content',
+            width: '360px',
+            maxWidth: '80%',
             top: 0,
             bottom: 0,
             right: 0,
@@ -382,47 +388,47 @@ export default function StudyProgramTable({ data, formik }) {
             </Typography>
           </Box>
           <Divider />
-          <Box sx={{ maxHeight: "70vh", overflowY: "auto", px: 2 }}>
+          <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
             <FormEditPeriod formik={formik} status={activeRow.status} />
           </Box>
           <Divider />
           <Stack
             sx={{
-              flexDirection: "row",
+              flexDirection: 'row',
               p: 2,
             }}
           >
             <Button
-              variant="outlined"
+              variant='outlined'
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenEditModal(false);
-                formik.setValues({ name: "", code: "" });
+                formik.setValues({ name: '', code: '' });
               }}
             >
               Batal
             </Button>
             <Button
-              variant="contained"
+              variant='contained'
               sx={{
                 flex: 1,
                 backgroundColor:
-                  formik.values["status"] === "Tidak Aktif"
-                    ? "primary.main"
-                    : "warning.main",
-                "&:hover": {
+                  formik.values['status'] === 'Tidak Aktif'
+                    ? 'primary.main'
+                    : 'warning.main',
+                '&:hover': {
                   backgroundColor:
-                    formik.values["status"] === "Aktif" ? "warning.dark" : "",
+                    formik.values['status'] === 'Aktif' ? 'warning.dark' : '',
                 },
               }}
               onClick={() => {
                 setOpenEditModal(false);
-                formik.setValues({ name: "", code: "" });
+                formik.setValues({ name: '', code: '' });
               }}
             >
-              {formik.values["status"] === "Tidak Aktif"
-                ? "Simpan"
-                : "Akhiri Periode"}
+              {formik.values['status'] === 'Tidak Aktif'
+                ? 'Simpan'
+                : 'Akhiri Periode'}
             </Button>
           </Stack>
         </Stack>
@@ -434,11 +440,11 @@ export default function StudyProgramTable({ data, formik }) {
           sx={{
             borderRadius: 2,
             zIndex: 20,
-            margin: "auto",
-            position: "fixed",
-            height: "fit-content",
-            width: "360px",
-            maxWidth: "80%",
+            margin: 'auto',
+            position: 'fixed',
+            height: 'fit-content',
+            width: '360px',
+            maxWidth: '80%',
             top: 0,
             bottom: 0,
             right: 0,
@@ -456,52 +462,51 @@ export default function StudyProgramTable({ data, formik }) {
             Anda akan menghapus periode berikut:
           </Typography>
           <Stack
-            sx={{ width: "100%", my: 1, overflow: "hidden", borderRadius: 2 }}
+            sx={{ width: '100%', my: 1, overflow: 'hidden', borderRadius: 2 }}
           >
             <Stack
               sx={{
-                width: "100%",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                borderBottom: "1px solid rgb(0,0,0,0.12)",
+                width: '100%',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                borderBottom: '1px solid rgb(0,0,0,0.12)',
                 px: 1,
-                py: "10px",
-                backgroundColor: "base.base10",
+                py: '10px',
+                backgroundColor: 'base.base10',
               }}
             >
               <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
                 Periode
               </Typography>
-              <Typography sx={{ fontSize: 14, textAlign: "right" }}>
-                {activeRow.period_name}
+              <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
+                {activeRow.name}
               </Typography>
             </Stack>
             <Stack
               sx={{
-                width: "100%",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                borderBottom: "1px solid rgb(0,0,0,0.12)",
+                width: '100%',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                borderBottom: '1px solid rgb(0,0,0,0.12)',
                 px: 1,
-                py: "10px",
-                backgroundColor: "base.base20",
+                py: '10px',
+                backgroundColor: 'base.base20',
               }}
             >
               <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
                 Program Studi
               </Typography>
-
-              <ChipList params={activeRow.study_program} compact/>
+              <ChipList params={activeRow.study_programs} compact />
             </Stack>
           </Stack>
 
           <Stack
             sx={{
-              flexDirection: "row",
+              flexDirection: 'row',
             }}
           >
             <Button
-              variant="outlined"
+              variant='outlined'
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenDeleteModal(false);
@@ -510,15 +515,16 @@ export default function StudyProgramTable({ data, formik }) {
               Batal
             </Button>
             <Button
-              variant="contained"
+              variant='contained'
               sx={{
                 flex: 1,
-                backgroundColor: "warning.main",
-                "&:hover": {
-                  backgroundColor: "warning.dark",
+                backgroundColor: 'warning.main',
+                '&:hover': {
+                  backgroundColor: 'warning.dark',
                 },
               }}
               onClick={() => {
+                deletePeriod(activeRow.id);
                 setOpenDeleteModal(false);
               }}
             >
@@ -577,7 +583,7 @@ export default function StudyProgramTable({ data, formik }) {
       )}
       <DataGrid
         rows={rows}
-        getRowHeight={() => "auto"}
+        getRowHeight={() => 'auto'}
         columns={columns}
         initialState={{
           pagination: {
@@ -586,7 +592,7 @@ export default function StudyProgramTable({ data, formik }) {
         }}
         pageSizeOptions={[10, 20, 50]}
         getRowClassName={(params) =>
-          params.indexRelativeToCurrentPage % 2 === 0 ? "Mui-even" : "Mui-odd"
+          params.indexRelativeToCurrentPage % 2 === 0 ? 'Mui-even' : 'Mui-odd'
         }
         disableRowSelectionOnClick
         disableColumnMenu

@@ -50,7 +50,30 @@ export default function StaffProfileContent() {
     initialValues: { emptyData },
 
     onSubmit: async (values) => {
-      console.log(values);
+      if (activeTab == 0) {
+        try {
+          if (!values.id) {
+            await AcademicAPI.createProdi(values);
+
+            window.location.reload();
+          } else {
+            const id = values.id;
+            delete values.id;
+
+            await AcademicAPI.editProdi(values, id);
+
+            window.location.reload();
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        try {
+          // window.location.reload();
+        } catch (error) {
+          console.log(error);
+        }
+      }
     },
   });
 

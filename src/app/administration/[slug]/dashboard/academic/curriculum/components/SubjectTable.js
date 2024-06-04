@@ -277,9 +277,9 @@ export default function SubjectTable({
 
   let rows = [];
 
-  data.map((data) => {
+  data.map((data, idx) => {
     let tempObject = {
-      id: data.id,
+      id: idx,
       name: data.name,
       study_program: data.study_program,
       subject: data.subject,
@@ -500,6 +500,7 @@ export default function SubjectTable({
                 },
               }}
               onClick={() => {
+                console.log(activeRow.id);
                 setOpenDeleteModal(false);
                 deleteSubject(activeRow.id);
               }}

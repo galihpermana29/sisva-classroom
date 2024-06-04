@@ -290,7 +290,12 @@ export default function StudyProgramTable({
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenEditModal(false);
-                formik.setValues({ name: '', code: '' });
+                formik.setFieldValue('id', activeRow.id);
+                formik.setFieldValue(
+                  'grades',
+                  activeRow.grades ? activeRow.grades : []
+                );
+                formik.handleSubmit();
               }}
             >
               Simpan

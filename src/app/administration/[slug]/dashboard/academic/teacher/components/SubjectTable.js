@@ -253,9 +253,9 @@ export default function SubjectTable({ data, formik }) {
 
   let rows = [];
 
-  data.map((data) => {
+  data.map((data, idx) => {
     let tempObject = {
-      id: data.id,
+      id: idx,
       period_name: data.name,
       study_program: data.study_program_name,
 

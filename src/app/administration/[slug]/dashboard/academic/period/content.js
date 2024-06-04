@@ -55,9 +55,9 @@ export default function StaffProfileContent() {
       try {
         if (activeTab == 0) {
           const start_time = dayjs(values.start_time).format(
-            'DD/MM/YYYY H:mm A Z'
+            'MM/DD/YYYY H:mm A Z'
           );
-          const end_time = dayjs(values.end_time).format('DD/MM/YYYY H:mm A Z');
+          const end_time = dayjs(values.end_time).format('MM/DD/YYYY H:mm A Z');
 
           const payload = {
             name: values.period_name,
@@ -69,8 +69,6 @@ export default function StaffProfileContent() {
 
           window.location.reload();
         } else if (activeTab == 1) {
-          console.log(values);
-
           const payload = {
             period_name: values.period_name,
             study_program_id: values.study_program_id,
@@ -79,6 +77,8 @@ export default function StaffProfileContent() {
             curriculum_id: values.curriculum_id,
             curriculum_name: values.curriculum_name,
           };
+
+          console.log(payload);
 
           // await AcademicAPI.addCurriculumInPeriod(payload);
 
@@ -89,46 +89,6 @@ export default function StaffProfileContent() {
       }
     },
   });
-
-  let data = [
-    {
-      id: 99,
-      period_name: 'Tahun Ajaran 2024/2025',
-      study_program: ['IPA', 'IPS', 'IPA-U', 'IPS-U'],
-      start_time: '2024-07-16T17:00:00.000Z',
-      end_time: '2025-06-16T17:00:00.000Z',
-      status: 'Tidak Aktif',
-    },
-    {
-      id: 1,
-      period_name: 'Tahun Ajaran 2023/2024',
-      study_program: ['IPA', 'IPS', 'IPA-U', 'IPS-U'],
-      start_time: '2023-07-16T17:00:00.000Z',
-      end_time: '2024-06-16T17:00:00.000Z',
-      status: 'Aktif',
-    },
-    {
-      id: 2,
-      period_name: 'Tahun Ajaran 2022/2023',
-      study_program: ['IPA', 'IPS', 'IPA-U', 'IPS-U'],
-      start_time: '2022-07-16T17:00:00.000Z',
-      end_time: '2023-06-16T17:00:00.000Z',
-      status: 'Selesai',
-    },
-  ];
-
-  [
-    {
-      id: 1,
-      name: 'tes 11',
-      start_time: '01/07/2023 8:04 AM +00:00',
-      end_time: '07/07/2023 8:45 AM +00:00',
-      status: 'inactive',
-      study_programs: [{ id: 15, code: 'TSNL2' }],
-    },
-  ];
-
-  let [dataTingkatan, setDataTingkatan] = useState([]);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -151,21 +111,52 @@ export default function StaffProfileContent() {
   const [openCreateCurriculumModal, setOpenCreateCurriculumModal] =
     useState(false);
 
+  const deletePeriod = async (id) => {
+    try {
+      await AcademicAPI.deletePeriod(id);
+
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deletePeriodCurr = async (id, payload) => {
+    try {
+      await AcademicAPI.deletePeriodCurr(id, payload);
+
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const [activeTab, setActiveTab] = useState(0);
   let tabs = [
     {
       title: 'Periode',
-      component: <PeriodTable formik={formik} data={filteredData} />,
+      component: (
+        <PeriodTable
+          formik={formik}
+          data={filteredData}
+          deletePeriod={deletePeriod}
+        />
+      ),
     },
     {
       title: 'Kurikulum',
-      component: <CurriculumTable formik={formik} data={filteredData} />,
+      component: (
+        <CurriculumTable
+          formik={formik}
+          data={filteredData}
+          deletePeriodCurr={deletePeriodCurr}
+        />
+      ),
     },
   ];
 
-  const [tableData, setTableData] = useState([]);
-
-  let [dataCurriculum, setDataCurriculum] = useState([]);
+  const [dataPeriod, setDataPeriod] = useState([]);
+  const [dataCurriculum, setDataCurriculum] = useState([]);
 
   useEffect(() => {
     const getAllPeriod = async () => {
@@ -173,52 +164,83 @@ export default function StaffProfileContent() {
         data: { data },
       } = await AcademicAPI.getAllPeriod();
 
-      console.log(data);
+      const mappedData = data.map((datum) => {
+        datum.status =
+          datum.status == 'active'
+            ? 'Aktif'
+            : datum.status == 'inactive'
+            ? 'Tidak Aktif'
+            : 'Selesai';
 
-      console.log(dataCurriculum);
+        if (datum.study_programs == undefined) {
+          datum.study_programs = [];
+        }
+        return datum;
+      });
 
-      setTableData(data);
+      setDataPeriod(mappedData);
     };
 
     getAllPeriod();
   }, []);
 
   useEffect(() => {
-    let temp = [];
-    let id = 1;
-    tableData?.map((period) => {
-      period.study_program?.map((study_program) => {
-        ['X', 'XI', 'XII'].map((grade) => {
-          let tempObject = {
-            id: id,
-            period_name: period.period_name,
-            study_program: study_program,
-            grade: grade,
-            curriculum: period.period_name.endsWith('2025')
-              ? 'Kurikulum Merdeka'
-              : period.period_name.endsWith('2024')
-              ? grade !== 'XII'
-                ? 'Kurikulum Merdeka'
-                : 'Kurikulum 2013'
-              : grade === 'X'
-              ? 'Kurikulum Merdeka'
-              : 'Kurikulum 2013',
-          };
-          temp.push(tempObject);
-          id++;
-        });
+    const getAllCurriculum = async () => {
+      const {
+        data: { data },
+      } = await AcademicAPI.getPeriodCurr();
+
+      const mappedData = data.map((datum) => {
+        return {
+          id: datum.period_id,
+          study_program: datum.study_program_name,
+          curriculum: datum.curriculum_name,
+          ...datum,
+        };
       });
-    });
-    setDataCurriculum(temp);
-  }, [activeTab, tableData]);
+
+      setDataCurriculum(mappedData);
+    };
+
+    getAllCurriculum();
+  }, []);
+
+  // useEffect(() => {
+  //   let temp = [];
+  //   let id = 1;
+  //   data.map((period) => {
+  //     period.study_program.map((study_program) => {
+  //       ['X', 'XI', 'XII'].map((grade) => {
+  //         let tempObject = {
+  //           id: id,
+  //           period_name: period.period_name,
+  //           study_program: study_program,
+  //           grade: grade,
+  //           curriculum: period.period_name.endsWith('2025')
+  //             ? 'Kurikulum Merdeka'
+  //             : period.period_name.endsWith('2024')
+  //             ? grade !== 'XII'
+  //               ? 'Kurikulum Merdeka'
+  //               : 'Kurikulum 2013'
+  //             : grade === 'X'
+  //             ? 'Kurikulum Merdeka'
+  //             : 'Kurikulum 2013',
+  //         };
+  //         temp.push(tempObject);
+  //         id++;
+  //       });
+  //     });
+  //   });
+  //   setDataCurriculum(temp);
+
+  //   console.log(temp);
+  // }, [activeTab, dataPeriod]);
 
   useEffect(() => {
     let temp = [];
     activeTab === 0
-      ? (temp = tableData.filter((item) => {
-          return item?.period_name
-            ?.toLowerCase()
-            .includes(search.toLowerCase());
+      ? (temp = dataPeriod.filter((item) => {
+          return item?.name?.toLowerCase().includes(search.toLowerCase());
         }))
       : (temp = dataCurriculum.filter((item) => {
           return (
@@ -290,7 +312,14 @@ export default function StaffProfileContent() {
     }
     setFilteredData(temp);
     formik.setValues(emptyData);
-  }, [search, studyProgramFilter, sortSettings, activeTab]);
+  }, [
+    search,
+    studyProgramFilter,
+    sortSettings,
+    activeTab,
+    dataPeriod,
+    dataCurriculum,
+  ]);
 
   function Filters() {
     if (activeTab === 1) {
@@ -656,7 +685,7 @@ export default function StaffProfileContent() {
                   setSortBy('');
                   setSortSettings('');
                   formik.setValues(emptyData);
-                  index === 0 ? setFilteredData(data) : null;
+                  index === 0 ? setFilteredData(dataPeriod) : null;
                 }}
               >
                 <Typography sx={{ fontWeight: 600, fontSize: 14 }}>

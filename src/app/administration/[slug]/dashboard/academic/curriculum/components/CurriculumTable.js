@@ -113,7 +113,11 @@ const columns = [
     sortable: false,
     flex: 1,
     renderCell: (params) => {
-      return params.value.length > 0 ? <ChipList params={params.value} /> : '-';
+      return params?.value?.length > 0 ? (
+        <ChipList params={params.value} />
+      ) : (
+        '-'
+      );
     },
   },
   // { field: "subjects", headerName: "Jumlah Mata Pelajaran", flex: 1 },
@@ -239,9 +243,9 @@ export default function CurriculumTable({
 
   let rows = [];
 
-  data.map((data) => {
+  data.map((data, idx) => {
     let tempObject = {
-      id: data.id,
+      id: idx,
       name: data.name,
       study_programs: data.study_programs,
       subjects: data.subjects,
@@ -324,7 +328,10 @@ export default function CurriculumTable({
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenEditModal(false);
-                formik.setValues({ name: '', code: '' });
+                // formik.setValues({ name: '', code: '' });
+                formik.setFieldValue('id', activeRow.id);
+                formik.setFieldValue('code', activeRow.code);
+                formik.handleSubmit();
               }}
             >
               Simpan

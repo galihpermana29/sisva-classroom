@@ -41,7 +41,7 @@ export const FormAddGrade = ({ formik, editing }) => {
       title: 'Ilmu Pengetahuan Sosial',
       slug: 'IPS',
       status: 'active',
-      grades: [],
+      grades: ['X', 'XI', 'XII'],
     },
     {
       id: 2,
@@ -69,6 +69,8 @@ export const FormAddGrade = ({ formik, editing }) => {
   let [gradeInput, setGradeInput] = useState('');
 
   const [cards, setCards] = useState([]);
+
+  console.log(formik);
 
   useEffect(() => {
     let temp = [];

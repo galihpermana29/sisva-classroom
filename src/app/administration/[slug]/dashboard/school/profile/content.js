@@ -49,8 +49,6 @@ export default function SchoolProfileContent() {
     onSubmit: async (values) => {
       const { email, nomorTelepon, alamat, kepemilikanSekolah } = values;
 
-      console.log(values);
-
       const payload = {
         ...values,
         additional_json_text: JSON.stringify({
@@ -111,7 +109,10 @@ export default function SchoolProfileContent() {
         data: { data },
       } = await FilesAPI.uploadimage(formData);
 
-      formik.setFieldValue(name, 'file://' + data);
+      formik.setFieldValue(
+        name,
+        `https://api-staging.sisva.id/file/v1/files/${data}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`
+      );
 
       // setSnackbarOpen({
       //   visible: true,
@@ -146,6 +147,7 @@ export default function SchoolProfileContent() {
         );
 
         const addtionalJson = JSON.parse(data.additional_json_text);
+        delete data.additional_json_text;
 
         formik.setValues({ ...data, ...addtionalJson });
         setinitialData({ ...data, ...addtionalJson });
