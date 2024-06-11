@@ -53,8 +53,6 @@ export default function StaffProfileContent() {
 
   let [dataTeacher, setDataTeacher] = useState([]);
 
-  let [dataTingkatan, setDataTingkatan] = useState([]);
-
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -63,6 +61,14 @@ export default function StaffProfileContent() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  // const deleteTeacher = (id) => {
+  //   try {
+  //     await
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
   let [filteredData, setFilteredData] = useState([]);
   const [search, setSearch] = useState('');
@@ -292,8 +298,6 @@ export default function StaffProfileContent() {
 
         return { id: datum.id, teacher: datum.teacher, grades, subjects };
       });
-
-      console.log(mappedData);
 
       setDataTeacher(mappedData);
     };

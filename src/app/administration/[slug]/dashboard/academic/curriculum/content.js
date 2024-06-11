@@ -62,7 +62,6 @@ export default function StaffProfileContent() {
 
               window.location.reload();
             } else {
-              console.log(values);
               const payload = { name: values.name };
 
               // await AcademicAPI.createCurriculum(payload);

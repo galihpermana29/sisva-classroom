@@ -192,6 +192,7 @@ export default function Container(props) {
         getCurrentUser();
       }, []);
 
+      console.log(currentUser);
       return (
         <Box>
           <Head>
@@ -221,16 +222,17 @@ export default function Container(props) {
                 ml: 1,
               }}
             >
-              <Image
-                alt='Web Image'
-                fill
-                sizes='100%'
-                style={{ objectFit: 'cover' }}
-                src={
-                  'https://images.unsplash.com/flagged/photo-1595514191830-3e96a518989b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80'
-                }
-              />
-              {/* A */}
+              {currentUser?.profile_image_uri !== '' ? (
+                <Image
+                  alt='Web Image'
+                  fill
+                  sizes='100%'
+                  style={{ objectFit: 'cover' }}
+                  src={`https://api-staging.sisva.id/file/v1/files/${currentUser?.profile_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+                />
+              ) : (
+                currentUser?.name.toUpperCase()[0]
+              )}
             </Avatar>
             <Typography
               sx={{
@@ -275,17 +277,17 @@ export default function Container(props) {
                   ml: 1,
                 }}
               >
-                <Image
-                  alt='Web Image'
-                  fill
-                  sizes='100%'
-                  style={{ objectFit: 'cover' }}
-                  src={
-                    'https://images.unsplash.com/flagged/photo-1595514191830-3e96a518989b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80'
-                  }
-                />
-
-                {/* A */}
+                {currentUser?.profile_image_uri !== '' ? (
+                  <Image
+                    alt='Web Image'
+                    fill
+                    sizes='100%'
+                    style={{ objectFit: 'cover' }}
+                    src={`https://api-staging.sisva.id/file/v1/files/${currentUser?.profile_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+                  />
+                ) : (
+                  currentUser?.name.toUpperCase()[0]
+                )}
               </Avatar>
               <Typography color='black' fontWeight={600} mr={1}>
                 {currentUser?.name}

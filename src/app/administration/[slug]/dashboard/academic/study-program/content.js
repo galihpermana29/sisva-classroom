@@ -40,12 +40,7 @@ export default function StaffProfileContent() {
     status: 'active',
     grades: [],
   });
-  const [filledData, setFilledData] = useState({
-    name: 'Ilmu Pengetahuan Alam',
-    code: 'IPA',
-    status: 'active',
-    grades: ['X', 'XI', 'XII'],
-  });
+
   const formik = useFormik({
     initialValues: { emptyData },
 
@@ -69,23 +64,18 @@ export default function StaffProfileContent() {
         }
       } else {
         try {
-          // window.location.reload();
+          const id = values.id;
+          delete values.id;
+
+          await AcademicAPI.editProdi(values, id);
+
+          window.location.reload();
         } catch (error) {
           console.log(error);
         }
       }
     },
   });
-
-  let data = [
-    {
-      id: 1,
-      name: '',
-      code: '',
-      status: '',
-      grades: [],
-    },
-  ];
 
   let [dataTingkatan, setDataTingkatan] = useState([]);
 
@@ -137,7 +127,9 @@ export default function StaffProfileContent() {
     },
     {
       title: 'Tingkatan',
-      component: <GradeTable formik={formik} data={filteredData} />,
+      component: (
+        <GradeTable formik={formik} data={filteredData} tableData={tableData} />
+      ),
     },
   ];
 
@@ -167,6 +159,7 @@ export default function StaffProfileContent() {
           name: studyProgram.name,
           code: studyProgram.code,
           grade: grade,
+          studyProgramId: studyProgram.id,
         };
         temp.push(tempObject);
       });
@@ -281,7 +274,7 @@ export default function StaffProfileContent() {
                 ),
               }}
             >
-              {data.map((option) => (
+              {tableData.map((option) => (
                 <MenuItem key={option.code} value={option.code}>
                   <Typography fontSize={14}>{option.name}</Typography>
                 </MenuItem>
@@ -330,7 +323,7 @@ export default function StaffProfileContent() {
           </Box>
           <Divider />
           <Box sx={{ maxHeight: '70vh', px: 2 }}>
-            <FormAddGrade formik={formik} />
+            <FormAddGrade formik={formik} tableData={tableData} />
           </Box>
           <Divider />
           <Stack
@@ -591,7 +584,7 @@ export default function StaffProfileContent() {
                   setSortBy('');
                   setSortSettings('');
                   formik.setValues(emptyData);
-                  index === 0 ? setFilteredData(data) : null;
+                  index === 0 ? setFilteredData(tableData) : null;
                 }}
               >
                 <Typography sx={{ fontWeight: 600, fontSize: 14 }}>

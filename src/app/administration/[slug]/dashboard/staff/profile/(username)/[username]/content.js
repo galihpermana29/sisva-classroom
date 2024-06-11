@@ -62,8 +62,6 @@ export default function StaffProfileContent({ user_id }) {
     onSubmit: async (values) => {
       let changePassData = {};
 
-      console.log(values);
-
       let json_text = {
         username: values.username,
         email: values.email,
@@ -73,6 +71,7 @@ export default function StaffProfileContent({ user_id }) {
         address: values.address,
         religion: values.religion,
         education_id: values.education_id,
+        personal_id: values.personal_id,
       };
 
       delete values.username;
@@ -172,8 +171,6 @@ export default function StaffProfileContent({ user_id }) {
         return;
       }
 
-      console.log(data);
-
       const additionalJson = JSON.parse(data.detail.json_text);
       delete data.detail.json_text;
 
@@ -250,14 +247,16 @@ export default function StaffProfileContent({ user_id }) {
         }}
       >
         <Avatar sx={{ height: 70, width: 70, position: 'relative', mr: 2 }}>
-          <Image
-            alt='Image'
-            src={
-              'https://images.unsplash.com/flagged/photo-1595514191830-3e96a518989b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80'
-            }
-            layout={'fill'}
-            objectFit={'cover'}
-          />
+          {initialData.profile_image_uri !== '' ? (
+            <Image
+              alt='Image'
+              src={`https://api-staging.sisva.id/file/v1/files/${initialData.profile_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+              layout={'fill'}
+              objectFit={'cover'}
+            />
+          ) : (
+            initialData.name.toUpperCase().slice(0, 1)
+          )}
         </Avatar>
         <Stack>
           <Typography sx={{ fontSize: 18, fontWeight: 600 }}>

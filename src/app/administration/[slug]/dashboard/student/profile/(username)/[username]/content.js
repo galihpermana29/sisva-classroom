@@ -158,7 +158,7 @@ export default function SchoolProfileContent({ user_id }) {
         data: { data },
       } = await FilesAPI.uploadimage(formData);
 
-      formik.setFieldValue(name, 'file://' + data);
+      formik.setFieldValue(name, data);
     } catch (error) {
       console.log(error, 'error upload user profile');
     }
@@ -256,14 +256,16 @@ export default function SchoolProfileContent({ user_id }) {
         }}
       >
         <Avatar sx={{ height: 70, width: 70, position: 'relative', mr: 2 }}>
-          <Image
-            alt='Image'
-            src={
-              'https://images.unsplash.com/photo-1695642579321-fcb1fc79b976?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=302&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY5NzIyMTM4NA&ixlib=rb-4.0.3&q=80&w=300'
-            }
-            layout={'fill'}
-            objectFit={'cover'}
-          />
+          {initialData.profile_image_uri !== '' ? (
+            <Image
+              alt='Image'
+              src={`https://api-staging.sisva.id/file/v1/files/${initialData.profile_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+              layout={'fill'}
+              objectFit={'cover'}
+            />
+          ) : (
+            initialData.name.toUpperCase().slice(0, 1)
+          )}
         </Avatar>
         <Stack>
           <Typography sx={{ fontSize: 18, fontWeight: 600 }}>

@@ -109,10 +109,7 @@ export default function SchoolProfileContent() {
         data: { data },
       } = await FilesAPI.uploadimage(formData);
 
-      formik.setFieldValue(
-        name,
-        `https://api-staging.sisva.id/file/v1/files/${data}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`
-      );
+      formik.setFieldValue(name, data);
 
       // setSnackbarOpen({
       //   visible: true,

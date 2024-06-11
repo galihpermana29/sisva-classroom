@@ -60,10 +60,10 @@ const columns = [
                       fill
                       sizes='100%'
                       style={{ objectFit: 'cover' }}
-                      src={params.value.data.profile_image_uri}
+                      src={`https://api-staging.sisva.id/file/v1/files/${params.value.data.profile_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
                     />
                   ) : (
-                    params.value.name?.toUpperCase().slice(0, 1)
+                    params.value.data.name?.toUpperCase().slice(0, 1)
                   )}
                 </Avatar>
                 <Typography
@@ -123,16 +123,16 @@ const columns = [
           // justifyContent: 'flex-end',
         }}
       >
-        {params.value !== '' ? (
+        {params.value[0] !== '' ? (
           <Image
             alt='Web Image'
             fill
             sizes='100%'
             style={{ objectFit: 'cover' }}
-            src={params.value}
+            src={`https://api-staging.sisva.id/file/v1/files/${params.value[0]}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
           />
         ) : (
-          params.value.name?.toUpperCase().slice(0, 1)
+          params.value[1]?.toUpperCase().slice(0, 1)
         )}
       </Avatar>
     ),
@@ -267,7 +267,7 @@ export default function DataTable({ data, deleteUser = () => ({}) }) {
       username: data.username,
       type: data.type,
       permissions: data.permissions,
-      profile_image_uri: data.profile_image_uri,
+      profile_image_uri: [data.profile_image_uri, data.name],
       action: {
         data: data,
         setActiveRow: setActiveRow,
@@ -337,7 +337,7 @@ export default function DataTable({ data, deleteUser = () => ({}) }) {
                   fill
                   sizes='100%'
                   style={{ objectFit: 'cover' }}
-                  src={activeRow.profile_image_uri}
+                  src={`https://api-staging.sisva.id/file/v1/files/${activeRow.profile_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
                 />
               ) : (
                 activeRow.name?.toUpperCase().slice(0, 1)

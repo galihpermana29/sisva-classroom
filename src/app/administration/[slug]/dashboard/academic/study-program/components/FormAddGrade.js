@@ -34,50 +34,17 @@ import { DragAndDropContainer } from './DragAndDropContainer';
 import { MultiBackend } from 'react-dnd-multi-backend';
 import { HTML5toTouch } from 'rdndmb-html5-to-touch'; // or any other pipeline
 
-export const FormAddGrade = ({ formik, editing }) => {
-  let data = [
-    {
-      id: 1,
-      title: 'Ilmu Pengetahuan Sosial',
-      slug: 'IPS',
-      status: 'active',
-      grades: ['X', 'XI', 'XII'],
-    },
-    {
-      id: 2,
-      title: 'Ilmu Pengetahuan Alam',
-      slug: 'IPA',
-      status: 'active',
-      grades: ['X', 'XI', 'XII'],
-    },
-    {
-      id: 3,
-      title: 'Ilmu Pengetahuan Sosial Unggulan',
-      slug: 'IPS-U',
-      status: 'active',
-      grades: ['X', 'XI', 'XII'],
-    },
-    {
-      id: 4,
-      title: 'Ilmu Pengetahuan Alam Unggulan',
-      slug: 'IPA-U',
-      status: 'active',
-      grades: ['X', 'XI', 'XII'],
-    },
-  ];
-
+export const FormAddGrade = ({ formik, editing, tableData }) => {
   let [gradeInput, setGradeInput] = useState('');
 
   const [cards, setCards] = useState([]);
 
-  console.log(formik);
-
   useEffect(() => {
     let temp = [];
     formik.values['code'] &&
-      data
-        .find((x) => x.slug === formik.values['code'])
-        .grades.map((grade, index) => {
+      tableData
+        .find((x) => x.code === formik.values['code'])
+        .grades?.map((grade, index) => {
           let tempObject = {
             id: index,
             text: grade,
@@ -87,6 +54,14 @@ export const FormAddGrade = ({ formik, editing }) => {
 
     setCards(formik.values['code'] ? temp : cards);
   }, [formik.values['code']]);
+
+  useEffect(() => {
+    if (editing) {
+      const id = tableData?.find((x) => x.code == formik.values.code).id;
+
+      formik.setFieldValue('id', id);
+    }
+  }, []);
 
   useEffect(() => {
     let temp = [];
@@ -117,19 +92,28 @@ export const FormAddGrade = ({ formik, editing }) => {
           select
           value={formik.values['code']}
           onChange={(e) => {
+            formik.setFieldValue(
+              'id',
+              tableData.find((x) => x.code == e.target.value).id
+            );
+
+            formik.setFieldValue(
+              'name',
+              tableData.find((x) => x.code == e.target.value).name
+            );
             formik.setFieldValue('code', e.target.value);
             formik.setFieldValue(
               'grades',
               e.target.value
-                ? data.find((x) => x.slug === e.target.value).grades
+                ? tableData.find((x) => x.code === e.target.value).grades
                 : []
             );
           }}
           sx={{ flex: { xs: 1, lg: 0 } }}
         >
-          {data.map((option) => (
-            <MenuItem key={option.slug} value={option.slug}>
-              <Typography fontSize={14}>{option.title}</Typography>
+          {tableData.map((option) => (
+            <MenuItem key={option.code} value={option.code}>
+              <Typography fontSize={14}>{option.name}</Typography>
             </MenuItem>
           ))}
         </TextField>
@@ -160,6 +144,10 @@ export const FormAddGrade = ({ formik, editing }) => {
               gradeInput && temp.push({ text: gradeInput, id: cards.length });
               setCards(temp);
               setGradeInput('');
+              formik.setFieldValue(
+                'grades',
+                cards.map((x) => x.text)
+              );
             }}
           >
             <Add />
@@ -171,8 +159,9 @@ export const FormAddGrade = ({ formik, editing }) => {
             <DragAndDropContainer
               formik={formik}
               data={
-                data.find((x) => x.slug === formik.values['code'])
-                  ? data.find((x) => x.slug === formik.values['code']).grades
+                tableData.find((x) => x.slug === formik.values['code'])
+                  ? tableData.find((x) => x.slug === formik.values['code'])
+                      .grades
                   : []
               }
               cards={cards}
