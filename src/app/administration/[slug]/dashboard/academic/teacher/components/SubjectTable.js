@@ -19,7 +19,7 @@ import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
 import Link from 'next/link';
 import { types, permissions } from '@/globalcomponents/Variable';
 import { useState } from 'react';
-import { FormAddStudyProgram } from './FormAddPeriod';
+import { FormAddStudyProgram } from './FormAddTeacher';
 import { FormEdiPeriod, FormEditPeriod } from './FormEditPeriod';
 import dayjs from 'dayjs';
 

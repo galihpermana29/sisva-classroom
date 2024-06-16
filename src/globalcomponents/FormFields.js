@@ -86,8 +86,9 @@ export const formEditPeriodFields = [
     md: 6,
     type: 'select',
     data: [
-      { slug: 'Tidak Aktif', title: 'Tidak Aktif' },
-      { slug: 'Aktif', title: 'Aktif' },
+      { slug: 'inactive', title: 'Tidak Aktif' },
+      { slug: 'active', title: 'Aktif' },
+      { slug: 'finished', title: 'Selesai' },
     ],
   },
 ];
@@ -110,16 +111,12 @@ export const formAddPeriodFields = [
 ];
 export const formAddSyllabusFields = [
   {
-    name: 'name',
+    name: 'curriculum_name',
     label: 'Nama',
     placeholder: 'Nama',
     md: 6,
     type: 'select',
-    data: [
-      { slug: 'Kurikulum Merdeka', title: 'Kurikulum Merdeka' },
-      { slug: 'Kurikulum 2013', title: 'Kurikulum 2013' },
-      { slug: 'Kurikulum Sekolah Sisva', title: 'Kurikulum Sekolah Sisva' },
-    ],
+    data: [],
   },
   {
     name: 'study_program',
@@ -127,12 +124,7 @@ export const formAddSyllabusFields = [
     placeholder: 'Program Studi',
     md: 6,
     type: 'select',
-    data: [
-      { slug: 'IPA', title: 'IPA' },
-      { slug: 'IPS', title: 'IPS' },
-      { slug: 'IPA-U', title: 'IPA-U' },
-      { slug: 'IPS-U', title: 'IPS-U' },
-    ],
+    data: [],
   },
   {
     name: 'subject',
@@ -140,32 +132,7 @@ export const formAddSyllabusFields = [
     placeholder: 'Mata Pelajaran',
     md: 6,
     type: 'select',
-    data: [
-      { slug: 'Matematika', title: 'Matematika' },
-      { slug: 'Fisika', title: 'Fisika' },
-      { slug: 'Kimia', title: 'Kimia' },
-      { slug: 'Biologi', title: 'Biologi' },
-      { slug: 'Bahasa Inggris', title: 'Bahasa Inggris' },
-      { slug: 'Bahasa Indonesia', title: 'Bahasa Indonesia' },
-      {
-        slug: 'Pendidikan Agama dan Budi Pekerti',
-        title: 'Pendidikan Agama dan Budi Pekerti',
-      },
-      {
-        slug: 'Pendidikan Pancasila dan Kewarganegaraan (PPKn)',
-        title: 'Pendidikan Pancasila dan Kewarganegaraan (PPKn)',
-      },
-      { slug: 'Seni dan Budaya', title: 'Seni dan Budaya' },
-      {
-        slug: 'Pendidikan Jasmani, Olahraga, dan Kesehatan (PJOK)',
-        title: 'Pendidikan Jasmani, Olahraga, dan Kesehatan (PJOK)',
-      },
-      { slug: 'Kewirausahaan', title: 'Kewirausahaan' },
-      {
-        slug: 'Teknologi Informasi dan Komunikasi (TIK)',
-        title: 'Teknologi Informasi dan Komunikasi (TIK)',
-      },
-    ],
+    data: [],
   },
   {
     name: 'grade',
@@ -190,15 +157,11 @@ export const formAddSyllabusFields = [
 export const formAddSubjectFields = [
   {
     name: 'name',
-    label: 'Nama',
+    label: 'Nama Kurikulum',
     placeholder: 'Nama',
     md: 6,
     type: 'select',
-    data: [
-      { slug: 'Kurikulum Merdeka', title: 'Kurikulum Merdeka' },
-      { slug: 'Kurikulum 2013', title: 'Kurikulum 2013' },
-      { slug: 'Kurikulum Sekolah Sisva', title: 'Kurikulum Sekolah Sisva' },
-    ],
+    data: [],
   },
   {
     name: 'study_program',
@@ -206,12 +169,7 @@ export const formAddSubjectFields = [
     placeholder: 'Program Studi',
     md: 6,
     type: 'select',
-    data: [
-      { slug: 'IPA', title: 'IPA' },
-      { slug: 'IPS', title: 'IPS' },
-      { slug: 'IPA-U', title: 'IPA-U' },
-      { slug: 'IPS-U', title: 'IPS-U' },
-    ],
+    data: [],
   },
   {
     name: 'subject',
@@ -897,10 +855,6 @@ export const formSchoolTypeFields = [
     image: false,
     data: [
       {
-        value: 'kindergarten',
-        label: 'TK/RA',
-      },
-      {
         value: 'elementary',
         label: 'SD/MI',
       },
@@ -926,7 +880,7 @@ export const formSchoolTypeFields = [
     image: false,
     data: [
       {
-        value: 'state',
+        value: 'public',
         label: 'Negeri',
       },
       {

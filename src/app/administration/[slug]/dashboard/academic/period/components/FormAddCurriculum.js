@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Avatar,
@@ -16,23 +16,65 @@ import {
   Stack,
   TextField,
   Typography,
-} from "@mui/material";
-import Image from "next/image";
+} from '@mui/material';
+import Image from 'next/image';
 
-import { formAddCurriculumFields, formAddStaffFields, formAddStudyProgramFields, formAddSubjectFields } from "@/globalcomponents/FormFields";
-import { Cancel, Visibility, VisibilityOff } from "@mui/icons-material";
-import { useState } from "react";
-import { permissions } from "@/globalcomponents/Variable";
+import {
+  formAddCurriculumFields,
+  formAddStaffFields,
+  formAddStudyProgramFields,
+  formAddSubjectFields,
+} from '@/globalcomponents/FormFields';
+import { Cancel, Visibility, VisibilityOff } from '@mui/icons-material';
+import { useState } from 'react';
+import { permissions } from '@/globalcomponents/Variable';
 
-export const FormAddCurriculum = ({ formik, editing }) => {
+export const FormAddCurriculum = ({
+  formik,
+  editing,
+  optPeriod,
+  dataAllCurr,
+}) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+
+  console.log(dataAllCurr);
+  console.log(optPeriod);
+
+  const updatedSubjectFields = formAddCurriculumFields.map((field) => {
+    if (field.name == 'period_name') {
+      field.data = optPeriod.map((td) => {
+        return { slug: td.id, title: td.name };
+      });
+    }
+
+    // if (field.name == 'study_program') {
+    //   field.data = dataAllCurr?.map((sp) => {
+    //     return { slug: sp.id, title: sp.name };
+    //   });
+    // }
+
+    // if (field.name == 'grade') {
+    //   field.data = subjectOpt?.map((sp) => {
+    //     return { slug: sp.id, title: sp.name };
+    //   });
+    // }
+
+    if (field.name == 'curriculum') {
+      field.data = dataAllCurr?.map((sp) => {
+        return { slug: sp.id, title: sp.name };
+      });
+    }
+
+    return field;
+  });
+
   return (
     <>
-      {formAddCurriculumFields.map((field) =>
-        field.type === "text" ? (
+      {updatedSubjectFields.map((field) =>
+        field.type === 'text' ? (
           <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant="body2" fontWeight={600} mb={0.5}>
+            <Typography variant='body2' fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <TextField
@@ -43,13 +85,13 @@ export const FormAddCurriculum = ({ formik, editing }) => {
               onChange={(e) => formik.setFieldValue(field.name, e.target.value)}
             />
           </Stack>
-        ) : field.type === "password" ? (
+        ) : field.type === 'password' ? (
           <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant="body2" fontWeight={600} mb={0.5}>
+            <Typography variant='body2' fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <TextField
-              type={showPassword ? "text" : "password"}
+              type={showPassword ? 'text' : 'password'}
               name={field.name}
               placeholder={field.placeholder}
               fullWidth
@@ -57,21 +99,21 @@ export const FormAddCurriculum = ({ formik, editing }) => {
               onChange={(e) => formik.setFieldValue(field.name, e.target.value)}
               InputProps={{
                 endAdornment: (
-                  <InputAdornment position="end">
+                  <InputAdornment position='end'>
                     <IconButton
                       onClick={() =>
-                        field.name === "password"
+                        field.name === 'password'
                           ? setShowPassword(!showPassword)
                           : setShowPasswordConfirm(!showPasswordConfirm)
                       }
                     >
-                      {field.name === "password" &&
+                      {field.name === 'password' &&
                         (showPassword ? (
                           <VisibilityOff sx={{ fontSize: 16 }} />
                         ) : (
                           <Visibility sx={{ fontSize: 16 }} />
                         ))}
-                      {field.name === "password_confirm" &&
+                      {field.name === 'password_confirm' &&
                         (showPasswordConfirm ? (
                           <VisibilityOff sx={{ fontSize: 16 }} />
                         ) : (
@@ -83,9 +125,9 @@ export const FormAddCurriculum = ({ formik, editing }) => {
               }}
             />
           </Stack>
-        ) : field.type === "select" ? (
+        ) : field.type === 'select' ? (
           <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant="body2" fontWeight={600} mb={0.5}>
+            <Typography variant='body2' fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <TextField
@@ -101,13 +143,13 @@ export const FormAddCurriculum = ({ formik, editing }) => {
               ))}
             </TextField>
           </Stack>
-        ) : field.type === "multiple-select" ? (
+        ) : field.type === 'multiple-select' ? (
           <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant="body2" fontWeight={600}>
+            <Typography variant='body2' fontWeight={600}>
               {field.label}
             </Typography>
 
-            <FormControl sx={{ width: "100%" }}>
+            <FormControl sx={{ width: '100%' }}>
               {/* <InputLabel id="demo-multiple-chip-label">Chip</InputLabel> */}
               <Select
                 multiple
@@ -117,7 +159,7 @@ export const FormAddCurriculum = ({ formik, editing }) => {
                 }
                 input={<OutlinedInput sx={{ p: 0 }} />}
                 renderValue={(selected) => (
-                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                     {selected.map((permission) => {
                       let tempPermission;
                       permissions.map((item) => {
@@ -129,17 +171,17 @@ export const FormAddCurriculum = ({ formik, editing }) => {
                         <Chip
                           key={permission}
                           label={tempPermission}
-                          color="primary"
+                          color='primary'
                         />
                       );
                     })}
                   </Box>
                 )}
                 MenuProps={{
-                  anchorOrigin: { vertical: "top", horizontal: "center" },
+                  anchorOrigin: { vertical: 'top', horizontal: 'center' },
                   transformOrigin: {
-                    vertical: "bottom",
-                    horizontal: "center",
+                    vertical: 'bottom',
+                    horizontal: 'center',
                   },
                 }}
               >

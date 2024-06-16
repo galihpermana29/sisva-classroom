@@ -41,33 +41,55 @@ export default function StaffProfileContent() {
     status: 'active',
     grades: [],
   });
-  const [filledData, setFilledData] = useState({
-    name: 'Ilmu Pengetahuan Alam',
-    code: 'IPA',
-    status: 'active',
-    grades: ['X', 'XI', 'XII'],
-  });
+
   const formik = useFormik({
     initialValues: { emptyData },
 
     onSubmit: async (values) => {
-      console.log(values);
       try {
         if (activeTab == 0) {
-          const start_time = dayjs(values.start_time).format(
-            'MM/DD/YYYY H:mm A Z'
-          );
-          const end_time = dayjs(values.end_time).format('MM/DD/YYYY H:mm A Z');
+          if (!values.id) {
+            const start_time = dayjs(values.start_time).format(
+              'DD/MM/YYYY h:mm A Z'
+            );
+            const end_time = dayjs(values.end_time).format(
+              'DD/MM/YYYY h:mm A Z'
+            );
 
-          const payload = {
-            name: values.period_name,
-            start_time: start_time,
-            end_time: end_time,
-          };
+            const payload = {
+              name: values.period_name,
+              start_time: start_time,
+              end_time: end_time,
+            };
 
-          await AcademicAPI.createPeriod(payload);
+            await AcademicAPI.createPeriod(payload);
 
-          window.location.reload();
+            window.location.reload();
+          } else {
+            const id = values.id;
+
+            console.log(id);
+
+            const start_time = dayjs(values.start_time).format(
+              'DD/MM/YYYY h:mm A Z'
+            );
+            const end_time = dayjs(values.end_time).format(
+              'DD/MM/YYYY h:mm A Z'
+            );
+
+            const payload = {
+              name: values.period_name,
+              start_time: start_time,
+              end_time: end_time,
+              status: values.status,
+            };
+
+            console.log(payload);
+
+            await AcademicAPI.updatePeriod(payload, id);
+
+            window.location.reload();
+          }
         } else if (activeTab == 1) {
           const payload = {
             period_name: values.period_name,
@@ -157,6 +179,42 @@ export default function StaffProfileContent() {
 
   const [dataPeriod, setDataPeriod] = useState([]);
   const [dataCurriculum, setDataCurriculum] = useState([]);
+  const [dataAllCurr, setDataAllCurr] = useState([]);
+  const [dataSubject, setDataSubject] = useState([]);
+
+  const optPeriod = dataPeriod.map((dp) => {
+    return { id: dp.id, name: dp.name };
+  });
+
+  useEffect(() => {
+    (async () => {
+      const {
+        data: { data },
+      } = await AcademicAPI.getAllCurriculum();
+
+      const resProdi = await AcademicAPI.getAllProdi();
+
+      const activeProgram = resProdi.data.data.filter(
+        (program) => program.status === 'active'
+      );
+
+      const mappedData = data.map((dt) => {
+        activeProgram.forEach((ap) => {
+          dt.study_programs.forEach((sp) => {
+            if (sp.id == ap.id) {
+              sp.grades = ap.grades;
+            }
+          });
+        });
+        delete dt.description;
+        delete dt.total_subjects;
+
+        return dt;
+      });
+
+      setDataAllCurr(mappedData);
+    })();
+  }, []);
 
   useEffect(() => {
     const getAllPeriod = async () => {
@@ -204,37 +262,6 @@ export default function StaffProfileContent() {
 
     getAllCurriculum();
   }, []);
-
-  // useEffect(() => {
-  //   let temp = [];
-  //   let id = 1;
-  //   data.map((period) => {
-  //     period.study_program.map((study_program) => {
-  //       ['X', 'XI', 'XII'].map((grade) => {
-  //         let tempObject = {
-  //           id: id,
-  //           period_name: period.period_name,
-  //           study_program: study_program,
-  //           grade: grade,
-  //           curriculum: period.period_name.endsWith('2025')
-  //             ? 'Kurikulum Merdeka'
-  //             : period.period_name.endsWith('2024')
-  //             ? grade !== 'XII'
-  //               ? 'Kurikulum Merdeka'
-  //               : 'Kurikulum 2013'
-  //             : grade === 'X'
-  //             ? 'Kurikulum Merdeka'
-  //             : 'Kurikulum 2013',
-  //         };
-  //         temp.push(tempObject);
-  //         id++;
-  //       });
-  //     });
-  //   });
-  //   setDataCurriculum(temp);
-
-  //   console.log(temp);
-  // }, [activeTab, dataPeriod]);
 
   useEffect(() => {
     let temp = [];
@@ -371,13 +398,9 @@ export default function StaffProfileContent() {
                 ),
               }}
             >
-              {[
-                'Tahun Ajaran 2024/2025',
-                'Tahun Ajaran 2023/2024',
-                'Tahun Ajaran 2022/2023',
-              ].map((option, index) => (
-                <MenuItem key={index} value={option}>
-                  <Typography fontSize={14}>{option}</Typography>
+              {optPeriod.map((option, index) => (
+                <MenuItem key={index} value={option.name}>
+                  <Typography fontSize={14}>{option.name}</Typography>
                 </MenuItem>
               ))}
             </TextField>
@@ -424,7 +447,11 @@ export default function StaffProfileContent() {
           </Box>
           <Divider />
           <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
-            <FormAddCurriculum formik={formik} />
+            <FormAddCurriculum
+              formik={formik}
+              optPeriod={optPeriod}
+              dataAllCurr={dataAllCurr}
+            />
           </Box>
           <Divider />
           <Stack

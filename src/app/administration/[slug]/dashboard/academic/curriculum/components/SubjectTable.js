@@ -188,8 +188,9 @@ function ActionButton({ params }) {
           params.value.setOpenEditModal(true);
           params.value.setActiveRow(params.value.data);
           params.value.formik.setValues({
-            name: params.value.data.name,
-            study_program: params.value.data.study_program,
+            id: params.value.data.id,
+            name: params.value.data.curriculum_id,
+            study_program: params.value.data.study_program_id,
             subject: params.value.data.subject,
             subject_type: params.value.data.subject_type,
           });
@@ -268,6 +269,8 @@ export default function SubjectTable({
   data,
   formik,
   deleteSubject = () => {},
+  tableData,
+  studyProgram,
 }) {
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('lg'));
 
@@ -280,6 +283,7 @@ export default function SubjectTable({
   data.map((data, idx) => {
     let tempObject = {
       id: idx,
+      subjectId: data.id,
       name: data.name,
       study_program: data.study_program,
       subject: data.subject,
@@ -308,7 +312,7 @@ export default function SubjectTable({
         open={openEditModal}
         onClose={() => {
           setOpenEditModal(false);
-          formik.setValues({ name: '' });
+          formik.setValues({});
         }}
       >
         <Stack
@@ -339,7 +343,11 @@ export default function SubjectTable({
           </Box>
           <Divider />
           <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
-            <FormAddSubject formik={formik} />
+            <FormAddSubject
+              formik={formik}
+              tableData={tableData}
+              studyProgram={studyProgram}
+            />
           </Box>
           <Divider />
           <Stack
@@ -363,7 +371,7 @@ export default function SubjectTable({
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenEditModal(false);
-                formik.setValues({ name: '', code: '' });
+                formik.handleSubmit();
               }}
             >
               Simpan

@@ -36,43 +36,89 @@ import { FormAddSubject } from './components/FormAddSubject';
 import SyllabusTable from './components/SyllabusTable';
 import { FormAddSyllabus } from './components/FormAddSyllabus';
 import AcademicAPI from '@/api/academic';
+import FilesAPI from '@/api/files';
 export default function StaffProfileContent() {
-  const [emptyData, setEmptyData] = useState({
-    name: '',
-    study_programs: '',
-    subjects: 0,
-  });
-  const [filledData, setFilledData] = useState({
-    name: 'Ilmu Pengetahuan Alam',
-    code: 'IPA',
-    status: 'active',
-    grades: ['X', 'XI', 'XII'],
-  });
+  const [emptyData, setEmptyData] = useState({});
+  const [studyProgram, setStudyProgram] = useState('');
+
   const formik = useFormik({
     initialValues: { emptyData },
 
     onSubmit: async (values) => {
       try {
         if (activeTab == 0) {
-          try {
-            if (!values.id) {
-              const payload = { name: values.name };
+          if (!values.id) {
+            const payload = { name: values.name };
 
-              await AcademicAPI.createCurriculum(payload);
+            await AcademicAPI.createCurriculum(payload);
 
-              window.location.reload();
-            } else {
-              const payload = { name: values.name };
+            window.location.reload();
+          } else {
+            const payload = { name: values.name };
 
-              // await AcademicAPI.createCurriculum(payload);
+            await AcademicAPI.updateCurriculum(payload, values.id);
 
-              // window.location.reload();
-            }
-          } catch (error) {}
+            window.location.reload();
+          }
         }
 
         if (activeTab == 1) {
-          await AcademicAPI.createSubject(values);
+          if (!values.id) {
+            const payload = {
+              name: values.subject,
+              type: values.subject_type,
+              study_program_id: values.study_program,
+              curriculum_id: values.name,
+            };
+
+            await AcademicAPI.createSubject(payload);
+
+            window.location.reload();
+          } else {
+            const id = values.id;
+
+            const payload = {
+              name: values.subject,
+              type: values.subject_type,
+              study_program_id: values.study_program,
+              curriculum_id: values.name,
+            };
+
+            await AcademicAPI.updateSubject(payload, id);
+
+            window.location.reload();
+          }
+        }
+
+        if (activeTab == 2) {
+          if (!values.id) {
+            console.log(values);
+
+            const payload = {
+              name: values.subject,
+              study_program_id: values.study_program,
+              subject_id: values.subject,
+              curriculum_id: values.name,
+              grade: values.grade,
+            };
+
+            // await AcademicAPI.createSubject(payload);
+
+            // window.location.reload();
+          } else {
+            const id = values.id;
+
+            const payload = {
+              name: values.subject,
+              type: values.subject_type,
+              study_program_id: values.study_program,
+              curriculum_id: values.name,
+            };
+
+            await AcademicAPI.updateSubject(payload, id);
+
+            window.location.reload();
+          }
         }
       } catch (error) {
         console.log(error);
@@ -80,47 +126,33 @@ export default function StaffProfileContent() {
     },
   });
 
-  const mataPelajaranIPS = [
-    'Bahasa Indonesia',
-    'Matematika',
-    'Bahasa Inggris',
-    'Sejarah',
-    'Geografi',
-    'Ekonomi',
-    'Sosiologi',
-    'Bahasa dan Sastra Asing',
-    'Seni dan Budaya',
-    'Pendidikan Jasmani, Olahraga, dan Kesehatan (PJOK)',
-    'Kewirausahaan',
-    'Pendidikan Agama dan Budi Pekerti',
-    'Pendidikan Pancasila dan Kewarganegaraan (PPKn)',
-    'Teknologi Informasi dan Komunikasi (TIK)',
-  ];
+  const handleFileChange = async (e) => {
+    e.preventDefault();
 
-  const mataPelajaranIPA = [
-    'Matematika',
-    'Fisika',
-    'Kimia',
-    'Biologi',
-    'Bahasa Inggris',
-    'Bahasa Indonesia',
-    'Pendidikan Agama dan Budi Pekerti',
-    'Pendidikan Pancasila dan Kewarganegaraan (PPKn)',
-    'Seni dan Budaya',
-    'Pendidikan Jasmani, Olahraga, dan Kesehatan (PJOK)',
-    'Kewirausahaan',
-    'Teknologi Informasi dan Komunikasi (TIK)',
-  ];
+    const { name } = e.target;
 
-  const mataPelajaranSisva = [
-    'Arsiktektur',
-    'Musik',
-    'Teater',
-    'Pemrograman',
-    'Film',
-    'Penelitian',
-    'Digital Marketing',
-  ];
+    console.log(name);
+
+    const file = e.target.files[0];
+
+    console.log(file);
+
+    const formData = new FormData();
+
+    formData.append('file', file);
+
+    try {
+      const {
+        data: { data },
+      } = await FilesAPI.uploadimage(formData);
+
+      console.log(name, data);
+
+      formik.setFieldValue(name, data);
+    } catch (error) {
+      console.log('File upload failed:', error);
+    }
+  };
 
   const [tableData, setTableData] = useState([]);
 
@@ -182,7 +214,9 @@ export default function StaffProfileContent() {
         return {
           id: datum.id,
           name: datum.curriculum_name,
+          curriculum_id: datum.curriculum_id,
           study_program: datum.study_program_name,
+          study_program_id: datum.study_program_id,
           subject: datum.name,
           subject_type: datum.type,
         };
@@ -195,34 +229,35 @@ export default function StaffProfileContent() {
   }, []);
 
   useEffect(() => {
+    (async () => {
+      const {
+        data: { data },
+      } = await AcademicAPI.getAllProdi();
+
+      const activeData = data.filter((dt) => dt.status == 'active');
+
+      setStudyProgram(activeData);
+    })();
+  }, []);
+
+  useEffect(() => {
     const getAllSyllabus = async () => {
       const {
         data: { data },
-      } = await AcademicAPI.getAllSubject();
+      } = await AcademicAPI.getAllSilabus();
 
-      const resStudy = await AcademicAPI.getAllProdi();
-
-      const dataStudy = resStudy.data.data.filter(
-        (datum) => datum.status == 'active'
-      );
-
-      const mappedData = [];
-
-      data.forEach((datum) => {
-        dataStudy.forEach((study) => {
-          if (study.id == datum.study_program_id) {
-            study.grades.forEach((gd) =>
-              mappedData.push({
-                id: datum.id,
-                name: datum.curriculum_name,
-                study_program: datum.study_program_name,
-                subject: datum.name,
-                grade: gd,
-                syllabus_uri: '',
-              })
-            );
-          }
-        });
+      const mappedData = data.map((dt) => {
+        return {
+          id: dt.id,
+          name: dt.curriculum_name,
+          curriculum_id: dt.curriculum_id,
+          study_program: dt.study_program_name,
+          study_program_id: dt.study_program_id,
+          subject: dt.subject_name,
+          subject_id: dt.subject_id,
+          grade: dt.grade,
+          syllabus_uri: '',
+        };
       });
 
       setDataSyllabus(mappedData);
@@ -285,7 +320,7 @@ export default function StaffProfileContent() {
   //   });
 
   //   mataPelajaranSisva.map((subject) => {
-  //     ['IPA', 'IPS', 'IPA-U', 'IPS-U'].map((item) => {
+  //     dataSubject.map((item) => {
   //       let tempObject = {
   //         id: id,
   //         name: 'Kurikulum Sekolah Sisva',
@@ -332,6 +367,18 @@ export default function StaffProfileContent() {
     setAnchorEl(null);
   };
 
+  const studyProgramOpt = [
+    ...new Set(dataSubject.map((opt) => opt.study_program)),
+  ];
+
+  const subjectOpt = [
+    ...new Set(
+      dataSubject.map((opt) => {
+        return { id: opt.id, name: opt.subject };
+      })
+    ),
+  ];
+
   let [filteredData, setFilteredData] = useState([]);
   const [search, setSearch] = useState('');
   const [curriculumFilter, setCurriculumFilter] = useState('');
@@ -366,12 +413,23 @@ export default function StaffProfileContent() {
           formik={formik}
           data={filteredData}
           deleteSubject={deleteSubject}
+          tableData={tableData}
+          studyProgram={studyProgram}
         />
       ),
     },
     {
       title: 'Tingkatan',
-      component: <SyllabusTable formik={formik} data={filteredData} />,
+      component: (
+        <SyllabusTable
+          formik={formik}
+          data={filteredData}
+          tableData={tableData}
+          studyProgram={studyProgram}
+          subjectOpt={subjectOpt}
+          handleFileChange={handleFileChange}
+        />
+      ),
     },
   ];
 
@@ -535,13 +593,9 @@ export default function StaffProfileContent() {
                 ),
               }}
             >
-              {[
-                'Kurikulum Merdeka',
-                'Kurikulum 2013',
-                'Kurikulum Sekolah Sisva',
-              ].map((option, index) => (
-                <MenuItem key={index} value={option}>
-                  <Typography fontSize={14}>{option}</Typography>
+              {tableData.map((option, index) => (
+                <MenuItem key={index} value={option.name}>
+                  <Typography fontSize={14}>{option.name}</Typography>
                 </MenuItem>
               ))}
             </TextField>
@@ -577,7 +631,7 @@ export default function StaffProfileContent() {
                 ),
               }}
             >
-              {['IPA', 'IPS', 'IPA-U', 'IPS-U'].map((option, index) => (
+              {studyProgramOpt.map((option, index) => (
                 <MenuItem key={index} value={option}>
                   <Typography fontSize={14}>{option}</Typography>
                 </MenuItem>
@@ -635,13 +689,9 @@ export default function StaffProfileContent() {
                 ),
               }}
             >
-              {[
-                'Kurikulum Merdeka',
-                'Kurikulum 2013',
-                'Kurikulum Sekolah Sisva',
-              ].map((option, index) => (
-                <MenuItem key={index} value={option}>
-                  <Typography fontSize={14}>{option}</Typography>
+              {tableData.map((option, index) => (
+                <MenuItem key={index} value={option.name}>
+                  <Typography fontSize={14}>{option.name}</Typography>
                 </MenuItem>
               ))}
             </TextField>
@@ -676,7 +726,7 @@ export default function StaffProfileContent() {
                 ),
               }}
             >
-              {['IPA', 'IPS', 'IPA-U', 'IPS-U'].map((option, index) => (
+              {studyProgramOpt.map((option, index) => (
                 <MenuItem key={index} value={option}>
                   <Typography fontSize={14}>{option}</Typography>
                 </MenuItem>
@@ -713,9 +763,9 @@ export default function StaffProfileContent() {
                 ),
               }}
             >
-              {mataPelajaranIPA.map((option, index) => (
-                <MenuItem key={index} value={option}>
-                  <Typography fontSize={14}>{option}</Typography>
+              {subjectOpt.map((option, index) => (
+                <MenuItem key={index} value={option.name}>
+                  <Typography fontSize={14}>{option.name}</Typography>
                 </MenuItem>
               ))}
             </TextField>
@@ -755,14 +805,21 @@ export default function StaffProfileContent() {
             sx={{
               padding: 2,
             }}
+            Tambah
+            Tingkatan
           >
-            <Typography fontWeight={600} fontSize={16}>
-              Tambah Tingkatan
-            </Typography>
+            <Typography fontWeight={600} fontSize={16}></Typography>
           </Box>
           <Divider />
           <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
-            <FormAddSyllabus formik={formik} editing={false} />
+            <FormAddSyllabus
+              formik={formik}
+              editing={false}
+              tableData={tableData}
+              studyProgram={studyProgram}
+              subjectOpt={subjectOpt}
+              handleFileChange={handleFileChange}
+            />
           </Box>
           <Divider />
           <Stack
@@ -787,7 +844,6 @@ export default function StaffProfileContent() {
               onClick={() => {
                 setOpenCreateSyllabusModal(false);
                 formik.handleSubmit();
-                formik.setValues({});
               }}
             >
               Simpan
@@ -823,14 +879,19 @@ export default function StaffProfileContent() {
             sx={{
               padding: 2,
             }}
+            Tambah
+            Mata
+            Pelajaran
           >
-            <Typography fontWeight={600} fontSize={16}>
-              Tambah Mata Pelajaran
-            </Typography>
+            <Typography fontWeight={600} fontSize={16}></Typography>
           </Box>
           <Divider />
           <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
-            <FormAddSubject formik={formik} />
+            <FormAddSubject
+              formik={formik}
+              tableData={tableData}
+              studyProgram={studyProgram}
+            />
           </Box>
           <Divider />
           <Stack
@@ -890,10 +951,10 @@ export default function StaffProfileContent() {
             sx={{
               padding: 2,
             }}
+            Tambah
+            Kurikulum
           >
-            <Typography fontWeight={600} fontSize={16}>
-              Tambah Kurikulum
-            </Typography>
+            <Typography fontWeight={600} fontSize={16}></Typography>
           </Box>
           <Divider />
           <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
@@ -1268,7 +1329,7 @@ export default function StaffProfileContent() {
                         opacity: '0',
                         border: '1px solid red',
                       }}
-                      // onChange={handleImageChange}
+                      onChange={handleFileChange}
                     />
                   </Stack>
                 </label>

@@ -228,9 +228,10 @@ function ActionButton({ params }) {
           params.value.setOpenEditModal(true);
           params.value.setActiveRow(params.value.data);
           params.value.formik.setValues({
-            name: params.value.data.name,
-            study_program: params.value.data.study_program,
-            subject: params.value.data.subject,
+            id: params.value.data.id,
+            name: params.value.data.curriculum_id,
+            study_program: params.value.data.study_program_id,
+            subject: params.value.data.subject_id,
             subject_type: params.value.data.subject_type,
             grade: params.value.data.grade,
           });
@@ -305,7 +306,14 @@ function ChipList({ params }) {
   );
 }
 
-export default function SyllabusTable({ data, formik }) {
+export default function SyllabusTable({
+  data,
+  formik,
+  tableData,
+  studyProgram,
+  subjectOpt,
+  handleFileChange,
+}) {
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('lg'));
 
   const [openEditModal, setOpenEditModal] = useState(false);
@@ -339,6 +347,8 @@ export default function SyllabusTable({ data, formik }) {
     };
     rows.push(tempObject);
   });
+
+  console.log(rows);
 
   return (
     <div style={{ height: '100%', width: '100%' }}>
@@ -377,7 +387,14 @@ export default function SyllabusTable({ data, formik }) {
           </Box>
           <Divider />
           <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
-            <FormAddSyllabus formik={formik} editing={true} />
+            <FormAddSyllabus
+              formik={formik}
+              editing={true}
+              tableData={tableData}
+              studyProgram={studyProgram}
+              subjectOpt={subjectOpt}
+              handleFileChange={handleFileChange}
+            />
           </Box>
           <Divider />
           <Stack
@@ -401,7 +418,7 @@ export default function SyllabusTable({ data, formik }) {
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenEditModal(false);
-                formik.setValues({ name: '', code: '' });
+                formik.handleSubmit();
               }}
             >
               Simpan

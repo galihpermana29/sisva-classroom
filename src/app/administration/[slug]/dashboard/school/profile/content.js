@@ -44,7 +44,6 @@ export default function SchoolProfileContent() {
 
   const formik = useFormik({
     initialValues: { ...initialData },
-    // validationSchema: schoolProfileFormValidation,
 
     onSubmit: async (values) => {
       const { email, nomorTelepon, alamat, kepemilikanSekolah } = values;
@@ -68,29 +67,9 @@ export default function SchoolProfileContent() {
       try {
         await CmsAPI.editSchoolById(values.id, payload);
 
-        // setSnackbarOpen({
-        //   visible: true,
-        //   message: 'Data is updated successfully',
-        //   severity: 'success',
-        // });
-
         window.location.reload();
       } catch (error) {
         console.log('Submitted', error);
-
-        // if (error.code === 'ERR_BAD_REQUEST') {
-        //   setSnackbarOpen({
-        //     visible: true,
-        //     message: 'Unauthorized',
-        //     severity: 'error',
-        //   });
-        // } else {
-        //   setSnackbarOpen({
-        //     visible: true,
-        //     message: 'Network Error',
-        //     severity: 'error',
-        //   });
-        // }
       }
     },
   });
@@ -110,27 +89,8 @@ export default function SchoolProfileContent() {
       } = await FilesAPI.uploadimage(formData);
 
       formik.setFieldValue(name, data);
-
-      // setSnackbarOpen({
-      //   visible: true,
-      //   message: 'Image uploaded successfully',
-      //   severity: 'success',
-      // });
     } catch (error) {
       console.error('File upload failed:', error);
-      // if (error.code === 'ERR_BAD_REQUEST') {
-      //   setSnackbarOpen({
-      //     visible: true,
-      //     message: 'Unauthorized',
-      //     severity: 'error',
-      //   });
-      // } else {
-      //   setSnackbarOpen({
-      //     visible: true,
-      //     message: 'Error file is too large',
-      //     severity: 'error',
-      //   });
-      // }
     }
   };
 

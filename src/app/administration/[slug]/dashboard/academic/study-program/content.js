@@ -55,7 +55,7 @@ export default function StaffProfileContent() {
             const id = values.id;
             delete values.id;
 
-            await AcademicAPI.editProdi(values, id);
+            await AcademicAPI.updateProdi(values, id);
 
             window.location.reload();
           }
@@ -67,7 +67,7 @@ export default function StaffProfileContent() {
           const id = values.id;
           delete values.id;
 
-          await AcademicAPI.editProdi(values, id);
+          await AcademicAPI.updateProdi(values, id);
 
           window.location.reload();
         } catch (error) {

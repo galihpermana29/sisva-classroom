@@ -27,10 +27,10 @@ import { ExcelIcon, ExportIcon, SortIcon } from '@/assets/SVGs';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { permissions, subject_types, types } from '@/globalcomponents/Variable';
-import { FormAddPeriod } from './components/FormAddPeriod';
+import { FormAddTeacher } from './components/FormAddTeacher';
 
 import { useFormik } from 'formik';
-import { FormAddCurriculum } from './components/FormAddCurriculum';
+import { FormAddSubjectTeacher } from './components/FormAddSubjectTeacher';
 import SubjectTable from './components/SubjectTable';
 import UsersAPI from '@/api/users';
 import AcademicAPI from '@/api/academic';
@@ -41,12 +41,7 @@ export default function StaffProfileContent() {
     status: 'active',
     grades: [],
   });
-  const [filledData, setFilledData] = useState({
-    name: 'Ilmu Pengetahuan Alam',
-    code: 'IPA',
-    status: 'active',
-    grades: ['X', 'XI', 'XII'],
-  });
+
   const formik = useFormik({
     initialValues: { emptyData },
   });
@@ -556,12 +551,12 @@ export default function StaffProfileContent() {
             }}
           >
             <Typography fontWeight={600} fontSize={16}>
-              Tambah Kurikulum
+              Tambah Guru
             </Typography>
           </Box>
           <Divider />
           <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
-            <FormAddCurriculum formik={formik} />
+            <FormAddSubjectTeacher formik={formik} />
           </Box>
           <Divider />
           <Stack
@@ -620,12 +615,12 @@ export default function StaffProfileContent() {
             }}
           >
             <Typography fontWeight={600} fontSize={16}>
-              Tambah Periode
+              Tambah Mata
             </Typography>
           </Box>
           <Divider />
           <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
-            <FormAddPeriod formik={formik} />
+            <FormAddTeacher formik={formik} />
           </Box>
           <Divider />
           <Stack
@@ -1003,13 +998,13 @@ export default function StaffProfileContent() {
                 width: 100,
                 height: '100%',
               }}
-              // onClick={() =>
-              //   activeTab === 0
-              //     ? setOpenCreatePeriodModal(true)
-              //     : activeTab === 1
-              //     ? setOpenCreateCurriculumModal(true)
-              //     : null
-              // }
+              onClick={() =>
+                activeTab === 0
+                  ? setOpenCreatePeriodModal(true)
+                  : activeTab === 1
+                  ? setOpenCreateCurriculumModal(true)
+                  : null
+              }
             >
               <Typography sx={{ fontSize: 14 }}>Tambah</Typography>
             </Button>

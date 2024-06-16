@@ -258,8 +258,8 @@ function ActionButton({ params }) {
           params.value.setOpenEditModal(true);
           params.value.setActiveRow(params.value.data);
           params.value.formik.setValues({
-            period_name: params.value.data.period_name,
-            study_program: params.value.data.study_programs.code,
+            id: params.value.data.id,
+            period_name: params.value.data.name,
             start_time: dayjs(params.value.data.start_time),
             end_time: dayjs(params.value.data.end_time),
             status: params.value.data.status,
@@ -350,8 +350,6 @@ export default function StudyProgramTable({
     rows.push(tempObject);
   });
 
-  console.log(activeRow);
-
   return (
     <div style={{ height: '100%', width: '100%' }}>
       <Modal
@@ -413,20 +411,20 @@ export default function StudyProgramTable({
               sx={{
                 flex: 1,
                 backgroundColor:
-                  formik.values['status'] === 'Tidak Aktif'
+                  formik.values['status'] !== 'inactive'
                     ? 'primary.main'
                     : 'warning.main',
                 '&:hover': {
                   backgroundColor:
-                    formik.values['status'] === 'Aktif' ? 'warning.dark' : '',
+                    formik.values['status'] !== 'active' ? 'warning.dark' : '',
                 },
               }}
               onClick={() => {
                 setOpenEditModal(false);
-                formik.setValues({ name: '', code: '' });
+                formik.handleSubmit();
               }}
             >
-              {formik.values['status'] === 'Tidak Aktif'
+              {formik.values['status'] !== 'inactive'
                 ? 'Simpan'
                 : 'Akhiri Periode'}
             </Button>

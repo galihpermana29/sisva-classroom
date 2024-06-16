@@ -41,7 +41,7 @@ const AcademicAPI = {
     return api.get(`/study-programs`, { headers });
   },
 
-  editProdi(payload, id) {
+  updateProdi(payload, id) {
     const headers = {
       'X-Sisva-Source': 'academic.test',
       'X-Sisva-UserID': USER_ID,
@@ -249,6 +249,16 @@ const AcademicAPI = {
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.delete(`/periods/${id}`, { headers });
+  },
+
+  updatePeriod(payload, id) {
+    const headers = {
+      'X-Sisva-Source': 'academic.periods.test',
+      'X-Sisva-UserID': USER_ID,
+      'X-Sisva-SchoolID': SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.patch(`/periods/${id}`, payload, { headers });
   },
 
   deletePeriodCurr(id, payload) {

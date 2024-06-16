@@ -161,7 +161,7 @@ export const FormSchoolIdentity = ({
             >
               <Image
                 alt='Image'
-                src={formik.values['landing_image_uri']}
+                src={`https://api-staging.sisva.id/file/v1/files/${formik.values['landing_image_uri']}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
                 layout='fill'
                 objectFit='cover'
               />
@@ -227,7 +227,7 @@ export const FormSchoolIdentity = ({
               >
                 <Image
                   alt='Image'
-                  src={formik.values['landing_image_uri']}
+                  src={`https://api-staging.sisva.id/file/v1/files/${formik.values['landing_image_uri']}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
                   layout='fill'
                   objectFit='cover'
                 />
