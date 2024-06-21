@@ -1,36 +1,20 @@
 'use client';
 
 import {
-  Avatar,
-  Box,
   Button,
-  Chip,
-  FormControl,
-  Grid,
   IconButton,
   InputAdornment,
-  InputLabel,
   MenuItem,
-  OutlinedInput,
-  Select,
   Stack,
   TextField,
   Typography,
 } from '@mui/material';
 import Image from 'next/image';
 
-import {
-  formAddStaffFields,
-  formAddStudyProgramFields,
-  formAddSubjectFields,
-  formAddSyllabusFields,
-} from '@/globalcomponents/FormFields';
-import { Cancel, Visibility, VisibilityOff } from '@mui/icons-material';
-import { useEffect, useState } from 'react';
-import { permissions } from '@/globalcomponents/Variable';
-
 import PDFIcon from '@/assets/icon-PDF.svg';
-import AcademicAPI from '@/api/academic';
+import { formAddSyllabusFields } from '@/globalcomponents/FormFields';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { useEffect, useState } from 'react';
 
 export const FormAddSyllabus = ({
   formik,
@@ -40,11 +24,14 @@ export const FormAddSyllabus = ({
   subjectOpt,
   handleFileChange = () => {},
 }) => {
+  console.log(formik);
+
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
   const [currId, setCurrId] = useState();
   const [studyProgramData, setStudyProgramData] = useState();
   const [subjectData, setSubjectData] = useState();
+  const [gradeData, setGradeData] = useState();
 
   const updatedSubjectFields = formAddSyllabusFields.map((field) => {
     if (field.name == 'curriculum_name') {
@@ -59,16 +46,10 @@ export const FormAddSyllabus = ({
   const fetchStudyProgram = async (val) => {
     setCurrId(val);
 
-    const {
-      data: { data },
-    } = await AcademicAPI.getAllProdi();
-
-    console.log(data);
-
     const firstMap = tableData.find((dt) => dt.id == val);
 
     const secMap = [...new Set(firstMap?.study_programs)].map((sm) => {
-      data.forEach((dt) => {
+      studyProgram.forEach((dt) => {
         if (sm == dt.code) {
           sm = { slug: dt.id, title: dt.name, code: dt.code };
         }
@@ -79,27 +60,33 @@ export const FormAddSyllabus = ({
     setStudyProgramData(secMap);
   };
 
-  const fetchSubject = async (val) => {
-    const {
-      data: { data },
-    } = await AcademicAPI.getAllSubject();
-
-    console.log(data);
-
-    const firstMap = data.filter(
-      (dt) => dt.study_program_id == val && dt.curriculum_id == currId
+  const fetchSubject = async (val, currId2) => {
+    const firstMap = subjectOpt.filter(
+      (dt) =>
+        dt.study_program_id == val &&
+        dt.curriculum_id == (currId ? currId : currId2)
     );
 
     const secMap = firstMap.map((fm) => {
-      return (fm = { slug: fm.id, title: fm.name });
+      return (fm = { slug: fm.id, title: fm.subject });
     });
 
+    const grades = studyProgram.find((sp) => sp.id == val).grades;
+
+    setGradeData(grades);
     setSubjectData(secMap);
   };
 
+  useEffect(() => {
+    if (editing) {
+      fetchStudyProgram(formik.values.curriculum_name);
+      fetchSubject(formik.values.study_program, formik.values.curriculum_name);
+    }
+  }, []);
+
   return (
     <>
-      {updatedSubjectFields.map((field) =>
+      {updatedSubjectFields?.map((field) =>
         field.type === 'text' ? (
           <Stack sx={{ my: 1 }} key={field.name}>
             <Typography variant='body2' fontWeight={600} mb={0.5}>
@@ -189,11 +176,22 @@ export const FormAddSyllabus = ({
                 }}
                 sx={{ flex: { xs: 1, lg: 0 } }}
               >
-                {studyProgramData?.map((option) => (
-                  <MenuItem key={option.slug} value={option.slug}>
-                    <Typography fontSize={14}>{option.title}</Typography>
-                  </MenuItem>
-                ))}
+                {studyProgramData?.length
+                  ? studyProgramData?.map((option) => (
+                      <MenuItem key={option.slug} value={option.slug}>
+                        <Typography fontSize={14}>{option.title}</Typography>
+                      </MenuItem>
+                    ))
+                  : ['Program Studi Tidak Tersedia'].map((option, idx) => (
+                      <MenuItem
+                        selected={idx == 0}
+                        disabled
+                        key={idx}
+                        value={option}
+                      >
+                        <Typography fontSize={14}>{option}</Typography>
+                      </MenuItem>
+                    ))}
               </TextField>
             </Stack>
           ) : field.name === 'subject' ? (
@@ -209,11 +207,22 @@ export const FormAddSyllabus = ({
                 }
                 sx={{ flex: { xs: 1, lg: 0 } }}
               >
-                {subjectData?.map((option) => (
-                  <MenuItem key={option.slug} value={option.slug}>
-                    <Typography fontSize={14}>{option.title}</Typography>
-                  </MenuItem>
-                ))}
+                {studyProgramData?.length
+                  ? subjectData?.map((option) => (
+                      <MenuItem key={option.slug} value={option.slug}>
+                        <Typography fontSize={14}>{option.title}</Typography>
+                      </MenuItem>
+                    ))
+                  : ['Mata Pelajaran Tidak Tersedia'].map((option, idx) => (
+                      <MenuItem
+                        selected={idx == 0}
+                        disabled
+                        key={idx}
+                        value={option}
+                      >
+                        <Typography fontSize={14}>{option}</Typography>
+                      </MenuItem>
+                    ))}
               </TextField>
             </Stack>
           ) : (
@@ -229,11 +238,22 @@ export const FormAddSyllabus = ({
                 }
                 sx={{ flex: { xs: 1, lg: 0 } }}
               >
-                {field.data.map((option) => (
-                  <MenuItem key={option.slug} value={option.slug}>
-                    <Typography fontSize={14}>{option.title}</Typography>
-                  </MenuItem>
-                ))}
+                {gradeData?.length
+                  ? gradeData?.map((option) => (
+                      <MenuItem key={option} value={option}>
+                        <Typography fontSize={14}>{option}</Typography>
+                      </MenuItem>
+                    ))
+                  : ['Tingkatan Tidak Tersedia'].map((option, idx) => (
+                      <MenuItem
+                        selected={idx == 0}
+                        disabled
+                        key={idx}
+                        value={option}
+                      >
+                        <Typography fontSize={14}>{option}</Typography>
+                      </MenuItem>
+                    ))}
               </TextField>
             </Stack>
           )
@@ -250,12 +270,14 @@ export const FormAddSyllabus = ({
                 mb: 0.5,
                 flexDirection: 'row',
                 alignItems: 'center',
-                display: editing ? 'flex' : 'none',
+                display: 'flex',
               }}
             >
               <Image src={PDFIcon} height={18} />
               <Typography sx={{ fontSize: 13, ml: 1 }}>
-                Silabus Matematika-Kurikulum Merdeka-IPA-X.pdf
+                {formik.values.syllabus_uri
+                  ? formik.values.syllabus_uri
+                  : 'Masukan PDF Silabus'}
               </Typography>
             </Stack>
 
@@ -267,7 +289,7 @@ export const FormAddSyllabus = ({
                 alignItems={'center'}
                 sx={{ mb: 0.5 }}
               >
-                {editing ? 'Ubah' : 'Upload'}
+                {formik.values.syllabus_uri ? 'Ubah' : 'Upload'}
                 <input
                   name={'syllabus_uri'}
                   accept='pdf'
@@ -287,7 +309,10 @@ export const FormAddSyllabus = ({
               variant='outlined'
               flexDirection={'row'}
               alignItems={'center'}
-              sx={{ mb: 1, display: editing ? 'flex' : 'none' }}
+              sx={{
+                mb: 1,
+                display: formik.values.syllabus_uri ? 'flex' : 'none',
+              }}
             >
               Hapus
             </Button>

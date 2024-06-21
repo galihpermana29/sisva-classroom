@@ -189,7 +189,7 @@ function ActionButton({ params }) {
           params.value.setActiveRow(params.value.data);
           params.value.formik.setValues({
             id: params.value.data.id,
-            name: params.value.data.curriculum_id,
+            curriculum_name: params.value.data.curriculum_id,
             study_program: params.value.data.study_program_id,
             subject: params.value.data.subject,
             subject_type: params.value.data.subject_type,
@@ -347,6 +347,7 @@ export default function SubjectTable({
               formik={formik}
               tableData={tableData}
               studyProgram={studyProgram}
+              editing={true}
             />
           </Box>
           <Divider />

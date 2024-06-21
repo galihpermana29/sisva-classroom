@@ -156,7 +156,7 @@ export const formAddSyllabusFields = [
 ];
 export const formAddSubjectFields = [
   {
-    name: 'name',
+    name: 'curriculum_name',
     label: 'Nama Kurikulum',
     placeholder: 'Nama',
     md: 6,

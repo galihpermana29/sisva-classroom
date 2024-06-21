@@ -144,9 +144,8 @@ const columns = [
                   Silabus
                 </Typography>
                 <Button small variant='outlined' sx={{ fontSize: 13 }}>
-                  {' '}
                   <a
-                    href='/Silabus Matematika-Kurikulum Merdeka-IPA-X.pdf'
+                    href='/17189757176d1d2d03182252039b56.pdf'
                     target='_blank'
                     rel='noopener noreferrer'
                   >
@@ -183,7 +182,7 @@ const columns = [
         <Button small variant='outlined' sx={{ fontSize: 13 }}>
           {' '}
           <a
-            href='/Silabus Matematika-Kurikulum Merdeka-IPA-X.pdf'
+            href={`https://api-staging.sisva.id/file/v1/files/${params.row.syllabus_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
             target='_blank'
             rel='noopener noreferrer'
           >
@@ -229,11 +228,11 @@ function ActionButton({ params }) {
           params.value.setActiveRow(params.value.data);
           params.value.formik.setValues({
             id: params.value.data.id,
-            name: params.value.data.curriculum_id,
+            curriculum_name: params.value.data.curriculum_id,
             study_program: params.value.data.study_program_id,
             subject: params.value.data.subject_id,
-            subject_type: params.value.data.subject_type,
             grade: params.value.data.grade,
+            syllabus_uri: params.value.data.syllabus_uri,
           });
         }}
       >
@@ -313,6 +312,7 @@ export default function SyllabusTable({
   studyProgram,
   subjectOpt,
   handleFileChange,
+  deleteSyllabus = () => {},
 }) {
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('lg'));
 
@@ -347,8 +347,6 @@ export default function SyllabusTable({
     };
     rows.push(tempObject);
   });
-
-  console.log(rows);
 
   return (
     <div style={{ height: '100%', width: '100%' }}>
@@ -408,7 +406,7 @@ export default function SyllabusTable({
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenEditModal(false);
-                formik.setValues({ name: '', code: '' });
+                formik.setValues();
               }}
             >
               Batal
@@ -555,6 +553,7 @@ export default function SyllabusTable({
                 },
               }}
               onClick={() => {
+                deleteSyllabus(activeRow.id);
                 setOpenDeleteModal(false);
               }}
             >

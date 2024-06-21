@@ -1,15 +1,10 @@
 'use client';
 
 import {
-  Avatar,
   Box,
-  Button,
-  Chip,
   FormControl,
-  Grid,
   IconButton,
   InputAdornment,
-  InputLabel,
   MenuItem,
   OutlinedInput,
   Select,
@@ -19,11 +14,7 @@ import {
 } from '@mui/material';
 import Image from 'next/image';
 
-import {
-  formAddStaffFields,
-  formAddStudyProgramFields,
-  formAddSubjectFields,
-} from '@/globalcomponents/FormFields';
+import { formAddSubjectFields } from '@/globalcomponents/FormFields';
 import { Cancel, Visibility, VisibilityOff } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
 import { permissions } from '@/globalcomponents/Variable';
@@ -37,22 +28,36 @@ export const FormAddSubject = ({
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+  const [studyProgramData, setStudyProgramData] = useState();
 
   const updatedSubjectFields = formAddSubjectFields.map((field) => {
-    if (field.name == 'name') {
+    if (field.name == 'curriculum_name') {
       field.data = tableData.map((td) => {
         return { slug: td.id, title: td.name };
       });
     }
 
-    if (field.name == 'study_program') {
-      field.data = studyProgram?.map((sp) => {
-        return { slug: sp.id, title: sp.name };
-      });
-    }
-
     return field;
   });
+
+  const fetchStudyProgram = async (val) => {
+    const firstMap = tableData.find((dt) => dt.id == val);
+
+    const secMap = [...new Set(firstMap?.study_programs)].map((sm) => {
+      studyProgram.forEach((dt) => {
+        if (sm == dt.code) {
+          sm = { slug: dt.id, title: dt.name, code: dt.code };
+        }
+      });
+      return sm;
+    });
+
+    setStudyProgramData(secMap);
+  };
+
+  useEffect(() => {
+    if (editing) fetchStudyProgram(formik.values.curriculum_name);
+  }, []);
 
   return (
     <>
@@ -111,23 +116,79 @@ export const FormAddSubject = ({
             />
           </Stack>
         ) : field.type === 'select' ? (
-          <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant='body2' fontWeight={600} mb={0.5}>
-              {field.label}
-            </Typography>
-            <TextField
-              select
-              value={formik.values[field.name]}
-              onChange={(e) => formik.setFieldValue(field.name, e.target.value)}
-              sx={{ flex: { xs: 1, lg: 0 } }}
-            >
-              {field.data.map((option) => (
-                <MenuItem key={option.slug} value={option.slug}>
-                  <Typography fontSize={14}>{option.title}</Typography>
-                </MenuItem>
-              ))}
-            </TextField>
-          </Stack>
+          field.name === 'curriculum_name' ? (
+            <Stack sx={{ my: 1 }} key={field.name}>
+              <Typography variant='body2' fontWeight={600} mb={0.5}>
+                {field.label}
+              </Typography>
+              <TextField
+                select
+                value={formik.values[field.name]}
+                onChange={(e) => {
+                  formik.setFieldValue(field.name, e.target.value);
+                  fetchStudyProgram(e.target.value);
+                }}
+                sx={{ flex: { xs: 1, lg: 0 } }}
+              >
+                {field.data.map((option) => (
+                  <MenuItem key={option.slug} value={option.slug}>
+                    <Typography fontSize={14}>{option.title}</Typography>
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Stack>
+          ) : field.name === 'study_program' ? (
+            <Stack sx={{ my: 1 }} key={field.name}>
+              <Typography variant='body2' fontWeight={600} mb={0.5}>
+                {field.label}
+              </Typography>
+              <TextField
+                select
+                value={formik.values[field.name]}
+                onChange={(e) =>
+                  formik.setFieldValue(field.name, e.target.value)
+                }
+                sx={{ flex: { xs: 1, lg: 0 } }}
+              >
+                {studyProgramData?.length
+                  ? studyProgramData?.map((option) => (
+                      <MenuItem key={option.slug} value={option.slug}>
+                        <Typography fontSize={14}>{option.title}</Typography>
+                      </MenuItem>
+                    ))
+                  : ['Program Studi Tidak Tersedia'].map((option, idx) => (
+                      <MenuItem
+                        selected={idx == 0}
+                        disabled
+                        key={idx}
+                        value={option}
+                      >
+                        <Typography fontSize={14}>{option}</Typography>
+                      </MenuItem>
+                    ))}
+              </TextField>
+            </Stack>
+          ) : (
+            <Stack sx={{ my: 1 }} key={field.name}>
+              <Typography variant='body2' fontWeight={600} mb={0.5}>
+                {field.label}
+              </Typography>
+              <TextField
+                select
+                value={formik.values[field.name]}
+                onChange={(e) =>
+                  formik.setFieldValue(field.name, e.target.value)
+                }
+                sx={{ flex: { xs: 1, lg: 0 } }}
+              >
+                {field.data.map((option) => (
+                  <MenuItem key={option.slug} value={option.slug}>
+                    <Typography fontSize={14}>{option.title}</Typography>
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Stack>
+          )
         ) : field.type === 'multiple-select' ? (
           <Stack sx={{ my: 1 }} key={field.name}>
             <Typography variant='body2' fontWeight={600}>

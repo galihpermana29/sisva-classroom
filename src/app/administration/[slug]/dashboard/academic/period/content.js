@@ -34,6 +34,7 @@ import CurriculumTable from './components/CurriculumTable';
 import { FormAddCurriculum } from './components/FormAddCurriculum';
 import AcademicAPI from '@/api/academic';
 import dayjs from 'dayjs';
+import { useRouter } from 'next/router';
 export default function StaffProfileContent() {
   const [emptyData, setEmptyData] = useState({
     name: '',
@@ -200,7 +201,7 @@ export default function StaffProfileContent() {
 
       const mappedData = data.map((dt) => {
         activeProgram.forEach((ap) => {
-          dt.study_programs.forEach((sp) => {
+          dt.study_programs?.forEach((sp) => {
             if (sp.id == ap.id) {
               sp.grades = ap.grades;
             }

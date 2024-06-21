@@ -247,7 +247,7 @@ export default function CurriculumTable({
     let tempObject = {
       id: idx,
       name: data.name,
-      study_programs: data.study_programs,
+      study_programs: [...new Set(data.study_programs)],
       subjects: data.subjects,
       action: {
         data: data,

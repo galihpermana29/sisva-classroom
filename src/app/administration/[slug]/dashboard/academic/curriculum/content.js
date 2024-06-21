@@ -37,6 +37,7 @@ import SyllabusTable from './components/SyllabusTable';
 import { FormAddSyllabus } from './components/FormAddSyllabus';
 import AcademicAPI from '@/api/academic';
 import FilesAPI from '@/api/files';
+
 export default function StaffProfileContent() {
   const [emptyData, setEmptyData] = useState({});
   const [studyProgram, setStudyProgram] = useState('');
@@ -92,30 +93,29 @@ export default function StaffProfileContent() {
 
         if (activeTab == 2) {
           if (!values.id) {
-            console.log(values);
-
             const payload = {
-              name: values.subject,
+              curriculum_id: values.curriculum_name,
               study_program_id: values.study_program,
               subject_id: values.subject,
-              curriculum_id: values.name,
               grade: values.grade,
+              file_uri: values.syllabus_uri,
             };
 
-            // await AcademicAPI.createSubject(payload);
+            await AcademicAPI.createSilabus(payload);
 
-            // window.location.reload();
+            window.location.reload();
           } else {
             const id = values.id;
 
             const payload = {
-              name: values.subject,
-              type: values.subject_type,
+              curriculum_id: values.curriculum_name,
               study_program_id: values.study_program,
-              curriculum_id: values.name,
+              subject_id: values.subject,
+              grade: values.grade,
+              file_uri: values.syllabus_uri,
             };
 
-            await AcademicAPI.updateSubject(payload, id);
+            // await AcademicAPI.updateSubject(payload, id);
 
             window.location.reload();
           }
@@ -131,11 +131,7 @@ export default function StaffProfileContent() {
 
     const { name } = e.target;
 
-    console.log(name);
-
     const file = e.target.files[0];
-
-    console.log(file);
 
     const formData = new FormData();
 
@@ -145,8 +141,6 @@ export default function StaffProfileContent() {
       const {
         data: { data },
       } = await FilesAPI.uploadimage(formData);
-
-      console.log(name, data);
 
       formik.setFieldValue(name, data);
     } catch (error) {
@@ -171,8 +165,16 @@ export default function StaffProfileContent() {
       await AcademicAPI.deleteSubject(id);
 
       window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-      setActiveTab(1);
+  const deleteSyllabus = async (id) => {
+    try {
+      await AcademicAPI.deleteSilabus(id);
+
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
@@ -246,6 +248,8 @@ export default function StaffProfileContent() {
         data: { data },
       } = await AcademicAPI.getAllSilabus();
 
+      console.log(data);
+
       const mappedData = data.map((dt) => {
         return {
           id: dt.id,
@@ -256,7 +260,7 @@ export default function StaffProfileContent() {
           subject: dt.subject_name,
           subject_id: dt.subject_id,
           grade: dt.grade,
-          syllabus_uri: '',
+          syllabus_uri: dt.file_uri,
         };
       });
 
@@ -265,98 +269,6 @@ export default function StaffProfileContent() {
 
     getAllSyllabus();
   }, []);
-
-  // useEffect(() => {
-  //   let temp = [];
-  //   let id = 1;
-  //   tableData.map((item) => {
-  //     mataPelajaranIPA.map((subject) => {
-  //       let tempObject = {
-  //         id: id,
-  //         name: item,
-  //         study_program: 'IPA',
-  //         subject: subject,
-  //         subject_type: 'mandatory',
-  //       };
-  //       temp.push(tempObject);
-  //       id++;
-  //     });
-
-  //     mataPelajaranIPS.map((subject) => {
-  //       let tempObject = {
-  //         id: id,
-  //         name: item,
-  //         study_program: 'IPS',
-  //         subject: subject,
-  //         subject_type: 'mandatory',
-  //       };
-  //       temp.push(tempObject);
-  //       id++;
-  //     });
-
-  //     mataPelajaranIPA.map((subject) => {
-  //       let tempObject = {
-  //         id: id,
-  //         name: item,
-  //         study_program: 'IPA-U',
-  //         subject: subject,
-  //         subject_type: 'mandatory',
-  //       };
-  //       temp.push(tempObject);
-  //       id++;
-  //     });
-
-  //     mataPelajaranIPS.map((subject) => {
-  //       let tempObject = {
-  //         id: id,
-  //         name: item,
-  //         study_program: 'IPS-U',
-  //         subject: subject,
-  //         subject_type: 'mandatory',
-  //       };
-  //       temp.push(tempObject);
-  //       id++;
-  //     });
-  //   });
-
-  //   mataPelajaranSisva.map((subject) => {
-  //     dataSubject.map((item) => {
-  //       let tempObject = {
-  //         id: id,
-  //         name: 'Kurikulum Sekolah Sisva',
-  //         study_program: item,
-  //         subject: subject,
-  //         subject_type: 'elective',
-  //       };
-  //       temp.push(tempObject);
-  //       id++;
-  //     });
-  //   });
-
-  //   // setDataSubject(temp);
-
-  //   id = 0;
-
-  //   let tempSyllabus = [];
-
-  //   temp.map((data) => {
-  //     ['X', 'XI', 'XII'].map((item) => {
-  //       let tempObject = {
-  //         id: id,
-  //         name: data.name,
-  //         study_program: data.study_program,
-  //         subject: data.subject,
-  //         grade: item,
-  //         syllabus_uri: '',
-  //       };
-
-  //       tempSyllabus.push(tempObject);
-  //       id++;
-  //     });
-  //   });
-
-  //   // setDataSyllabus(tempSyllabus);
-  // }, []);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -374,7 +286,7 @@ export default function StaffProfileContent() {
   const subjectOpt = [
     ...new Set(
       dataSubject.map((opt) => {
-        return { id: opt.id, name: opt.subject };
+        return { id: opt.id, name: opt.subject, currId: opt.curriculum_id };
       })
     ),
   ];
@@ -426,8 +338,9 @@ export default function StaffProfileContent() {
           data={filteredData}
           tableData={tableData}
           studyProgram={studyProgram}
-          subjectOpt={subjectOpt}
+          subjectOpt={dataSubject}
           handleFileChange={handleFileChange}
+          deleteSyllabus={deleteSyllabus}
         />
       ),
     },
@@ -805,10 +718,10 @@ export default function StaffProfileContent() {
             sx={{
               padding: 2,
             }}
-            Tambah
-            Tingkatan
           >
-            <Typography fontWeight={600} fontSize={16}></Typography>
+            <Typography fontWeight={600} fontSize={16}>
+              Tambah Tingkatan
+            </Typography>
           </Box>
           <Divider />
           <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
@@ -817,7 +730,7 @@ export default function StaffProfileContent() {
               editing={false}
               tableData={tableData}
               studyProgram={studyProgram}
-              subjectOpt={subjectOpt}
+              subjectOpt={dataSubject}
               handleFileChange={handleFileChange}
             />
           </Box>
@@ -880,10 +793,10 @@ export default function StaffProfileContent() {
               padding: 2,
             }}
             Tambah
-            Mata
-            Pelajaran
           >
-            <Typography fontWeight={600} fontSize={16}></Typography>
+            <Typography fontWeight={600} fontSize={16}>
+              Mata Pelajaran
+            </Typography>
           </Box>
           <Divider />
           <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
@@ -951,10 +864,10 @@ export default function StaffProfileContent() {
             sx={{
               padding: 2,
             }}
-            Tambah
-            Kurikulum
           >
-            <Typography fontWeight={600} fontSize={16}></Typography>
+            <Typography fontWeight={600} fontSize={16}>
+              Tambah Kurikulum
+            </Typography>
           </Box>
           <Divider />
           <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>

@@ -25,7 +25,6 @@ import { useFormik } from 'formik';
 import { FormSchoolDetails } from './components/FormSchoolDetails';
 import { FormSchoolType } from './components/FormSchoolType';
 import { FormSchoolIdentity } from './components/FormSchoolIdentity';
-import { schoolProfileFormValidation } from './components/FormValidation';
 import CmsAPI from '@/api/cms';
 import FilesAPI from '@/api/files';
 
@@ -36,11 +35,6 @@ export default function SchoolProfileContent() {
   const { name = '', abbreviation = '', logo_uri = '' } = initialData ?? {};
 
   const [editing, setEditing] = useState(false);
-  const [snackbarOpen, setSnackbarOpen] = useState({
-    visible: false,
-    message: '',
-    severity: '',
-  });
 
   const formik = useFormik({
     initialValues: { ...initialData },
@@ -144,7 +138,7 @@ export default function SchoolProfileContent() {
         <Box sx={{ height: 70, width: 70, position: 'relative', mr: 2 }}>
           <Image
             alt='Image'
-            src={logo_uri}
+            src={`https://api-staging.sisva.id/file/v1/files/${logo_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
             layout={'fill'}
             objectFit={'contain'}
           />

@@ -211,6 +211,16 @@ const AcademicAPI = {
     return api.patch(`/syllabuses/${id}`, payload, { headers });
   },
 
+  deleteSilabus(id) {
+    const headers = {
+      'X-Sisva-Source': 'academic.curriculum.test',
+      'X-Sisva-UserID': USER_ID,
+      'X-Sisva-SchoolID': SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.delete(`/syllabuses/${id}`, { headers });
+  },
+
   createPeriod(payload) {
     const headers = {
       'X-Sisva-Source': 'academic.periods.test',
