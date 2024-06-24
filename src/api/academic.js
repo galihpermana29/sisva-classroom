@@ -231,14 +231,14 @@ const AcademicAPI = {
     return api.post(`/periods`, payload, { headers });
   },
 
-  addCurriculumInPeriod(payload) {
+  addCurriculumInPeriod(id, payload) {
     const headers = {
       'X-Sisva-Source': 'academic.periods.test',
       'X-Sisva-UserID': USER_ID,
       'X-Sisva-SchoolID': SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
-    return api.post(`/periods/1/curriculums`, payload, { headers });
+    return api.post(`/periods/${id}/curriculums`, payload, { headers });
   },
 
   getAllPeriod() {
@@ -273,12 +273,16 @@ const AcademicAPI = {
 
   deletePeriodCurr(id, payload) {
     const headers = {
-      'X-Sisva-Source': 'academic.periods.test',
+      'X-Sisva-Source': 'academic.period.test',
       'X-Sisva-UserID': USER_ID,
       'X-Sisva-SchoolID': SCHOOL_ID,
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
-    return api.delete(`/periods/${id}/curriculums`, payload, { headers });
+    return api.delete(`/periods/${id}/curriculums`, {
+      headers: headers,
+      data: payload,
+    });
   },
 
   getAllSubjectTeacher() {

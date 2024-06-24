@@ -1,23 +1,16 @@
-import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import Image from 'next/image';
+import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
 import {
-  Avatar,
   Box,
   Button,
-  Chip,
   Divider,
   IconButton,
   Modal,
   Paper,
   Stack,
-  TextField,
   Typography,
   useMediaQuery,
 } from '@mui/material';
-import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
-import Link from 'next/link';
-import { types, permissions } from '@/globalcomponents/Variable';
+import { DataGrid } from '@mui/x-data-grid';
 import { useState } from 'react';
 import { FormAddCurriculum } from './FormAddCurriculum';
 
@@ -166,10 +159,10 @@ function ActionButton({ params }) {
           params.value.setOpenEditModal(true);
           params.value.setActiveRow(params.value.data);
           params.value.formik.setValues({
-            period_name: params.value.data.period_name,
-            study_program: params.value.data.study_program,
+            period_name: params.value.data.period_id,
+            study_program: params.value.data.study_program_id,
             grade: params.value.data.grade,
-            curriculum: params.value.data.curriculum,
+            curriculum_name: params.value.data.curriculum_id,
           });
         }}
       >
@@ -218,6 +211,9 @@ function ActionButton({ params }) {
 export default function CurriculumTable({
   data,
   formik,
+  optPeriod,
+  dataAllCurr,
+  dataStudyProgram,
   deletePeriodCurr = () => {},
 }) {
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('lg'));
@@ -228,9 +224,10 @@ export default function CurriculumTable({
 
   let rows = [];
 
-  data.map((data) => {
+  data.map((data, idx) => {
     let tempObject = {
-      id: data.id,
+      id: idx,
+      curriculum_id: data.id,
       period_name: data.period_name,
       study_program: data.study_program,
       grade: data.grade,
@@ -290,7 +287,13 @@ export default function CurriculumTable({
           </Box>
           <Divider />
           <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
-            <FormAddCurriculum formik={formik} />
+            <FormAddCurriculum
+              formik={formik}
+              optPeriod={optPeriod}
+              dataAllCurr={dataAllCurr}
+              dataStudyProgram={dataStudyProgram}
+              editing={true}
+            />
           </Box>
           <Divider />
           <Stack
@@ -433,7 +436,7 @@ export default function CurriculumTable({
                 },
               }}
               onClick={() => {
-                deletePeriodCurr(activeRow.id, activeRow);
+                deletePeriodCurr(activeRow.period_id, activeRow);
                 setOpenDeleteModal(false);
               }}
             >

@@ -1,8 +1,5 @@
-import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import Image from 'next/image';
+import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
 import {
-  Avatar,
   Box,
   Button,
   Chip,
@@ -11,17 +8,13 @@ import {
   Modal,
   Paper,
   Stack,
-  TextField,
   Typography,
   useMediaQuery,
 } from '@mui/material';
-import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
-import Link from 'next/link';
-import { types, permissions } from '@/globalcomponents/Variable';
-import { useState } from 'react';
-import { FormAddStudyProgram } from './FormAddPeriod';
-import { FormEdiPeriod, FormEditPeriod } from './FormEditPeriod';
+import { DataGrid } from '@mui/x-data-grid';
 import dayjs from 'dayjs';
+import { useState } from 'react';
+import { FormEditPeriod } from './FormEditPeriod';
 
 const columns = [
   {
@@ -126,13 +119,13 @@ const columns = [
                     mr: 0.5,
                     backgroundColor: 'green',
                     display:
-                      params.value.data.status === 'Aktif' ? 'flex' : 'none',
+                      params.value.data.status === 'active' ? 'flex' : 'none',
                   }}
                 />
                 <Typography
                   sx={{
                     fontWeight:
-                      params.value.data.status === 'Aktif' ? 500 : 400,
+                      params.value.data.status === 'active' ? 500 : 400,
                     fontSize: 13,
                   }}
                 >
@@ -179,16 +172,20 @@ const columns = [
               borderRadius: 10,
               mr: 0.5,
               backgroundColor: 'green',
-              display: params.value === 'Aktif' ? 'flex' : 'none',
+              display: params.value === 'active' ? 'flex' : 'none',
             }}
           />
           <Typography
             sx={{
-              fontWeight: params.value === 'Aktif' ? 500 : 400,
+              fontWeight: params.value === 'active' ? 500 : 400,
               fontSize: 13,
             }}
           >
-            {params.value}
+            {params.value === 'active'
+              ? 'Aktif'
+              : params.value === 'inactive'
+              ? 'Tidak Aktif'
+              : 'Selesai'}
           </Typography>
         </Stack>
       );
@@ -252,7 +249,7 @@ function ActionButton({ params }) {
           },
           height: 'fit-content',
           width: { xs: 90, lg: 'fit-content' },
-          display: params.value.data.status === 'Selesai' ? 'none' : 'flex',
+          display: params.value.data.status === 'finished' ? 'none' : 'flex',
         }}
         onClick={() => {
           params.value.setOpenEditModal(true);
@@ -284,7 +281,7 @@ function ActionButton({ params }) {
             backgroundColor: 'warning.dark',
           },
           width: { xs: 90, lg: 'fit-content' },
-          display: params.value.data.status !== 'Tidak Aktif' ? 'none' : 'flex',
+          display: params.value.data.status !== 'inactive' ? 'none' : 'flex',
         }}
         onClick={() => {
           params.value.setOpenDeleteModal(true);

@@ -20,11 +20,15 @@ export const formAddCurriculumFields = [
     placeholder: 'Periode',
     md: 6,
     type: 'select',
-    data: [
-      { slug: 'Tahun Ajaran 2024/2025', title: 'Tahun Ajaran 2024/2025' },
-      { slug: 'Tahun Ajaran 2023/2024', title: 'Tahun Ajaran 2023/2024' },
-      { slug: 'Tahun Ajaran 2022/2023', title: 'Tahun Ajaran 2022/2023' },
-    ],
+    data: [],
+  },
+  {
+    name: 'curriculum_name',
+    label: 'Kurikulum',
+    placeholder: 'Kurikulum',
+    md: 6,
+    type: 'select',
+    data: [],
   },
   {
     name: 'study_program',
@@ -32,12 +36,7 @@ export const formAddCurriculumFields = [
     placeholder: 'Program Studi',
     md: 6,
     type: 'select',
-    data: [
-      { slug: 'IPA', title: 'IPA' },
-      { slug: 'IPS', title: 'IPS' },
-      { slug: 'IPA-U', title: 'IPA-U' },
-      { slug: 'IPS-U', title: 'IPS-U' },
-    ],
+    data: [],
   },
   {
     name: 'grade',
@@ -45,23 +44,7 @@ export const formAddCurriculumFields = [
     placeholder: 'Tingkatan',
     md: 6,
     type: 'select',
-    data: [
-      { slug: 'X', title: 'X' },
-      { slug: 'XI', title: 'XI' },
-      { slug: 'XII', title: 'XII' },
-    ],
-  },
-  {
-    name: 'curriculum',
-    label: 'Kurikulum',
-    placeholder: 'Kurikulum',
-    md: 6,
-    type: 'select',
-    data: [
-      { slug: 'Kurikulum Merdeka', title: 'Kurikulum Merdeka' },
-      { slug: 'Kurikulum 2013', title: 'Kurikulum 2013' },
-      { slug: 'Kurikulum Sekolah Sisva', title: 'Kurikulum Sekolah Sisva' },
-    ],
+    data: [],
   },
 ];
 export const formEditPeriodFields = [

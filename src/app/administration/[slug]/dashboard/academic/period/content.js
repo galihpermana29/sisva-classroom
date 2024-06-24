@@ -1,5 +1,6 @@
 'use client';
 
+import { ExcelIcon, SortIcon } from '@/assets/SVGs';
 import {
   Add,
   Cancel,
@@ -12,7 +13,6 @@ import {
   Button,
   Divider,
   Hidden,
-  IconButton,
   InputAdornment,
   Menu,
   MenuItem,
@@ -22,19 +22,15 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import PeriodTable from './components/PeriodTable';
-import { ExcelIcon, ExportIcon, SortIcon } from '@/assets/SVGs';
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { permissions, types } from '@/globalcomponents/Variable';
 import { FormAddPeriod } from './components/FormAddPeriod';
+import PeriodTable from './components/PeriodTable';
 
+import AcademicAPI from '@/api/academic';
+import dayjs from 'dayjs';
 import { useFormik } from 'formik';
 import CurriculumTable from './components/CurriculumTable';
 import { FormAddCurriculum } from './components/FormAddCurriculum';
-import AcademicAPI from '@/api/academic';
-import dayjs from 'dayjs';
-import { useRouter } from 'next/router';
 export default function StaffProfileContent() {
   const [emptyData, setEmptyData] = useState({
     name: '',
@@ -69,8 +65,6 @@ export default function StaffProfileContent() {
           } else {
             const id = values.id;
 
-            console.log(id);
-
             const start_time = dayjs(values.start_time).format(
               'DD/MM/YYYY h:mm A Z'
             );
@@ -85,27 +79,23 @@ export default function StaffProfileContent() {
               status: values.status,
             };
 
-            console.log(payload);
-
             await AcademicAPI.updatePeriod(payload, id);
 
             window.location.reload();
           }
         } else if (activeTab == 1) {
+          const id = values.period_name;
+
           const payload = {
-            period_name: values.period_name,
-            study_program_id: values.study_program_id,
-            study_program_name: values.study_program_name,
+            period_id: values.period_name,
+            curriculum_id: values.curriculum_name,
+            study_program_id: values.study_program,
             grade: values.grade,
-            curriculum_id: values.curriculum_id,
-            curriculum_name: values.curriculum_name,
           };
 
-          console.log(payload);
+          await AcademicAPI.addCurriculumInPeriod(id, payload);
 
-          // await AcademicAPI.addCurriculumInPeriod(payload);
-
-          // window.location.reload();
+          window.location.reload();
         }
       } catch (error) {
         console.log(error);
@@ -146,6 +136,18 @@ export default function StaffProfileContent() {
 
   const deletePeriodCurr = async (id, payload) => {
     try {
+      payload = {
+        period_id: payload.period_id,
+        period_name: payload.period_name,
+        study_program_id: payload.study_program_id,
+        study_program_name: payload.study_program_name,
+        grade: payload.grade,
+        curriculum_id: payload.curriculum_id,
+        curriculum_name: payload.curriculum_name,
+      };
+
+      console.log(id, payload);
+
       await AcademicAPI.deletePeriodCurr(id, payload);
 
       window.location.reload();
@@ -153,6 +155,15 @@ export default function StaffProfileContent() {
       console.log(error);
     }
   };
+
+  const [dataPeriod, setDataPeriod] = useState([]);
+  const [dataCurriculum, setDataCurriculum] = useState([]);
+  const [dataAllCurr, setDataAllCurr] = useState([]);
+  const [dataStudyProgram, setDataStudyProgram] = useState([]);
+
+  const optPeriod = dataPeriod.map((dp) => {
+    return { id: dp.id, name: dp.name };
+  });
 
   const [activeTab, setActiveTab] = useState(0);
   let tabs = [
@@ -173,19 +184,13 @@ export default function StaffProfileContent() {
           formik={formik}
           data={filteredData}
           deletePeriodCurr={deletePeriodCurr}
+          dataStudyProgram={dataStudyProgram}
+          dataAllCurr={dataAllCurr}
+          optPeriod={optPeriod}
         />
       ),
     },
   ];
-
-  const [dataPeriod, setDataPeriod] = useState([]);
-  const [dataCurriculum, setDataCurriculum] = useState([]);
-  const [dataAllCurr, setDataAllCurr] = useState([]);
-  const [dataSubject, setDataSubject] = useState([]);
-
-  const optPeriod = dataPeriod.map((dp) => {
-    return { id: dp.id, name: dp.name };
-  });
 
   useEffect(() => {
     (async () => {
@@ -194,6 +199,8 @@ export default function StaffProfileContent() {
       } = await AcademicAPI.getAllCurriculum();
 
       const resProdi = await AcademicAPI.getAllProdi();
+
+      setDataStudyProgram(resProdi.data.data);
 
       const activeProgram = resProdi.data.data.filter(
         (program) => program.status === 'active'
@@ -218,18 +225,17 @@ export default function StaffProfileContent() {
   }, []);
 
   useEffect(() => {
-    const getAllPeriod = async () => {
+    (async () => {
       const {
         data: { data },
       } = await AcademicAPI.getAllPeriod();
 
       const mappedData = data.map((datum) => {
-        datum.status =
-          datum.status == 'active'
-            ? 'Aktif'
-            : datum.status == 'inactive'
-            ? 'Tidak Aktif'
-            : 'Selesai';
+        let start_date = datum.start_time.split(' ')[0].split('/');
+        let end_date = datum.end_time.split(' ')[0].split('/');
+
+        datum.start_time = `${start_date[1]}/${start_date[0]}/${start_date[2]}`;
+        datum.end_time = `${end_date[1]}/${end_date[0]}/${end_date[2]}`;
 
         if (datum.study_programs == undefined) {
           datum.study_programs = [];
@@ -238,9 +244,7 @@ export default function StaffProfileContent() {
       });
 
       setDataPeriod(mappedData);
-    };
-
-    getAllPeriod();
+    })();
   }, []);
 
   useEffect(() => {
@@ -452,6 +456,7 @@ export default function StaffProfileContent() {
               formik={formik}
               optPeriod={optPeriod}
               dataAllCurr={dataAllCurr}
+              dataStudyProgram={dataStudyProgram}
             />
           </Box>
           <Divider />

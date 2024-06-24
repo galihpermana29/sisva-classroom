@@ -248,8 +248,6 @@ export default function StaffProfileContent() {
         data: { data },
       } = await AcademicAPI.getAllSilabus();
 
-      console.log(data);
-
       const mappedData = data.map((dt) => {
         return {
           id: dt.id,

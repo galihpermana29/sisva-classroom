@@ -192,7 +192,6 @@ export default function Container(props) {
         getCurrentUser();
       }, []);
 
-      console.log(currentUser);
       return (
         <Box>
           <Head>
