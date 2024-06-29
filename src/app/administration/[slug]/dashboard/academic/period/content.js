@@ -134,7 +134,7 @@ export default function StaffProfileContent() {
     }
   };
 
-  const deletePeriodCurr = async (id, payload) => {
+  const deletePeriodCurr = async (id, payload, edit) => {
     try {
       payload = {
         period_id: payload.period_id,
@@ -146,11 +146,9 @@ export default function StaffProfileContent() {
         curriculum_name: payload.curriculum_name,
       };
 
-      console.log(id, payload);
-
       await AcademicAPI.deletePeriodCurr(id, payload);
 
-      window.location.reload();
+      if (!edit) window.location.reload();
     } catch (error) {
       console.log(error);
     }

@@ -145,7 +145,7 @@ function ActionButton({ params }) {
         mt: { xs: 2, lg: 0 },
       }}
     >
-      {/* <IconButton
+      <IconButton
         sx={{
           borderRadius: 2,
           backgroundColor: 'base.base30',
@@ -174,7 +174,7 @@ function ActionButton({ params }) {
         >
           Edit
         </Typography>
-      </IconButton> */}
+      </IconButton>
       <IconButton
         sx={{
           borderRadius: 2,
@@ -236,14 +236,14 @@ export default function CurriculumTable({
         data: data,
         setActiveRow: setActiveRow,
         setOpenDeleteModal: setOpenDeleteModal,
-        // setOpenEditModal: setOpenEditModal,
+        setOpenEditModal: setOpenEditModal,
         formik: formik,
       },
       card: {
         data: data,
         setActiveRow: setActiveRow,
         setOpenDeleteModal: setOpenDeleteModal,
-        // setOpenEditModal: setOpenEditModal,
+        setOpenEditModal: setOpenEditModal,
         formik: formik,
       },
     };
@@ -317,7 +317,8 @@ export default function CurriculumTable({
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenEditModal(false);
-                formik.setValues({});
+                deletePeriodCurr(activeRow.period_id, activeRow, true);
+                formik.handleSubmit();
               }}
             >
               Simpan
@@ -436,7 +437,7 @@ export default function CurriculumTable({
                 },
               }}
               onClick={() => {
-                deletePeriodCurr(activeRow.period_id, activeRow);
+                deletePeriodCurr(activeRow.period_id, activeRow, false);
                 setOpenDeleteModal(false);
               }}
             >
