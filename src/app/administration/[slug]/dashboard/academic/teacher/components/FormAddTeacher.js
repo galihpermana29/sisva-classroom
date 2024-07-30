@@ -1,69 +1,90 @@
 'use client';
 
 import {
-  Avatar,
-  Box,
-  Button,
+  Checkbox,
   Chip,
-  FormControl,
-  Grid,
-  IconButton,
-  Input,
-  InputAdornment,
-  InputLabel,
+  FormControlLabel,
   MenuItem,
-  OutlinedInput,
-  Select,
+  MenuList,
   Stack,
   TextField,
   Typography,
 } from '@mui/material';
-import Image from 'next/image';
 
-import {
-  formAddPeriodFields,
-  formAddStudyProgramFields,
-} from '@/globalcomponents/FormFields';
-import { Cancel, Visibility, VisibilityOff } from '@mui/icons-material';
-import { useState } from 'react';
-import { permissions } from '@/globalcomponents/Variable';
+import { formAddSubjectTeacher } from '@/globalcomponents/FormFields';
+import { useEffect, useState } from 'react';
 
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+export const FormAddTeacher = ({
+  formik,
+  editing,
+  subjectList,
+  teacherList,
+  subjectData,
+}) => {
+  const [gradeData, setGradeData] = useState();
+  const [searchTerms, setSearchTerms] = useState('');
+  const [selectedTeachers, setSelectedTeachers] = useState('');
+  const [clicked, setClicked] = useState(false);
 
-export const FormAddTeacher = ({ formik, editing }) => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+  const updatedFields = formAddSubjectTeacher.map((field) => {
+    if (field.name == 'subject') {
+      field.data = subjectList;
+    }
 
-  const renderInput = (props) => (
-    <Input
-      type='text'
-      inputProps={{
-        sx: { minWidth: 140, width: { xs: '100%', lg: 'fit-content' } },
-        startAdornment: props.value && (
-          <Cancel
-            onClick={() => {
-              setStudyProgramFilter('');
-            }}
-            sx={{
-              fontSize: 14,
-              color: 'base.base50',
-              cursor: 'pointer',
-              transform: 'translateX(-4px)',
-              '&:hover': {
-                color: 'base.base60',
-              },
-            }}
-          />
-        ),
-      }}
-    />
+    return field;
+  });
+
+  const fetchGrade = async (val) => {
+    const grades = subjectList.find((sp) => sp.id == val).grades;
+
+    setGradeData(grades);
+  };
+
+  const filteredTeacher = teacherList.filter((tl) =>
+    tl.name.toLowerCase().includes(searchTerms.toLowerCase())
   );
+
+  const selectDefault = (grade, id) => {
+    const selected = subjectData.find((sd) => sd.grade == grade && sd.id == id);
+
+    if (selected) {
+      selected.teachers.forEach((tc) => {
+        handleSelected(tc.teacher_id);
+      });
+    }
+  };
+
+  const handleSelected = (opt) => {
+    if (selectedTeachers.includes(opt)) {
+      setSelectedTeachers(selectedTeachers.filter((o) => o !== opt));
+    } else {
+      setSelectedTeachers([...selectedTeachers, opt]);
+    }
+  };
+
+  const previewTeacher = teacherList.filter((tl) =>
+    selectedTeachers.includes(tl.id)
+  );
+
+  useEffect(() => {
+    formik.setFieldValue('teachers', selectedTeachers);
+  }, [selectedTeachers]);
+
+  useEffect(() => {
+    if (editing) {
+      fetchGrade(formik.values.subject);
+
+      let teachers = formik.values.childs.map((td) => {
+        return td.teacher_id;
+      });
+
+      setSelectedTeachers(teachers);
+    }
+  }, []);
+
   return (
     <>
-      {formAddPeriodFields.map((field) =>
+      {updatedFields.map((field) =>
         field.type === 'text' ? (
           <Stack sx={{ my: 1 }} key={field.name}>
             <Typography variant='body2' fontWeight={600} mb={0.5}>
@@ -77,102 +98,141 @@ export const FormAddTeacher = ({ formik, editing }) => {
               onChange={(e) => formik.setFieldValue(field.name, e.target.value)}
             />
           </Stack>
-        ) : field.type === 'password' ? (
-          <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant='body2' fontWeight={600} mb={0.5}>
-              {field.label}
-            </Typography>
-            <TextField
-              type={showPassword ? 'text' : 'password'}
-              name={field.name}
-              placeholder={field.placeholder}
-              fullWidth
-              value={formik.values[field.name]}
-              onChange={(e) => formik.setFieldValue(field.name, e.target.value)}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position='end'>
-                    <IconButton
-                      onClick={() =>
-                        field.name === 'password'
-                          ? setShowPassword(!showPassword)
-                          : setShowPasswordConfirm(!showPasswordConfirm)
-                      }
-                    >
-                      {field.name === 'password' &&
-                        (showPassword ? (
-                          <VisibilityOff sx={{ fontSize: 16 }} />
-                        ) : (
-                          <Visibility sx={{ fontSize: 16 }} />
-                        ))}
-                      {field.name === 'password_confirm' &&
-                        (showPasswordConfirm ? (
-                          <VisibilityOff sx={{ fontSize: 16 }} />
-                        ) : (
-                          <Visibility sx={{ fontSize: 16 }} />
-                        ))}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Stack>
         ) : field.type === 'select' ? (
-          <Stack sx={{ my: 1 }} key={field.name}>
+          field.name === 'subject' ? (
+            <Stack
+              sx={{ my: 1 }}
+              key={field.name}
+              onFocus={() => {
+                setClicked(false);
+              }}
+            >
+              <Typography variant='body2' fontWeight={600} mb={0.5}>
+                {field.label}
+              </Typography>
+              <TextField
+                select
+                value={formik.values[field.name]}
+                disabled={editing ? true : false}
+                onChange={(e) => {
+                  formik.setFieldValue(field.name, e.target.value);
+                  formik.setFieldValue('grade', '');
+                  setSelectedTeachers([]);
+                  fetchGrade(e.target.value);
+                }}
+                sx={{ flex: { xs: 1, lg: 0 } }}
+                onClick={() => {
+                  setClicked(false);
+                }}
+              >
+                {field.data.map((option, idx) => (
+                  <MenuItem key={idx} value={option.id}>
+                    <Typography fontSize={14}>{option.name}</Typography>
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Stack>
+          ) : field.name === 'grade' ? (
+            <Stack
+              sx={{ my: 1 }}
+              key={field.name}
+              onFocus={() => {
+                setClicked(false);
+              }}
+            >
+              <Typography variant='body2' fontWeight={600} mb={0.5}>
+                {field.label}
+              </Typography>
+              <TextField
+                select
+                disabled={editing ? true : false}
+                value={formik.values[field.name]}
+                onChange={(e) => {
+                  formik.setFieldValue(field.name, e.target.value);
+                  selectDefault(e.target.value, formik.values.subject);
+                }}
+                sx={{ flex: { xs: 1, lg: 0 } }}
+              >
+                {gradeData?.length
+                  ? gradeData?.map((option, idx) => (
+                      <MenuItem key={idx} value={option}>
+                        <Typography fontSize={14}>{option}</Typography>
+                      </MenuItem>
+                    ))
+                  : ['Tingkatan Tidak Tersedia'].map((option, idx) => (
+                      <MenuItem
+                        selected={idx == 0}
+                        disabled
+                        key={idx}
+                        value={option}
+                      >
+                        <Typography fontSize={14}>{option}</Typography>
+                      </MenuItem>
+                    ))}
+              </TextField>
+            </Stack>
+          ) : null
+        ) : (
+          <Stack
+            sx={{ my: 1 }}
+            key={field.name}
+            onFocus={() => {
+              setClicked(true);
+            }}
+          >
             <Typography variant='body2' fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <TextField
-              select
-              value={formik.values[field.name]}
-              onChange={(e) => formik.setFieldValue(field.name, e.target.value)}
+              type='text'
+              placeholder={field.placeholder}
+              value={searchTerms}
+              onChange={(e) => setSearchTerms(e.target.value)}
               sx={{ flex: { xs: 1, lg: 0 } }}
+            ></TextField>
+            {clicked && (
+              <MenuList
+                sx={{
+                  gap: 1,
+                  my: 1,
+                  height: '10vh',
+                  overflowY: 'auto',
+                }}
+              >
+                {filteredTeacher.map((option, idx) => (
+                  <MenuItem
+                    key={idx}
+                    selected={
+                      selectedTeachers.includes(option.id) ? true : false
+                    }
+                    value={option.id}
+                    sx={{
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    <FormControlLabel
+                      value={option.id}
+                      control={<Checkbox />}
+                      label={option.name}
+                      sx={{ width: 1 }}
+                      checked={selectedTeachers.includes(option.id)}
+                      onChange={() => {
+                        handleSelected(option.id);
+                      }}
+                    />
+                  </MenuItem>
+                ))}
+              </MenuList>
+            )}
+            <Stack
+              sx={{ my: 1, flexDirection: 'row', gap: 1, overflowY: 'auto' }}
             >
-              {field.data.map((option) => (
-                <MenuItem key={option.slug} value={option.slug}>
-                  <Typography fontSize={14}>{option.title}</Typography>
-                </MenuItem>
+              {previewTeacher.map((option) => (
+                <Chip label={option.name} variant='outlined' color='primary' />
               ))}
-            </TextField>
-          </Stack>
-        ) : field.type === 'month-range' ? (
-          <Stack flexDirection={'row'} key={field.name}>
-            <Stack sx={{ flex: 1 }}>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <Stack sx={{ mb: 1 }}>
-                  <Typography variant='body2' fontWeight={600} mb={0.5}>
-                    Waktu Mulai
-                  </Typography>
-                  <DatePicker
-                    placeholder={'Waktu Mulai'}
-                    views={['month', 'year']}
-                    renderInput={renderInput}
-                    value={formik.values['start_time']}
-                    onChange={(value) =>
-                      formik.setFieldValue('start_time', value)
-                    }
-                  />
-                </Stack>
-
-                <Stack>
-                  <Typography variant='body2' fontWeight={600} mb={0.5}>
-                    Waktu Selesai
-                  </Typography>
-
-                  <DatePicker
-                    placeholder={'Waktu Selesai'}
-                    views={['month', 'year']}
-                    renderInput={renderInput}
-                    value={formik.values['end_time']}
-                    onChange={(value) =>
-                      formik.setFieldValue('end_time', value)
-                    }
-                  />
-                </Stack>
-              </LocalizationProvider>
             </Stack>
           </Stack>
-        ) : null
+        )
       )}
     </>
   );

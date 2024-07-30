@@ -1,8 +1,5 @@
-import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import Image from 'next/image';
+import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
 import {
-  Avatar,
   Box,
   Button,
   Chip,
@@ -11,17 +8,12 @@ import {
   Modal,
   Paper,
   Stack,
-  TextField,
   Typography,
   useMediaQuery,
 } from '@mui/material';
-import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
-import Link from 'next/link';
-import { types, permissions } from '@/globalcomponents/Variable';
+import { DataGrid } from '@mui/x-data-grid';
 import { useState } from 'react';
-import { FormAddStudyProgram } from './FormAddTeacher';
-import { FormEdiPeriod, FormEditPeriod } from './FormEditPeriod';
-import dayjs from 'dayjs';
+import { FormAddTeacher } from './FormAddTeacher';
 
 const columns = [
   {
@@ -101,7 +93,7 @@ const columns = [
                   Guru
                 </Typography>
 
-                <ChipList params={params.value.data.teachers} />
+                {/* <ChipList params={params.value.data.teachers} /> */}
               </Stack>
             </Stack>
 
@@ -127,7 +119,8 @@ const columns = [
     flex: 1.5,
     sortable: false,
     renderCell: (params) => {
-      return params.length > 0 ? <ChipList params={params.value} /> : '-';
+      if (!params.value.length) return '-';
+      else return <ChipList params={params.value} />;
     },
   },
   {
@@ -152,7 +145,7 @@ function ChipList({ params, compact }) {
         m: { xs: 0, lg: compact ? 0 : '8px 0' },
       }}
     >
-      {params.map((studyProgram, index) => {
+      {params.map((teachers, index) => {
         return (
           <Chip
             key={index}
@@ -160,7 +153,7 @@ function ChipList({ params, compact }) {
               m: { xs: '2px 0px 2px 4px', lg: '2px' },
               fontSize: 12,
             }}
-            label={studyProgram}
+            label={teachers.teacher_name}
             color='primary'
           />
         );
@@ -190,17 +183,15 @@ function ActionButton({ params }) {
           width: { xs: 90, lg: 'fit-content' },
           display: params.value.data.status === 'Selesai' ? 'none' : 'flex',
         }}
-        // onClick={() => {
-        //   params.value.setOpenEditModal(true);
-        //   params.value.setActiveRow(params.value.data);
-        //   params.value.formik.setValues({
-        //     period_name: params.value.data.period_name,
-        //     study_program: params.value.data.study_program,
-        //     start_time: dayjs(params.value.data.start_time),
-        //     end_time: dayjs(params.value.data.end_time),
-        //     status: params.value.data.status,
-        //   });
-        // }}
+        onClick={() => {
+          params.value.setOpenEditModal(true);
+          params.value.setActiveRow(params.value.data);
+          params.value.formik.setValues({
+            subject: params.value.data.id,
+            grade: params.value.data.grade,
+            childs: params.value.data.teachers,
+          });
+        }}
       >
         <BorderColorRounded
           sx={{ fontSize: { xs: 15, lg: 18 }, color: 'base.base50' }}
@@ -211,7 +202,7 @@ function ActionButton({ params }) {
           Edit
         </Typography>
       </IconButton>
-      <IconButton
+      {/* <IconButton
         sx={{
           borderRadius: 2,
           ml: 1,
@@ -239,12 +230,17 @@ function ActionButton({ params }) {
         >
           Delete
         </Typography>
-      </IconButton>
+      </IconButton> */}
     </Stack>
   );
 }
 
-export default function SubjectTable({ data, formik }) {
+export default function SubjectTable({
+  data,
+  formik,
+  subjectList,
+  teacherList,
+}) {
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('lg'));
 
   const [openEditModal, setOpenEditModal] = useState(false);
@@ -258,22 +254,19 @@ export default function SubjectTable({ data, formik }) {
       id: idx,
       period_name: data.name,
       study_program: data.study_program_name,
-
       grade: data.grade,
-      subject: data.subject,
+      subject: data.name,
       teachers: data.teachers,
 
       action: {
         data: data,
         setActiveRow: setActiveRow,
-        setOpenDeleteModal: setOpenDeleteModal,
         setOpenEditModal: setOpenEditModal,
         formik: formik,
       },
       card: {
         data: data,
         setActiveRow: setActiveRow,
-        setOpenDeleteModal: setOpenDeleteModal,
         setOpenEditModal: setOpenEditModal,
         formik: formik,
       },
@@ -281,15 +274,13 @@ export default function SubjectTable({ data, formik }) {
     rows.push(tempObject);
   });
 
-  console.log(rows);
-
   return (
     <div style={{ height: '100%', width: '100%' }}>
       <Modal
         open={openEditModal}
         onClose={() => {
           setOpenEditModal(false);
-          formik.setValues({ name: '', code: '' });
+          formik.setValues({ subject: '', grade: '', teachers: '' });
         }}
       >
         <Stack
@@ -315,12 +306,18 @@ export default function SubjectTable({ data, formik }) {
             }}
           >
             <Typography fontWeight={600} fontSize={16}>
-              Edit Periode
+              Edit Mata Pelajaran Guru
             </Typography>
           </Box>
           <Divider />
           <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
-            <FormEditPeriod formik={formik} status={activeRow.status} />
+            <FormAddTeacher
+              formik={formik}
+              subjectList={subjectList}
+              teacherList={teacherList}
+              status={activeRow.status}
+              editing={true}
+            />
           </Box>
           <Divider />
           <Stack
@@ -334,32 +331,20 @@ export default function SubjectTable({ data, formik }) {
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenEditModal(false);
-                formik.setValues({ name: '', code: '' });
+                formik.setValues({ subject: '', grade: '', teachers: '' });
               }}
             >
               Batal
             </Button>
             <Button
               variant='contained'
-              sx={{
-                flex: 1,
-                backgroundColor:
-                  formik.values['status'] === 'Tidak Aktif'
-                    ? 'primary.main'
-                    : 'warning.main',
-                '&:hover': {
-                  backgroundColor:
-                    formik.values['status'] === 'Aktif' ? 'warning.dark' : '',
-                },
-              }}
+              sx={{ flex: 1 }}
               onClick={() => {
                 setOpenEditModal(false);
-                formik.setValues({ name: '', code: '' });
+                formik.handleSubmit();
               }}
             >
-              {formik.values['status'] === 'Tidak Aktif'
-                ? 'Simpan'
-                : 'Akhiri Periode'}
+              Simpan
             </Button>
           </Stack>
         </Stack>
@@ -385,12 +370,12 @@ export default function SubjectTable({ data, formik }) {
         >
           <Box>
             <Typography fontWeight={600} fontSize={16}>
-              Hapus Periode
+              Hapus Mata Pelajaran
             </Typography>
           </Box>
 
           <Typography sx={{ mt: 1, fontSize: 14 }}>
-            Anda akan menghapus periode berikut:
+            Anda akan menghapus Mata Pelajaran berikut:
           </Typography>
           <Stack
             sx={{ width: '100%', my: 1, overflow: 'hidden', borderRadius: 2 }}
@@ -407,10 +392,10 @@ export default function SubjectTable({ data, formik }) {
               }}
             >
               <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
-                Periode
+                Mata Pelajaran
               </Typography>
               <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
-                {activeRow.period_name}
+                {activeRow.name}
               </Typography>
             </Stack>
             <Stack

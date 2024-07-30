@@ -161,6 +161,16 @@ const AcademicAPI = {
     return api.patch(`/subjects/${id}`, payload, { headers });
   },
 
+  replaceSubjectTeacher(payload) {
+    const headers = {
+      'X-Sisva-Source': 'academic.subjects.teachers.test',
+      'X-Sisva-UserID': USER_ID,
+      'X-Sisva-SchoolID': SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.put(`/subjects/teachers`, payload, { headers });
+  },
+
   deleteSubject(id) {
     const headers = {
       'X-Sisva-Source': 'academic.curriculum.test',
@@ -323,6 +333,46 @@ const AcademicAPI = {
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.get(`/student-groups/students`, { headers });
+  },
+
+  getAllAnnouncements() {
+    const headers = {
+      'X-Sisva-Source': 'academic.test',
+      'X-Sisva-UserID': USER_ID,
+      'X-Sisva-SchoolID': SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.get(`/announcements`, { headers });
+  },
+
+  deleteAnnouncement(id) {
+    const headers = {
+      'X-Sisva-Source': 'academic.test',
+      'X-Sisva-UserID': USER_ID,
+      'X-Sisva-SchoolID': SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.delete(`/announcements/${id}`, { headers });
+  },
+
+  addAnnouncement(payload) {
+    const headers = {
+      'X-Sisva-Source': 'academic.test',
+      'X-Sisva-UserID': USER_ID,
+      'X-Sisva-SchoolID': SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.post(`/announcements`, payload, { headers });
+  },
+
+  updateAnnouncement(id, payload) {
+    const headers = {
+      'X-Sisva-Source': 'academic.test',
+      'X-Sisva-UserID': USER_ID,
+      'X-Sisva-SchoolID': SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.patch(`/announcements/${id}`, payload, { headers });
   },
 };
 

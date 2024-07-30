@@ -1,5 +1,6 @@
 'use client';
 
+import { ExcelIcon, SortIcon } from '@/assets/SVGs';
 import {
   Add,
   Cancel,
@@ -12,7 +13,6 @@ import {
   Button,
   Divider,
   Hidden,
-  IconButton,
   InputAdornment,
   Menu,
   MenuItem,
@@ -22,31 +22,61 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import TeacherTable from './components/TeacherTable';
-import { ExcelIcon, ExportIcon, SortIcon } from '@/assets/SVGs';
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { permissions, subject_types, types } from '@/globalcomponents/Variable';
 import { FormAddTeacher } from './components/FormAddTeacher';
+import TeacherTable from './components/TeacherTable';
 
+import AcademicAPI from '@/api/academic';
+import UsersAPI from '@/api/users';
 import { useFormik } from 'formik';
 import { FormAddSubjectTeacher } from './components/FormAddSubjectTeacher';
 import SubjectTable from './components/SubjectTable';
-import UsersAPI from '@/api/users';
-import AcademicAPI from '@/api/academic';
 export default function StaffProfileContent() {
-  const [emptyData, setEmptyData] = useState({
-    name: '',
-    code: '',
-    status: 'active',
-    grades: [],
-  });
+  const [emptyData, setEmptyData] = useState({});
 
   const formik = useFormik({
     initialValues: { emptyData },
+
+    onSubmit: async (values) => {
+      if (activeTab == 0) {
+        const payload = {
+          parent_type: 'subject',
+          parent_id: values.subject,
+          grade: values.grade,
+          childs: values.teachers,
+        };
+
+        try {
+          await AcademicAPI.replaceSubjectTeacher(payload);
+
+          window.location.reload();
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        const payload = {
+          parent_type: 'teacher',
+          parent_id: values.teacher,
+          grade: values.grade,
+          childs: values.subjects,
+        };
+
+        try {
+          await AcademicAPI.replaceSubjectTeacher(payload);
+
+          window.location.reload();
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    },
   });
 
-  let [dataTeacher, setDataTeacher] = useState([]);
+  const [dataTeacher, setDataTeacher] = useState([]);
+  const [teacherList, setTeacherList] = useState([]);
+  const [subjectList, setSubjectList] = useState([]);
+  const [gradeList, setGradeList] = useState([]);
+  const [subjectData, setSubjectData] = useState([]);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -57,14 +87,6 @@ export default function StaffProfileContent() {
     setAnchorEl(null);
   };
 
-  // const deleteTeacher = (id) => {
-  //   try {
-  //     await
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
   let [filteredData, setFilteredData] = useState([]);
   const [search, setSearch] = useState('');
   const [studyProgramFilter, setStudyProgramFilter] = useState('');
@@ -73,54 +95,55 @@ export default function StaffProfileContent() {
   const [sortSettings, setSortSettings] = useState('');
   const [openSortModal, setOpenSortModal] = useState(false);
 
-  const [openCreatePeriodModal, setOpenCreatePeriodModal] = useState(false);
-  const [openCreateCurriculumModal, setOpenCreateCurriculumModal] =
-    useState(false);
+  const [openCreateSubjectModal, setOpenCreateSubjectModal] = useState(false);
+  const [openCreateTeacherModal, setOpenCreateTeacherModal] = useState(false);
 
   const [activeTab, setActiveTab] = useState(0);
   let tabs = [
     {
       title: 'Mata Pelajaran',
-      component: <SubjectTable formik={formik} data={filteredData} />,
+      component: (
+        <SubjectTable
+          formik={formik}
+          subjectList={subjectList}
+          teacherList={teacherList}
+          data={filteredData}
+          subjectData={subjectData}
+        />
+      ),
     },
     {
       title: 'Guru',
-      component: <TeacherTable formik={formik} data={filteredData} />,
+      component: (
+        <TeacherTable
+          formik={formik}
+          data={filteredData}
+          teacherList={teacherList}
+          gradeList={gradeList}
+          dataTeacher={dataTeacher}
+        />
+      ),
     },
   ];
 
-  const [subjectData, setSubjectData] = useState([]);
+  // get all teachers data
+  useEffect(() => {
+    (async () => {
+      const {
+        data: { data },
+      } = await UsersAPI.getAllUsers('teacher');
 
-  let [dataCurriculum, setDataCurriculum] = useState([]);
-  // useEffect(() => {
-  //   let temp = [];
-  //   let id = 1;
-  //   data.map((period) => {
-  //     period.study_program.map((study_program) => {
-  //       ["X", "XI", "XII"].map((grade) => {
-  //         let tempObject = {
-  //           id: id,
-  //           period_name: period.period_name,
-  //           study_program: study_program,
-  //           grade: grade,
-  //           curriculum: period.period_name.endsWith("2025")
-  //             ? "Kurikulum Merdeka"
-  //             : period.period_name.endsWith("2024")
-  //             ? grade !== "XII"
-  //               ? "Kurikulum Merdeka"
-  //               : "Kurikulum 2013"
-  //             : grade === "X"
-  //             ? "Kurikulum Merdeka"
-  //             : "Kurikulum 2013",
-  //         };
-  //         temp.push(tempObject);
-  //         id++;
-  //       });
-  //     });
-  //   });
-  //   setDataCurriculum(temp);
-  // }, [activeTab]);
+      const activeTeacher = data
+        .filter((at) => at.status == 'active')
+        .map((at) => {
+          return { id: at.id, name: at.name };
+        });
 
+      setTeacherList(activeTeacher);
+    })();
+  }, []);
+
+  // get all the subjects with the teachers in it.
   useEffect(() => {
     const getAllSubjectData = async () => {
       const resTeacher = await AcademicAPI.getAllSubjectTeacher();
@@ -131,167 +154,108 @@ export default function StaffProfileContent() {
       const dataSubject = resSubject.data.data;
       const dataProgram = resProgram.data.data;
 
-      const mappedData = [];
+      let mappedData = [];
 
-      const firstMap = dataSubject.map((subject) => {
-        let teachers = [];
-
-        dataTeacher.forEach((teacher) => {
-          if (teacher.subject_detail.id == subject.id)
-            teachers.push(teacher.name);
+      dataProgram.forEach((dp) => {
+        dataSubject.forEach((ds) => {
+          if (dp.id == ds.study_program_id)
+            dp.grades.forEach((dpg) => {
+              mappedData.push({ ...ds, grade: dpg });
+            });
         });
-
-        return { ...subject, teachers };
       });
 
-      firstMap.forEach((subject) => {
+      const data = mappedData.map((md) => {
+        let teachers = [];
+        dataTeacher.forEach((dt) => {
+          if (md.grade == dt.grade && md.id == dt.subject_detail.id)
+            teachers.push({
+              teacher_id: dt.teacher_id,
+              teacher_name: dt.teacher_name,
+            });
+        });
+
+        return { ...md, teachers };
+      });
+
+      setSubjectData(data);
+
+      const gradeOpt = [];
+
+      dataSubject.forEach((subject) => {
         dataProgram.forEach((program) => {
           if (program.id == subject.study_program_id) {
-            program.grades.forEach((grade) => {
-              mappedData.push({ ...subject, grade });
+            gradeOpt.push({
+              id: subject.id,
+              name: subject.name,
+              grades: program.grades,
             });
           }
         });
       });
 
-      setSubjectData(mappedData);
+      setSubjectList(gradeOpt);
+
+      const subjectOpt = [];
+
+      mappedData.forEach((md, idx, arr) => {
+        const filter = arr.filter((ar) => ar.grade == md.grade);
+
+        if (filter.length == 1)
+          subjectOpt.push({
+            grade: md.grade,
+            subjects: [{ subject_id: md.id, subject_name: md.name }],
+          });
+        else if (filter.length > 1) {
+          let subj = [];
+
+          filter.forEach((fl) => {
+            subj.push({ subject_id: fl.id, subject_name: fl.name });
+          });
+
+          subjectOpt.push({ grade: md.grade, subjects: subj });
+
+          mappedData.splice(idx, filter.length - 1);
+        }
+      });
+
+      setGradeList(subjectOpt);
     };
 
     getAllSubjectData();
   }, []);
 
-  const dummyTeacherData = [
-    {
-      'teacher_id': '47ba6b3a-7e93-4b3b-a55d-31d5db0d7d54',
-      'teacher_name': 'User Test',
-      'subject_id': 2,
-      'subject_name': 'Matematika',
-      'grade': '1',
-      'subject_detail': {
-        'id': 2,
-        'name': 'Matematika',
-        'type': 'mandatory',
-        'study_program_id': 18,
-        'study_program_name': 'bahasa indo',
-        'curriculum_id': 1,
-        'curriculum_name': 'test',
-      },
-    },
-    {
-      'teacher_id': '47ba6b3a-7e93-4b3b-a55d-31d5db0d7d54',
-      'teacher_name': 'User Test',
-      'subject_id': 2,
-      'subject_name': 'Matematika',
-      'grade': '6',
-      'subject_detail': {
-        'id': 2,
-        'name': 'Matematika',
-        'type': 'mandatory',
-        'study_program_id': 18,
-        'study_program_name': 'bahasa indo',
-        'curriculum_id': 1,
-        'curriculum_name': 'test',
-      },
-    },
-    {
-      'teacher_id': '47ba6b3a-7e93-4b3b-a55d-31d5db0d7d54',
-      'teacher_name': 'User Test',
-      'subject_id': 2,
-      'subject_name': 'Komputer',
-      'grade': '8',
-      'subject_detail': {
-        'id': 2,
-        'name': 'Komputer',
-        'type': 'mandatory',
-        'study_program_id': 18,
-        'study_program_name': 'bahasa indo',
-        'curriculum_id': 1,
-        'curriculum_name': 'test',
-      },
-    },
-    {
-      'teacher_id': '47ba6b3a-7e93-4b3b-a55d-31d5db0d97354',
-      'teacher_name': 'Aditiya Test',
-      'subject_id': 2,
-      'subject_name': 'Bahasa Indonesia',
-      'grade': '8',
-      'subject_detail': {
-        'id': 2,
-        'name': 'Bahasa Indonesia',
-        'type': 'mandatory',
-        'study_program_id': 18,
-        'study_program_name': 'bahasa indo',
-        'curriculum_id': 1,
-        'curriculum_name': 'test',
-      },
-    },
-    {
-      'teacher_id': '47ba6b3a-7e93-4b3b-a55d-31d5db0d97354',
-      'teacher_name': 'Aditiya Test',
-      'subject_id': 2,
-      'subject_name': 'IPA',
-      'grade': '8',
-      'subject_detail': {
-        'id': 2,
-        'name': 'Bahasa Indonesia',
-        'type': 'mandatory',
-        'study_program_id': 18,
-        'study_program_name': 'bahasa indo',
-        'curriculum_id': 1,
-        'curriculum_name': 'test',
-      },
-    },
-    {
-      'teacher_id': '47ba6b3a-7e93-4b21b-a55d-31d5db0d97354',
-      'teacher_name': 'Third Test',
-      'subject_id': 2,
-      'subject_name': 'IPA',
-      'grade': '8',
-      'subject_detail': {
-        'id': 2,
-        'name': 'Bahasa Indonesia',
-        'type': 'mandatory',
-        'study_program_id': 18,
-        'study_program_name': 'bahasa indo',
-        'curriculum_id': 1,
-        'curriculum_name': 'test',
-      },
-    },
-  ];
-
+  // get all the teachers with the subjects in it
   useEffect(() => {
     const getAllTeacher = async () => {
       const {
         data: { data },
       } = await AcademicAPI.getAllSubjectTeacher();
 
-      let mappedData = [];
+      const teacherData = await UsersAPI.getAllUsers('teacher');
+      const teachProfile = teacherData.data.data.filter(
+        (td) => td.status == 'active'
+      );
 
-      let grades = [];
-      let subjects = [];
+      const mappedData = [];
 
-      dummyTeacherData.forEach((datum, idx) => {
-        let next = idx + 1;
-        let teacher = datum.teacher_name;
+      teachProfile.forEach((tp) => {
+        let subjects = [];
+        let grades = [];
 
-        if (!data[next] || data[next].teacher_id !== datum.teacher_id) {
-          grades.push(datum.grade);
-          subjects.push(datum.subject_name);
-          mappedData.push({ id: datum.teacher_id, teacher, grades, subjects });
+        data.forEach((dt) => {
+          if (tp.id == dt.teacher_id) {
+            if (!subjects.find((sb) => sb.subject_id == dt.subject_id))
+              subjects.push({
+                subject_id: dt.subject_id,
+                subject_name: dt.subject_name,
+                subject_grade: dt.grade,
+              });
+            if (!grades.includes(dt.grade)) grades.push(dt.grade);
+          }
+        });
 
-          grades = [];
-          subjects = [];
-        } else {
-          grades.push(datum.grade);
-          subjects.push(datum.subject_name);
-        }
-      });
-
-      mappedData = mappedData.map((datum) => {
-        grades = [...new Set(datum.grades)];
-        subjects = [...new Set(datum.subjects)];
-
-        return { id: datum.id, teacher: datum.teacher, grades, subjects };
+        mappedData.push({ id: tp.id, name: tp.name, subjects, grades });
       });
 
       setDataTeacher(mappedData);
@@ -307,7 +271,7 @@ export default function StaffProfileContent() {
           return item.name.toLowerCase().includes(search.toLowerCase());
         }))
       : (temp = dataTeacher.filter((item) => {
-          return item.teacher.toLowerCase().includes(search.toLowerCase());
+          return item.name.toLowerCase().includes(search.toLowerCase());
         }));
     // if (sortSettings && sortSettings.sortBy) {
     //   temp = temp.sort(function (a, b) {
@@ -522,10 +486,10 @@ export default function StaffProfileContent() {
   return (
     <Stack sx={{ height: '100%', width: '100%', p: { xs: 0, lg: 4 } }}>
       <Modal
-        open={openCreateCurriculumModal}
+        open={openCreateTeacherModal}
         onClose={() => {
-          setOpenCreateCurriculumModal(false);
-          formik.setValues({});
+          setOpenCreateTeacherModal(false);
+          formik.setValues({ subject: '', grade: '', teachers: '' });
         }}
       >
         <Stack
@@ -556,7 +520,12 @@ export default function StaffProfileContent() {
           </Box>
           <Divider />
           <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
-            <FormAddSubjectTeacher formik={formik} />
+            <FormAddSubjectTeacher
+              formik={formik}
+              teacherList={teacherList}
+              gradeList={gradeList}
+              dataTeacher={dataTeacher}
+            />
           </Box>
           <Divider />
           <Stack
@@ -569,8 +538,8 @@ export default function StaffProfileContent() {
               variant='outlined'
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
-                setOpenCreateCurriculumModal(false);
-                formik.setValues({});
+                setOpenCreateTeacherModal(false);
+                formik.setValues({ subject: '', grade: '', teachers: '' });
               }}
             >
               Batal
@@ -579,8 +548,8 @@ export default function StaffProfileContent() {
               variant='contained'
               sx={{ flex: 1 }}
               onClick={() => {
-                setOpenCreateCurriculumModal(false);
-                formik.setValues({});
+                setOpenCreateTeacherModal(false);
+                formik.handleSubmit();
               }}
             >
               Simpan
@@ -589,8 +558,11 @@ export default function StaffProfileContent() {
         </Stack>
       </Modal>
       <Modal
-        open={openCreatePeriodModal}
-        onClose={() => setOpenCreatePeriodModal(false)}
+        open={openCreateSubjectModal}
+        onClose={() => {
+          setOpenCreateSubjectModal(false);
+          formik.setValues({ subject: '', grade: '', teachers: '' });
+        }}
       >
         <Stack
           component={Paper}
@@ -615,12 +587,17 @@ export default function StaffProfileContent() {
             }}
           >
             <Typography fontWeight={600} fontSize={16}>
-              Tambah Mata
+              Tambah Mata Pelajaran
             </Typography>
           </Box>
           <Divider />
           <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
-            <FormAddTeacher formik={formik} />
+            <FormAddTeacher
+              formik={formik}
+              subjectList={subjectList}
+              teacherList={teacherList}
+              subjectData={subjectData}
+            />
           </Box>
           <Divider />
           <Stack
@@ -633,8 +610,8 @@ export default function StaffProfileContent() {
               variant='outlined'
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
-                setOpenCreatePeriodModal(false);
-                formik.setValues(emptyData);
+                setOpenCreateSubjectModal(false);
+                formik.setValues({ subject: '', grade: '', teachers: '' });
               }}
             >
               Batal
@@ -643,8 +620,8 @@ export default function StaffProfileContent() {
               variant='contained'
               sx={{ flex: 1 }}
               onClick={() => {
-                setOpenCreatePeriodModal(false);
-                formik.setValues(emptyData);
+                setOpenCreateSubjectModal(false);
+                formik.handleSubmit();
               }}
             >
               Simpan
@@ -701,10 +678,9 @@ export default function StaffProfileContent() {
           >
             {(activeTab === 1
               ? [
+                  { title: 'Tingkatan', slug: 'grade' },
                   { title: 'Periode', slug: 'period_name' },
                   { title: 'Program Studi', slug: 'study_program' },
-                  { title: 'Tingkatan', slug: 'grade' },
-                  { title: 'Kurikulum', slug: 'curriculum' },
                 ]
               : [
                   { title: 'Periode', slug: 'period_name' },
@@ -1000,9 +976,9 @@ export default function StaffProfileContent() {
               }}
               onClick={() =>
                 activeTab === 0
-                  ? setOpenCreatePeriodModal(true)
+                  ? setOpenCreateSubjectModal(true)
                   : activeTab === 1
-                  ? setOpenCreateCurriculumModal(true)
+                  ? setOpenCreateTeacherModal(true)
                   : null
               }
             >

@@ -27,6 +27,7 @@ import { FormSchoolType } from './components/FormSchoolType';
 import { FormSchoolIdentity } from './components/FormSchoolIdentity';
 import CmsAPI from '@/api/cms';
 import FilesAPI from '@/api/files';
+import { themeConfig } from '@/app/administration/theme';
 
 export default function SchoolProfileContent() {
   const containerRef = useRef(null);

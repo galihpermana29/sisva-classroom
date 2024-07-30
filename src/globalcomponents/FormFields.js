@@ -873,3 +873,81 @@ export const formSchoolTypeFields = [
     ],
   },
 ];
+
+export const formAddSubjectTeacher = [
+  {
+    name: 'subject',
+    label: 'Mata Pelajaran',
+    placeholder: 'Mata Pelajaran',
+    md: 6,
+    type: 'select',
+    data: [],
+  },
+  {
+    name: 'grade',
+    label: 'Tingkatan',
+    placeholder: 'Tingkatan',
+    md: 6,
+    type: 'select',
+    data: [],
+  },
+  {
+    name: 'teacher',
+    label: 'Guru',
+    placeholder: 'Ketik guru yang diinginkan',
+    md: 6,
+    type: 'search',
+    data: [],
+  },
+];
+
+export const formAddTeacher = [
+  {
+    name: 'teacher',
+    label: 'Guru',
+    placeholder: 'Ketik guru yang diinginkan',
+    md: 6,
+    type: 'select',
+    data: [],
+  },
+  {
+    name: 'grade',
+    label: 'Tingkatan',
+    placeholder: 'Tingkatan',
+    md: 6,
+    type: 'select',
+    data: [],
+  },
+  {
+    name: 'subject',
+    label: 'Mata Pelajaran',
+    placeholder: 'Mata Pelajaran',
+    md: 6,
+    type: 'search',
+    data: [],
+  },
+];
+
+export const formAddAnnouncement = [
+  {
+    name: 'title',
+    label: 'Judul',
+    placeholder: 'Ketik judul yang diinginkan',
+    md: 6,
+    type: 'text',
+  },
+  {
+    name: 'text',
+    label: 'Deskripsi',
+    placeholder: 'Masukan deskripsi yang diinginkan',
+    md: 6,
+    type: 'textField',
+  },
+  {
+    name: 'image_uri',
+    label: 'Gambar',
+    placeholder: 'Gambar',
+    md: 6,
+    type: 'file',
+  },
+];

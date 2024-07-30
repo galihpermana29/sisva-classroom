@@ -1,40 +1,87 @@
 'use client';
 
 import {
-  Avatar,
-  Box,
-  Button,
+  Checkbox,
   Chip,
-  FormControl,
-  Grid,
-  IconButton,
-  InputAdornment,
-  InputLabel,
+  FormControlLabel,
   MenuItem,
-  OutlinedInput,
-  Select,
+  MenuList,
   Stack,
   TextField,
   Typography,
 } from '@mui/material';
-import Image from 'next/image';
 
-import {
-  formAddCurriculumFields,
-  formAddStaffFields,
-  formAddStudyProgramFields,
-  formAddSubjectFields,
-} from '@/globalcomponents/FormFields';
-import { Cancel, Visibility, VisibilityOff } from '@mui/icons-material';
-import { useState } from 'react';
-import { permissions } from '@/globalcomponents/Variable';
+import { formAddTeacher } from '@/globalcomponents/FormFields';
+import { useEffect, useState } from 'react';
 
-export const FormAddSubjectTeacher = ({ formik, editing }) => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+export const FormAddSubjectTeacher = ({
+  formik,
+  editing,
+  teacherList,
+  gradeList,
+  dataTeacher,
+}) => {
+  const [subjectData, setSubjectData] = useState([]);
+  const [searchTerms, setSearchTerms] = useState('');
+  const [selectedSubject, setSelectedSubject] = useState('');
+  const [clicked, setClicked] = useState(false);
+
+  const updatedFields = formAddTeacher.map((field) => {
+    if (field.name == 'teacher') {
+      field.data = teacherList;
+    }
+
+    if (field.name == 'grade') {
+      field.data = gradeList;
+    }
+
+    return field;
+  });
+
+  const fetchSubject = async (grade, id) => {
+    const subjects = gradeList.find((sp) => sp.grade == grade).subjects;
+
+    setSelectedSubject([]);
+    const selected = dataTeacher.find((dt) => dt.id == id);
+
+    const subjectIds = [];
+
+    if (selected && selected.subjects) {
+      selected.subjects.forEach((ss) => {
+        if (ss.subject_grade == grade) {
+          subjectIds.push(ss.subject_id);
+        }
+      });
+    }
+
+    setSelectedSubject(subjectIds);
+
+    setSubjectData(subjects);
+  };
+
+  const filteredSubject = subjectData.filter((tl) =>
+    tl.subject_name.toLowerCase().includes(searchTerms.toLowerCase())
+  );
+
+  const handleSelected = (opt) => {
+    if (selectedSubject.includes(opt)) {
+      setSelectedSubject(selectedSubject.filter((o) => o !== opt));
+    } else {
+      setSelectedSubject([...selectedSubject, opt]);
+    }
+  };
+
+  const previewSubject = subjectData.filter((tl) =>
+    selectedSubject.includes(tl.subject_id)
+  );
+
+  useEffect(() => {
+    formik.setFieldValue('subjects', selectedSubject);
+  }, [selectedSubject]);
+
   return (
     <>
-      {formAddCurriculumFields.map((field) =>
+      {updatedFields.map((field) =>
         field.type === 'text' ? (
           <Stack sx={{ my: 1 }} key={field.name}>
             <Typography variant='body2' fontWeight={600} mb={0.5}>
@@ -48,115 +95,152 @@ export const FormAddSubjectTeacher = ({ formik, editing }) => {
               onChange={(e) => formik.setFieldValue(field.name, e.target.value)}
             />
           </Stack>
-        ) : field.type === 'password' ? (
-          <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant='body2' fontWeight={600} mb={0.5}>
-              {field.label}
-            </Typography>
-            <TextField
-              type={showPassword ? 'text' : 'password'}
-              name={field.name}
-              placeholder={field.placeholder}
-              fullWidth
-              value={formik.values[field.name]}
-              onChange={(e) => formik.setFieldValue(field.name, e.target.value)}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position='end'>
-                    <IconButton
-                      onClick={() =>
-                        field.name === 'password'
-                          ? setShowPassword(!showPassword)
-                          : setShowPasswordConfirm(!showPasswordConfirm)
-                      }
-                    >
-                      {field.name === 'password' &&
-                        (showPassword ? (
-                          <VisibilityOff sx={{ fontSize: 16 }} />
-                        ) : (
-                          <Visibility sx={{ fontSize: 16 }} />
-                        ))}
-                      {field.name === 'password_confirm' &&
-                        (showPasswordConfirm ? (
-                          <VisibilityOff sx={{ fontSize: 16 }} />
-                        ) : (
-                          <Visibility sx={{ fontSize: 16 }} />
-                        ))}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Stack>
         ) : field.type === 'select' ? (
-          <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant='body2' fontWeight={600} mb={0.5}>
-              {field.label}
-            </Typography>
-            <TextField
-              select
-              value={formik.values[field.name]}
-              onChange={(e) => formik.setFieldValue(field.name, e.target.value)}
-              sx={{ flex: { xs: 1, lg: 0 } }}
+          field.name === 'teacher' ? (
+            <Stack
+              sx={{ my: 1 }}
+              key={field.name}
+              onFocus={() => {
+                setClicked(false);
+              }}
             >
-              {field.data.map((option) => (
-                <MenuItem key={option.slug} value={option.slug}>
-                  <Typography fontSize={14}>{option.title}</Typography>
-                </MenuItem>
-              ))}
-            </TextField>
-          </Stack>
-        ) : field.type === 'multiple-select' ? (
-          <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant='body2' fontWeight={600}>
-              {field.label}
-            </Typography>
-
-            <FormControl sx={{ width: '100%' }}>
-              {/* <InputLabel id="demo-multiple-chip-label">Chip</InputLabel> */}
-              <Select
-                multiple
+              <Typography variant='body2' fontWeight={600} mb={0.5}>
+                {field.label}
+              </Typography>
+              <TextField
+                select
                 value={formik.values[field.name]}
-                onChange={(e) =>
-                  formik.setFieldValue(field.name, e.target.value)
-                }
-                input={<OutlinedInput sx={{ p: 0 }} />}
-                renderValue={(selected) => (
-                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                    {selected.map((permission) => {
-                      let tempPermission;
-                      permissions.map((item) => {
-                        if (item.slug === permission) {
-                          tempPermission = item.title;
-                        }
-                      });
-                      return (
-                        <Chip
-                          key={permission}
-                          label={tempPermission}
-                          color='primary'
-                        />
-                      );
-                    })}
-                  </Box>
-                )}
-                MenuProps={{
-                  anchorOrigin: { vertical: 'top', horizontal: 'center' },
-                  transformOrigin: {
-                    vertical: 'bottom',
-                    horizontal: 'center',
-                  },
+                disabled={editing ? true : false}
+                onChange={(e) => {
+                  formik.setFieldValue(field.name, e.target.value);
+                  formik.setFieldValue('grade', '');
+                }}
+                sx={{ flex: { xs: 1, lg: 0 } }}
+                onClick={() => {
+                  setClicked(false);
                 }}
               >
-                {field.data.map((option) => (
-                  <MenuItem key={option.slug} value={option.slug}>
-                    <Typography fontSize={14}>{option.title}</Typography>
+                {field.data.map((option, idx) => (
+                  <MenuItem key={idx} value={option.id}>
+                    <Typography fontSize={14}>{option.name}</Typography>
                   </MenuItem>
                 ))}
-              </Select>
-            </FormControl>
+              </TextField>
+            </Stack>
+          ) : field.name === 'grade' ? (
+            <Stack
+              sx={{ my: 1 }}
+              key={field.name}
+              onFocus={() => {
+                setClicked(false);
+              }}
+            >
+              <Typography variant='body2' fontWeight={600} mb={0.5}>
+                {field.label}
+              </Typography>
+              <TextField
+                select
+                value={formik.values[field.name]}
+                onChange={(e) => {
+                  formik.setFieldValue(field.name, e.target.value);
+                  fetchSubject(e.target.value, formik.values.teacher);
+                  // defaultSelected(e.target.value, formik.values.teacher);
+                }}
+                sx={{ flex: { xs: 1, lg: 0 } }}
+              >
+                {formik.values.teacher ? (
+                  field.data.map((option, idx) => (
+                    <MenuItem key={idx} value={option.grade}>
+                      <Typography fontSize={14}>{option.grade}</Typography>
+                    </MenuItem>
+                  ))
+                ) : (
+                  <MenuItem>
+                    <Typography fontSize={14} color='gray'>
+                      Pilih Guru Terlebih Dahulu
+                    </Typography>
+                  </MenuItem>
+                )}
+              </TextField>
+            </Stack>
+          ) : null
+        ) : (
+          <Stack
+            sx={{ my: 1 }}
+            key={field.name}
+            onFocus={() => {
+              setClicked(true);
+            }}
+          >
+            <Typography variant='body2' fontWeight={600} mb={0.5}>
+              {field.label}
+            </Typography>
+            <TextField
+              type='text'
+              placeholder={field.placeholder}
+              value={searchTerms}
+              onChange={(e) => setSearchTerms(e.target.value)}
+              sx={{ flex: { xs: 1, lg: 0 } }}
+            ></TextField>
+            {clicked && (
+              <MenuList
+                sx={
+                  filteredSubject.length
+                    ? {
+                        gap: 1,
+                        my: 1,
+                        height: '15vh',
+                        overflowY: 'auto',
+                      }
+                    : { my: 1, mx: 1 }
+                }
+              >
+                {filteredSubject.length ? (
+                  filteredSubject.map((option, idx) => (
+                    <MenuItem
+                      key={idx}
+                      selected={
+                        selectedSubject.includes(option.subject_id)
+                          ? true
+                          : false
+                      }
+                      value={option.subject_id}
+                      sx={{
+                        justifyContent: 'space-between',
+                      }}
+                    >
+                      <FormControlLabel
+                        value={option.subject_id}
+                        control={<Checkbox />}
+                        label={option.subject_name}
+                        sx={{ width: 1 }}
+                        checked={selectedSubject.includes(option.subject_id)}
+                        onChange={() => {
+                          handleSelected(option.subject_id);
+                        }}
+                      />
+                    </MenuItem>
+                  ))
+                ) : (
+                  <Typography fontSize={14} color='gray'>
+                    Pilih Tingkatan Terlebih Dahulu
+                  </Typography>
+                )}
+              </MenuList>
+            )}
+            <Stack
+              sx={{ my: 1, flexDirection: 'row', gap: 1, overflowY: 'auto' }}
+            >
+              {previewSubject.map((option) => (
+                <Chip
+                  label={option.subject_name}
+                  variant='outlined'
+                  color='primary'
+                />
+              ))}
+            </Stack>
           </Stack>
-        ) : null
+        )
       )}
     </>
   );

@@ -1,8 +1,5 @@
-import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import Image from 'next/image';
+import { BorderColorRounded } from '@mui/icons-material';
 import {
-  Avatar,
   Box,
   Button,
   Chip,
@@ -11,17 +8,13 @@ import {
   Modal,
   Paper,
   Stack,
-  TextField,
   Typography,
   useMediaQuery,
 } from '@mui/material';
-import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
-import Link from 'next/link';
-import { types, permissions } from '@/globalcomponents/Variable';
+import { DataGrid } from '@mui/x-data-grid';
 import { useState } from 'react';
-import { FormAddStudyProgram } from './FormAddTeacher';
-import { FormEdiPeriod, FormEditPeriod } from './FormEditPeriod';
-import dayjs from 'dayjs';
+import { FormEditPeriod } from './FormEditPeriod';
+import { FormAddSubjectTeacher } from './FormAddSubjectTeacher';
 
 const columns = [
   {
@@ -59,7 +52,7 @@ const columns = [
                   Guru
                 </Typography>
                 <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
-                  {params.value.data.teacher}
+                  {/* {params.value.data.teacher} */}
                 </Typography>
               </Stack>
               <Stack
@@ -123,7 +116,7 @@ const columns = [
       return params?.value?.length > 0 ? (
         <ChipList params={params.value} />
       ) : (
-        ''
+        '-'
       );
     },
   },
@@ -136,7 +129,7 @@ const columns = [
       return params?.value?.length > 0 ? (
         <ChipList params={params.value} />
       ) : (
-        ''
+        '-'
       );
     },
   },
@@ -162,7 +155,7 @@ function ChipList({ params, compact }) {
         m: { xs: 0, lg: compact ? 0 : '8px 0' },
       }}
     >
-      {params.map((studyProgram, index) => {
+      {params.map((datum, index) => {
         return (
           <Chip
             key={index}
@@ -170,7 +163,7 @@ function ChipList({ params, compact }) {
               m: { xs: '2px 0px 2px 4px', lg: '2px' },
               fontSize: 12,
             }}
-            label={studyProgram}
+            label={datum.subject_name ? datum.subject_name : datum}
             color='primary'
           />
         );
@@ -200,17 +193,16 @@ function ActionButton({ params }) {
           width: { xs: 90, lg: 'fit-content' },
           display: params.value.data.status === 'Selesai' ? 'none' : 'flex',
         }}
-        // onClick={() => {
-        //   params.value.setOpenEditModal(true);
-        //   params.value.setActiveRow(params.value.data);
-        //   params.value.formik.setValues({
-        //     period_name: params.value.data.period_name,
-        //     study_program: params.value.data.study_program,
-        //     start_time: dayjs(params.value.data.start_time),
-        //     end_time: dayjs(params.value.data.end_time),
-        //     status: params.value.data.status,
-        //   });
-        // }}
+        onClick={() => {
+          params.value.setOpenEditModal(true);
+          params.value.setActiveRow(params.value.data);
+          console.log(params.value.data);
+          params.value.formik.setValues({
+            grades: params.value.data.grades,
+            subjects: params.value.data.subjects,
+            teacher: params.value.data.id,
+          });
+        }}
       >
         <BorderColorRounded
           sx={{ fontSize: { xs: 15, lg: 18 }, color: 'base.base50' }}
@@ -221,44 +213,21 @@ function ActionButton({ params }) {
           Edit
         </Typography>
       </IconButton>
-      <IconButton
-        sx={{
-          borderRadius: 2,
-          ml: 1,
-          backgroundColor: 'warning.main',
-          '&:hover': {
-            backgroundColor: 'warning.dark',
-          },
-          width: { xs: 90, lg: 'fit-content' },
-        }}
-        // onClick={() => {
-        //   params.value.setOpenDeleteModal(true);
-        //   params.value.setActiveRow(params.value.data);
-        // }}
-      >
-        <DeleteForeverRounded
-          sx={{ color: 'white', fontSize: { xs: 16, lg: 18 } }}
-        />
-        <Typography
-          sx={{
-            fontSize: 14,
-            ml: 1,
-            display: { xs: 'flex', lg: 'none' },
-            color: 'white',
-          }}
-        >
-          Delete
-        </Typography>
-      </IconButton>
     </Stack>
   );
 }
 
-export default function TeacherTable({ data, formik }) {
+export default function TeacherTable({
+  data,
+  formik,
+  teacherList,
+  gradeList,
+  dataTeacher,
+}) {
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('lg'));
 
+  const [openCreateTeacherModal, setOpenCreateTeacherModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [activeRow, setActiveRow] = useState({});
 
   let rows = [];
@@ -266,38 +235,32 @@ export default function TeacherTable({ data, formik }) {
   data.map((data, idx) => {
     let tempObject = {
       id: idx,
-
       grades: data.grades,
       subjects: data.subjects,
-      teacher: data.teacher,
-
+      teacher: data.name,
       action: {
         data: data,
         setActiveRow: setActiveRow,
-        setOpenDeleteModal: setOpenDeleteModal,
-        setOpenEditModal: setOpenEditModal,
+        setOpenEditModal: setOpenCreateTeacherModal,
         formik: formik,
       },
       card: {
         data: data,
         setActiveRow: setActiveRow,
-        setOpenDeleteModal: setOpenDeleteModal,
-        setOpenEditModal: setOpenEditModal,
+        setOpenEditModal: setOpenCreateTeacherModal,
         formik: formik,
       },
     };
     rows.push(tempObject);
   });
 
-  console.log(rows);
-
   return (
     <div style={{ height: '100%', width: '100%' }}>
       <Modal
-        open={openEditModal}
+        open={openCreateTeacherModal}
         onClose={() => {
-          setOpenEditModal(false);
-          formik.setValues({ name: '', code: '' });
+          setOpenCreateTeacherModal(false);
+          formik.setValues({ subject: '', grade: '', teachers: '' });
         }}
       >
         <Stack
@@ -323,12 +286,18 @@ export default function TeacherTable({ data, formik }) {
             }}
           >
             <Typography fontWeight={600} fontSize={16}>
-              Edit Periode
+              Edit Guru
             </Typography>
           </Box>
           <Divider />
           <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
-            <FormEditPeriod formik={formik} status={activeRow.status} />
+            <FormAddSubjectTeacher
+              editing={true}
+              formik={formik}
+              teacherList={teacherList}
+              gradeList={gradeList}
+              dataTeacher={dataTeacher}
+            />
           </Box>
           <Divider />
           <Stack
@@ -341,140 +310,26 @@ export default function TeacherTable({ data, formik }) {
               variant='outlined'
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
-                setOpenEditModal(false);
-                formik.setValues({ name: '', code: '' });
+                setOpenCreateTeacherModal(false);
+                formik.setValues({ subject: '', grade: '', teachers: '' });
               }}
             >
               Batal
             </Button>
             <Button
               variant='contained'
-              sx={{
-                flex: 1,
-                backgroundColor:
-                  formik.values['status'] === 'Tidak Aktif'
-                    ? 'primary.main'
-                    : 'warning.main',
-                '&:hover': {
-                  backgroundColor:
-                    formik.values['status'] === 'Aktif' ? 'warning.dark' : '',
-                },
-              }}
+              sx={{ flex: 1 }}
               onClick={() => {
-                setOpenEditModal(false);
-                formik.setValues({ name: '', code: '' });
+                setOpenCreateTeacherModal(false);
+                formik.handleSubmit();
               }}
             >
-              {formik.values['status'] === 'Tidak Aktif'
-                ? 'Simpan'
-                : 'Akhiri Periode'}
+              Simpan
             </Button>
           </Stack>
         </Stack>
       </Modal>
-      <Modal open={openDeleteModal} onClose={() => setOpenDeleteModal(false)}>
-        <Stack
-          component={Paper}
-          elevation={2}
-          sx={{
-            borderRadius: 2,
-            zIndex: 20,
-            margin: 'auto',
-            position: 'fixed',
-            height: 'fit-content',
-            width: '360px',
-            maxWidth: '80%',
-            top: 0,
-            bottom: 0,
-            right: 0,
-            left: 0,
-            p: 2,
-          }}
-        >
-          <Box>
-            <Typography fontWeight={600} fontSize={16}>
-              Hapus Periode
-            </Typography>
-          </Box>
 
-          <Typography sx={{ mt: 1, fontSize: 14 }}>
-            Anda akan menghapus periode berikut:
-          </Typography>
-          <Stack
-            sx={{ width: '100%', my: 1, overflow: 'hidden', borderRadius: 2 }}
-          >
-            <Stack
-              sx={{
-                width: '100%',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                borderBottom: '1px solid rgb(0,0,0,0.12)',
-                px: 1,
-                py: '10px',
-                backgroundColor: 'base.base10',
-              }}
-            >
-              <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
-                Periode
-              </Typography>
-              <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
-                {activeRow.period_name}
-              </Typography>
-            </Stack>
-            <Stack
-              sx={{
-                width: '100%',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                borderBottom: '1px solid rgb(0,0,0,0.12)',
-                px: 1,
-                py: '10px',
-                backgroundColor: 'base.base20',
-              }}
-            >
-              <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
-                Program Studi
-              </Typography>
-
-              <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
-                {activeRow.study_program}
-              </Typography>
-              {/* <ChipList params={activeRow.study_program} compact/> */}
-            </Stack>
-          </Stack>
-
-          <Stack
-            sx={{
-              flexDirection: 'row',
-            }}
-          >
-            <Button
-              variant='outlined'
-              sx={{ flex: 1, mr: 1 }}
-              onClick={() => {
-                setOpenDeleteModal(false);
-              }}
-            >
-              Batal
-            </Button>
-            <Button
-              variant='contained'
-              sx={{
-                flex: 1,
-                backgroundColor: 'warning.main',
-                '&:hover': {
-                  backgroundColor: 'warning.dark',
-                },
-              }}
-              onClick={() => {
-                setOpenDeleteModal(false);
-              }}
-            >
-              Hapus
-            </Button>
-          </Stack>
-        </Stack>
-      </Modal>
       {isMobile ? (
         <style jsx global>{`
           .MuiDataGrid-root .MuiDataGrid-cell {

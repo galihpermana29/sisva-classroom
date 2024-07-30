@@ -37,6 +37,7 @@ import {
 } from '@/assets/SVGs';
 import Head from 'next/head';
 import UsersAPI from '@/api/users';
+import CmsAPI from '@/api/cms';
 
 export const metadata = {
   title: 'Beranda | Sisva',
@@ -156,6 +157,22 @@ export default function Container(props) {
       });
       return title;
     }
+
+    const [currentSchool, setCurrentSchool] = useState(null);
+
+    const getSchoolProfile = async () => {
+      const {
+        data: { data },
+      } = await CmsAPI.getSchoolById(
+        JSON.parse(localStorage.getItem('user')).school_id
+      );
+
+      setCurrentSchool(data);
+    };
+
+    useEffect(() => {
+      getSchoolProfile();
+    }, []);
 
     function UserMenu() {
       const [anchorEl, setAnchorEl] = React.useState(null);
@@ -345,9 +362,14 @@ export default function Container(props) {
             alignItems: 'center',
           }}
         >
-          <Image alt='Web Image' src={SchoolLogoBlue} height={36} width={36} />
+          <Image
+            alt='Web Image'
+            src={`https://api-staging.sisva.id/file/v1/files/${currentSchool?.logo_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+            height={36}
+            width={36}
+          />
           <Typography fontWeight='700' ml={1} fontSize={18}>
-            Sekolah Sisva
+            {currentSchool?.name}
           </Typography>
         </Stack>
         <Stack

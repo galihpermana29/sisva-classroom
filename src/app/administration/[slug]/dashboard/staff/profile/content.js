@@ -73,8 +73,6 @@ export default function StaffProfileListContent() {
         password,
       };
 
-      console.log(payload);
-
       try {
         const res = await UsersAPI.createUser(payload);
 
