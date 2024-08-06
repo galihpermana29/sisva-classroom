@@ -421,13 +421,13 @@ export default function Container(props) {
               title: "Kelas",
               slug: "class",
             },
-            // {
-            //   title: "Jadwal Pelajaran",
-            //   slug: "schedule",
-            // },
             {
               title: "Ekstrakurikuler",
               slug: "extracurricular",
+            },
+            {
+              title: "Jadwal Pelajaran",
+              slug: "schedule",
             },
           ],
         },
