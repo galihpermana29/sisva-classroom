@@ -7,7 +7,10 @@ const DEFAULT_TAB = 0;
 
 const DashboardAcademic = ({ searchParams }) => {
   const { tab } = searchParams;
-  const activeTab = tab ?? DEFAULT_TAB;
+
+  // check whether tab search params exists (not null),
+  // and checks whether the current tab is valid (tabs[tab] exists)
+  const activeTab = tab && Boolean(tabs[tab]) ? tab : DEFAULT_TAB;
 
   return (
     <Stack gap={3}>
@@ -22,21 +25,17 @@ const DashboardAcademic = ({ searchParams }) => {
         }}
       >
         <Suspense>
-          <TabsSelector tabs={tabs} fallback={DEFAULT_TAB} />
+          <TabsSelector tabs={tabs} activeTab={activeTab} />
         </Suspense>
 
         <Divider />
 
-        <Suspense>
-          <Box sx={{ flex: 1, paddingX: 4, paddingY: 3, overflowY: "hidden" }}>
-            {tabs[activeTab].component}
-          </Box>
-        </Suspense>
+        <Box sx={{ flex: 1, paddingX: 4, paddingY: 3, overflowY: "hidden" }}>
+          <Suspense>{tabs[activeTab].component}</Suspense>
+        </Box>
       </Stack>
 
-      {tabs[activeTab].extras ? (
-        <Suspense>{tabs[activeTab].extras}</Suspense>
-      ) : null}
+      <Suspense>{tabs[activeTab].extras}</Suspense>
     </Stack>
   );
 };

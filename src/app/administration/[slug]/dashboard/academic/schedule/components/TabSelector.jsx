@@ -1,10 +1,12 @@
 "use client";
 
-import { useActiveTab } from "@/hooks/useActiveTab";
+import { useQueryParam } from "@/hooks/useQueryParam";
 import { Button, Stack, Typography } from "@mui/material";
 
-export const TabsSelector = ({ tabs, fallback }) => {
-  const { activeTab, changeTab } = useActiveTab(fallback);
+export const TabsSelector = ({ tabs, activeTab }) => {
+  const { updateQueryParam } = useQueryParam();
+  const changeTab = (value) => updateQueryParam("tab", value);
+
   return (
     <Stack
       gap={2}
