@@ -9,7 +9,6 @@ export const TabsSelector = ({ tabs, activeTab }) => {
 
   return (
     <Stack
-      gap={2}
       sx={{
         flexDirection: "row",
         borderBottom: "1px solid rgb(0,0,0,0.12)",
@@ -21,7 +20,7 @@ export const TabsSelector = ({ tabs, activeTab }) => {
           <Button
             key={`${item.title}${index}`}
             sx={{
-              p: { xs: "16px 8px", lg: 2 },
+              p: { xs: "16px 24px", lg: 2 },
               minWidth: "fit-content",
               flex: { xs: 1, lg: 0 },
               borderBottom: "2px solid",

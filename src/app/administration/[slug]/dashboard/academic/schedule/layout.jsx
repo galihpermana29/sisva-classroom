@@ -11,7 +11,7 @@ const DashboardAcademicLayout = ({ children }) => {
 
 const LayoutTitle = () => {
   return (
-    <Typography fontWeight={600} fontSize={24} lineHeight="120%">
+    <Typography fontWeight={600} fontSize={20} lineHeight="120%">
       Jadwal Pelajaran
     </Typography>
   );

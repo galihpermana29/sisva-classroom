@@ -1,7 +1,8 @@
-import { Box, Divider, Paper, Stack } from "@mui/material";
+import { Divider, Paper, Stack } from "@mui/material";
 import { BobotSKS } from "./components/BobotSKS";
 import { TabsSelector } from "./components/TabSelector";
 import { Suspense } from "react";
+import { PengaturanJadwal } from "./components/PengaturanJadwal";
 
 const DEFAULT_TAB = 0;
 
@@ -30,9 +31,7 @@ const DashboardAcademic = ({ searchParams }) => {
 
         <Divider />
 
-        <Box sx={{ flex: 1, paddingX: 4, paddingY: 3, overflowY: "hidden" }}>
-          <Suspense>{tabs[activeTab].component}</Suspense>
-        </Box>
+        <Suspense>{tabs[activeTab].component}</Suspense>
       </Stack>
 
       <Suspense>{tabs[activeTab].extras}</Suspense>
@@ -43,7 +42,7 @@ const DashboardAcademic = ({ searchParams }) => {
 const tabs = [
   {
     title: "Pengaturan Jadwal",
-    component: <div>Pengaturan Jadwal</div>,
+    component: <PengaturanJadwal />,
     extras: <BobotSKS />,
   },
   {

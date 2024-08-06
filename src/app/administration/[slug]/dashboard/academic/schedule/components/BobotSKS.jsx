@@ -6,19 +6,19 @@ export const BobotSKS = () => {
       component={Paper}
       variant="outlined"
       gap={2}
-      sx={{
-        flexDirection: "col",
-        paddingX: 4,
-        paddingY: 3,
-        borderRadius: 2,
-      }}
+      className="p-6"
+      sx={{ flexDirection: "col", borderRadius: 2 }}
     >
-      <Typography fontWeight={600} fontSize={16} lineHeight="120%">
+      <Typography fontWeight={600} variant="body1">
         Bobot SKS
       </Typography>
       <Stack flexDirection="row" alignItems="center" gap={2}>
-        <TextField sx={{ borderRadius: 4, width: "4em" }} variant="outlined" />
-        <Typography fontSize={14}>Menit</Typography>
+        <TextField
+          sx={{ borderRadius: 4, width: "4em" }}
+          variant="outlined"
+          size="small"
+        />
+        <Typography variant="body1">Menit</Typography>
       </Stack>
     </Stack>
   );
