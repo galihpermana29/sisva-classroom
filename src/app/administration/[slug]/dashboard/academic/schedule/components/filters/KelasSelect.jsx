@@ -4,14 +4,14 @@ import { useQueryParam } from "@/hooks/useQueryParam";
 import { MenuItem, Select } from "@mui/material";
 import { useSearchParams } from "next/navigation";
 
-export const TINGKAT_FIELD_NAME = "tingkat";
+export const KELAS_FIELD_NAME = "kelas";
 
-export const TingkatSelect = ({ disabled }) => {
+export const KelasSelect = ({ disabled }) => {
   const searchParams = useSearchParams();
-  const value = searchParams.get(TINGKAT_FIELD_NAME) ?? "";
+  const value = searchParams.get(KELAS_FIELD_NAME) ?? "";
 
   const { updateQueryParam } = useQueryParam();
-  const handleChange = (value) => updateQueryParam(TINGKAT_FIELD_NAME, value);
+  const handleChange = (value) => updateQueryParam(KELAS_FIELD_NAME, value);
 
   return (
     <Select
@@ -22,7 +22,7 @@ export const TingkatSelect = ({ disabled }) => {
       onChange={(event) => handleChange(event.target.value)}
     >
       <MenuItem disabled value="">
-        Tingkatan
+        Kelas
       </MenuItem>
       {data.map(({ value, label }) => (
         <MenuItem key={`${value}${label}`} value={value}>
@@ -33,4 +33,4 @@ export const TingkatSelect = ({ disabled }) => {
   );
 };
 
-const data = [{ value: "XI", label: "XI" }];
+const data = [{ value: 1, label: "XI IPA 1" }];

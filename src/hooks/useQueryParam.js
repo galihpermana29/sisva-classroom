@@ -23,5 +23,5 @@ export const useQueryParam = () => {
   const updateQueryParam = (name, value) =>
     router.push(pathname + "?" + createQueryString(name, value));
 
-  return { updateQueryParam };
+  return { updateQueryParam, createQueryString };
 };

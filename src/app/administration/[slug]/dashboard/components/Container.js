@@ -798,7 +798,7 @@ export default function Container(props) {
           pl: { xs: 0, lg: '280px' },
           pt: '70px',
           backgroundColor: 'base.base20',
-          overflow: 'hidden',
+          overflow: 'auto',
         }}
       >
         {props.children}

@@ -2,7 +2,9 @@ import { Divider, Paper, Stack } from "@mui/material";
 import { BobotSKS } from "./components/BobotSKS";
 import { TabsSelector } from "./components/TabSelector";
 import { Suspense } from "react";
-import { PengaturanJadwal } from "./components/PengaturanJadwal";
+import { PengaturanJadwal } from "./components/tabs/PengaturanJadwal";
+import { JadwalKelas } from "./components/tabs/JadwalKelas";
+import { JadwalGuru } from "./components/tabs/JadwalGuru";
 
 const DEFAULT_TAB = 0;
 
@@ -51,11 +53,11 @@ const tabs = [
   },
   {
     title: "Jadwal Kelas",
-    component: <div>Jadwal Kelas</div>,
+    component: <JadwalKelas />,
   },
   {
     title: "Jadwal Guru",
-    component: <div>Jadwal Guru</div>,
+    component: <JadwalGuru />,
   },
 ];
 
