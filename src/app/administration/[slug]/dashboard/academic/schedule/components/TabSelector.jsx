@@ -1,11 +1,12 @@
 "use client";
 
-import { useQueryParam } from "@/hooks/useQueryParam";
 import { Button, Stack, Typography } from "@mui/material";
+import { usePathname, useRouter } from "next/navigation";
 
 export const TabsSelector = ({ tabs, activeTab }) => {
-  const { updateQueryParam } = useQueryParam();
-  const changeTab = (value) => updateQueryParam("tab", value);
+  const router = useRouter();
+  const pathname = usePathname();
+  const changeTab = (value) => router.push(pathname + `?tab=${value}`);
 
   return (
     <Stack

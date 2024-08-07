@@ -1,14 +1,24 @@
+"use client";
+
 import { MenuItem, Select, Stack, Typography } from "@mui/material";
 
-export const DaySelect = () => {
+export const DaySelect = ({ formik, name, label, placeholder }) => {
   return (
     <Stack spacing={1}>
       <Typography fontWeight={600} variant="body2">
-        Hari
+        {label}
       </Typography>
-      <Select displayEmpty>
-        <MenuItem disabled value={undefined}>
-          Pilih hari
+      <Select
+        id={name}
+        name={name}
+        value={formik.values ? formik.values[name] : ""}
+        onChange={(event) => formik.setFieldValue(name, event.target.value)}
+        onBlur={formik.handleBlur}
+        error={formik.touched[name] && Boolean(formik.errors[name])}
+        displayEmpty
+      >
+        <MenuItem disabled value={""}>
+          {placeholder}
         </MenuItem>
         {days.map(({ label, value }) => (
           <MenuItem key={`${label}${value}`} value={value}>
