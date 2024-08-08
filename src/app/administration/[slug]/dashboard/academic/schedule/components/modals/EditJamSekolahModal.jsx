@@ -21,15 +21,19 @@ export const EditJamSekolahModal = ({ data }) => {
   const initialValues = useMemo(
     () => ({
       day: formatDay(data.day),
-      start_time: dayjs(data.start_time, "HH:mm"),
-      end_time: dayjs(data.end_time, "HH:mm"),
+      start_time: dayjs(data.start_time, "H:mm a Z"),
+      end_time: dayjs(data.end_time, "H:mm a Z"),
     }),
-    [data],
+    [data.day, data.start_time, data.end_time]
   );
 
   return (
     <>
-      <IconButton onClick={handleOpen} aria-label="edit" size="small">
+      <IconButton
+        onClick={handleOpen}
+        aria-label="edit"
+        size="small"
+      >
         <ModeEdit />
       </IconButton>
       <Modal
