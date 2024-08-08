@@ -10,6 +10,7 @@ export const ClassSelect = ({ formik, name, label, placeholder, disabled }) => {
       </Typography>
       <Select
         id={name}
+        size="small"
         name={name}
         disabled={disabled}
         value={formik.values ? formik.values[name] : ""}

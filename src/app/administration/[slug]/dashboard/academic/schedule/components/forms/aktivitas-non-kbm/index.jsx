@@ -1,27 +1,21 @@
 "use client";
 
-import { useFormik } from "formik";
-import { jadwalKelasSchema } from "./jadwalKelasSchema";
 import { Button, Stack } from "@mui/material";
+import { useFormik } from "formik";
 import { DaySelect } from "../../DaySelect";
+import { ActivityNameInput } from "../../form-items/ActivityNameInput";
 import { TimeSelect } from "../../TimeSelect";
-import { ClassSelect } from "../../form-items/ClassSelect";
-import { LevelSelect } from "../../form-items/LevelSelect";
-import { PeriodSelect } from "../../form-items/PeriodSelect";
-import { StudyProgramSelect } from "../../form-items/StudyProgramSelect";
+import { aktiitasNonKbmSchema } from "./aktivitasNonKbmSchema";
 
-export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
+export const AktivitasNonKbmForm = ({ handleClose, initialValues, edit }) => {
   const formik = useFormik({
     initialValues: initialValues ?? {
-      periode: null,
-      prodi: null,
-      tingkatan: null,
-      kelas: null,
+      nama: null,
       hari: null,
       jam_mulai: null,
       jam_selesai: null,
     },
-    validationSchema: jadwalKelasSchema,
+    validationSchema: aktiitasNonKbmSchema,
     onSubmit: (values) =>
       edit ? console.log("edit", values) : console.log("create", values),
   });
@@ -32,29 +26,11 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
       onSubmit={formik.handleSubmit}
     >
       <Stack gap={2}>
-        <PeriodSelect
-          label={"Periode"}
-          placeholder={"Pilih periode"}
+        <ActivityNameInput
+          label="Nama Aktivitas"
+          placeholder="Isi nama aktivitas"
           formik={formik}
-          name={"periode"}
-        />
-        <StudyProgramSelect
-          label={"Program Studi"}
-          placeholder={"Pilih program studi"}
-          formik={formik}
-          name={"prodi"}
-        />
-        <LevelSelect
-          label={"Tingkatan"}
-          placeholder={"Pilih tingkatan"}
-          formik={formik}
-          name={"tingkatan"}
-        />
-        <ClassSelect
-          label={"Kelas"}
-          placeholder={"Pilih kelas"}
-          formik={formik}
-          name={"kelas"}
+          name="nama"
         />
         <DaySelect
           label="Hari"

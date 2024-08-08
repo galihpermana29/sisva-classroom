@@ -11,6 +11,7 @@ export const DaySelect = ({ formik, name, label, placeholder }) => {
       <Select
         id={name}
         name={name}
+        size="small"
         value={formik.values ? formik.values[name] : ""}
         onChange={(event) => formik.setFieldValue(name, event.target.value)}
         onBlur={formik.handleBlur}

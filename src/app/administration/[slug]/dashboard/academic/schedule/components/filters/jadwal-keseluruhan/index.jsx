@@ -9,21 +9,30 @@ import { KelasSelect } from "../KelasSelect";
 import { PERIODE_FIELD_NAME, PeriodeSelect } from "../PeriodeSelect";
 import { PRODI_FIELD_NAME, ProdiSelect } from "../ProdiSelect";
 import { TingkatSelect } from "../TingkatSelect";
-import { JadwalKeseluruhanSwitch } from "../JadwalKeseluruhanSwitch";
+import {
+  JADWAL_KESELURUHAN_FIELD_NAME,
+  JadwalKeseluruhanSwitch,
+} from "../JadwalKeseluruhanSwitch";
 import AddJadwalKelasModal from "../../modals/AddJadwalKelasModal";
+import AddAktivitasNonKbmModal from "../../modals/AddAktivitasNonKbmModal";
 
 function JadwalKeseluruhanFilters() {
   const searchParams = useSearchParams();
   const tab = searchParams.get("tab");
   const periode = searchParams.get(PERIODE_FIELD_NAME);
   const prodi = searchParams.get(PRODI_FIELD_NAME);
+  const jadwalKeseluruhan =
+    searchParams.get(JADWAL_KESELURUHAN_FIELD_NAME) ?? "true";
 
   const showProdi = Boolean(periode);
   const showTingkat = Boolean(prodi);
 
   const pathName = usePathname();
   const router = useRouter();
-  const handleReset = () => router.push(`${pathName}?tab=${tab}`);
+  const handleReset = () =>
+    router.push(
+      `${pathName}?tab=${tab}&jadwal_keseluruhan=${jadwalKeseluruhan}`
+    );
 
   return (
     <Stack
@@ -33,8 +42,8 @@ function JadwalKeseluruhanFilters() {
     >
       <Stack flexDirection={"row"} alignItems={"center"} gap={1}>
         <PeriodeSelect />
-        {showProdi && <ProdiSelect />}
-        {showProdi && showTingkat && (
+        {jadwalKeseluruhan === "true" && showProdi && <ProdiSelect />}
+        {jadwalKeseluruhan === "true" && showProdi && showTingkat && (
           <>
             <TingkatSelect />
             <KelasSelect />
@@ -57,9 +66,18 @@ function JadwalKeseluruhanFilters() {
           </Stack>
         </Button>
       </Stack>
-      <Stack flexDirection={"row"} alignItems={"center"} gap={2}>
+      <Stack
+        flexDirection={"row"}
+        justifyContent={"end"}
+        alignItems={"center"}
+        gap={2}
+      >
         <JadwalKeseluruhanSwitch />
-        <AddJadwalKelasModal />
+        {jadwalKeseluruhan === "true" ? (
+          <AddJadwalKelasModal />
+        ) : (
+          <AddAktivitasNonKbmModal />
+        )}
       </Stack>
     </Stack>
   );

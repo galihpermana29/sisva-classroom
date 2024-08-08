@@ -11,6 +11,7 @@ export const TimeSelect = ({ formik, name, label }) => {
       <TimePicker
         id={name}
         name={name}
+        size="small"
         value={formik.values ? formik.values[name] : dayjs()}
         onChange={(value) =>
           formik.setFieldValue(name, dayjs(value).format("HH:mm"))

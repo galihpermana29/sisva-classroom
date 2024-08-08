@@ -15,7 +15,9 @@ export default function RootLayout({ children }) {
         width: "100%",
       }}
     >
-      <Container>{children}</Container>
+      <Container>
+        <div className="max-h-[90vh] overflow-auto">{children}</div>
+      </Container>
     </Box>
   );
 }

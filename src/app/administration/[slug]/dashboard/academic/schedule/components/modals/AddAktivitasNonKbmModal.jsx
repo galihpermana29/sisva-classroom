@@ -1,9 +1,9 @@
+import { ModalBody } from "@/components/CustomModal";
 import { Button, Modal } from "@mui/material";
 import { useState } from "react";
-import { ModalBody } from "@/components/CustomModal";
-import { JadwalKelasForm } from "../forms/jadwal-kelas";
+import { AktivitasNonKbmForm } from "../forms/aktivitas-non-kbm";
 
-function AddJadwalKelasModal() {
+function AddAktivitasNonKbmModal() {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -17,17 +17,17 @@ function AddJadwalKelasModal() {
       <Modal
         open={open}
         onClose={handleClose}
-        aria-labelledby="Modal tambah jadwal kelas"
-        aria-describedby="Tambah jadwal kelas"
+        aria-labelledby="Modal tambah aktivitas non KBM"
+        aria-describedby="Tambah aktivitas non KBM"
       >
         <ModalBody
-          title="Tambah Jadwal Kelas"
+          title="Aktivitas Non KBM"
           handleClose={handleClose}
-          content={<JadwalKelasForm handleClose={handleClose} />}
+          content={<AktivitasNonKbmForm handleClose={handleClose} />}
         />
       </Modal>
     </>
   );
 }
 
-export default AddJadwalKelasModal;
+export default AddAktivitasNonKbmModal;

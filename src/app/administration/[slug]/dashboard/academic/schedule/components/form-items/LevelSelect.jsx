@@ -11,6 +11,7 @@ export const LevelSelect = ({ formik, name, label, placeholder, disabled }) => {
       <Select
         id={name}
         name={name}
+        size="small"
         disabled={disabled}
         value={formik.values ? formik.values[name] : ""}
         onChange={(event) => formik.setFieldValue(name, event.target.value)}

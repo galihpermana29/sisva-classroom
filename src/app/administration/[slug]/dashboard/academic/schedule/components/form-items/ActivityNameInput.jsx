@@ -1,8 +1,8 @@
 "use client";
 
-import { MenuItem, Select, Stack, Typography } from "@mui/material";
+import { Stack, TextField, Typography } from "@mui/material";
 
-export const StudyProgramSelect = ({
+export const ActivityNameInput = ({
   formik,
   name,
   label,
@@ -14,28 +14,18 @@ export const StudyProgramSelect = ({
       <Typography fontWeight={600} variant="body2">
         {label}
       </Typography>
-      <Select
+      <TextField
         id={name}
-        name={name}
         size="small"
+        name={name}
+        placeholder={placeholder}
         disabled={disabled}
         value={formik.values ? formik.values[name] : ""}
         onChange={(event) => formik.setFieldValue(name, event.target.value)}
         onBlur={formik.handleBlur}
         error={formik.touched[name] && Boolean(formik.errors[name])}
         displayEmpty
-      >
-        <MenuItem disabled value={""}>
-          {placeholder}
-        </MenuItem>
-        {data.map(({ label, value }) => (
-          <MenuItem key={`${label}${value}`} value={value}>
-            {label}
-          </MenuItem>
-        ))}
-      </Select>
+      ></TextField>
     </Stack>
   );
 };
-
-const data = [{ value: 1, label: "IPA" }];
