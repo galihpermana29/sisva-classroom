@@ -8,8 +8,14 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-      <Box sx={{ height: "100vh", maxHeight: "100vh", width: "100%" }}>
-        <Container>{children}</Container>
-      </Box>
+    <Box
+      sx={{
+        height: "100vh",
+        maxHeight: "100vh",
+        width: "100%",
+      }}
+    >
+      <Container>{children}</Container>
+    </Box>
   );
 }

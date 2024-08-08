@@ -6,14 +6,14 @@ import { JadwalGuruFilters } from "../filters/jadwal-guru";
 const JadwalGuruSchedule = dynamic(
   () =>
     import("../JadwalGuruSchedule").then(
-      ({ JadwalGuruSchedule }) => JadwalGuruSchedule,
+      ({ JadwalGuruSchedule }) => JadwalGuruSchedule
     ),
   {
     ssr: false,
     loading: () => (
       <div className="h-[650px] w-full animate-pulse bg-gray-200" />
     ),
-  },
+  }
 );
 
 export const JadwalGuru = () => {
