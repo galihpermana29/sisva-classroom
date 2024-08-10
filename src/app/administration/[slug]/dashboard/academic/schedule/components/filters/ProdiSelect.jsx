@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 
 export const PRODI_FIELD_NAME = "prodi";
 
-export const ProdiSelect = ({ disabled }) => {
+export const ProdiSelect = ({ disabled, data }) => {
   const searchParams = useSearchParams();
   const value = searchParams.get(PRODI_FIELD_NAME) ?? "";
 
@@ -32,5 +32,3 @@ export const ProdiSelect = ({ disabled }) => {
     </Select>
   );
 };
-
-const data = [{ value: 1, label: "IPA" }];

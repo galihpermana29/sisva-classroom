@@ -14,7 +14,10 @@ export const JadwalKeseluruhanSwitch = () => {
 
   return (
     <Stack flexDirection={"row"} justifyContent={"end"} alignItems={"center"}>
-      <Switch defaultChecked={value} onChange={handleChange} />
+      <Switch
+        defaultChecked={value === "true" ? true : false}
+        onChange={handleChange}
+      />
       <Typography fontWeight={"600"} fontSize={"13px"} color={"#98A2B3"}>
         Jadwal Keseluruhan
       </Typography>

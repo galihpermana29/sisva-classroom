@@ -25,16 +25,22 @@ export const JadwalKeseluruhanFilterAlert = () => {
     <Box paddingX={3}>
       <Alert sx={{ borderRadius: "0.5rem" }} severity="warning">
         <AlertTitle>Peringatan: Filter Wajib Dipilih!</AlertTitle>
-        Untuk menampilkan data pada tabel, Anda harus memilih minimal dua filter
-        berikut: <b>periode</b>
-        {jadwalKeseluruhan === "true" && (
+        Untuk menampilkan data pada tabel, Anda harus memilih
+        {jadwalKeseluruhan === "true" ? (
           <span>
             {" "}
-            dan <b>program studi</b>
+            minimal dua filter berikut: <b>periode</b> dan <b>program studi</b>.
+            Tanpa memilih kedua filter ini, data tidak akan dapat ditampilkan.
+            Pastikan Anda telah memilih kedua filter untuk melanjutkan.
+          </span>
+        ) : (
+          <span>
+            {" "}
+            filter berikut: <b>periode</b>. Tanpa memilih filter ini, data tidak
+            akan dapat ditampilkan. Pastikan Anda telah memilih filter untuk
+            melanjutkan.
           </span>
         )}
-        . Tanpa memilih kedua filter ini, data tidak akan dapat ditampilkan.
-        Pastikan Anda telah memilih kedua filter untuk melanjutkan.
       </Alert>
     </Box>
   );

@@ -1,38 +1,39 @@
 "use client";
 
-import { Box, Button, Stack, Switch, Typography } from "@mui/material";
+import AcademicAPI from "@/api/academic";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { GuruSelect } from "../GuruSelect";
-import { HariSelect } from "../HariSelect";
-import { KelasSelect } from "../KelasSelect";
-import { PERIODE_FIELD_NAME, PeriodeSelect } from "../PeriodeSelect";
-import { PRODI_FIELD_NAME, ProdiSelect } from "../ProdiSelect";
-import { TingkatSelect } from "../TingkatSelect";
+import { useEffect, useState } from "react";
+import AddAktivitasNonKbmModal from "../../modals/AddAktivitasNonKbmModal";
+import AddJadwalKelasModal from "../../modals/AddJadwalKelasModal";
+import JadwalKeseluruhanOptionalFiltersModal from "../JadwalKeseluruhanOptionalFiltersModal";
 import {
   JADWAL_KESELURUHAN_FIELD_NAME,
   JadwalKeseluruhanSwitch,
 } from "../JadwalKeseluruhanSwitch";
-import AddJadwalKelasModal from "../../modals/AddJadwalKelasModal";
-import AddAktivitasNonKbmModal from "../../modals/AddAktivitasNonKbmModal";
+import { PERIODE_FIELD_NAME, PeriodeSelect } from "../PeriodeSelect";
+import { PRODI_FIELD_NAME, ProdiSelect } from "../ProdiSelect";
+import useJadwalKeseluruhanFilter from "../../../hooks/useJadwalKeseluruhanFilter";
 
 function JadwalKeseluruhanFilters() {
   const searchParams = useSearchParams();
-  const tab = searchParams.get("tab");
   const periode = searchParams.get(PERIODE_FIELD_NAME);
   const prodi = searchParams.get(PRODI_FIELD_NAME);
   const jadwalKeseluruhan =
     searchParams.get(JADWAL_KESELURUHAN_FIELD_NAME) ?? "true";
 
   const showProdi = Boolean(periode);
-  const showTingkat = Boolean(prodi);
+  const showOptionalFilters = Boolean(prodi);
 
-  const pathName = usePathname();
-  const router = useRouter();
-  const handleReset = () =>
-    router.push(
-      `${pathName}?tab=${tab}&jadwal_keseluruhan=${jadwalKeseluruhan}`
-    );
+  const {
+    handleReset,
+    periodeSelectData,
+    prodiSelectData,
+    tingkatanSelectData,
+    kelasSelectData,
+    hariSelectData,
+  } = useJadwalKeseluruhanFilter();
 
   return (
     <Stack
@@ -41,16 +42,20 @@ function JadwalKeseluruhanFilters() {
       width={"100%"}
     >
       <Stack flexDirection={"row"} alignItems={"center"} gap={1}>
-        <PeriodeSelect />
-        {jadwalKeseluruhan === "true" && showProdi && <ProdiSelect />}
-        {jadwalKeseluruhan === "true" && showProdi && showTingkat && (
+        <PeriodeSelect data={periodeSelectData} />
+        {jadwalKeseluruhan === "true" && showProdi && (
           <>
-            <TingkatSelect />
-            <KelasSelect />
-            <HariSelect />
-            <GuruSelect />
+            <ProdiSelect data={prodiSelectData} />
+            {showOptionalFilters && (
+              <JadwalKeseluruhanOptionalFiltersModal
+                tingkatanData={tingkatanSelectData}
+                kelasData={kelasSelectData}
+                hariData={hariSelectData}
+              />
+            )}
           </>
         )}
+
         <Button ml={"12px"} onClick={handleReset}>
           <Stack flexDirection={"row"} alignItems={"center"} gap={"4px"}>
             <Box position={"relative"} width={"10px"} height={"10px"}>

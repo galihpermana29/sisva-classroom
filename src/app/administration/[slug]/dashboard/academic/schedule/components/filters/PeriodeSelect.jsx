@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 
 export const PERIODE_FIELD_NAME = "periode";
 
-export const PeriodeSelect = ({ disabled }) => {
+export const PeriodeSelect = ({ disabled, data }) => {
   const searchParams = useSearchParams();
   const value = searchParams.get(PERIODE_FIELD_NAME) ?? "";
 
@@ -32,5 +32,3 @@ export const PeriodeSelect = ({ disabled }) => {
     </Select>
   );
 };
-
-const data = [{ value: 1, label: "IPA 2021/2022" }];
