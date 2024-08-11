@@ -1,8 +1,13 @@
-import { colors } from "@mui/material";
+import { Kumbh_Sans } from "next/font/google";
+
+const font = Kumbh_Sans({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+});
 
 export const themeConfig = {
   typography: {
-    fontFamily: ["Kumbh Sans", "sans-serif"].join(","),
+    fontFamily: font.style.fontFamily,
     fontSize: 13,
   },
   palette: {
