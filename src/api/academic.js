@@ -385,6 +385,28 @@ const AcademicAPI = {
 
     return api.get("/school-schedules", { headers });
   },
+
+  getCredit() {
+    const headers = {
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+
+    return api.get(`/credits`, { headers });
+  },
+
+  createCredit(payload) {
+    const headers = {
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+
+    return api.post("/credits", payload, { headers });
+  },
 };
 
 export default AcademicAPI;

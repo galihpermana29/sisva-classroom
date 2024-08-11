@@ -1,4 +1,5 @@
-import { Paper, Stack, TextField, Typography } from "@mui/material";
+import { Paper, Stack, Typography } from "@mui/material";
+import { BobotSKSInput } from "./BobotSKSInput";
 
 export const BobotSKS = () => {
   return (
@@ -9,15 +10,18 @@ export const BobotSKS = () => {
       className="p-6"
       sx={{ flexDirection: "col", borderRadius: 2 }}
     >
-      <Typography fontWeight={600} variant="body1">
+      <Typography
+        fontWeight={600}
+        variant="body1"
+      >
         Bobot SKS
       </Typography>
-      <Stack flexDirection="row" alignItems="center" gap={2}>
-        <TextField
-          sx={{ borderRadius: 4, width: "4em" }}
-          variant="outlined"
-          size="small"
-        />
+      <Stack
+        flexDirection="row"
+        alignItems="center"
+        gap={2}
+      >
+        <BobotSKSInput />
         <Typography variant="body1">Menit</Typography>
       </Stack>
     </Stack>
