@@ -8,7 +8,6 @@ import { JamSekolahForm } from "../forms/jam-sekolah";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { useMemo } from "react";
-import { formatDay } from "@/utils/formatDay";
 
 dayjs.extend(customParseFormat);
 
@@ -20,7 +19,7 @@ export const EditJamSekolahModal = ({ data }) => {
 
   const initialValues = useMemo(
     () => ({
-      day: formatDay(data.day),
+      day: data.day,
       start_time: dayjs(data.start_time, "H:mm a Z"),
       end_time: dayjs(data.end_time, "H:mm a Z"),
     }),

@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 
 export const PERIODE_FIELD_NAME = "periode";
 
-export const PeriodeSelect = ({ disabled }) => {
+export const PeriodeSelect = ({ data, disabled }) => {
   const searchParams = useSearchParams();
   const value = searchParams.get(PERIODE_FIELD_NAME) ?? "";
 
@@ -21,16 +21,22 @@ export const PeriodeSelect = ({ disabled }) => {
       value={value}
       onChange={(event) => handleChange(event.target.value)}
     >
-      <MenuItem disabled value="">
+      <MenuItem
+        disabled
+        value=""
+      >
         Periode
       </MenuItem>
-      {data.map(({ value, label }) => (
-        <MenuItem key={`${value}${label}`} value={value}>
-          {label}
-        </MenuItem>
-      ))}
+      {data
+        ? data.map(({ id, name }) => (
+            <MenuItem
+              key={`${id}${name}`}
+              value={id}
+            >
+              {name}
+            </MenuItem>
+          ))
+        : null}
     </Select>
   );
 };
-
-const data = [{ value: 1, label: "IPA 2021/2022" }];

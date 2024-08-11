@@ -12,11 +12,17 @@ import { Suspense } from "react";
 export const CustomTable = ({ columns, minWidth, body }) => {
   return (
     <TableContainer>
-      <Table stickyHeader sx={{ minWidth: minWidth ?? 640 }}>
+      <Table
+        stickyHeader
+        sx={{ minWidth: minWidth ?? 640 }}
+      >
         <TableHead>
           <TableRow>
             {columns.map((column) => (
-              <TableCell key={`${column}-head`} className="font-semibold">
+              <TableCell
+                key={`${column}-head`}
+                className="font-semibold"
+              >
                 {column}
               </TableCell>
             ))}

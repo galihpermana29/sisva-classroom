@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 
 export const KELAS_FIELD_NAME = "kelas";
 
-export const KelasSelect = ({ disabled }) => {
+export const KelasSelect = ({ data, disabled }) => {
   const searchParams = useSearchParams();
   const value = searchParams.get(KELAS_FIELD_NAME) ?? "";
 
@@ -21,14 +21,22 @@ export const KelasSelect = ({ disabled }) => {
       value={value}
       onChange={(event) => handleChange(event.target.value)}
     >
-      <MenuItem disabled value="">
+      <MenuItem
+        disabled
+        value=""
+      >
         Kelas
       </MenuItem>
-      {data.map(({ value, label }) => (
-        <MenuItem key={`${value}${label}`} value={value}>
-          {label}
-        </MenuItem>
-      ))}
+      {data
+        ? data.map(({ value, label }) => (
+            <MenuItem
+              key={`${value}${label}`}
+              value={value}
+            >
+              {label}
+            </MenuItem>
+          ))
+        : null}
     </Select>
   );
 };

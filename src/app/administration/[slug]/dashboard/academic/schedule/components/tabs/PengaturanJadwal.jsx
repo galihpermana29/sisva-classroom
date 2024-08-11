@@ -2,8 +2,8 @@ import { Divider, Stack, Typography } from "@mui/material";
 import { Suspense } from "react";
 import { PengaturanJadwalFilters } from "../filters/pengaturan-jadwal";
 import { AddJamSekolahModal } from "../modals/AddJamSekolahModal";
-import { PengaturanJadwalTable } from "../tables/pengaturan-jadwal";
 import { PengaturanJadwalFilterAlert } from "../PengaturanJadwalFilterAlert";
+import { TablePengaturanJadwal } from "../tables/table-pengaturan-jadwal";
 
 export const PengaturanJadwal = () => {
   return (
@@ -42,7 +42,7 @@ export const PengaturanJadwal = () => {
       </Stack>
       <Stack>
         <Divider variant="fullWidth" />
-        <PengaturanJadwalTable />
+        <TablePengaturanJadwal />
       </Stack>
     </Stack>
   );
