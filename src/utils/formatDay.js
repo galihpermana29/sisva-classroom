@@ -1,13 +1,16 @@
-const dayMap = ["Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu"];
+const dayMap = [
+  "Senin",
+  "Selasa",
+  "Rabu",
+  "Kamis",
+  "Jum'at",
+  "Sabtu",
+  "Minggu",
+];
 
-// USAGE:
-// Converting from value to label
-// formatDay(0, true) => "Senin";
-//
-// Converting from label to value
-// formatDay("Senin") => 0;
+// formatDayToIndex("Senin") => 1
+export const formatDayToIndex = (day) =>
+  dayMap.findIndex((value) => value === day - 1);
 
-export const formatDay = (day, toLabel) => {
-  if (toLabel) return dayMap[day];
-  return dayMap.findIndex((value) => value === day);
-};
+// formatDayToLabel(0) => "Senin"
+export const formatDayToLabel = (day) => dayMap[day - 1];

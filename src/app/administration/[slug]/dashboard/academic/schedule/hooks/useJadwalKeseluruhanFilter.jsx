@@ -115,6 +115,28 @@ function useJadwalKeseluruhanFilter() {
     }
   }, [periode]);
 
+  //* reset all filters after study program on study program change
+  useEffect(() => {
+    if (tingkat) {
+      router.push(
+        `${pathName}?tab=${tab}&jadwal_keseluruhan=${jadwalKeseluruhan}&periode=${periode}${
+          prodi ? `&prodi=${prodi}` : ""
+        }`
+      );
+    }
+  }, [prodi]);
+
+  //* reset all filters after grade on grade change
+  useEffect(() => {
+    if (kelas) {
+      router.push(
+        `${pathName}?tab=${tab}&jadwal_keseluruhan=${jadwalKeseluruhan}&periode=${periode}&prodi=${prodi}${
+          tingkat ? `&tingkat=${tingkat}` : ""
+        }`
+      );
+    }
+  }, [tingkat]);
+
   return {
     handleReset,
     periodeSelectData,
