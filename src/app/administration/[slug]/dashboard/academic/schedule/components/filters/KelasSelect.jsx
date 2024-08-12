@@ -8,7 +8,9 @@ export const KELAS_FIELD_NAME = "kelas";
 
 export const KelasSelect = ({ data, disabled }) => {
   const searchParams = useSearchParams();
-  const value = searchParams.get(KELAS_FIELD_NAME) ?? "";
+  const value = Boolean(searchParams.get(KELAS_FIELD_NAME) && data)
+    ? searchParams.get(KELAS_FIELD_NAME)
+    : "";
 
   const { updateQueryParam } = useQueryParam();
   const handleChange = (value) => updateQueryParam(KELAS_FIELD_NAME, value);

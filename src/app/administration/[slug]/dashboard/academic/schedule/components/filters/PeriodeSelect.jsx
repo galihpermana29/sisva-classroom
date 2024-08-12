@@ -8,7 +8,9 @@ export const PERIODE_FIELD_NAME = "periode";
 
 export const PeriodeSelect = ({ data, disabled }) => {
   const searchParams = useSearchParams();
-  const value = searchParams.get(PERIODE_FIELD_NAME) ?? "";
+  const value = Boolean(searchParams.get(PERIODE_FIELD_NAME) && data)
+    ? parseInt(searchParams.get(PERIODE_FIELD_NAME))
+    : "";
 
   const { updateQueryParam } = useQueryParam();
   const handleChange = (value) => updateQueryParam(PERIODE_FIELD_NAME, value);

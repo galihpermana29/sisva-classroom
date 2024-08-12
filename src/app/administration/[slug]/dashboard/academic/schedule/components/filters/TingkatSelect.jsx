@@ -8,7 +8,9 @@ export const TINGKAT_FIELD_NAME = "tingkat";
 
 export const TingkatSelect = ({ data, disabled }) => {
   const searchParams = useSearchParams();
-  const value = searchParams.get(TINGKAT_FIELD_NAME) ?? "";
+  const value = Boolean(searchParams.get(TINGKAT_FIELD_NAME) && data)
+    ? searchParams.get(TINGKAT_FIELD_NAME)
+    : "";
 
   const { updateQueryParam } = useQueryParam();
   const handleChange = (value) => updateQueryParam(TINGKAT_FIELD_NAME, value);

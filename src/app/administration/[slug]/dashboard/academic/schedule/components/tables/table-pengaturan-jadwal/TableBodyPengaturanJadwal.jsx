@@ -3,33 +3,33 @@
 import { TableBodyLoading, TableEmptyState } from "@/components/CustomTable";
 import { formatDayToLabel } from "@/utils/formatDay";
 import { Stack, TableCell, TableRow } from "@mui/material";
-import dayjs from "dayjs";
-import customParseFormat from "dayjs/plugin/customParseFormat";
-import Image from "next/image";
-import { useGetClassSchedule } from "../../../hooks/useGetClassSchedule";
 import { EditJamSekolahModal } from "../../modals/EditJamSekolahModal";
 import { DeleteJamSekolahModal } from "../../modals/DeleteJamSekolahModal";
-
-dayjs.extend(customParseFormat);
+import { useGetSchoolSchedule } from "../../../hooks/useGetSchoolSchedule";
+import { timeStringToDayjs } from "@/utils/formatTimeString";
+import { useMounted } from "@mantine/hooks";
+import { toTitleCase } from "@/utils/toTitleCase";
 
 export const TableBodyPengaturanJadwal = ({ columnCount }) => {
-  const { data: rows, isLoading } = useGetClassSchedule();
+  const mounted = useMounted();
+  const { data: rows, isLoading } = useGetSchoolSchedule();
 
-  if (isLoading) return <TableBodyLoading columnCount={columnCount} />;
+  if (isLoading || !mounted)
+    return <TableBodyLoading columnCount={columnCount} />;
   if (!rows) return <NoFilterState columnCount={columnCount} />;
 
   return rows && rows.length > 0 ? (
     rows.map((row) => (
       <TableRow
-        className="even:bg-gray-100/60"
         hover
         key={row.id}
       >
         <TableCell>{formatDayToLabel(row.day)}</TableCell>
         <TableCell>
-          {dayjs(row.start_time, "H:mm a Z").format("HH:mm")}
+          {timeStringToDayjs(row.start_time).format("HH:mm")}
         </TableCell>
-        <TableCell>{dayjs(row.end_time, "H:mm a Z").format("HH:mm")}</TableCell>
+        <TableCell>{timeStringToDayjs(row.end_time).format("HH:mm")}</TableCell>
+        <TableCell>{toTitleCase(statusMap[row.status])}</TableCell>
         <TableCell>
           <Stack
             flexDirection="row"
@@ -37,7 +37,7 @@ export const TableBodyPengaturanJadwal = ({ columnCount }) => {
             gap={1}
           >
             <EditJamSekolahModal data={row} />
-            <DeleteJamSekolahModal />
+            <DeleteJamSekolahModal data={row} />
           </Stack>
         </TableCell>
       </TableRow>
@@ -56,14 +56,19 @@ const NoFilterState = ({ columnCount }) => {
           alignItems="center"
           justifyContent="center"
         >
-          <Image
-            src="/images/empty-state.gif"
-            alt="Empty Schedule"
-            width={200}
-            height={137}
-          />
+          <iframe
+            className="border-0"
+            src="https://lottie.host/embed/e4758337-7146-4fed-b259-dc56de7d4128/Cor7u7MJ2a.json"
+          ></iframe>
         </Stack>
       </TableCell>
     </TableRow>
   );
+};
+
+const statusMap = {
+  active: "Aktif",
+  inactive: "Tidak aktif",
+  finished: "Selesai",
+  trial: "Trial",
 };

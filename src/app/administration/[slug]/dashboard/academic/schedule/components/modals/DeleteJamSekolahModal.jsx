@@ -1,22 +1,46 @@
 "use client";
 
-import { Button, IconButton, Modal, Stack, Typography } from "@mui/material";
+import {
+  Button,
+  IconButton,
+  Modal,
+  Stack,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
 import { ModalBody } from "@/components/CustomModal";
 import { Delete } from "@mui/icons-material";
-import Image from "next/image";
+import { useDeleteSchoolSchedule } from "../../hooks/useDeleteSchoolSchedule";
 
-export const DeleteJamSekolahModal = () => {
+export const DeleteJamSekolahModal = ({ data }) => {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const ableToDelete = data.status === "inactive";
+
   return (
     <>
-      <IconButton onClick={handleOpen} aria-label="delete" size="small">
-        <Delete />
-      </IconButton>
+      <Tooltip
+        title={
+          ableToDelete
+            ? "Hapus jadwal"
+            : "Hanya dapat menghapus jadwal yang tidak aktif"
+        }
+      >
+        <span>
+          <IconButton
+            disabled={!ableToDelete}
+            onClick={handleOpen}
+            aria-label="delete"
+            size="small"
+          >
+            <Delete />
+          </IconButton>
+        </span>
+      </Tooltip>
       <Modal
         open={open}
         onClose={handleClose}
@@ -26,35 +50,53 @@ export const DeleteJamSekolahModal = () => {
         <ModalBody
           maxWidth={400}
           handleClose={handleClose}
-          content={<ModalContent handleClose={handleClose} />}
+          content={
+            <ModalContent
+              id={data.id}
+              handleClose={handleClose}
+            />
+          }
         />
       </Modal>
     </>
   );
 };
 
-const ModalContent = ({ handleClose }) => {
+const ModalContent = ({ id, handleClose }) => {
+  const { mutate } = useDeleteSchoolSchedule({ handleClose, id });
+  const handleSubmit = () => mutate();
+
   return (
-    <Stack textAlign="center" justifyContent="center" alignItems="center">
-      <Image
-        className="subpixel-antialiased"
-        alt="Trash icon"
-        src="/images/delete-confirmation.gif"
-        width={178}
-        height={178}
-        quality={100}
-      />
+    <Stack
+      textAlign="center"
+      justifyContent="center"
+      alignItems="center"
+    >
+      <iframe
+        className="border-0"
+        src="https://lottie.host/embed/6d4a2abf-582d-43ab-bf7b-bcef061d5319/2JJjyKCiUO.json"
+      ></iframe>
       <Stack gap={3}>
         <Stack gap={1}>
-          <Typography variant="h5" fontWeight={500}>
+          <Typography
+            variant="h5"
+            fontWeight={500}
+          >
             Hapus Jadwal
           </Typography>
-          <Typography variant="body1" className="text-pretty text-gray-400">
+          <Typography
+            variant="body1"
+            className="text-pretty text-gray-400"
+          >
             Anda akan menghapus jadwal ini dari tabel jam sekolah. Apakah anda
             yakin?
           </Typography>
         </Stack>
-        <Stack width="100%" flexDirection="row" gap={2}>
+        <Stack
+          width="100%"
+          flexDirection="row"
+          gap={2}
+        >
           <Button
             type="button"
             fullWidth
@@ -63,8 +105,13 @@ const ModalContent = ({ handleClose }) => {
           >
             Batal
           </Button>
-          <Button type="submit" fullWidth variant="contained" color="error">
-            Simpan
+          <Button
+            onClick={handleSubmit}
+            fullWidth
+            variant="contained"
+            color="error"
+          >
+            Hapus
           </Button>
         </Stack>
       </Stack>

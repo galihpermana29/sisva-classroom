@@ -8,7 +8,9 @@ export const PRODI_FIELD_NAME = "prodi";
 
 export const ProdiSelect = ({ data, disabled }) => {
   const searchParams = useSearchParams();
-  const value = searchParams.get(PRODI_FIELD_NAME) ?? "";
+  const value = Boolean(searchParams.get(PRODI_FIELD_NAME) && data)
+    ? parseInt(searchParams.get(PRODI_FIELD_NAME))
+    : "";
 
   const { updateQueryParam } = useQueryParam();
   const handleChange = (value) => updateQueryParam(PRODI_FIELD_NAME, value);

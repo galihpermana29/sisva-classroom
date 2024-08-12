@@ -1,8 +1,6 @@
-"use client";
-
 import { Alert, MenuItem, Select, Stack, Typography } from "@mui/material";
 
-export const DaySelect = ({
+export const StatusSelect = ({
   formik,
   name,
   label,
@@ -11,7 +9,10 @@ export const DaySelect = ({
   withError = true,
 }) => {
   return (
-    <Stack spacing={1}>
+    <Stack
+      width="100%"
+      spacing={1}
+    >
       <Typography
         fontWeight={600}
         variant="body2"
@@ -22,7 +23,7 @@ export const DaySelect = ({
         disabled={disabled}
         id={name}
         name={name}
-        value={formik.values ? formik.values[name] : ""}
+        value={formik.values && formik.values[name] ? formik.values[name] : ""}
         onChange={(event) => formik.setFieldValue(name, event.target.value)}
         onBlur={formik.handleBlur}
         error={formik.touched[name] && Boolean(formik.errors[name])}
@@ -34,7 +35,7 @@ export const DaySelect = ({
         >
           {placeholder}
         </MenuItem>
-        {days.map(({ label, value }) => (
+        {statuses.map(({ label, value }) => (
           <MenuItem
             key={`${label}${value}`}
             value={value}
@@ -50,12 +51,8 @@ export const DaySelect = ({
   );
 };
 
-const days = [
-  { label: "Senin", value: 1 },
-  { label: "Selasa", value: 2 },
-  { label: "Rabu", value: 3 },
-  { label: "Kamis", value: 4 },
-  { label: "Jum'at", value: 5 },
-  { label: "Sabtu", value: 6 },
-  { label: "Minggu", value: 7 },
+const statuses = [
+  { label: "Tidak aktif", value: "inactive" },
+  { label: "Aktif", value: "active" },
+  { label: "Selesai", value: "finished" },
 ];

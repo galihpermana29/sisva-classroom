@@ -8,7 +8,9 @@ export const GURU_FIELD_NAME = "guru";
 
 export const GuruSelect = ({ data, disabled }) => {
   const searchParams = useSearchParams();
-  const value = searchParams.get(GURU_FIELD_NAME) ?? "";
+  const value = Boolean(searchParams.get(GURU_FIELD_NAME) && data)
+    ? searchParams.get(GURU_FIELD_NAME)
+    : "";
 
   const { updateQueryParam } = useQueryParam();
   const handleChange = (value) => updateQueryParam(GURU_FIELD_NAME, value);

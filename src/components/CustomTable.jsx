@@ -21,7 +21,7 @@ export const CustomTable = ({ columns, minWidth, body }) => {
             {columns.map((column) => (
               <TableCell
                 key={`${column}-head`}
-                className="font-semibold"
+                sx={{ fontWeight: 600 }}
               >
                 {column}
               </TableCell>
@@ -45,7 +45,7 @@ export const TableBodyLoading = ({ columnCount, rowCount = 10 }) => {
     <TableRow key={`${index}row`}>
       {Array.from({ length: columnCount }, (_, index) => (
         <TableCell key={`${index}cell`}>
-          <Skeleton className="h-5 w-full" />
+          <Skeleton sx={{ height: "1.25rem", width: "100%" }} />
         </TableCell>
       ))}
     </TableRow>
@@ -57,7 +57,7 @@ export const TableRowLoading = ({ columnCount }) => {
     <TableRow>
       {Array.from({ length: columnCount }, (_, index) => (
         <TableCell key={`${index}cell`}>
-          <Skeleton className="h-5 w-full" />
+          <Skeleton sx={{ height: "1.25rem", width: "100%" }} />
         </TableCell>
       ))}
     </TableRow>

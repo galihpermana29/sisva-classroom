@@ -1,23 +1,20 @@
 "use client";
 
 import { Alert, AlertTitle, Box } from "@mui/material";
-import { useSearchParams } from "next/navigation";
-import { PERIODE_FIELD_NAME } from "./filters/PeriodeSelect";
-import { PRODI_FIELD_NAME } from "./filters/ProdiSelect";
-import { TINGKAT_FIELD_NAME } from "./filters/TingkatSelect";
+import { useFilterStatus } from "../hooks/useFilterStatus";
 
 export const PengaturanJadwalFilterAlert = () => {
-  const searchParams = useSearchParams();
-  const periode = searchParams.get(PERIODE_FIELD_NAME);
-  const prodi = searchParams.get(PRODI_FIELD_NAME);
-  const tingkat = searchParams.get(TINGKAT_FIELD_NAME);
+  const { prodi, periode, tingkat } = useFilterStatus();
 
   const shouldRender = !prodi || !periode || !tingkat;
   if (!shouldRender) return null;
 
   return (
     <Box paddingX={3}>
-      <Alert sx={{ borderRadius: "0.5rem" }} severity="warning">
+      <Alert
+        sx={{ borderRadius: "0.5rem" }}
+        severity="warning"
+      >
         <AlertTitle>Peringatan: Filter Belum Lengkap!</AlertTitle>
         Untuk menampilkan data pada tabel, Anda perlu memilih ketiga filter yang
         tersedia: <b>periode</b>, <b>program studi</b>, dan <b>tingkatan</b>.
