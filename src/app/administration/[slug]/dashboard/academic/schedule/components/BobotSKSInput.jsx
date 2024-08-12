@@ -13,7 +13,9 @@ export const BobotSKSInput = () => {
 
   const handleChange = useDebouncedCallback((event) => {
     const value = event?.target.value;
-    if (!value) return;
+    if (!value || value === data || value < 0 || isNaN(parseInt(value))) {
+      return;
+    }
 
     const payload = { duration_minutes: parseInt(value) };
     mutate(payload);
@@ -27,6 +29,7 @@ export const BobotSKSInput = () => {
   return (
     <>
       <TextField
+        type="number"
         disabled={isLoadingSKS}
         defaultValue={data ? data.duration_minutes : undefined}
         onChange={handleChange}
