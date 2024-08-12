@@ -14,11 +14,9 @@ export const JadwalKeseluruhanFilterAlert = () => {
     searchParams.get(JADWAL_KESELURUHAN_FIELD_NAME) ?? "true";
 
   if (jadwalKeseluruhan === "true") {
-    const shouldRender = !prodi || !periode;
-    if (!shouldRender) return null;
+    if (prodi && periode) return null;
   } else {
-    const shouldRender = !prodi;
-    if (!shouldRender) return null;
+    if (periode) return null;
   }
 
   return (

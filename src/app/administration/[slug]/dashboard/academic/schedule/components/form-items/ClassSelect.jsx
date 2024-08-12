@@ -2,7 +2,14 @@
 
 import { MenuItem, Select, Stack, Typography } from "@mui/material";
 
-export const ClassSelect = ({ formik, name, label, placeholder, disabled }) => {
+export const ClassSelect = ({
+  formik,
+  name,
+  label,
+  placeholder,
+  disabled,
+  data,
+}) => {
   return (
     <Stack spacing={1}>
       <Typography fontWeight={600} variant="body2">
@@ -31,5 +38,3 @@ export const ClassSelect = ({ formik, name, label, placeholder, disabled }) => {
     </Stack>
   );
 };
-
-const data = [{ value: 1, label: "XI IPA 1" }];

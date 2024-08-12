@@ -2,7 +2,14 @@
 
 import { MenuItem, Select, Stack, Typography } from "@mui/material";
 
-export const LevelSelect = ({ formik, name, label, placeholder, disabled }) => {
+export const LevelSelect = ({
+  formik,
+  name,
+  label,
+  placeholder,
+  disabled,
+  data,
+}) => {
   return (
     <Stack spacing={1}>
       <Typography fontWeight={600} variant="body2">
@@ -22,7 +29,7 @@ export const LevelSelect = ({ formik, name, label, placeholder, disabled }) => {
         <MenuItem disabled value={""}>
           {placeholder}
         </MenuItem>
-        {data.map(({ label, value }) => (
+        {data?.map(({ label, value }) => (
           <MenuItem key={`${label}${value}`} value={value}>
             {label}
           </MenuItem>
@@ -31,5 +38,3 @@ export const LevelSelect = ({ formik, name, label, placeholder, disabled }) => {
     </Stack>
   );
 };
-
-const data = [{ value: "XI", label: "XI" }];

@@ -16,8 +16,8 @@ import { formatTime } from "@/utils/formatTime";
 export const AktivitasNonKbmForm = ({ handleClose, initialValues, edit }) => {
   const formik = useFormik({
     initialValues: initialValues ?? {
-      name: null,
-      school_schedule_id: null,
+      name: "",
+      school_schedule_id: "",
       start_time: null,
       end_time: null,
     },
@@ -66,7 +66,7 @@ export const AktivitasNonKbmForm = ({ handleClose, initialValues, edit }) => {
   };
 
   useEffect(() => {
-    getDayData();
+    if (periode) getDayData();
   }, [periode]);
 
   return (

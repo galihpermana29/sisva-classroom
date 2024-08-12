@@ -6,7 +6,7 @@ export const JADWAL_KESELURUHAN_FIELD_NAME = "jadwal_keseluruhan";
 
 export const JadwalKeseluruhanSwitch = () => {
   const searchParams = useSearchParams();
-  const value = searchParams.get(JADWAL_KESELURUHAN_FIELD_NAME) ?? true;
+  const value = searchParams.get(JADWAL_KESELURUHAN_FIELD_NAME) ?? "true";
 
   const { updateQueryParam } = useQueryParam();
   const handleChange = (event) =>

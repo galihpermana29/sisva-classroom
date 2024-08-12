@@ -8,6 +8,7 @@ export const StudyProgramSelect = ({
   label,
   placeholder,
   disabled,
+  data,
 }) => {
   return (
     <Stack spacing={1}>
@@ -37,5 +38,3 @@ export const StudyProgramSelect = ({
     </Stack>
   );
 };
-
-const data = [{ value: 1, label: "IPA" }];

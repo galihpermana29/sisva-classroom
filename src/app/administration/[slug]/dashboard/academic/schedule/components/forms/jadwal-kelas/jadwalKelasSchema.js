@@ -1,11 +1,11 @@
 import * as yup from "yup";
 
 export const jadwalKelasSchema = yup.object({
-  periode: yup.string().required(),
-  prodi: yup.string().required(),
-  tingkatan: yup.string().required(),
-  kelas: yup.string().required(),
-  hari: yup.number().required(),
-  jam_mulai: yup.string().required(),
-  jam_selesai: yup.string().required(),
+  period_id: yup.string().required(),
+  study_program_id: yup.string().required(),
+  grade: yup.string().required(),
+  class_id: yup.string().required(),
+  day: yup.number().required(),
+  start_time: yup.string().required(),
+  end_time: yup.string().required(),
 });

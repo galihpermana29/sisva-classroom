@@ -8,8 +8,7 @@ import { KELAS_FIELD_NAME } from "../components/filters/KelasSelect";
 import { PERIODE_FIELD_NAME } from "../components/filters/PeriodeSelect";
 import { PRODI_FIELD_NAME } from "../components/filters/ProdiSelect";
 import { TINGKAT_FIELD_NAME } from "../components/filters/TingkatSelect";
-
-const days = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"];
+import { formatDayToLabel } from "@/utils/formatDay";
 
 function useJadwalKeseluruhanFilter() {
   const searchParams = useSearchParams();
@@ -55,8 +54,8 @@ function useJadwalKeseluruhanFilter() {
       ({ study_program_id, grade }) =>
         study_program_id === parseInt(prodi) && grade === tingkat
     )
-    .map(({ id, class_name }) => ({
-      label: class_name,
+    .map(({ id, name }) => ({
+      label: name,
       value: id,
     }));
 
@@ -69,7 +68,7 @@ function useJadwalKeseluruhanFilter() {
         class_id === parseInt(kelas)
     )
     .map(({ day }) => ({
-      label: days[day - 1],
+      label: formatDayToLabel(day),
       value: day,
     }));
 
@@ -79,7 +78,7 @@ function useJadwalKeseluruhanFilter() {
   };
 
   const getAllClasses = async () => {
-    const { data } = await AcademicAPI.getAllClassSchedules();
+    const { data } = await AcademicAPI.getAllStudentGroup();
     setKelasData(data.data);
   };
 
@@ -96,8 +95,11 @@ function useJadwalKeseluruhanFilter() {
   //* handle initial period data fetching
   useEffect(() => {
     getAllPeriode();
-    getAllClasses();
   }, []);
+
+  useEffect(() => {
+    if (periode) getAllClasses();
+  }, [periode]);
 
   //* fetch grades data after selecting a study program
   useEffect(() => {

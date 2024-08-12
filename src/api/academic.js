@@ -397,6 +397,18 @@ const AcademicAPI = {
     });
   },
 
+  getAllNonLearningSchedules(params) {
+    const headers = {
+      "X-Sisva-Source": "academic.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.get(`/non-learning-schedules?${new URLSearchParams(params)}`, {
+      headers,
+    });
+  },
+
   createNonLearningSchedule(payload) {
     const headers = {
       "X-Sisva-Source": "academic.periods.test",
@@ -405,6 +417,16 @@ const AcademicAPI = {
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.post(`/non-learning-schedules`, payload, { headers });
+  },
+
+  createClassSchedule(payload) {
+    const headers = {
+      "X-Sisva-Source": "academic.periods.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.post(`/class-schedules`, payload, { headers });
   },
 };
 

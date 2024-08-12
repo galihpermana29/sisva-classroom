@@ -59,6 +59,9 @@ function TimelineWeekSchedule({ data }) {
       cellClick={(args) => {
         args.cancel = true;
       }}
+      cellDoubleClick={(args) => {
+        args.cancel = true;
+      }}
     >
       <ViewsDirective>
         <ViewDirective option="TimelineWeek" />

@@ -1,18 +1,18 @@
 import TimelineWeekSchedule from "./TimelineWeekSchedule";
 
-export const JadwalKeseluruhanSchedule = () => {
+export const JadwalKeseluruhanSchedule = ({ data }) => {
   return <TimelineWeekSchedule data={data} />;
 };
 
 const data = [
-  // {
-  //   Id: 1,
-  //   Subject: "Matematika",
-  //   StartTime: new Date(2024, 7, 19, 8, 0),
-  //   EndTime: new Date(2024, 7, 19, 9, 0),
-  //   ProdiId: 1,
-  //   KelasId: 1,
-  // },
+  {
+    Id: 1,
+    Subject: "Matematika",
+    StartTime: new Date(2024, 7, 19, 8, 0),
+    EndTime: new Date(2024, 7, 19, 9, 0),
+    ProdiId: 1,
+    KelasId: 1,
+  },
   // {
   //   Id: 2,
   //   Subject: "Bahasa Indonesia",

@@ -2,7 +2,7 @@
 
 import { MenuItem, Select, Stack, Typography } from "@mui/material";
 
-export const PeriodSelect = ({ formik, name, label, placeholder }) => {
+export const PeriodSelect = ({ formik, name, label, placeholder, data }) => {
   return (
     <Stack spacing={1}>
       <Typography fontWeight={600} variant="body2">
@@ -30,5 +30,3 @@ export const PeriodSelect = ({ formik, name, label, placeholder }) => {
     </Stack>
   );
 };
-
-const data = [{ value: 1, label: "IPA 2021/2022" }];

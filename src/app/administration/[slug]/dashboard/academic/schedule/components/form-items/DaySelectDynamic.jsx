@@ -8,6 +8,7 @@ export const DaySelectDynamic = ({
   label,
   placeholder,
   data,
+  disabled = false,
 }) => {
   return (
     <Stack spacing={1}>
@@ -15,6 +16,7 @@ export const DaySelectDynamic = ({
         {label}
       </Typography>
       <Select
+        disabled={disabled}
         id={name}
         name={name}
         size="small"
