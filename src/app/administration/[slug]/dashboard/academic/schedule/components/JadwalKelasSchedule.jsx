@@ -1,20 +1,25 @@
+"use client";
+
+import { Stack } from "@mui/material";
+import { useFilterStatus } from "../hooks/filters/useFilterStatus";
+import { useGetAvailableClassSchedules } from "../hooks/useGetAvailableClassSchedules";
+import { FilterIncompleteState } from "./FilterIncompleteState";
 import WeekGeneralSchedule from "./WeekGeneralSchedule";
 
 export const JadwalKelasSchedule = () => {
-  return <WeekGeneralSchedule data={data} />;
-};
+  const { periode, prodi, tingkat, kelas } = useFilterStatus();
+  const data = useGetAvailableClassSchedules();
 
-const data = [
-  {
-    Id: 1,
-    Subject: "Story Time for Kids",
-    StartTime: "2021-02-14T04:30:00.000Z",
-    EndTime: "2021-02-14T06:00:00.000Z",
-  },
-  {
-    Id: 2,
-    Subject: "Camping with Turtles",
-    StartTime: "2021-02-15T06:30:00.000Z",
-    EndTime: "2021-02-15T08:30:00.000Z",
-  },
-];
+  const shouldRender = Boolean(periode && prodi && tingkat && kelas);
+
+  return (
+    <Stack
+      alignItems="center"
+      justifyContent="center"
+      minWidth={shouldRender && 1280}
+    >
+      {!shouldRender && <FilterIncompleteState />}
+      {shouldRender && <WeekGeneralSchedule data={data} />}
+    </Stack>
+  );
+};

@@ -30,17 +30,15 @@ export const GuruSelect = ({ data, disabled }) => {
         Guru
       </MenuItem>
       {data
-        ? data.map(({ value, label }) => (
+        ? data.map(({ teacher_id, teacher_name }) => (
             <MenuItem
-              key={`${value}${label}`}
-              value={value}
+              key={`${teacher_id}${teacher_name}`}
+              value={teacher_id}
             >
-              {label}
+              {teacher_name}
             </MenuItem>
           ))
         : null}
     </Select>
   );
 };
-
-const data = [{ value: 1, label: "Bimo Arsa S.Pd" }];

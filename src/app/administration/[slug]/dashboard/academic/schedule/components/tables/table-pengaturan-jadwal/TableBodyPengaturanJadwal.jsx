@@ -9,6 +9,7 @@ import { useGetSchoolSchedule } from "../../../hooks/useGetSchoolSchedule";
 import { timeStringToDayjs } from "@/utils/formatTimeString";
 import { useMounted } from "@mantine/hooks";
 import { toTitleCase } from "@/utils/toTitleCase";
+import { FilterIncompleteState } from "../../FilterIncompleteState";
 
 export const TableBodyPengaturanJadwal = ({ columnCount }) => {
   const mounted = useMounted();
@@ -51,16 +52,7 @@ const NoFilterState = ({ columnCount }) => {
   return (
     <TableRow>
       <TableCell colSpan={columnCount}>
-        <Stack
-          paddingY={5}
-          alignItems="center"
-          justifyContent="center"
-        >
-          <iframe
-            className="border-0"
-            src="https://lottie.host/embed/e4758337-7146-4fed-b259-dc56de7d4128/Cor7u7MJ2a.json"
-          ></iframe>
-        </Stack>
+        <FilterIncompleteState />
       </TableCell>
     </TableRow>
   );

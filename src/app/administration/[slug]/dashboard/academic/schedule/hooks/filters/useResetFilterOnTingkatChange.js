@@ -2,12 +2,9 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
-import { PRODI_FIELD_NAME } from "../../components/filters/ProdiSelect";
-import { TINGKAT_FIELD_NAME } from "../../components/filters/TingkatSelect";
 import { KELAS_FIELD_NAME } from "../../components/filters/KelasSelect";
-import { GURU_FIELD_NAME } from "../../components/filters/GuruSelect";
 
-export const useResetFilterOnPeriodeChange = (periode) => {
+export const useResetFilterOnTingkatChange = (tingkat) => {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -15,11 +12,9 @@ export const useResetFilterOnPeriodeChange = (periode) => {
   const params = new URLSearchParams(searchParams.toString());
 
   useEffect(() => {
-    params.delete(PRODI_FIELD_NAME);
-    params.delete(TINGKAT_FIELD_NAME);
-    params.delete(KELAS_FIELD_NAME);
-    params.delete(GURU_FIELD_NAME);
+    if (!tingkat) return; // prevent this effect from running if tingkat is removed because of changes in other previous filter
 
+    params.delete(KELAS_FIELD_NAME);
     return router.replace(pathname + "?" + params.toString());
-  }, [periode]);
+  }, [tingkat]);
 };

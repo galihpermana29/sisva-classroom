@@ -3,18 +3,23 @@
 import {
   Inject,
   ScheduleComponent,
-  WorkWeek,
+  Week,
 } from "@syncfusion/ej2-react-schedule";
 import { Internationalization } from "@syncfusion/ej2-base";
 import { Typography } from "@mui/material";
+import dayjs from "dayjs";
 
 const WeekGeneralSchedule = ({ data }) => {
   const instance = new Internationalization();
   const getDateHeaderText = (props) => {
     return (
-      <Typography className="text-center" variant="body2" fontWeight={600}>
+      <Typography
+        className="text-center"
+        variant="body2"
+        fontWeight={600}
+      >
         {formatDateHeaderToBahasa(
-          instance.formatDate(props.date, { format: "EEEE" }),
+          instance.formatDate(props.date, { format: "EEEE" })
         )}
       </Typography>
     );
@@ -30,10 +35,11 @@ const WeekGeneralSchedule = ({ data }) => {
       startHour="07:00"
       endHour="17:00"
       width="100%"
-      height="490px"
-      selectedDate={new Date(2021, 1, 15)}
+      height="100%"
+      firstDayOfWeek={1}
+      selectedDate={dayjs().toDate()}
       eventSettings={{ dataSource: data }}
-      currentView="WorkWeek"
+      currentView="Week"
       showHeaderBar={false}
       showTimeIndicator={false}
       showQuickInfo={false}
@@ -41,7 +47,7 @@ const WeekGeneralSchedule = ({ data }) => {
       eventDoubleClick={handleClickDoNothing}
       cellDoubleClick={handleClickDoNothing}
     >
-      <Inject services={[WorkWeek]} />
+      <Inject services={[Week]} />
     </ScheduleComponent>
   );
 };
@@ -55,6 +61,7 @@ const dayMap = {
   Thursday: "Kamis",
   Friday: "Jum'at",
   Saturday: "Sabtu",
+  Sunday: "Minggu",
 };
 
 const formatDateHeaderToBahasa = (day) => {

@@ -9,7 +9,7 @@ export const KELAS_FIELD_NAME = "kelas";
 export const KelasSelect = ({ data, disabled }) => {
   const searchParams = useSearchParams();
   const value = Boolean(searchParams.get(KELAS_FIELD_NAME) && data)
-    ? searchParams.get(KELAS_FIELD_NAME)
+    ? parseInt(searchParams.get(KELAS_FIELD_NAME))
     : "";
 
   const { updateQueryParam } = useQueryParam();
@@ -30,17 +30,15 @@ export const KelasSelect = ({ data, disabled }) => {
         Kelas
       </MenuItem>
       {data
-        ? data.map(({ value, label }) => (
+        ? data.map(({ class_id, class_name }) => (
             <MenuItem
-              key={`${value}${label}`}
-              value={value}
+              key={`${class_id}${class_name}`}
+              value={class_id}
             >
-              {label}
+              {class_name}
             </MenuItem>
           ))
         : null}
     </Select>
   );
 };
-
-const data = [{ value: 1, label: "XI IPA 1" }];
