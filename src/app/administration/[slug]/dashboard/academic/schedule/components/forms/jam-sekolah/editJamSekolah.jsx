@@ -7,9 +7,9 @@ import { DaySelect } from "../../DaySelect";
 import { TimeSelect } from "../../TimeSelect";
 import { useEditSchoolSchedule } from "../../../hooks/useEditSchoolSchedule";
 import { getEditJamSekolahSchema } from "./editJamSekolahSchema";
-import { useFilterStatus } from "../../../hooks/useFilterStatus";
 import { StatusSelect } from "../../StatusSelect";
 import { useGetActiveSchoolSchedule } from "../../../hooks/useGetActiveSchoolSchedule";
+import { useFilterStatus } from "../../../hooks/filters/useFilterStatus";
 
 export const EditJamSekolahForm = ({ handleClose, initialValues, id }) => {
   const { data } = useGetActiveSchoolSchedule();
