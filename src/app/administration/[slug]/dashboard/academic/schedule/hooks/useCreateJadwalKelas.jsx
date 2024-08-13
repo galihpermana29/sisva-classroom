@@ -55,7 +55,7 @@ function useCreateJadwalKelas(formik) {
     )
     .map(({ id, day }) => ({
       label: formatDayToLabel(day),
-      value: id,
+      value: `${id}:${day}`,
     }));
 
   const getAllPeriode = async () => {

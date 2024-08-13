@@ -5,7 +5,7 @@ export const jadwalKelasSchema = yup.object({
   study_program_id: yup.string().required(),
   grade: yup.string().required(),
   class_id: yup.string().required(),
-  day: yup.number().required(),
+  day: yup.string().required(),
   start_time: yup.string().required(),
   end_time: yup.string().required(),
 });

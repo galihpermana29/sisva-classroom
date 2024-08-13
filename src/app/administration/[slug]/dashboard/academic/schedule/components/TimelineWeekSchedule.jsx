@@ -16,13 +16,6 @@ import {
   Week,
 } from "@syncfusion/ej2-react-schedule";
 
-const prodiData = [
-  { ProdiText: "IPA 1", Id: 1, GroupId: 1, ProdiColor: "#ffaa00" },
-  { ProdiText: "IPA 2", Id: 2, GroupId: 1, ProdiColor: "#f8a398" },
-  { ProdiText: "IPS 1", Id: 3, GroupId: 2, ProdiColor: "#f92a89" },
-  { ProdiText: "IPS 2", Id: 4, GroupId: 2, ProdiColor: "#a3f312" },
-  { ProdiText: "IPS 3", Id: 5, GroupId: 3, ProdiColor: "#ffffff" },
-];
 const kelasData = [
   { ClassText: "Kelas X", Id: 1, ClassColor: "#ffaa00" },
   { ClassText: "Kelas XI", Id: 2, ClassColor: "#f8a398" },
@@ -40,7 +33,8 @@ const getDateHeaderText = (props) => {
   );
 };
 
-function TimelineWeekSchedule({ data }) {
+function TimelineWeekSchedule({ data, classData }) {
+  console.log(classData);
   return (
     <ScheduleComponent
       timeFormat="HH:mm"
@@ -55,7 +49,7 @@ function TimelineWeekSchedule({ data }) {
       dateHeaderTemplate={getDateHeaderText}
       showHeaderBar={false}
       eventSettings={{ dataSource: data }}
-      group={{ byGroupID: false, resources: ["Kelas", "ProgramStudi"] }}
+      group={{ byGroupID: true, resources: ["Kelas", "StudentGroup"] }}
       cellClick={(args) => {
         args.cancel = true;
       }}
@@ -68,16 +62,16 @@ function TimelineWeekSchedule({ data }) {
       </ViewsDirective>
       <ResourcesDirective>
         <ResourceDirective
-          field="ProdiId"
-          title="Program Studi"
-          name="ProgramStudi"
-          groupIDField="GroupId"
+          field="student_group_id"
+          title="StudentGroup"
+          name="StudentGroup"
+          groupIDField="group_id"
           allowMultiple={true}
-          dataSource={prodiData}
-          textField="ProdiText"
-          idField="Id"
-          colorField="ProdiColor"
+          dataSource={classData}
+          textField="name"
+          idField="id"
         />
+
         <ResourceDirective
           field="KelasId"
           title="Kelas"

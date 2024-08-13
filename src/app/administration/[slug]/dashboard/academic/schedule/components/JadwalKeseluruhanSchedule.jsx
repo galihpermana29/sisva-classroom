@@ -1,18 +1,51 @@
+"use client";
+
+import AcademicAPI from "@/api/academic";
+import { useEffect, useState } from "react";
 import TimelineWeekSchedule from "./TimelineWeekSchedule";
 
 export const JadwalKeseluruhanSchedule = ({ data }) => {
-  return <TimelineWeekSchedule data={data} />;
+  const [studentGroup, setStudentGroup] = useState([]);
+
+  const getAllStudentGroup = async () => {
+    const { data } = await AcademicAPI.getAllStudentGroup();
+
+    setStudentGroup(
+      data.data.map((value) => {
+        let group_id;
+
+        if (value.grade === "X") {
+          group_id = 1;
+        } else if (value.grade === "XI") {
+          group_id = 2;
+        } else if (value.grade === "XII") {
+          group_id = 3;
+        }
+
+        return {
+          ...value,
+          group_id,
+        };
+      })
+    );
+  };
+
+  useEffect(() => {
+    getAllStudentGroup();
+  }, []);
+
+  return <TimelineWeekSchedule data={data} classData={studentGroup} />;
 };
 
 const data = [
-  {
-    Id: 1,
-    Subject: "Matematika",
-    StartTime: new Date(2024, 7, 19, 8, 0),
-    EndTime: new Date(2024, 7, 19, 9, 0),
-    ProdiId: 1,
-    KelasId: 1,
-  },
+  // {
+  //   Id: 1,
+  //   Subject: "Matematika",
+  //   StartTime: new Date(2024, 7, 19, 8, 0),
+  //   EndTime: new Date(2024, 7, 19, 9, 0),
+  //   student_group_id: 7,
+  //   KelasId: 1,
+  // },
   // {
   //   Id: 2,
   //   Subject: "Bahasa Indonesia",

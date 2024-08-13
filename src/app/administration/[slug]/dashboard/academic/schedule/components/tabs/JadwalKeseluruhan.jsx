@@ -35,7 +35,6 @@ function JadwalKeseluruhan() {
     });
 
     const res = data.data;
-    console.log(res);
 
     const newData = res.map(({ start_time, end_time }) => {
       return {
