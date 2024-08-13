@@ -7,14 +7,18 @@ import { DaySelect } from "../../DaySelect";
 import { TimeSelect } from "../../TimeSelect";
 import { useEditSchoolSchedule } from "../../../hooks/useEditSchoolSchedule";
 import { getEditJamSekolahSchema } from "./editJamSekolahSchema";
-import { useFilterStatus } from "../../../hooks/useFilterStatus";
 import { StatusSelect } from "../../StatusSelect";
 import { useGetActiveSchoolSchedule } from "../../../hooks/useGetActiveSchoolSchedule";
+import { useFilterStatus } from "../../../hooks/filters/useFilterStatus";
 
 export const EditJamSekolahForm = ({ handleClose, initialValues, id }) => {
   const { data } = useGetActiveSchoolSchedule();
   const { periode, prodi, tingkat } = useFilterStatus();
-  const { mutate: editSchedule } = useEditSchoolSchedule({ handleClose, id });
+  const { mutate: editSchedule } = useEditSchoolSchedule({
+    handleClose,
+    id,
+    periode,
+  });
 
   const scheduleIsActive = initialValues.status === "active";
   const scheduleIsFinished = initialValues.status === "finished";

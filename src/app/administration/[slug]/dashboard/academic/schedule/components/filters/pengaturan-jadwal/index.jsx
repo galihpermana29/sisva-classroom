@@ -1,18 +1,15 @@
 "use client";
 
+import { useGetFilterPengaturanJadwal } from "../../../hooks/filters/pengaturan-jadwal";
+import { useGetShowFilterStatus } from "../../../hooks/filters/useGetShowFilterStatus";
 import { PeriodeSelect } from "../PeriodeSelect";
 import { ProdiSelect } from "../ProdiSelect";
 import { TingkatSelect } from "../TingkatSelect";
-import { useGetFilterPengaturanJadwal } from "../../../hooks/useGetFilterPengaturanJadwal";
 
 export const PengaturanJadwalFilters = () => {
-  const {
-    showProdi,
-    showTingkat,
-    availablePeriods,
-    availableStudyPrograms,
-    availableGrades,
-  } = useGetFilterPengaturanJadwal();
+  const { showProdi, showGrade } = useGetShowFilterStatus();
+  const { availablePeriods, availableStudyPrograms, availableGrades } =
+    useGetFilterPengaturanJadwal();
 
   return (
     <>
@@ -23,7 +20,7 @@ export const PengaturanJadwalFilters = () => {
       />
       <TingkatSelect
         data={availableGrades}
-        disabled={!showTingkat}
+        disabled={!showGrade}
       />
     </>
   );

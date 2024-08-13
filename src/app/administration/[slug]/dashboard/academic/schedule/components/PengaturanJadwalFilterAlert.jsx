@@ -1,7 +1,7 @@
 "use client";
 
 import { Alert, AlertTitle, Box } from "@mui/material";
-import { useFilterStatus } from "../hooks/useFilterStatus";
+import { useFilterStatus } from "../hooks/filters/useFilterStatus";
 
 export const PengaturanJadwalFilterAlert = () => {
   const { prodi, periode, tingkat } = useFilterStatus();

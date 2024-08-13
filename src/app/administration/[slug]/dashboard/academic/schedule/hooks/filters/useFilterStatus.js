@@ -1,11 +1,11 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { GURU_FIELD_NAME } from "../components/filters/GuruSelect";
-import { KELAS_FIELD_NAME } from "../components/filters/KelasSelect";
-import { PERIODE_FIELD_NAME } from "../components/filters/PeriodeSelect";
-import { PRODI_FIELD_NAME } from "../components/filters/ProdiSelect";
-import { TINGKAT_FIELD_NAME } from "../components/filters/TingkatSelect";
+import { PERIODE_FIELD_NAME } from "../../components/filters/PeriodeSelect";
+import { PRODI_FIELD_NAME } from "../../components/filters/ProdiSelect";
+import { TINGKAT_FIELD_NAME } from "../../components/filters/TingkatSelect";
+import { KELAS_FIELD_NAME } from "../../components/filters/KelasSelect";
+import { GURU_FIELD_NAME } from "../../components/filters/GuruSelect";
 
 export const useFilterStatus = () => {
   const searchParams = useSearchParams();
