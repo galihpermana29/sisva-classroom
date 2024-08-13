@@ -1,5 +1,6 @@
 'use client';
 
+import { ExcelIcon, SortIcon } from '@/assets/SVGs';
 import {
   Add,
   Cancel,
@@ -12,7 +13,6 @@ import {
   Button,
   Divider,
   Hidden,
-  IconButton,
   InputAdornment,
   Menu,
   MenuItem,
@@ -22,21 +22,17 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import StudyProgramTable from './components/StudyProgramTable';
-import { ExcelIcon, ExportIcon, SortIcon } from '@/assets/SVGs';
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { permissions, types } from '@/globalcomponents/Variable';
 
+import AcademicAPI from '@/api/academic';
+import FilesAPI from '@/api/files';
 import { useFormik } from 'formik';
 import CurriculumTable from './components/CurriculumTable';
 import { FormAddCurriculum } from './components/FormAddCurriculum';
-import SubjectTable from './components/SubjectTable';
 import { FormAddSubject } from './components/FormAddSubject';
-import SyllabusTable from './components/SyllabusTable';
 import { FormAddSyllabus } from './components/FormAddSyllabus';
-import AcademicAPI from '@/api/academic';
-import FilesAPI from '@/api/files';
+import SubjectTable from './components/SubjectTable';
+import SyllabusTable from './components/SyllabusTable';
 
 export default function StaffProfileContent() {
   const [emptyData, setEmptyData] = useState({});
@@ -52,14 +48,10 @@ export default function StaffProfileContent() {
             const payload = { name: values.name };
 
             await AcademicAPI.createCurriculum(payload);
-
-            window.location.reload();
           } else {
             const payload = { name: values.name };
 
             await AcademicAPI.updateCurriculum(payload, values.id);
-
-            window.location.reload();
           }
         }
 
@@ -69,12 +61,10 @@ export default function StaffProfileContent() {
               name: values.subject,
               type: values.subject_type,
               study_program_id: values.study_program,
-              curriculum_id: values.name,
+              curriculum_id: values.curriculum_name,
             };
 
             await AcademicAPI.createSubject(payload);
-
-            window.location.reload();
           } else {
             const id = values.id;
 
@@ -82,12 +72,10 @@ export default function StaffProfileContent() {
               name: values.subject,
               type: values.subject_type,
               study_program_id: values.study_program,
-              curriculum_id: values.name,
+              curriculum_id: values.curriculum_name,
             };
 
             await AcademicAPI.updateSubject(payload, id);
-
-            window.location.reload();
           }
         }
 
@@ -102,8 +90,6 @@ export default function StaffProfileContent() {
             };
 
             await AcademicAPI.createSilabus(payload);
-
-            window.location.reload();
           } else {
             const id = values.id;
 
@@ -115,11 +101,14 @@ export default function StaffProfileContent() {
               file_uri: values.syllabus_uri,
             };
 
-            // await AcademicAPI.updateSubject(payload, id);
-
-            window.location.reload();
+            await AcademicAPI.updateSilabus(payload, id);
           }
         }
+
+        getAllCurriculum();
+        getAllSubject();
+        getAllStudyProgram();
+        getAllSyllabus();
       } catch (error) {
         console.log(error);
       }
@@ -154,7 +143,10 @@ export default function StaffProfileContent() {
     try {
       await AcademicAPI.deleteCurriculum(id);
 
-      window.location.reload();
+      getAllCurriculum();
+      getAllSubject();
+      getAllStudyProgram();
+      getAllSyllabus();
     } catch (error) {
       console.log(error);
     }
@@ -164,7 +156,10 @@ export default function StaffProfileContent() {
     try {
       await AcademicAPI.deleteSubject(id);
 
-      window.location.reload();
+      getAllCurriculum();
+      getAllSubject();
+      getAllStudyProgram();
+      getAllSyllabus();
     } catch (error) {
       console.log(error);
     }
@@ -174,7 +169,10 @@ export default function StaffProfileContent() {
     try {
       await AcademicAPI.deleteSilabus(id);
 
-      window.location.reload();
+      getAllCurriculum();
+      getAllSubject();
+      getAllStudyProgram();
+      getAllSyllabus();
     } catch (error) {
       console.log(error);
     }
@@ -183,88 +181,81 @@ export default function StaffProfileContent() {
   let [dataSubject, setDataSubject] = useState([]);
   let [dataSyllabus, setDataSyllabus] = useState([]);
 
-  useEffect(() => {
-    const getAllCurriculum = async () => {
-      const {
-        data: { data },
-      } = await AcademicAPI.getAllCurriculum();
+  const getAllCurriculum = async () => {
+    const {
+      data: { data },
+    } = await AcademicAPI.getAllCurriculum();
 
-      const mappedData = data.map((datum) => {
-        const study_programs = [];
+    const mappedData = data.map((datum) => {
+      const study_programs = [];
 
-        datum.study_programs?.forEach((programs) => {
-          study_programs.push(programs.code);
-        });
-
-        delete datum.study_program;
-        return { ...datum, study_programs };
+      datum.study_programs?.forEach((programs) => {
+        study_programs.push(programs.code);
       });
 
-      setTableData(mappedData);
-    };
+      delete datum.study_program;
+      return { ...datum, study_programs };
+    });
 
+    setTableData(mappedData);
+  };
+
+  const getAllSubject = async () => {
+    const {
+      data: { data },
+    } = await AcademicAPI.getAllSubject();
+
+    const mappedData = data.map((datum) => {
+      return {
+        id: datum.id,
+        name: datum.curriculum_name,
+        curriculum_id: datum.curriculum_id,
+        study_program: datum.study_program_name,
+        study_program_id: datum.study_program_id,
+        subject: datum.name,
+        subject_type: datum.type,
+      };
+    });
+
+    setDataSubject(mappedData);
+  };
+
+  const getAllStudyProgram = async () => {
+    const {
+      data: { data },
+    } = await AcademicAPI.getAllProdi();
+
+    const activeData = data.filter((dt) => dt.status == 'active');
+
+    setStudyProgram(activeData);
+  };
+
+  const getAllSyllabus = async () => {
+    const {
+      data: { data },
+    } = await AcademicAPI.getAllSilabus();
+
+    const mappedData = data.map((dt) => {
+      return {
+        id: dt.id,
+        name: dt.curriculum_name,
+        curriculum_id: dt.curriculum_id,
+        study_program: dt.study_program_name,
+        study_program_id: dt.study_program_id,
+        subject: dt.subject_name,
+        subject_id: dt.subject_id,
+        grade: dt.grade,
+        syllabus_uri: dt.file_uri,
+      };
+    });
+
+    setDataSyllabus(mappedData);
+  };
+
+  useEffect(() => {
     getAllCurriculum();
-  }, []);
-
-  useEffect(() => {
-    const getAllSubject = async () => {
-      const {
-        data: { data },
-      } = await AcademicAPI.getAllSubject();
-
-      const mappedData = data.map((datum) => {
-        return {
-          id: datum.id,
-          name: datum.curriculum_name,
-          curriculum_id: datum.curriculum_id,
-          study_program: datum.study_program_name,
-          study_program_id: datum.study_program_id,
-          subject: datum.name,
-          subject_type: datum.type,
-        };
-      });
-
-      setDataSubject(mappedData);
-    };
-
     getAllSubject();
-  }, []);
-
-  useEffect(() => {
-    (async () => {
-      const {
-        data: { data },
-      } = await AcademicAPI.getAllProdi();
-
-      const activeData = data.filter((dt) => dt.status == 'active');
-
-      setStudyProgram(activeData);
-    })();
-  }, []);
-
-  useEffect(() => {
-    const getAllSyllabus = async () => {
-      const {
-        data: { data },
-      } = await AcademicAPI.getAllSilabus();
-
-      const mappedData = data.map((dt) => {
-        return {
-          id: dt.id,
-          name: dt.curriculum_name,
-          curriculum_id: dt.curriculum_id,
-          study_program: dt.study_program_name,
-          study_program_id: dt.study_program_id,
-          subject: dt.subject_name,
-          subject_id: dt.subject_id,
-          grade: dt.grade,
-          syllabus_uri: dt.file_uri,
-        };
-      });
-
-      setDataSyllabus(mappedData);
-    };
-
+    getAllStudyProgram();
     getAllSyllabus();
   }, []);
 

@@ -8,6 +8,7 @@ import CmsAPI from '@/api/cms';
 
 export default function RootLayout({ children }) {
   const [color, setColor] = useState();
+  const [user, setUser] = useState();
 
   const fetchTheme = async () => {
     const {
@@ -19,13 +20,17 @@ export default function RootLayout({ children }) {
     setColor(data.theme_json_text);
   };
 
-  if (color) themeConfig.palette.primary.main = color;
+  if (color) {
+    themeConfig.palette.primary.main = color;
+  }
 
   const theme = createTheme(themeConfig);
 
   useEffect(() => {
-    fetchTheme();
-  }, [color]);
+    if (localStorage.getItem('user')) {
+      fetchTheme();
+    }
+  }, []);
 
   return (
     <html lang='en'>

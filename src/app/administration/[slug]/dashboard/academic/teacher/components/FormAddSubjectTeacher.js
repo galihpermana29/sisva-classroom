@@ -175,6 +175,17 @@ export const FormAddSubjectTeacher = ({
             <Typography variant='body2' fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
+            <Stack
+              sx={{ my: 1, flexDirection: 'row', gap: 1, overflowY: 'auto' }}
+            >
+              {previewSubject.map((option) => (
+                <Chip
+                  label={option.subject_name}
+                  variant='outlined'
+                  color='primary'
+                />
+              ))}
+            </Stack>
             <TextField
               type='text'
               placeholder={field.placeholder}
@@ -228,17 +239,6 @@ export const FormAddSubjectTeacher = ({
                 )}
               </MenuList>
             )}
-            <Stack
-              sx={{ my: 1, flexDirection: 'row', gap: 1, overflowY: 'auto' }}
-            >
-              {previewSubject.map((option) => (
-                <Chip
-                  label={option.subject_name}
-                  variant='outlined'
-                  color='primary'
-                />
-              ))}
-            </Stack>
           </Stack>
         )
       )}

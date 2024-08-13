@@ -1,19 +1,10 @@
 'use client';
 
-import {
-  Button,
-  IconButton,
-  InputAdornment,
-  MenuItem,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Button, MenuItem, Stack, TextField, Typography } from '@mui/material';
 import Image from 'next/image';
 
 import PDFIcon from '@/assets/icon-PDF.svg';
 import { formAddSyllabusFields } from '@/globalcomponents/FormFields';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
 
 export const FormAddSyllabus = ({
@@ -214,7 +205,7 @@ export const FormAddSyllabus = ({
             </Stack>
           )
         ) : field.type === 'file' ? (
-          <Stack>
+          <Stack sx={{ overflowX: 'hidden' }}>
             <Typography variant='body2' fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>

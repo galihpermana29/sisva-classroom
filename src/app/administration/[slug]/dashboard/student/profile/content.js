@@ -46,11 +46,6 @@ export default function SchoolProfileListContent() {
     onSubmit: async (values) => {
       const { name, password, type, username, password_confirm } = values;
 
-      if (password !== password_confirm) {
-        console.log('mismatched password');
-        return;
-      }
-
       let payload = {
         user: {
           name,
@@ -69,7 +64,7 @@ export default function SchoolProfileListContent() {
       try {
         await UsersAPI.createUser(payload);
 
-        window.location.reload();
+        getAllStudent();
         formik.setValues(initialData);
       } catch (error) {
         console.log(error, 'error adding staff');
@@ -103,32 +98,31 @@ export default function SchoolProfileListContent() {
 
       await UsersAPI.updateUserById(userData, userData.id);
 
-      window.location.reload();
+      getAllStudent();
     } catch (error) {
       console.log(error, 'error delete staff');
     }
   };
 
+  const getAllStudent = async (params = 'student') => {
+    try {
+      const {
+        data: { data },
+      } = await UsersAPI.getAllUsers(params);
+
+      const newMappedData = data
+        .map((user) => {
+          const additionalJson = JSON.parse(user.detail.json_text);
+          return { ...user, ...additionalJson };
+        })
+        .filter((user) => user.status === 'active');
+
+      setStudentData(newMappedData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
-    const getAllStudent = async (params = 'student') => {
-      try {
-        const {
-          data: { data },
-        } = await UsersAPI.getAllUsers(params);
-
-        const newMappedData = data
-          .map((user) => {
-            const additionalJson = JSON.parse(user.detail.json_text);
-            return { ...user, ...additionalJson };
-          })
-          .filter((user) => user.status === 'active');
-
-        setStudentData(newMappedData);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
     getAllStudent();
   }, []);
 

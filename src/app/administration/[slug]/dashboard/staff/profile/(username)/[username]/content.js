@@ -32,8 +32,10 @@ import UsersAPI from '@/api/users';
 import { object } from 'yup';
 import AuthAPI from '@/api/auth';
 import FilesAPI from '@/api/files';
+import { useParams } from 'next/navigation';
 
 export default function StaffProfileContent({ user_id }) {
+  const { slug } = useParams();
   const containerRef = useRef(null);
   const [activeTab, setActiveTab] = useState(0);
 
@@ -98,7 +100,7 @@ export default function StaffProfileContent({ user_id }) {
         try {
           const data = await UsersAPI.updateUserById(formatedData, values.id);
 
-          window.location.reload();
+          fetchProfile(user_id);
         } catch (error) {
           console.log(error, 'update user');
         }
@@ -112,7 +114,6 @@ export default function StaffProfileContent({ user_id }) {
 
           if (Object.keys(changePassData).includes('current_password')) {
             try {
-              console.log('test');
               await AuthAPI.changeUserPass(changePassData);
             } catch (error) {
               console.log(error, 'change user password');
@@ -122,7 +123,6 @@ export default function StaffProfileContent({ user_id }) {
             !Object.keys(changePassData).includes('current_password')
           ) {
             try {
-              console.log('test');
               await AuthAPI.resetUserPass(changePassData);
             } catch (error) {
               console.log(error, 'reset user password');
@@ -133,7 +133,7 @@ export default function StaffProfileContent({ user_id }) {
         }
       }
 
-      window.location.reload();
+      fetchProfile(user_id);
       formik.setValues(initialData);
     },
   });
@@ -226,7 +226,7 @@ export default function StaffProfileContent({ user_id }) {
       >
         <IconButton
           component={Link}
-          href='/administration/SEKOLAHSISVA/dashboard/staff/profile/'
+          href={`/administration/${slug}/dashboard/staff/profile/`}
           sx={{ borderRadius: 2, mr: 1 }}
         >
           <ArrowBackIosNewRounded />

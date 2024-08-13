@@ -143,7 +143,6 @@ export const FormEditPeriod = ({ formik, editing, status }) => {
                       value={formik.values['start_time']}
                       onChange={(value) => {
                         formik.setFieldValue('start_time', value);
-                        console.log(value);
                       }}
                     />
                   </Stack>

@@ -1,7 +1,7 @@
 'use client';
 
+import { ExcelIcon, SortIcon } from '@/assets/SVGs';
 import {
-  Add,
   Cancel,
   DownloadRounded,
   Search,
@@ -21,169 +21,52 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import DataTable from './components/Table';
-import { ExcelIcon, ExportIcon, SortIcon } from '@/assets/SVGs';
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { permissions, types } from '@/globalcomponents/Variable';
 import { FormAddStaff } from './components/FormAddStaff';
+import DataTable from './components/Table';
 
-import { useFormik } from 'formik';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import dayjs from 'dayjs';
 import AttendanceApi from '@/api/attendance';
 import UsersAPI from '@/api/users';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import dayjs from 'dayjs';
+import { useFormik } from 'formik';
 
 export default function StaffProfileListContent() {
   const [initialData, setinitialData] = useState({
-    name: '',
-    username: '',
-    type: 'staff',
-    permissions: [],
-    password: '',
-    password_confirm: '',
+    id: '',
+    status: 'present',
   });
 
   const [pickedDate, setPickedDate] = useState(dayjs(new Date()));
 
   const formik = useFormik({
     initialValues: { ...initialData },
-  });
 
-  let data = [
-    {
-      id: 'bb28c1b4-4a84-48a7-8d01-20bf157d1c61',
-      username: 'agung.prabowo',
-      nik: '78901234567890',
-      name: 'Agung Prabowo',
-      type: 'staff',
-      detail: {},
-      profile_image_uri:
-        'https://images.unsplash.com/flagged/photo-1595514191830-3e96a518989b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
-      roles: ['staff', 'teacher'],
-      permissions: [
-        'school',
-        'staff',
-        'academic',
-        'student',
-        'report',
-        'information',
-        'finance',
-      ],
-      status: 'present',
+    onSubmit: async (values) => {
+      try {
+        const dateCode = dayjs(new Date(pickedDate))
+          .toISOString()
+          .split('T')[0]
+          .split('-')
+          .join('');
+
+        const id = values.id;
+
+        const payload = {
+          date_id: Number(dateCode),
+          status: values.status,
+        };
+
+        await AttendanceApi.createStaffAttendance(id, payload);
+
+        fetchStaffAttendance(pickedDate);
+      } catch (error) {
+        console.log(error);
+      }
     },
-    {
-      id: '9c7bf4f7-7df6-48a3-94df-67de486ac1ca',
-      username: 'putra.utama',
-      nik: '12345678901234',
-      name: 'Putra Utama',
-      type: 'staff',
-      detail: {},
-      profile_image_uri: `https://source.unsplash.com/random/300x300`,
-      roles: ['staff'],
-      permissions: ['academic', 'student', 'report'],
-      status: 'leave',
-    },
-    {
-      id: '1b19c067-1fc1-4856-a4a9-c0c7a32aeb5e',
-      username: 'siti.rahma',
-      nik: '23456789012345',
-      name: 'Siti Rahmawati',
-      type: 'staff',
-      detail: {},
-      profile_image_uri: `https://source.unsplash.com/random/300x301`,
-      roles: ['staff'],
-      permissions: ['finance'],
-      status: 'present',
-    },
-    {
-      id: '9aa18316-9e57-4aa3-aa0b-3df0fdeac42a',
-      username: 'indra.kusuma',
-      nik: '34567890123456',
-      name: 'Indra Kusuma',
-      type: 'staff',
-      detail: {},
-      profile_image_uri: `https://source.unsplash.com/random/300x302`,
-      roles: ['staff'],
-      permissions: ['information'],
-      status: 'present',
-    },
-    {
-      id: '91b93b08-16f9-4b8d-b991-9b11ef2c7744',
-      username: 'nur.hidayah',
-      nik: '45678901234567',
-      name: 'Nur Hidayah',
-      type: 'staff',
-      detail: {},
-      profile_image_uri: `https://source.unsplash.com/random/300x303`,
-      roles: ['staff'],
-      permissions: [],
-      status: 'present',
-    },
-    {
-      id: '4f674fea-688f-4ae1-8c29-900c1d1b6852',
-      username: 'budi.santoso',
-      nik: '56789012345678',
-      name: 'Budi Santoso',
-      type: 'staff',
-      detail: {},
-      profile_image_uri: `https://source.unsplash.com/random/300x304`,
-      roles: ['staff'],
-      permissions: [],
-      status: 'absent',
-    },
-    {
-      id: '01bf819d-ea18-475d-9c18-488ac27a1212',
-      username: 'maya.dewi',
-      nik: '67890123456789',
-      name: 'Maya Dewi',
-      type: 'teacher',
-      detail: {},
-      profile_image_uri: `https://source.unsplash.com/random/300x305`,
-      roles: ['staff', 'teacher'],
-      permissions: ['report'],
-      status: 'present',
-    },
-    {
-      id: '45a8d93a-e7ca-4c2f-a1e8-4d8bf7e51f1e',
-      username: 'dian.sari',
-      nik: '89012345678901',
-      name: 'Dian Sari',
-      type: 'teacher',
-      detail: {},
-      profile_image_uri: `https://source.unsplash.com/random/300x307`,
-      roles: ['staff', 'teacher'],
-      permissions: ['report'],
-      status: 'sick',
-    },
-    {
-      id: 'a0c1b7e6-529c-456e-b77f-428cd75c1ea4',
-      username: 'bayu.pratama',
-      nik: '90123456789012',
-      name: 'Bayu Pratama',
-      type: 'teacher',
-      detail: {},
-      profile_image_uri: `https://source.unsplash.com/random/300x308`,
-      roles: ['staff', 'teacher'],
-      permissions: ['report'],
-      status: 'present',
-    },
-    {
-      id: 'b4a8f1eb-4e64-4ae3-9d14-109ea2c1b9ab',
-      username: 'wulan.sari',
-      nik: '12345678901234',
-      name: 'Wulan Sari',
-      type: 'teacher',
-      detail: {},
-      profile_image_uri: `https://source.unsplash.com/random/300x309`,
-      roles: ['staff', 'teacher'],
-      permissions: ['report'],
-      status: 'present',
-    },
-  ];
+  });
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -220,16 +103,12 @@ export default function StaffProfileListContent() {
 
       const userDetailData = await (
         await UsersAPI.getAllUsers('staff,teacher')
-      ).data.data;
+      ).data.data.filter((user) => user.status == 'active');
 
-      const newMappedData = data.map((user) => {
-        const exists = userDetailData.find(
-          (detail) => detail.id === user.staff_id
-        );
+      const newMappedData = userDetailData.map((user) => {
+        const stats = data.find((dt) => user.id == dt.staff_id)?.status;
 
-        if (exists) {
-          return { ...exists, status: user.status };
-        }
+        return { ...user, status: stats ? stats : 'present' };
       });
 
       setTableData(newMappedData);
@@ -283,8 +162,6 @@ export default function StaffProfileListContent() {
     }
     setFilteredData(temp);
   }, [tableData, search, typeFilter, permissionFilter, sortSettings]);
-
-  let [studyProgramFilter, setStudyProgramFilter] = useState('');
 
   function Filters() {
     return (
@@ -643,7 +520,6 @@ export default function StaffProfileListContent() {
                 </label>
               </MenuItem>
             </Menu>
-
             {/* <Button
               variant="contained"
               color="primary"
@@ -690,7 +566,7 @@ export default function StaffProfileListContent() {
         </Stack>
         <Divider />
         <Box sx={{ flex: 1, overflowY: 'hidden' }}>
-          <DataTable data={filteredData} />
+          <DataTable data={filteredData} formik={formik} />
         </Box>
       </Stack>
     </Stack>

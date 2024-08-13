@@ -15,7 +15,7 @@ import {
   Typography,
 } from '@mui/material';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 
 import SchoolLogoBlue from '@/assets/School-Logo-Blue.png';
 import {
@@ -45,6 +45,7 @@ export const metadata = {
 };
 
 export default function Container(props) {
+  const { slug } = useParams();
   const pathname = usePathname();
   let [navigationOpen, setNavigationOpen] = useState(false);
   let [navigationOpenList, setNavigationOpenList] = useState([]);
@@ -312,7 +313,7 @@ export default function Container(props) {
             <Divider />
             <MenuItem
               component={Link}
-              href={`/administration/SEKOLAHSISVA/dashboard/staff/profile/${currentUser?.id}`}
+              href={`/administration/${slug}/dashboard/staff/profile/${currentUser?.id}`}
               sx={{ maxWidth: 280 }}
             >
               <Stack flexDirection={'row'}>
@@ -325,7 +326,7 @@ export default function Container(props) {
                 localStorage.clear();
               }}
               component={Link}
-              href='/administration/SEKOLAHSISVA/auth/login'
+              href={`/administration/${slug}/auth/login`}
               sx={{ maxWidth: 280 }}
             >
               <Stack flexDirection={'row'}>
@@ -354,7 +355,7 @@ export default function Container(props) {
       >
         <Stack
           component={Link}
-          href='/administration/SEKOLAHSISVA/dashboard'
+          href={`/administration/${slug}/dashboard`}
           sx={{
             display: { xs: 'none', lg: 'flex' },
             flexDirection: 'row',
@@ -605,7 +606,7 @@ export default function Container(props) {
                   <Button
                     component={Link}
                     onClick={() => setNavigationOpen(false)}
-                    href={`/administration/SEKOLAHSISVA/dashboard/${props.item.slug}/${child.slug}`}
+                    href={`/administration/${slug}/dashboard/${props.item.slug}/${child.slug}`}
                     key={child.slug}
                     sx={{
                       maxWidth: '100%',
@@ -645,7 +646,7 @@ export default function Container(props) {
         return (
           <Button
             component={Link}
-            href={`/administration/SEKOLAHSISVA/${props.item.slug}`}
+            href={`/administration/${slug}/${props.item.slug}`}
             onClick={() => setNavigationOpen(false)}
             sx={{
               width: '100%',
@@ -730,7 +731,7 @@ export default function Container(props) {
           >
             <Stack
               component={Link}
-              href='/administration/SEKOLAHSISVA/dashboard'
+              href={`/administration/${slug}/dashboard`}
               sx={{
                 flexDirection: 'row',
                 minHeight: 70,

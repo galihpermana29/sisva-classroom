@@ -10,6 +10,13 @@ const CmsAPI = {
 
     return api.get(`/schools/${id}`, { headers });
   },
+  getSchoolByCode(code) {
+    const headers = {
+      'X-Sisva-Source': 'test',
+    };
+
+    return api.get(`/schools?code=${code}`, { headers });
+  },
   editSchoolById(id, payload) {
     const headers = {
       'X-Sisva-Source': 'test',

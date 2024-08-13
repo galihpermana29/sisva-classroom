@@ -1,11 +1,13 @@
-"use client";
+'use client';
 
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useParams, useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function Home() {
   const router = useRouter();
+  const { slug } = useParams();
+
   useEffect(() => {
-    router.push("/administration/SEKOLAHSISVA/auth/login");
+    router.push(`/administration/${slug}/auth/login`);
   });
 }

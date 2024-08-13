@@ -92,3 +92,8 @@ export const permissions = [
     slug: 'manage_finance',
   },
 ];
+
+export const targets = [
+  { slug: 'student', title: 'Siswa' },
+  { slug: 'staff', title: 'Staf' },
+];
