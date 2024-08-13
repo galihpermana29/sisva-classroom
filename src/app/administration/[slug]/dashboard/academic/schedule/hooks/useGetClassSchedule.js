@@ -13,7 +13,7 @@ export const useGetClassSchedule = () => {
   const shouldFetch = Boolean(periode && prodi);
 
   const { data: queryResult, ...query } = useQuery({
-    queryKey: ["class-schedule", { periode }],
+    queryKey: ["class-schedule", { periode, shouldFetch }],
     queryFn: () => AcademicAPI.getClassSchedule(periode),
     enabled: shouldFetch,
   });

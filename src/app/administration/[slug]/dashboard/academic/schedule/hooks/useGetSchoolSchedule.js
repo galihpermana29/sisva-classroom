@@ -12,7 +12,7 @@ export const useGetSchoolSchedule = () => {
   const shouldFetch = Boolean(periode && prodi && tingkat);
 
   const { data: queryResult, ...query } = useQuery({
-    queryKey: ["school-schedule", { periode }],
+    queryKey: ["school-schedule", { periode, shouldFetch }],
     queryFn: () => AcademicAPI.getSchoolSchedule(periode),
     enabled: shouldFetch,
   });

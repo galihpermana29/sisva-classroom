@@ -13,7 +13,7 @@ export const useGetNonLearningSchedule = () => {
   const shouldFetch = Boolean(periode && prodi);
 
   const { data: queryResult, ...query } = useQuery({
-    queryKey: ["non-learning-schedule", { periode }],
+    queryKey: ["non-learning-schedule", { periode, shouldFetch }],
     queryFn: () => AcademicAPI.getNonLearningSchedule(periode),
     enabled: shouldFetch,
   });
