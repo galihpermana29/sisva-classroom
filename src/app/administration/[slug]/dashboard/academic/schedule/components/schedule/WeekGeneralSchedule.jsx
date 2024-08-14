@@ -108,10 +108,13 @@ const onRenderCell = (args) => {
 
 const onEventRendered = (props) => {
   let target = props.element;
+  const appearanceCount = props.data.AppearanceCount;
   // set background color according to type
   target.style.backgroundColor = props.data.Color;
   target.style.borderRadius = "0.5rem";
   target.style.padding = "8px";
+  // setting event card width
+  target.style.width = `${100 * appearanceCount}%`;
   // set text to centered on non learning schedule
   target.style.placeContent = props.data.Type === "non-learning" && "center";
 };
@@ -120,8 +123,7 @@ const getStartHour = (data) => {
   const defaultStartHour = dayjs("07:00", "HH:mm");
   const res = data
     .map((data) => dayjs(data.StartTime))
-    // sort ascending
-    .sort((a, b) => a.unix() - b.unix());
+    .sort((a, b) => a.get("hour") - b.get("hour"));
 
   const earliestSchedule = res.at(0); // earliest would be the first element
   const isEarlierThanDefault = earliestSchedule?.isBefore(
@@ -139,9 +141,9 @@ const getEndHour = (data) => {
   const res = data
     .map((data) => dayjs(data.EndTime))
     // sort descending
-    .sort((a, b) => b.unix() - a.unix());
+    .sort((a, b) => a.get("hour") - b.get("hour"));
 
-  const latestSchedule = res.at(0); // latest would be the last element
+  const latestSchedule = res.at(-1); // latest would be the last element
   const isLaterThanDefault = latestSchedule?.isAfter(defaultEndHour, "hour"); // compare by hour
   const endHour = isLaterThanDefault
     ? roundAndFormatHour(latestSchedule, "end")
@@ -152,27 +154,22 @@ const getEndHour = (data) => {
 const roundAndFormatHour = (timestamp, type) => {
   if (!timestamp) return undefined;
 
+  const hour = timestamp.get("hour");
   const minutes = timestamp.get("minute");
-  // early return the timestamp in format "HH:mm" (24 hour)
+  // early return the timestamp in format "HH:mm" (24 hour) if minutes is 0
   if (minutes === 0) return timestamp.format("HH:mm");
 
-  const hour = timestamp.get("hour");
-  // set the minute to 00
-  let newTimestamp = timestamp.set("minute", 0);
-
-  switch (type) {
-    case "start":
-      // round down to the nearest hour
-      newTimestamp.set("hour", hour - 1);
-      break;
-    case "end":
-      // round up to the nearest hour
-      newTimestamp.set("hour", hour + 1);
-      break;
-    default:
-      throw new Error("Unrecognized format type!");
+  if (type === "start") {
+    // always round down to the nearest hour
+    return timestamp.set("minute", 0).format("HH:mm");
   }
 
-  // return the new formatted timestamp
-  return newTimestamp.format("HH:mm");
+  if (type === "end") {
+    // handles hour later than 23:xx
+    if (hour >= 23) return timestamp.set("minute", 59).format("HH:mm");
+    // else just round up to the nearest hour
+    return timestamp.set("minute", 0).set("hour", hour + 1);
+  }
+
+  return timestamp.format("HH:mm");
 };
