@@ -100,9 +100,11 @@ const ModalContent = ({ id, handleClose }) => {
           gap={2}
         >
           <Button
+            sx={{ color: "lightslategray" }}
             type="button"
             fullWidth
             variant="outlined"
+            color="inherit"
             onClick={handleClose}
           >
             Batal
