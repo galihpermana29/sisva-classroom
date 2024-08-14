@@ -60,28 +60,20 @@ export default function StaffProfileContent() {
             };
 
             await AcademicAPI.createPeriod(payload);
-
-            window.location.reload();
           } else {
             const id = values.id;
 
-            const start_time = dayjs(values.start_time).format(
-              'DD/MM/YYYY h:mm A Z'
-            );
-            const end_time = dayjs(values.end_time).format(
-              'DD/MM/YYYY h:mm A Z'
-            );
+            const start_time = dayjs(values.start_time).format('DD/MM/YYYY');
+            const end_time = dayjs(values.end_time).format('DD/MM/YYYY');
 
             const payload = {
               name: values.period_name,
-              start_time: start_time,
-              end_time: end_time,
+              start_time: `${start_time} 5:00 PM +00:00`,
+              end_time: `${end_time} 5:00 PM +00:00`,
               status: values.status,
             };
 
             await AcademicAPI.updatePeriod(payload, id);
-
-            window.location.reload();
           }
         } else if (activeTab == 1) {
           const id = values.period_name;
@@ -94,9 +86,11 @@ export default function StaffProfileContent() {
           };
 
           await AcademicAPI.addCurriculumInPeriod(id, payload);
-
-          window.location.reload();
         }
+
+        getAllDataCurr();
+        getAllDataPeriod();
+        getAllCurriculum();
       } catch (error) {
         console.log(error);
       }
@@ -128,7 +122,9 @@ export default function StaffProfileContent() {
     try {
       await AcademicAPI.deletePeriod(id);
 
-      window.location.reload();
+      getAllDataCurr();
+      getAllDataPeriod();
+      getAllCurriculum();
     } catch (error) {
       console.log(error);
     }
@@ -148,7 +144,9 @@ export default function StaffProfileContent() {
 
       await AcademicAPI.deletePeriodCurr(id, payload);
 
-      if (!edit) window.location.reload();
+      getAllDataCurr();
+      getAllDataPeriod();
+      getAllCurriculum();
     } catch (error) {
       console.log(error);
     }
@@ -190,79 +188,77 @@ export default function StaffProfileContent() {
     },
   ];
 
-  useEffect(() => {
-    (async () => {
-      const {
-        data: { data },
-      } = await AcademicAPI.getAllCurriculum();
+  const getAllDataCurr = async () => {
+    const {
+      data: { data },
+    } = await AcademicAPI.getAllCurriculum();
 
-      const resProdi = await AcademicAPI.getAllProdi();
+    const resProdi = await AcademicAPI.getAllProdi();
 
-      setDataStudyProgram(resProdi.data.data);
+    setDataStudyProgram(resProdi.data.data);
 
-      const activeProgram = resProdi.data.data.filter(
-        (program) => program.status === 'active'
-      );
+    const activeProgram = resProdi.data.data.filter(
+      (program) => program.status === 'active'
+    );
 
-      const mappedData = data.map((dt) => {
-        activeProgram.forEach((ap) => {
-          dt.study_programs?.forEach((sp) => {
-            if (sp.id == ap.id) {
-              sp.grades = ap.grades;
-            }
-          });
+    const mappedData = data.map((dt) => {
+      activeProgram.forEach((ap) => {
+        dt.study_programs?.forEach((sp) => {
+          if (sp.id == ap.id) {
+            sp.grades = ap.grades;
+          }
         });
-        delete dt.description;
-        delete dt.total_subjects;
-
-        return dt;
       });
+      delete dt.description;
+      delete dt.total_subjects;
 
-      setDataAllCurr(mappedData);
-    })();
-  }, []);
+      return dt;
+    });
+
+    setDataAllCurr(mappedData);
+  };
+
+  const getAllDataPeriod = async () => {
+    const {
+      data: { data },
+    } = await AcademicAPI.getAllPeriod();
+
+    const mappedData = data.map((datum) => {
+      let start_date = datum.start_time.split(' ')[0].split('/');
+      let end_date = datum.end_time.split(' ')[0].split('/');
+
+      datum.start_time = `${start_date[1]}/${start_date[0]}/${start_date[2]}`;
+      datum.end_time = `${end_date[1]}/${end_date[0]}/${end_date[2]}`;
+
+      if (datum.study_programs == undefined) {
+        datum.study_programs = [];
+      }
+      return datum;
+    });
+
+    setDataPeriod(mappedData);
+  };
+
+  const getAllCurriculum = async () => {
+    const {
+      data: { data },
+    } = await AcademicAPI.getPeriodCurr();
+
+    const mappedData = data.map((datum) => {
+      return {
+        id: datum.period_id,
+        study_program: datum.study_program_name,
+        curriculum: datum.curriculum_name,
+        ...datum,
+      };
+    });
+
+    setDataCurriculum(mappedData);
+  };
 
   useEffect(() => {
-    (async () => {
-      const {
-        data: { data },
-      } = await AcademicAPI.getAllPeriod();
-
-      const mappedData = data.map((datum) => {
-        let start_date = datum.start_time.split(' ')[0].split('/');
-        let end_date = datum.end_time.split(' ')[0].split('/');
-
-        datum.start_time = `${start_date[1]}/${start_date[0]}/${start_date[2]}`;
-        datum.end_time = `${end_date[1]}/${end_date[0]}/${end_date[2]}`;
-
-        if (datum.study_programs == undefined) {
-          datum.study_programs = [];
-        }
-        return datum;
-      });
-
-      setDataPeriod(mappedData);
-    })();
-  }, []);
-
-  useEffect(() => {
-    const getAllCurriculum = async () => {
-      const {
-        data: { data },
-      } = await AcademicAPI.getPeriodCurr();
-
-      const mappedData = data.map((datum) => {
-        return {
-          id: datum.period_id,
-          study_program: datum.study_program_name,
-          curriculum: datum.curriculum_name,
-          ...datum,
-        };
-      });
-
-      setDataCurriculum(mappedData);
-    };
-
+    getAllDataCurr();
+    getAllDataPeriod();
     getAllCurriculum();
   }, []);
 

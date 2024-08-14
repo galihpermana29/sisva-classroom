@@ -14,7 +14,11 @@ import { useFilterStatus } from "../../../hooks/filters/useFilterStatus";
 export const EditJamSekolahForm = ({ handleClose, initialValues, id }) => {
   const { data } = useGetActiveSchoolSchedule();
   const { periode, prodi, tingkat } = useFilterStatus();
-  const { mutate: editSchedule } = useEditSchoolSchedule({ handleClose, id });
+  const { mutate: editSchedule } = useEditSchoolSchedule({
+    handleClose,
+    id,
+    periode,
+  });
 
   const scheduleIsActive = initialValues.status === "active";
   const scheduleIsFinished = initialValues.status === "finished";

@@ -1,5 +1,6 @@
 'use client';
 
+import { ExcelIcon, SortIcon } from '@/assets/SVGs';
 import {
   Add,
   Cancel,
@@ -12,7 +13,6 @@ import {
   Button,
   Divider,
   Hidden,
-  IconButton,
   InputAdornment,
   Menu,
   MenuItem,
@@ -22,24 +22,19 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import StudyProgramTable from './components/StudyProgramTable';
-import GradeTable from './components/GradeTable';
-import { ExcelIcon, ExportIcon, SortIcon } from '@/assets/SVGs';
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { permissions, types } from '@/globalcomponents/Variable';
-import { FormAddStudyProgram } from './components/FormAddStudyProgram';
 import { FormAddGrade } from './components/FormAddGrade';
+import { FormAddStudyProgram } from './components/FormAddStudyProgram';
+import GradeTable from './components/GradeTable';
+import StudyProgramTable from './components/StudyProgramTable';
 
-import { useFormik } from 'formik';
 import AcademicAPI from '@/api/academic';
+import { useFormik } from 'formik';
+import StudentTable from './components/StudentTable';
+import UsersAPI from '@/api/users';
+import { FormAddStudent } from './components/FormAddStudent';
 export default function StaffProfileContent() {
-  const [emptyData, setEmptyData] = useState({
-    name: '',
-    code: '',
-    status: 'active',
-    grades: [],
-  });
+  const [emptyData, setEmptyData] = useState({});
 
   const formik = useFormik({
     initialValues: { emptyData },
@@ -49,31 +44,49 @@ export default function StaffProfileContent() {
         try {
           if (!values.id) {
             await AcademicAPI.createProdi(values);
-
-            window.location.reload();
           } else {
             const id = values.id;
             delete values.id;
 
             await AcademicAPI.updateProdi(values, id);
-
-            window.location.reload();
           }
         } catch (error) {
           console.log(error);
         }
-      } else {
+      } else if (activeTab == 1) {
         try {
           const id = values.id;
           delete values.id;
 
           await AcademicAPI.updateProdi(values, id);
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        try {
+          const id = values.student;
 
-          window.location.reload();
+          const detail = {
+            ...values.detail,
+            study_program_id: values.study_program,
+            study_program: values.study_program_name,
+          };
+
+          const payload = {
+            detail: {
+              grade: values.grade,
+              json_text: JSON.stringify(detail),
+            },
+          };
+
+          await UsersAPI.updateUserById(payload, id);
         } catch (error) {
           console.log(error);
         }
       }
+
+      getAllStudent();
+      getAllStudyProgram();
     },
   });
 
@@ -88,9 +101,11 @@ export default function StaffProfileContent() {
     setAnchorEl(null);
   };
 
-  const [tableData, setTabelData] = useState([]);
+  const [tableData, setTableData] = useState([]);
+  const [studentData, setStudentData] = useState([]);
+  const [studentList, setStudentList] = useState([]);
 
-  let [filteredData, setFilteredData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [search, setSearch] = useState('');
   const [studyProgramFilter, setStudyProgramFilter] = useState('');
   const [sortBy, setSortBy] = useState('');
@@ -101,6 +116,7 @@ export default function StaffProfileContent() {
   const [openCreateStudyProgramModal, setOpenCreateStudyProgramModal] =
     useState(false);
   const [openCreateGradeModal, setOpenCreateGradeModal] = useState(false);
+  const [openCreateStudentModal, setOpenCreateStudentModal] = useState(false);
 
   const [activeTab, setActiveTab] = useState(0);
 
@@ -108,10 +124,31 @@ export default function StaffProfileContent() {
     try {
       await AcademicAPI.deleteProdi(id);
 
-      window.location.reload();
+      getAllStudyProgram();
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const deleteStudent = async (id, values) => {
+    try {
+      delete values.study_program_id;
+      delete values.study_program;
+
+      const payload = {
+        detail: {
+          json_text: JSON.stringify(values),
+        },
+        grade: '',
+      };
+
+      await UsersAPI.updateUserById(payload, id);
+    } catch (error) {
+      console.log(error);
+    }
+
+    getAllStudent();
+    getAllStudyProgram();
   };
 
   let tabs = [
@@ -127,32 +164,40 @@ export default function StaffProfileContent() {
     },
     {
       title: 'Tingkatan',
+      component: <GradeTable formik={formik} data={filteredData} />,
+    },
+    {
+      title: 'Siswa',
       component: (
-        <GradeTable formik={formik} data={filteredData} tableData={tableData} />
+        <StudentTable
+          formik={formik}
+          data={filteredData}
+          tableData={tableData}
+          studentList={studentList}
+          deleteStudent={deleteStudent}
+        />
       ),
     },
   ];
 
-  useEffect(() => {
-    const getAllStudyProgram = async () => {
-      const {
-        data: { data },
-      } = await AcademicAPI.getAllProdi();
+  const getAllStudyProgram = async () => {
+    const {
+      data: { data },
+    } = await AcademicAPI.getAllProdi();
 
-      const activeProgram = data.filter(
-        (program) => program.status === 'active'
-      );
+    const activeProgram = data
+      .filter((program) => program.status === 'active')
+      .sort((a, b) => +a.id - +b.id);
 
-      setTabelData(activeProgram);
-    };
+    setTableData(activeProgram);
 
-    getAllStudyProgram();
-  }, []);
+    getGradeData(activeProgram);
+  };
 
-  useEffect(() => {
+  const getGradeData = (activeProgram) => {
     let temp = [];
 
-    tableData.map((studyProgram) => {
+    (activeProgram ? activeProgram : tableData).map((studyProgram) => {
       studyProgram.grades?.map((grade) => {
         let tempObject = {
           id: grade + '-' + studyProgram.code,
@@ -164,7 +209,76 @@ export default function StaffProfileContent() {
         temp.push(tempObject);
       });
     });
+
     setDataTingkatan(temp);
+  };
+
+  const getAllStudent = async () => {
+    const {
+      data: { data },
+    } = await UsersAPI.getAllUsers('student');
+
+    const noGradeData = data
+      .filter((dt) => {
+        const details = JSON.parse(dt.detail.json_text);
+
+        if (
+          !details.study_program_id &&
+          dt.status == 'active' &&
+          dt.detail.grade == ''
+        )
+          return dt;
+      })
+      .map((dt) => {
+        const json_text = JSON.parse(dt.detail.json_text);
+
+        const detail = {
+          json_text: json_text,
+          grade: dt.detail.grade,
+        };
+
+        return { ...dt, detail };
+      });
+
+    setStudentList(noGradeData);
+
+    const activeStudent = data
+      .filter((dt) => {
+        const details = JSON.parse(dt.detail.json_text);
+
+        if (
+          details.study_program_id &&
+          dt.status == 'active' &&
+          dt.detail.grade !== ''
+        )
+          return dt;
+      })
+      .map((dt) => {
+        const details = JSON.parse(dt.detail.json_text);
+        const grade = dt.detail.grade;
+
+        return {
+          id: dt.id,
+          name: dt.name,
+          study_program: details.study_program,
+          study_program_id: details.study_program_id,
+          grade: grade,
+          profile_image_uri: dt.profile_image_uri,
+          detail: details,
+        };
+      });
+
+    setStudentData(activeStudent);
+  };
+
+  useEffect(() => {
+    getAllStudyProgram();
+  }, []);
+
+  useEffect(() => {
+    if (tableData.length) getAllStudent();
+
+    getGradeData();
   }, [tableData]);
 
   useEffect(() => {
@@ -183,6 +297,10 @@ export default function StaffProfileContent() {
           (item.code.toLowerCase() === studyProgramFilter.toLowerCase() ||
             !studyProgramFilter)
         );
+      });
+    } else if (activeTab === 2) {
+      temp = studentData.filter((item) => {
+        return item.name.toLowerCase().includes(search.toLowerCase());
       });
     }
     if (sortSettings && sortSettings.sortBy) {
@@ -222,7 +340,14 @@ export default function StaffProfileContent() {
     }
     setFilteredData(temp);
     formik.setValues(emptyData);
-  }, [tableData, search, studyProgramFilter, sortSettings, activeTab]);
+  }, [
+    tableData,
+    search,
+    studyProgramFilter,
+    sortSettings,
+    activeTab,
+    studentData,
+  ]);
 
   function Filters() {
     if (activeTab === 1) {
@@ -348,7 +473,7 @@ export default function StaffProfileContent() {
               onClick={() => {
                 setOpenCreateGradeModal(false);
                 formik.handleSubmit();
-                // formik.setValues(emptyData);
+                formik.setValues(emptyData);
               }}
             >
               Simpan
@@ -412,6 +537,75 @@ export default function StaffProfileContent() {
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenCreateStudyProgramModal(false);
+                formik.handleSubmit();
+                formik.setValues(emptyData);
+              }}
+            >
+              Simpan
+            </Button>
+          </Stack>
+        </Stack>
+      </Modal>
+      <Modal
+        open={openCreateStudentModal}
+        onClose={() => setOpenCreateStudentModal(false)}
+      >
+        <Stack
+          component={Paper}
+          elevation={2}
+          sx={{
+            borderRadius: 2,
+            zIndex: 20,
+            margin: 'auto',
+            position: 'fixed',
+            height: 'fit-content',
+            width: '360px',
+            maxWidth: '80%',
+            top: 0,
+            bottom: 0,
+            right: 0,
+            left: 0,
+          }}
+        >
+          <Box
+            sx={{
+              padding: 2,
+            }}
+          >
+            <Typography fontWeight={600} fontSize={16}>
+              Tambah Siswa
+            </Typography>
+          </Box>
+          <Divider />
+          <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
+            <FormAddStudent
+              formik={formik}
+              tableData={tableData}
+              studentList={studentList}
+            />
+          </Box>
+          <Divider />
+          <Stack
+            sx={{
+              flexDirection: 'row',
+              p: 2,
+            }}
+          >
+            <Button
+              variant='outlined'
+              sx={{ flex: 1, mr: 1 }}
+              onClick={() => {
+                setOpenCreateStudentModal(false);
+                formik.setValues(emptyData);
+              }}
+            >
+              Batal
+            </Button>
+            <Button
+              variant='contained'
+              sx={{ flex: 1 }}
+              onClick={() => {
+                setOpenCreateStudentModal(false);
                 formik.handleSubmit();
                 // formik.setValues(emptyData);
               }}
@@ -772,7 +966,7 @@ export default function StaffProfileContent() {
                   ? setOpenCreateStudyProgramModal(true)
                   : activeTab === 1
                   ? setOpenCreateGradeModal(true)
-                  : null
+                  : setOpenCreateStudentModal(true)
               }
             >
               <Typography sx={{ fontSize: 14 }}>Tambah</Typography>

@@ -13,7 +13,10 @@ import { useFilterStatus } from "../../../hooks/filters/useFilterStatus";
 export const AddJamSekolahForm = ({ handleClose }) => {
   const { data } = useGetActiveSchoolSchedule();
   const { periode, prodi, tingkat } = useFilterStatus();
-  const { mutate: createSchedule } = useCreateSchoolSchedule({ handleClose });
+  const { mutate: createSchedule } = useCreateSchoolSchedule({
+    handleClose,
+    periode,
+  });
 
   const schema = getAddJamSekolahSchema({
     periode,

@@ -1,5 +1,6 @@
 'use client';
 
+import { ExcelIcon, SortIcon } from '@/assets/SVGs';
 import {
   Add,
   Cancel,
@@ -12,7 +13,6 @@ import {
   Button,
   Divider,
   Hidden,
-  IconButton,
   InputAdornment,
   Menu,
   MenuItem,
@@ -22,453 +22,120 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import TeacherTable from './components/StudentTable';
-import { ExcelIcon, ExportIcon, SortIcon } from '@/assets/SVGs';
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { permissions, types } from '@/globalcomponents/Variable';
-import { FormAddPeriod } from './components/FormAddPeriod';
+import { FormAddStudent } from './components/FormAddStudent';
 
-import { useFormik } from 'formik';
-import { FormAddCurriculum } from './components/FormAddCurriculum';
-import SubjectTable from './components/ClassTable';
-import ClassTable from './components/ClassTable';
-import StudentTable from './components/StudentTable';
-import ClassElectiveTable from './components/ClassElectiveTable';
 import AcademicAPI from '@/api/academic';
 import UsersAPI from '@/api/users';
+import { useFormik } from 'formik';
+import ClassElectiveTable from './components/ClassElectiveTable';
+import ClassTable from './components/ClassTable';
+import { FormAddStudentGroup } from './components/FormAddStudentGroup';
+import StudentTable from './components/StudentTable';
 export default function StaffProfileContent() {
-  const [emptyData, setEmptyData] = useState({
-    name: '',
-    code: '',
-    status: 'active',
-    grades: [],
-  });
-  const [filledData, setFilledData] = useState({
-    name: 'Ilmu Pengetahuan Alam',
-    code: 'IPA',
-    status: 'active',
-    grades: ['X', 'XI', 'XII'],
-  });
+  const [emptyData, setEmptyData] = useState({});
+
   const formik = useFormik({
     initialValues: { emptyData },
+
+    onSubmit: async (values) => {
+      try {
+        if (activeTab == 0) {
+          if (!values.id) {
+            const payload = {
+              name: values.name,
+              type: 'homeroom',
+              period_id: values.period_id,
+              study_program_id: values.study_program_id,
+              grade: values.grade,
+              detail: {
+                homeroom_teacher_id: values.homeroom_teacher_id,
+              },
+            };
+
+            await AcademicAPI.createStudentGroup(payload);
+          } else {
+            const id = values.id;
+
+            const payload = {
+              name: values.name,
+              study_program_id: values.study_program_id,
+              grade: values.grade,
+              detail: {
+                homeroom_teacher_id: values.homeroom_teacher_id,
+              },
+            };
+
+            await AcademicAPI.updateStudentGroup(id, payload);
+          }
+        } else if (activeTab == 2) {
+          const id = values.class;
+
+          const payload = {
+            student_id: values.student,
+          };
+
+          await AcademicAPI.insertStudentToStudentGroup(id, payload);
+        }
+
+        getClassesData();
+        getAllCreateGroupData();
+      } catch (error) {
+        console.log(error);
+      } finally {
+        formik.setValues(emptyData);
+      }
+    },
   });
 
-  let data = [
-    {
-      id: 1,
-      period_name: 'Tahun Ajaran 2024/2025',
-      type: 'mandatory',
-      study_program: 'IPA',
-      guardian: 'Rina Puspita',
-      grade: 'X',
-      class: 'X IPA 1',
-      students: 30,
-    },
-    {
-      id: 2,
-      period_name: 'Tahun Ajaran 2024/2025',
-      type: 'mandatory',
-      study_program: 'IPA',
-      guardian: 'Siti Rahayu',
-      grade: 'X',
-      class: 'X IPA 2',
-      students: 30,
-    },
-    {
-      id: 3,
-      period_name: 'Tahun Ajaran 2024/2025',
-      type: 'mandatory',
-      study_program: 'IPA',
-      guardian: 'Dewi Kusuma',
-      grade: 'X',
-      class: 'X IPA 3',
-      students: 30,
-    },
-    {
-      id: 4,
-      period_name: 'Tahun Ajaran 2024/2025',
-      type: 'mandatory',
-      study_program: 'IPA',
-      guardian: 'Agus Setiawan',
-      grade: 'X',
-      class: 'X IPA 4',
-      students: 30,
-    },
-    {
-      id: 5,
-      period_name: 'Tahun Ajaran 2024/2025',
-      type: 'mandatory',
-      study_program: 'IPA',
-      guardian: 'Joko Susanto',
-      grade: 'X',
-      class: 'X IPA 5',
-      students: 30,
-    },
-    {
-      id: 6,
-      period_name: 'Tahun Ajaran 2024/2025',
-      type: 'mandatory',
-      study_program: 'IPA',
-      guardian: 'Joko Susanto',
-      grade: 'XI',
-      class: 'XI IPA 1',
-      students: 38,
-    },
-    {
-      id: 7,
-      period_name: 'Tahun Ajaran 2024/2025',
-      type: 'mandatory',
-      study_program: 'IPA',
-      guardian: 'Siti Rahayu',
-      grade: 'XI',
-      class: 'XI IPA 2',
-      students: 37,
-    },
-    {
-      id: 8,
-      period_name: 'Tahun Ajaran 2024/2025',
-      type: 'mandatory',
-      study_program: 'IPA',
-      guardian: 'Agus Setiawan',
-      grade: 'XI',
-      class: 'XI IPA 3',
-      students: 37,
-    },
-    {
-      id: 9,
-      period_name: 'Tahun Ajaran 2024/2025',
-      type: 'mandatory',
-      study_program: 'IPA',
-      guardian: 'Ani Cahyani',
-      grade: 'XI',
-      class: 'XI IPA 4',
-      students: 32,
-    },
-    {
-      id: 10,
-      period_name: 'Tahun Ajaran 2024/2025',
-      type: 'mandatory',
-      study_program: 'IPA',
-      guardian: 'Iwan Nugroho',
-      grade: 'XI',
-      class: 'XI IPA 5',
-      students: 37,
-    },
-    {
-      id: 11,
-      period_name: 'Tahun Ajaran 2024/2025',
-      type: 'mandatory',
-      study_program: 'IPA',
-      guardian: 'Dewi Kusuma',
-      grade: 'XII',
-      class: 'XII IPA 1',
-      students: 34,
-    },
-    {
-      id: 12,
-      period_name: 'Tahun Ajaran 2024/2025',
-      type: 'mandatory',
-      study_program: 'IPA',
-      guardian: 'Rina Wati',
-      grade: 'XII',
-      class: 'XII IPA 2',
-      students: 35,
-    },
-    {
-      id: 13,
-      period_name: 'Tahun Ajaran 2024/2025',
-      type: 'mandatory',
-      study_program: 'IPA',
-      guardian: 'Rina Puspita',
-      grade: 'XII',
-      class: 'XII IPA 3',
-      students: 31,
-    },
-    {
-      id: 14,
-      period_name: 'Tahun Ajaran 2024/2025',
-      type: 'mandatory',
-      study_program: 'IPA',
-      guardian: 'Iwan Nugroho',
-      grade: 'XII',
-      class: 'XII IPA 4',
-      students: 38,
-    },
-    {
-      id: 15,
-      period_name: 'Tahun Ajaran 2024/2025',
-      type: 'mandatory',
-      study_program: 'IPA',
-      guardian: 'Budi Santoso',
-      grade: 'XII',
-      class: 'XII IPA 5',
-      students: 35,
-    },
-    {
-      id: 21,
-      period_name: 'Tahun Ajaran 2024/2025',
-      type: 'elective',
-      study_program: 'IPA',
-      guardian: '',
-      grade: 'X',
-      class: 'Student Day Arsitektur',
-      students: 30,
-    },
-    {
-      id: 22,
-      period_name: 'Tahun Ajaran 2024/2025',
-      type: 'elective',
-      study_program: 'IPA',
-      guardian: '',
-      grade: 'X',
-      class: 'Student Day Programming',
-      students: 30,
-    },
-    {
-      id: 23,
-      period_name: 'Tahun Ajaran 2024/2025',
-      type: 'elective',
-      study_program: 'IPA',
-      guardian: '',
-      grade: 'X',
-      class: 'Student Day Fotografi',
-      students: 33,
-    },
-    {
-      id: 24,
-      period_name: 'Tahun Ajaran 2024/2025',
-      type: 'elective',
-      study_program: 'IPA',
-      guardian: '',
-      grade: 'X',
-      class: 'Student Day Sejarah',
-      students: 28,
-    },
-    {
-      id: 25,
-      period_name: 'Tahun Ajaran 2024/2025',
-      type: 'elective',
-      study_program: 'IPA',
-      guardian: '',
-      grade: 'X',
-      class: 'Student Day Bahasa Inggris',
-      students: 30,
-    },
-  ];
+  const removeStudent = async (class_id, student_id) => {
+    try {
+      const payload = {
+        student_id: student_id,
+      };
 
-  let [dataStudent, setDataStudent] = useState([
-    {
-      id: 1,
-      period_name: 'Tahun Ajaran 2024/2025',
-      grade: 'X',
-      class: 'X IPA 1',
-      student: 'Widi Astuti',
-    },
-    {
-      id: 2,
-      period_name: 'Tahun Ajaran 2024/2025',
-      grade: 'X',
-      class: 'X IPA 1',
-      student: 'Desi Susanti',
-    },
-    {
-      id: 3,
-      period_name: 'Tahun Ajaran 2024/2025',
-      grade: 'X',
-      class: 'X IPA 1',
-      student: 'Rudi Hartono',
-    },
-    {
-      id: 4,
-      period_name: 'Tahun Ajaran 2024/2025',
-      grade: 'X',
-      class: 'X IPA 1',
-      student: 'Arifin Rahman',
-    },
-    {
-      id: 5,
-      period_name: 'Tahun Ajaran 2024/2025',
-      grade: 'X',
-      class: 'X IPA 1',
-      student: 'Eko Lina',
-    },
-    {
-      id: 6,
-      period_name: 'Tahun Ajaran 2024/2025',
-      grade: 'X',
-      class: 'X IPA 1',
-      student: 'Budi Santoso',
-    },
-    {
-      id: 7,
-      period_name: 'Tahun Ajaran 2024/2025',
-      grade: 'X',
-      class: 'X IPA 1',
-      student: 'Sinta Amelia',
-    },
-    {
-      id: 8,
-      period_name: 'Tahun Ajaran 2024/2025',
-      grade: 'X',
-      class: 'X IPA 1',
-      student: 'Samsul Arifin',
-    },
-    {
-      id: 9,
-      period_name: 'Tahun Ajaran 2024/2025',
-      grade: 'X',
-      class: 'X IPA 1',
-      student: 'Bambang Surya',
-    },
-    {
-      id: 10,
-      period_name: 'Tahun Ajaran 2024/2025',
-      grade: 'X',
-      class: 'X IPA 1',
-      student: 'Joko Susanto',
-    },
-    {
-      id: 11,
-      period_name: 'Tahun Ajaran 2024/2025',
-      grade: 'X',
-      class: 'X IPA 1',
-      student: 'Hadi Dini',
-    },
-    {
-      id: 12,
-      period_name: 'Tahun Ajaran 2024/2025',
-      grade: 'X',
-      class: 'X IPA 1',
-      student: 'Adi Pratama',
-    },
-    {
-      id: 13,
-      period_name: 'Tahun Ajaran 2024/2025',
-      grade: 'X',
-      class: 'X IPA 1',
-      student: 'Ani Cahyani',
-    },
-    {
-      id: 14,
-      period_name: 'Tahun Ajaran 2024/2025',
-      grade: 'X',
-      class: 'X IPA 1',
-      student: 'Ratna Dewi',
-    },
-    {
-      id: 15,
-      period_name: 'Tahun Ajaran 2024/2025',
-      grade: 'X',
-      class: 'X IPA 1',
-      student: 'Achmad Faisal',
-    },
-    {
-      id: 16,
-      period_name: 'Tahun Ajaran 2024/2025',
-      grade: 'X',
-      class: 'X IPA 1',
-      student: 'Putra Sari',
-    },
-    {
-      id: 17,
-      period_name: 'Tahun Ajaran 2024/2025',
-      grade: 'X',
-      class: 'X IPA 1',
-      student: 'Sari Fitriani',
-    },
-    {
-      id: 18,
-      period_name: 'Tahun Ajaran 2024/2025',
-      grade: 'X',
-      class: 'X IPA 1',
-      student: 'Indra Wati',
-    },
-    {
-      id: 19,
-      period_name: 'Tahun Ajaran 2024/2025',
-      grade: 'X',
-      class: 'X IPA 1',
-      student: 'Sari Indah',
-    },
-    {
-      id: 20,
-      period_name: 'Tahun Ajaran 2024/2025',
-      grade: 'X',
-      class: 'X IPA 1',
-      student: 'Hendra Gunawan',
-    },
-    {
-      id: 21,
-      period_name: 'Tahun Ajaran 2024/2025',
-      grade: 'X',
-      class: 'X IPA 1',
-      student: 'Arianto Susilo',
-    },
-    {
-      id: 22,
-      period_name: 'Tahun Ajaran 2024/2025',
-      grade: 'X',
-      class: 'X IPA 1',
-      student: 'Linda Wulandari',
-    },
-    {
-      id: 23,
-      period_name: 'Tahun Ajaran 2024/2025',
-      grade: 'X',
-      class: 'X IPA 1',
-      student: 'Ilham Saputra',
-    },
-    {
-      id: 24,
-      period_name: 'Tahun Ajaran 2024/2025',
-      grade: 'X',
-      class: 'X IPA 1',
-      student: 'Yuniarti',
-    },
-    {
-      id: 25,
-      period_name: 'Tahun Ajaran 2024/2025',
-      grade: 'X',
-      class: 'X IPA 1',
-      student: 'Arief Dian',
-    },
-    {
-      id: 26,
-      period_name: 'Tahun Ajaran 2024/2025',
-      grade: 'X',
-      class: 'X IPA 1',
-      student: 'Firman Maya',
-    },
-    {
-      id: 27,
-      period_name: 'Tahun Ajaran 2024/2025',
-      grade: 'X',
-      class: 'X IPA 1',
-      student: 'Hendra',
-    },
-    {
-      id: 28,
-      period_name: 'Tahun Ajaran 2024/2025',
-      grade: 'X',
-      class: 'X IPA 1',
-      student: 'Rina Wati',
-    },
-    {
-      id: 29,
-      period_name: 'Tahun Ajaran 2024/2025',
-      grade: 'X',
-      class: 'X IPA 1',
-      student: 'Nurul Huda',
-    },
-    {
-      id: 30,
-      period_name: 'Tahun Ajaran 2024/2025',
-      grade: 'X',
-      class: 'X IPA 1',
-      student: 'Yulia Susanti',
-    },
-  ]);
+      await AcademicAPI.removeStudentFromGroup(class_id, payload);
+
+      getClassesData();
+      getAllCreateGroupData();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const editStudent = async (class_id, new_class_id, student_id) => {
+    try {
+      const id = new_class_id;
+
+      const payload = {
+        student_id: student_id,
+      };
+
+      await AcademicAPI.insertStudentToStudentGroup(id, payload);
+
+      await removeStudent(class_id, student_id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const removeStudentGroup = async (class_id) => {
+    try {
+      await AcademicAPI.removeStudentGroup(class_id);
+
+      getClassesData();
+      getAllCreateGroupData();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const [studentData, setStudentData] = useState([]);
+  const [groupList, setGroupList] = useState([]);
+  const [studentList, setStudentList] = useState([]);
+  const [teacherList, setTeacherList] = useState([]);
+  const [periodList, setPeriodList] = useState([]);
+  const [studyProgramList, setStudyProgramList] = useState([]);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -487,15 +154,25 @@ export default function StaffProfileContent() {
   const [sortSettings, setSortSettings] = useState('');
   const [openSortModal, setOpenSortModal] = useState(false);
 
-  const [openCreatePeriodModal, setOpenCreatePeriodModal] = useState(false);
-  const [openCreateCurriculumModal, setOpenCreateCurriculumModal] =
+  const [openInsertStudentModal, setOpenInsertStudentModal] = useState(false);
+  const [openCreateClassModal, setOpenCreateClassModal] = useState(false);
+  const [openCreateStudentGroupModal, setOpenCreateStudentGroupModal] =
     useState(false);
 
   const [activeTab, setActiveTab] = useState(0);
   let tabs = [
     {
       title: 'Kelas Wajib',
-      component: <ClassTable formik={formik} data={filteredData} />,
+      component: (
+        <ClassTable
+          formik={formik}
+          data={filteredData}
+          removeStudentGroup={removeStudentGroup}
+          teacherList={teacherList}
+          periodList={periodList}
+          studyProgramList={studyProgramList}
+        />
+      ),
     },
     {
       title: 'Kelas Pilihan',
@@ -503,80 +180,134 @@ export default function StaffProfileContent() {
     },
     {
       title: 'Murid',
-      component: <StudentTable formik={formik} data={filteredData} />,
+      component: (
+        <StudentTable
+          formik={formik}
+          data={filteredData}
+          removeStudent={removeStudent}
+          groupList={groupList}
+          teacherList={teacherList}
+          studentList={studentList}
+          editStudent={editStudent}
+        />
+      ),
     },
   ];
 
-  let [dataCurriculum, setDataCurriculum] = useState([]);
+  const [studentGroupData, setStudentGroupData] = useState([]);
+
+  const getClassesData = async () => {
+    try {
+      const fetchTeachers = await UsersAPI.getAllUsers('teacher');
+      const fetchGroup = await AcademicAPI.getAllStudentGroup();
+      const fetchStudent = await AcademicAPI.getAllStudentInGroup();
+      const fetchAllStudent = await UsersAPI.getAllUsers('student');
+
+      const groupData = fetchGroup.data.data;
+      const studentData = fetchStudent.data.data;
+      const allStudentData = fetchAllStudent.data.data;
+
+      const resTeachers = fetchTeachers.data.data.filter((ft) => {
+        const exist = groupData.find(
+          (fg) => fg.detail.homeroom_teacher_id == ft.id
+        );
+
+        if (ft.status == 'active' && !exist) {
+          return ft;
+        }
+      });
+
+      const filterStudent = allStudentData.reduce((a, b) => {
+        const exist = studentData.find((sd) => sd.student_id == b.id);
+
+        if (b.status == 'active' && !exist) {
+          return [...a, b];
+        }
+
+        return a;
+      }, []);
+
+      setStudentList(filterStudent);
+      setGroupList(groupData);
+      setTeacherList(resTeachers);
+
+      const groupRes = groupData
+        .map((gd) => {
+          const students = studentData.filter(
+            (sd) => sd.student_group_id == gd.id
+          );
+
+          return {
+            id: gd.id,
+            type: gd.type,
+            period: gd.period_name,
+            period_id: gd.period_id,
+            study_program: gd.study_program_name,
+            study_program_id: gd.study_program_id,
+            guardian: gd.detail.homeroom_teacher_name,
+            guardian_id: gd.detail.homeroom_teacher_id,
+            grade: gd.grade,
+            class: gd.name,
+            students: students.length,
+          };
+        })
+        .sort((a, b) => (a.grade == b.grade ? 0 : a.grade < b.grade ? -1 : 1));
+
+      const studentRes = studentData.map((sd) => {
+        const group = groupData.find((gd) => gd.id == sd.student_group_id);
+
+        return {
+          id: sd.student_group_id,
+          class: sd.student_group_name,
+          student: sd.student_name,
+          student_id: sd.student_id,
+          grade: group.grade,
+        };
+      });
+
+      setStudentData(studentRes);
+
+      setStudentGroupData(groupRes);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getAllCreateGroupData = async () => {
+    const fetchPeriod = await AcademicAPI.getAllPeriod();
+    const fetchStudyProgram = await AcademicAPI.getAllProdi();
+
+    const resPeriod = fetchPeriod.data.data;
+    const resProgram = fetchStudyProgram.data.data.filter(
+      (fsp) => fsp.status == 'active'
+    );
+
+    setPeriodList(resPeriod);
+    setStudyProgramList(resProgram);
+  };
 
   useEffect(() => {
-    const getClassesData = async () => {
-      const resStudentGroup = await AcademicAPI.getAllStudentGroup();
-      const resTeacher = await UsersAPI.getAllUsers('teacher');
-      const resStudent = await AcademicAPI.getAllStudentInGroup();
-
-      const studentGroupData = resStudentGroup.data.data;
-      const teacherData = resTeacher.data.data;
-      const studentData = resStudent.data.data;
-
-      // const mappedData = studentGroupData.map(sgd => {
-      //   if (sgd.)
-      // })
-
-      console.log(studentData);
-      console.log(studentGroupData);
-      console.log(teacherData);
-    };
-
     getClassesData();
+    getAllCreateGroupData();
   }, []);
-
-  // useEffect(() => {
-  //   let temp = [];
-  //   let id = 1;
-  //   data.map((period) => {
-  //     period.study_program.map((study_program) => {
-  //       ["X", "XI", "XII"].map((grade) => {
-  //         let tempObject = {
-  //           id: id,
-  //           period_name: period.period_name,
-  //           study_program: study_program,
-  //           grade: grade,
-  //           curriculum: period.period_name.endsWith("2025")
-  //             ? "Kurikulum Merdeka"
-  //             : period.period_name.endsWith("2024")
-  //             ? grade !== "XII"
-  //               ? "Kurikulum Merdeka"
-  //               : "Kurikulum 2013"
-  //             : grade === "X"
-  //             ? "Kurikulum Merdeka"
-  //             : "Kurikulum 2013",
-  //         };
-  //         temp.push(tempObject);
-  //         id++;
-  //       });
-  //     });
-  //   });
-  //   setDataCurriculum(temp);
-  // }, [activeTab]);
 
   useEffect(() => {
     let temp = [];
     activeTab === 0
-      ? (temp = data.filter((item) => {
+      ? (temp = studentGroupData.filter((item) => {
           return (
             item.class.toLowerCase().includes(search.toLowerCase()) &&
-            item.type === 'mandatory'
+            item.type === 'homeroom'
           );
         }))
       : activeTab === 1
-      ? (temp = data.filter((item) => {
+      ? (temp = studentGroupData.filter((item) => {
           return (
             item.class.toLowerCase().includes(search.toLowerCase()) &&
             item.type === 'elective'
           );
         }))
-      : (temp = dataStudent.filter((item) => {
+      : (temp = studentData.filter((item) => {
           return item.student.toLowerCase().includes(search.toLowerCase());
         }));
     // if (sortSettings && sortSettings.sortBy) {
@@ -640,9 +371,15 @@ export default function StaffProfileContent() {
     //   });
     // }
     setFilteredData(temp);
-    console.log(temp);
     formik.setValues(emptyData);
-  }, [search, studyProgramFilter, sortSettings, activeTab]);
+  }, [
+    search,
+    studyProgramFilter,
+    sortSettings,
+    activeTab,
+    studentGroupData,
+    studentData,
+  ]);
 
   function Filters() {
     return (
@@ -824,9 +561,9 @@ export default function StaffProfileContent() {
   return (
     <Stack sx={{ height: '100%', width: '100%', p: { xs: 0, lg: 4 } }}>
       <Modal
-        open={openCreateCurriculumModal}
+        open={openCreateStudentGroupModal}
         onClose={() => {
-          setOpenCreateCurriculumModal(false);
+          setOpenCreateStudentGroupModal(false);
           formik.setValues({});
         }}
       >
@@ -853,12 +590,17 @@ export default function StaffProfileContent() {
             }}
           >
             <Typography fontWeight={600} fontSize={16}>
-              Tambah Kurikulum
+              Tambah Kelas Wajib
             </Typography>
           </Box>
           <Divider />
           <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
-            <FormAddCurriculum formik={formik} />
+            <FormAddStudentGroup
+              formik={formik}
+              teacherList={teacherList}
+              periodList={periodList}
+              studyProgramList={studyProgramList}
+            />
           </Box>
           <Divider />
           <Stack
@@ -871,7 +613,7 @@ export default function StaffProfileContent() {
               variant='outlined'
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
-                setOpenCreateCurriculumModal(false);
+                setOpenCreateStudentGroupModal(false);
                 formik.setValues({});
               }}
             >
@@ -881,8 +623,8 @@ export default function StaffProfileContent() {
               variant='contained'
               sx={{ flex: 1 }}
               onClick={() => {
-                setOpenCreateCurriculumModal(false);
-                formik.setValues({});
+                setOpenCreateStudentGroupModal(false);
+                formik.handleSubmit();
               }}
             >
               Simpan
@@ -891,8 +633,11 @@ export default function StaffProfileContent() {
         </Stack>
       </Modal>
       <Modal
-        open={openCreatePeriodModal}
-        onClose={() => setOpenCreatePeriodModal(false)}
+        open={openInsertStudentModal}
+        onClose={() => {
+          setOpenInsertStudentModal(false);
+          formik.setValues({});
+        }}
       >
         <Stack
           component={Paper}
@@ -917,12 +662,16 @@ export default function StaffProfileContent() {
             }}
           >
             <Typography fontWeight={600} fontSize={16}>
-              Tambah Periode
+              Tambah Murid
             </Typography>
           </Box>
           <Divider />
           <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
-            <FormAddPeriod formik={formik} />
+            <FormAddStudent
+              formik={formik}
+              studentList={studentList}
+              groupList={groupList}
+            />
           </Box>
           <Divider />
           <Stack
@@ -935,7 +684,7 @@ export default function StaffProfileContent() {
               variant='outlined'
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
-                setOpenCreatePeriodModal(false);
+                setOpenInsertStudentModal(false);
                 formik.setValues(emptyData);
               }}
             >
@@ -945,8 +694,8 @@ export default function StaffProfileContent() {
               variant='contained'
               sx={{ flex: 1 }}
               onClick={() => {
-                setOpenCreatePeriodModal(false);
-                formik.setValues(emptyData);
+                setOpenInsertStudentModal(false);
+                formik.handleSubmit();
               }}
             >
               Simpan
@@ -1003,13 +752,11 @@ export default function StaffProfileContent() {
           >
             {(activeTab === 1
               ? [
-                  { title: 'Periode', slug: 'period_name' },
                   { title: 'Program Studi', slug: 'study_program' },
                   { title: 'Tingkatan', slug: 'grade' },
                   { title: 'Kurikulum', slug: 'curriculum' },
                 ]
               : [
-                  { title: 'Periode', slug: 'period_name' },
                   { title: 'Rentang Waktu', slug: 'start_time' },
                   { title: 'Status', slug: 'status' },
                 ]
@@ -1117,7 +864,7 @@ export default function StaffProfileContent() {
                   setSortBy('');
                   setSortSettings('');
                   formik.setValues(emptyData);
-                  index === 0 ? setFilteredData(data) : null;
+                  index === 0 ? setFilteredData(studentGroupData) : null;
                 }}
               >
                 <Typography sx={{ fontWeight: 600, fontSize: 14 }}>
@@ -1300,13 +1047,13 @@ export default function StaffProfileContent() {
                 width: 100,
                 height: '100%',
               }}
-              // onClick={() =>
-              //   activeTab === 0
-              //     ? setOpenCreatePeriodModal(true)
-              //     : activeTab === 1
-              //     ? setOpenCreateCurriculumModal(true)
-              //     : null
-              // }
+              onClick={() =>
+                activeTab === 0
+                  ? setOpenCreateStudentGroupModal(true)
+                  : activeTab === 1
+                  ? setOpenCreateClassModal(true)
+                  : setOpenInsertStudentModal(true)
+              }
             >
               <Typography sx={{ fontSize: 14 }}>Tambah</Typography>
             </Button>

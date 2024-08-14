@@ -1,25 +1,21 @@
-import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import Image from 'next/image';
+import { types } from '@/globalcomponents/Variable';
+import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
 import {
   Avatar,
   Box,
   Button,
-  Chip,
   Divider,
   IconButton,
   Modal,
   Paper,
   Stack,
-  TextField,
   Typography,
   useMediaQuery,
 } from '@mui/material';
-import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
-import Link from 'next/link';
-import { types, permissions, targets } from '@/globalcomponents/Variable';
+import { DataGrid } from '@mui/x-data-grid';
+import Image from 'next/image';
 import { useState } from 'react';
-import { FormAddAnnouncement } from './FormAddAnnouncement';
+import { FormAddStudent } from './FormAddStudent';
 
 const columns = [
   {
@@ -28,12 +24,6 @@ const columns = [
     flex: 1,
     sortable: false,
     renderCell: (params) => {
-      let tempType;
-      types.map((item) => {
-        if (item.slug === params.value.data.type) {
-          tempType = item.title;
-        }
-      });
       return (
         <Box sx={{ width: '100%', mx: 2, py: 0.5 }}>
           <Stack
@@ -45,59 +35,76 @@ const columns = [
               p: 2,
             }}
           >
-            <Stack direction={'row'} justifyContent={'space-between'} flex={1}>
-              <Stack direction={'row'} alignItems={'center'}>
-                <Box
-                  sx={{
-                    minWidth: '60px',
-                    height: '60px',
-                    borderRadius: 2,
-                    overflow: 'hidden',
-                    position: 'relative',
-                    mr: 1,
-                  }}
-                >
-                  <Image
-                    alt='Web Image'
-                    fill
-                    sizes='100%'
-                    style={{ objectFit: 'cover' }}
-                    src={`https://api-staging.sisva.id/file/v1/files/${params.value.data.image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
-                  />
-                </Box>
+            <Stack sx={{ width: '100%' }}>
+              <Stack
+                direction={'row'}
+                justifyContent={'space-between'}
+                flex={1}
+              >
+                <Stack direction={'row'} alignItems={'center'}>
+                  <Avatar
+                    sx={{
+                      width: '40px',
+                      height: '40px',
+                      position: 'relative',
+                      mr: 1,
+                    }}
+                  >
+                    <Image
+                      alt='Web Image'
+                      fill
+                      sizes='100%'
+                      style={{ objectFit: 'cover' }}
+                      src={`https://api-staging.sisva.id/file/v1/files/${params.value.data.profile_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+                    />
+                  </Avatar>
+                  <Typography
+                    sx={{
+                      color: 'black',
+                    }}
+                  >
+                    {params.value.data.name}
+                  </Typography>
+                </Stack>
+              </Stack>
+
+              <Stack
+                sx={{
+                  width: '100%',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  borderBottom: '1px solid rgb(0,0,0,0.12)',
+                  px: 1,
+                  py: '10px',
+                  backgroundColor: 'base.base10',
+                }}
+              >
                 <Typography
-                  sx={{
-                    fontWeight: 600,
-                    color: 'black',
-                  }}
+                  sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
                 >
-                  {params.value.data.name}
+                  Program Studi
+                </Typography>
+                <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
+                  {params.value.data.grades?.length}
+                </Typography>
+              </Stack>
+
+              <Stack
+                sx={{
+                  width: '100%',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  borderBottom: '1px solid rgb(0,0,0,0.12)',
+                  px: 1,
+                  py: '10px',
+                  backgroundColor: 'base.base10',
+                }}
+              >
+                <Typography sx={{ color: 'base.base50', fontSize: 12 }}>
+                  Tingkatan
                 </Typography>
               </Stack>
             </Stack>
-
-            <Typography sx={{ fontSize: 14, lineHeight: '14px', mt: 2 }}>
-              {params.value.data.description}
-            </Typography>
-            <Stack sx={{ flexDirection: 'row', mt: 2 }}>
-              <Stack sx={{ flex: 1 }}>
-                <Typography sx={{ color: 'base.base50', fontSize: 12 }}>
-                  Target
-                </Typography>
-                <Typography sx={{ fontSize: 14, lineHeight: '14px' }}>
-                  {params.value.data.target}
-                </Typography>
-              </Stack>
-              <Stack sx={{ flex: 1, textAlign: 'right' }}>
-                <Typography sx={{ color: 'base.base50', fontSize: 12 }}>
-                  Tanggal Post
-                </Typography>
-                <Typography sx={{ fontSize: 14, lineHeight: '14px' }}>
-                  {params.value.data.datePosted}
-                </Typography>
-              </Stack>
-            </Stack>
-
             <ActionButton params={params} />
           </Stack>
         </Box>
@@ -105,46 +112,38 @@ const columns = [
     },
   },
   {
-    field: 'image_uri',
+    field: 'profile_image_uri',
     headerName: '',
+    width: 70,
     sortable: false,
-    width: 110,
     renderCell: (params) => (
-      <Box
+      <Avatar
         sx={{
-          width: 70,
-          height: 70,
-          borderRadius: 2,
-          overflow: 'hidden',
-          backgroundColor: 'red',
+          width: 40,
+          height: 40,
           my: 1.5,
           ml: 2,
           position: 'relative',
           display: 'flex',
-          justifyContent: 'flex-end',
         }}
       >
-        <Image
-          alt='Web Image'
-          fill
-          sizes='100%'
-          style={{ objectFit: 'cover' }}
-          src={`https://api-staging.sisva.id/file/v1/files/${params.value}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
-        />
-      </Box>
+        {params.value[0] !== '' ? (
+          <Image
+            alt='Web Image'
+            fill
+            sizes='100%'
+            style={{ objectFit: 'cover' }}
+            src={`https://api-staging.sisva.id/file/v1/files/${params.value[0]}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+          />
+        ) : (
+          params.value[1].toUpperCase().slice(0, 1)
+        )}
+      </Avatar>
     ),
   },
-  { field: 'name', headerName: 'Judul', flex: 0.6 },
-  { field: 'description', headerName: 'Deskripsi', flex: 1 },
-  {
-    field: 'target',
-    headerName: 'Target',
-    width: 140,
-    renderCell: (params) => {
-      return <ChipList params={params.row.target} />;
-    },
-  },
-  { field: 'datePosted', headerName: 'Tanggal Post', flex: 0.5 },
+  { field: 'name', headerName: 'Nama', flex: 1 },
+  { field: 'study_program', headerName: 'Program Studi', flex: 1 },
+  { field: 'grade', headerName: 'Tingkatan', flex: 1 },
   {
     field: 'action',
     headerName: 'Aksi',
@@ -156,46 +155,12 @@ const columns = [
   },
 ];
 
-function ChipList({ params }) {
-  return (
-    <Stack
-      sx={{
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        overflow: 'hidden',
-        m: '8px 0',
-      }}
-    >
-      {params.map((target, index) => {
-        let tempTarget;
-        targets.map((item) => {
-          if (item.slug === target) {
-            tempTarget = item.title;
-          }
-        });
-        return (
-          <Chip
-            key={index}
-            sx={{
-              m: { xs: '2px 4px 2px 0', lg: '2px' },
-              fontSize: 12,
-            }}
-            label={tempTarget}
-            color='primary'
-          />
-        );
-      })}
-    </Stack>
-  );
-}
-
 function ActionButton({ params }) {
   return (
     <Stack
       sx={{
         flexDirection: 'row',
         alignItems: 'center',
-        alignSelf: { xs: 'flex-end', lg: 'center' },
         mt: { xs: 2, lg: 0 },
       }}
     >
@@ -213,11 +178,12 @@ function ActionButton({ params }) {
           params.value.setOpenEditModal(true);
           params.value.setActiveRow(params.value.data);
           params.value.formik.setValues({
-            id: params.value.data.id,
-            title: params.value.data.name,
-            text: params.value.data.description,
-            target_user_types: params.value.data.target,
-            image_uri: params.value.data.image_uri,
+            student: params.value.data.id,
+            student_name: params.value.data.name,
+            study_program_name: params.value.data.study_program,
+            study_program: params.value.data.study_program_id,
+            grade: params.value.data.grade,
+            detail: params.value.data.detail,
           });
         }}
       >
@@ -263,11 +229,12 @@ function ActionButton({ params }) {
   );
 }
 
-export default function DataTable({
-  formik,
+export default function StudentTable({
   data,
-  deleteInfo = () => {},
-  handleFileChange = () => {},
+  formik,
+  tableData,
+  studentList,
+  deleteStudent = () => {},
 }) {
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('lg'));
 
@@ -281,20 +248,22 @@ export default function DataTable({
     let tempObject = {
       id: data.id,
       name: data.name,
-      description: data.description,
-      target: data.target,
-      datePosted: data.datePosted,
-      image_uri: data.image_uri,
+      study_program: data.study_program,
+      grade: data.grade,
+      profile_image_uri: [data.profile_image_uri, data.name],
+      detail: data.detail,
+
       action: {
         data: data,
         setActiveRow: setActiveRow,
-        setOpenDeleteModal: setOpenDeleteModal,
         setOpenEditModal: setOpenEditModal,
+        setOpenDeleteModal: setOpenDeleteModal,
         formik: formik,
       },
       card: {
         data: data,
         setActiveRow: setActiveRow,
+        setOpenEditModal: setOpenEditModal,
         setOpenDeleteModal: setOpenDeleteModal,
         formik: formik,
       },
@@ -307,7 +276,8 @@ export default function DataTable({
       <Modal
         open={openEditModal}
         onClose={() => {
-          setOpenEditModal(false), formik.setValues({});
+          setOpenEditModal(false);
+          formik.setValues({});
         }}
       >
         <Stack
@@ -333,14 +303,16 @@ export default function DataTable({
             }}
           >
             <Typography fontWeight={600} fontSize={16}>
-              Edit Pengumuman
+              Edit Siswa
             </Typography>
           </Box>
           <Divider />
           <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
-            <FormAddAnnouncement
+            <FormAddStudent
               formik={formik}
-              handleFileChange={handleFileChange}
+              tableData={tableData}
+              studentList={studentList}
+              editing={true}
             />
           </Box>
           <Divider />
@@ -365,10 +337,11 @@ export default function DataTable({
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenEditModal(false);
+                formik.setFieldValue('id', activeRow.id);
                 formik.handleSubmit();
               }}
             >
-              Edit
+              Simpan
             </Button>
           </Stack>
         </Stack>
@@ -394,51 +367,68 @@ export default function DataTable({
         >
           <Box>
             <Typography fontWeight={600} fontSize={16}>
-              Hapus Pengumuman
+              Hapus Program Studi
             </Typography>
           </Box>
 
           <Typography sx={{ mt: 1, fontSize: 14 }}>
-            Anda akan menghapus pengumuman:
+            Anda akan menghapus program studi berikut:
           </Typography>
           <Stack
-            sx={{
-              backgroundColor: 'base.base20',
-              p: 1,
-              borderRadius: 2,
-              flexDirection: 'row',
-              alignItems: 'center',
-              mt: 1,
-              mb: 2,
-            }}
+            sx={{ width: '100%', my: 1, overflow: 'hidden', borderRadius: 2 }}
           >
-            <Avatar
+            <Stack
               sx={{
-                width: '40px',
-                height: '40px',
-                position: 'relative',
-                mr: 1,
+                width: '100%',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                borderBottom: '1px solid rgb(0,0,0,0.12)',
+                px: 1,
+                py: '10px',
+                backgroundColor: 'base.base10',
               }}
             >
-              <Image
-                alt='Web Image'
-                fill
-                sizes='100%'
-                style={{ objectFit: 'cover' }}
-                src={`https://api-staging.sisva.id/file/v1/files/${activeRow.image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
-              />
-            </Avatar>
-            <Stack justifyContent={'center'}>
-              <Typography
-                sx={{
-                  color: 'black',
-                  fontWeight: 600,
-                }}
-              >
+              <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
+                Program Studi
+              </Typography>
+              <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
                 {activeRow.name}
               </Typography>
-              <Typography sx={{ fontSize: 14, lineHeight: '16px' }}>
-                {activeRow.username}
+            </Stack>
+            <Stack
+              sx={{
+                width: '100%',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                borderBottom: '1px solid rgb(0,0,0,0.12)',
+                px: 1,
+                py: '10px',
+                backgroundColor: 'base.base20',
+              }}
+            >
+              <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
+                Program Study
+              </Typography>
+              <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
+                {activeRow.study_program}
+              </Typography>
+            </Stack>
+            <Stack
+              sx={{
+                width: '100%',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                borderBottom: '1px solid rgb(0,0,0,0.12)',
+                px: 1,
+                py: '10px',
+                backgroundColor: 'base.base20',
+              }}
+            >
+              <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
+                Tingkatan
+              </Typography>
+              <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
+                {activeRow.grade}
               </Typography>
             </Stack>
           </Stack>
@@ -467,7 +457,7 @@ export default function DataTable({
                 },
               }}
               onClick={() => {
-                deleteInfo(activeRow.id);
+                deleteStudent(activeRow.id, activeRow.detail);
                 setOpenDeleteModal(false);
               }}
             >
@@ -510,7 +500,7 @@ export default function DataTable({
             background-color: #f2f4f7;
           }
           .MuiDataGrid-root .MuiDataGrid-cell {
-            padding: 16px;
+            padding: 0;
             padding-left: 10px;
           }
           .MuiDataGrid-root .MuiDataGrid-cell:focus-within {
@@ -545,11 +535,11 @@ export default function DataTable({
                 card: false,
               }
             : {
-                image_uri: false,
+                profile_image_uri: false,
                 name: false,
-                description: false,
-                target: false,
-                datePosted: false,
+                username: false,
+                type: false,
+                permissions: false,
                 action: false,
               }
         }

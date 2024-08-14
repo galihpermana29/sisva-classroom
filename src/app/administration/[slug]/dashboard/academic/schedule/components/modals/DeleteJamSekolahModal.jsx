@@ -12,6 +12,7 @@ import { useState } from "react";
 import { ModalBody } from "@/components/CustomModal";
 import { Delete } from "@mui/icons-material";
 import { useDeleteSchoolSchedule } from "../../hooks/useDeleteSchoolSchedule";
+import { useFilterStatus } from "../../hooks/filters/useFilterStatus";
 
 export const DeleteJamSekolahModal = ({ data }) => {
   const [open, setOpen] = useState(false);
@@ -63,7 +64,8 @@ export const DeleteJamSekolahModal = ({ data }) => {
 };
 
 const ModalContent = ({ id, handleClose }) => {
-  const { mutate } = useDeleteSchoolSchedule({ handleClose, id });
+  const { periode } = useFilterStatus();
+  const { mutate } = useDeleteSchoolSchedule({ handleClose, id, periode });
   const handleSubmit = () => mutate();
 
   return (

@@ -192,7 +192,9 @@ export const FormStudentParents = ({ formik, editing }) => {
                 <Box sx={{ height: 96, width: 96, position: 'relative' }}>
                   <Image
                     alt='Image'
-                    src={formik.values[field.name]}
+                    src={`https://api-staging.sisva.id/file/v1/files/${
+                      formik.values[field.name]
+                    }?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
                     layout='fill'
                     objectFit='cover'
                   />
@@ -295,7 +297,9 @@ export const FormStudentParents = ({ formik, editing }) => {
                   <Box sx={{ height: 96, width: 96, position: 'relative' }}>
                     <Image
                       alt='Image'
-                      src={formik.values[field.name]}
+                      src={`https://api-staging.sisva.id/file/v1/files/${
+                        formik.values[field.name]
+                      }?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
                       layout='fill'
                       objectFit='cover'
                     />

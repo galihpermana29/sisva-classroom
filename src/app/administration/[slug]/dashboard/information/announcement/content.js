@@ -1,19 +1,13 @@
 'use client';
 
-import {
-  Add,
-  Cancel,
-  DownloadRounded,
-  Search,
-  UploadFileRounded,
-} from '@mui/icons-material';
+import { SortIcon } from '@/assets/SVGs';
+import { Add, Cancel, Search } from '@mui/icons-material';
 import {
   Box,
   Button,
   Divider,
   Hidden,
   InputAdornment,
-  Menu,
   MenuItem,
   Modal,
   Paper,
@@ -21,24 +15,19 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import DataTable from './components/Table';
-import { ExcelIcon, ExportIcon, SortIcon } from '@/assets/SVGs';
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { permissions, types } from '@/globalcomponents/Variable';
-import {
-  FormAddAnnouncement,
-  FormAddStaff,
-} from './components/FormAddAnnouncement';
+import { FormAddAnnouncement } from './components/FormAddAnnouncement';
+import DataTable from './components/Table';
 
-import { useFormik } from 'formik';
 import AcademicAPI from '@/api/academic';
 import FilesAPI from '@/api/files';
+import { useFormik } from 'formik';
 
 export default function AnnouncementsList() {
   const [initialData, setinitialData] = useState({
     title: '',
     text: '',
+    target_user_types: [],
     image_uri: '',
   });
   const formik = useFormik({
@@ -50,8 +39,6 @@ export default function AnnouncementsList() {
           const payload = values;
 
           await AcademicAPI.addAnnouncement(payload);
-
-          window.location.reload();
         }
         if (values.id) {
           const id = values.id;
@@ -61,12 +48,12 @@ export default function AnnouncementsList() {
           const payload = values;
 
           await AcademicAPI.updateAnnouncement(id, payload);
-
-          window.location.reload();
         }
       } catch (error) {
         console.log(error);
       }
+
+      fetchInfo();
     },
   });
 
@@ -83,7 +70,7 @@ export default function AnnouncementsList() {
           id: dt.id,
           name: dt.title,
           description: dt.text,
-          target: '-',
+          target: dt.target_user_types,
           datePosted: dt.create_time.split(' ').splice(0, 2).join(' '),
           image_uri: dt.image_uri,
         };
@@ -99,7 +86,7 @@ export default function AnnouncementsList() {
     try {
       await AcademicAPI.deleteAnnouncement(id);
 
-      window.location.reload();
+      fetchInfo();
     } catch (error) {
       console.log(error);
     }
@@ -120,8 +107,6 @@ export default function AnnouncementsList() {
       const {
         data: { data },
       } = await FilesAPI.uploadimage(formData);
-
-      console.log(data);
 
       formik.setFieldValue(name, data);
     } catch (error) {

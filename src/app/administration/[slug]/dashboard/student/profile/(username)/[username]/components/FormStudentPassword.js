@@ -314,13 +314,16 @@ export const FormStudentPassword = ({
                     mr: 1,
                   }}
                 >
-                  <Image
-                    alt='Web Image'
-                    fill
-                    sizes='100%'
-                    style={{ objectFit: 'cover' }}
-                    src={activeUser.profile_image_uri}
-                  />
+                  {activeUser.profile_image_uri !== '' ? (
+                    <Image
+                      alt='Image'
+                      src={`https://api-staging.sisva.id/file/v1/files/${activeUser.profile_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+                      layout={'fill'}
+                      objectFit={'cover'}
+                    />
+                  ) : (
+                    activeUser?.name.toUpperCase().slice(0, 1)
+                  )}
                 </Avatar>
                 <Stack justifyContent={'center'}>
                   <Typography
@@ -366,7 +369,7 @@ export const FormStudentPassword = ({
                     formik.handleSubmit();
                   }}
                 >
-                  Hapus
+                  Reset
                 </Button>
               </Stack>
             </Stack>
