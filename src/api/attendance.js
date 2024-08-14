@@ -30,6 +30,26 @@ const AttendanceApi = {
     };
     return api.get(`/students?date_id=${date_id}`, { headers });
   },
+
+  createStaffAttendance(id, payload) {
+    const headers = {
+      'X-Sisva-Source': 'attendance.tasks.test',
+      'X-Sisva-UserID': USER_ID,
+      'X-Sisva-SchoolID': SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.put(`/staff/${id}`, payload, { headers });
+  },
+
+  createStudentAttendance(id, payload) {
+    const headers = {
+      'X-Sisva-Source': 'attendance.tasks.test',
+      'X-Sisva-UserID': USER_ID,
+      'X-Sisva-SchoolID': SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.put(`/students/${id}`, payload, { headers });
+  },
 };
 
 export default AttendanceApi;

@@ -16,11 +16,12 @@ import {
 
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import AuthAPI from '@/api/auth';
 
 export default function Home() {
   const router = useRouter();
+  const { slug } = useParams();
 
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -50,7 +51,7 @@ export default function Home() {
         localStorage.setItem('user', JSON.stringify(data));
 
         if (JSON.parse(localStorage.getItem('user'))) {
-          router.push('/administration/SEKOLAHSISVA/dashboard');
+          router.push(`/administration/${slug}/dashboard`);
         }
       }
     } catch (error) {
@@ -150,7 +151,7 @@ export default function Home() {
 
       <Typography
         component={Link}
-        href='/administration/SEKOLAHSISVA/auth/information'
+        href={`/administration/${slug}/auth/information`}
         color='primary'
         variant='body2'
         fontWeight='500'

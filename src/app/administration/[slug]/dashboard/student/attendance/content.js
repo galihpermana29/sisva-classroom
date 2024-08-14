@@ -1,7 +1,7 @@
 'use client';
 
+import { ExcelIcon, SortIcon } from '@/assets/SVGs';
 import {
-  Add,
   Cancel,
   DownloadRounded,
   Search,
@@ -21,178 +21,75 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import DataTable from './components/Table';
-import { ExcelIcon, ExportIcon, SortIcon } from '@/assets/SVGs';
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { permissions, types } from '@/globalcomponents/Variable';
 import { FormAddStaff } from './components/FormAddStaff';
+import DataTable from './components/Table';
 
-import { useFormik } from 'formik';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import dayjs from 'dayjs';
 import AttendanceApi from '@/api/attendance';
 import UsersAPI from '@/api/users';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import dayjs from 'dayjs';
+import { useFormik } from 'formik';
 
 export default function StaffProfileListContent() {
   const [initialData, setinitialData] = useState({
-    name: '',
-    class: '',
-    username: '',
-    type: 'staff',
-    permissions: [],
-    password: '',
-    password_confirm: '',
+    id: '',
+    status: 'present',
   });
   const formik = useFormik({
     initialValues: { ...initialData },
+
+    onSubmit: async (values) => {
+      try {
+        const dateCode = dayjs(new Date(pickedDate))
+          .toISOString()
+          .split('T')[0]
+          .split('-')
+          .join('');
+
+        const id = values.id;
+
+        const payload = {
+          date_id: Number(dateCode),
+          status: values.status,
+        };
+
+        await AttendanceApi.createStudentAttendance(id, payload);
+
+        getAllStudentAttendance(pickedDate);
+      } catch (error) {
+        console.log(error);
+      }
+    },
   });
 
-  let data = [
-    {
-      id: 'bb28c1b4-4a84-48a7-8d01-20bf157d1c61',
-      class: 'X MIPA 1',
-      username: 'doni.alamsyah',
-      nik: '78901234567890',
-      name: 'Doni Alamsyah',
-      class: 'X MIPA 1',
-      type: 'student',
-      detail: {},
-      profile_image_uri:
-        'https://images.unsplash.com/photo-1695642579321-fcb1fc79b976?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=302&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY5NzIyMTM4NA&ixlib=rb-4.0.3&q=80&w=300',
-      roles: ['student'],
-      permissions: [
-        'school',
-        'student',
-        'academic',
-        'student',
-        'report',
-        'information',
-        'finance',
-      ],
-      status: 'absent',
-    },
-    {
-      id: '9c7bf4f7-7df6-48a3-94df-67de486ac1ca',
-      class: 'X MIPA 1',
-      username: 'putra.utama',
-      nik: '12345678901234',
-      name: 'Putra Utama',
-      type: 'student',
-      detail: {},
-      profile_image_uri: `https://source.unsplash.com/random/300x300`,
-      roles: ['student'],
-      permissions: ['academic', 'student', 'report'],
-      status: 'present',
-    },
-    {
-      id: '1b19c067-1fc1-4856-a4a9-c0c7a32aeb5e',
-      class: 'X MIPA 1',
-      username: 'siti.rahma',
-      nik: '23456789012345',
-      name: 'Siti Rahmawati',
-      type: 'student',
-      detail: {},
-      profile_image_uri: `https://source.unsplash.com/random/300x301`,
-      roles: ['student'],
-      permissions: ['finance'],
-      status: 'present',
-    },
-    {
-      id: '9aa18316-9e57-4aa3-aa0b-3df0fdeac42a',
-      class: 'X MIPA 1',
-      username: 'indra.kusuma',
-      nik: '34567890123456',
-      name: 'Indra Kusuma',
-      type: 'student',
-      detail: {},
-      profile_image_uri: `https://source.unsplash.com/random/300x302`,
-      roles: ['student'],
-      permissions: ['information'],
-      status: 'leave',
-    },
-    {
-      id: '91b93b08-16f9-4b8d-b991-9b11ef2c7744',
-      class: 'X MIPA 1',
-      username: 'nur.hidayah',
-      nik: '45678901234567',
-      name: 'Nur Hidayah',
-      type: 'student',
-      detail: {},
-      profile_image_uri: `https://source.unsplash.com/random/300x303`,
-      roles: ['student'],
-      permissions: [],
-      status: 'sick',
-    },
-    {
-      id: '4f674fea-688f-4ae1-8c29-900c1d1b6852',
-      class: 'X MIPA 1',
-      username: 'budi.santoso',
-      nik: '56789012345678',
-      name: 'Budi Santoso',
-      type: 'student',
-      detail: {},
-      profile_image_uri: `https://source.unsplash.com/random/300x304`,
-      roles: ['student'],
-      permissions: [],
-      status: 'present',
-    },
-    {
-      id: '01bf819d-ea18-475d-9c18-488ac27a1212',
-      class: 'X MIPA 1',
-      username: 'maya.dewi',
-      nik: '67890123456789',
-      name: 'Maya Dewi',
-      type: 'student',
-      detail: {},
-      profile_image_uri: `https://source.unsplash.com/random/300x305`,
-      roles: ['student'],
-      permissions: ['report'],
-      status: 'present',
-    },
-    {
-      id: '45a8d93a-e7ca-4c2f-a1e8-4d8bf7e51f1e',
-      class: 'X MIPA 1',
-      username: 'dian.sari',
-      nik: '89012345678901',
-      name: 'Dian Sari',
-      type: 'student',
-      detail: {},
-      profile_image_uri: `https://source.unsplash.com/random/300x307`,
-      roles: ['student'],
-      permissions: ['report'],
-      status: 'present',
-    },
-    {
-      id: 'a0c1b7e6-529c-456e-b77f-428cd75c1ea4',
-      class: 'X MIPA 1',
-      username: 'bayu.pratama',
-      nik: '90123456789012',
-      name: 'Bayu Pratama',
-      type: 'student',
-      detail: {},
-      profile_image_uri: `https://source.unsplash.com/random/300x308`,
-      roles: ['student'],
-      permissions: ['report'],
-      status: 'present',
-    },
-    {
-      id: 'b4a8f1eb-4e64-4ae3-9d14-109ea2c1b9ab',
-      class: 'X MIPA 1',
-      username: 'wulan.sari',
-      nik: '12345678901234',
-      name: 'Wulan Sari',
-      type: 'student',
-      detail: {},
-      profile_image_uri: `https://source.unsplash.com/random/300x309`,
-      roles: ['student'],
-      permissions: ['report'],
-      status: 'present',
-    },
-  ];
+  // let data = [
+  //   {
+  //     id: 'bb28c1b4-4a84-48a7-8d01-20bf157d1c61',
+  //     class: 'X MIPA 1',
+  //     username: 'doni.alamsyah',
+  //     nik: '78901234567890',
+  //     name: 'Doni Alamsyah',
+  //     class: 'X MIPA 1',
+  //     type: 'student',
+  //     detail: {},
+  //     profile_image_uri:
+  //       'https://images.unsplash.com/photo-1695642579321-fcb1fc79b976?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=302&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY5NzIyMTM4NA&ixlib=rb-4.0.3&q=80&w=300',
+  //     roles: ['student'],
+  //     permissions: [
+  //       'school',
+  //       'student',
+  //       'academic',
+  //       'student',
+  //       'report',
+  //       'information',
+  //       'finance',
+  //     ],
+  //     status: 'absent',
+  //   },
+  // ];
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -231,16 +128,12 @@ export default function StaffProfileListContent() {
 
       const studentDetailData = await (
         await UsersAPI.getAllUsers('student')
-      ).data.data;
+      ).data.data.filter((dt) => dt.status == 'active');
 
-      const newMappedData = data.map((user) => {
-        const exists = studentDetailData.find(
-          (detail) => detail.id === user.student_id
-        );
+      const newMappedData = studentDetailData.map((user) => {
+        const stats = data.find((dt) => user.id == dt.student_id)?.status;
 
-        if (exists) {
-          return { ...exists, status: user.status };
-        }
+        return { ...user, status: stats ? stats : 'present' };
       });
 
       setStudentAttendanceData(newMappedData);
@@ -463,9 +356,7 @@ export default function StaffProfileListContent() {
               padding: 2,
             }}
           >
-            <Typography fontWeight={600} fontSize={16}>
-              Tambah Karyawan
-            </Typography>
+            <Typography fontWeight={600} fontSize={16}></Typography>
           </Box>
           <Divider />
           <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
@@ -815,7 +706,7 @@ export default function StaffProfileListContent() {
         </Stack>
         <Divider />
         <Box sx={{ flex: 1, overflowY: 'hidden' }}>
-          <DataTable data={filteredData} />
+          <DataTable data={filteredData} formik={formik} />
         </Box>
       </Stack>
     </Stack>

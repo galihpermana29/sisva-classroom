@@ -418,12 +418,21 @@ export default function StudyProgramTable({
               }}
               onClick={() => {
                 setOpenEditModal(false);
+
+                if (activeRow.status == 'active') {
+                  formik.setValues({
+                    id: activeRow.id,
+                    period_name: activeRow.name,
+                    start_time: dayjs(activeRow.start_time),
+                    end_time: dayjs(activeRow.end_time),
+                    status: 'finished',
+                  });
+                }
+
                 formik.handleSubmit();
               }}
             >
-              {formik.values['status'] !== 'inactive'
-                ? 'Simpan'
-                : 'Akhiri Periode'}
+              {activeRow.status !== 'active' ? 'Simpan' : 'Akhiri Periode'}
             </Button>
           </Stack>
         </Stack>

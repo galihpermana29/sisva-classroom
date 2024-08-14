@@ -1,15 +1,11 @@
 'use client';
 
 import {
-  Avatar,
   Box,
   Button,
   Chip,
   FormControl,
   Grid,
-  IconButton,
-  InputAdornment,
-  InputLabel,
   MenuItem,
   OutlinedInput,
   Select,
@@ -19,13 +15,8 @@ import {
 } from '@mui/material';
 import Image from 'next/image';
 
-import {
-  formAddAnnouncement,
-  formAddStaffFields,
-} from '@/globalcomponents/FormFields';
-import { Cancel, Visibility, VisibilityOff } from '@mui/icons-material';
-import { useState } from 'react';
-import { permissions } from '@/globalcomponents/Variable';
+import { formAddAnnouncement } from '@/globalcomponents/FormFields';
+import { targets } from '@/globalcomponents/Variable';
 
 export const FormAddAnnouncement = ({
   formik,
@@ -63,6 +54,51 @@ export const FormAddAnnouncement = ({
               onChange={(e) => formik.setFieldValue(field.name, e.target.value)}
             />
           </Stack>
+        ) : field.type === 'multiple-select' ? (
+          <Stack sx={{ my: 1 }} key={field.name}>
+            <Typography variant='body2' fontWeight={600} mb={0.5}>
+              {field.label}
+            </Typography>
+
+            <FormControl sx={{ width: '100%' }}>
+              <Select
+                multiple
+                value={formik.values.target_user_types}
+                onChange={(e) =>
+                  formik.setFieldValue('target_user_types', e.target.value)
+                }
+                input={<OutlinedInput sx={{ p: 0 }} />}
+                renderValue={(selected) => (
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                    {selected.map((target) => {
+                      let tempTarget;
+                      targets.map((item) => {
+                        if (item.slug === target) {
+                          tempTarget = item.title;
+                        }
+                      });
+                      return (
+                        <Chip key={target} label={tempTarget} color='primary' />
+                      );
+                    })}
+                  </Box>
+                )}
+                MenuProps={{
+                  anchorOrigin: { vertical: 'top', horizontal: 'center' },
+                  transformOrigin: {
+                    vertical: 'bottom',
+                    horizontal: 'center',
+                  },
+                }}
+              >
+                {field.data.map((option) => (
+                  <MenuItem key={option.slug} value={option.slug}>
+                    <Typography fontSize={14}>{option.title}</Typography>
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Stack>
         ) : field.type === 'file' ? (
           <Grid xs={12} item key={field.name}>
             <Typography variant='body2' fontWeight={600} mb={0.5}>
@@ -73,6 +109,7 @@ export const FormAddAnnouncement = ({
                 my: 1,
                 flex: 1,
                 // alignItems: 'center',
+                overflowX: 'hidden',
               }}
             >
               <Box

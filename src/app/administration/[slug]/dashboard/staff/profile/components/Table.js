@@ -1,23 +1,21 @@
-import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import Image from 'next/image';
+import { permissions, types } from '@/globalcomponents/Variable';
+import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
 import {
   Avatar,
   Box,
   Button,
   Chip,
-  Divider,
   IconButton,
   Modal,
   Paper,
   Stack,
-  TextField,
   Typography,
   useMediaQuery,
 } from '@mui/material';
-import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
+import { DataGrid } from '@mui/x-data-grid';
+import Image from 'next/image';
 import Link from 'next/link';
-import { types, permissions } from '@/globalcomponents/Variable';
+import { useParams } from 'next/navigation';
 import { useState } from 'react';
 
 const columns = [
@@ -207,6 +205,8 @@ function ChipList({ params }) {
 }
 
 function ActionButton({ params }) {
+  const { slug } = useParams();
+
   return (
     <Stack
       sx={{
@@ -216,7 +216,7 @@ function ActionButton({ params }) {
     >
       <IconButton
         component={Link}
-        href={`/administration/SEKOLAHSISVA/dashboard/staff/profile/${params.value.data.id}`}
+        href={`/administration/${slug}/dashboard/staff/profile/${params.value.data.id}`}
         sx={{
           borderRadius: 2,
           backgroundColor: 'base.base30',

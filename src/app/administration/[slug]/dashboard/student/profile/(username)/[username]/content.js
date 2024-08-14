@@ -1,21 +1,17 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
-import Image from 'next/image';
 import {
   Avatar,
   Box,
   Button,
-  Divider,
   Grid,
   IconButton,
-  OutlinedInput,
   Paper,
   Stack,
   Typography,
 } from '@mui/material';
-import SchoolLogo from '@/assets/School-Logo-Blue.png';
-import LandingImage from '@/assets/Login-Library.png';
+import Image from 'next/image';
+import { useEffect, useRef, useState } from 'react';
 
 import {
   ArrowBackIosNewRounded,
@@ -24,16 +20,19 @@ import {
 
 import { useFormik } from 'formik';
 
+import AuthAPI from '@/api/auth';
+import FilesAPI from '@/api/files';
+import UsersAPI from '@/api/users';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { FormStudentBasic } from './components/FormStudentBasic';
 import { FormStudentBiodata } from './components/FormStudentBiodata';
 import { FormStudentParents } from './components/FormStudentParents';
 import { FormStudentPassword } from './components/FormStudentPassword';
-import Link from 'next/link';
-import UsersAPI from '@/api/users';
-import AuthAPI from '@/api/auth';
-import FilesAPI from '@/api/files';
 
 export default function SchoolProfileContent({ user_id }) {
+  const { slug } = useParams();
+
   const containerRef = useRef(null);
   const [activeTab, setActiveTab] = useState(0);
 
@@ -43,8 +42,6 @@ export default function SchoolProfileContent({ user_id }) {
 
     onSubmit: async (values) => {
       let changePassData = {};
-
-      console.log(values);
 
       let json_text = {
         username: values.username,
@@ -105,8 +102,6 @@ export default function SchoolProfileContent({ user_id }) {
       if (!Object.keys(changePassData).length) {
         try {
           const data = await UsersAPI.updateUserById(formatedData, values.id);
-
-          window.location.reload();
         } catch (error) {
           console.log(error, 'update user');
         }
@@ -139,7 +134,8 @@ export default function SchoolProfileContent({ user_id }) {
         }
       }
 
-      // window.location.reload();
+      fetchProfile(user_id);
+
       formik.setValues(initialData);
     },
   });
@@ -199,27 +195,27 @@ export default function SchoolProfileContent({ user_id }) {
     },
   ];
 
-  useEffect(() => {
-    const fetchProfile = async (userId, updateCurrentUser = false) => {
-      try {
-        const {
-          data: { data },
-        } = await UsersAPI.getUserById(userId);
+  const fetchProfile = async (userId, updateCurrentUser = false) => {
+    try {
+      const {
+        data: { data },
+      } = await UsersAPI.getUserById(userId);
 
-        if (updateCurrentUser) {
-          localStorage.setItem('current_user', JSON.stringify(data));
-          return;
-        }
-
-        const additionalJson = JSON.parse(data.detail.json_text);
-
-        setinitialData({ ...data, ...additionalJson });
-        formik.setValues({ ...data, ...additionalJson });
-      } catch (error) {
-        console.log(error, 'error fetch profile');
+      if (updateCurrentUser) {
+        localStorage.setItem('current_user', JSON.stringify(data));
+        return;
       }
-    };
 
+      const additionalJson = JSON.parse(data.detail.json_text);
+
+      setinitialData({ ...data, ...additionalJson });
+      formik.setValues({ ...data, ...additionalJson });
+    } catch (error) {
+      console.log(error, 'error fetch profile');
+    }
+  };
+
+  useEffect(() => {
     fetchProfile(user_id);
   }, []);
 
@@ -235,7 +231,7 @@ export default function SchoolProfileContent({ user_id }) {
       >
         <IconButton
           component={Link}
-          href='/administration/SEKOLAHSISVA/dashboard/student/profile/'
+          href={`/administration/${slug}/dashboard/student/profile/`}
           sx={{ borderRadius: 2, mr: 1 }}
         >
           <ArrowBackIosNewRounded />

@@ -1,16 +1,10 @@
 'use client';
 
 import {
-  Avatar,
   Box,
   Button,
-  Chip,
-  FormControl,
   Grid,
-  InputLabel,
   MenuItem,
-  OutlinedInput,
-  Select,
   Stack,
   TextField,
   Typography,
@@ -18,15 +12,10 @@ import {
 import Image from 'next/image';
 
 import { formStaffBiodataFields } from '@/globalcomponents/FormFields';
+import { genders, nationalities, religions } from '@/globalcomponents/Variable';
 import { Cancel } from '@mui/icons-material';
-import { useState } from 'react';
-import {
-  genders,
-  nationalities,
-  permissions,
-  religions,
-  types,
-} from '@/globalcomponents/Variable';
+
+import MediaIcon from '@/assets/icon-Media.svg';
 
 export const FormStaffBiodata = ({
   formik,
@@ -215,16 +204,33 @@ export const FormStaffBiodata = ({
                     borderRadius: 2,
                   }}
                 >
-                  <Box sx={{ height: 96, width: 96, position: 'relative' }}>
-                    <Image
-                      alt='Image'
-                      src={`https://api-staging.sisva.id/file/v1/files/${
-                        formik.values[field.name]
-                      }?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
-                      layout='fill'
-                      objectFit='cover'
-                    />
-                  </Box>
+                  {formik.values[field.name] ? (
+                    <Box sx={{ height: 96, width: 96, position: 'relative' }}>
+                      <Image
+                        alt='Image'
+                        src={`https://api-staging.sisva.id/file/v1/files/${
+                          formik.values[field.name]
+                        }?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+                        layout='fill'
+                        objectFit='cover'
+                      />
+                    </Box>
+                  ) : (
+                    <Box
+                      sx={{
+                        height: 96,
+                        width: 96,
+                        flex: 1,
+                      }}
+                    >
+                      <Image
+                        alt='Image'
+                        src={MediaIcon}
+                        // layout='fill'
+                        // objectFit='cover'
+                      />
+                    </Box>
+                  )}
                 </Box>
                 <label htmlFor='image-input'>
                   <Button

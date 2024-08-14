@@ -1,26 +1,19 @@
-import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import Image from 'next/image';
+import { subject_types } from '@/globalcomponents/Variable';
+import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
 import {
-  Avatar,
   Box,
   Button,
-  ButtonGroup,
   Chip,
   Divider,
   IconButton,
   Modal,
   Paper,
   Stack,
-  TextField,
   Typography,
   useMediaQuery,
 } from '@mui/material';
-import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
-import Link from 'next/link';
-import { types, permissions, subject_types } from '@/globalcomponents/Variable';
+import { DataGrid } from '@mui/x-data-grid';
 import { useState } from 'react';
-import { FormAddCurriculum, FormAddSubject } from './FormAddSubject';
 import { FormAddSyllabus } from './FormAddSyllabus';
 
 const columns = [
@@ -325,6 +318,7 @@ export default function SyllabusTable({
   data.map((data, idx) => {
     let tempObject = {
       id: idx,
+      syllabus_id: data.id,
       name: data.name,
       study_program: data.study_program,
       subject: data.subject,

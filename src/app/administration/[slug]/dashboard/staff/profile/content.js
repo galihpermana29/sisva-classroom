@@ -82,7 +82,7 @@ export default function StaffProfileListContent() {
         //   severity: 'success',
         // });
 
-        window.location.reload();
+        getAllUsers();
 
         formik.setValues(initialData);
       } catch (error) {
@@ -119,32 +119,31 @@ export default function StaffProfileListContent() {
 
       await UsersAPI.updateUserById(userData, userData.id);
 
-      window.location.reload();
+      getAllUsers();
     } catch (error) {
       console.log(error, 'error delete staff');
     }
   };
 
+  const getAllUsers = async () => {
+    try {
+      const {
+        data: { data },
+      } = await UsersAPI.getAllUsers('staff,teacher');
+
+      const newMappedData = data
+        .map((user) => {
+          const additionalJson = JSON.parse(user.detail.json_text);
+          return { ...user, ...additionalJson };
+        })
+        .filter((user) => user.status == 'active');
+
+      setStaffData(newMappedData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
-    const getAllUsers = async (params = 'staff,teacher') => {
-      try {
-        const {
-          data: { data },
-        } = await UsersAPI.getAllUsers(params);
-
-        const newMappedData = data
-          .map((user) => {
-            const additionalJson = JSON.parse(user.detail.json_text);
-            return { ...user, ...additionalJson };
-          })
-          .filter((user) => user.status == 'active');
-
-        setStaffData(newMappedData);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
     getAllUsers();
   }, []);
 
