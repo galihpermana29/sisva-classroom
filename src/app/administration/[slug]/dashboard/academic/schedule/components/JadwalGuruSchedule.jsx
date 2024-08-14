@@ -3,8 +3,10 @@
 import { Stack } from "@mui/material";
 import { useFilterStatus } from "../hooks/filters/useFilterStatus";
 import { FilterIncompleteState } from "./FilterIncompleteState";
-import WeekGeneralSchedule from "./WeekGeneralSchedule";
 import { useGetAvailableTeacherSchedules } from "../hooks/useGetAvailableTeacherSchedules";
+import WeekGeneralSchedule from "./schedule/WeekGeneralSchedule";
+import { NonLearningCell } from "./schedule/NonLearningCell";
+import { GuruLearningCell } from "./schedule/GuruLearningCell";
 
 export const JadwalGuruSchedule = () => {
   const { periode, prodi, guru } = useFilterStatus();
@@ -19,7 +21,23 @@ export const JadwalGuruSchedule = () => {
       minWidth={shouldRender && 1280}
     >
       {!shouldRender && <FilterIncompleteState />}
-      {shouldRender && <WeekGeneralSchedule data={data} />}
+      {shouldRender && (
+        <WeekGeneralSchedule
+          data={data}
+          cellTemplate={getTemplate}
+        />
+      )}
     </Stack>
   );
+};
+
+const getTemplate = (data) => {
+  switch (data.Type) {
+    case "learning":
+      return <GuruLearningCell data={data} />;
+    case "non-learning":
+      return <NonLearningCell data={data} />;
+    default:
+      throw new Error("Unrecognized data type");
+  }
 };

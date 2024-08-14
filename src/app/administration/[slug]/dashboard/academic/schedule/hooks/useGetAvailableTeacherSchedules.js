@@ -42,6 +42,8 @@ const formatNonLearningSchedule = (schedule) => {
   return schedule.map((schedule) => ({
     Id: schedule.id,
     Subject: schedule.name,
+    Type: "non-learning",
+    Color: "#FFDBCB",
     StartTime: timeStringToDayjs(schedule.start_time)
       .isoWeekday(schedule.day)
       .toDate()
@@ -58,6 +60,8 @@ const formatLearningSchedule = (schedule) => {
   return schedule.map((schedule) => ({
     Id: schedule.id,
     Subject: schedule.subject_name,
+    Type: "learning",
+    Color: "#ACDEE7",
     StartTime: timeStringToDayjs(schedule.start_time)
       .isoWeekday(schedule.day)
       .toDate()
@@ -66,5 +70,6 @@ const formatLearningSchedule = (schedule) => {
       .isoWeekday(schedule.day)
       .toDate()
       .toLocaleString(),
+    ClassName: schedule.class_name,
   }));
 };
