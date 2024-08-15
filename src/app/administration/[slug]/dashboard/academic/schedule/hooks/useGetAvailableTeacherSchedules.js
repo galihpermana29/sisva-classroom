@@ -3,12 +3,10 @@
 import { useMemo } from "react";
 import { useFilterStatus } from "./filters/useFilterStatus";
 import { useGetClassSchedule } from "./useGetClassSchedule";
-import { timeStringToDayjs } from "@/utils/formatTimeString";
 
-import dayjs from "dayjs";
-import isoWeek from "dayjs/plugin/isoWeek";
 import { useGetNonLearningSchedule } from "./useGetNonLearningSchedule";
-dayjs.extend(isoWeek);
+import { formatAndCombineSchedule } from "../utils/formatAndCombineSchedule";
+import { countConsecutiveAppearances } from "../utils/countScheduleConsecutiveAppearance";
 
 export const useGetAvailableTeacherSchedules = () => {
   const { guru } = useFilterStatus();
@@ -18,58 +16,15 @@ export const useGetAvailableTeacherSchedules = () => {
     useGetNonLearningSchedule();
 
   const classSchedules = useMemo(() => {
-    const filteredLearningSchedule = filterLearningSchedule(
-      learningSchedule,
-      guru
-    );
-
-    const formattedLearning = formatLearningSchedule(filteredLearningSchedule);
-    const formattedNonLearning = formatNonLearningSchedule(nonLearningSchedule);
-
-    return formattedLearning.concat(formattedNonLearning);
+    const filteredLearning = filterLearningSchedule(learningSchedule, guru);
+    const countedNonLearning = countConsecutiveAppearances(nonLearningSchedule);
+    return formatAndCombineSchedule(filteredLearning, countedNonLearning);
   }, [guru, learningScheduleIsStale, nonLearningScheduleIsStale]);
 
   return classSchedules;
 };
 
-const filterLearningSchedule = (schedule, guru) => {
-  if (!schedule) return [];
-  return schedule.filter((schedule) => schedule.teacher_id === guru);
-};
-
-const formatNonLearningSchedule = (schedule) => {
-  if (!schedule) return [];
-  return schedule.map((schedule) => ({
-    Id: schedule.id,
-    Subject: schedule.name,
-    Type: "non-learning",
-    Color: "#FFDBCB",
-    StartTime: timeStringToDayjs(schedule.start_time)
-      .isoWeekday(schedule.day)
-      .toDate()
-      .toLocaleString(),
-    EndTime: timeStringToDayjs(schedule.end_time)
-      .isoWeekday(schedule.day)
-      .toDate()
-      .toLocaleString(),
-  }));
-};
-
-const formatLearningSchedule = (schedule) => {
-  if (!schedule) return [];
-  return schedule.map((schedule) => ({
-    Id: schedule.id,
-    Subject: schedule.subject_name,
-    Type: "learning",
-    Color: "#ACDEE7",
-    StartTime: timeStringToDayjs(schedule.start_time)
-      .isoWeekday(schedule.day)
-      .toDate()
-      .toLocaleString(),
-    EndTime: timeStringToDayjs(schedule.end_time)
-      .isoWeekday(schedule.day)
-      .toDate()
-      .toLocaleString(),
-    ClassName: schedule.class_name,
-  }));
+const filterLearningSchedule = (schedules, guru) => {
+  if (!schedules) return [];
+  return schedules.filter((schedule) => schedule.teacher_id === guru);
 };

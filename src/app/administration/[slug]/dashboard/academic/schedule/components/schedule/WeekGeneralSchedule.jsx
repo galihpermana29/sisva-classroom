@@ -108,7 +108,7 @@ const onRenderCell = (args) => {
 
 const onEventRendered = (props) => {
   let target = props.element;
-  const appearanceCount = props.data.AppearanceCount;
+  const appearanceCount = props.data.AppearanceCount ?? 1;
   // set background color according to type
   target.style.backgroundColor = props.data.Color;
   target.style.borderRadius = "0.5rem";
@@ -121,6 +121,8 @@ const onEventRendered = (props) => {
 
 const getStartHour = (data) => {
   const defaultStartHour = dayjs("07:00", "HH:mm");
+  if (!data) return defaultStartHour.format("HH:mm");
+
   const res = data
     .map((data) => dayjs(data.StartTime))
     .sort((a, b) => a.get("hour") - b.get("hour"));
@@ -138,6 +140,8 @@ const getStartHour = (data) => {
 
 const getEndHour = (data) => {
   const defaultEndHour = dayjs("17:00", "HH:mm");
+  if (!data) return defaultEndHour.format("HH:mm");
+
   const res = data
     .map((data) => dayjs(data.EndTime))
     // sort descending
