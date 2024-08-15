@@ -1,8 +1,10 @@
 "use client";
 
 import { useQueryParam } from "@/hooks/useQueryParam";
+import { useMounted } from "@mantine/hooks";
 import { MenuItem, Select } from "@mui/material";
 import { useSearchParams } from "next/navigation";
+import { FilterNotMounted } from "./FilterNotMounted";
 
 export const TINGKAT_FIELD_NAME = "tingkat";
 
@@ -14,6 +16,9 @@ export const TingkatSelect = ({ data, disabled }) => {
 
   const { updateQueryParam } = useQueryParam();
   const handleChange = (value) => updateQueryParam(TINGKAT_FIELD_NAME, value);
+
+  const mounted = useMounted();
+  if (!mounted) return <FilterNotMounted />;
 
   return (
     <Select

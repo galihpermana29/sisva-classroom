@@ -8,7 +8,7 @@ import "./globals.css";
 
 import { Kumbh_Sans } from "next/font/google";
 
-const font = Kumbh_Sans({
+export const font = Kumbh_Sans({
   subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });

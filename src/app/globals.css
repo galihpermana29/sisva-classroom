@@ -75,10 +75,6 @@ input {
   background: #888;
 }
 
-.e-appointment {
-  width: 100% !important;
-}
-
 @layer utilities {
   /* Hide scrollbar for Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {

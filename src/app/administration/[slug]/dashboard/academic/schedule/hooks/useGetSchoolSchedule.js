@@ -2,23 +2,17 @@
 
 import AcademicAPI from "@/api/academic";
 import { useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "next/navigation";
-import { PERIODE_FIELD_NAME } from "../components/filters/PeriodeSelect";
-import { PRODI_FIELD_NAME } from "../components/filters/ProdiSelect";
-import { TINGKAT_FIELD_NAME } from "../components/filters/TingkatSelect";
 import { useMemo } from "react";
+import { useFilterStatus } from "./filters/useFilterStatus";
 
 export const useGetSchoolSchedule = () => {
-  const searchParams = useSearchParams();
-  const periode = searchParams.get(PERIODE_FIELD_NAME);
-  const prodi = searchParams.get(PRODI_FIELD_NAME);
-  const tingkat = searchParams.get(TINGKAT_FIELD_NAME);
+  const { periode, prodi, tingkat } = useFilterStatus();
 
   // should fetch when all filter is selected
   const shouldFetch = Boolean(periode && prodi && tingkat);
 
   const { data: queryResult, ...query } = useQuery({
-    queryKey: ["school-schedule", { periode, prodi, tingkat }],
+    queryKey: ["school-schedule", { periode, shouldFetch }],
     queryFn: () => AcademicAPI.getSchoolSchedule(periode),
     enabled: shouldFetch,
   });
