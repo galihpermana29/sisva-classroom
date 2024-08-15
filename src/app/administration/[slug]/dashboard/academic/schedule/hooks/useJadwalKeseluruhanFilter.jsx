@@ -26,6 +26,7 @@ function useJadwalKeseluruhanFilter() {
   const [kelasData, setKelasData] = useState([]);
   const [periodeData, setPeriodeData] = useState([]);
   const [prodiData, setProdiData] = useState([]);
+  const [jadwalKelasData, setJadwalKelasData] = useState([]);
 
   //* data for period select filter
   const periodeSelectData = periodeData?.map(({ id, name }) => ({
@@ -49,28 +50,21 @@ function useJadwalKeseluruhanFilter() {
   }));
 
   //* data for class select filter
-  const kelasSelectData = kelasData
-    ?.filter(
-      ({ study_program_id, grade }) =>
-        study_program_id === parseInt(prodi) && grade === tingkat
-    )
-    .map(({ id, name }) => ({
-      label: name,
-      value: id,
-    }));
+  const kelasSelectData = kelasData.map(({ id, name }) => ({
+    label: name,
+    value: id,
+  }));
 
   //* data for day select filter
-  const hariSelectData = kelasData
-    ?.filter(
-      ({ study_program_id, grade, class_id }) =>
-        study_program_id === parseInt(prodi) &&
-        grade === tingkat &&
-        class_id === parseInt(kelas)
+  const hariSelectData = Array.from(
+    new Set(
+      jadwalKelasData
+        ?.filter(({ study_program_id }) => study_program_id === parseInt(prodi))
+        .map(({ day }) =>
+          JSON.stringify({ label: formatDayToLabel(day), value: day })
+        )
     )
-    .map(({ day }) => ({
-      label: formatDayToLabel(day),
-      value: day,
-    }));
+  ).map((item) => JSON.parse(item));
 
   const getAllPeriode = async () => {
     const { data } = await AcademicAPI.getAllPeriod();
@@ -78,13 +72,20 @@ function useJadwalKeseluruhanFilter() {
   };
 
   const getAllClasses = async () => {
-    const { data } = await AcademicAPI.getAllStudentGroup();
+    const { data } = await AcademicAPI.getAllClasses();
     setKelasData(data.data);
   };
 
   const getDetailProdi = async () => {
     const { data } = await AcademicAPI.getDetailProdi(prodi);
     setProdiData(data.data);
+  };
+
+  const getAllClassSchedule = async () => {
+    const { data } = await AcademicAPI.getAllClassSchedules({
+      period_id: periode,
+    });
+    setJadwalKelasData(data.data);
   };
 
   const handleReset = () =>
@@ -98,7 +99,10 @@ function useJadwalKeseluruhanFilter() {
   }, []);
 
   useEffect(() => {
-    if (periode) getAllClasses();
+    if (periode) {
+      getAllClasses();
+      getAllClassSchedule();
+    }
   }, [periode]);
 
   //* fetch grades data after selecting a study program

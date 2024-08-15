@@ -53,7 +53,7 @@ function JadwalKeseluruhanOptionalFilterForm({
           data={tingkatanData}
         />
         <FilterClassSelect
-          disabled={!Boolean(tingkat)}
+          // disabled={!Boolean(tingkat)}
           formik={formik}
           label={"Kelas"}
           name={"kelas"}
@@ -61,7 +61,7 @@ function JadwalKeseluruhanOptionalFilterForm({
           data={kelasData}
         />
         <FilterDaySelect
-          disabled={!Boolean(kelas)}
+          // disabled={!Boolean(kelas)}
           formik={formik}
           label={"Hari"}
           name={"hari"}

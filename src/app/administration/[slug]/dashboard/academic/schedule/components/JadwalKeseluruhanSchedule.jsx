@@ -1,121 +1,65 @@
 "use client";
 
-import AcademicAPI from "@/api/academic";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import useJadwalKeseluruhanCalendar from "../hooks/useJadwalKeseluruhanCalendar";
+import EditAktivitasNonKbmModal from "./modals/EditAktivitasNonKbmModal";
 import TimelineWeekSchedule from "./TimelineWeekSchedule";
+import dayjs from "dayjs";
+import EditJadwalKelasModal from "./modals/EditJadwalKelasModal";
 
-export const JadwalKeseluruhanSchedule = ({ data }) => {
-  const [studentGroup, setStudentGroup] = useState([]);
-
-  const getAllStudentGroup = async () => {
-    const { data } = await AcademicAPI.getAllStudentGroup();
-
-    setStudentGroup(
-      data.data.map((value) => {
-        let group_id;
-
-        if (value.grade === "X") {
-          group_id = 1;
-        } else if (value.grade === "XI") {
-          group_id = 2;
-        } else if (value.grade === "XII") {
-          group_id = 3;
-        }
-
-        return {
-          ...value,
-          group_id,
-        };
-      })
-    );
-  };
-
-  useEffect(() => {
-    getAllStudentGroup();
-  }, []);
-
-  return <TimelineWeekSchedule data={data} classData={studentGroup} />;
+const formatDateTime = (date) => {
+  return date.toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
 };
 
-const data = [
-  // {
-  //   Id: 1,
-  //   Subject: "Matematika",
-  //   StartTime: new Date(2024, 7, 19, 8, 0),
-  //   EndTime: new Date(2024, 7, 19, 9, 0),
-  //   student_group_id: 7,
-  //   KelasId: 1,
-  // },
-  // {
-  //   Id: 2,
-  //   Subject: "Bahasa Indonesia",
-  //   StartTime: new Date(2024, 7, 19, 9, 0),
-  //   EndTime: new Date(2024, 7, 19, 10, 0),
-  //   ProdiId: 2,
-  //   KelasId: 2,
-  // },
-  // {
-  //   Id: 3,
-  //   Subject: "Fisika",
-  //   StartTime: new Date(2024, 7, 19, 10, 0),
-  //   EndTime: new Date(2024, 7, 19, 11, 0),
-  //   ProdiId: 1,
-  //   KelasId: 3,
-  // },
-  // {
-  //   Id: 4,
-  //   Subject: "Sejarah",
-  //   StartTime: new Date(2024, 7, 19, 11, 0),
-  //   EndTime: new Date(2024, 7, 19, 12, 0),
-  //   ProdiId: 3,
-  //   KelasId: 1,
-  // },
-  // {
-  //   Id: 5,
-  //   Subject: "Biologi",
-  //   StartTime: new Date(2024, 7, 19, 13, 0),
-  //   EndTime: new Date(2024, 7, 19, 14, 0),
-  //   ProdiId: 2,
-  //   KelasId: 3,
-  // },
-  // {
-  //   Id: 6,
-  //   Subject: "Ekonomi",
-  //   StartTime: new Date(2024, 7, 19, 14, 0),
-  //   EndTime: new Date(2024, 7, 19, 15, 0),
-  //   ProdiId: 4,
-  //   KelasId: 2,
-  // },
-  // {
-  //   Id: 7,
-  //   Subject: "Seni Budaya",
-  //   StartTime: new Date(2024, 7, 20, 8, 0),
-  //   EndTime: new Date(2024, 7, 20, 9, 0),
-  //   ProdiId: 3,
-  //   KelasId: 3,
-  // },
-  // {
-  //   Id: 8,
-  //   Subject: "Penjaskes",
-  //   StartTime: new Date(2024, 7, 20, 9, 0),
-  //   EndTime: new Date(2024, 7, 20, 10, 0),
-  //   ProdiId: 1,
-  //   KelasId: 2,
-  // },
-  // {
-  //   Id: 9,
-  //   Subject: "Bahasa Inggris",
-  //   StartTime: new Date(2024, 7, 20, 10, 0),
-  //   EndTime: new Date(2024, 7, 20, 11, 0),
-  //   ProdiId: 2,
-  //   KelasId: 1,
-  // },
-  // {
-  //   Id: 10,
-  //   Subject: "Kimia",
-  //   StartTime: new Date(2024, 7, 20, 11, 0),
-  //   EndTime: new Date(2024, 7, 20, 12, 0),
-  //   ProdiId: 4,
-  //   KelasId: 3,
-  // },
-];
+export const JadwalKeseluruhanSchedule = ({}) => {
+  const { data, studentGroup } = useJadwalKeseluruhanCalendar();
+
+  const [openEditNonKbm, setOpenEditNonKbm] = useState(false);
+  const [openEditJadwalKelas, setOpenEditJadwalKelas] = useState(false);
+  const [initialEditData, setInitialEditData] = useState();
+
+  const handleOpenEditNonKbm = () => setOpenEditNonKbm(true);
+  const handleCloseEditNonKbm = () => setOpenEditNonKbm(false);
+
+  const handleOpenEditJadwalKelas = () => setOpenEditJadwalKelas(true);
+  const handleCloseEditJadwalKelas = () => setOpenEditJadwalKelas(false);
+
+  const onEventClick = (args) => {
+    args.cancel = true;
+
+    if (args.event.type === "learning") handleOpenEditJadwalKelas();
+    else handleOpenEditNonKbm();
+
+    const parsedData = {
+      ...args.event,
+      start_time: dayjs(args.event.start_time),
+      end_time: dayjs(args.event.end_time),
+    };
+
+    setInitialEditData(parsedData);
+  };
+
+  return (
+    <>
+      <TimelineWeekSchedule
+        data={data}
+        classData={studentGroup}
+        onEventClick={onEventClick}
+      />
+      <EditAktivitasNonKbmModal
+        open={openEditNonKbm}
+        handleClose={handleCloseEditNonKbm}
+        data={initialEditData}
+      />
+      <EditJadwalKelasModal
+        open={openEditJadwalKelas}
+        handleClose={handleCloseEditJadwalKelas}
+        data={initialEditData}
+      />
+    </>
+  );
+};

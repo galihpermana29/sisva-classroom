@@ -8,6 +8,7 @@ export const DaySelectDynamic = ({
   label,
   placeholder,
   data,
+
   disabled = false,
 }) => {
   return (
@@ -20,6 +21,7 @@ export const DaySelectDynamic = ({
         id={name}
         name={name}
         size="small"
+        defaultValue={formik.initialValues[name]}
         value={formik.values ? formik.values[name] : ""}
         onChange={(event) => formik.setFieldValue(name, event.target.value)}
         onBlur={formik.handleBlur}

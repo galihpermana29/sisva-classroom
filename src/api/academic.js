@@ -375,14 +375,16 @@ const AcademicAPI = {
     return api.patch(`/announcements/${id}`, payload, { headers });
   },
 
-  getAllClassSchedules() {
+  getAllClassSchedules(params) {
     const headers = {
       "X-Sisva-Source": "academic.test",
       "X-Sisva-UserID": USER_ID,
       "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
-    return api.get(`/class-schedules`, { headers });
+    return api.get(`/class-schedules?${new URLSearchParams(params)}`, {
+      headers,
+    });
   },
 
   getAllSchoolSchedules(params) {
@@ -419,6 +421,16 @@ const AcademicAPI = {
     return api.post(`/non-learning-schedules`, payload, { headers });
   },
 
+  updateNonLearningSchedule(id, payload) {
+    const headers = {
+      "X-Sisva-Source": "academic.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.patch(`/non-learning-schedules/${id}`, payload, { headers });
+  },
+
   createClassSchedule(payload) {
     const headers = {
       "X-Sisva-Source": "academic.periods.test",
@@ -427,6 +439,16 @@ const AcademicAPI = {
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.post(`/class-schedules`, payload, { headers });
+  },
+
+  updateClassSchedule(id, payload) {
+    const headers = {
+      "X-Sisva-Source": "academic.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.patch(`/class-schedules/${id}`, payload, { headers });
   },
 };
 

@@ -12,8 +12,11 @@ import { DaySelectDynamic } from "../../form-items/DaySelectDynamic";
 import { TimeSelect } from "../../TimeSelect";
 import { aktivitasNonKbmSchema } from "./aktivitasNonKbmSchema";
 import { formatTime } from "@/utils/formatTime";
+import { useRouter } from "next/navigation";
 
 export const AktivitasNonKbmForm = ({ handleClose, initialValues, edit }) => {
+  const router = useRouter();
+
   const formik = useFormik({
     initialValues: initialValues ?? {
       name: "",
@@ -23,22 +26,33 @@ export const AktivitasNonKbmForm = ({ handleClose, initialValues, edit }) => {
     },
     validationSchema: aktivitasNonKbmSchema,
     onSubmit: async ({ name, school_schedule_id, start_time, end_time }) => {
+      const formattedStartTime =
+        typeof start_time === "object"
+          ? start_time.format("HH:mm")
+          : start_time;
+      const formattedEndTime =
+        typeof end_time === "object" ? end_time.format("HH:mm") : end_time;
+
       const newPayload = {
         name,
         school_schedule_id,
-        start_time: formatTime(start_time),
-        end_time: formatTime(end_time),
+        start_time: formatTime(formattedStartTime),
+        end_time: formatTime(formattedEndTime),
       };
 
       try {
-        await AcademicAPI.createNonLearningSchedule(newPayload);
-        setMessage("Aktivitas berhasil ditambahkan!");
-        setOpenSnackBar(true);
+        if (edit) {
+          await AcademicAPI.updateNonLearningSchedule(
+            formik.initialValues?.id,
+            newPayload
+          );
+        } else {
+          await AcademicAPI.createNonLearningSchedule(newPayload);
+        }
         handleClose();
+        router.refresh();
       } catch (err) {
-        console.log(err);
         setMessage(err?.code);
-        setOpenSnackBar(true);
       }
     },
   });

@@ -20,6 +20,7 @@ export const StudyProgramSelect = ({
         name={name}
         size="small"
         disabled={disabled}
+        defaultValue={formik?.initialValues[name]}
         value={formik.values ? formik.values[name] : ""}
         onChange={(event) => formik.setFieldValue(name, event.target.value)}
         onBlur={formik.handleBlur}

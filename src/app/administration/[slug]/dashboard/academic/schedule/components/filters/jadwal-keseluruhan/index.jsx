@@ -1,10 +1,10 @@
 "use client";
 
-import AcademicAPI from "@/api/academic";
-import { Box, Button, Stack, Typography } from "@mui/material";
-import Image from "next/image";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Button, Stack, Typography } from "@mui/material";
+import useTheme from "@mui/material/styles/useTheme";
+import { useSearchParams } from "next/navigation";
+import useJadwalKeseluruhanFilter from "../../../hooks/useJadwalKeseluruhanFilter";
+import ResetIcon from "../../icons/ResetIcon";
 import AddAktivitasNonKbmModal from "../../modals/AddAktivitasNonKbmModal";
 import AddJadwalKelasModal from "../../modals/AddJadwalKelasModal";
 import JadwalKeseluruhanOptionalFiltersModal from "../JadwalKeseluruhanOptionalFiltersModal";
@@ -14,7 +14,6 @@ import {
 } from "../JadwalKeseluruhanSwitch";
 import { PERIODE_FIELD_NAME, PeriodeSelect } from "../PeriodeSelect";
 import { PRODI_FIELD_NAME, ProdiSelect } from "../ProdiSelect";
-import useJadwalKeseluruhanFilter from "../../../hooks/useJadwalKeseluruhanFilter";
 
 function JadwalKeseluruhanFilters() {
   const searchParams = useSearchParams();
@@ -25,6 +24,8 @@ function JadwalKeseluruhanFilters() {
 
   const showProdi = Boolean(periode);
   const showOptionalFilters = Boolean(prodi);
+
+  const theme = useTheme();
 
   const {
     handleReset,
@@ -58,14 +59,12 @@ function JadwalKeseluruhanFilters() {
 
         <Button ml={"12px"} onClick={handleReset}>
           <Stack flexDirection={"row"} alignItems={"center"} gap={"4px"}>
-            <Box position={"relative"} width={"10px"} height={"10px"}>
-              <Image
-                src={"/images/reset-icon-blue.svg"}
-                fill
-                alt="Reset Icon"
-              />
-            </Box>
-            <Typography fontWeight={"600"} fontSize={"13px"} color={"#008CD5"}>
+            <ResetIcon color={theme.palette.primary.main} />
+            <Typography
+              fontWeight={"600"}
+              fontSize={"13px"}
+              color={"primary.main"}
+            >
               Reset
             </Typography>
           </Stack>

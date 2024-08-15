@@ -15,11 +15,12 @@ import {
   ViewsDirective,
   Week,
 } from "@syncfusion/ej2-react-schedule";
+import dayjs from "dayjs";
 
-const kelasData = [
-  { ClassText: "Kelas X", Id: 1, ClassColor: "#ffaa00" },
-  { ClassText: "Kelas XI", Id: 2, ClassColor: "#f8a398" },
-  { ClassText: "Kelas XII", Id: 3, ClassColor: "#7499e1" },
+const groupData = [
+  { GroupText: "Kelas X", Id: 1, GroupColor: "#ffaa00" },
+  { GroupText: "Kelas XI", Id: 2, GroupColor: "#f8a398" },
+  { GroupText: "Kelas XII", Id: 3, GroupColor: "#7499e1" },
 ];
 
 const instance = new Internationalization();
@@ -33,8 +34,7 @@ const getDateHeaderText = (props) => {
   );
 };
 
-function TimelineWeekSchedule({ data, classData }) {
-  console.log(classData);
+function TimelineWeekSchedule({ data, classData, onEventClick }) {
   return (
     <ScheduleComponent
       timeFormat="HH:mm"
@@ -45,42 +45,52 @@ function TimelineWeekSchedule({ data, classData }) {
       workHours={{ highlight: true, start: "07:00", end: "16:00" }}
       startHour="07:00"
       endHour="17:00"
-      selectedDate={new Date(2024, 7, 19)}
+      selectedDate={dayjs().toDate()}
       dateHeaderTemplate={getDateHeaderText}
       showHeaderBar={false}
-      eventSettings={{ dataSource: data }}
-      group={{ byGroupID: true, resources: ["Kelas", "StudentGroup"] }}
+      eventSettings={{
+        dataSource: data,
+        fields: {
+          subject: { title: "Name", name: "name" },
+          startTime: { title: "StartTime", name: "start_time" },
+          endTime: { title: "EndTime", name: "end_time" },
+          isBlock: { title: "Block", name: "is_block" },
+        },
+      }}
+      group={{ byGroupID: true, resources: ["Group", "StudentGroup"] }}
       cellClick={(args) => {
         args.cancel = true;
       }}
       cellDoubleClick={(args) => {
         args.cancel = true;
       }}
+      eventClick={onEventClick}
     >
       <ViewsDirective>
         <ViewDirective option="TimelineWeek" />
       </ViewsDirective>
       <ResourcesDirective>
         <ResourceDirective
-          field="student_group_id"
+          field="sg_id"
           title="StudentGroup"
           name="StudentGroup"
           groupIDField="group_id"
-          allowMultiple={true}
+          allowMultiple={false}
           dataSource={classData}
           textField="name"
           idField="id"
+          colorField="GroupColor"
         />
 
         <ResourceDirective
-          field="KelasId"
-          title="Kelas"
-          name="Kelas"
+          field="group_id"
+          title="Group"
+          name="Group"
           allowMultiple={false}
-          dataSource={kelasData}
-          textField="ClassText"
+          dataSource={groupData}
+          textField="GroupText"
           idField="Id"
-          colorField="ClassColor"
+          colorField="GroupColor"
         />
       </ResourcesDirective>
       <Inject services={[Week, Month, TimelineViews, TimelineMonth, Agenda]} />

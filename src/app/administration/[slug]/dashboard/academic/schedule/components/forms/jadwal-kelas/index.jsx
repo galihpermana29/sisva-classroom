@@ -28,6 +28,15 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
 
   const [hasError, setHasError] = useState(false);
 
+  if (initialValues) {
+    initialValues = {
+      ...initialValues,
+      period_id: periode,
+    };
+  }
+
+  console.log(initialValues);
+
   const formik = useFormik({
     initialValues: initialValues ?? {
       period_id: "",
@@ -39,14 +48,21 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
       end_time: null,
     },
     validationSchema: jadwalKelasSchema,
-    onSubmit: async ({ start_time, end_time, class_id, day }) => {
+    onSubmit: async ({ start_time, end_time, class_id, day, grade }) => {
       const [school_schedule_id, day_num] = day.split(":");
+
+      const formattedStartTime =
+        typeof start_time === "object"
+          ? start_time.format("HH:mm")
+          : start_time;
+      const formattedEndTime =
+        typeof end_time === "object" ? end_time.format("HH:mm") : end_time;
 
       const newPayload = {
         class_id,
-        school_schedule_id,
-        start_time: formatTime(start_time),
-        end_time: formatTime(end_time),
+        school_schedule_id: parseInt(school_schedule_id),
+        start_time: formatTime(formattedStartTime),
+        end_time: formatTime(formattedEndTime),
       };
 
       try {
@@ -56,14 +72,16 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
 
         data.data.forEach(
           ({
+            id: ext_id,
             start_time: ext_start_time,
             end_time: ext_end_time,
             day: ext_day,
+            grade: ext_grade,
           }) => {
             const parsedExtStartTime = parseTime(ext_start_time);
             const parsedExtEndTime = parseTime(ext_end_time);
-            const parsedStartTime = parseTime(formatTime(start_time));
-            const parsedEndTime = parseTime(formatTime(end_time));
+            const parsedStartTime = parseTime(formatTime(formattedStartTime));
+            const parsedEndTime = parseTime(formatTime(formattedEndTime));
 
             const hasTimeConflict =
               ((parsedStartTime.isAfter(parsedExtStartTime) ||
@@ -73,7 +91,12 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
                 parsedEndTime.isSame(parsedExtStartTime)) &&
                 parsedEndTime.isBefore(parsedExtEndTime));
 
-            if (parseInt(day_num) === ext_day && hasTimeConflict) {
+            if (
+              ext_id !== formik.initialValues?.id &&
+              ext_grade === grade &&
+              parseInt(day_num) === ext_day &&
+              hasTimeConflict
+            ) {
               setHasError(true);
             } else {
               setHasError(false);
@@ -83,7 +106,14 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
 
         if (hasError) return;
 
-        await AcademicAPI.createClassSchedule(newPayload);
+        if (edit) {
+          await AcademicAPI.updateClassSchedule(
+            formik.initialValues?.id,
+            newPayload
+          );
+        } else {
+          await AcademicAPI.createClassSchedule(newPayload);
+        }
         handleClose();
       } catch (err) {
         console.log(err);
@@ -125,7 +155,7 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
               formik={formik}
               name={"study_program_id"}
               data={prodiSelectData}
-              disabled={formik.values.period_id === ""}
+              disabled={!edit && formik.values.period_id === ""}
             />
             <LevelSelect
               label={"Tingkatan"}
@@ -133,7 +163,7 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
               formik={formik}
               name={"grade"}
               data={tingkatanSelectData}
-              disabled={formik.values.study_program_id === ""}
+              disabled={!edit && formik.values.study_program_id === ""}
             />
             <ClassSelect
               label={"Kelas"}
@@ -148,7 +178,7 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
               formik={formik}
               name="day"
               data={hariSelectData}
-              disabled={formik.values.grade === ""}
+              disabled={!edit && formik.values.grade === ""}
             />
             <Stack
               width="100%"
