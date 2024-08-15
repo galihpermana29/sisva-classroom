@@ -13,9 +13,46 @@ import { TimeSelect } from "../../TimeSelect";
 import { aktivitasNonKbmSchema } from "./aktivitasNonKbmSchema";
 import { formatTime } from "@/utils/formatTime";
 import { useRouter } from "next/navigation";
+import ErrorJadwalKelasModal from "../../modals/ErrorJadwalKelasModal";
+import dayjs from "dayjs";
+
+function parseTime(timeString) {
+  return dayjs(timeString, "h:mm A Z");
+}
+
+const hasTimeConflict = (startTime, endTime, extStartTime, extEndTime) => {
+  const hasLowerConflict =
+    (startTime.isBefore(extStartTime) || startTime.isSame(extStartTime)) &&
+    startTime.isBefore(extEndTime) &&
+    endTime.isAfter(extStartTime) &&
+    (endTime.isBefore(extEndTime) || endTime.isSame(extEndTime));
+
+  const hasWithinConflict =
+    (startTime.isSame(extStartTime) || startTime.isAfter(extStartTime)) &&
+    (endTime.isBefore(extEndTime) || endTime.isSame(extEndTime));
+
+  const hasUpperConflict =
+    (startTime.isSame(extStartTime) || startTime.isAfter(extStartTime)) &&
+    startTime.isBefore(extEndTime) &&
+    (endTime.isSame(extEndTime) || endTime.isAfter(extEndTime));
+
+  return hasLowerConflict || hasWithinConflict || hasUpperConflict;
+};
 
 export const AktivitasNonKbmForm = ({ handleClose, initialValues, edit }) => {
   const router = useRouter();
+  if (initialValues) {
+    initialValues = {
+      ...initialValues,
+      school_schedule_id: `${initialValues?.school_schedule_id}:${initialValues?.day}`,
+    };
+  }
+
+  const searchParam = useSearchParams();
+  const periode = searchParam.get(PERIODE_FIELD_NAME);
+
+  const [daySelectData, setDaySelectData] = useState([]);
+  const [hasError, setHasError] = useState(false);
 
   const formik = useFormik({
     initialValues: initialValues ?? {
@@ -26,21 +63,88 @@ export const AktivitasNonKbmForm = ({ handleClose, initialValues, edit }) => {
     },
     validationSchema: aktivitasNonKbmSchema,
     onSubmit: async ({ name, school_schedule_id, start_time, end_time }) => {
+      const [ss_id, day_num] = school_schedule_id.split(":");
+
       const formattedStartTime =
         typeof start_time === "object"
           ? start_time.format("HH:mm")
           : start_time;
       const formattedEndTime =
         typeof end_time === "object" ? end_time.format("HH:mm") : end_time;
+      const parsedStartTime = parseTime(formatTime(formattedStartTime));
+      const parsedEndTime = parseTime(formatTime(formattedEndTime));
 
       const newPayload = {
         name,
-        school_schedule_id,
+        school_schedule_id: parseInt(ss_id),
         start_time: formatTime(formattedStartTime),
         end_time: formatTime(formattedEndTime),
       };
 
       try {
+        const { data: nonLearningScheduleData } =
+          await AcademicAPI.getAllNonLearningSchedules({
+            period_id: periode,
+          });
+        const { data: classScheduleData } =
+          await AcademicAPI.getAllClassSchedules({
+            period_id: periode,
+          });
+
+        nonLearningScheduleData.data.forEach(
+          ({
+            id: ext_id,
+            start_time: ext_start_time,
+            end_time: ext_end_time,
+            day: ext_day,
+            school_schedule_id: ext_school_schedule_id,
+          }) => {
+            const parsedExtStartTime = parseTime(ext_start_time);
+            const parsedExtEndTime = parseTime(ext_end_time);
+
+            if (
+              (edit ? ext_id !== formik.initialValues?.id : true) &&
+              ext_school_schedule_id === parseInt(ss_id) &&
+              ext_day === parseInt(day_num) &&
+              hasTimeConflict(
+                parsedStartTime,
+                parsedEndTime,
+                parsedExtStartTime,
+                parsedExtEndTime
+              )
+            ) {
+              setHasError(true);
+            }
+          }
+        );
+
+        classScheduleData.data.forEach(
+          ({
+            start_time: ext_start_time,
+            end_time: ext_end_time,
+            day: ext_day,
+            school_schedule_id: ext_school_schedule_id,
+          }) => {
+            const parsedExtStartTime = parseTime(ext_start_time);
+            const parsedExtEndTime = parseTime(ext_end_time);
+
+            if (
+              ext_school_schedule_id === parseInt(ss_id) &&
+              ext_day === parseInt(day_num) &&
+              hasTimeConflict(
+                parsedStartTime,
+                parsedEndTime,
+                parsedExtStartTime,
+                parsedExtEndTime
+              )
+            ) {
+              setHasError(true);
+            }
+          }
+        );
+
+        if (hasError) return;
+
         if (edit) {
           await AcademicAPI.updateNonLearningSchedule(
             formik.initialValues?.id,
@@ -52,17 +156,10 @@ export const AktivitasNonKbmForm = ({ handleClose, initialValues, edit }) => {
         handleClose();
         router.refresh();
       } catch (err) {
-        setMessage(err?.code);
+        console.log(err);
       }
     },
   });
-
-  const searchParam = useSearchParams();
-  const periode = searchParam.get(PERIODE_FIELD_NAME);
-
-  const [daySelectData, setDaySelectData] = useState([]);
-  const [openSnackBar, setOpenSnackBar] = useState(false);
-  const [message, setMessage] = useState();
 
   const getDayData = async () => {
     const { data } = await AcademicAPI.getAllSchoolSchedules({
@@ -72,9 +169,9 @@ export const AktivitasNonKbmForm = ({ handleClose, initialValues, edit }) => {
     setDaySelectData(
       data.data
         .filter(({ status }) => status === "inactive")
-        .map(({ day, id }) => ({
+        .map(({ id, day }) => ({
           label: formatDayToLabel(day),
-          value: id,
+          value: `${id}:${day}`,
         }))
     );
   };
@@ -85,56 +182,55 @@ export const AktivitasNonKbmForm = ({ handleClose, initialValues, edit }) => {
 
   return (
     <>
-      <Snackbar
-        open={openSnackBar}
-        autoHideDuration={6000}
-        onClose={() => setOpenSnackBar(false)}
-        message={message}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      <ErrorJadwalKelasModal
+        open={hasError}
+        handleClose={() => setHasError(false)}
       />
-      <form
-        className="flex flex-col gap-6 max-h-[75vh] overflow-auto"
-        onSubmit={formik.handleSubmit}
-      >
-        <Stack gap={2}>
-          <ActivityNameInput
-            label="Nama Aktivitas"
-            placeholder="Isi nama aktivitas"
-            formik={formik}
-            name="name"
-          />
-          <DaySelectDynamic
-            label="Hari"
-            placeholder="Pilih hari"
-            formik={formik}
-            name="school_schedule_id"
-            data={daySelectData}
-          />
-          <Stack
-            width="100%"
-            alignItems="center"
-            flexDirection="row"
-            justifyContent="center"
-            gap={2}
-          >
-            <TimeSelect label="Jam Mulai" formik={formik} name="start_time" />
-            <TimeSelect label="Jam Selesai" formik={formik} name="end_time" />
+      {!hasError && (
+        <form
+          className="flex flex-col gap-6 max-h-[75vh] overflow-auto"
+          onSubmit={formik.handleSubmit}
+        >
+          <Stack gap={2}>
+            <ActivityNameInput
+              label="Nama Aktivitas"
+              placeholder="Isi nama aktivitas"
+              formik={formik}
+              name="name"
+            />
+            <DaySelectDynamic
+              label="Hari"
+              placeholder="Pilih hari"
+              formik={formik}
+              name="school_schedule_id"
+              data={daySelectData}
+            />
+            <Stack
+              width="100%"
+              alignItems="center"
+              flexDirection="row"
+              justifyContent="center"
+              gap={2}
+            >
+              <TimeSelect label="Jam Mulai" formik={formik} name="start_time" />
+              <TimeSelect label="Jam Selesai" formik={formik} name="end_time" />
+            </Stack>
           </Stack>
-        </Stack>
-        <Stack flexDirection="row" gap={2}>
-          <Button
-            type="button"
-            fullWidth
-            variant="outlined"
-            onClick={handleClose}
-          >
-            Batal
-          </Button>
-          <Button type="submit" fullWidth variant="contained">
-            Simpan
-          </Button>
-        </Stack>
-      </form>
+          <Stack flexDirection="row" gap={2}>
+            <Button
+              type="button"
+              fullWidth
+              variant="outlined"
+              onClick={handleClose}
+            >
+              Batal
+            </Button>
+            <Button type="submit" fullWidth variant="contained">
+              Simpan
+            </Button>
+          </Stack>
+        </form>
+      )}
     </>
   );
 };

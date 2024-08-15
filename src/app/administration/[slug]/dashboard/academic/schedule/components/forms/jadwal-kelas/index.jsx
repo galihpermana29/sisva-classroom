@@ -51,6 +51,7 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
     initialValues = {
       ...initialValues,
       period_id: periode,
+      school_schedule_id: `${initialValues?.school_schedule_id}:${initialValues?.day}`,
     };
   }
 
