@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import '../globals.css';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { themeConfig } from './theme';
-import { useEffect, useState } from 'react';
-import CmsAPI from '@/api/cms';
+import "../globals.css";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { themeConfig } from "./theme";
+import { useEffect, useState } from "react";
+import CmsAPI from "@/api/cms";
 
 export default function RootLayout({ children }) {
   const [color, setColor] = useState();
@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
     const {
       data: { data },
     } = await CmsAPI.getSchoolById(
-      JSON.parse(localStorage.getItem('user')).school_id
+      JSON.parse(localStorage.getItem("user")).school_id
     );
 
     setColor(data.theme_json_text);
@@ -33,7 +33,7 @@ export default function RootLayout({ children }) {
   }, []);
 
   return (
-    <html lang='en'>
+    <html lang="en">
       <body suppressHydrationWarning={true}>
         <ThemeProvider theme={theme}>{children}</ThemeProvider>
       </body>

@@ -1,21 +1,21 @@
-import axios from 'axios';
+import axios from "axios";
 
-import { getBearerToken, getSchoolId, getUserId } from '.';
+import { getBearerToken, getSchoolId, getUserId } from ".";
 
 const BEARER_TOKEN = getBearerToken();
 const USER_ID = getUserId();
 const SCHOOL_ID = getSchoolId();
 
 const api = axios.create({
-  baseURL: 'https://api-staging.sisva.id/academic/v1',
+  baseURL: "https://api-staging.sisva.id/academic/v1",
 });
 
 const AcademicAPI = {
   createProdi(payload) {
     const headers = {
-      'X-Sisva-Source': 'academic.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.post(`/study-programs`, payload, { headers });
@@ -23,9 +23,9 @@ const AcademicAPI = {
 
   getDetailProdi(id) {
     const headers = {
-      'X-Sisva-Source': 'academic.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.get(`/study-programs/${id}`, { headers });
@@ -33,9 +33,9 @@ const AcademicAPI = {
 
   getAllProdi() {
     const headers = {
-      'X-Sisva-Source': 'academic.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.get(`/study-programs`, { headers });
@@ -43,9 +43,9 @@ const AcademicAPI = {
 
   updateProdi(payload, id) {
     const headers = {
-      'X-Sisva-Source': 'academic.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.patch(`/study-programs/${id}`, payload, { headers });
@@ -53,9 +53,9 @@ const AcademicAPI = {
 
   deleteProdi(id) {
     const headers = {
-      'X-Sisva-Source': 'academic.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.delete(`/study-programs/${id}`, { headers });
@@ -63,9 +63,9 @@ const AcademicAPI = {
 
   getAllCurriculum() {
     const headers = {
-      'X-Sisva-Source': 'academic.curriculum.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.get(`/curriculums`, { headers });
@@ -73,9 +73,9 @@ const AcademicAPI = {
 
   createCurriculum(payload) {
     const headers = {
-      'X-Sisva-Source': 'academic.curriculum.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.post(`/curriculums`, payload, { headers });
@@ -83,9 +83,9 @@ const AcademicAPI = {
 
   getDetailCurriculum(id) {
     const headers = {
-      'X-Sisva-Source': 'academic.curriculum.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.get(`/curriculums/${id}`, { headers });
@@ -93,9 +93,9 @@ const AcademicAPI = {
 
   updateCurriculum(payload, id) {
     const headers = {
-      'X-Sisva-Source': 'academic.curriculum.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.patch(`/curriculums/${id}`, payload, { headers });
@@ -103,9 +103,9 @@ const AcademicAPI = {
 
   deleteCurriculum(id) {
     const headers = {
-      'X-Sisva-Source': 'academic.curriculum.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.delete(`/curriculums/${id}`, { headers });
@@ -113,9 +113,9 @@ const AcademicAPI = {
 
   getPeriodCurr() {
     const headers = {
-      'X-Sisva-Source': 'academic.period.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.period.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.get(`/periods/curriculums`, { headers });
@@ -123,9 +123,9 @@ const AcademicAPI = {
 
   getAllSubject() {
     const headers = {
-      'X-Sisva-Source': 'academic.curriculum.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.get(`/subjects`, { headers });
@@ -133,9 +133,9 @@ const AcademicAPI = {
 
   createSubject(payload) {
     const headers = {
-      'X-Sisva-Source': 'academic.curriculum.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.post(`/subjects`, payload, { headers });
@@ -143,9 +143,9 @@ const AcademicAPI = {
 
   getDetailSubject(id) {
     const headers = {
-      'X-Sisva-Source': 'academic.curriculum.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.get(`/subjects/${id}`, { headers });
@@ -153,9 +153,9 @@ const AcademicAPI = {
 
   updateSubject(payload, id) {
     const headers = {
-      'X-Sisva-Source': 'academic.curriculum.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.patch(`/subjects/${id}`, payload, { headers });
@@ -163,9 +163,9 @@ const AcademicAPI = {
 
   replaceSubjectTeacher(payload) {
     const headers = {
-      'X-Sisva-Source': 'academic.subjects.teachers.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.subjects.teachers.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.put(`/subjects/teachers`, payload, { headers });
@@ -173,9 +173,9 @@ const AcademicAPI = {
 
   deleteSubject(id) {
     const headers = {
-      'X-Sisva-Source': 'academic.curriculum.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.delete(`/subjects/${id}`, { headers });
@@ -183,9 +183,9 @@ const AcademicAPI = {
 
   getAllSilabus() {
     const headers = {
-      'X-Sisva-Source': 'academic.curriculum.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.get(`/syllabuses`, { headers });
@@ -193,9 +193,9 @@ const AcademicAPI = {
 
   createSilabus(payload) {
     const headers = {
-      'X-Sisva-Source': 'academic.curriculum.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.post(`/syllabuses`, payload, { headers });
@@ -203,9 +203,9 @@ const AcademicAPI = {
 
   updateSilabus(payload, id) {
     const headers = {
-      'X-Sisva-Source': 'academic.curriculum.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.patch(`/syllabuses/${id}`, payload, { headers });
@@ -213,9 +213,9 @@ const AcademicAPI = {
 
   getDetailSilabus(id) {
     const headers = {
-      'X-Sisva-Source': 'academic.curriculum.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.get(`/syllabuses/${id}`, { headers });
@@ -223,9 +223,9 @@ const AcademicAPI = {
 
   updateSilabus(payload, id) {
     const headers = {
-      'X-Sisva-Source': 'academic.curriculum.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.patch(`/syllabuses/${id}`, payload, { headers });
@@ -233,9 +233,9 @@ const AcademicAPI = {
 
   deleteSilabus(id) {
     const headers = {
-      'X-Sisva-Source': 'academic.curriculum.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.delete(`/syllabuses/${id}`, { headers });
@@ -243,9 +243,9 @@ const AcademicAPI = {
 
   createPeriod(payload) {
     const headers = {
-      'X-Sisva-Source': 'academic.periods.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.periods.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.post(`/periods`, payload, { headers });
@@ -253,9 +253,9 @@ const AcademicAPI = {
 
   addCurriculumInPeriod(id, payload) {
     const headers = {
-      'X-Sisva-Source': 'academic.periods.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.periods.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.post(`/periods/${id}/curriculums`, payload, { headers });
@@ -263,9 +263,9 @@ const AcademicAPI = {
 
   getAllPeriod() {
     const headers = {
-      'X-Sisva-Source': 'academic.periods.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.periods.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.get(`/periods`, { headers });
@@ -273,9 +273,9 @@ const AcademicAPI = {
 
   deletePeriod(id) {
     const headers = {
-      'X-Sisva-Source': 'academic.periods.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.periods.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.delete(`/periods/${id}`, { headers });
@@ -283,9 +283,9 @@ const AcademicAPI = {
 
   updatePeriod(payload, id) {
     const headers = {
-      'X-Sisva-Source': 'academic.periods.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.periods.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.patch(`/periods/${id}`, payload, { headers });
@@ -293,10 +293,10 @@ const AcademicAPI = {
 
   deletePeriodCurr(id, payload) {
     const headers = {
-      'X-Sisva-Source': 'academic.period.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
-      'Content-Type': 'application/json',
+      "X-Sisva-Source": "academic.period.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      "Content-Type": "application/json",
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.delete(`/periods/${id}/curriculums`, {
@@ -307,9 +307,9 @@ const AcademicAPI = {
 
   getAllSubjectTeacher() {
     const headers = {
-      'X-Sisva-Source': 'academic.subjects.teachers.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.subjects.teachers.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.get(`/subjects/teachers`, { headers });
@@ -317,9 +317,9 @@ const AcademicAPI = {
 
   getAllClasses() {
     const headers = {
-      'X-Sisva-Source': 'academic.classes.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.classes.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.get(`/classes`, { headers });
@@ -327,9 +327,9 @@ const AcademicAPI = {
 
   getAllStudentGroup() {
     const headers = {
-      'X-Sisva-Source': 'academic.studentgroups.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.studentgroups.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.get(`/student-groups`, { headers });
@@ -337,9 +337,9 @@ const AcademicAPI = {
 
   getAllStudentInGroup() {
     const headers = {
-      'X-Sisva-Source': 'academic.period.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.period.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.get(`/student-groups/students`, { headers });
@@ -347,9 +347,9 @@ const AcademicAPI = {
 
   createStudentGroup(payload) {
     const headers = {
-      'X-Sisva-Source': 'academic.studentgroups.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.studentgroups.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.post(`/student-groups`, payload, { headers });
@@ -357,9 +357,9 @@ const AcademicAPI = {
 
   updateStudentGroup(id, payload) {
     const headers = {
-      'X-Sisva-Source': 'academic.studentgroups.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.studentgroups.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.patch(`/student-groups/${id}`, payload, { headers });
@@ -367,9 +367,9 @@ const AcademicAPI = {
 
   insertStudentToStudentGroup(id, payload) {
     const headers = {
-      'X-Sisva-Source': 'academic.studentgroups.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.studentgroups.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.put(`/student-groups/${id}/students`, payload, { headers });
@@ -377,9 +377,9 @@ const AcademicAPI = {
 
   removeStudentGroup(id) {
     const headers = {
-      'X-Sisva-Source': 'academic.studentgroups.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.studentgroups.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.delete(`/student-groups/${id}`, { headers });
@@ -387,9 +387,9 @@ const AcademicAPI = {
 
   removeStudentFromGroup(id, payload) {
     const headers = {
-      'X-Sisva-Source': 'academic.studentgroups.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.studentgroups.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.delete(`/student-groups/${id}/students`, {
@@ -400,9 +400,9 @@ const AcademicAPI = {
 
   getAllAnnouncements() {
     const headers = {
-      'X-Sisva-Source': 'academic.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.get(`/announcements`, { headers });
@@ -410,9 +410,9 @@ const AcademicAPI = {
 
   deleteAnnouncement(id) {
     const headers = {
-      'X-Sisva-Source': 'academic.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.delete(`/announcements/${id}`, { headers });
@@ -420,9 +420,9 @@ const AcademicAPI = {
 
   addAnnouncement(payload) {
     const headers = {
-      'X-Sisva-Source': 'academic.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.post(`/announcements`, payload, { headers });
@@ -430,19 +430,85 @@ const AcademicAPI = {
 
   updateAnnouncement(id, payload) {
     const headers = {
-      'X-Sisva-Source': 'academic.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.patch(`/announcements/${id}`, payload, { headers });
   },
 
+  getSchoolSchedule(period_id) {
+    const headers = {
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+
+    return api.get(`/school-schedules?period_id=${period_id}`, { headers });
+  },
+
+  getCredit() {
+    const headers = {
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+
+    return api.get(`/credits`, { headers });
+  },
+
+  createCredit(payload) {
+    const headers = {
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+
+    return api.post("/credits", payload, { headers });
+  },
+
+  createSchoolSchedule(payload) {
+    const headers = {
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+
+    return api.post("/school-schedules", payload, { headers });
+  },
+
+  editSchoolSchedule(payload, id) {
+    const headers = {
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+
+    return api.patch(`/school-schedules/${id}`, payload, { headers });
+  },
+
+  deleteSchoolSchedule(id) {
+    const headers = {
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+
+    return api.delete(`/school-schedules/${id}`, { headers });
+  },
+
   getAllExtra() {
     const headers = {
-      'X-Sisva-Source': 'academic.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.get(`/extracurriculars`, { headers });
@@ -450,9 +516,9 @@ const AcademicAPI = {
 
   createExtra(payload) {
     const headers = {
-      'X-Sisva-Source': 'academic.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.post(`/extracurriculars`, payload, { headers });
@@ -460,9 +526,9 @@ const AcademicAPI = {
 
   updateExtra(id, payload) {
     const headers = {
-      'X-Sisva-Source': 'academic.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.patch(`/extracurriculars/${id}`, payload, { headers });
@@ -470,9 +536,9 @@ const AcademicAPI = {
 
   deleteExtra(id) {
     const headers = {
-      'X-Sisva-Source': 'academic.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.delete(`/extracurriculars/${id}`, { headers });
@@ -480,9 +546,9 @@ const AcademicAPI = {
 
   getAllExtraStudent() {
     const headers = {
-      'X-Sisva-Source': 'academic.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.get(`/extracurriculars/students`, { headers });
@@ -490,9 +556,9 @@ const AcademicAPI = {
 
   createStudentInExtra(id, payload) {
     const headers = {
-      'X-Sisva-Source': 'academic.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.post(`/extracurriculars/${id}/students`, payload, { headers });
@@ -500,9 +566,9 @@ const AcademicAPI = {
 
   deleteStudentInExtra(id, payload) {
     const headers = {
-      'X-Sisva-Source': 'academic.test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "academic.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.delete(`/extracurriculars/${id}/students`, {

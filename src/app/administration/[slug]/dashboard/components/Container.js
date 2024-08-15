@@ -476,13 +476,13 @@ export default function Container(props) {
               title: 'Kelas',
               slug: 'class',
             },
-            // {
-            //   title: "Jadwal Pelajaran",
-            //   slug: "schedule",
-            // },
             {
               title: 'Ekstrakurikuler',
               slug: 'extracurricular',
+            },
+            {
+              title: "Jadwal Pelajaran",
+              slug: "schedule",
             },
           ],
         },
@@ -799,7 +799,7 @@ export default function Container(props) {
           pl: { xs: 0, lg: '280px' },
           pt: '70px',
           backgroundColor: 'base.base20',
-          overflow: 'hidden',
+          overflow: 'auto',
         }}
       >
         {props.children}
