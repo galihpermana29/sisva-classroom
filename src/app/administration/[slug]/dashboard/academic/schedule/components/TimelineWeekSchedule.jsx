@@ -18,9 +18,9 @@ import {
 import dayjs from "dayjs";
 
 const groupData = [
-  { GroupText: "Kelas X", Id: 1, GroupColor: "#ffaa00" },
-  { GroupText: "Kelas XI", Id: 2, GroupColor: "#f8a398" },
-  { GroupText: "Kelas XII", Id: 3, GroupColor: "#7499e1" },
+  { GroupText: "Kelas X", Id: 1, GroupColor: "#FFDBCB" },
+  { GroupText: "Kelas XI", Id: 2, GroupColor: "#FFDBCB" },
+  { GroupText: "Kelas XII", Id: 3, GroupColor: "#FFDBCB" },
 ];
 
 const instance = new Internationalization();
@@ -31,6 +31,15 @@ const getDateHeaderText = (props) => {
         instance.formatDate(props.date, { format: "EEEE" })
       )}
     </Typography>
+  );
+};
+
+const eventTemplate = (props) => {
+  return (
+    <div className="text-[#1D2939] w-full pt-[2px]">
+      <h3 className="font-medium !text-xs line-clamp-1">{props.name}</h3>
+      <p className="text-[10px]">{props?.teacher_name}</p>
+    </div>
   );
 };
 
@@ -56,6 +65,7 @@ function TimelineWeekSchedule({ data, classData, onEventClick }) {
           endTime: { title: "EndTime", name: "end_time" },
           isBlock: { title: "Block", name: "is_block" },
         },
+        template: eventTemplate,
       }}
       group={{ byGroupID: true, resources: ["Group", "StudentGroup"] }}
       cellClick={(args) => {
@@ -79,7 +89,7 @@ function TimelineWeekSchedule({ data, classData, onEventClick }) {
           dataSource={classData}
           textField="name"
           idField="id"
-          colorField="GroupColor"
+          colorField="group_color"
         />
 
         <ResourceDirective

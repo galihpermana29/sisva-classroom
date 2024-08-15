@@ -158,7 +158,7 @@ function useJadwalKeseluruhanCalendar() {
         return {
           ...value,
           group_id,
-          group_color: "#ffaa00",
+          group_color: "#ACDEE7",
         };
       })
     );
