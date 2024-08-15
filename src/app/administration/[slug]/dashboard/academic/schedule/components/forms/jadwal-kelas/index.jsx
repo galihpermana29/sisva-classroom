@@ -22,6 +22,25 @@ function parseTime(timeString) {
   return dayjs(timeString, "h:mm A Z");
 }
 
+const hasTimeConflict = (startTime, endTime, extStartTime, extEndTime) => {
+  const hasLowerConflict =
+    (startTime.isBefore(extStartTime) || startTime.isSame(extStartTime)) &&
+    startTime.isBefore(extEndTime) &&
+    endTime.isAfter(extStartTime) &&
+    (endTime.isBefore(extEndTime) || endTime.isSame(extEndTime));
+
+  const hasWithinConflict =
+    (startTime.isSame(extStartTime) || startTime.isAfter(extStartTime)) &&
+    (endTime.isBefore(extEndTime) || endTime.isSame(extEndTime));
+
+  const hasUpperConflict =
+    (startTime.isSame(extStartTime) || startTime.isAfter(extStartTime)) &&
+    startTime.isBefore(extEndTime) &&
+    (endTime.isSame(extEndTime) || endTime.isAfter(extEndTime));
+
+  return hasLowerConflict || hasWithinConflict || hasUpperConflict;
+};
+
 export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
   const searchParams = useSearchParams();
   const periode = searchParams.get(PERIODE_FIELD_NAME);
@@ -34,8 +53,6 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
       period_id: periode,
     };
   }
-
-  console.log(initialValues);
 
   const formik = useFormik({
     initialValues: initialValues ?? {
@@ -57,6 +74,8 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
           : start_time;
       const formattedEndTime =
         typeof end_time === "object" ? end_time.format("HH:mm") : end_time;
+      const parsedStartTime = parseTime(formatTime(formattedStartTime));
+      const parsedEndTime = parseTime(formatTime(formattedEndTime));
 
       const newPayload = {
         class_id,
@@ -66,11 +85,41 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
       };
 
       try {
-        const { data } = await AcademicAPI.getAllClassSchedules({
-          period_id: periode,
-        });
+        const { data: nonLearningScheduleData } =
+          await AcademicAPI.getAllNonLearningSchedules({
+            period_id: periode,
+          });
+        const { data: classScheduleData } =
+          await AcademicAPI.getAllClassSchedules({
+            period_id: periode,
+          });
 
-        data.data.forEach(
+        nonLearningScheduleData.data.forEach(
+          ({
+            start_time: ext_start_time,
+            end_time: ext_end_time,
+            day: ext_day,
+            grade: ext_grade,
+          }) => {
+            const parsedExtStartTime = parseTime(ext_start_time);
+            const parsedExtEndTime = parseTime(ext_end_time);
+
+            if (
+              ext_grade === grade &&
+              ext_day === parseInt(day_num) &&
+              hasTimeConflict(
+                parsedStartTime,
+                parsedEndTime,
+                parsedExtStartTime,
+                parsedExtEndTime
+              )
+            ) {
+              setHasError(true);
+            }
+          }
+        );
+
+        classScheduleData.data.forEach(
           ({
             id: ext_id,
             start_time: ext_start_time,
@@ -80,26 +129,19 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
           }) => {
             const parsedExtStartTime = parseTime(ext_start_time);
             const parsedExtEndTime = parseTime(ext_end_time);
-            const parsedStartTime = parseTime(formatTime(formattedStartTime));
-            const parsedEndTime = parseTime(formatTime(formattedEndTime));
-
-            const hasTimeConflict =
-              ((parsedStartTime.isAfter(parsedExtStartTime) ||
-                parsedStartTime.isSame(parsedExtStartTime)) &&
-                parsedStartTime.isBefore(parsedExtEndTime)) ||
-              ((parsedEndTime.isAfter(parsedExtStartTime) ||
-                parsedEndTime.isSame(parsedExtStartTime)) &&
-                parsedEndTime.isBefore(parsedExtEndTime));
 
             if (
-              ext_id !== formik.initialValues?.id &&
+              (edit ? ext_id !== formik.initialValues?.id : true) &&
               ext_grade === grade &&
-              parseInt(day_num) === ext_day &&
-              hasTimeConflict
+              ext_day === parseInt(day_num) &&
+              hasTimeConflict(
+                parsedStartTime,
+                parsedEndTime,
+                parsedExtStartTime,
+                parsedExtEndTime
+              )
             ) {
               setHasError(true);
-            } else {
-              setHasError(false);
             }
           }
         );
@@ -171,6 +213,7 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
               formik={formik}
               name={"class_id"}
               data={kelasSelectData}
+              disabled={!edit && formik.values.grade === ""}
             />
             <DaySelectDynamic
               label="Hari"
@@ -178,7 +221,7 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
               formik={formik}
               name="day"
               data={hariSelectData}
-              disabled={!edit && formik.values.grade === ""}
+              disabled={!edit && formik.values.class_id === ""}
             />
             <Stack
               width="100%"
