@@ -8,6 +8,11 @@ import { JadwalGuru } from "./components/tabs/JadwalGuru";
 
 const DEFAULT_TAB = 0;
 
+export const metadata = {
+  title: `Jadwal Pelajaran | Sisva`,
+  description: "Sisva | Solusi Digitalisasi dan Modernisasi Sekolah",
+};
+
 const DashboardAcademic = ({ searchParams }) => {
   const { tab } = searchParams;
 
@@ -21,7 +26,7 @@ const DashboardAcademic = ({ searchParams }) => {
         component={Paper}
         variant="outlined"
         sx={{
-          borderRadius: 2,
+          borderRadius: { xs: 0, lg: 2 },
           flex: 1,
           overflowY: "hidden",
           maxHeight: "100%",
@@ -34,7 +39,7 @@ const DashboardAcademic = ({ searchParams }) => {
           />
         </Suspense>
 
-        <Divider />
+        <Divider sx={{ display: { xs: "none", lg: "block" } }} />
 
         <Suspense>{tabs[activeTab].component}</Suspense>
       </Stack>
