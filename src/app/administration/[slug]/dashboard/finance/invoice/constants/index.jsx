@@ -1,7 +1,10 @@
+import Tagihan from "../components/tabs/Tagihan";
 import { TagihanPengguna } from "../components/tabs/TagihanPengguna";
 import { TagihanPenggunaActions } from "../components/tagihan-pengguna/TagihanPenggunaActions";
 import { TagihanPenggunaFilters } from "../components/tagihan-pengguna/TagihanPenggunaFilters";
 import { TagihanPenggunaSearch } from "../components/tagihan-pengguna/TagihanPenggunaSearch";
+import { TagihanFilters } from "../components/tagihan/TagihanFilters";
+import { TagihanSearch } from "../components/tagihan/TagihanSearch";
 
 /** Default active invoice tab */
 export const DEFAULT_INVOICE_TAB = 0;
@@ -9,10 +12,10 @@ export const DEFAULT_INVOICE_TAB = 0;
 export const INVOICE_TABS = [
   {
     title: "Tagihan",
-    component: <div>Tagihan</div>,
+    component: <Tagihan />,
     actions: <div>Tagihan Actions</div>,
-    search: <div>Tagihan Search</div>,
-    filters: <div>Tagihan Filters</div>,
+    search: <TagihanSearch />,
+    filters: <TagihanFilters />,
   },
   {
     title: "Tagihan Pengguna",
