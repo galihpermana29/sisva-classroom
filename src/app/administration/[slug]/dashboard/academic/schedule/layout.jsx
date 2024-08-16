@@ -2,7 +2,10 @@ import { Typography, Stack } from "@mui/material";
 
 const DashboardAcademicLayout = ({ children }) => {
   return (
-    <Stack gap={3} padding="2rem">
+    <Stack
+      gap={3}
+      padding={{ xs: "0rem", lg: "2rem" }}
+    >
       <LayoutTitle />
       {children}
     </Stack>
@@ -11,7 +14,12 @@ const DashboardAcademicLayout = ({ children }) => {
 
 const LayoutTitle = () => {
   return (
-    <Typography fontWeight={600} fontSize={20} lineHeight="120%">
+    <Typography
+      display={{ xs: "none", lg: "block" }}
+      fontWeight={600}
+      fontSize={20}
+      lineHeight="120%"
+    >
       Jadwal Pelajaran
     </Typography>
   );
