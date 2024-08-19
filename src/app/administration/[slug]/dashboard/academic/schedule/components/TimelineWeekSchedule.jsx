@@ -35,12 +35,24 @@ const getDateHeaderText = (props) => {
 };
 
 const eventTemplate = (props) => {
+  const bgColor = props?.type === "learning" ? "#ACDEE7" : "#FFDBCB";
+
   return (
-    <div className="text-[#1D2939] w-full pt-[2px]">
+    <div
+      className="text-[#1D2939] h-full -mx-1 px-1 !w-full min-w-[500px] pt-[2px]"
+      style={{ backgroundColor: bgColor }}
+    >
       <h3 className="font-medium !text-xs line-clamp-1">{props.name}</h3>
       <p className="text-[10px]">{props?.teacher_name}</p>
     </div>
   );
+};
+
+const eventRendered = (args) => {
+  // Hide all events except the first one in a cell
+  if (args.element && args.element.previousElementSibling) {
+    args.element.style.display = "none";
+  }
 };
 
 function TimelineWeekSchedule({ data, classData, onEventClick }) {
@@ -63,9 +75,10 @@ function TimelineWeekSchedule({ data, classData, onEventClick }) {
           subject: { title: "Name", name: "name" },
           startTime: { title: "StartTime", name: "start_time" },
           endTime: { title: "EndTime", name: "end_time" },
-          isBlock: { title: "Block", name: "is_block" },
+          isBlock: { title: "IsBlock", name: "is_block" },
         },
         template: eventTemplate,
+        allowMultiple: false,
       }}
       group={{ byGroupID: true, resources: ["Group", "StudentGroup"] }}
       cellClick={(args) => {
@@ -75,6 +88,7 @@ function TimelineWeekSchedule({ data, classData, onEventClick }) {
         args.cancel = true;
       }}
       eventClick={onEventClick}
+      eventRendered={eventRendered}
     >
       <ViewsDirective>
         <ViewDirective option="TimelineWeek" />

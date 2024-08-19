@@ -3,6 +3,7 @@ import { ModalBody } from "@/components/CustomModal";
 import Image from "next/image";
 
 function ErrorJadwalKelasModal({ open, handleClose }) {
+  console.log(open);
   return (
     <Modal open={open} onClose={handleClose}>
       <ModalBody

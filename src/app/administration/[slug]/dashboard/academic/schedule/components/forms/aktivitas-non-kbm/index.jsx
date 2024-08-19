@@ -1,20 +1,20 @@
 "use client";
 
 import AcademicAPI from "@/api/academic";
+import { useQueryParam } from "@/hooks/useQueryParam";
 import { formatDayToLabel } from "@/utils/formatDay";
-import { Button, Snackbar, Stack } from "@mui/material";
+import { formatTime } from "@/utils/formatTime";
+import { Button, Stack } from "@mui/material";
+import dayjs from "dayjs";
 import { useFormik } from "formik";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { PERIODE_FIELD_NAME } from "../../filters/PeriodeSelect";
 import { ActivityNameInput } from "../../form-items/ActivityNameInput";
 import { DaySelectDynamic } from "../../form-items/DaySelectDynamic";
+import ErrorJadwalKelasModal from "../../modals/ErrorJadwalKelasModal";
 import { TimeSelect } from "../../TimeSelect";
 import { aktivitasNonKbmSchema } from "./aktivitasNonKbmSchema";
-import { formatTime } from "@/utils/formatTime";
-import { useRouter } from "next/navigation";
-import ErrorJadwalKelasModal from "../../modals/ErrorJadwalKelasModal";
-import dayjs from "dayjs";
 
 function parseTime(timeString) {
   return dayjs(timeString, "h:mm A Z");
@@ -40,7 +40,8 @@ const hasTimeConflict = (startTime, endTime, extStartTime, extEndTime) => {
 };
 
 export const AktivitasNonKbmForm = ({ handleClose, initialValues, edit }) => {
-  const router = useRouter();
+  const { updateQueryParam } = useQueryParam();
+
   if (initialValues) {
     initialValues = {
       ...initialValues,
@@ -65,6 +66,8 @@ export const AktivitasNonKbmForm = ({ handleClose, initialValues, edit }) => {
     onSubmit: async ({ name, school_schedule_id, start_time, end_time }) => {
       const [ss_id, day_num] = school_schedule_id.split(":");
 
+      let errorDetected = false;
+
       const formattedStartTime =
         typeof start_time === "object"
           ? start_time.format("HH:mm")
@@ -82,79 +85,83 @@ export const AktivitasNonKbmForm = ({ handleClose, initialValues, edit }) => {
       };
 
       try {
-        const { data: nonLearningScheduleData } =
-          await AcademicAPI.getAllNonLearningSchedules({
-            period_id: periode,
-          });
-        const { data: classScheduleData } =
-          await AcademicAPI.getAllClassSchedules({
-            period_id: periode,
-          });
+        const [nonLearningScheduleData, classScheduleData] = await Promise.all([
+          AcademicAPI.getAllNonLearningSchedules({ period_id: periode }),
+          AcademicAPI.getAllClassSchedules({ period_id: periode }),
+        ]);
 
-        nonLearningScheduleData.data.forEach(
-          ({
-            id: ext_id,
-            start_time: ext_start_time,
-            end_time: ext_end_time,
-            day: ext_day,
-            school_schedule_id: ext_school_schedule_id,
-          }) => {
-            const parsedExtStartTime = parseTime(ext_start_time);
-            const parsedExtEndTime = parseTime(ext_end_time);
+        console.log(nonLearningScheduleData, classScheduleData);
 
-            if (
-              (edit ? ext_id !== formik.initialValues?.id : true) &&
-              ext_school_schedule_id === parseInt(ss_id) &&
-              ext_day === parseInt(day_num) &&
-              hasTimeConflict(
-                parsedStartTime,
-                parsedEndTime,
-                parsedExtStartTime,
-                parsedExtEndTime
-              )
-            ) {
-              setHasError(true);
+        if (nonLearningScheduleData && classScheduleData) {
+          nonLearningScheduleData.data.data.forEach(
+            ({
+              id: ext_id,
+              start_time: ext_start_time,
+              end_time: ext_end_time,
+              day: ext_day,
+              school_schedule_id: ext_school_schedule_id,
+            }) => {
+              const parsedExtStartTime = parseTime(ext_start_time);
+              const parsedExtEndTime = parseTime(ext_end_time);
+
+              if (
+                (edit ? ext_id !== formik.initialValues?.id : true) &&
+                ext_school_schedule_id === parseInt(ss_id) &&
+                ext_day === parseInt(day_num) &&
+                hasTimeConflict(
+                  parsedStartTime,
+                  parsedEndTime,
+                  parsedExtStartTime,
+                  parsedExtEndTime
+                )
+              ) {
+                errorDetected = true;
+              }
             }
-          }
-        );
-
-        classScheduleData.data.forEach(
-          ({
-            start_time: ext_start_time,
-            end_time: ext_end_time,
-            day: ext_day,
-            school_schedule_id: ext_school_schedule_id,
-          }) => {
-            const parsedExtStartTime = parseTime(ext_start_time);
-            const parsedExtEndTime = parseTime(ext_end_time);
-
-            if (
-              ext_school_schedule_id === parseInt(ss_id) &&
-              ext_day === parseInt(day_num) &&
-              hasTimeConflict(
-                parsedStartTime,
-                parsedEndTime,
-                parsedExtStartTime,
-                parsedExtEndTime
-              )
-            ) {
-              setHasError(true);
-            }
-          }
-        );
-
-        if (hasError) return;
-
-        if (edit) {
-          await AcademicAPI.updateNonLearningSchedule(
-            formik.initialValues?.id,
-            newPayload
           );
-        } else {
-          await AcademicAPI.createNonLearningSchedule(newPayload);
+
+          classScheduleData.data.data.forEach(
+            ({
+              start_time: ext_start_time,
+              end_time: ext_end_time,
+              day: ext_day,
+              school_schedule_id: ext_school_schedule_id,
+            }) => {
+              const parsedExtStartTime = parseTime(ext_start_time);
+              const parsedExtEndTime = parseTime(ext_end_time);
+
+              if (
+                ext_school_schedule_id === parseInt(ss_id) &&
+                ext_day === parseInt(day_num) &&
+                hasTimeConflict(
+                  parsedStartTime,
+                  parsedEndTime,
+                  parsedExtStartTime,
+                  parsedExtEndTime
+                )
+              ) {
+                errorDetected = true;
+              }
+            }
+          );
+
+          if (errorDetected) {
+            setHasError(true);
+            return;
+          }
+
+          if (edit) {
+            await AcademicAPI.updateNonLearningSchedule(
+              formik.initialValues?.id,
+              newPayload
+            );
+          } else {
+            await AcademicAPI.createNonLearningSchedule(newPayload);
+          }
+
+          updateQueryParam("rf", true);
+          handleClose();
         }
-        handleClose();
-        router.refresh();
       } catch (err) {
         console.log(err);
       }

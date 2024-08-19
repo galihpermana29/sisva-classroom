@@ -11,6 +11,7 @@ import { PRODI_FIELD_NAME } from "../components/filters/ProdiSelect";
 import { TINGKAT_FIELD_NAME } from "../components/filters/TingkatSelect";
 import { KELAS_FIELD_NAME } from "../components/filters/KelasSelect";
 import { HARI_FIELD_NAME } from "../components/filters/HariSelect";
+import { useQueryParam } from "@/hooks/useQueryParam";
 
 dayjs.extend(isoWeek);
 
@@ -49,7 +50,10 @@ const addDateToTime = (day, time) => {
 };
 
 function useJadwalKeseluruhanCalendar() {
+  const { updateQueryParam } = useQueryParam();
   const searchParams = useSearchParams();
+
+  const refetch = searchParams.get("rf") ?? "false";
   const periode = searchParams.get(PERIODE_FIELD_NAME) ?? "-1";
   const prodi = searchParams.get(PRODI_FIELD_NAME) ?? "-1";
   const tingkat = searchParams.get(TINGKAT_FIELD_NAME);
@@ -63,10 +67,41 @@ function useJadwalKeseluruhanCalendar() {
   const [learningSchedule, setLearningSchedule] = useState([]);
   const [nonLearningSchedule, setNonLearningSchedule] = useState([]);
 
+  const learningScheduleData = learningSchedule.filter(
+    ({ grade, class_id, day }) => {
+      const gradeMatch = tingkat ? tingkat === grade : true;
+      const classMatch = kelas ? parseInt(kelas) === class_id : true;
+      const dayMatch = hari ? parseInt(hari) === day : true;
+
+      return gradeMatch && classMatch && dayMatch;
+    }
+  );
+
+  const nonLearningScheduleData = studentGroup.flatMap(({ group_id, id }) => {
+    const res = nonLearningSchedule
+      .filter((nl_data) => group_id === nl_data.group_id)
+      .map((nl_data) => ({
+        ...nl_data,
+        sg_id: id,
+      }));
+
+    return res;
+  });
+
   let data =
     isJadwalKeseluruhan === "true"
-      ? [...nonLearningSchedule, ...learningSchedule]
-      : nonLearningSchedule;
+      ? [...nonLearningScheduleData, ...learningScheduleData]
+      : nonLearningScheduleData;
+
+  let studentGroupData = studentGroup.filter((sg) => {
+    const periodeMatch =
+      periode !== "-1" ? sg.period_id === parseInt(periode) : true;
+    const prodiMatch =
+      prodi !== "-1" ? sg.study_program_id === parseInt(prodi) : true;
+    const tingkatMatch = tingkat ? sg.grade === tingkat : true;
+
+    return periodeMatch && prodiMatch && tingkatMatch;
+  });
 
   useEffect(() => {
     data = data.filter(({ type, grade, day, class_id }) => {
@@ -170,6 +205,15 @@ function useJadwalKeseluruhanCalendar() {
   }, []);
 
   useEffect(() => {
+    if (refetch === "true") {
+      getAllNonLearningSchedule();
+      getAllClassSchedules();
+    }
+
+    updateQueryParam("rf", false);
+  }, [refetch]);
+
+  useEffect(() => {
     if (periode !== "-1") {
       getAllNonLearningSchedule();
       if (prodi !== "-1") getAllClassSchedules();
@@ -188,6 +232,7 @@ function useJadwalKeseluruhanCalendar() {
   return {
     studentGroup,
     setStudentGroup,
+    studentGroupData,
     data,
   };
 }

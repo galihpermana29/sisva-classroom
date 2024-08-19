@@ -16,7 +16,7 @@ const formatDateTime = (date) => {
 };
 
 export const JadwalKeseluruhanSchedule = ({}) => {
-  const { data, studentGroup } = useJadwalKeseluruhanCalendar();
+  const { data, studentGroupData } = useJadwalKeseluruhanCalendar();
 
   const [openEditNonKbm, setOpenEditNonKbm] = useState(false);
   const [openEditJadwalKelas, setOpenEditJadwalKelas] = useState(false);
@@ -47,7 +47,7 @@ export const JadwalKeseluruhanSchedule = ({}) => {
     <>
       <TimelineWeekSchedule
         data={data}
-        classData={studentGroup}
+        classData={studentGroupData}
         onEventClick={onEventClick}
       />
       <EditAktivitasNonKbmModal
