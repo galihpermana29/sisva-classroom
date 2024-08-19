@@ -5,10 +5,9 @@ import { formatDayToLabel } from "@/utils/formatDay";
 import { useEffect, useState } from "react";
 
 function useCreateJadwalKelas(formik, edit = false) {
-  const { period_id, study_program_id, grade } = edit
-    ? formik.initialValues
-    : formik.values;
+  const { period_id, study_program_id, grade } = formik.values;
 
+  const [isEdit, setIsEdit] = useState(edit);
   const [kelasData, setKelasData] = useState([]);
   const [periodeData, setPeriodeData] = useState([]);
   const [prodiData, setProdiData] = useState([]);
@@ -102,16 +101,18 @@ function useCreateJadwalKelas(formik, edit = false) {
 
   //* reset study_program_id and grade on period_id change
   useEffect(() => {
-    if (study_program_id) {
+    if (study_program_id && !isEdit) {
       formik.setFieldValue("study_program_id", "");
       formik.setFieldValue("grade", "");
+      formik.setFieldValue("day", "");
     }
   }, [period_id]);
 
   //* reset  grade on study_program_id change
   useEffect(() => {
-    if (grade) {
+    if (grade && !isEdit) {
       formik.setFieldValue("grade", "");
+      formik.setFieldValue("day", "");
     }
   }, [study_program_id]);
 

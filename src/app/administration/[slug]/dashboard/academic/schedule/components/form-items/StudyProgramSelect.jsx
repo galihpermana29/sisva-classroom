@@ -10,6 +10,7 @@ export const StudyProgramSelect = ({
   disabled,
   data,
 }) => {
+  console.log(formik.values[name]);
   return (
     <Stack spacing={1}>
       <Typography fontWeight={600} variant="body2">
@@ -20,7 +21,6 @@ export const StudyProgramSelect = ({
         name={name}
         size="small"
         disabled={disabled}
-        defaultValue={formik?.initialValues[name]}
         value={formik.values ? formik.values[name] : ""}
         onChange={(event) => formik.setFieldValue(name, event.target.value)}
         onBlur={formik.handleBlur}

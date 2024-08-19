@@ -44,21 +44,21 @@ export const JadwalKeseluruhanSchedule = ({}) => {
     setInitialEditData(parsedData);
   };
 
-  if (studentGroupData?.length === 0) {
-    return (
-      <iframe
-        src="https://lottie.host/embed/b5db43dc-864b-4e2d-8ad1-042536dbe95b/O1cPFK7CcS.json"
-        className="border-none w-full h-[238px]"
-      ></iframe>
-    );
-  }
+  // if (studentGroupData?.length === 0) {
+  //   return (
+  //     <iframe
+  //       src="https://lottie.host/embed/b5db43dc-864b-4e2d-8ad1-042536dbe95b/O1cPFK7CcS.json"
+  //       className="border-none w-full h-[238px]"
+  //     ></iframe>
+  //   );
+  // }
 
   return (
     <>
       {!isLoading ? (
         <TimelineWeekSchedule
           data={data}
-          classData={studentGroupData}
+          classData={studentGroup}
           onEventClick={onEventClick}
         />
       ) : (

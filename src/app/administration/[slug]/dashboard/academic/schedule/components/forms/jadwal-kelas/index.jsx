@@ -52,7 +52,7 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
   if (initialValues) {
     initialValues = {
       ...initialValues,
-      period_id: periode,
+      period_id: parseInt(periode),
       day: `${initialValues?.school_schedule_id}:${initialValues?.day}`,
     };
   }
