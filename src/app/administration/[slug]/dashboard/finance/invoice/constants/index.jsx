@@ -7,6 +7,7 @@ import { TagihanPengguna } from "../components/tabs/TagihanPengguna";
 import { TagihanPenggunaActions } from "../components/tagihan-pengguna/TagihanPenggunaActions";
 import { TagihanPenggunaFilters } from "../components/tagihan-pengguna/TagihanPenggunaFilters";
 import { TagihanPenggunaSearch } from "../components/tagihan-pengguna/TagihanPenggunaSearch";
+import { TagihanActions } from "../components/tagihan/TagihanActions";
 import { TagihanFilters } from "../components/tagihan/TagihanFilters";
 import { TagihanSearch } from "../components/tagihan/TagihanSearch";
 
@@ -17,7 +18,7 @@ export const INVOICE_TABS = [
   {
     title: "Tagihan",
     component: <Tagihan />,
-    actions: <div>Tagihan Actions</div>,
+    actions: <TagihanActions />,
     search: <TagihanSearch />,
     filters: <TagihanFilters />,
   },
