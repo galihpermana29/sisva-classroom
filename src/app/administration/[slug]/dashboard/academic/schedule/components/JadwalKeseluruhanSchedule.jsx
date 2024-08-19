@@ -16,7 +16,8 @@ const formatDateTime = (date) => {
 };
 
 export const JadwalKeseluruhanSchedule = ({}) => {
-  const { data, studentGroupData } = useJadwalKeseluruhanCalendar();
+  const { data, studentGroupData, studentGroup, isLoading } =
+    useJadwalKeseluruhanCalendar();
 
   const [openEditNonKbm, setOpenEditNonKbm] = useState(false);
   const [openEditJadwalKelas, setOpenEditJadwalKelas] = useState(false);
@@ -43,13 +44,26 @@ export const JadwalKeseluruhanSchedule = ({}) => {
     setInitialEditData(parsedData);
   };
 
+  if (studentGroupData?.length === 0) {
+    return (
+      <iframe
+        src="https://lottie.host/embed/b5db43dc-864b-4e2d-8ad1-042536dbe95b/O1cPFK7CcS.json"
+        className="border-none w-full h-[238px]"
+      ></iframe>
+    );
+  }
+
   return (
     <>
-      <TimelineWeekSchedule
-        data={data}
-        classData={studentGroupData}
-        onEventClick={onEventClick}
-      />
+      {!isLoading ? (
+        <TimelineWeekSchedule
+          data={data}
+          classData={studentGroupData}
+          onEventClick={onEventClick}
+        />
+      ) : (
+        <div className="h-[650px] w-full animate-pulse bg-gray-200" />
+      )}
       <EditAktivitasNonKbmModal
         open={openEditNonKbm}
         handleClose={handleCloseEditNonKbm}

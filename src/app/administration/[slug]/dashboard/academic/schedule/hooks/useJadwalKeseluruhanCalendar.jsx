@@ -62,6 +62,7 @@ function useJadwalKeseluruhanCalendar() {
   const isJadwalKeseluruhan =
     searchParams.get(JADWAL_KESELURUHAN_FIELD_NAME) ?? "true";
 
+  const [isLoading, setIsLoading] = useState(false);
   const [classData, setClassData] = useState([]);
   const [studentGroup, setStudentGroup] = useState([]);
   const [learningSchedule, setLearningSchedule] = useState([]);
@@ -94,6 +95,8 @@ function useJadwalKeseluruhanCalendar() {
       : nonLearningScheduleData;
 
   let studentGroupData = studentGroup.filter((sg) => {
+    if (periode === "-1") return false;
+
     const periodeMatch =
       periode !== "-1" ? sg.period_id === parseInt(periode) : true;
     const prodiMatch =
@@ -200,14 +203,27 @@ function useJadwalKeseluruhanCalendar() {
   };
 
   useEffect(() => {
-    getAllStudentGroup();
-    getAllClasses();
+    const fetchData = async () => {
+      setIsLoading(true);
+      await Promise.all([getAllStudentGroup(), getAllClasses()]);
+      setIsLoading(false);
+    };
+
+    fetchData();
   }, []);
 
   useEffect(() => {
     if (refetch === "true") {
-      getAllNonLearningSchedule();
-      getAllClassSchedules();
+      const fetchData = async () => {
+        setIsLoading(true);
+        await Promise.all([
+          getAllClassSchedules(),
+          getAllNonLearningSchedule(),
+        ]);
+        setIsLoading(false);
+      };
+
+      fetchData();
     }
 
     updateQueryParam("rf", false);
@@ -230,6 +246,8 @@ function useJadwalKeseluruhanCalendar() {
   }, [periode, prodi]);
 
   return {
+    isLoading,
+    setIsLoading,
     studentGroup,
     setStudentGroup,
     studentGroupData,

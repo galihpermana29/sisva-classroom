@@ -4,8 +4,10 @@ import AcademicAPI from "@/api/academic";
 import { formatDayToLabel } from "@/utils/formatDay";
 import { useEffect, useState } from "react";
 
-function useCreateJadwalKelas(formik) {
-  const { period_id, study_program_id, grade, day } = formik.values;
+function useCreateJadwalKelas(formik, edit = false) {
+  const { period_id, study_program_id, grade } = edit
+    ? formik.initialValues
+    : formik.values;
 
   const [kelasData, setKelasData] = useState([]);
   const [periodeData, setPeriodeData] = useState([]);

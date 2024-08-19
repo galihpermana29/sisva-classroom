@@ -30,7 +30,7 @@ export const StudyProgramSelect = ({
         <MenuItem disabled value={""}>
           {placeholder}
         </MenuItem>
-        {data.map(({ label, value }) => (
+        {data?.map(({ label, value }) => (
           <MenuItem key={`${label}${value}`} value={value}>
             {label}
           </MenuItem>

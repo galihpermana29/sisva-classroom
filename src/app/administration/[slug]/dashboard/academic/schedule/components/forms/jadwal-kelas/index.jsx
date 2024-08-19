@@ -67,6 +67,7 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
       start_time: null,
       end_time: null,
     },
+    enableReinitialize: true,
     validationSchema: jadwalKelasSchema,
     onSubmit: async ({ start_time, end_time, class_id, day, grade }) => {
       const [school_schedule_id, day_num] = day.split(":");
@@ -90,13 +91,21 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
       };
 
       try {
-        const [nonLearningScheduleData, classScheduleData] = await Promise.all([
-          AcademicAPI.getAllNonLearningSchedules({ period_id: periode }),
-          AcademicAPI.getAllClassSchedules({ period_id: periode }),
-        ]);
+        const [nonLearningScheduleData, classScheduleData, classData] =
+          await Promise.all([
+            AcademicAPI.getAllNonLearningSchedules({ period_id: periode }),
+            AcademicAPI.getAllClassSchedules({ period_id: periode }),
+            AcademicAPI.getAllClasses({
+              periode,
+            }),
+          ]);
 
-        if (nonLearningScheduleData && classScheduleData) {
-          nonLearningScheduleData.data.data.forEach(
+        const teacher_id = classData?.data?.data.find(
+          (item) => item.id === 3
+        )?.teacher_id;
+
+        if (nonLearningScheduleData && classScheduleData && classData) {
+          nonLearningScheduleData?.data?.data?.forEach(
             ({
               start_time: ext_start_time,
               end_time: ext_end_time,
@@ -106,6 +115,7 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
               const parsedExtStartTime = parseTime(ext_start_time);
               const parsedExtEndTime = parseTime(ext_end_time);
 
+              //* checks for time conflict
               if (
                 ext_grade === grade &&
                 ext_day === parseInt(day_num) &&
@@ -128,10 +138,26 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
               end_time: ext_end_time,
               day: ext_day,
               grade: ext_grade,
+              teacher_id: ext_teacher_id,
             }) => {
               const parsedExtStartTime = parseTime(ext_start_time);
               const parsedExtEndTime = parseTime(ext_end_time);
 
+              //* checks for teacher conflict
+              if (
+                ext_day !== parseInt(day_num) &&
+                ext_teacher_id === teacher_id &&
+                hasTimeConflict(
+                  parsedStartTime,
+                  parsedEndTime,
+                  parsedExtStartTime,
+                  parsedExtEndTime
+                )
+              ) {
+                errorDetected = true;
+              }
+
+              //* checks for time conflict
               if (
                 (edit ? ext_id !== formik.initialValues?.id : true) &&
                 ext_grade === grade &&
@@ -177,7 +203,7 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
     tingkatanSelectData,
     kelasSelectData,
     hariSelectData,
-  } = useCreateJadwalKelas(formik);
+  } = useCreateJadwalKelas(formik, edit);
 
   return (
     <>

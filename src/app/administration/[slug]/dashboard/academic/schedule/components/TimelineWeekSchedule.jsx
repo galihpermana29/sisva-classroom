@@ -1,6 +1,6 @@
 "use client";
 
-import { Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { Internationalization } from "@syncfusion/ej2-base";
 import {
   Agenda,
@@ -38,21 +38,22 @@ const eventTemplate = (props) => {
   const bgColor = props?.type === "learning" ? "#ACDEE7" : "#FFDBCB";
 
   return (
-    <div
-      className="text-[#1D2939] h-full -mx-1 px-1 !w-full min-w-[500px] pt-[2px]"
-      style={{ backgroundColor: bgColor }}
+    <Stack
+      sx={{
+        color: "#1D2939",
+        height: "100%",
+        margin: "0 -4px",
+        padding: "0 4px",
+        width: "100%",
+        minWidth: "500px",
+        paddingTop: "2px",
+        backgroundColor: bgColor,
+      }}
     >
       <h3 className="font-medium !text-xs line-clamp-1">{props.name}</h3>
       <p className="text-[10px]">{props?.teacher_name}</p>
-    </div>
+    </Stack>
   );
-};
-
-const eventRendered = (args) => {
-  // Hide all events except the first one in a cell
-  if (args.element && args.element.previousElementSibling) {
-    args.element.style.display = "none";
-  }
 };
 
 function TimelineWeekSchedule({ data, classData, onEventClick }) {
@@ -78,7 +79,6 @@ function TimelineWeekSchedule({ data, classData, onEventClick }) {
           isBlock: { title: "IsBlock", name: "is_block" },
         },
         template: eventTemplate,
-        allowMultiple: false,
       }}
       group={{ byGroupID: true, resources: ["Group", "StudentGroup"] }}
       cellClick={(args) => {
@@ -88,7 +88,6 @@ function TimelineWeekSchedule({ data, classData, onEventClick }) {
         args.cancel = true;
       }}
       eventClick={onEventClick}
-      eventRendered={eventRendered}
     >
       <ViewsDirective>
         <ViewDirective option="TimelineWeek" />
