@@ -1,14 +1,12 @@
-import { ModeEdit } from "@mui/icons-material";
-import { IconButton, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import { DeleteTagihanModal } from "../modals/tagihan/DeleteTagihanModal";
+import { EditTagihanModal } from "../modals/tagihan/EditTagihanModal";
 
-export const TagihanRowActions = ({ id, status }) => {
+export const TagihanRowActions = ({ id, status, data }) => {
   return (
-    <Stack flexDirection="row" justifyContent={"center"} width={"100%"} gap={1}>
+    <Stack flexDirection="row" justifyContent={"center"} gap={1}>
       {status !== "published" && <DeleteTagihanModal id={id} />}
-      <IconButton aria-label="edit" size="small">
-        <ModeEdit />
-      </IconButton>
+      <EditTagihanModal initialValues={data} />
     </Stack>
   );
 };

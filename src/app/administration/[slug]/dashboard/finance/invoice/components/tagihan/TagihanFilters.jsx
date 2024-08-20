@@ -1,6 +1,7 @@
 import { SortIcon } from "@/assets/SVGs";
 import { KeyboardArrowDown, Tune } from "@mui/icons-material";
 import { Button, Divider, IconButton, Stack } from "@mui/material";
+import { useGetTagihan } from "../../hooks/useGetTagihan";
 import { DateRangeSelect } from "../filters/DateRangeSelect";
 import FilterReset from "../filters/FilterReset";
 import { KategoriSelect } from "../filters/KategoriSelect";
@@ -19,6 +20,17 @@ const statusFilters = [
 
 /** @description Component for handling tagihan tab's filters */
 export const TagihanFilters = () => {
+  const { data: allBillsData } = useGetTagihan();
+
+  const uniqueNames = [
+    ...new Set(allBillsData.flatMap((group) => group.map((item) => item.name))),
+  ];
+
+  const nameFilters = uniqueNames.map((name) => ({
+    value: name,
+    label: name,
+  }));
+
   return (
     <Stack flexDirection="row" alignItems="center" gap={1}>
       <Button
@@ -46,7 +58,7 @@ export const TagihanFilters = () => {
         gap={1}
       >
         <DateRangeSelect />
-        <KategoriSelect data={statusFilters} />
+        <KategoriSelect data={nameFilters} />
         <StatusSelect data={statusFilters} />
         <FilterReset />
       </Stack>

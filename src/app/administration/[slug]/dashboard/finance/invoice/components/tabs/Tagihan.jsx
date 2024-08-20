@@ -1,6 +1,7 @@
 import { Divider, Paper, Stack } from "@mui/material";
 import TableTagihan from "../tables/tagihan";
 import { TagihanPagination } from "../tagihan/TagihanPagination";
+import { TagihanData } from "../tagihan/TagihanData";
 
 function Tagihan() {
   return (
@@ -10,7 +11,7 @@ function Tagihan() {
         <TableTagihan />
       </Stack>
       <Stack display={{ xs: "flex", lg: "none" }} padding={2} flexGrow={1}>
-        {/* <TagihanPenggunaData /> */}
+        <TagihanData />
       </Stack>
       <Stack padding={2} component={Paper} position="sticky" bottom={0}>
         <TagihanPagination />

@@ -5,12 +5,28 @@ import { formatToRupiah } from "@/utils/formatToRupiah";
 import { useMounted } from "@mantine/hooks";
 import { Stack, TableCell, TableRow, Typography } from "@mui/material";
 import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+import "dayjs/locale/id";
 import { DEFAULT_ROWS_PER_PAGE } from "../../../constants";
 import { useGetTagihan } from "../../../hooks/useGetTagihan";
 import { usePagination } from "../../../hooks/usePagination";
-import { TagihanPenggunaRowActions } from "../../tagihan-pengguna/TagihanPenggunaRowActions";
-import { TagihanStatusBadge } from "../../tagihan/TagihanStatusBadge";
 import { TagihanRowActions } from "../../tagihan/TagihanRowActions";
+import { TagihanStatusBadge } from "../../tagihan/TagihanStatusBadge";
+
+dayjs.extend(customParseFormat);
+dayjs.extend(localizedFormat);
+dayjs.locale("id");
+
+function formatDate(dateString) {
+  const date = dayjs(dateString, "DD/MM/YYYY h:mm A Z");
+  return date.format("D, MMM YYYY");
+}
+
+function formatTime(dateString) {
+  const date = dayjs(dateString, "DD/MM/YYYY h:mm A Z");
+  return date.format("HH:mm");
+}
 
 export const TableBodyTagihan = ({ columnCount }) => {
   const mounted = useMounted();
@@ -30,15 +46,17 @@ export const TableBodyTagihan = ({ columnCount }) => {
   return data && data.length > 0 ? (
     data.map((row) => (
       <TableRow hover key={row.id}>
-        <TableCell>{row.id}</TableCell>
+        <TableCell>#{row.id}</TableCell>
         <TableCell>{row.name}</TableCell>
-        <TableCell>{formatToRupiah(row.total_price)}</TableCell>
+        <TableCell>{formatToRupiah(row.amount)}</TableCell>
         <TableCell>{row.total_payment}</TableCell>
         <TableCell>
           <Stack>
-            <Typography>{dayjs(row.deadline).format("D, MMM YYYY")}</Typography>
+            <Typography fontSize={"14px"}>
+              {formatDate(row.deadline)}
+            </Typography>
             <Typography fontSize={"12px"} color={"#969696"}>
-              {dayjs(row.deadline).format("HH:mm")}
+              {formatTime(row.deadline)}
             </Typography>
           </Stack>
         </TableCell>
@@ -46,7 +64,7 @@ export const TableBodyTagihan = ({ columnCount }) => {
           <TagihanStatusBadge>{row.status}</TagihanStatusBadge>
         </TableCell>
         <TableCell>
-          <TagihanRowActions id={row.id} status={row.status} />
+          <TagihanRowActions id={row.id} status={row.status} data={row} />
         </TableCell>
       </TableRow>
     ))

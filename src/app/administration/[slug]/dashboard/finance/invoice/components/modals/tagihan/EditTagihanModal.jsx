@@ -1,12 +1,12 @@
 "use client";
 
 import { ModalBody } from "@/components/CustomModal";
-import AddIcon from "@mui/icons-material/Add";
+import { ModeEdit } from "@mui/icons-material";
 import {
-  Box,
   Button,
   Checkbox,
   FormControl,
+  IconButton,
   MenuItem,
   Modal,
   Select,
@@ -20,10 +20,10 @@ import dayjs from "dayjs";
 import { useFormik } from "formik";
 import { useState } from "react";
 import { tagihanSchema } from "./tagihanSchema";
-import useMutateCreateTagihan from "../../../hooks/useMutateCreateTagihan";
+import useMutateEditTagihan from "../../../hooks/useMutateEditTagihan";
 import { useQueryClient } from "@tanstack/react-query";
 
-export const AddTagihanModal = () => {
+export const EditTagihanModal = ({ initialValues }) => {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -31,14 +31,9 @@ export const AddTagihanModal = () => {
 
   return (
     <>
-      <Button
-        disableElevation
-        onClick={handleOpen}
-        variant="contained"
-        startIcon={<AddIcon />}
-      >
-        Add
-      </Button>
+      <IconButton onClick={handleOpen} aria-label="edit" size="small">
+        <ModeEdit />
+      </IconButton>
       <Modal
         open={open}
         onClose={handleClose}
@@ -50,7 +45,12 @@ export const AddTagihanModal = () => {
           maxWidth={600}
           title="Buat Tagihan"
           handleClose={handleClose}
-          content={<ModalContent handleClose={handleClose} />}
+          content={
+            <ModalContent
+              handleClose={handleClose}
+              initialValues={initialValues}
+            />
+          }
         />
       </Modal>
     </>
@@ -68,20 +68,22 @@ const MenuProps = {
   },
 };
 
-const ModalContent = ({ handleClose }) => {
+const ModalContent = ({ handleClose, initialValues }) => {
   const theme = useTheme();
   const queryClient = useQueryClient();
 
   const refetchTagihan = () => queryClient.refetchQueries(["tagihan"]);
 
-  const { mutate } = useMutateCreateTagihan(handleClose, refetchTagihan);
+  const { mutate } = useMutateEditTagihan(handleClose, refetchTagihan);
 
   const formik = useFormik({
-    initialValues: {
+    initialValues: initialValues ?? {
+      custom_id: "",
       name: "",
-      status: "draft",
+      status: "",
       target_user_types: [],
       amount: "",
+      description: "",
       deadline: null,
     },
     enableReinitialize: true,
@@ -117,13 +119,7 @@ const ModalContent = ({ handleClose }) => {
             </Typography>
             <DatePicker
               size="small"
-              slotProps={{
-                textField: {
-                  size: "small",
-                  error:
-                    formik.touched.deadline && Boolean(formik.errors.deadline),
-                },
-              }}
+              slotProps={{ textField: { size: "small" } }}
               value={
                 formik?.values?.deadline
                   ? dayjs(formik.values?.deadline, "DD/MM/YYYY h:mm A Z")
@@ -137,12 +133,8 @@ const ModalContent = ({ handleClose }) => {
                 formik.setFieldValue("deadline", formattedDate);
               }}
               onBlur={formik.handleBlur}
+              error={formik.touched.deadline && Boolean(formik.errors.deadline)}
             />
-            {formik.touched.deadline && formik.errors.deadline && (
-              <Typography color={theme.palette.error.main} fontSize={"12px"}>
-                {formik.errors.deadline}
-              </Typography>
-            )}
           </Stack>
         </Stack>
         <Stack width="100%" flexDirection="row" gap={1}>
@@ -211,54 +203,27 @@ const ModalContent = ({ handleClose }) => {
           </Typography>
           <FormControl sx={{ width: "100%" }}>
             <Select
+              disabled
               multiple
               size="small"
               className="capitalize"
               value={formik?.values ? formik.values.target_user_types : []}
-              onChange={(e) => {
-                formik.setFieldValue("target_user_types", e.target.value);
-              }}
               onBlur={formik.handleBlur}
               error={
                 formik.touched.target_user_types &&
                 Boolean(formik.errors.target_user_types)
               }
-              renderValue={(selected) => (
-                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                  {targetData
-                    .filter(
-                      ({ value }) =>
-                        selected.findIndex((target) => target === value) > -1
-                    )
-                    .map(({ label }, index) => (
-                      <Stack
-                        key={index}
-                        bgcolor={theme.palette.base.base30}
-                        paddingY={"4px"}
-                        paddingX={"8px"}
-                        borderRadius={"4px"}
-                        flexDirection={"row"}
-                        gap={"16px"}
-                        alignItems={"center"}
-                      >
-                        <span>{label}</span>
-                      </Stack>
-                    ))}
-                </Box>
-              )}
+              renderValue={(selected) =>
+                targetData
+                  .filter(
+                    ({ value }) =>
+                      selected.findIndex((target) => target === value) > -1
+                  )
+                  .map(({ label }) => label)
+                  .join(", ")
+              }
               MenuProps={MenuProps}
-            >
-              {targetData?.map(({ label, value }, index) => (
-                <MenuItem key={index} value={value} className="capitalize">
-                  <Checkbox
-                    checked={
-                      formik.values?.target_user_types?.indexOf(value) > -1
-                    }
-                  />
-                  {label}
-                </MenuItem>
-              ))}
-            </Select>
+            ></Select>
           </FormControl>
           {formik.touched.target_user_types &&
             formik.errors.target_user_types && (

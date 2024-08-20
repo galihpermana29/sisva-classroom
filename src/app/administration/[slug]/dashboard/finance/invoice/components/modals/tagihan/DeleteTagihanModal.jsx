@@ -11,6 +11,8 @@ import {
 import { useState } from "react";
 import { ModalBody } from "@/components/CustomModal";
 import { Delete } from "@mui/icons-material";
+import useMutateDeleteTagihan from "../../../hooks/useMutateDeleteTagihan";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const DeleteTagihanModal = ({ id }) => {
   const [open, setOpen] = useState(false);
@@ -28,6 +30,7 @@ export const DeleteTagihanModal = ({ id }) => {
       <Modal
         open={open}
         onClose={handleClose}
+        className="mx-2"
         aria-labelledby="Modal hapus tagihan"
         aria-describedby="Hapus tagihan"
       >
@@ -42,6 +45,12 @@ export const DeleteTagihanModal = ({ id }) => {
 };
 
 const ModalContent = ({ id, handleClose }) => {
+  const queryClient = useQueryClient();
+
+  const refetchTagihan = () => queryClient.refetchQueries(["tagihan"]);
+
+  const { mutate } = useMutateDeleteTagihan(handleClose, refetchTagihan);
+
   return (
     <Stack textAlign="center" justifyContent="center" alignItems="center">
       <iframe
@@ -68,7 +77,12 @@ const ModalContent = ({ id, handleClose }) => {
           >
             Batal
           </Button>
-          <Button fullWidth variant="contained" color="error">
+          <Button
+            onClick={() => mutate(id)}
+            fullWidth
+            variant="contained"
+            color="error"
+          >
             Hapus
           </Button>
         </Stack>
