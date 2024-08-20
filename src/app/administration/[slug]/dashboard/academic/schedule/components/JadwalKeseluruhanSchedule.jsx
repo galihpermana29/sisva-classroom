@@ -7,14 +7,6 @@ import TimelineWeekSchedule from "./TimelineWeekSchedule";
 import dayjs from "dayjs";
 import EditJadwalKelasModal from "./modals/EditJadwalKelasModal";
 
-const formatDateTime = (date) => {
-  return date.toLocaleTimeString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  });
-};
-
 export const JadwalKeseluruhanSchedule = ({}) => {
   const { data, studentGroupData, studentGroup, isLoading } =
     useJadwalKeseluruhanCalendar();
@@ -44,21 +36,21 @@ export const JadwalKeseluruhanSchedule = ({}) => {
     setInitialEditData(parsedData);
   };
 
-  // if (studentGroupData?.length === 0) {
-  //   return (
-  //     <iframe
-  //       src="https://lottie.host/embed/b5db43dc-864b-4e2d-8ad1-042536dbe95b/O1cPFK7CcS.json"
-  //       className="border-none w-full h-[238px]"
-  //     ></iframe>
-  //   );
-  // }
+  if (studentGroupData?.length === 0) {
+    return (
+      <iframe
+        src="https://lottie.host/embed/b5db43dc-864b-4e2d-8ad1-042536dbe95b/O1cPFK7CcS.json"
+        className="border-none w-full h-[238px]"
+      ></iframe>
+    );
+  }
 
   return (
     <>
       {!isLoading ? (
         <TimelineWeekSchedule
           data={data}
-          classData={studentGroup}
+          classData={studentGroupData}
           onEventClick={onEventClick}
         />
       ) : (
