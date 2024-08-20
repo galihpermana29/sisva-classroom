@@ -1,20 +1,43 @@
-import WeekGeneralSchedule from "./WeekGeneralSchedule";
+"use client";
+
+import { Stack } from "@mui/material";
+import { useFilterStatus } from "../hooks/filters/useFilterStatus";
+import { useGetAvailableClassSchedules } from "../hooks/useGetAvailableClassSchedules";
+import { FilterIncompleteState } from "./FilterIncompleteState";
+import WeekGeneralSchedule from "./schedule/WeekGeneralSchedule";
+import { NonLearningCell } from "./schedule/NonLearningCell";
+import { KelasLearningCell } from "./schedule/KelasLearningCell";
 
 export const JadwalKelasSchedule = () => {
-  return <WeekGeneralSchedule data={data} />;
+  const { periode, prodi, tingkat, kelas } = useFilterStatus();
+  const data = useGetAvailableClassSchedules();
+
+  const shouldRender = Boolean(periode && prodi && tingkat && kelas);
+
+  return (
+    <Stack
+      alignItems="center"
+      justifyContent="center"
+      minWidth={shouldRender && 1280}
+    >
+      {!shouldRender && <FilterIncompleteState />}
+      {shouldRender && (
+        <WeekGeneralSchedule
+          data={data}
+          cellTemplate={getTemplate}
+        />
+      )}
+    </Stack>
+  );
 };
 
-const data = [
-  {
-    Id: 1,
-    Subject: "Story Time for Kids",
-    StartTime: "2021-02-14T04:30:00.000Z",
-    EndTime: "2021-02-14T06:00:00.000Z",
-  },
-  {
-    Id: 2,
-    Subject: "Camping with Turtles",
-    StartTime: "2021-02-15T06:30:00.000Z",
-    EndTime: "2021-02-15T08:30:00.000Z",
-  },
-];
+const getTemplate = (data) => {
+  switch (data.Type) {
+    case "learning":
+      return <KelasLearningCell data={data} />;
+    case "non-learning":
+      return <NonLearningCell data={data} />;
+    default:
+      throw new Error("Unrecognized data type");
+  }
+};

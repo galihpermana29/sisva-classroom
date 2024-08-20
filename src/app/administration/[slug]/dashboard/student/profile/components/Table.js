@@ -19,6 +19,7 @@ import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
 import Link from 'next/link';
 import { types, permissions } from '@/globalcomponents/Variable';
 import { useState } from 'react';
+import { useParams } from 'next/navigation';
 
 const columns = [
   {
@@ -88,12 +89,7 @@ const columns = [
                   {params.value.data.username}
                 </Typography>
               </Stack>
-              {/* <Stack sx={{ flex: 1 }}> */}
-              {/* <Typography sx={{ color: "base.base50", fontSize: 12 }}>
-                  Status
-                </Typography> */}
             </Stack>
-            {/* </Stack> */}
           </Stack>
         </Box>
       );
@@ -176,6 +172,8 @@ function ChipList({ params }) {
 }
 
 function ActionButton({ params }) {
+  const { slug } = useParams();
+
   return (
     <Stack
       sx={{
@@ -185,7 +183,7 @@ function ActionButton({ params }) {
     >
       <IconButton
         component={Link}
-        href={`/administration/SEKOLAHSISVA/dashboard/student/profile/${params.value.data.id}`}
+        href={`/administration/${slug}/dashboard/student/profile/${params.value.data.id}`}
         sx={{
           borderRadius: 2,
           backgroundColor: 'base.base30',

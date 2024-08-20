@@ -1,8 +1,5 @@
-import * as React from "react";
-import { DataGrid } from "@mui/x-data-grid";
-import Image from "next/image";
+import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
 import {
-  Avatar,
   Box,
   Button,
   Chip,
@@ -11,46 +8,41 @@ import {
   Modal,
   Paper,
   Stack,
-  TextField,
   Typography,
   useMediaQuery,
-} from "@mui/material";
-import { BorderColorRounded, DeleteForeverRounded } from "@mui/icons-material";
-import Link from "next/link";
-import { types, permissions } from "@/globalcomponents/Variable";
-import { useState } from "react";
-import { FormAddStudyProgram } from "./FormAddPeriod";
-import { FormEdiPeriod, FormEditPeriod } from "./FormEditPeriod";
-import dayjs from "dayjs";
+} from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
+import { useState } from 'react';
+import { FormAddExtracurriculer } from './FormAddExtracurriculer';
 
 const columns = [
   {
-    field: "card",
-    headerName: "",
+    field: 'card',
+    headerName: '',
     flex: 1,
     sortable: false,
     renderCell: (params) => {
       return (
-        <Box sx={{ width: "100%", mx: 2, py: 0.5 }}>
+        <Box sx={{ width: '100%', mx: 2, py: 0.5 }}>
           <Stack
             component={Paper}
-            variant="outlined"
+            variant='outlined'
             sx={{
-              justifyContent: "flex-start",
+              justifyContent: 'flex-start',
               borderRadius: 2,
               p: 2,
             }}
           >
-            <Stack sx={{ width: "100%" }}>
+            <Stack sx={{ width: '100%' }}>
               <Stack
                 sx={{
-                  width: "100%",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  borderBottom: "1px solid rgb(0,0,0,0.12)",
+                  width: '100%',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  borderBottom: '1px solid rgb(0,0,0,0.12)',
                   px: 1,
-                  py: "10px",
-                  backgroundColor: "base.base10",
+                  py: '10px',
+                  backgroundColor: 'base.base10',
                 }}
               >
                 <Typography
@@ -58,19 +50,19 @@ const columns = [
                 >
                   Tingkatan
                 </Typography>
-                <Typography sx={{ fontSize: 14, textAlign: "right" }}>
+                <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
                   {params.value.data.grade}
                 </Typography>
               </Stack>
               <Stack
                 sx={{
-                  width: "100%",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  borderBottom: "1px solid rgb(0,0,0,0.12)",
+                  width: '100%',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  borderBottom: '1px solid rgb(0,0,0,0.12)',
                   px: 1,
-                  py: "10px",
-                  backgroundColor: "base.base20",
+                  py: '10px',
+                  backgroundColor: 'base.base20',
                 }}
               >
                 <Typography
@@ -79,20 +71,19 @@ const columns = [
                   Kelas
                 </Typography>
 
-                <Typography sx={{ fontSize: 14, textAlign: "right" }}>
+                <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
                   {params.value.data.class}
                 </Typography>
-                {/* <ChipList params={params.value.data.study_program} /> */}
               </Stack>
               <Stack
                 sx={{
-                  width: "100%",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  borderBottom: "1px solid rgb(0,0,0,0.12)",
+                  width: '100%',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  borderBottom: '1px solid rgb(0,0,0,0.12)',
                   px: 1,
-                  py: "10px",
-                  backgroundColor: "base.base10",
+                  py: '10px',
+                  backgroundColor: 'base.base10',
                 }}
               >
                 <Typography
@@ -100,19 +91,19 @@ const columns = [
                 >
                   Wali Kelas
                 </Typography>
-                <Typography sx={{ fontSize: 14, textAlign: "right" }}>
+                <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
                   {params.value.data.guardian}
                 </Typography>
               </Stack>
               <Stack
                 sx={{
-                  width: "100%",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  borderBottom: "1px solid rgb(0,0,0,0.12)",
+                  width: '100%',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  borderBottom: '1px solid rgb(0,0,0,0.12)',
                   px: 1,
-                  py: "10px",
-                  backgroundColor: "base.base20",
+                  py: '10px',
+                  backgroundColor: 'base.base20',
                 }}
               >
                 <Typography
@@ -121,10 +112,9 @@ const columns = [
                   Jumlah Murid
                 </Typography>
 
-                <Typography sx={{ fontSize: 14, textAlign: "right" }}>
+                <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
                   {params.value.data.students}
                 </Typography>
-                {/* <ChipList params={params.value.data.study_program} /> */}
               </Stack>
             </Stack>
 
@@ -135,23 +125,23 @@ const columns = [
     },
   },
   {
-    field: "extracurricular",
-    headerName: "Ekstrakurikuler",
+    field: 'extracurricular',
+    headerName: 'Ekstrakurikuler',
     flex: 1,
   },
   {
-    field: "guardian",
-    headerName: "Pembina",
+    field: 'guardian',
+    headerName: 'Pembina',
     flex: 1,
   },
   {
-    field: "students",
-    headerName: "Jumlah Anggota",
+    field: 'students',
+    headerName: 'Jumlah Anggota',
     flex: 1,
   },
   {
-    field: "action",
-    headerName: "Aksi",
+    field: 'action',
+    headerName: 'Aksi',
     sortable: false,
     width: 120,
     renderCell: (params) => {
@@ -164,11 +154,11 @@ function ChipList({ params, compact }) {
   return (
     <Stack
       sx={{
-        flexDirection: "row",
-        flexWrap: "wrap",
-        overflow: "hidden",
-        justifyContent: compact ? "flex-end" : "flex-start",
-        m: { xs: 0, lg: compact ? 0 : "8px 0" },
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        overflow: 'hidden',
+        justifyContent: compact ? 'flex-end' : 'flex-start',
+        m: { xs: 0, lg: compact ? 0 : '8px 0' },
       }}
     >
       {params.map((studyProgram, index) => {
@@ -176,11 +166,11 @@ function ChipList({ params, compact }) {
           <Chip
             key={index}
             sx={{
-              m: { xs: "2px 0px 2px 4px", lg: "2px" },
+              m: { xs: '2px 0px 2px 4px', lg: '2px' },
               fontSize: 12,
             }}
             label={studyProgram}
-            color="primary"
+            color='primary'
           />
         );
       })}
@@ -192,40 +182,38 @@ function ActionButton({ params }) {
   return (
     <Stack
       sx={{
-        flexDirection: "row",
-        alignItems: "center",
-        alignSelf: "flex-end",
+        flexDirection: 'row',
+        alignItems: 'center',
+        alignSelf: 'flex-end',
         mt: { xs: 2, lg: 0 },
       }}
     >
       <IconButton
         sx={{
           borderRadius: 2,
-          backgroundColor: "base.base30",
-          "&:hover": {
-            backgroundColor: "base.base40",
+          backgroundColor: 'base.base30',
+          '&:hover': {
+            backgroundColor: 'base.base40',
           },
-          height: "fit-content",
-          width: { xs: 90, lg: "fit-content" },
-          display: params.value.data.status === "Selesai" ? "none" : "flex",
+          height: 'fit-content',
+          width: { xs: 90, lg: 'fit-content' },
+          display: params.value.data.status === 'Selesai' ? 'none' : 'flex',
         }}
-        // onClick={() => {
-        //   params.value.setOpenEditModal(true);
-        //   params.value.setActiveRow(params.value.data);
-        //   params.value.formik.setValues({
-        //     period_name: params.value.data.period_name,
-        //     study_program: params.value.data.study_program,
-        //     start_time: dayjs(params.value.data.start_time),
-        //     end_time: dayjs(params.value.data.end_time),
-        //     status: params.value.data.status,
-        //   });
-        // }}
+        onClick={() => {
+          params.value.setOpenEditModal(true);
+          params.value.setActiveRow(params.value.data);
+          params.value.formik.setValues({
+            id: params.value.data.id,
+            title: params.value.data.extracurricular,
+            teacher: params.value.data.guardian_id,
+          });
+        }}
       >
         <BorderColorRounded
-          sx={{ fontSize: { xs: 15, lg: 18 }, color: "base.base50" }}
+          sx={{ fontSize: { xs: 15, lg: 18 }, color: 'base.base50' }}
         />
         <Typography
-          sx={{ fontSize: 14, ml: 1, display: { xs: "flex", lg: "none" } }}
+          sx={{ fontSize: 14, ml: 1, display: { xs: 'flex', lg: 'none' } }}
         >
           Edit
         </Typography>
@@ -234,26 +222,26 @@ function ActionButton({ params }) {
         sx={{
           borderRadius: 2,
           ml: 1,
-          backgroundColor: "warning.main",
-          "&:hover": {
-            backgroundColor: "warning.dark",
+          backgroundColor: 'warning.main',
+          '&:hover': {
+            backgroundColor: 'warning.dark',
           },
-          width: { xs: 90, lg: "fit-content" },
+          width: { xs: 90, lg: 'fit-content' },
         }}
-        // onClick={() => {
-        //   params.value.setOpenDeleteModal(true);
-        //   params.value.setActiveRow(params.value.data);
-        // }}
+        onClick={() => {
+          params.value.setOpenDeleteModal(true);
+          params.value.setActiveRow(params.value.data);
+        }}
       >
         <DeleteForeverRounded
-          sx={{ color: "white", fontSize: { xs: 16, lg: 18 } }}
+          sx={{ color: 'white', fontSize: { xs: 16, lg: 18 } }}
         />
         <Typography
           sx={{
             fontSize: 14,
             ml: 1,
-            display: { xs: "flex", lg: "none" },
-            color: "white",
+            display: { xs: 'flex', lg: 'none' },
+            color: 'white',
           }}
         >
           Delete
@@ -263,8 +251,13 @@ function ActionButton({ params }) {
   );
 }
 
-export default function ClassTable({ data, formik }) {
-  const isMobile = useMediaQuery((theme) => theme.breakpoints.down("lg"));
+export default function ClassTable({
+  data,
+  formik,
+  teacherList,
+  deleteExtra = () => {},
+}) {
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('lg'));
 
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -278,6 +271,7 @@ export default function ClassTable({ data, formik }) {
       extracurricular: data.extracurricular,
       guardian: data.guardian,
       students: data.students,
+      guardian_id: data.guardian_id,
 
       action: {
         data: data,
@@ -298,12 +292,12 @@ export default function ClassTable({ data, formik }) {
   });
 
   return (
-    <div style={{ height: "100%", width: "100%" }}>
+    <div style={{ height: '100%', width: '100%' }}>
       <Modal
         open={openEditModal}
         onClose={() => {
           setOpenEditModal(false);
-          formik.setValues({ name: "", code: "" });
+          formik.setValues({ id: '', title: '', teacher: '' });
         }}
       >
         <Stack
@@ -312,11 +306,11 @@ export default function ClassTable({ data, formik }) {
           sx={{
             borderRadius: 2,
             zIndex: 20,
-            margin: "auto",
-            position: "fixed",
-            height: "fit-content",
-            width: "360px",
-            maxWidth: "80%",
+            margin: 'auto',
+            position: 'fixed',
+            height: 'fit-content',
+            width: '360px',
+            maxWidth: '80%',
             top: 0,
             bottom: 0,
             right: 0,
@@ -329,51 +323,39 @@ export default function ClassTable({ data, formik }) {
             }}
           >
             <Typography fontWeight={600} fontSize={16}>
-              Edit Periode
+              Edit Ekstrakulikuler
             </Typography>
           </Box>
           <Divider />
-          <Box sx={{ maxHeight: "70vh", overflowY: "auto", px: 2 }}>
-            <FormEditPeriod formik={formik} status={activeRow.status} />
+          <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
+            <FormAddExtracurriculer formik={formik} teacherList={teacherList} />
           </Box>
           <Divider />
           <Stack
             sx={{
-              flexDirection: "row",
+              flexDirection: 'row',
               p: 2,
             }}
           >
             <Button
-              variant="outlined"
+              variant='outlined'
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenEditModal(false);
-                formik.setValues({ name: "", code: "" });
+                formik.setValues({ id: '', title: '', teacher: '' });
               }}
             >
               Batal
             </Button>
             <Button
-              variant="contained"
-              sx={{
-                flex: 1,
-                backgroundColor:
-                  formik.values["status"] === "Tidak Aktif"
-                    ? "primary.main"
-                    : "warning.main",
-                "&:hover": {
-                  backgroundColor:
-                    formik.values["status"] === "Aktif" ? "warning.dark" : "",
-                },
-              }}
+              variant='contained'
+              sx={{ flex: 1 }}
               onClick={() => {
                 setOpenEditModal(false);
-                formik.setValues({ name: "", code: "" });
+                formik.handleSubmit();
               }}
             >
-              {formik.values["status"] === "Tidak Aktif"
-                ? "Simpan"
-                : "Akhiri Periode"}
+              Simpan
             </Button>
           </Stack>
         </Stack>
@@ -385,11 +367,11 @@ export default function ClassTable({ data, formik }) {
           sx={{
             borderRadius: 2,
             zIndex: 20,
-            margin: "auto",
-            position: "fixed",
-            height: "fit-content",
-            width: "360px",
-            maxWidth: "80%",
+            margin: 'auto',
+            position: 'fixed',
+            height: 'fit-content',
+            width: '360px',
+            maxWidth: '80%',
             top: 0,
             bottom: 0,
             right: 0,
@@ -399,63 +381,42 @@ export default function ClassTable({ data, formik }) {
         >
           <Box>
             <Typography fontWeight={600} fontSize={16}>
-              Hapus Periode
+              Hapus Ekstrakulikuler
             </Typography>
           </Box>
 
           <Typography sx={{ mt: 1, fontSize: 14 }}>
-            Anda akan menghapus periode berikut:
+            Anda akan menghapus ekstrakulikuler berikut:
           </Typography>
           <Stack
-            sx={{ width: "100%", my: 1, overflow: "hidden", borderRadius: 2 }}
+            sx={{ width: '100%', my: 1, overflow: 'hidden', borderRadius: 2 }}
           >
             <Stack
               sx={{
-                width: "100%",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                borderBottom: "1px solid rgb(0,0,0,0.12)",
+                width: '100%',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                borderBottom: '1px solid rgb(0,0,0,0.12)',
                 px: 1,
-                py: "10px",
-                backgroundColor: "base.base10",
+                py: '10px',
+                backgroundColor: 'base.base10',
               }}
             >
               <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
-                Periode
+                Ekstrakulikuler
               </Typography>
-              <Typography sx={{ fontSize: 14, textAlign: "right" }}>
-                {activeRow.period_name}
+              <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
+                {activeRow.extracurricular}
               </Typography>
-            </Stack>
-            <Stack
-              sx={{
-                width: "100%",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                borderBottom: "1px solid rgb(0,0,0,0.12)",
-                px: 1,
-                py: "10px",
-                backgroundColor: "base.base20",
-              }}
-            >
-              <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
-                Program Studi
-              </Typography>
-
-              <Typography sx={{ fontSize: 14, textAlign: "right" }}>
-                {activeRow.study_program}
-              </Typography>
-              {/* <ChipList params={activeRow.study_program} compact/> */}
             </Stack>
           </Stack>
-
           <Stack
             sx={{
-              flexDirection: "row",
+              flexDirection: 'row',
             }}
           >
             <Button
-              variant="outlined"
+              variant='outlined'
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenDeleteModal(false);
@@ -464,15 +425,16 @@ export default function ClassTable({ data, formik }) {
               Batal
             </Button>
             <Button
-              variant="contained"
+              variant='contained'
               sx={{
                 flex: 1,
-                backgroundColor: "warning.main",
-                "&:hover": {
-                  backgroundColor: "warning.dark",
+                backgroundColor: 'warning.main',
+                '&:hover': {
+                  backgroundColor: 'warning.dark',
                 },
               }}
               onClick={() => {
+                deleteExtra(activeRow.id);
                 setOpenDeleteModal(false);
               }}
             >
@@ -531,7 +493,7 @@ export default function ClassTable({ data, formik }) {
       )}
       <DataGrid
         rows={rows}
-        getRowHeight={() => "auto"}
+        getRowHeight={() => 'auto'}
         columns={columns}
         initialState={{
           pagination: {
@@ -540,7 +502,7 @@ export default function ClassTable({ data, formik }) {
         }}
         pageSizeOptions={[20, 50, 100]}
         getRowClassName={(params) =>
-          params.indexRelativeToCurrentPage % 2 === 0 ? "Mui-even" : "Mui-odd"
+          params.indexRelativeToCurrentPage % 2 === 0 ? 'Mui-even' : 'Mui-odd'
         }
         disableRowSelectionOnClick
         disableColumnMenu

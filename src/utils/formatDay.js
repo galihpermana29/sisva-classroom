@@ -12,5 +12,5 @@ const dayMap = [
 export const formatDayToIndex = (day) =>
   dayMap.findIndex((value) => value === day - 1);
 
-// formatDayToLabel(0) => "Senin"
+// formatDayToLabel(1) => "Senin"
 export const formatDayToLabel = (day) => dayMap[day - 1];

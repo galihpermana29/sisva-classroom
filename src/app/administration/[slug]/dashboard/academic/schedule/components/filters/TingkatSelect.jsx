@@ -1,17 +1,24 @@
 "use client";
 
 import { useQueryParam } from "@/hooks/useQueryParam";
+import { useMounted } from "@mantine/hooks";
 import { MenuItem, Select } from "@mui/material";
 import { useSearchParams } from "next/navigation";
+import { FilterNotMounted } from "./FilterNotMounted";
 
 export const TINGKAT_FIELD_NAME = "tingkat";
 
-export const TingkatSelect = ({ disabled }) => {
+export const TingkatSelect = ({ data, disabled }) => {
   const searchParams = useSearchParams();
-  const value = searchParams.get(TINGKAT_FIELD_NAME) ?? "";
+  const value = Boolean(searchParams.get(TINGKAT_FIELD_NAME) && data)
+    ? searchParams.get(TINGKAT_FIELD_NAME)
+    : "";
 
   const { updateQueryParam } = useQueryParam();
   const handleChange = (value) => updateQueryParam(TINGKAT_FIELD_NAME, value);
+
+  const mounted = useMounted();
+  if (!mounted) return <FilterNotMounted />;
 
   return (
     <Select
@@ -21,16 +28,22 @@ export const TingkatSelect = ({ disabled }) => {
       value={value}
       onChange={(event) => handleChange(event.target.value)}
     >
-      <MenuItem disabled value="">
+      <MenuItem
+        disabled
+        value=""
+      >
         Tingkatan
       </MenuItem>
-      {data.map(({ value, label }) => (
-        <MenuItem key={`${value}${label}`} value={value}>
-          {label}
-        </MenuItem>
-      ))}
+      {data
+        ? data.map((grade) => (
+            <MenuItem
+              key={`${grade}grades`}
+              value={grade}
+            >
+              {grade}
+            </MenuItem>
+          ))
+        : null}
     </Select>
   );
 };
-
-const data = [{ value: "XI", label: "XI" }];

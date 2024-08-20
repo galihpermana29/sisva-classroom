@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
 import Link from 'next/link';
-import { types, permissions } from '@/globalcomponents/Variable';
+import { types, permissions, targets } from '@/globalcomponents/Variable';
 import { useState } from 'react';
 import { FormAddAnnouncement } from './FormAddAnnouncement';
 
@@ -131,7 +131,6 @@ const columns = [
           style={{ objectFit: 'cover' }}
           src={`https://api-staging.sisva.id/file/v1/files/${params.value}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
         />
-        {/* A */}
       </Box>
     ),
   },
@@ -140,7 +139,10 @@ const columns = [
   {
     field: 'target',
     headerName: 'Target',
-    width: 70,
+    width: 140,
+    renderCell: (params) => {
+      return <ChipList params={params.row.target} />;
+    },
   },
   { field: 'datePosted', headerName: 'Tanggal Post', flex: 0.5 },
   {
@@ -164,11 +166,11 @@ function ChipList({ params }) {
         m: '8px 0',
       }}
     >
-      {params.map((permission, index) => {
-        let tempPermission;
-        permissions.map((item) => {
-          if (item.slug === permission) {
-            tempPermission = item.title;
+      {params.map((target, index) => {
+        let tempTarget;
+        targets.map((item) => {
+          if (item.slug === target) {
+            tempTarget = item.title;
           }
         });
         return (
@@ -178,7 +180,7 @@ function ChipList({ params }) {
               m: { xs: '2px 4px 2px 0', lg: '2px' },
               fontSize: 12,
             }}
-            label={tempPermission}
+            label={tempTarget}
             color='primary'
           />
         );
@@ -214,6 +216,7 @@ function ActionButton({ params }) {
             id: params.value.data.id,
             title: params.value.data.name,
             text: params.value.data.description,
+            target_user_types: params.value.data.target,
             image_uri: params.value.data.image_uri,
           });
         }}

@@ -30,8 +30,8 @@ function useJadwalKeseluruhanFilter() {
 
   //* data for period select filter
   const periodeSelectData = periodeData?.map(({ id, name }) => ({
-    label: name,
-    value: id,
+    name,
+    id,
   }));
 
   //* data for study program select filter
@@ -39,8 +39,8 @@ function useJadwalKeseluruhanFilter() {
     periodeData
       ?.find(({ id }) => id === parseInt(periode))
       ?.study_programs?.map(({ id, code }) => ({
-        label: code,
-        value: id,
+        code,
+        id,
       })) || [];
 
   //* data for grade select filter

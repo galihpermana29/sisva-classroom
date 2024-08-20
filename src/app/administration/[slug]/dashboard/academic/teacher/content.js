@@ -48,8 +48,6 @@ export default function StaffProfileContent() {
 
         try {
           await AcademicAPI.replaceSubjectTeacher(payload);
-
-          window.location.reload();
         } catch (error) {
           console.log(error);
         }
@@ -63,12 +61,14 @@ export default function StaffProfileContent() {
 
         try {
           await AcademicAPI.replaceSubjectTeacher(payload);
-
-          window.location.reload();
         } catch (error) {
           console.log(error);
         }
       }
+
+      getAllTeachersData();
+      getAllSubjectData();
+      getAllTeacher();
     },
   });
 
@@ -127,140 +127,134 @@ export default function StaffProfileContent() {
   ];
 
   // get all teachers data
-  useEffect(() => {
-    (async () => {
-      const {
-        data: { data },
-      } = await UsersAPI.getAllUsers('teacher');
+  const getAllTeachersData = async () => {
+    const {
+      data: { data },
+    } = await UsersAPI.getAllUsers('teacher');
 
-      const activeTeacher = data
-        .filter((at) => at.status == 'active')
-        .map((at) => {
-          return { id: at.id, name: at.name };
-        });
-
-      setTeacherList(activeTeacher);
-    })();
-  }, []);
-
-  // get all the subjects with the teachers in it.
-  useEffect(() => {
-    const getAllSubjectData = async () => {
-      const resTeacher = await AcademicAPI.getAllSubjectTeacher();
-      const resSubject = await AcademicAPI.getAllSubject();
-      const resProgram = await AcademicAPI.getAllProdi();
-
-      const dataTeacher = resTeacher.data.data;
-      const dataSubject = resSubject.data.data;
-      const dataProgram = resProgram.data.data;
-
-      let mappedData = [];
-
-      dataProgram.forEach((dp) => {
-        dataSubject.forEach((ds) => {
-          if (dp.id == ds.study_program_id)
-            dp.grades.forEach((dpg) => {
-              mappedData.push({ ...ds, grade: dpg });
-            });
-        });
+    const activeTeacher = data
+      .filter((at) => at.status == 'active')
+      .map((at) => {
+        return { id: at.id, name: at.name };
       });
 
-      const data = mappedData.map((md) => {
-        let teachers = [];
-        dataTeacher.forEach((dt) => {
-          if (md.grade == dt.grade && md.id == dt.subject_detail.id)
-            teachers.push({
-              teacher_id: dt.teacher_id,
-              teacher_name: dt.teacher_name,
-            });
-        });
+    setTeacherList(activeTeacher);
+  };
 
-        return { ...md, teachers };
-      });
+  const getAllSubjectData = async () => {
+    const resTeacher = await AcademicAPI.getAllSubjectTeacher();
+    const resSubject = await AcademicAPI.getAllSubject();
+    const resProgram = await AcademicAPI.getAllProdi();
 
-      setSubjectData(data);
+    const dataTeacher = resTeacher.data.data;
+    const dataSubject = resSubject.data.data;
+    const dataProgram = resProgram.data.data;
 
-      const gradeOpt = [];
+    let mappedData = [];
 
-      dataSubject.forEach((subject) => {
-        dataProgram.forEach((program) => {
-          if (program.id == subject.study_program_id) {
-            gradeOpt.push({
-              id: subject.id,
-              name: subject.name,
-              grades: program.grades,
-            });
-          }
-        });
-      });
-
-      setSubjectList(gradeOpt);
-
-      const subjectOpt = [];
-
-      mappedData.forEach((md, idx, arr) => {
-        const filter = arr.filter((ar) => ar.grade == md.grade);
-
-        if (filter.length == 1)
-          subjectOpt.push({
-            grade: md.grade,
-            subjects: [{ subject_id: md.id, subject_name: md.name }],
+    dataProgram.forEach((dp) => {
+      dataSubject.forEach((ds) => {
+        if (dp.id == ds.study_program_id)
+          dp.grades.forEach((dpg) => {
+            mappedData.push({ ...ds, grade: dpg });
           });
-        else if (filter.length > 1) {
-          let subj = [];
+      });
+    });
 
-          filter.forEach((fl) => {
-            subj.push({ subject_id: fl.id, subject_name: fl.name });
+    const data = mappedData.map((md) => {
+      let teachers = [];
+      dataTeacher.forEach((dt) => {
+        if (md.grade == dt.grade && md.id == dt.subject_detail.id)
+          teachers.push({
+            teacher_id: dt.teacher_id,
+            teacher_name: dt.teacher_name,
           });
+      });
 
-          subjectOpt.push({ grade: md.grade, subjects: subj });
+      return { ...md, teachers };
+    });
 
-          mappedData.splice(idx, filter.length - 1);
+    setSubjectData(data);
+
+    const gradeOpt = [];
+
+    dataSubject.forEach((subject) => {
+      dataProgram.forEach((program) => {
+        if (program.id == subject.study_program_id) {
+          gradeOpt.push({
+            id: subject.id,
+            name: subject.name,
+            grades: program.grades,
+          });
+        }
+      });
+    });
+
+    setSubjectList(gradeOpt);
+
+    const subjectOpt = [];
+
+    mappedData.forEach((md, idx, arr) => {
+      const filter = arr.filter((ar) => ar.grade == md.grade);
+
+      if (filter.length == 1)
+        subjectOpt.push({
+          grade: md.grade,
+          subjects: [{ subject_id: md.id, subject_name: md.name }],
+        });
+      else if (filter.length > 1) {
+        let subj = [];
+
+        filter.forEach((fl) => {
+          subj.push({ subject_id: fl.id, subject_name: fl.name });
+        });
+
+        subjectOpt.push({ grade: md.grade, subjects: subj });
+
+        mappedData.splice(idx, filter.length - 1);
+      }
+    });
+
+    setGradeList(subjectOpt);
+  };
+
+  const getAllTeacher = async () => {
+    const {
+      data: { data },
+    } = await AcademicAPI.getAllSubjectTeacher();
+
+    const teacherData = await UsersAPI.getAllUsers('teacher');
+    const teachProfile = teacherData.data.data.filter(
+      (td) => td.status == 'active'
+    );
+
+    const mappedData = [];
+
+    teachProfile.forEach((tp) => {
+      let subjects = [];
+      let grades = [];
+
+      data.forEach((dt) => {
+        if (tp.id == dt.teacher_id) {
+          if (!subjects.find((sb) => sb.subject_id == dt.subject_id))
+            subjects.push({
+              subject_id: dt.subject_id,
+              subject_name: dt.subject_name,
+              subject_grade: dt.grade,
+            });
+          if (!grades.includes(dt.grade)) grades.push(dt.grade);
         }
       });
 
-      setGradeList(subjectOpt);
-    };
+      mappedData.push({ id: tp.id, name: tp.name, subjects, grades });
+    });
 
-    getAllSubjectData();
-  }, []);
+    setDataTeacher(mappedData);
+  };
 
-  // get all the teachers with the subjects in it
   useEffect(() => {
-    const getAllTeacher = async () => {
-      const {
-        data: { data },
-      } = await AcademicAPI.getAllSubjectTeacher();
-
-      const teacherData = await UsersAPI.getAllUsers('teacher');
-      const teachProfile = teacherData.data.data.filter(
-        (td) => td.status == 'active'
-      );
-
-      const mappedData = [];
-
-      teachProfile.forEach((tp) => {
-        let subjects = [];
-        let grades = [];
-
-        data.forEach((dt) => {
-          if (tp.id == dt.teacher_id) {
-            if (!subjects.find((sb) => sb.subject_id == dt.subject_id))
-              subjects.push({
-                subject_id: dt.subject_id,
-                subject_name: dt.subject_name,
-                subject_grade: dt.grade,
-              });
-            if (!grades.includes(dt.grade)) grades.push(dt.grade);
-          }
-        });
-
-        mappedData.push({ id: tp.id, name: tp.name, subjects, grades });
-      });
-
-      setDataTeacher(mappedData);
-    };
-
+    getAllTeachersData();
+    getAllSubjectData();
     getAllTeacher();
   }, []);
 

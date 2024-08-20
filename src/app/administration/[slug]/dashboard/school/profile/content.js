@@ -1,33 +1,29 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
-import Image from 'next/image';
 import {
   Box,
   Button,
   Divider,
   Grid,
-  OutlinedInput,
   Paper,
   Stack,
   Typography,
 } from '@mui/material';
-import SchoolLogo from '@/assets/School-Logo-Blue.png';
-import LandingImage from '@/assets/Login-Library.png';
+import Image from 'next/image';
+import { useEffect, useRef, useState } from 'react';
 
-import formOneIcon from '@/assets/Icon-Paragraph.svg';
 import formThreeIcon from '@/assets/Icon-Document.svg';
 import formTwoIcon from '@/assets/Icon-Media.svg';
+import formOneIcon from '@/assets/Icon-Paragraph.svg';
 import { BorderColorRounded } from '@mui/icons-material';
 
 import { useFormik } from 'formik';
 
-import { FormSchoolDetails } from './components/FormSchoolDetails';
-import { FormSchoolType } from './components/FormSchoolType';
-import { FormSchoolIdentity } from './components/FormSchoolIdentity';
 import CmsAPI from '@/api/cms';
 import FilesAPI from '@/api/files';
-import { themeConfig } from '@/app/administration/theme';
+import { FormSchoolDetails } from './components/FormSchoolDetails';
+import { FormSchoolIdentity } from './components/FormSchoolIdentity';
+import { FormSchoolType } from './components/FormSchoolType';
 
 export default function SchoolProfileContent() {
   const containerRef = useRef(null);
@@ -89,25 +85,24 @@ export default function SchoolProfileContent() {
     }
   };
 
+  const getProfileData = async () => {
+    try {
+      const {
+        data: { data },
+      } = await CmsAPI.getSchoolById(
+        JSON.parse(localStorage.getItem('user')).school_id
+      );
+
+      const addtionalJson = JSON.parse(data.additional_json_text);
+      delete data.additional_json_text;
+
+      formik.setValues({ ...data, ...addtionalJson });
+      setinitialData({ ...data, ...addtionalJson });
+    } catch (error) {
+      console.log(error, 'error fetch school profile');
+    }
+  };
   useEffect(() => {
-    const getProfileData = async () => {
-      try {
-        const {
-          data: { data },
-        } = await CmsAPI.getSchoolById(
-          JSON.parse(localStorage.getItem('user')).school_id
-        );
-
-        const addtionalJson = JSON.parse(data.additional_json_text);
-        delete data.additional_json_text;
-
-        formik.setValues({ ...data, ...addtionalJson });
-        setinitialData({ ...data, ...addtionalJson });
-      } catch (error) {
-        console.log(error, 'error fetch school profile');
-      }
-    };
-
     getProfileData();
   }, []);
 

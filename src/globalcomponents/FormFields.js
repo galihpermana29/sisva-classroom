@@ -71,7 +71,6 @@ export const formEditPeriodFields = [
     data: [
       { slug: 'inactive', title: 'Tidak Aktif' },
       { slug: 'active', title: 'Aktif' },
-      { slug: 'finished', title: 'Selesai' },
     ],
   },
 ];
@@ -944,10 +943,146 @@ export const formAddAnnouncement = [
     type: 'textField',
   },
   {
+    name: 'target',
+    label: 'Target',
+    placeholder: 'Pilih target yang diinginkan',
+    md: 6,
+    type: 'multiple-select',
+    data: [
+      { slug: 'student', title: 'Siswa' },
+      { slug: 'staff', title: 'Staf' },
+    ],
+  },
+  {
     name: 'image_uri',
     label: 'Gambar',
     placeholder: 'Gambar',
     md: 6,
     type: 'file',
+  },
+];
+
+export const formAddStudentGroup = [
+  {
+    name: 'name',
+    label: 'Kelas Wajib',
+    placeholder: 'Kelas',
+    md: 6,
+    type: 'text',
+  },
+  {
+    name: 'homeroom_teacher_id',
+    label: 'Wali Kelas',
+    placeholder: 'Wali Kelas',
+    md: 6,
+    type: 'select',
+    data: [],
+  },
+  {
+    name: 'period_id',
+    label: 'Periode',
+    placeholder: 'Periode',
+    md: 6,
+    type: 'select',
+    data: [],
+  },
+  {
+    name: 'study_program_id',
+    label: 'Program Studi',
+    placeholder: 'Program Studi',
+    md: 6,
+    type: 'select',
+    data: [],
+  },
+  {
+    name: 'grade',
+    label: 'Tingkatan',
+    placeholder: 'Tingkatan',
+    md: 6,
+    type: 'select',
+    data: [],
+  },
+];
+
+export const formAddExtracurriculer = [
+  {
+    name: 'title',
+    label: 'Nama Ekstrakurikuler',
+    placeholder: 'Ketik nama yang diinginkan',
+    md: 6,
+    type: 'text',
+  },
+  {
+    name: 'teacher',
+    label: 'Pembina',
+    placeholder: 'Pilih Pembina yang diinginkan',
+    md: 6,
+    type: 'select',
+    data: [],
+  },
+];
+
+export const formAddStudentInExtracurriculer = [
+  {
+    name: 'title',
+    label: 'Nama Extracurriculer',
+    placeholder: 'Ketik nama yang diinginkan',
+    md: 6,
+    type: 'select',
+    data: [],
+  },
+  {
+    name: 'student',
+    label: 'Murid',
+    placeholder: 'Pilih Pembina yang diinginkan',
+    md: 6,
+    type: 'select',
+    data: [],
+  },
+];
+
+export const formAddStudent = [
+  {
+    name: 'student',
+    label: 'Nama Siswa',
+    placeholder: 'Pilih Nama yang diinginkan',
+    md: 6,
+    type: 'select',
+    data: [],
+  },
+  {
+    name: 'study_program',
+    label: 'Program Study',
+    placeholder: 'Pilih Program yang diinginkan',
+    md: 6,
+    type: 'select',
+    data: [],
+  },
+  {
+    name: 'grade',
+    label: 'Tingkatan',
+    placeholder: 'Pilih Tingkatan yang diinginkan',
+    md: 6,
+    type: 'select',
+    data: [],
+  },
+];
+
+export const formInsertStudentGroup = [
+  {
+    name: 'class',
+    label: 'Kelas Wajib',
+    placeholder: 'Pilih Tingkatan yang diinginkan',
+    md: 6,
+    type: 'select',
+    data: [],
+  },
+  {
+    name: 'student',
+    label: 'Nama Siswa',
+    placeholder: 'Pilih Nama yang diinginkan',
+    md: 6,
+    type: 'select',
+    data: [],
   },
 ];

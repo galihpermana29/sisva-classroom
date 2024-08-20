@@ -201,6 +201,16 @@ const AcademicAPI = {
     return api.post(`/syllabuses`, payload, { headers });
   },
 
+  updateSilabus(payload, id) {
+    const headers = {
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.patch(`/syllabuses/${id}`, payload, { headers });
+  },
+
   getDetailSilabus(id) {
     const headers = {
       "X-Sisva-Source": "academic.curriculum.test",
@@ -335,6 +345,59 @@ const AcademicAPI = {
     return api.get(`/student-groups/students`, { headers });
   },
 
+  createStudentGroup(payload) {
+    const headers = {
+      "X-Sisva-Source": "academic.studentgroups.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.post(`/student-groups`, payload, { headers });
+  },
+
+  updateStudentGroup(id, payload) {
+    const headers = {
+      "X-Sisva-Source": "academic.studentgroups.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.patch(`/student-groups/${id}`, payload, { headers });
+  },
+
+  insertStudentToStudentGroup(id, payload) {
+    const headers = {
+      "X-Sisva-Source": "academic.studentgroups.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.put(`/student-groups/${id}/students`, payload, { headers });
+  },
+
+  removeStudentGroup(id) {
+    const headers = {
+      "X-Sisva-Source": "academic.studentgroups.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.delete(`/student-groups/${id}`, { headers });
+  },
+
+  removeStudentFromGroup(id, payload) {
+    const headers = {
+      "X-Sisva-Source": "academic.studentgroups.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.delete(`/student-groups/${id}/students`, {
+      headers: headers,
+      data: payload,
+    });
+  },
+
   getAllAnnouncements() {
     const headers = {
       "X-Sisva-Source": "academic.test",
@@ -375,6 +438,94 @@ const AcademicAPI = {
     return api.patch(`/announcements/${id}`, payload, { headers });
   },
 
+  getSchoolSchedule(period_id) {
+    const headers = {
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+
+    return api.get(`/school-schedules?period_id=${period_id}`, { headers });
+  },
+
+  getCredit() {
+    const headers = {
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+
+    return api.get(`/credits`, { headers });
+  },
+
+  createCredit(payload) {
+    const headers = {
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+
+    return api.post("/credits", payload, { headers });
+  },
+
+  createSchoolSchedule(payload) {
+    const headers = {
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+
+    return api.post("/school-schedules", payload, { headers });
+  },
+
+  editSchoolSchedule(payload, id) {
+    const headers = {
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+
+    return api.patch(`/school-schedules/${id}`, payload, { headers });
+  },
+
+  deleteSchoolSchedule(id) {
+    const headers = {
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+
+    return api.delete(`/school-schedules/${id}`, { headers });
+  },
+
+  getClassSchedule(period) {
+    const headers = {
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+
+    return api.get(`/class-schedules?period_id=${period}`, { headers });
+  },
+
+  getNonLearningSchedule(period) {
+    const headers = {
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+
+    return api.get(`/non-learning-schedules?period_id=${period}`, { headers });
+  },
+
   getAllClassSchedules(params) {
     const headers = {
       "X-Sisva-Source": "academic.test",
@@ -382,6 +533,7 @@ const AcademicAPI = {
       "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
+
     return api.get(`/class-schedules?${new URLSearchParams(params)}`, {
       headers,
     });
@@ -449,6 +601,80 @@ const AcademicAPI = {
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
     return api.patch(`/class-schedules/${id}`, payload, { headers });
+  },
+
+  getAllExtra() {
+    const headers = {
+      "X-Sisva-Source": "academic.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+
+    return api.get(`/extracurriculars`, { headers });
+  },
+
+  createExtra(payload) {
+    const headers = {
+      "X-Sisva-Source": "academic.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.post(`/extracurriculars`, payload, { headers });
+  },
+
+  updateExtra(id, payload) {
+    const headers = {
+      "X-Sisva-Source": "academic.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.patch(`/extracurriculars/${id}`, payload, { headers });
+  },
+
+  deleteExtra(id) {
+    const headers = {
+      "X-Sisva-Source": "academic.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.delete(`/extracurriculars/${id}`, { headers });
+  },
+
+  getAllExtraStudent() {
+    const headers = {
+      "X-Sisva-Source": "academic.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.get(`/extracurriculars/students`, { headers });
+  },
+
+  createStudentInExtra(id, payload) {
+    const headers = {
+      "X-Sisva-Source": "academic.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.post(`/extracurriculars/${id}/students`, payload, { headers });
+  },
+
+  deleteStudentInExtra(id, payload) {
+    const headers = {
+      "X-Sisva-Source": "academic.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.delete(`/extracurriculars/${id}/students`, {
+      headers: headers,
+      data: payload,
+    });
   },
 };
 

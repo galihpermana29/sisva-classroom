@@ -8,6 +8,7 @@ import {
   Chip,
   Divider,
   IconButton,
+  MenuItem,
   Modal,
   Paper,
   Stack,
@@ -54,13 +55,17 @@ const columns = [
                     mr: 1,
                   }}
                 >
-                  <Image
-                    alt='Web Image'
-                    fill
-                    sizes='100%'
-                    style={{ objectFit: 'cover' }}
-                    src={params.value.data.profile_image_uri}
-                  />
+                  {params.value.data.profile_image_uri !== '' ? (
+                    <Image
+                      alt='Web Image'
+                      fill
+                      sizes='100%'
+                      style={{ objectFit: 'cover' }}
+                      src={`https://api-staging.sisva.id/file/v1/files/${params.value.data.profile_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+                    />
+                  ) : (
+                    params.value.data.nametoUpperCase().slice(0, 1)
+                  )}
                 </Avatar>
                 <Typography
                   sx={{
@@ -144,17 +149,20 @@ const columns = [
           ml: 2,
           position: 'relative',
           display: 'flex',
-          justifyContent: 'flex-end',
+          // justifyContent: 'flex-end',
         }}
       >
-        <Image
-          alt='Web Image'
-          fill
-          sizes='100%'
-          style={{ objectFit: 'cover' }}
-          src={params.value}
-        />
-        {/* A */}
+        {params.value.profile_image_uri !== '' ? (
+          <Image
+            alt='Web Image'
+            fill
+            sizes='100%'
+            style={{ objectFit: 'cover' }}
+            src={`https://api-staging.sisva.id/file/v1/files/${params.value.profile_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+          />
+        ) : (
+          params.value.name.toUpperCase().slice(0, 1)
+        )}
       </Avatar>
     ),
   },
@@ -266,38 +274,27 @@ function ActionButton({ params }) {
           },
           height: 'fit-content',
         }}
+        onClick={() => {
+          params.value.setOpenEditModal(true);
+          params.value.setActiveRow(params.value.data);
+          params.value.formik.setValues({
+            id: params.value.data.id,
+            status: params.value.data.status,
+          });
+        }}
       >
         <BorderColorRounded
           sx={{ fontSize: { xs: 15, lg: 18 }, color: 'base.base50' }}
-        />
-      </IconButton>
-      <IconButton
-        sx={{
-          borderRadius: 2,
-          ml: 1,
-          backgroundColor: 'warning.main',
-          '&:hover': {
-            backgroundColor: 'warning.dark',
-          },
-          display: 'none',
-        }}
-        onClick={() => {
-          params.value.setOpenDeleteModal(true);
-          params.value.setActiveRow(params.value.data);
-        }}
-      >
-        <DeleteForeverRounded
-          sx={{ color: 'white', fontSize: { xs: 16, lg: 18 } }}
         />
       </IconButton>
     </Stack>
   );
 }
 
-export default function DataTable({ data }) {
+export default function DataTable({ data, formik }) {
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('lg'));
 
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
   const [activeRow, setActiveRow] = useState({});
 
   let rows = [];
@@ -308,24 +305,42 @@ export default function DataTable({ data }) {
       name: data.name,
       username: data.username,
       status: data.status,
-      profile_image_uri: data.profile_image_uri,
+      profile_image_uri: {
+        profile_image_uri: data.profile_image_uri,
+        name: data.name,
+      },
       action: {
         data: data,
         setActiveRow: setActiveRow,
-        setOpenDeleteModal: setOpenDeleteModal,
+        setOpenEditModal: setOpenEditModal,
+        formik: formik,
       },
       card: {
         data: data,
         setActiveRow: setActiveRow,
-        setOpenDeleteModal: setOpenDeleteModal,
+        setOpenEditModal: setOpenEditModal,
+        formik: formik,
       },
     };
     rows.push(tempObject);
   });
 
+  const absentOpt = [
+    { slug: 'present', show: 'Hadir' },
+    { slug: 'sick', show: 'Sakit' },
+    { slug: 'leave', show: 'Izin' },
+    { slug: 'absent', show: 'Alpha' },
+  ];
+
   return (
     <div style={{ height: '100%', width: '100%' }}>
-      <Modal open={openDeleteModal} onClose={() => setOpenDeleteModal(false)}>
+      <Modal
+        open={openEditModal}
+        onClose={() => {
+          setOpenEditModal(false);
+          formik.setFieldValue('status', '');
+        }}
+      >
         <Stack
           component={Paper}
           elevation={2}
@@ -346,12 +361,17 @@ export default function DataTable({ data }) {
         >
           <Box>
             <Typography fontWeight={600} fontSize={16}>
-              Hapus Karyawan
+              Absensi
             </Typography>
           </Box>
 
           <Typography sx={{ mt: 1, fontSize: 14 }}>
-            Anda akan menghapus karyawan berikut:
+            {new Date().toLocaleDateString('id-ID', {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
           </Typography>
           <Stack
             sx={{
@@ -361,7 +381,7 @@ export default function DataTable({ data }) {
               flexDirection: 'row',
               alignItems: 'center',
               mt: 1,
-              mb: 2,
+              mb: 1,
             }}
           >
             <Avatar
@@ -372,13 +392,16 @@ export default function DataTable({ data }) {
                 mr: 1,
               }}
             >
-              <Image
-                alt='Web Image'
-                fill
-                sizes='100%'
-                style={{ objectFit: 'cover' }}
-                src={`https://images.unsplash.com/flagged/photo-1595514191830-3e96a518989b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80`}
-              />
+              {activeRow.profile_image_uri !== '' ? (
+                <Image
+                  alt='Image'
+                  src={`https://api-staging.sisva.id/file/v1/files/${activeRow.profile_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+                  layout={'fill'}
+                  objectFit={'cover'}
+                />
+              ) : (
+                activeRow?.name.toUpperCase().slice(0, 1)
+              )}
             </Avatar>
             <Stack justifyContent={'center'}>
               <Typography
@@ -394,7 +417,23 @@ export default function DataTable({ data }) {
               </Typography>
             </Stack>
           </Stack>
-
+          <Stack sx={{ mb: 1 }} key={'status'}>
+            <TextField
+              select
+              value={formik.values.status}
+              onChange={(e) => {
+                formik.setFieldValue('id', activeRow.id);
+                formik.setFieldValue('status', e.target.value);
+              }}
+              sx={{ flex: { xs: 1, lg: 0 } }}
+            >
+              {absentOpt.map((option, idx) => (
+                <MenuItem key={idx} value={option.slug}>
+                  <Typography fontSize={14}>{option.show}</Typography>
+                </MenuItem>
+              ))}
+            </TextField>
+          </Stack>
           <Stack
             sx={{
               flexDirection: 'row',
@@ -404,7 +443,8 @@ export default function DataTable({ data }) {
               variant='outlined'
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
-                setOpenDeleteModal(false);
+                setOpenEditModal(false);
+                formik.setFieldValue('status', '');
               }}
             >
               Batal
@@ -419,10 +459,11 @@ export default function DataTable({ data }) {
                 },
               }}
               onClick={() => {
-                setOpenDeleteModal(false);
+                formik.handleSubmit();
+                setOpenEditModal(false);
               }}
             >
-              Hapus
+              Simpan
             </Button>
           </Stack>
         </Stack>

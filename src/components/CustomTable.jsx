@@ -12,11 +12,19 @@ import { Suspense } from "react";
 export const CustomTable = ({ columns, minWidth, body }) => {
   return (
     <TableContainer>
-      <Table stickyHeader sx={{ minWidth: minWidth ?? 640 }}>
+      <Table
+        stickyHeader
+        sx={{ minWidth: minWidth ?? 640 }}
+      >
         <TableHead>
           <TableRow>
             {columns.map((column) => (
-              <TableCell key={`${column}-head`}>{column}</TableCell>
+              <TableCell
+                key={`${column}-head`}
+                sx={{ fontWeight: 600 }}
+              >
+                {column}
+              </TableCell>
             ))}
           </TableRow>
         </TableHead>
@@ -37,7 +45,7 @@ export const TableBodyLoading = ({ columnCount, rowCount = 10 }) => {
     <TableRow key={`${index}row`}>
       {Array.from({ length: columnCount }, (_, index) => (
         <TableCell key={`${index}cell`}>
-          <Skeleton className="h-5 w-full" />
+          <Skeleton sx={{ height: "1.25rem", width: "100%" }} />
         </TableCell>
       ))}
     </TableRow>
@@ -49,7 +57,7 @@ export const TableRowLoading = ({ columnCount }) => {
     <TableRow>
       {Array.from({ length: columnCount }, (_, index) => (
         <TableCell key={`${index}cell`}>
-          <Skeleton className="h-5 w-full" />
+          <Skeleton sx={{ height: "1.25rem", width: "100%" }} />
         </TableCell>
       ))}
     </TableRow>

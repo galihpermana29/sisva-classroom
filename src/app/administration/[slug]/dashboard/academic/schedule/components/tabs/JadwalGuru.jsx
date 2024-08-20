@@ -1,24 +1,18 @@
-import { Box, Stack, TableContainer } from "@mui/material";
+import { Stack, TableContainer } from "@mui/material";
 import { Suspense } from "react";
-import dynamic from "next/dynamic";
 import { JadwalGuruFilters } from "../filters/jadwal-guru";
-
-const JadwalGuruSchedule = dynamic(
-  () =>
-    import("../JadwalGuruSchedule").then(
-      ({ JadwalGuruSchedule }) => JadwalGuruSchedule
-    ),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="h-[650px] w-full animate-pulse bg-gray-200" />
-    ),
-  }
-);
+import { JadwalGuruSchedule } from "../JadwalGuruSchedule";
+import { JadwalGuruFilterAlert } from "../JadwalGuruFilterAlert";
 
 export const JadwalGuru = () => {
   return (
-    <Stack paddingTop={3} spacing={3}>
+    <Stack
+      paddingTop={3}
+      spacing={3}
+    >
+      <Suspense>
+        <JadwalGuruFilterAlert />
+      </Suspense>
       <Stack
         gap={1}
         paddingX={3}
@@ -30,10 +24,8 @@ export const JadwalGuru = () => {
           <JadwalGuruFilters />
         </Suspense>
       </Stack>
-      <TableContainer>
-        <Box minWidth={764}>
-          <JadwalGuruSchedule />
-        </Box>
+      <TableContainer className="place-content-center">
+        <JadwalGuruSchedule />
       </TableContainer>
     </Stack>
   );

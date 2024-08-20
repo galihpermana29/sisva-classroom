@@ -1,23 +1,27 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
-import { PERIODE_FIELD_NAME, PeriodeSelect } from "../PeriodeSelect";
-import { PRODI_FIELD_NAME, ProdiSelect } from "../ProdiSelect";
+import { useGetFilterPengaturanJadwal } from "../../../hooks/filters/pengaturan-jadwal";
+import { useGetShowFilterStatus } from "../../../hooks/filters/useGetShowFilterStatus";
+import { PeriodeSelect } from "../PeriodeSelect";
+import { ProdiSelect } from "../ProdiSelect";
 import { TingkatSelect } from "../TingkatSelect";
 
 export const PengaturanJadwalFilters = () => {
-  const searchParams = useSearchParams();
-  const periode = searchParams.get(PERIODE_FIELD_NAME);
-  const prodi = searchParams.get(PRODI_FIELD_NAME);
-
-  const showProdi = Boolean(periode);
-  const showTingkat = Boolean(prodi);
+  const { showProdi, showGrade } = useGetShowFilterStatus();
+  const { availablePeriods, availableStudyPrograms, availableGrades } =
+    useGetFilterPengaturanJadwal();
 
   return (
     <>
-      <PeriodeSelect />
-      <ProdiSelect disabled={!showProdi} />
-      <TingkatSelect disabled={!showTingkat} />
+      <PeriodeSelect data={availablePeriods} />
+      <ProdiSelect
+        data={availableStudyPrograms}
+        disabled={!showProdi}
+      />
+      <TingkatSelect
+        data={availableGrades}
+        disabled={!showGrade}
+      />
     </>
   );
 };
