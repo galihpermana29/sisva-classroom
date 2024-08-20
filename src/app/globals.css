@@ -78,10 +78,6 @@ input {
   background: #888;
 }
 
-.e-appointment {
-  @apply !rounded-md;
-}
-
 @layer utilities {
   /* Hide scrollbar for Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {

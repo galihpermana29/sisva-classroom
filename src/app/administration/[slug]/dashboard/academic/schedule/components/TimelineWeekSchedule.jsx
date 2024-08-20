@@ -34,25 +34,21 @@ const getDateHeaderText = (props) => {
   );
 };
 
-const eventTemplate = (props) => {
-  const bgColor = props?.type === "learning" ? "#ACDEE7" : "#FFDBCB";
+const onEventRendered = (props) => {
+  const target = props.element;
 
+  target.style.color = "#1D2939";
+  target.style.paddingTop = "2px";
+  target.style.backgroundColor =
+    props.data.type === "learning" ? "#ACDEE7" : "#FFDBCB";
+};
+
+const eventTemplate = (props) => {
   return (
-    <Stack
-      sx={{
-        color: "#1D2939",
-        height: "100%",
-        margin: "0 -4px",
-        padding: "0 4px",
-        width: "100%",
-        minWidth: "500px",
-        paddingTop: "2px",
-        backgroundColor: bgColor,
-      }}
-    >
-      <h3 className="font-medium !text-xs line-clamp-1">{props.name}</h3>
+    <>
+      <h3 className="font-medium !text-xs !line-clamp-1">{props.name}</h3>
       <p className="text-[10px]">{props?.teacher_name}</p>
-    </Stack>
+    </>
   );
 };
 
@@ -63,6 +59,7 @@ function TimelineWeekSchedule({ data, classData, onEventClick }) {
       showWeekend={false}
       width="100%"
       height="100%"
+      rowAutoHeight={true}
       workDays={[1, 2, 3, 4, 5]}
       workHours={{ highlight: true, start: "07:00", end: "16:00" }}
       startHour="07:00"
@@ -88,6 +85,8 @@ function TimelineWeekSchedule({ data, classData, onEventClick }) {
         args.cancel = true;
       }}
       eventClick={onEventClick}
+      eventRendered={onEventRendered}
+      className="[&.e-appointment]:!rounded-md [&.e-appointment]:!h-[58.5px] [&.e-appointment]:!-translate-y-[2px] [&.e-work-hours]:!h-[60px] [&.e-resource-cells]:!h-[60px]"
     >
       <ViewsDirective>
         <ViewDirective option="TimelineWeek" />
