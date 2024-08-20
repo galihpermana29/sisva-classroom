@@ -9,23 +9,29 @@ import {
 } from "@mui/material";
 import { Suspense } from "react";
 
-export const CustomTable = ({ columns, minWidth, body }) => {
+/** Component to display a custom table wrapped with table container to handle scrolling/responsiveness
+ * @description Provide a `columns` prop to specify the table header, `minWidth` is used to specify a breakpoint for the table to be scrollable horizontally, `body` is used to display the table's body, and `header` is used to customize the default header.
+ * @description If not provided, `minWidth` will take a value of 640 px.
+ * @param {{columns: JSX.Element[], minWidth: number, body: JSX.Element, header?: JSX.Element[]}}
+ */
+export const CustomTable = ({ columns, body, header, minWidth = 640 }) => {
   return (
     <TableContainer>
       <Table
         stickyHeader
-        sx={{ minWidth: minWidth ?? 640 }}
+        sx={{ minWidth }}
       >
         <TableHead>
           <TableRow>
-            {columns.map((column) => (
-              <TableCell
-                key={`${column}-head`}
-                sx={{ fontWeight: 600 }}
-              >
-                {column}
-              </TableCell>
-            ))}
+            {header ??
+              columns.map((column, index) => (
+                <TableCell
+                  key={`column-${index}-head`}
+                  sx={{ fontWeight: 600 }}
+                >
+                  {column}
+                </TableCell>
+              ))}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -40,6 +46,10 @@ export const CustomTable = ({ columns, minWidth, body }) => {
   );
 };
 
+/** Used to display a placeholder when the whole table body is still loading
+ * @description `columnCount` should be given the same value as the data's number of column. Customize the value of `rowCount` to display a number of loading rows.
+ * @param {{columnCount: number, rowCount: number}}
+ */
 export const TableBodyLoading = ({ columnCount, rowCount = 10 }) => {
   return Array.from({ length: rowCount }, (_, index) => (
     <TableRow key={`${index}row`}>
@@ -52,6 +62,10 @@ export const TableBodyLoading = ({ columnCount, rowCount = 10 }) => {
   ));
 };
 
+/** Used to display a placeholder when a single table row is still loading
+ * @description `columnCount` should be given the same value as the data's number of column. Customize the value of `rowCount` to display a number of loading rows.
+ * @param {{columnCount: number}}
+ */
 export const TableRowLoading = ({ columnCount }) => {
   return (
     <TableRow>
@@ -64,6 +78,10 @@ export const TableRowLoading = ({ columnCount }) => {
   );
 };
 
+/** Used to display a single empty row, usually used to display an empty state if there's no data given to a table.
+ * @description `columnCount` should be given the same value as the data's number of column. Customize the value of `rowCount` to display a number of loading rows.
+ * @param {{columnCount: number}}
+ */
 export const TableEmptyState = ({ columnCount }) => {
   return (
     <TableRow>

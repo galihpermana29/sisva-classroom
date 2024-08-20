@@ -1,9 +1,9 @@
 import { Stack } from "@mui/material";
 import { ExcelButton } from "../ExcelButton";
-import { AddTagihanPenggunaModal } from "../modals/tagihan-pengguna/AddTagihanPenggunaModal";
+import { AddInvoiceModal } from "../modals/invoice/AddInvoiceModal";
 
 /** @description Component to show top level actions beside layout title */
-export const TagihanPenggunaActions = () => {
+export const InvoiceActions = () => {
   return (
     <Stack
       flexDirection="row"
@@ -11,7 +11,7 @@ export const TagihanPenggunaActions = () => {
       gap={1}
     >
       <ExcelButton />
-      <AddTagihanPenggunaModal />
+      <AddInvoiceModal />
     </Stack>
   );
 };

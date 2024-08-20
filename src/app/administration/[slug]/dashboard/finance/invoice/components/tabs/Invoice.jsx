@@ -1,10 +1,10 @@
 import { Divider, Paper, Stack } from "@mui/material";
-import { TableTagihanPengguna } from "../tables/tagihan-pengguna";
-import { TagihanPenggunaData } from "../tagihan-pengguna/TagihanPenggunaData";
-import { TagihanPenggunaPagination } from "../tagihan-pengguna/TagihanPenggunaPagination";
+import { InvoiceData } from "../invoice/InvoiceData";
+import { TableInvoice } from "../tables/invoice";
+import { InvoicePagination } from "../invoice/InvoicePagination";
 
 /** @description Component showing the main content of tagihan pengguna tab */
-export const TagihanPengguna = () => {
+export const Invoice = () => {
   return (
     <Stack
       flexDirection="column"
@@ -12,14 +12,14 @@ export const TagihanPengguna = () => {
     >
       <Divider sx={{ display: { xs: "none", lg: "block" } }} />
       <Stack display={{ xs: "none", lg: "flex" }}>
-        <TableTagihanPengguna />
+        <TableInvoice />
       </Stack>
       <Stack
         display={{ xs: "flex", lg: "none" }}
         padding={2}
         flexGrow={1}
       >
-        <TagihanPenggunaData />
+        <InvoiceData />
       </Stack>
       <Stack
         padding={2}
@@ -27,7 +27,7 @@ export const TagihanPengguna = () => {
         position="sticky"
         bottom={0}
       >
-        <TagihanPenggunaPagination />
+        <InvoicePagination />
       </Stack>
     </Stack>
   );

@@ -1,19 +1,20 @@
 "use client";
 
 import { FilterNotMounted } from "@/components/FilterNotMounted";
-import { useQueryParam } from "@/hooks/useQueryParam";
 import { useMounted } from "@mantine/hooks";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useInvoiceFilters } from "../../hooks/useInvoiceFilters";
 
+/** Use this field name to get or modify date range filter value elsewhere */
 export const TANGGAL_FIELD_NAME = "tanggal";
 
 export const DateRangeSelect = ({ disabled }) => {
   const mounted = useMounted();
   const searchParams = useSearchParams();
-  const { updateQueryParam } = useQueryParam();
+  const { updateFilters } = useInvoiceFilters();
 
   /** @description date range format in url query is: tanggal={start_time}-{end-time} */
   const rangeArr = searchParams.get(TANGGAL_FIELD_NAME)?.split("-") ?? [];
@@ -37,7 +38,7 @@ export const DateRangeSelect = ({ disabled }) => {
   /** @description handles url query update, only if startDate and endDate are not null/undefined */
   useEffect(() => {
     if (dateRange?.startDate && dateRange?.endDate)
-      updateQueryParam(
+      updateFilters(
         TANGGAL_FIELD_NAME,
         `${dateRange?.startDate}-${dateRange?.endDate}`
       );

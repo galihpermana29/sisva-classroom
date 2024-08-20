@@ -3,9 +3,10 @@ import { KeyboardArrowDown, Tune } from "@mui/icons-material";
 import { Button, Divider, IconButton, Stack } from "@mui/material";
 import { DateRangeSelect } from "../filters/DateRangeSelect";
 import { KategoriSelect } from "../filters/KategoriSelect";
+import { StatusSelect } from "../filters/StatusSelect";
 
-/** @description Component for handling tagihan pengguna tab's filters */
-export const TagihanPenggunaFilters = () => {
+/** @description Component for handling invoice tab's filters */
+export const InvoiceFilters = () => {
   return (
     <Stack
       flexDirection="row"
@@ -38,6 +39,7 @@ export const TagihanPenggunaFilters = () => {
       >
         <DateRangeSelect />
         <KategoriSelect />
+        <StatusSelect />
       </Stack>
     </Stack>
   );
