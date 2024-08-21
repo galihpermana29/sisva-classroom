@@ -50,10 +50,17 @@ function useJadwalKeseluruhanFilter() {
   }));
 
   //* data for class select filter
-  const kelasSelectData = kelasData.map(({ id, name }) => ({
-    label: name,
-    value: id,
-  }));
+  const kelasSelectData = kelasData
+    .filter(
+      ({ period_id, study_program_id, grade }) =>
+        period_id === parseInt(periode ?? "-1") &&
+        study_program_id === parseInt(prodi ?? "-1") &&
+        (tingkat ? grade === tingkat : true)
+    )
+    .map(({ id, name }) => ({
+      label: name,
+      value: id,
+    }));
 
   //* data for day select filter
   const hariSelectData = Array.from(
@@ -72,7 +79,7 @@ function useJadwalKeseluruhanFilter() {
   };
 
   const getAllClasses = async () => {
-    const { data } = await AcademicAPI.getAllClasses();
+    const { data } = await AcademicAPI.getAllStudentGroup();
     setKelasData(data.data);
   };
 

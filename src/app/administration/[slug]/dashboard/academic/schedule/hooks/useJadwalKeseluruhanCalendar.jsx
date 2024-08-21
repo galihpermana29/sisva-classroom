@@ -102,8 +102,9 @@ function useJadwalKeseluruhanCalendar() {
     const prodiMatch =
       prodi !== "-1" ? sg.study_program_id === parseInt(prodi) : true;
     const tingkatMatch = tingkat ? sg.grade === tingkat : true;
+    const kelasMatch = kelas ? sg.id === parseInt(kelas) : true;
 
-    return periodeMatch && prodiMatch && tingkatMatch;
+    return periodeMatch && prodiMatch && tingkatMatch && kelasMatch;
   });
 
   useEffect(() => {
