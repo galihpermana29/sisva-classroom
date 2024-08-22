@@ -76,10 +76,13 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
 
       const formattedStartTime =
         typeof start_time === "object"
-          ? start_time.format("HH:mm")
-          : start_time;
+          ? start_time.format("H:mm")
+          : dayjs(start_time, "h:mm A Z").format("H:mm");
       const formattedEndTime =
-        typeof end_time === "object" ? end_time.format("HH:mm") : end_time;
+        typeof end_time === "object"
+          ? end_time.format("HH:mm")
+          : dayjs(end_time, "h:mm A Z").format("H:mm");
+
       const parsedStartTime = parseTime(formatTime(formattedStartTime));
       const parsedEndTime = parseTime(formatTime(formattedEndTime));
 

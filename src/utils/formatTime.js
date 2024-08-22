@@ -1,9 +1,23 @@
-export function formatTime(timeString, offsetHour = "+07:00") {
+import dayjs from "dayjs";
+
+// timeString format H:mm
+export function formatTime(timeString) {
   // Split the input string into hours and minutes
   let [hours, minutes] = timeString.split(":").map(Number);
 
-  // Decrease the hour by 7
-  hours -= 7;
+  // Get the user's local offset in hours
+  const userOffsetMinutes = dayjs().utcOffset();
+  const userOffsetHours = userOffsetMinutes / 60;
+
+  // Format the user's offset into +HH:MM format
+  const userOffsetSign = userOffsetHours >= 0 ? "+" : "-";
+  const formattedOffsetHours = Math.abs(userOffsetHours)
+    .toString()
+    .padStart(2, "0");
+  const formattedOffset = `${userOffsetSign}${formattedOffsetHours}:00`;
+
+  // Decrease the hour based on the offset hours
+  hours -= userOffsetHours;
 
   // Handle negative hours by wrapping around to the previous day
   if (hours < 0) {
@@ -19,5 +33,5 @@ export function formatTime(timeString, offsetHour = "+07:00") {
   // Return the formatted time string
   return `${hours}:${minutes
     .toString()
-    .padStart(2, "0")} ${period} ${offsetHour}`;
+    .padStart(2, "0")} ${period} ${formattedOffset}`;
 }
