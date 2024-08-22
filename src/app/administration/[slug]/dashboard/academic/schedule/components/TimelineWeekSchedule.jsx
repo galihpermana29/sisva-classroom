@@ -86,7 +86,7 @@ function TimelineWeekSchedule({ data, classData, onEventClick }) {
       }}
       eventClick={onEventClick}
       eventRendered={onEventRendered}
-      className="[&.e-appointment]:!rounded-md [&.e-appointment]:!h-[58.5px] [&.e-appointment]:!-translate-y-[2px] [&.e-work-hours]:!h-[60px] [&.e-resource-cells]:!h-[60px]"
+      className="[&_.e-appointment]:!rounded-md [&_.e-appointment]:!h-[58.5px] [&_.e-appointment]:!-translate-y-[2px] [&_.e-work-hours]:!h-[60px] [&_.e-resource-cells]:!h-[60px]"
     >
       <ViewsDirective>
         <ViewDirective option="TimelineWeek" />
