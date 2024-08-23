@@ -47,5 +47,3 @@ export const ProdiSelect = ({ data, disabled }) => {
     </Select>
   );
 };
-
-const data = [{ value: 1, label: "IPA" }];
