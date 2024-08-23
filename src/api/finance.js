@@ -39,16 +39,17 @@ export const FinanceAPI = {
     return api.post("/invoices", payload, { headers });
   },
 
-  getAllInvoices({ bill_id, user_bill_id }) {
+  getAllInvoices({ bill_id, user_id }) {
     const params = createQueryParam([
       { name: "bill_id", value: bill_id },
-      { name: "user_bill_id", value: user_bill_id },
+      { name: "user_id", value: user_id },
     ]);
     return api.get(`/invoices?${params}`, { headers });
   },
 
-  getAllBills() {
-    return api.get("/bills", { headers });
+  getAllBills({ bill_id }) {
+    const params = createQueryParam({ name: "bill_id", value: bill_id });
+    return api.get(`/bills?${params}`, { headers });
   },
 
   getBillById(id) {
