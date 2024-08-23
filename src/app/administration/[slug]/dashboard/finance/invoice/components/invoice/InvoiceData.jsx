@@ -1,16 +1,16 @@
 "use client";
 
-import { Divider, Paper, Stack, Typography } from "@mui/material";
-import { useGetInvoice } from "../../hooks/useGetInvoice";
 import { useMounted } from "@mantine/hooks";
+import { Divider, Paper, Stack, Typography } from "@mui/material";
+import { useGetAllInvoices } from "../../hooks/useGetAllInvoices";
 import { usePagination } from "../../hooks/usePagination";
-import { InvoiceStatusBadge } from "./InvoiceStatusBadge";
 import { InvoiceRowActions } from "./InvoiceRowActions";
+import { InvoiceStatusBadge } from "./InvoiceStatusBadge";
 
 export const InvoiceData = () => {
   const mounted = useMounted();
   const { page } = usePagination();
-  const { data: rows, isLoading } = useGetInvoice();
+  const { data: rows, isLoading } = useGetAllInvoices();
 
   if (isLoading || !mounted) return <div>Loading...</div>;
 
@@ -50,10 +50,7 @@ const DataCard = ({ id, name, description, total_price, status }) => {
         alignItems="center"
         gap={2}
       >
-        <Typography
-          fontWeight={600}
-          variant="body1"
-        >
+        <Typography fontWeight={600} variant="body1">
           {id}
         </Typography>
 
@@ -62,18 +59,9 @@ const DataCard = ({ id, name, description, total_price, status }) => {
 
       <Divider orientation="horizontal" />
 
-      <Stack
-        flexDirection="column"
-        gap={2}
-      >
-        <Stack
-          flexDirection="column"
-          gap={1}
-        >
-          <Typography
-            variant="body1"
-            fontSize={16}
-          >
+      <Stack flexDirection="column" gap={2}>
+        <Stack flexDirection="column" gap={1}>
+          <Typography variant="body1" fontSize={16}>
             {name}
           </Typography>
 
@@ -84,21 +72,12 @@ const DataCard = ({ id, name, description, total_price, status }) => {
           justifyContent="space-between"
           alignItems="center"
         >
-          <Stack
-            flexDirection="column"
-            gap={0}
-          >
-            <Typography
-              variant="caption"
-              color="gray"
-            >
+          <Stack flexDirection="column" gap={0}>
+            <Typography variant="caption" color="gray">
               Total harga:
             </Typography>
 
-            <Typography
-              variant="body1"
-              fontWeight={600}
-            >
+            <Typography variant="body1" fontWeight={600}>
               Rp {total_price}
             </Typography>
           </Stack>

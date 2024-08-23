@@ -17,7 +17,7 @@ export const useGetTagihan = () => {
   const { rowsPerPage } = usePagination();
 
   const getAllBills = async () => {
-    const { data } = await FinanceAPI.getAllBills();
+    const { data } = await FinanceAPI.getAllBills({});
 
     return data.data;
   };

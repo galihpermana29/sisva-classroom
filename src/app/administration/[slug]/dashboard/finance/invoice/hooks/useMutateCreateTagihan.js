@@ -3,10 +3,9 @@ import { useMutation } from "@tanstack/react-query";
 
 function useMutateCreateTagihan(handleClose, refetch) {
   const createTagihan = async (payload) => {
-    console.log(payload);
-    // const res = await FinanceAPI.createBill(payload);
+    const res = await FinanceAPI.createBill(payload);
 
-    // return res;
+    return res;
   };
 
   const res = useMutation({
@@ -14,8 +13,8 @@ function useMutateCreateTagihan(handleClose, refetch) {
       return createTagihan(payload);
     },
     onSuccess: () => {
-      //   refetch();
-      //   handleClose();
+      refetch();
+      handleClose();
     },
   });
 

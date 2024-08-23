@@ -13,6 +13,8 @@ import { useGetTagihan } from "../../../hooks/useGetTagihan";
 import { usePagination } from "../../../hooks/usePagination";
 import { TagihanRowActions } from "../../tagihan/TagihanRowActions";
 import { TagihanStatusBadge } from "../../tagihan/TagihanStatusBadge";
+import { useGetAllInvoices } from "../../../hooks/useGetAllInvoices";
+import JumlahPembayaranTagihan from "./JumlahPembayaranTagihan";
 
 dayjs.extend(customParseFormat);
 dayjs.extend(localizedFormat);
@@ -49,7 +51,9 @@ export const TableBodyTagihan = ({ columnCount }) => {
         <TableCell>#{row.id}</TableCell>
         <TableCell>{row.name}</TableCell>
         <TableCell>{formatToRupiah(row.amount)}</TableCell>
-        <TableCell>{row.total_payment}</TableCell>
+        <TableCell>
+          <JumlahPembayaranTagihan bill_id={row.id} />
+        </TableCell>
         <TableCell>
           <Stack>
             <Typography fontSize={"14px"}>
