@@ -10,6 +10,7 @@ import { timeStringToDayjs } from "@/utils/formatTimeString";
 import { useMounted } from "@mantine/hooks";
 import { toTitleCase } from "@/utils/toTitleCase";
 import { FilterIncompleteState } from "../../FilterIncompleteState";
+import { getUserTimezone } from "@/utils/getUserTimezone";
 
 export const TableBodyPengaturanJadwal = ({ columnCount }) => {
   const mounted = useMounted();
@@ -19,6 +20,8 @@ export const TableBodyPengaturanJadwal = ({ columnCount }) => {
     return <TableBodyLoading columnCount={columnCount} />;
   if (!rows) return <NoFilterState columnCount={columnCount} />;
 
+  const userTimezone = getUserTimezone();
+
   return rows && rows.length > 0 ? (
     rows.map((row) => (
       <TableRow
@@ -27,9 +30,13 @@ export const TableBodyPengaturanJadwal = ({ columnCount }) => {
       >
         <TableCell>{formatDayToLabel(row.day)}</TableCell>
         <TableCell>
-          {timeStringToDayjs(row.start_time).format("HH:mm")}
+          {`${timeStringToDayjs(row.start_time).format(
+            "HH:mm"
+          )} ${userTimezone}`}
         </TableCell>
-        <TableCell>{timeStringToDayjs(row.end_time).format("HH:mm")}</TableCell>
+        <TableCell>{`${timeStringToDayjs(row.end_time).format(
+          "HH:mm"
+        )} ${userTimezone}`}</TableCell>
         <TableCell>{toTitleCase(statusMap[row.status])}</TableCell>
         <TableCell>
           <Stack
