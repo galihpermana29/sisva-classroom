@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 import { formatToRupiah } from "@/utils/formatToRupiah";
 import { TagihanStatusBadge } from "./TagihanStatusBadge";
 import { useTheme } from "@emotion/react";
+import JumlahPembayaranTagihan from "../tables/tagihan/JumlahPembayaranTagihan";
 
 export const TagihanData = () => {
   const theme = useTheme();
@@ -79,9 +80,14 @@ const DataCard = ({ data }) => {
 
       <Stack flexDirection="column" gap={2}>
         <Stack flexDirection="column" gap={1}>
-          <Typography variant="body1" fontSize={16}>
-            {data.name}
-          </Typography>
+          <Stack>
+            <Typography className="text-sm text-gray-400">
+              <JumlahPembayaranTagihan bill_id={data.id} />
+            </Typography>
+            <Typography variant="body1" fontSize={16}>
+              {data.name}
+            </Typography>
+          </Stack>
 
           <Typography variant="body2">{data.payment}</Typography>
         </Stack>

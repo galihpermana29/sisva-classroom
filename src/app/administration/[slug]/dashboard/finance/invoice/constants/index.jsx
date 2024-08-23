@@ -17,10 +17,10 @@ export const DEFAULT_INVOICE_TAB = 0;
 export const INVOICE_TABS = [
   {
     title: "Tagihan",
-    component: <Tagihan />,
-    actions: <TagihanActions />,
-    search: <TagihanSearch />,
-    filters: <TagihanFilters />,
+    component: <Tagihan key="tagihan" />,
+    actions: <TagihanActions key="tagihan-actions" />,
+    search: <TagihanSearch key="tagihan-search" />,
+    filters: <TagihanFilters key="tagihan-filters" />,
   },
   {
     title: "Tagihan Pengguna",

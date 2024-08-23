@@ -38,12 +38,12 @@ export const EditTagihanModal = ({ initialValues }) => {
         open={open}
         onClose={handleClose}
         className="mx-2"
-        aria-labelledby="Modal tambah tagihan"
-        aria-describedby="Tambah tagihan"
+        aria-labelledby="Modal edit tagihan"
+        aria-describedby="Edit tagihan"
       >
         <ModalBody
           maxWidth={600}
-          title="Buat Tagihan"
+          title="Edit Tagihan"
           handleClose={handleClose}
           content={
             <ModalContent
@@ -56,6 +56,14 @@ export const EditTagihanModal = ({ initialValues }) => {
     </>
   );
 };
+
+function formatNumber(value) {
+  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
+function unformatNumber(value) {
+  return value.replace(/\./g, "");
+}
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -144,14 +152,17 @@ const ModalContent = ({ handleClose, initialValues }) => {
             </Typography>
             <TextField
               placeholder="Rp 3000000"
-              type="number"
               size="small"
-              value={formik?.values ? formik.values?.amount : ""}
-              onChange={(e) =>
-                formik.setFieldValue("amount", Number(e.target.value))
+              value={
+                formik.values.amount ? formatNumber(formik.values.amount) : ""
               }
+              onChange={(e) => {
+                const unformattedValue = unformatNumber(e.target.value);
+                formik.setFieldValue("amount", Number(unformattedValue));
+              }}
               onBlur={formik.handleBlur}
               error={formik.touched.amount && Boolean(formik.errors.amount)}
+              helperText={formik.touched.amount && formik.errors.amount}
             />
             {formik.touched.amount && formik.errors.amount && (
               <Typography color={theme.palette.error.main} fontSize={"12px"}>
@@ -235,7 +246,7 @@ const ModalContent = ({ handleClose, initialValues }) => {
         <Stack flexDirection={"row"} justifyContent={"end"} gap={"12px"}>
           <Button onClick={handleClose}>Batal</Button>
           <Button type="submit" variant="contained">
-            Create
+            Edit
           </Button>
         </Stack>
       </Stack>
