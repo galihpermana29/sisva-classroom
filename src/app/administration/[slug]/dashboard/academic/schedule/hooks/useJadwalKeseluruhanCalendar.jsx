@@ -30,19 +30,35 @@ const getGroupId = (grade) => {
 };
 
 const parseTime = (time) => {
-  const [hourMinute, period] = time.split(" ");
+  const [hourMinute, period, offsetString] = time.split(" ");
   let [hour, minute] = hourMinute.split(":").map(Number);
   if (period === "PM" && hour !== 12) hour += 12;
   if (period === "AM" && hour === 12) hour = 0;
-  return { hour, minute };
+
+  // Extract the sign, hours, and minutes using a regular expression
+  const regex = /^([+-])(\d{2}):(\d{2})$/;
+  const match = offsetString.match(regex);
+
+  if (!match) {
+    throw new Error("Invalid offset format");
+  }
+
+  const sign = match[1]; // "+" or "-"
+  const hours = parseInt(match[2], 10); // Extract hours as an integer
+  const minutes = parseInt(match[3], 10); // Extract minutes as an integer
+
+  const offsetInHours = hours + minutes / 60;
+  const offset = sign === "+" ? offsetInHours : -offsetInHours;
+
+  return { hour, minute, offset };
 };
 
 const addDateToTime = (day, time) => {
   const date = dayjs().isoWeekday(day);
-  const { hour, minute } = parseTime(time);
+  const { hour, minute, offset } = parseTime(time);
 
   const result = date
-    .set("hour", hour + 7)
+    .set("hour", hour + offset)
     .set("minute", minute)
     .set("second", 0);
 
