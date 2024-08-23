@@ -14,6 +14,8 @@
  */
 export const paginateData = (rowData, rowsPerPage) => {
   const paginatedData = [];
+  if (!rowData) return paginateData;
+
   for (let i = 0; i < rowData.length; i += rowsPerPage) {
     paginatedData.push(rowData.slice(i, i + rowsPerPage));
   }
