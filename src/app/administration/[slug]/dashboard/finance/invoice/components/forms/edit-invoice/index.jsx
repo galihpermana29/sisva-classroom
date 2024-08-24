@@ -3,7 +3,7 @@
 import { CustomTextArea } from "@/components/CustomTextArea";
 import { FieldLabel } from "@/components/FieldLabel";
 import { FileUpload } from "@/components/FileUpload";
-import { getImageUrl } from "@/utils/getImageURL";
+import { getImageUrl } from "@/utils/getImageUrl";
 import { Button, MenuItem, Select, Stack } from "@mui/material";
 
 export const EditInvoiceForm = ({ formik, handleClose }) => {
