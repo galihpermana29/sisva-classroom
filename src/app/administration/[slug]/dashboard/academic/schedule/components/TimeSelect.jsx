@@ -10,14 +10,8 @@ export const TimeSelect = ({
   withError = true,
 }) => {
   return (
-    <Stack
-      width="100%"
-      spacing={1}
-    >
-      <Typography
-        fontWeight={600}
-        variant="body2"
-      >
+    <Stack width="100%" spacing={1}>
+      <Typography fontWeight={600} variant="body2">
         {label}
       </Typography>
       <TimePicker
