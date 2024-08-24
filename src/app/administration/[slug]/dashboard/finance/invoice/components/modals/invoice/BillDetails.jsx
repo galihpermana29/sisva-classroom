@@ -15,6 +15,8 @@ export const BillDetails = ({ billId, userBillId }) => {
     bill_id: billId,
   });
 
+  const billedAmount = sumAmount(invoices);
+
   const amountPaid = useMemo(() => {
     const paidInvoices = invoices
       ? invoices.filter(
@@ -23,10 +25,7 @@ export const BillDetails = ({ billId, userBillId }) => {
         )
       : [];
 
-    const amountPaid = paidInvoices.reduce(
-      (acc, invoice) => acc + invoice.amount,
-      0
-    );
+    const amountPaid = sumAmount(paidInvoices);
 
     return amountPaid;
   }, [invoiceStale, billId]);
@@ -80,7 +79,7 @@ export const BillDetails = ({ billId, userBillId }) => {
         >
           Total Tertagih
         </Typography>
-        <Typography variant="body2">{formatToRupiah(amountPaid)}</Typography>
+        <Typography variant="body2">{formatToRupiah(billedAmount)}</Typography>
       </Stack>
       <Stack
         width="100%"
@@ -111,3 +110,6 @@ const LoadingBillDetail = () => {
     </Stack>
   );
 };
+
+const sumAmount = (invoices) =>
+  invoices ? invoices.reduce((acc, invoice) => acc + invoice.amount, 0) : 0;
