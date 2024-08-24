@@ -117,12 +117,19 @@ const DataCard = ({ id, user_bill_id, amount, status }) => {
           flexDirection="column"
           gap={1}
         >
-          <Typography
-            variant="body1"
-            fontSize={16}
+          <Stack
+            flexDirection="row"
+            alignItems="center"
+            gap={1}
           >
-            {userData.name}
-          </Typography>
+            <Typography variant="body1">{userData.name}</Typography>
+            <Typography
+              variant="body2"
+              color="gray"
+            >
+              {userTypeMap[userData.type]}
+            </Typography>
+          </Stack>
 
           <Typography variant="body2">{billData.name}</Typography>
         </Stack>
@@ -154,4 +161,10 @@ const DataCard = ({ id, user_bill_id, amount, status }) => {
       </Stack>
     </Stack>
   );
+};
+
+const userTypeMap = {
+  student: "Siswa",
+  staff: "Staf",
+  teacher: "Guru",
 };
