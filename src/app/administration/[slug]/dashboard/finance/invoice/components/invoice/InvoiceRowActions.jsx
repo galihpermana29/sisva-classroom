@@ -1,6 +1,6 @@
-import { ModeEdit } from "@mui/icons-material";
-import { IconButton, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import { DeleteInvoiceModal } from "../modals/invoice/DeleteInvoiceModal";
+import { EditInvoiceModal } from "../modals/invoice/EditInvoiceModal";
 
 export const InvoiceRowActions = ({ id, status }) => {
   return (
@@ -9,12 +9,7 @@ export const InvoiceRowActions = ({ id, status }) => {
       maxWidth="fit-content"
       gap={1}
     >
-      <IconButton
-        aria-label="edit"
-        size="small"
-      >
-        <ModeEdit />
-      </IconButton>
+      <EditInvoiceModal id={id} />
 
       <DeleteInvoiceModal
         id={id}

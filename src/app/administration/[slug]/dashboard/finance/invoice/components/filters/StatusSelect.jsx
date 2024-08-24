@@ -14,14 +14,13 @@ export const StatusSelect = ({ data, disabled }) => {
   const searchParams = useSearchParams();
   const { updateFilters } = useInvoiceFilters();
 
-  const value = Boolean(searchParams.get(STATUS_FIELD_NAME) && data)
-    ? searchParams.get(STATUS_FIELD_NAME)
-    : "";
-
   const handleChange = (event) =>
     updateFilters(STATUS_FIELD_NAME, event.target.value);
 
   if (!mounted) return <FilterNotMounted />;
+
+  const selectData = data ?? staticData;
+  const value = searchParams.get(STATUS_FIELD_NAME) ?? "";
 
   return (
     <Select
@@ -37,16 +36,20 @@ export const StatusSelect = ({ data, disabled }) => {
       >
         Status
       </MenuItem>
-      {data
-        ? data.map(({ value, label }) => (
-            <MenuItem
-              key={`${value}${label}`}
-              value={value}
-            >
-              {label}
-            </MenuItem>
-          ))
-        : null}
+      {selectData.map(({ value, label }) => (
+        <MenuItem
+          key={`${value}${label}`}
+          value={value}
+        >
+          {label}
+        </MenuItem>
+      ))}
     </Select>
   );
 };
+
+const staticData = [
+  { value: "done", label: "Lunas" },
+  { value: "inreview", label: "Verifikasi" },
+  { value: "pending", label: "Pending" },
+];

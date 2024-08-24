@@ -2,8 +2,8 @@ import { SortIcon } from "@/assets/SVGs";
 import { KeyboardArrowDown, Tune } from "@mui/icons-material";
 import { Button, Divider, IconButton, Stack } from "@mui/material";
 import { DateRangeSelect } from "../filters/DateRangeSelect";
-import { KategoriSelect } from "../filters/KategoriSelect";
 import { StatusSelect } from "../filters/StatusSelect";
+import { InvoiceKategoriFilter } from "../filters/invoice/InvoiceKategoriFilter";
 
 /** @description Component for handling invoice tab's filters */
 export const InvoiceFilters = () => {
@@ -38,7 +38,7 @@ export const InvoiceFilters = () => {
         gap={1}
       >
         <DateRangeSelect />
-        <KategoriSelect />
+        <InvoiceKategoriFilter />
         <StatusSelect />
       </Stack>
     </Stack>

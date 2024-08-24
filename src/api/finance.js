@@ -27,6 +27,10 @@ export const FinanceAPI = {
     return api.patch(`/bills/${id}`, payload, { headers });
   },
 
+  updatePaymentProof(id, payload) {
+    return api.patch(`/invoices/${id}/payment-proof`, payload, { headers });
+  },
+
   createBill(payload) {
     return api.post("/bills", payload, { headers });
   },
@@ -65,7 +69,7 @@ export const FinanceAPI = {
   },
 
   deleteInvoice(id) {
-    return api.delete(`/invoice/${id}`, { headers });
+    return api.delete(`/invoices/${id}`, { headers });
   },
 
   deleteBill(id) {

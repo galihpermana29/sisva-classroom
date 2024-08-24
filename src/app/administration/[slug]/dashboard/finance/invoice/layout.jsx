@@ -25,10 +25,10 @@ export default function InvoiceLayout({ children }) {
           alignItems="center"
         >
           <Suspense>
-            <TabLayoutTitle key="tab-title" />
+            <TabLayoutTitle />
           </Suspense>
           <Suspense>
-            <TabActions key="tab-actions" />
+            <TabActions />
           </Suspense>
         </Stack>
         <Stack
@@ -42,7 +42,7 @@ export default function InvoiceLayout({ children }) {
           }}
         >
           <Suspense>
-            <InvoiceTabs key="invoice-tabs" />
+            <InvoiceTabs />
           </Suspense>
 
           <Divider sx={{ display: { xs: "none", lg: "block" } }} />
@@ -56,10 +56,10 @@ export default function InvoiceLayout({ children }) {
               alignItems="center"
             >
               <Suspense>
-                <TabSearch key="tab-search" />
+                <TabSearch />
               </Suspense>
               <Suspense>
-                <TabFilters key="tab-filters" />
+                <TabFilters />
               </Suspense>
             </Stack>
 
@@ -74,14 +74,14 @@ export default function InvoiceLayout({ children }) {
                 justifyContent="space-between"
               >
                 <Suspense>
-                  <TabSearch key="tab-search" />
+                  <TabSearch />
                 </Suspense>
                 <Suspense>
-                  <TabActions key="tab-actions" />
+                  <TabActions />
                 </Suspense>
               </Stack>
               <Suspense>
-                <TabFilters key="tab-filters" />
+                <TabFilters />
               </Suspense>
             </Stack>
           </Box>
