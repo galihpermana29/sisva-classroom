@@ -57,6 +57,14 @@ export const AddTagihanModal = () => {
   );
 };
 
+function formatNumber(value) {
+  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
+function unformatNumber(value) {
+  return value.replace(/\./g, "");
+}
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -152,14 +160,17 @@ const ModalContent = ({ handleClose }) => {
             </Typography>
             <TextField
               placeholder="Rp 3000000"
-              type="number"
               size="small"
-              value={formik?.values ? formik.values?.amount : ""}
-              onChange={(e) =>
-                formik.setFieldValue("amount", Number(e.target.value))
+              value={
+                formik.values.amount ? formatNumber(formik.values.amount) : ""
               }
+              onChange={(e) => {
+                const unformattedValue = unformatNumber(e.target.value);
+                formik.setFieldValue("amount", Number(unformattedValue));
+              }}
               onBlur={formik.handleBlur}
               error={formik.touched.amount && Boolean(formik.errors.amount)}
+              helperText={formik.touched.amount && formik.errors.amount}
             />
             {formik.touched.amount && formik.errors.amount && (
               <Typography color={theme.palette.error.main} fontSize={"12px"}>

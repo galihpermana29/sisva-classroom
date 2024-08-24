@@ -23,6 +23,8 @@ import FilterReset from "../filters/FilterReset";
 import { KATEGORI_FIELD_NAME, KategoriSelect } from "../filters/KategoriSelect";
 import { STATUS_FIELD_NAME, StatusSelect } from "../filters/StatusSelect";
 import ResetIcon from "../icons/ResetIcon";
+import { useFormik } from "formik";
+import { useQueryParam } from "@/hooks/useQueryParam";
 
 const statusFilters = [
   {
@@ -41,9 +43,10 @@ export const TagihanFilters = () => {
   const router = useRouter();
   const pathName = usePathname();
   const searchParams = useSearchParams();
-  const [openDrawer, setOpenDrawer] = useState(false);
+  const [showDrawer, setShowDrawer] = useState(false);
 
-  const toggleDrawer = (newOpen) => () => setOpenDrawer(newOpen);
+  const openDrawer = () => setShowDrawer(true);
+  const closeDrawer = () => setShowDrawer(false);
 
   const handleResetFilters = () => {
     router.push(`${pathName}?tab=${tab}`);
@@ -52,6 +55,7 @@ export const TagihanFilters = () => {
   const tanggal = searchParams.get(TANGGAL_FIELD_NAME);
   const kategori = searchParams.get(KATEGORI_FIELD_NAME);
   const status = searchParams.get(STATUS_FIELD_NAME);
+  const sort = searchParams.get("sort");
   const tab = searchParams.get("tab") ?? 0;
 
   const showMobileReset =
@@ -76,17 +80,22 @@ export const TagihanFilters = () => {
             borderRadius: 2,
             display: { xs: "block", lg: "none" },
           }}
-          onClick={toggleDrawer(true)}
+          onClick={openDrawer}
         >
           <SortIcon sx={{ color: theme.palette.primary.main }} />
         </IconButton>
         <Drawer
           anchor="bottom"
           sx={{ borderRadius: "20px 20px 0 0 !important" }}
-          open={openDrawer}
-          onClose={toggleDrawer(false)}
+          open={showDrawer}
+          onClose={closeDrawer}
+          PaperProps={{
+            sx: {
+              borderRadius: "12px 12px 0 0",
+            },
+          }}
         >
-          <DrawerContent toggleDrawer={toggleDrawer} />
+          <DrawerContent closeDrawer={closeDrawer} sortQuery={sort} />
         </Drawer>
         <Divider
           orientation="vertical"
@@ -120,6 +129,7 @@ export const TagihanFilters = () => {
       </Stack>
       {showMobileReset && (
         <Button
+          sx={{ display: { xs: "flex", lg: "none", fontWeight: 600 } }}
           startIcon={<ResetIcon color={theme.palette.primary.main} />}
           onClick={handleResetFilters}
         >
@@ -157,7 +167,41 @@ const filters = [
   },
 ];
 
-const DrawerContent = ({ toggleDrawer }) => {
+const DrawerContent = ({ closeDrawer, sortQuery }) => {
+  const { updateQueryParam } = useQueryParam();
+
+  const sortedArr = sortQuery?.split(",") ?? [];
+
+  const initialValues = {
+    id: false,
+    name: false,
+    amount: false,
+    total_paid: false,
+    deadline: false,
+    status: false,
+  };
+
+  sortedArr.forEach((key) => {
+    if (initialValues.hasOwnProperty(key)) {
+      initialValues[key] = true;
+    }
+  });
+
+  const formik = useFormik({
+    initialValues: initialValues,
+    onSubmit: (values) => {
+      const sortedColumns = [];
+
+      for (const key in values) {
+        if (values[key]) {
+          sortedColumns.push(key);
+        }
+      }
+      updateQueryParam("sort", sortedColumns.join(","));
+      closeDrawer();
+    },
+  });
+
   return (
     <Stack padding={"16px"}>
       <Stack
@@ -170,13 +214,13 @@ const DrawerContent = ({ toggleDrawer }) => {
         </Typography>
         <IconButton
           sx={{ borderRadius: 2, display: { xs: "block", lg: "none" } }}
-          onClick={toggleDrawer(false)}
+          onClick={closeDrawer}
         >
           <Close color="action" />
         </IconButton>
       </Stack>
       <Divider sx={{ marginY: "16px" }} />
-      <form>
+      <form onSubmit={formik.handleSubmit}>
         <Stack gap={"16px"}>
           {filters.map(({ label, value }) => (
             <Stack gap={"16px"}>
@@ -186,21 +230,30 @@ const DrawerContent = ({ toggleDrawer }) => {
                 alignItems={"center"}
               >
                 <Typography>{label}</Typography>
-                <Checkbox />
+                <Checkbox
+                  checked={
+                    Boolean(formik?.values[value])
+                      ? formik?.values[value]
+                      : false
+                  }
+                  onChange={(e) => {
+                    formik.setFieldValue(value, e.target.checked);
+                  }}
+                />
               </Stack>
               <Divider />
             </Stack>
           ))}
         </Stack>
+        <Stack flexDirection={"row"} gap={"12px"} marginTop={"32px"}>
+          <Button onClick={closeDrawer} variant="outlined" fullWidth>
+            Batal
+          </Button>
+          <Button type="submit" variant="contained" fullWidth>
+            Simpan
+          </Button>
+        </Stack>
       </form>
-      <Stack flexDirection={"row"} gap={"12px"} marginTop={"32px"}>
-        <Button onClick={toggleDrawer(false)} variant="outlined" fullWidth>
-          Batal
-        </Button>
-        <Button variant="contained" fullWidth>
-          Simpan
-        </Button>
-      </Stack>
     </Stack>
   );
 };

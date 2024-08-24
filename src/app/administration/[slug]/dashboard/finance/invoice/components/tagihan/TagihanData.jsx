@@ -38,8 +38,9 @@ export const TagihanData = () => {
       ))}
     </Stack>
   ) : (
-    // TODO: add empty state here
-    <span>empty</span>
+    <div className="flex w-full justify-center">
+      <iframe src="https://lottie.host/embed/b5db43dc-864b-4e2d-8ad1-042536dbe95b/O1cPFK7CcS.json"></iframe>
+    </div>
   );
 };
 
@@ -66,7 +67,7 @@ const DataCard = ({ data }) => {
       >
         <Stack flexDirection="column" gap={0}>
           <Typography fontWeight={600} variant="body2">
-            #{data.id}
+            #{Boolean(data.custom_id) ? data.custom_id : data.id}
           </Typography>
           <Typography fontWeight={300} color="gray" variant="body2">
             {formatDate(data.deadline)}

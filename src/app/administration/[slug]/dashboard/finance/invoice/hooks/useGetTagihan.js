@@ -8,13 +8,19 @@ import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import { useFilterStatus } from "./useFilterStatus";
 import { usePagination } from "./usePagination";
+import { useSearchParams } from "next/navigation";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 
+dayjs.extend(customParseFormat);
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
 
 export const useGetTagihan = () => {
   const { tanggal, kategori, cari, status } = useFilterStatus();
   const { rowsPerPage } = usePagination();
+
+  const searchParams = useSearchParams();
+  const sortKeys = searchParams.get("sort")?.split(",") ?? [];
 
   const getAllBills = async () => {
     const { data } = await FinanceAPI.getAllBills({});
@@ -23,11 +29,17 @@ export const useGetTagihan = () => {
   };
 
   const { data: queryData, ...query } = useQuery({
-    queryKey: ["tagihan", { tanggal, kategori }],
+    queryKey: ["tagihan", { tanggal, kategori, status, cari, sortKeys }],
     queryFn: getAllBills,
   });
 
-  const results = filterData(queryData, { tanggal, kategori, cari, status });
+  const results = filterData(queryData, {
+    tanggal,
+    kategori,
+    cari,
+    status,
+    sortKeys,
+  });
   const paginatedData = paginateData(results, rowsPerPage);
   const totalPage = paginatedData.length > 0 ? paginatedData.length : 1;
 
@@ -54,16 +66,60 @@ function isDateInRange(dateRange, dateStr) {
   );
 }
 
-const filterData = (queryData, { tanggal, kategori, cari, status }) => {
+const filterData = (
+  queryData,
+  { tanggal, kategori, cari, status, sortKeys }
+) => {
   if (!queryData || queryData.length === 0) {
     return [];
   }
 
-  return queryData.filter(
+  const filteredData = queryData.filter(
     (data) =>
       (cari ? data.name.toLowerCase().includes(cari.toLowerCase()) : true) &&
       (kategori ? data.name.toLowerCase() === kategori.toLowerCase() : true) &&
       (status ? data.status.toLowerCase() === status.toLowerCase() : true) &&
       (tanggal ? isDateInRange(tanggal, data.deadline) : true)
   );
+
+  return sortData(filteredData, sortKeys);
 };
+
+function parseDate(dateString) {
+  const format = "DD/MM/YYYY h:mm A Z";
+  const date = dayjs(dateString, format);
+  return date.isValid() ? date : dayjs();
+}
+
+function sortData(data, fields) {
+  return data.sort((a, b) => {
+    for (const field of fields) {
+      let comparison = 0;
+
+      switch (field) {
+        case "id":
+          comparison = a?.custom_id.localeCompare(b?.custom_id); // ascending order
+          break;
+        case "amount":
+          comparison = b.amount - a.amount; // descending order
+          break;
+        case "deadline":
+          const dateA = parseDate(a.deadline);
+          const dateB = parseDate(b.deadline);
+          comparison = dateA - dateB; // ascending orderc
+          break;
+        case "status":
+          comparison = a.status.localeCompare(b.status); // ascending order
+          break;
+        case "name":
+          comparison = a.name.localeCompare(b.name); // ascending order
+          break;
+        default:
+          break;
+      }
+
+      if (comparison !== 0) return comparison;
+    }
+    return 0;
+  });
+}
