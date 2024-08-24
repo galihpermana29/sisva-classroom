@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import { PengaturanJadwal } from "./components/tabs/PengaturanJadwal";
 import { JadwalKelas } from "./components/tabs/JadwalKelas";
 import { JadwalGuru } from "./components/tabs/JadwalGuru";
+import JadwalKeseluruhan from "./components/tabs/JadwalKeseluruhan";
 
 const DEFAULT_TAB = 0;
 
@@ -57,7 +58,7 @@ const tabs = [
   },
   {
     title: "Jadwal Keseluruhan",
-    component: <div>Jadwal Keseluruhan</div>,
+    component: <JadwalKeseluruhan />,
   },
   {
     title: "Jadwal Kelas",
