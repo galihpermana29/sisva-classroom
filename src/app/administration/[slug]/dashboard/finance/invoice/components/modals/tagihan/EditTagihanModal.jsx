@@ -99,8 +99,6 @@ const ModalContent = ({ handleClose, initialValues }) => {
     onSubmit: (values) => mutate(values),
   });
 
-  console.log(formik.dirty);
-
   return (
     <form onSubmit={formik.handleSubmit}>
       <Stack width="100%" gap={3}>
