@@ -99,6 +99,8 @@ const ModalContent = ({ handleClose, initialValues }) => {
     onSubmit: (values) => mutate(values),
   });
 
+  console.log(formik.dirty);
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <Stack width="100%" gap={3}>
@@ -154,7 +156,7 @@ const ModalContent = ({ handleClose, initialValues }) => {
               placeholder="Rp 3000000"
               size="small"
               value={
-                formik.values.amount ? formatNumber(formik.values.amount) : ""
+                formik.values.amount ? formatNumber(formik.values.amount) : null
               }
               onChange={(e) => {
                 const unformattedValue = unformatNumber(e.target.value);
@@ -162,7 +164,6 @@ const ModalContent = ({ handleClose, initialValues }) => {
               }}
               onBlur={formik.handleBlur}
               error={formik.touched.amount && Boolean(formik.errors.amount)}
-              helperText={formik.touched.amount && formik.errors.amount}
             />
             {formik.touched.amount && formik.errors.amount && (
               <Typography color={theme.palette.error.main} fontSize={"12px"}>
@@ -245,7 +246,7 @@ const ModalContent = ({ handleClose, initialValues }) => {
         </Stack>
         <Stack flexDirection={"row"} justifyContent={"end"} gap={"12px"}>
           <Button onClick={handleClose}>Batal</Button>
-          <Button type="submit" variant="contained">
+          <Button disabled={!formik.dirty} type="submit" variant="contained">
             Edit
           </Button>
         </Stack>

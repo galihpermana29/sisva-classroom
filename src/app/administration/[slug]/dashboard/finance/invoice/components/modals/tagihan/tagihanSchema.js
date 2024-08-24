@@ -8,7 +8,11 @@ export const tagihanSchema = yup.object({
     .array()
     .min(1, "Wajib memilih target!")
     .required("Wajib memilih target!"),
-  amount: yup.number().required("Wajib mengisi harga!"),
+  amount: yup
+    .number()
+    .min(1, "Wajib mengisi harga!")
+    .typeError("Harga harus berupa angka!")
+    .required("Wajib mengisi harga!"),
   deadline: yup.string().required("Wajib mengisi batas waktu!"),
   descriptuon: yup.string().notRequired(),
 });
