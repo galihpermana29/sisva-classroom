@@ -2,7 +2,14 @@
 
 import { ModalBody } from "@/components/CustomModal";
 import { ModeEdit } from "@mui/icons-material";
-import { IconButton, MenuItem, Modal, Select, Stack } from "@mui/material";
+import {
+  IconButton,
+  MenuItem,
+  Modal,
+  Select,
+  Stack,
+  TextField,
+} from "@mui/material";
 import { useState } from "react";
 import { useGetInvoiceById } from "../../../hooks/useGetInvoiceById";
 import { BillDetails } from "./BillDetails";
@@ -14,6 +21,7 @@ import { EditInvoiceForm } from "../../forms/edit-invoice";
 import { FieldLabel } from "@/components/FieldLabel";
 import { getEditInvoiceSchema } from "../../forms/edit-invoice/editInvoiceSchema";
 import { useEditInvoice } from "../../../hooks/useEditInvoice";
+import { formatToRupiah } from "@/utils/formatToRupiah";
 
 export const EditInvoiceModal = ({ id }) => {
   const [open, setOpen] = useState(false);
@@ -118,6 +126,13 @@ const ModalContent = ({ id, handleClose }) => {
         billId={billId}
         userBillId={userBillId}
       />
+      <FieldLabel name="Nilai Invoice">
+        <TextField
+          value={formatToRupiah(invoice?.amount)}
+          size="small"
+          disabled
+        />
+      </FieldLabel>
       <EditInvoiceForm
         handleClose={handleClose}
         formik={formik}
