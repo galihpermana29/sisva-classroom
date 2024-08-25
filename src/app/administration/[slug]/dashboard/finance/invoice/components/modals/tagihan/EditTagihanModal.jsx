@@ -127,6 +127,7 @@ const ModalContent = ({ handleClose, initialValues }) => {
             </Typography>
             <DatePicker
               size="small"
+              minDate={dayjs()}
               slotProps={{ textField: { size: "small" } }}
               value={
                 formik?.values?.deadline
