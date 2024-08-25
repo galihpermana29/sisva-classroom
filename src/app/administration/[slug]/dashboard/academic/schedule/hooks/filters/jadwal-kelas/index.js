@@ -6,13 +6,13 @@ import { useGetShowFilterStatus } from "../useGetShowFilterStatus";
 import { useGetAvailableStudyPrograms } from "../useGetAvailableStudyPrograms";
 import { useGetAllStudyPrograms } from "@/hooks/useGetAllStudyPrograms";
 import { useGetAvailableGrades } from "../useGetAvailableGrades";
-import { useGetClassSchedule } from "../../useGetClassSchedule";
 import { useResetFilterOnPeriodeChange } from "../useResetFilterOnPeriodeChange";
 import { useResetFilterOnProdiChange } from "../useResetFilterOnProdiChange";
 import { useEnsureFilterOrder } from "../useEnsureFilterOrder";
 import { useSetDefaultPeriod } from "../useSetDefaultPeriod";
 import { useGetAvailableClasses } from "../useGetAvailableClasses";
 import { useResetFilterOnTingkatChange } from "../useResetFilterOnTingkatChange";
+import { useGetAllStudentGroups } from "@/hooks/useGetAllStudentGroups";
 
 export const useGetFilterJadwalKelas = () => {
   const { periode, prodi, tingkat } = useFilterStatus();
@@ -46,13 +46,14 @@ export const useGetFilterJadwalKelas = () => {
     showGrade
   ); // get available grades based on study program filter data
 
-  const { data: classSchedules, isStale: classSchedulesIsStale } =
-    useGetClassSchedule();
+  const { data: studentGroups, isStale: studentGroupsIsStale } =
+    useGetAllStudentGroups();
   const availableClasses = useGetAvailableClasses(
+    periode,
     tingkat,
     prodi,
-    classSchedules,
-    classSchedulesIsStale,
+    studentGroups,
+    studentGroupsIsStale,
     showKelas
   ); // get available classes based on data from class schedules
 
