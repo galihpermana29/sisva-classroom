@@ -7,6 +7,7 @@ export const formatLearningSchedule = (schedules, classes) => {
   if (!schedules) return [];
   return schedules.map((schedule) => {
     // can this be null tho?
+    // (2 days later) just realized it can indeed be null
     const scheduleClass = classes
       ? getScheduleClass(schedule, classes)
       : undefined;

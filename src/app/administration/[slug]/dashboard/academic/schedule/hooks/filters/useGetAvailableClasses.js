@@ -39,7 +39,7 @@ const deduplicateClasses = (classes) => {
   let seen = new Set();
   return classes.filter((kelas) => {
     // check if we already seen the same class id, if yes then remove it as it is a duplicate
-    const key = kelas.id;
+    const key = kelas.class_id;
     return seen.has(key) ? false : seen.add(key);
   });
 };
