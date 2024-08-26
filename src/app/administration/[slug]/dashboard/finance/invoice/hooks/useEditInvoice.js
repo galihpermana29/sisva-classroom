@@ -12,9 +12,9 @@ export const useEditInvoice = ({ invoiceId, userBillId }) => {
       return FinanceAPI.updateInvoice(invoiceId, invoicePayload);
     },
     onSettled: () => {
-      queryClient.refetchQueries({ queryKey: ["invoice", { id: invoiceId }] });
-      queryClient.refetchQueries({
-        queryKey: ["invoices", { bill_id: undefined, user_id: undefined }],
+      queryClient.invalidateQueries({
+        predicate: (query) =>
+          query.queryKey[0] === "invoice" || query.queryKey[0] === "invoices",
       });
     },
   });

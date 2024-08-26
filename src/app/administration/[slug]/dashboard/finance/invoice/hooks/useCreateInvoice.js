@@ -14,8 +14,9 @@ export const useCreateInvoice = ({ userBillId, handleClose }) => {
     },
     onSuccess: () => {
       handleClose ? handleClose() : undefined;
-      queryClient.refetchQueries({
-        queryKey: ["invoices", { user_id: undefined, bill_id: undefined }],
+      queryClient.invalidateQueries({
+        predicate: (query) =>
+          query.queryKey[0] === "invoice" || query.queryKey[0] === "invoices",
       });
     },
   });
