@@ -7,7 +7,7 @@ export const useGetBillById = (id) => {
   const { data, ...query } = useQuery({
     queryKey: ["bill", { id }],
     queryFn: () => FinanceAPI.getBillById(id),
-    enabled: id !== null && id !== undefined,
+    enabled: id === 0 || (id !== 0 && Boolean(id)),
   });
 
   const queryData = data ? data.data.data : undefined;

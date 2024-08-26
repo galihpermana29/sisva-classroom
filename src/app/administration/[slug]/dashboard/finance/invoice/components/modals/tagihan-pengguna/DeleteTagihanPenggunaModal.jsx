@@ -11,8 +11,17 @@ import {
 import { useState } from "react";
 import { ModalBody } from "@/components/CustomModal";
 import { Delete } from "@mui/icons-material";
+import { useDeleteUserBill } from "../../../hooks/useDeleteUserBill";
+import { useGetAllInvoices } from "../../../hooks/useGetAllInvoices";
 
-export const DeleteTagihanPenggunaModal = ({ id }) => {
+export const DeleteTagihanPenggunaModal = ({ id, billId, userId }) => {
+  const { data: invoice } = useGetAllInvoices({
+    bill_id: billId,
+    user_id: userId,
+  });
+
+  const isDisabled = invoice ? invoice.length !== 0 : false;
+
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -20,14 +29,23 @@ export const DeleteTagihanPenggunaModal = ({ id }) => {
 
   return (
     <>
-      <Tooltip title="Hapus tagihan pengguna">
-        <IconButton
-          onClick={handleOpen}
-          aria-label="hapus"
-          size="small"
-        >
-          <Delete />
-        </IconButton>
+      <Tooltip
+        title={
+          isDisabled
+            ? "Tidak dapat menghapus tagihan pengguna yang sudah tertagih"
+            : "Hapus tagihan pengguna"
+        }
+      >
+        <span>
+          <IconButton
+            disabled={isDisabled}
+            onClick={handleOpen}
+            aria-label="hapus"
+            size="small"
+          >
+            <Delete />
+          </IconButton>
+        </span>
       </Tooltip>
       <Modal
         open={open}
@@ -51,6 +69,9 @@ export const DeleteTagihanPenggunaModal = ({ id }) => {
 };
 
 const ModalContent = ({ id, handleClose }) => {
+  const { mutate } = useDeleteUserBill({ id, handleClose });
+  const handleClick = () => mutate();
+
   return (
     <Stack
       textAlign="center"
@@ -92,6 +113,7 @@ const ModalContent = ({ id, handleClose }) => {
             Batal
           </Button>
           <Button
+            onClick={handleClick}
             fullWidth
             variant="contained"
             color="error"

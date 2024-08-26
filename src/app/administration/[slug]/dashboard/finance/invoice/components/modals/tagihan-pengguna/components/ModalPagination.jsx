@@ -1,13 +1,10 @@
-"use client";
-
-import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import { Stack, Typography } from "@mui/material";
-import { RowsPerPage } from "./RowsPerPage";
-import { PaginationButton } from "./PaginationButton";
-import { usePagination } from "../../hooks/usePagination";
+import { PaginationButton } from "../../../paginations/PaginationButton";
+import { ArrowBack, ArrowForward } from "@mui/icons-material";
 
-export const Paginations = ({ totalPage, withRowSetting = true }) => {
-  const { page, goToPrevPage, goToNextPage } = usePagination();
+export const ModalPagination = ({ page, totalPage, setPage }) => {
+  const goToNextPage = () => setPage((prev) => prev + 1);
+  const goToPrevPage = () => setPage((prev) => prev - 1);
 
   const isAbleToGoBack = page > 1;
   const isAbleToGoNext = page < totalPage;
@@ -19,15 +16,14 @@ export const Paginations = ({ totalPage, withRowSetting = true }) => {
       alignItems="center"
       gap={2}
     >
-      {withRowSetting && <RowsPerPage />}
       <Stack
-        width={{ xs: "100%", lg: withRowSetting ? "auto" : "100%" }}
+        width="100%"
         flexDirection="row"
         gap={2}
         alignItems="center"
         justifyContent={{
           xs: "space-between",
-          lg: withRowSetting ? "center" : "end",
+          lg: "end",
         }}
       >
         <PaginationButton

@@ -1,8 +1,11 @@
 import { SortIcon } from "@/assets/SVGs";
+
 import { KeyboardArrowDown, Tune } from "@mui/icons-material";
 import { Button, Divider, IconButton, Stack } from "@mui/material";
+
 import { DateRangeSelect } from "../filters/DateRangeSelect";
-import { KategoriSelect } from "../filters/KategoriSelect";
+import { TagihanPenggunaKategoriFilter } from "../filters/tagihan-pengguna/TagihanPenggunaKategoriFilter";
+import FilterReset from "../filters/FilterReset";
 
 /** @description Component for handling tagihan pengguna tab's filters */
 export const TagihanPenggunaFilters = () => {
@@ -37,7 +40,8 @@ export const TagihanPenggunaFilters = () => {
         gap={1}
       >
         <DateRangeSelect />
-        <KategoriSelect />
+        <TagihanPenggunaKategoriFilter />
+        <FilterReset />
       </Stack>
     </Stack>
   );
