@@ -61,10 +61,7 @@ const ModalContent = ({ handleClose }) => {
   }, [ableToSubmit]);
 
   const formik = useFormik({
-    initialValues: {
-      amount: "0",
-      note: "",
-    },
+    initialValues: { amount: "", note: "" },
     validationSchema: addInvoiceSchema,
     onSubmit: (values) =>
       ableToSubmit

@@ -22,6 +22,7 @@ import { FieldLabel } from "@/components/FieldLabel";
 import { getEditInvoiceSchema } from "../../forms/edit-invoice/editInvoiceSchema";
 import { useEditInvoice } from "../../../hooks/useEditInvoice";
 import { formatToRupiah } from "@/utils/formatToRupiah";
+import { useUpdatePayment } from "../../../hooks/useUpdatePayment";
 
 export const EditInvoiceModal = ({ id }) => {
   const [open, setOpen] = useState(false);
@@ -73,17 +74,36 @@ const ModalContent = ({ id, handleClose }) => {
   const { data: bill } = useGetBillById(billId);
   const { data: user } = useGetUserById(userId, Boolean(userId));
 
+  const { mutate: updatePayment } = useUpdatePayment({ invoiceId: id });
   const { mutate: editInvoice } = useEditInvoice({
     invoiceId: id,
     userBillId,
-    handleClose,
   });
+
+  const handleSubmit = (values) => {
+    const { payment_proof_note, payment_proof_uri } = values;
+    const {
+      payment_proof_note: initialProofNote,
+      payment_proof_uri: initialProofUri,
+    } = formik.initialValues;
+
+    const shouldUpdatePayment =
+      payment_proof_note !== initialProofNote ||
+      payment_proof_uri !== initialProofUri;
+
+    if (shouldUpdatePayment) {
+      updatePayment(values);
+    }
+
+    editInvoice(values);
+    handleClose();
+  };
+
   const schema = getEditInvoiceSchema({ invoice });
   const formik = useFormik({
     initialValues: schema.getDefault(),
     validationSchema: schema,
-    enableReinitialize: true,
-    onSubmit: (values) => editInvoice(values),
+    onSubmit: handleSubmit,
   });
 
   if (isLoading || !invoice) return;

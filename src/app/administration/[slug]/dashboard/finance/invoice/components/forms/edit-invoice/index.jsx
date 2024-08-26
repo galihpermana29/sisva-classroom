@@ -1,10 +1,10 @@
 "use client";
 
-import { CustomTextArea } from "@/components/CustomTextArea";
 import { FieldLabel } from "@/components/FieldLabel";
 import { FileUpload } from "@/components/FileUpload";
 import { getImageUrl } from "@/utils/getImageUrl";
-import { Button, MenuItem, Select, Stack } from "@mui/material";
+import { Button, MenuItem, Select, Stack, TextField } from "@mui/material";
+import Image from "next/image";
 
 export const EditInvoiceForm = ({ formik, handleClose }) => {
   return (
@@ -27,7 +27,7 @@ export const EditInvoiceForm = ({ formik, handleClose }) => {
         />
       </FieldLabel>
       <FieldLabel name="Deskripsi">
-        <CustomTextArea
+        <TextField
           id="note"
           name="note"
           value={
@@ -36,6 +36,8 @@ export const EditInvoiceForm = ({ formik, handleClose }) => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={formik.touched["note"] && Boolean(formik.errors["note"])}
+          size="small"
+          multiline
         />
       </FieldLabel>
       <FieldLabel name="Bukti Pembayaran">
@@ -51,15 +53,25 @@ export const EditInvoiceForm = ({ formik, handleClose }) => {
             formik.touched["payment_proof_uri"] &&
             Boolean(formik.errors["payment_proof_uri"])
           }
-          inputProps={{ accept: "image/*" }}
+          accept="image/*"
           afterUpload={(data) => {
             const imageUrl = getImageUrl(data?.data?.data);
             formik.setFieldValue("payment_proof_uri", imageUrl);
           }}
         />
+        {formik.values["payment_proof_uri"] ? (
+          <div className="relative flex justify-center max-h-96 overflow-y-auto rounded-lg">
+            <Image
+              height={384}
+              width={600}
+              src={formik.values["payment_proof_uri"]}
+              style={{ height: "max-content", width: "100%" }}
+            />
+          </div>
+        ) : null}
       </FieldLabel>
       <FieldLabel name="Catatan Pembayaran">
-        <CustomTextArea
+        <TextField
           id="payment_proof_note"
           name="payment_proof_note"
           value={
@@ -73,6 +85,8 @@ export const EditInvoiceForm = ({ formik, handleClose }) => {
             formik.touched["payment_proof_note"] &&
             Boolean(formik.errors["payment_proof_note"])
           }
+          size="small"
+          multiline
         />
       </FieldLabel>
       <Stack
