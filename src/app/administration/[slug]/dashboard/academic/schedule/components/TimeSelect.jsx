@@ -18,6 +18,9 @@ export const TimeSelect = ({
         disabled={disabled}
         id={name}
         name={name}
+        slotProps={{
+          textField: { size: "small" },
+        }}
         value={
           formik.values && formik.values[name]
             ? timeStringToDayjs(formik.values[name])

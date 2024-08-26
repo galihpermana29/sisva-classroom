@@ -55,12 +55,10 @@ const parseTime = (time) => {
 
 const addDateToTime = (day, time) => {
   const date = dayjs().isoWeekday(day);
-  const { hour, minute, offset } = parseTime(time);
 
-  const result = date
-    .set("hour", hour + offset)
-    .set("minute", minute)
-    .set("second", 0);
+  const { hour, minute } = parseTime(time);
+
+  const result = date.set("hour", hour).set("minute", minute).set("second", 0);
 
   return result;
 };
@@ -82,6 +80,7 @@ function useJadwalKeseluruhanCalendar() {
   const [classData, setClassData] = useState([]);
   const [studentGroup, setStudentGroup] = useState([]);
   const [learningSchedule, setLearningSchedule] = useState([]);
+  const [schoolSchedule, setSchoolSchedule] = useState([]);
   const [nonLearningSchedule, setNonLearningSchedule] = useState([]);
 
   const learningScheduleData = learningSchedule.filter(
@@ -109,6 +108,18 @@ function useJadwalKeseluruhanCalendar() {
     isJadwalKeseluruhan === "true"
       ? [...nonLearningScheduleData, ...learningScheduleData]
       : nonLearningScheduleData;
+
+  let workDays = Array.from(
+    new Set(
+      schoolSchedule
+        .filter(({ study_program_id, grade }) =>
+          study_program_id === parseInt(prodi) && Boolean(tingkat)
+            ? grade === tingkat
+            : true
+        )
+        .map(({ day }) => day)
+    )
+  );
 
   let studentGroupData = studentGroup.filter((sg) => {
     if (periode === "-1") return false;
@@ -143,6 +154,13 @@ function useJadwalKeseluruhanCalendar() {
   const getAllClasses = async () => {
     const { data } = await AcademicAPI.getAllClasses();
     setClassData(data.data);
+  };
+
+  const getAllSchoolSchedule = async () => {
+    const { data } = await AcademicAPI.getAllSchoolSchedules({
+      period_id: periode,
+    });
+    setSchoolSchedule(data.data);
   };
 
   const getAllClassSchedules = async () => {
@@ -187,7 +205,7 @@ function useJadwalKeseluruhanCalendar() {
         ...data,
         start_time: startTimeWithDate.toDate(),
         end_time: endTimeWithDate.toDate(),
-        group_id: 1,
+        group_id: getGroupId(data.grade),
         type: "non-learning",
       };
     });
@@ -200,19 +218,9 @@ function useJadwalKeseluruhanCalendar() {
 
     setStudentGroup(
       data.data.map((value) => {
-        let group_id;
-
-        if (value.grade === "X") {
-          group_id = 1;
-        } else if (value.grade === "XI") {
-          group_id = 2;
-        } else if (value.grade === "XII") {
-          group_id = 3;
-        }
-
         return {
           ...value,
-          group_id,
+          group_id: getGroupId(value?.grade),
           group_color: "#ACDEE7",
         };
       })
@@ -249,6 +257,7 @@ function useJadwalKeseluruhanCalendar() {
   useEffect(() => {
     if (periode !== "-1") {
       getAllNonLearningSchedule();
+      getAllSchoolSchedule();
       if (prodi !== "-1") getAllClassSchedules();
     }
 
@@ -265,10 +274,13 @@ function useJadwalKeseluruhanCalendar() {
   return {
     isLoading,
     setIsLoading,
-    studentGroup,
     setStudentGroup,
     studentGroupData,
     data,
+    periode,
+    prodi,
+    isJadwalKeseluruhan,
+    workDays,
   };
 }
 

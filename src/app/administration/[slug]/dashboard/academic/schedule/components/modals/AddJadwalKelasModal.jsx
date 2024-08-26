@@ -2,12 +2,26 @@ import { Button, Modal } from "@mui/material";
 import { useState } from "react";
 import { ModalBody } from "@/components/CustomModal";
 import { JadwalKelasForm } from "../forms/jadwal-kelas";
+import { useFilterStatus } from "../../hooks/filters/useFilterStatus";
 
 function AddJadwalKelasModal() {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const { periode, prodi, tingkat, hari, kelas } = useFilterStatus();
+
+  const initialValues = {
+    period_id: periode ?? "",
+    study_program_id: parseInt(prodi) ?? "",
+    grade: tingkat ?? "",
+    student_group_id: Boolean(kelas) ? parseInt(kelas) : "",
+    class_id: "",
+    day: parseInt(hari) ?? "",
+    start_time: null,
+    end_time: null,
+  };
 
   return (
     <>
@@ -23,7 +37,12 @@ function AddJadwalKelasModal() {
         <ModalBody
           title="Tambah Jadwal Kelas"
           handleClose={handleClose}
-          content={<JadwalKelasForm handleClose={handleClose} />}
+          content={
+            <JadwalKelasForm
+              initialValues={initialValues}
+              handleClose={handleClose}
+            />
+          }
         />
       </Modal>
     </>

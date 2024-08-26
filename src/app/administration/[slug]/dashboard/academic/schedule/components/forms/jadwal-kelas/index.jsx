@@ -18,6 +18,7 @@ import { PeriodSelect } from "../../form-items/PeriodSelect";
 import { StudyProgramSelect } from "../../form-items/StudyProgramSelect";
 import ErrorJadwalKelasModal from "../../modals/ErrorJadwalKelasModal";
 import { jadwalKelasSchema } from "./jadwalKelasSchema";
+import { StudentGroupSelect } from "../../form-items/StudentGroupSelect";
 
 function parseTime(timeString) {
   return dayjs(timeString, "h:mm A Z");
@@ -53,7 +54,10 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
     initialValues = {
       ...initialValues,
       period_id: parseInt(periode),
-      day: `${initialValues?.school_schedule_id}:${initialValues?.day}`,
+      student_group_id: initialValues?.student_group_id ?? initialValues?.sg_id,
+      day: Boolean(initialValues?.school_schedule_id)
+        ? `${initialValues?.school_schedule_id}:${initialValues?.day}`
+        : "",
     };
   }
 
@@ -62,6 +66,7 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
       period_id: "",
       study_program_id: "",
       grade: "",
+      student_group_id: "",
       class_id: "",
       day: "",
       start_time: null,
@@ -200,13 +205,16 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
     },
   });
 
+  console.log(formik.values);
+
   const {
     periodeSelectData,
     prodiSelectData,
     tingkatanSelectData,
+    studentGroupSelectData,
     kelasSelectData,
     hariSelectData,
-  } = useCreateJadwalKelas(formik, edit);
+  } = useCreateJadwalKelas(formik);
 
   return (
     <>
@@ -244,13 +252,21 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
               data={tingkatanSelectData}
               disabled={!edit && formik.values.study_program_id === ""}
             />
-            <ClassSelect
+            <StudentGroupSelect
               label={"Kelas"}
               placeholder={"Pilih kelas"}
               formik={formik}
+              name={"student_group_id"}
+              data={studentGroupSelectData}
+              disabled={!edit && formik.values.grade === ""}
+            />
+            <ClassSelect
+              label={"Kelas Mapel"}
+              placeholder={"Pilih kelas mapel"}
+              formik={formik}
               name={"class_id"}
               data={kelasSelectData}
-              disabled={!edit && formik.values.grade === ""}
+              disabled={!edit && formik.values.student_group_id === ""}
             />
             <DaySelectDynamic
               label="Hari"

@@ -87,13 +87,14 @@ export const AktivitasNonKbmForm = ({ handleClose, initialValues, edit }) => {
         end_time: formatTime(formattedEndTime),
       };
 
+      console.log(daySelectData);
+      console.log(newPayload);
+
       try {
         const [nonLearningScheduleData, classScheduleData] = await Promise.all([
           AcademicAPI.getAllNonLearningSchedules({ period_id: periode }),
           AcademicAPI.getAllClassSchedules({ period_id: periode }),
         ]);
-
-        console.log(nonLearningScheduleData, classScheduleData);
 
         if (nonLearningScheduleData && classScheduleData) {
           nonLearningScheduleData.data.data.forEach(

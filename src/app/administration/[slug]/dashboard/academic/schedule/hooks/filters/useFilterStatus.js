@@ -6,6 +6,7 @@ import { PRODI_FIELD_NAME } from "../../components/filters/ProdiSelect";
 import { TINGKAT_FIELD_NAME } from "../../components/filters/TingkatSelect";
 import { KELAS_FIELD_NAME } from "../../components/filters/KelasSelect";
 import { GURU_FIELD_NAME } from "../../components/filters/GuruSelect";
+import { HARI_FIELD_NAME } from "../../components/filters/HariSelect";
 
 export const useFilterStatus = () => {
   const searchParams = useSearchParams();
@@ -14,6 +15,7 @@ export const useFilterStatus = () => {
   const tingkat = searchParams.get(TINGKAT_FIELD_NAME);
   const kelas = searchParams.get(KELAS_FIELD_NAME);
   const guru = searchParams.get(GURU_FIELD_NAME);
+  const hari = searchParams.get(HARI_FIELD_NAME);
 
-  return { periode, prodi, tingkat, kelas, guru };
+  return { periode, prodi, tingkat, kelas, guru, hari };
 };

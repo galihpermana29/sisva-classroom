@@ -2,7 +2,7 @@
 
 import { MenuItem, Select, Stack, Typography } from "@mui/material";
 
-export const StudyProgramSelect = ({
+export const StudentGroupSelect = ({
   formik,
   name,
   label,
@@ -17,8 +17,8 @@ export const StudyProgramSelect = ({
       </Typography>
       <Select
         id={name}
-        name={name}
         size="small"
+        name={name}
         disabled={disabled}
         value={formik.values ? formik.values[name] : ""}
         onChange={(event) => formik.setFieldValue(name, event.target.value)}
@@ -29,7 +29,7 @@ export const StudyProgramSelect = ({
         <MenuItem disabled value={""}>
           {placeholder}
         </MenuItem>
-        {data?.map(({ label, value }) => (
+        {data.map(({ label, value }) => (
           <MenuItem key={`${label}${value}`} value={value}>
             {label}
           </MenuItem>
