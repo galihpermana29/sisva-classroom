@@ -4,10 +4,11 @@ import { formatNonLearningSchedule } from "./formatNonLearningSchedule";
 
 export const formatAndCombineSchedule = (
   filteredLearning,
-  countedNonLearning
+  countedNonLearning,
+  classes
 ) => {
   // format to data shape for scheduler
-  const formattedLearning = formatLearningSchedule(filteredLearning);
+  const formattedLearning = formatLearningSchedule(filteredLearning, classes);
   const formattedNonLearning = formatNonLearningSchedule(countedNonLearning);
   // deduplicate schedule that appeared more than once in non learning
   const deduplicatedNonLearning = deduplicateNonLearning(formattedNonLearning);

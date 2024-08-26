@@ -3,28 +3,33 @@
 import { useMemo } from "react";
 
 export const useGetAvailableClasses = (
+  period,
   grade,
   prodi,
-  classSchedules,
-  classSchedulesIsStale,
+  studentGroups,
+  studentGroupsIsStale,
   showKelas
 ) => {
   const availableClasses = useMemo(
     () =>
       deduplicateClasses(
-        showKelas && classSchedules
-          ? classSchedules
+        showKelas && studentGroups
+          ? studentGroups
               .filter(
-                (schedule) => schedule.study_program_id === parseInt(prodi)
+                (studentGroup) =>
+                  studentGroup.study_program_id === parseInt(prodi)
               )
-              .filter((schedule) => schedule.grade === grade)
-              .flatMap((schedule) => ({
-                class_id: schedule.class_id,
-                class_name: schedule.class_name,
+              .filter((studentGroup) => studentGroup.grade === grade)
+              .filter(
+                (studentGroup) => studentGroup.period_id === parseInt(period)
+              )
+              .flatMap((studentGroup) => ({
+                class_id: studentGroup.id,
+                class_name: studentGroup.name,
               }))
           : []
       ),
-    [prodi, grade, classSchedulesIsStale]
+    [period, prodi, grade, studentGroupsIsStale]
   );
 
   return availableClasses;
