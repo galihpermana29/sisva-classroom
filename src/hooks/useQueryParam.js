@@ -13,11 +13,11 @@ export const useQueryParam = () => {
   const createQueryString = useCallback(
     (name, value) => {
       const params = new URLSearchParams(searchParams.toString());
-      params.set(name, value);
+      value ? params.set(name, value) : params.delete(name);
 
       return params.toString();
     },
-    [searchParams],
+    [searchParams]
   );
 
   const updateQueryParam = (name, value) =>
