@@ -14,7 +14,7 @@ export const TableInvoice = () => {
 const columns = [
   "ID Invoice",
   "Nama",
-  "Deskripsi",
+  "Pembayaran",
   "Total Harga",
   "Nilai Invoice",
   "Status",

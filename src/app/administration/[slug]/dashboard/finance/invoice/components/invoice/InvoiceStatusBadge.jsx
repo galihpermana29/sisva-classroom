@@ -2,20 +2,24 @@ import { Chip } from "@mui/material";
 
 export const InvoiceStatusBadge = ({ children }) => {
   let label;
-  let color;
+  let backgroundColor;
+  let textColor;
 
   switch (children) {
-    case "lunas":
+    case "done":
       label = "Lunas";
-      color = "success";
+      textColor = "#27AE60";
+      backgroundColor = "#D9FFE9";
       break;
-    case "verifikasi":
+    case "inreview":
       label = "Verifikasi";
-      color = "warning";
+      textColor = "#F39038";
+      backgroundColor = "#FFF0E4";
       break;
     case "pending":
       label = "Pending";
-      color = "error";
+      textColor = "#F8412C";
+      backgroundColor = "#FFDDD8";
       break;
     default:
       // Don't return anything if children value is not valid.
@@ -24,8 +28,13 @@ export const InvoiceStatusBadge = ({ children }) => {
 
   return (
     <Chip
+      sx={{
+        color: textColor,
+        backgroundColor,
+        fontWeight: 500,
+        paddingX: 0.6,
+      }}
       label={label}
-      color={color}
       variant="filled"
       size="small"
     />

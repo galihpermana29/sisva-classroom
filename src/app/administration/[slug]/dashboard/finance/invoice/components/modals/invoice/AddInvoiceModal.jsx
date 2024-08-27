@@ -1,17 +1,16 @@
 "use client";
 
-import {
-  Button,
-  Modal,
-  Select,
-  Stack,
-  TextareaAutosize,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Alert, Button, Modal, Stack } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ModalBody } from "@/components/CustomModal";
+import { ModalTagihanFilter } from "./modal-filters/ModalTagihanFilter";
+import { ModalTagihanPenggunaFilter } from "./modal-filters/ModalTagihanPenggunaFilter";
+import { useCreateInvoice } from "../../../hooks/useCreateInvoice";
+import { useFormik } from "formik";
+import { addInvoiceSchema } from "../../forms/add-invoice/addInvoiceSchema";
+import { AddInvoiceForm } from "../../forms/add-invoice";
+import { BillDetails } from "./BillDetails";
 
 export const AddInvoiceModal = () => {
   const [open, setOpen] = useState(false);
@@ -39,14 +38,39 @@ export const AddInvoiceModal = () => {
           maxWidth={600}
           title="Buat Invoice"
           handleClose={handleClose}
-          content={<ModalContent />}
+          content={<ModalContent handleClose={handleClose} />}
         />
       </Modal>
     </>
   );
 };
 
-const ModalContent = () => {
+const ModalContent = ({ handleClose }) => {
+  const [filters, setFilters] = useState({ tagihan: "", tagihanPengguna: "" });
+  const [filterError, setFilterError] = useState("");
+  const ableToSubmit = filters.tagihan !== "" && filters.tagihanPengguna !== "";
+  const { mutate } = useCreateInvoice({
+    userBillId: filters.tagihanPengguna,
+    handleClose,
+  });
+
+  useEffect(() => {
+    if (ableToSubmit) {
+      setFilterError("");
+    }
+  }, [ableToSubmit]);
+
+  const formik = useFormik({
+    initialValues: { amount: "", note: "" },
+    validationSchema: addInvoiceSchema,
+    onSubmit: (values) =>
+      ableToSubmit
+        ? mutate(values)
+        : setFilterError(
+            "Harap pilih tagihan dan tagihan pengguna terlebih dahulu!"
+          ),
+  });
+
   return (
     <Stack
       width="100%"
@@ -57,121 +81,31 @@ const ModalContent = () => {
         flexDirection="row"
         gap={1}
       >
-        <Stack
-          width="100%"
-          gap={1}
-        >
-          <Typography
-            fontWeight={600}
-            variant="body2"
-          >
-            Pilih Tagihan
-          </Typography>
-          <Select
-            size="small"
-            fullWidth
-          />
-        </Stack>
-        <Stack
-          width="100%"
-          gap={1}
-        >
-          <Typography
-            fontWeight={600}
-            variant="body2"
-          >
-            Pilih Tagihan Pengguna
-          </Typography>
-          <Select
-            size="small"
-            fullWidth
-          />
-        </Stack>
-      </Stack>
-      <Stack
-        width="100%"
-        className="grid grid-cols-2 gap-y-5"
-      >
-        <Stack
-          width="100%"
-          gap={1}
-        >
-          <Typography
-            fontWeight={600}
-            variant="body2"
-          >
-            Total Harga
-          </Typography>
-          <Typography variant="body2">Rp300,000</Typography>
-        </Stack>
-        <Stack
-          width="100%"
-          gap={1}
-        >
-          <Typography
-            fontWeight={600}
-            variant="body2"
-          >
-            Invoice Aktif
-          </Typography>
-          <Typography variant="body2">TBA</Typography>
-        </Stack>
-        <Stack
-          width="100%"
-          gap={1}
-        >
-          <Typography
-            fontWeight={600}
-            variant="body2"
-          >
-            Total Tertagih
-          </Typography>
-          <Typography variant="body2">Rp200,000</Typography>
-        </Stack>
-        <Stack
-          width="100%"
-          gap={1}
-        >
-          <Typography
-            fontWeight={600}
-            variant="body2"
-          >
-            Sisa Tagihan
-          </Typography>
-          <Typography variant="body2">Rp100,000</Typography>
-        </Stack>
-      </Stack>
-      <Stack
-        width="100%"
-        gap={1}
-      >
-        <Typography
-          fontWeight={600}
-          variant="body2"
-        >
-          Nilai Invoice
-        </Typography>
-        <TextField
-          size="small"
-          fullWidth
-          InputProps={{ startAdornment: "Rp " }}
+        <ModalTagihanFilter
+          value={filters}
+          setValue={setFilters}
+        />
+        <ModalTagihanPenggunaFilter
+          value={filters}
+          setValue={setFilters}
         />
       </Stack>
-      <Stack
-        width="100%"
-        gap={1}
-      >
-        <Typography
-          fontWeight={600}
-          variant="body2"
+      {filterError ? (
+        <Alert
+          variant="filled"
+          severity="error"
         >
-          Nilai Invoice
-        </Typography>
-        <TextareaAutosize
-          minRows={5}
-          fullWidth
-        />
-      </Stack>
+          {filterError}
+        </Alert>
+      ) : null}
+      <BillDetails
+        billId={filters.tagihan}
+        userBillId={filters.tagihanPengguna}
+      />
+      <AddInvoiceForm
+        formik={formik}
+        handleClose={handleClose}
+      />
     </Stack>
   );
 };

@@ -13,7 +13,7 @@ export const TableTagihanPengguna = () => {
 
 const columns = [
   "ID Tagihan",
-  "Tanggal",
+  "Tenggat Waktu",
   "Nama",
   "Pembayaran",
   "Total Harga",

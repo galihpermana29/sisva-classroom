@@ -676,6 +676,16 @@ const AcademicAPI = {
       data: payload,
     });
   },
+
+  getStudentsInStudentGroup() {
+    const headers = {
+      "X-Sisva-Source": "academic.curriculum.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.get("/student-groups/students", { headers });
+  },
 };
 
 export default AcademicAPI;

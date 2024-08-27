@@ -9,6 +9,7 @@ export const InvoiceTabs = () => {
   const { activeIndex } = useActiveInvoiceTab();
   return (
     <TabsSelector
+      key={`invoice-tabs-${activeIndex}`}
       tabs={INVOICE_TABS}
       activeTab={activeIndex}
     />

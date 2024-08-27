@@ -11,6 +11,7 @@ import {
 import { useState } from "react";
 import { ModalBody } from "@/components/CustomModal";
 import { Delete } from "@mui/icons-material";
+import { useDeleteInvoice } from "../../../hooks/useDeleteInvoice";
 
 export const DeleteInvoiceModal = ({ id, isDisabled }) => {
   const [open, setOpen] = useState(false);
@@ -60,6 +61,9 @@ export const DeleteInvoiceModal = ({ id, isDisabled }) => {
 };
 
 const ModalContent = ({ id, handleClose }) => {
+  const { mutate } = useDeleteInvoice(id);
+  const handleClick = () => mutate();
+
   return (
     <Stack
       width="100%"
@@ -109,6 +113,7 @@ const ModalContent = ({ id, handleClose }) => {
             Batal
           </Button>
           <Button
+            onClick={handleClick}
             fullWidth
             variant="contained"
             color="error"

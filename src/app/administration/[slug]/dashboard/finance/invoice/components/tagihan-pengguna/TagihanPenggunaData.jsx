@@ -1,16 +1,29 @@
 "use client";
 
-import { Divider, Paper, Stack, Typography } from "@mui/material";
-import { useGetTagihanPengguna } from "../../hooks/useGetTagihanPengguna";
+import { useGetUserById } from "@/hooks/useGetUserById";
+import { formatToRupiah } from "@/utils/formatToRupiah";
+import { getUserTimezone } from "@/utils/getUserTimezone";
+
 import { useMounted } from "@mantine/hooks";
+import { Divider, Paper, Stack, Typography } from "@mui/material";
+import dayjs from "dayjs";
+
+import { useCheckCariFilter } from "../../hooks/useCheckCariFilter";
+import { useCheckKategoriFilter } from "../../hooks/useCheckKategoriFilter";
+import { useCheckTanggalFilter } from "../../hooks/useCheckTanggalFilter";
+import { useGetAllUserBill } from "../../hooks/useGetAllUserBill";
+import { useGetBillById } from "../../hooks/useGetBillById";
 import { usePagination } from "../../hooks/usePagination";
-import { TagihanPenggunaRowActions } from "./TagihanPenggunaRowActions";
+
+import { LoadingDataCard } from "../LoadingDataCard";
+import { DeleteTagihanPenggunaModal } from "../modals/tagihan-pengguna/DeleteTagihanPenggunaModal";
 
 export const TagihanPenggunaData = () => {
   const mounted = useMounted();
-  const { data: rows, isLoading } = useGetTagihanPengguna();
+  const { data: rows, isLoading } = useGetAllUserBill({ paginated: true });
   const { page } = usePagination();
 
+  // TODO: add overall loading state here
   if (isLoading || !mounted) return <div>Loading...</div>;
 
   const data = rows[page - 1];
@@ -20,12 +33,7 @@ export const TagihanPenggunaData = () => {
       {data.map((row) => (
         <DataCard
           key={row.id}
-          id={row.id}
-          date={row.date}
-          name={row.name}
-          payment={row.payment}
-          total_price={row.total_price}
-          total_payment={row.total_payment}
+          {...row}
         />
       ))}
     </Stack>
@@ -35,7 +43,34 @@ export const TagihanPenggunaData = () => {
   );
 };
 
-const DataCard = ({ id, date, name, payment, total_price }) => {
+const DataCard = ({ id, bill_id, user_id }) => {
+  const cariFilterPass = useCheckCariFilter(user_id);
+  const kategoriFilterPass = useCheckKategoriFilter(user_id);
+  const tanggalFilterPass = useCheckTanggalFilter(bill_id);
+
+  const {
+    data: billData,
+    isLoading: billIsLoading,
+    isError: billIsError,
+  } = useGetBillById(bill_id);
+  const {
+    data: userData,
+    isLoading: userIsLoading,
+    isError: userIsError,
+  } = useGetUserById(user_id);
+
+  const isLoading = userIsLoading || billIsLoading;
+  const isError = userIsError || billIsError;
+
+  if (isLoading) return <LoadingDataCard />;
+  // TODO: add error state here
+  if (isError) return null;
+  // TODO: add empty state here
+  if (!cariFilterPass || !tanggalFilterPass || !kategoriFilterPass) return null;
+
+  const date = dayjs(billData.deadline, "DD/MM/YYYY h:mm A Z");
+  const timezone = getUserTimezone();
+
   return (
     <Stack
       component={Paper}
@@ -58,18 +93,20 @@ const DataCard = ({ id, date, name, payment, total_price }) => {
             fontWeight={600}
             variant="body2"
           >
-            {id}
+            #{billData.custom_id}
           </Typography>
           <Typography
             fontWeight={300}
             color="gray"
             variant="body2"
           >
-            {date}
+            {`${date.format("DD MMM YYYY")} ${date.format(
+              "HH:mm"
+            )} ${timezone}`}
           </Typography>
         </Stack>
 
-        <TagihanPenggunaRowActions id={id} />
+        <DeleteTagihanPenggunaModal id={id} />
       </Stack>
 
       <Divider orientation="horizontal" />
@@ -86,10 +123,10 @@ const DataCard = ({ id, date, name, payment, total_price }) => {
             variant="body1"
             fontSize={16}
           >
-            {name}
+            {userData.name}
           </Typography>
 
-          <Typography variant="body2">{payment}</Typography>
+          <Typography variant="body2">{billData.name}</Typography>
         </Stack>
         <Stack
           flexDirection="column"
@@ -106,7 +143,7 @@ const DataCard = ({ id, date, name, payment, total_price }) => {
             variant="body1"
             fontWeight={600}
           >
-            Rp {total_price}
+            {formatToRupiah(billData.amount)}
           </Typography>
         </Stack>
       </Stack>

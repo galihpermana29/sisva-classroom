@@ -6,7 +6,7 @@ import { useGetAllInvoices } from "../../hooks/useGetAllInvoices";
 
 export const InvoicePagination = () => {
   const mounted = useMounted();
-  const { totalPage, isLoading } = useGetAllInvoices();
+  const { totalPage, isLoading } = useGetAllInvoices({ paginated: true });
 
   if (isLoading || !mounted) return null;
 

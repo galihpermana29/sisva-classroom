@@ -6,7 +6,7 @@ import { RowsPerPage } from "./RowsPerPage";
 import { PaginationButton } from "./PaginationButton";
 import { usePagination } from "../../hooks/usePagination";
 
-export const Paginations = ({ totalPage }) => {
+export const Paginations = ({ totalPage, withRowSetting = true }) => {
   const { page, goToPrevPage, goToNextPage } = usePagination();
 
   const isAbleToGoBack = page > 1;
@@ -19,13 +19,16 @@ export const Paginations = ({ totalPage }) => {
       alignItems="center"
       gap={2}
     >
-      <RowsPerPage />
+      {withRowSetting && <RowsPerPage />}
       <Stack
-        width={{ xs: "100%", lg: "auto" }}
+        width={{ xs: "100%", lg: withRowSetting ? "auto" : "100%" }}
         flexDirection="row"
         gap={2}
         alignItems="center"
-        justifyContent={{ xs: "space-between", lg: "center" }}
+        justifyContent={{
+          xs: "space-between",
+          lg: withRowSetting ? "center" : "end",
+        }}
       >
         <PaginationButton
           text="Previous"

@@ -1,27 +1,15 @@
 "use client";
 
-import {
-  Button,
-  Checkbox,
-  Divider,
-  IconButton,
-  Modal,
-  Select,
-  Stack,
-  TableCell,
-  TableRow,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Button, Modal, Stack, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import { ModalBody } from "@/components/CustomModal";
-import { Delete, ModeEdit, Search } from "@mui/icons-material";
-import { ProdiSelect } from "@/app/administration/[slug]/dashboard/academic/schedule/components/filters/ProdiSelect";
-import { TingkatSelect } from "@/app/administration/[slug]/dashboard/academic/schedule/components/filters/TingkatSelect";
-import { KelasSelect } from "@/app/administration/[slug]/dashboard/academic/schedule/components/filters/KelasSelect";
 import { CustomTable } from "@/components/CustomTable";
-import { Paginations } from "../../paginations";
+import { DaftarPenggunaTerpilihTableBody } from "./components/DaftarPenggunaTerpilihTableBody";
+import { ModalFilters } from "./modal-filters";
+import { useUserFilter } from "./hooks/useUserFilter";
+import { DaftarPenggunaSection } from "./components/DaftarPenggunaSection";
+import { useCreateUserBill } from "../../../hooks/useCreateUserBill";
 
 export const AddTagihanPenggunaModal = () => {
   const [open, setOpen] = useState(false);
@@ -49,96 +37,75 @@ export const AddTagihanPenggunaModal = () => {
           maxWidth={825}
           title="Buat Tagihan Pengguna"
           handleClose={handleClose}
-          content={<ModalContent />}
+          content={<ModalContent handleClose={handleClose} />}
         />
       </Modal>
     </>
   );
 };
 
-const ModalContent = () => {
+const ModalContent = ({ handleClose }) => {
+  /** Handles tagihan filter */
+  const [tagihanId, setTagihanId] = useState("");
+
+  /** Handles target filter */
+  const [availableTarget, setAvailableTarget] = useState([]);
+  const [target, setTarget] = useState("");
+
+  /** Handles target user section filter */
+  const { userFilter, setUserFilter } = useUserFilter({ target });
+  const showUserTable = Boolean(tagihanId) && Boolean(target);
+
+  /** Handles selected users */
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const selectedUserColumn = [
+    "No.",
+    "Nama",
+    "Jenis Pembayaran",
+    "Total Harga",
+    "Buat Invoice",
+  ];
+
+  /** Handles selected users which also creates invoice */
+  const [bundledInvoiceUsers, setBundledInvoiceUsers] = useState([]);
+
+  const { mutate } = useCreateUserBill({ billId: tagihanId });
+  const onSubmit = () => {
+    if (selectedUsers.length === 0) return;
+    selectedUsers.forEach((id) => {
+      const bundled = bundledInvoiceUsers.includes(id);
+      mutate({ userId: id, bundled });
+    });
+    handleClose();
+  };
+
   return (
     <Stack
+      className="no-scrollbar"
+      sx={{ overflowY: "auto" }}
+      maxHeight="75vh"
       width="100%"
       gap={3}
     >
-      <Stack
-        width="100%"
-        flexDirection="row"
-        gap={1}
-      >
-        <Stack
-          width="100%"
-          gap={1}
-        >
-          <Typography
-            fontWeight={600}
-            variant="body2"
-          >
-            Pilih Tagihan
-          </Typography>
-          <Select
-            size="small"
-            fullWidth
-          />
-        </Stack>
-        <Stack
-          width="100%"
-          gap={1}
-        >
-          <Typography
-            fontWeight={600}
-            variant="body2"
-          >
-            Target
-          </Typography>
-          <Select
-            size="small"
-            fullWidth
-          />
-        </Stack>
-      </Stack>
-      <Stack
-        width="100%"
-        gap={1}
-      >
-        <Typography
-          fontSize="1em"
-          fontWeight={600}
-        >
-          Daftar Pengguna
-        </Typography>
-        <Stack
-          flexDirection={{ md: "row" }}
-          alignItems="center"
-          justifyContent="space-between"
-          gap={{ xs: 1.5, md: 3 }}
-        >
-          <TextField
-            size="small"
-            fullWidth
-            sx={{ maxWidth: { md: "14rem" } }}
-            InputProps={{ endAdornment: <Search /> }}
-          />
-          <Stack
-            width="100%"
-            flexDirection="row"
-            gap={0.5}
-            alignItems="center"
-            justifyContent="end"
-          >
-            <ProdiSelect />
-            <TingkatSelect />
-            <KelasSelect />
-          </Stack>
-        </Stack>
-      </Stack>
-      <CustomTable
-        minWidth={240}
-        columns={[<Checkbox disabled />, "Nama", "Target"]}
-        body={<DaftarPenggunaTableBody />}
+      <ModalFilters
+        availableTarget={availableTarget}
+        tagihanId={tagihanId}
+        target={target}
+        setAvailableTarget={setAvailableTarget}
+        setTagihanId={setTagihanId}
+        setTarget={setTarget}
       />
-      <Paginations />
+      {showUserTable && (
+        <DaftarPenggunaSection
+          tagihanId={tagihanId}
+          target={target}
+          userFilter={userFilter}
+          setUserFilter={setUserFilter}
+          selectedUsers={selectedUsers}
+          setSelectedUsers={setSelectedUsers}
+          setBundledUsers={setBundledInvoiceUsers}
+        />
+      )}
       <Stack
         width="100%"
         gap={1}
@@ -147,70 +114,46 @@ const ModalContent = () => {
           fontSize="1em"
           fontWeight={600}
         >
-          Daftar Pengguna
+          Daftar Pengguna Terpilih
         </Typography>
         <CustomTable
           minWidth={720}
-          columns={[
-            "",
-            "Nama",
-            "Jenis Pembayaran",
-            "Total Harga",
-            "Buat Invoice",
-            "Action",
-          ]}
-          body={<DaftarPenggunaTerpilihTableBody />}
+          columns={selectedUserColumn}
+          body={
+            <DaftarPenggunaTerpilihTableBody
+              tagihanId={tagihanId}
+              columnCount={selectedUserColumn.length}
+              selectedUsers={selectedUsers}
+              bundledUsers={bundledInvoiceUsers}
+              setBundledUsers={setBundledInvoiceUsers}
+            />
+          }
         />
       </Stack>
-    </Stack>
-  );
-};
-
-const DaftarPenggunaTableBody = () => {
-  return (
-    <TableRow hover>
-      <TableCell sx={{ minWidth: 0, width: "1em" }}>
-        <Checkbox />
-      </TableCell>
-      <TableCell>Arsa</TableCell>
-      <TableCell>Siswa</TableCell>
-    </TableRow>
-  );
-};
-
-const DaftarPenggunaTerpilihTableBody = () => {
-  return (
-    <TableRow hover>
-      <TableCell sx={{ minWidth: 0, width: "1em" }}>
-        <Checkbox />
-      </TableCell>
-      <TableCell>Bagas</TableCell>
-      <TableCell>SPP</TableCell>
-      <TableCell>Rp500,000</TableCell>
-      <TableCell>
-        <Checkbox />
-      </TableCell>
-      <TableCell>
-        <Stack
-          flexDirection="row"
-          maxWidth="fit-content"
-          gap={1}
+      <Stack
+        className="bg-white pt-2 z-10"
+        bottom={0}
+        position="sticky"
+        flexDirection="row"
+        gap={2}
+      >
+        <Button
+          type="button"
+          fullWidth
+          variant="outlined"
+          onClick={handleClose}
         >
-          <IconButton
-            aria-label="edit"
-            size="small"
-          >
-            <ModeEdit />
-          </IconButton>
-
-          <IconButton
-            aria-label="delete"
-            size="small"
-          >
-            <Delete />
-          </IconButton>
-        </Stack>
-      </TableCell>
-    </TableRow>
+          Batal
+        </Button>
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          onClick={onSubmit}
+        >
+          Buat
+        </Button>
+      </Stack>
+    </Stack>
   );
 };

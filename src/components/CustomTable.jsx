@@ -78,6 +78,15 @@ export const TableRowLoading = ({ columnCount }) => {
   );
 };
 
+/** Used to display a placeholder for a single cell */
+export const TableCellLoading = () => {
+  return (
+    <TableCell>
+      <Skeleton sx={{ height: "1.25rem", width: "100%" }} />
+    </TableCell>
+  );
+};
+
 /** Used to display a single empty row, usually used to display an empty state if there's no data given to a table.
  * @description `columnCount` should be given the same value as the data's number of column. Customize the value of `rowCount` to display a number of loading rows.
  * @param {{columnCount: number}}
