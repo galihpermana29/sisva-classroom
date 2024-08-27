@@ -4,7 +4,7 @@ import AcademicAPI from "@/api/academic";
 import { useQueryParam } from "@/hooks/useQueryParam";
 import { formatDayToLabel } from "@/utils/formatDay";
 import { formatTime } from "@/utils/formatTime";
-import { Button, Stack } from "@mui/material";
+import { Button, Stack, Typography, useTheme } from "@mui/material";
 import dayjs from "dayjs";
 import { useFormik } from "formik";
 import { useSearchParams } from "next/navigation";
@@ -13,8 +13,8 @@ import { PERIODE_FIELD_NAME } from "../../filters/PeriodeSelect";
 import { ActivityNameInput } from "../../form-items/ActivityNameInput";
 import { DaySelectDynamic } from "../../form-items/DaySelectDynamic";
 import ErrorJadwalKelasModal from "../../modals/ErrorJadwalKelasModal";
-import { TimeSelect } from "../../TimeSelect";
 import { aktivitasNonKbmSchema } from "./aktivitasNonKbmSchema";
+import { TimeSelect } from "../../form-items/TimeSelect";
 
 function parseTime(timeString) {
   return dayjs(timeString, "h:mm A Z");
@@ -49,6 +49,7 @@ export const AktivitasNonKbmForm = ({ handleClose, initialValues, edit }) => {
     };
   }
 
+  const theme = useTheme();
   const searchParam = useSearchParams();
   const periode = searchParam.get(PERIODE_FIELD_NAME);
 
@@ -180,8 +181,9 @@ export const AktivitasNonKbmForm = ({ handleClose, initialValues, edit }) => {
     setDaySelectData(
       data.data
         .filter(({ status }) => status === "inactive")
-        .map(({ id, day }) => ({
-          label: formatDayToLabel(day),
+        .sort((a, b) => a.day - b.day)
+        .map(({ id, day, grade }) => ({
+          label: `${formatDayToLabel(day)} - ${grade}`,
           value: `${id}:${day}`,
         }))
     );
@@ -216,6 +218,7 @@ export const AktivitasNonKbmForm = ({ handleClose, initialValues, edit }) => {
               name="school_schedule_id"
               data={daySelectData}
             />
+
             <Stack
               width="100%"
               alignItems="center"

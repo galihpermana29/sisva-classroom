@@ -8,7 +8,6 @@ export const DaySelectDynamic = ({
   label,
   placeholder,
   data,
-
   disabled = false,
 }) => {
   return (
@@ -37,6 +36,11 @@ export const DaySelectDynamic = ({
           </MenuItem>
         ))}
       </Select>
+      {formik.touched[name] && formik.errors[name] && (
+        <Typography className="text-red-700" fontSize={"12px"}>
+          {formik.errors[name]}
+        </Typography>
+      )}
     </Stack>
   );
 };

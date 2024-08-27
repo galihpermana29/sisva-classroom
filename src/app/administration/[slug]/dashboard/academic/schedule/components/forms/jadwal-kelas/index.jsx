@@ -9,7 +9,6 @@ import { useFormik } from "formik";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import useCreateJadwalKelas from "../../../hooks/useCreateJadwalKelas";
-import { TimeSelect } from "../../TimeSelect";
 import { PERIODE_FIELD_NAME } from "../../filters/PeriodeSelect";
 import { ClassSelect } from "../../form-items/ClassSelect";
 import { DaySelectDynamic } from "../../form-items/DaySelectDynamic";
@@ -19,6 +18,7 @@ import { StudyProgramSelect } from "../../form-items/StudyProgramSelect";
 import ErrorJadwalKelasModal from "../../modals/ErrorJadwalKelasModal";
 import { jadwalKelasSchema } from "./jadwalKelasSchema";
 import { StudentGroupSelect } from "../../form-items/StudentGroupSelect";
+import { TimeSelect } from "../../form-items/TimeSelect";
 
 function parseTime(timeString) {
   return dayjs(timeString, "h:mm A Z");
@@ -60,6 +60,8 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
         : "",
     };
   }
+
+  console.log(initialValues);
 
   const formik = useFormik({
     initialValues: initialValues ?? {
@@ -278,7 +280,7 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
             />
             <Stack
               width="100%"
-              alignItems="center"
+              alignItems="start"
               flexDirection="row"
               justifyContent="center"
               gap={2}

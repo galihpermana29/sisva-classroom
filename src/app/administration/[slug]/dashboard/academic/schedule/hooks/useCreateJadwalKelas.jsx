@@ -127,7 +127,6 @@ function useCreateJadwalKelas(formik) {
     fetchInitialDatas();
   }, []);
 
-  // console.log(formik.values);
   useEffect(() => {
     if (period_id) getAllSchoolSchedules();
   }, [period_id]);

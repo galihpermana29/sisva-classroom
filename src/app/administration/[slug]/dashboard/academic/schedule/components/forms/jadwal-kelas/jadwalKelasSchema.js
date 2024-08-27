@@ -1,12 +1,13 @@
+import { timeStringToDayjs } from "@/utils/formatTimeString";
 import * as yup from "yup";
 
 export const jadwalKelasSchema = yup.object({
-  period_id: yup.string().required(),
-  study_program_id: yup.string().required(),
-  grade: yup.string().required(),
-  class_id: yup.string().required(),
-  student_group_id: yup.string().required(),
-  day: yup.string().required(),
-  start_time: yup.string().required(),
-  end_time: yup.string().required(),
+  id: yup.string().required("Wajib memilih periode!"),
+  study_program_id: yup.string().required("Wajib memilih program studi!"),
+  grade: yup.string().required("Wajib memilih tingkat!"),
+  class_id: yup.string().required("Wajib memilih kelas mapel!"),
+  student_group_id: yup.string().required("Wajib memilih kelas!"),
+  day: yup.string().required("Wajib memilih hari!"),
+  start_time: yup.string().required("Wajib mengisi waktu mulai!"),
+  end_time: yup.string().required("Wajib mengisi waktu akhir!"),
 });
