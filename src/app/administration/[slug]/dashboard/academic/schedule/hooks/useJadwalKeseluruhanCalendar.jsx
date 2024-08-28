@@ -112,12 +112,15 @@ function useJadwalKeseluruhanCalendar() {
   let workDays = Array.from(
     new Set(
       schoolSchedule
-        .filter(
-          ({ study_program_id, grade, day }) =>
+        .filter(({ study_program_id, grade, day }) => {
+          if (isJadwalKeseluruhan === "false") return true;
+
+          return (
             study_program_id === parseInt(prodi) &&
             (Boolean(tingkat) ? grade === tingkat : true) &&
             (Boolean(hari) ? day === parseInt(hari) : true)
-        )
+          );
+        })
         .map(({ day }) => day)
     )
   );
