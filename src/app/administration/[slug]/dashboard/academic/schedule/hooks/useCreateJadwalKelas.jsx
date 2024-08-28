@@ -4,14 +4,15 @@ import AcademicAPI from "@/api/academic";
 import { formatDayToLabel } from "@/utils/formatDay";
 import { useEffect, useState } from "react";
 
-function useCreateJadwalKelas(formik, edit = false) {
-  const { period_id, study_program_id, grade } = formik.values;
+function useCreateJadwalKelas(formik) {
+  const { period_id, study_program_id, grade, student_group_id, class_id } =
+    formik.values;
 
-  const [isEdit, setIsEdit] = useState(edit);
   const [kelasData, setKelasData] = useState([]);
   const [periodeData, setPeriodeData] = useState([]);
   const [prodiData, setProdiData] = useState([]);
   const [schoolScheduleData, setSchoolScheduleData] = useState([]);
+  const [studentGroupData, setStudentGroupData] = useState([]);
 
   //* data for period select filter
   const periodeSelectData = periodeData?.map(({ id, name }) => ({
@@ -34,11 +35,35 @@ function useCreateJadwalKelas(formik, edit = false) {
     value: grade,
   }));
 
+  //* data for student group select filter
+  const studentGroupSelectData = studentGroupData
+    ?.filter(
+      ({
+        period_id: item_period_id,
+        study_program_id: item_sp_id,
+        grade: item_grade,
+      }) => {
+        return (
+          item_period_id === parseInt(period_id) &&
+          item_sp_id === parseInt(study_program_id) &&
+          item_grade === grade
+        );
+      }
+    )
+    .map(({ id, name }) => ({
+      label: name,
+      value: id,
+    }));
+
   //* data for class select filter
-  const kelasSelectData = kelasData.map(({ id, name }) => ({
-    label: name,
-    value: id,
-  }));
+  const kelasSelectData = kelasData
+    .filter(({ student_group_id: item_sg_id }) =>
+      Boolean(student_group_id) ? item_sg_id === student_group_id : true
+    )
+    .map(({ id, name }) => ({
+      label: name,
+      value: id,
+    }));
 
   //* data for day select filter
   const hariSelectData = schoolScheduleData
@@ -82,12 +107,24 @@ function useCreateJadwalKelas(formik, edit = false) {
     setSchoolScheduleData(data.data);
   };
 
+  const getAllStudentGroups = async () => {
+    const { data } = await AcademicAPI.getAllStudentGroup();
+    setStudentGroupData(data.data);
+  };
+
   const handleReset = () => formik.resetForm();
 
   //* handle initial period data fetching
   useEffect(() => {
-    getAllPeriode();
-    getAllClasses();
+    const fetchInitialDatas = async () => {
+      await Promise.all([
+        getAllPeriode(),
+        getAllClasses(),
+        getAllStudentGroups(),
+      ]);
+    };
+
+    fetchInitialDatas();
   }, []);
 
   useEffect(() => {
@@ -101,25 +138,47 @@ function useCreateJadwalKelas(formik, edit = false) {
 
   //* reset study_program_id and grade on period_id change
   useEffect(() => {
-    if (study_program_id && !isEdit) {
+    if (Boolean(study_program_id) && formik.dirty) {
       formik.setFieldValue("study_program_id", "");
       formik.setFieldValue("grade", "");
+      formik.setFieldValue("student_group_id", "");
+      formik.setFieldValue("class_id", "");
       formik.setFieldValue("day", "");
     }
   }, [period_id]);
 
-  //* reset  grade on study_program_id change
+  //* reset grade on study_program_id change
   useEffect(() => {
-    if (grade && !isEdit) {
+    if (grade && formik.dirty) {
       formik.setFieldValue("grade", "");
+      formik.setFieldValue("student_group_id", "");
+      formik.setFieldValue("class_id", "");
       formik.setFieldValue("day", "");
     }
   }, [study_program_id]);
+
+  //* reset student group on grade change
+  useEffect(() => {
+    if (student_group_id && formik.dirty) {
+      formik.setFieldValue("student_group_id", "");
+      formik.setFieldValue("class_id", "");
+      formik.setFieldValue("day", "");
+    }
+  }, [grade]);
+
+  //* reset class on student group change
+  useEffect(() => {
+    if (class_id && formik.dirty) {
+      formik.setFieldValue("class_id", "");
+      formik.setFieldValue("day", "");
+    }
+  }, [student_group_id]);
 
   return {
     handleReset,
     periodeSelectData,
     prodiSelectData,
+    studentGroupSelectData,
     tingkatanSelectData,
     kelasSelectData,
     hariSelectData,
