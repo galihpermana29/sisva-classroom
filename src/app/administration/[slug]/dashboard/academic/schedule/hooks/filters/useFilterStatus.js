@@ -16,6 +16,17 @@ export const useFilterStatus = () => {
   const kelas = searchParams.get(KELAS_FIELD_NAME);
   const guru = searchParams.get(GURU_FIELD_NAME);
   const hari = searchParams.get(HARI_FIELD_NAME);
+  const tab = searchParams.get("tab");
+  const isJadwalKeseluruhan = searchParams.get("jadwal_keseluruhan");
 
-  return { periode, prodi, tingkat, kelas, guru, hari };
+  return {
+    periode,
+    prodi,
+    tingkat,
+    kelas,
+    guru,
+    hari,
+    tab,
+    isJadwalKeseluruhan,
+  };
 };

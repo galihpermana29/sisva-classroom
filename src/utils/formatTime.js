@@ -16,11 +16,14 @@ export function formatTime(timeString) {
     .padStart(2, "0");
   const formattedOffset = `${userOffsetSign}${formattedOffsetHours}:00`;
 
+  // Convert the hour to 12-hour format
+  const formattedHour = hours % 12 === 0 ? 12 : hours % 12; // 12-hour format without leading zero
+
   // Determine AM or PM
   const period = hours >= 12 ? "PM" : "AM";
 
   // Return the formatted time string
-  return `${hours}:${minutes
+  return `${formattedHour}:${minutes
     .toString()
     .padStart(2, "0")} ${period} ${formattedOffset}`;
 }

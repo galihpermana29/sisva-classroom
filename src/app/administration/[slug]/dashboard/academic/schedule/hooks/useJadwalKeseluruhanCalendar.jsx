@@ -112,14 +112,39 @@ function useJadwalKeseluruhanCalendar() {
   let workDays = Array.from(
     new Set(
       schoolSchedule
-        .filter(({ study_program_id, grade }) =>
-          study_program_id === parseInt(prodi) && Boolean(tingkat)
-            ? grade === tingkat
-            : true
+        .filter(
+          ({ study_program_id, grade, day }) =>
+            study_program_id === parseInt(prodi) &&
+            (Boolean(tingkat) ? grade === tingkat : true) &&
+            (Boolean(hari) ? day === parseInt(hari) : true)
         )
         .map(({ day }) => day)
     )
   );
+
+  const scheduleStartTime = dayjs(
+    schoolSchedule.reduce((earliest, current) => {
+      const currentStartTime = dayjs(current.start_time, "h:mm A Z");
+      const earliestTime = dayjs(earliest, "h:mm A Z");
+
+      return !earliest || currentStartTime.isBefore(earliestTime)
+        ? current.start_time
+        : earliest;
+    }, null),
+    "h:mm A Z"
+  ).format("H:mm");
+
+  const scheduleEndTime = dayjs(
+    schoolSchedule.reduce((latest, current) => {
+      const currentEndTime = dayjs(current.end_time, "h:mm A Z");
+      const latestTime = dayjs(latest, "h:mm A Z");
+
+      return !latest || currentEndTime.isAfter(latestTime)
+        ? current.end_time
+        : latest;
+    }, null),
+    "h:mm A Z"
+  ).format("H:mm");
 
   let studentGroupData = studentGroup.filter((sg) => {
     if (periode === "-1") return false;
@@ -281,6 +306,8 @@ function useJadwalKeseluruhanCalendar() {
     prodi,
     isJadwalKeseluruhan,
     workDays,
+    scheduleStartTime,
+    scheduleEndTime,
   };
 }
 

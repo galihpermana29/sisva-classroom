@@ -61,8 +61,6 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
     };
   }
 
-  console.log(initialValues);
-
   const formik = useFormik({
     initialValues: initialValues ?? {
       period_id: "",
@@ -206,8 +204,6 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
       }
     },
   });
-
-  console.log(formik.values);
 
   const {
     periodeSelectData,

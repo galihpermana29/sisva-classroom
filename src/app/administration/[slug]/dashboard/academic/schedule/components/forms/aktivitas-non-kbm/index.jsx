@@ -4,7 +4,7 @@ import AcademicAPI from "@/api/academic";
 import { useQueryParam } from "@/hooks/useQueryParam";
 import { formatDayToLabel } from "@/utils/formatDay";
 import { formatTime } from "@/utils/formatTime";
-import { Button, Stack, Typography, useTheme } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import dayjs from "dayjs";
 import { useFormik } from "formik";
 import { useSearchParams } from "next/navigation";
@@ -12,9 +12,13 @@ import { useEffect, useState } from "react";
 import { PERIODE_FIELD_NAME } from "../../filters/PeriodeSelect";
 import { ActivityNameInput } from "../../form-items/ActivityNameInput";
 import { DaySelectDynamic } from "../../form-items/DaySelectDynamic";
+import { TimeSelect } from "../../form-items/TimeSelect";
 import ErrorJadwalKelasModal from "../../modals/ErrorJadwalKelasModal";
 import { aktivitasNonKbmSchema } from "./aktivitasNonKbmSchema";
-import { TimeSelect } from "../../form-items/TimeSelect";
+import useCreateAktivitasNonKbm from "../../../hooks/useCreateAktivitasNonKbm";
+import { StudyProgramSelect } from "../../form-items/StudyProgramSelect";
+import { LevelSelect } from "../../form-items/LevelSelect";
+import { useFilterStatus } from "../../../hooks/filters/useFilterStatus";
 
 function parseTime(timeString) {
   return dayjs(timeString, "h:mm A Z");
@@ -49,16 +53,14 @@ export const AktivitasNonKbmForm = ({ handleClose, initialValues, edit }) => {
     };
   }
 
-  const theme = useTheme();
-  const searchParam = useSearchParams();
-  const periode = searchParam.get(PERIODE_FIELD_NAME);
-
-  const [daySelectData, setDaySelectData] = useState([]);
+  const { periode } = useFilterStatus();
   const [hasError, setHasError] = useState(false);
 
   const formik = useFormik({
     initialValues: initialValues ?? {
       name: "",
+      study_program_id: "",
+      grade: "",
       school_schedule_id: "",
       start_time: null,
       end_time: null,
@@ -87,9 +89,6 @@ export const AktivitasNonKbmForm = ({ handleClose, initialValues, edit }) => {
         start_time: formatTime(formattedStartTime),
         end_time: formatTime(formattedEndTime),
       };
-
-      console.log(daySelectData);
-      console.log(newPayload);
 
       try {
         const [nonLearningScheduleData, classScheduleData] = await Promise.all([
@@ -173,25 +172,8 @@ export const AktivitasNonKbmForm = ({ handleClose, initialValues, edit }) => {
     },
   });
 
-  const getDayData = async () => {
-    const { data } = await AcademicAPI.getAllSchoolSchedules({
-      period_id: periode,
-    });
-
-    setDaySelectData(
-      data.data
-        .filter(({ status }) => status === "inactive")
-        .sort((a, b) => a.day - b.day)
-        .map(({ id, day, grade }) => ({
-          label: `${formatDayToLabel(day)} - ${grade}`,
-          value: `${id}:${day}`,
-        }))
-    );
-  };
-
-  useEffect(() => {
-    if (periode) getDayData();
-  }, [periode]);
+  const { prodiSelectData, tingkatanSelectData, daySelectData } =
+    useCreateAktivitasNonKbm(formik);
 
   return (
     <>
@@ -211,12 +193,29 @@ export const AktivitasNonKbmForm = ({ handleClose, initialValues, edit }) => {
               formik={formik}
               name="name"
             />
+            <StudyProgramSelect
+              label={"Program Studi"}
+              placeholder={"Pilih program studi"}
+              formik={formik}
+              name={"study_program_id"}
+              data={prodiSelectData}
+              disabled={!edit && formik.values.period_id === ""}
+            />
+            <LevelSelect
+              label={"Tingkatan"}
+              placeholder={"Pilih tingkatan"}
+              formik={formik}
+              name={"grade"}
+              data={tingkatanSelectData}
+              disabled={!edit && !Boolean(formik.values.study_program_id)}
+            />
             <DaySelectDynamic
               label="Hari"
               placeholder="Pilih hari"
               formik={formik}
               name="school_schedule_id"
               data={daySelectData}
+              disabled={!edit && !Boolean(formik.values.grade)}
             />
 
             <Stack

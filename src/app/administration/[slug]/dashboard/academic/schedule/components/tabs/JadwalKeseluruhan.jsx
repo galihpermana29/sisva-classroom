@@ -2,13 +2,11 @@
 
 import { Box, Stack, TableContainer } from "@mui/material";
 import dynamic from "next/dynamic";
-import { Suspense, useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { Suspense, useLayoutEffect } from "react";
+import { useFilterStatus } from "../../hooks/filters/useFilterStatus";
 import { JadwalKeseluruhanFilterAlert } from "../JadwalKeseluruhanFilterAlert";
 import JadwalKeseluruhanFilters from "../filters/jadwal-keseluruhan";
-import AcademicAPI from "@/api/academic";
-import { useSearchParams } from "next/navigation";
-import { PERIODE_FIELD_NAME } from "../filters/PeriodeSelect";
-import dayjs from "dayjs";
 
 const JadwalKeseluruhanSchedule = dynamic(
   () =>
@@ -24,39 +22,19 @@ const JadwalKeseluruhanSchedule = dynamic(
 );
 
 function JadwalKeseluruhan() {
-  const searchParams = useSearchParams();
-  const period = searchParams.get(PERIODE_FIELD_NAME);
+  const pathName = usePathname();
 
-  const [data, setData] = useState([]);
+  const { periode, prodi, tab, isJadwalKeseluruhan } = useFilterStatus();
 
-  const getNonLearningData = async () => {
-    const { data } = await AcademicAPI.getAllNonLearningSchedules({
-      period_id: period,
-    });
-
-    const res = data.data;
-
-    const newData = res.map(({ start_time, end_time }) => {
-      return {
-        start_time: dayjs(start_time, "h:mm A Z")
-          .set("date", 19)
-          .set("month", 7)
-          .set("year", 2024)
-          .toDate(),
-        end_time: dayjs(end_time, "h:mm A Z")
-          .set("date", 19)
-          .set("month", 7)
-          .set("year", 2024)
-          .toDate(),
-      };
-    });
-
-    setData(newData);
-  };
-
-  useEffect(() => {
-    if (period) getNonLearningData();
-  }, [period]);
+  useLayoutEffect(() => {
+    if (
+      Boolean(periode) || Boolean(isJadwalKeseluruhan) ? Boolean(prodi) : false
+    ) {
+      window.location = `${pathName}?tab=${tab}${
+        isJadwalKeseluruhan ? `&jadwal_keseluruhan=${isJadwalKeseluruhan}` : ""
+      }`;
+    }
+  }, []);
 
   return (
     <Stack paddingY={3} spacing={3}>
@@ -76,7 +54,7 @@ function JadwalKeseluruhan() {
       </Stack>
       <TableContainer>
         <Box minWidth={764}>
-          <JadwalKeseluruhanSchedule data={data} />
+          <JadwalKeseluruhanSchedule />
         </Box>
       </TableContainer>
     </Stack>

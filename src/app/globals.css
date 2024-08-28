@@ -57,6 +57,10 @@ input {
   all: unset;
 }
 
+.e-current-day {
+  color: #008cd5 !important;
+}
+
 ::-webkit-scrollbar {
   width: 4px;
   height: 2px;

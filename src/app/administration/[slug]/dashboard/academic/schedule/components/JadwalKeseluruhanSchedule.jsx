@@ -7,7 +7,7 @@ import TimelineWeekSchedule from "./TimelineWeekSchedule";
 import dayjs from "dayjs";
 import EditJadwalKelasModal from "./modals/EditJadwalKelasModal";
 
-export const JadwalKeseluruhanSchedule = ({}) => {
+export const JadwalKeseluruhanSchedule = () => {
   const {
     data,
     studentGroupData,
@@ -16,6 +16,8 @@ export const JadwalKeseluruhanSchedule = ({}) => {
     prodi,
     isJadwalKeseluruhan,
     workDays,
+    scheduleStartTime,
+    scheduleEndTime,
   } = useJadwalKeseluruhanCalendar();
 
   const [openEditNonKbm, setOpenEditNonKbm] = useState(false);
@@ -69,6 +71,8 @@ export const JadwalKeseluruhanSchedule = ({}) => {
           classData={studentGroupData}
           onEventClick={onEventClick}
           workDays={workDays}
+          startTime={scheduleStartTime}
+          endTime={scheduleEndTime}
         />
       ) : (
         <div className="h-[650px] w-full animate-pulse bg-gray-200" />
