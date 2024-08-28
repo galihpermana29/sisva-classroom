@@ -84,9 +84,9 @@ function useJadwalKeseluruhanCalendar() {
   const [nonLearningSchedule, setNonLearningSchedule] = useState([]);
 
   const learningScheduleData = learningSchedule.filter(
-    ({ grade, class_id, day }) => {
+    ({ grade, sg_id, day }) => {
       const gradeMatch = tingkat ? tingkat === grade : true;
-      const classMatch = kelas ? parseInt(kelas) === class_id : true;
+      const classMatch = kelas ? parseInt(kelas) === sg_id : true;
       const dayMatch = hari ? parseInt(hari) === day : true;
 
       return gradeMatch && classMatch && dayMatch;
