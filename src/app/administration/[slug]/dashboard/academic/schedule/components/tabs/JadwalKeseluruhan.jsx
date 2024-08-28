@@ -2,9 +2,7 @@
 
 import { Box, Stack, TableContainer } from "@mui/material";
 import dynamic from "next/dynamic";
-import { usePathname } from "next/navigation";
-import { Suspense, useLayoutEffect } from "react";
-import { useFilterStatus } from "../../hooks/filters/useFilterStatus";
+import { Suspense } from "react";
 import { JadwalKeseluruhanFilterAlert } from "../JadwalKeseluruhanFilterAlert";
 import JadwalKeseluruhanFilters from "../filters/jadwal-keseluruhan";
 
@@ -22,20 +20,6 @@ const JadwalKeseluruhanSchedule = dynamic(
 );
 
 function JadwalKeseluruhan() {
-  const pathName = usePathname();
-
-  const { periode, prodi, tab, isJadwalKeseluruhan } = useFilterStatus();
-
-  useLayoutEffect(() => {
-    if (
-      Boolean(periode) || Boolean(isJadwalKeseluruhan) ? Boolean(prodi) : false
-    ) {
-      window.location = `${pathName}?tab=${tab}${
-        isJadwalKeseluruhan ? `&jadwal_keseluruhan=${isJadwalKeseluruhan}` : ""
-      }`;
-    }
-  }, []);
-
   return (
     <Stack paddingY={3} spacing={3}>
       <Suspense>

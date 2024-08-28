@@ -280,7 +280,7 @@ function useJadwalKeseluruhanCalendar() {
     }
 
     updateQueryParam("rf", false);
-  }, [refetch]);
+  }, [refetch, classData]);
 
   useEffect(() => {
     if (periode !== "-1") {
@@ -297,7 +297,7 @@ function useJadwalKeseluruhanCalendar() {
       setLearningSchedule([]);
       data = [...nonLearningSchedule];
     }
-  }, [periode, prodi]);
+  }, [periode, prodi, classData]);
 
   return {
     isLoading,
