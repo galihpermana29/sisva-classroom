@@ -7,9 +7,18 @@ import TimelineWeekSchedule from "./TimelineWeekSchedule";
 import dayjs from "dayjs";
 import EditJadwalKelasModal from "./modals/EditJadwalKelasModal";
 
-export const JadwalKeseluruhanSchedule = ({}) => {
-  const { data, studentGroupData, studentGroup, isLoading } =
-    useJadwalKeseluruhanCalendar();
+export const JadwalKeseluruhanSchedule = () => {
+  const {
+    data,
+    studentGroupData,
+    isLoading,
+    periode,
+    prodi,
+    isJadwalKeseluruhan,
+    workDays,
+    scheduleStartTime,
+    scheduleEndTime,
+  } = useJadwalKeseluruhanCalendar();
 
   const [openEditNonKbm, setOpenEditNonKbm] = useState(false);
   const [openEditJadwalKelas, setOpenEditJadwalKelas] = useState(false);
@@ -36,13 +45,22 @@ export const JadwalKeseluruhanSchedule = ({}) => {
     setInitialEditData(parsedData);
   };
 
-  if (studentGroupData?.length === 0) {
-    return (
-      <iframe
-        src="https://lottie.host/embed/b5db43dc-864b-4e2d-8ad1-042536dbe95b/O1cPFK7CcS.json"
-        className="border-none w-full h-[238px]"
-      ></iframe>
-    );
+  const emptyState = (
+    <iframe
+      src="https://lottie.host/embed/b5db43dc-864b-4e2d-8ad1-042536dbe95b/O1cPFK7CcS.json"
+      className="border-none w-full h-[238px]"
+    ></iframe>
+  );
+
+  const isStudentGroupDataEmpty = studentGroupData?.length === 0;
+  const isPeriodeInvalid = parseInt(periode) === -1;
+  const isProdiInvalid = parseInt(prodi) === -1;
+
+  if (isJadwalKeseluruhan === "true") {
+    if (isStudentGroupDataEmpty || isPeriodeInvalid || isProdiInvalid)
+      return emptyState;
+  } else {
+    if (isStudentGroupDataEmpty || isPeriodeInvalid) return emptyState;
   }
 
   return (
@@ -52,6 +70,9 @@ export const JadwalKeseluruhanSchedule = ({}) => {
           data={data}
           classData={studentGroupData}
           onEventClick={onEventClick}
+          workDays={workDays}
+          startTime={scheduleStartTime}
+          endTime={scheduleEndTime}
         />
       ) : (
         <div className="h-[650px] w-full animate-pulse bg-gray-200" />

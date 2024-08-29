@@ -35,6 +35,11 @@ export const ClassSelect = ({
           </MenuItem>
         ))}
       </Select>
+      {formik.touched[name] && formik.errors[name] && (
+        <Typography className="text-red-700" fontSize={"12px"}>
+          {formik.errors[name]}
+        </Typography>
+      )}
     </Stack>
   );
 };

@@ -2,13 +2,7 @@ import { dayjsToTimeString, timeStringToDayjs } from "@/utils/formatTimeString";
 import { Alert, Stack, Typography } from "@mui/material";
 import { TimePicker } from "@mui/x-date-pickers";
 
-export const TimeSelect = ({
-  formik,
-  name,
-  label,
-  disabled,
-  withError = true,
-}) => {
+export const TimeSelect = ({ formik, name, label, disabled }) => {
   return (
     <Stack width="100%" spacing={1}>
       <Typography fontWeight={600} variant="body2">
@@ -19,7 +13,10 @@ export const TimeSelect = ({
         id={name}
         name={name}
         slotProps={{
-          textField: { size: "small" },
+          textField: {
+            size: "small",
+            error: formik.touched[name] && Boolean(formik.errors[name]),
+          },
         }}
         value={
           formik.values && formik.values[name]
@@ -30,11 +27,12 @@ export const TimeSelect = ({
           formik.setFieldValue(name, dayjsToTimeString(value))
         }
         onBlur={formik.handleBlur}
-        error={formik.touched[name] && Boolean(formik.errors[name])}
       />
-      {withError && formik.touched[name] && Boolean(formik.errors[name]) ? (
-        <Alert severity="error">{formik.errors[name]}</Alert>
-      ) : null}
+      {formik.touched[name] && formik.errors[name] && (
+        <Typography className="text-red-700" fontSize={"12px"}>
+          {formik.errors[name]}
+        </Typography>
+      )}
     </Stack>
   );
 };

@@ -16,22 +16,14 @@ export function formatTime(timeString) {
     .padStart(2, "0");
   const formattedOffset = `${userOffsetSign}${formattedOffsetHours}:00`;
 
-  // Decrease the hour based on the offset hours
-  hours -= userOffsetHours;
-
-  // Handle negative hours by wrapping around to the previous day
-  if (hours < 0) {
-    hours += 24;
-  }
+  // Convert the hour to 12-hour format
+  const formattedHour = hours % 12 === 0 ? 12 : hours % 12; // 12-hour format without leading zero
 
   // Determine AM or PM
   const period = hours >= 12 ? "PM" : "AM";
 
-  // Convert hours from 24-hour format to 12-hour format
-  hours = hours % 12 || 12; // If hours is 0, set it to 12 (midnight or noon)
-
   // Return the formatted time string
-  return `${hours}:${minutes
+  return `${formattedHour}:${minutes
     .toString()
     .padStart(2, "0")} ${period} ${formattedOffset}`;
 }

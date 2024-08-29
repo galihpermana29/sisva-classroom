@@ -1,6 +1,6 @@
 "use client";
 
-import { Stack, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Internationalization } from "@syncfusion/ej2-base";
 import {
   Agenda,
@@ -16,6 +16,7 @@ import {
   Week,
 } from "@syncfusion/ej2-react-schedule";
 import dayjs from "dayjs";
+import { useMemo } from "react";
 
 const groupData = [
   { GroupText: "Kelas X", Id: 1, GroupColor: "#FFDBCB" },
@@ -52,7 +53,20 @@ const eventTemplate = (props) => {
   );
 };
 
-function TimelineWeekSchedule({ data, classData, onEventClick }) {
+function TimelineWeekSchedule({
+  data,
+  classData,
+  onEventClick,
+  workDays,
+  startTime,
+  endTime,
+}) {
+  const computedData = useMemo(() => {
+    return data;
+  }, [data]);
+
+  console.log(startTime, endTime, workDays);
+
   return (
     <ScheduleComponent
       timeFormat="HH:mm"
@@ -60,15 +74,13 @@ function TimelineWeekSchedule({ data, classData, onEventClick }) {
       width="100%"
       height="100%"
       rowAutoHeight={true}
-      workDays={[1, 2, 3, 4, 5]}
-      workHours={{ highlight: true, start: "07:00", end: "16:00" }}
-      startHour="07:00"
-      endHour="17:00"
+      workDays={workDays}
+      workHours={{ start: startTime, end: endTime }}
       selectedDate={dayjs().toDate()}
       dateHeaderTemplate={getDateHeaderText}
       showHeaderBar={false}
       eventSettings={{
-        dataSource: data,
+        dataSource: computedData,
         fields: {
           subject: { title: "Name", name: "name" },
           startTime: { title: "StartTime", name: "start_time" },

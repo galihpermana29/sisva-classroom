@@ -2,13 +2,13 @@
 
 import { MenuItem, Select, Stack, Typography } from "@mui/material";
 
-export const DaySelectDynamic = ({
+export const StudentGroupSelect = ({
   formik,
   name,
   label,
   placeholder,
+  disabled,
   data,
-  disabled = false,
 }) => {
   return (
     <Stack spacing={1}>
@@ -16,11 +16,10 @@ export const DaySelectDynamic = ({
         {label}
       </Typography>
       <Select
-        disabled={disabled}
         id={name}
-        name={name}
         size="small"
-        defaultValue={formik.initialValues[name]}
+        name={name}
+        disabled={disabled}
         value={formik.values ? formik.values[name] : ""}
         onChange={(event) => formik.setFieldValue(name, event.target.value)}
         onBlur={formik.handleBlur}

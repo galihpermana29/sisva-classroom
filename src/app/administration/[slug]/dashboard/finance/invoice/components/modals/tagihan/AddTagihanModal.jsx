@@ -125,6 +125,7 @@ const ModalContent = ({ handleClose }) => {
             </Typography>
             <DatePicker
               size="small"
+              minDate={dayjs()}
               slotProps={{
                 textField: {
                   size: "small",
@@ -170,7 +171,6 @@ const ModalContent = ({ handleClose }) => {
               }}
               onBlur={formik.handleBlur}
               error={formik.touched.amount && Boolean(formik.errors.amount)}
-              helperText={formik.touched.amount && formik.errors.amount}
             />
             {formik.touched.amount && formik.errors.amount && (
               <Typography color={theme.palette.error.main} fontSize={"12px"}>

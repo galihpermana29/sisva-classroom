@@ -10,7 +10,6 @@ export const StudyProgramSelect = ({
   disabled,
   data,
 }) => {
-  console.log(formik.values[name]);
   return (
     <Stack spacing={1}>
       <Typography fontWeight={600} variant="body2">
@@ -36,6 +35,11 @@ export const StudyProgramSelect = ({
           </MenuItem>
         ))}
       </Select>
+      {formik.touched[name] && formik.errors[name] && (
+        <Typography className="text-red-700" fontSize={"12px"}>
+          {formik.errors[name]}
+        </Typography>
+      )}
     </Stack>
   );
 };
