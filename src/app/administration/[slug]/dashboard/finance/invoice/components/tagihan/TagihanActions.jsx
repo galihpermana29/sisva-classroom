@@ -13,7 +13,7 @@ const headers = [
   "Status",
   "Target",
   "Total Harga",
-  "Tenggal Waktu",
+  "Tenggat Waktu",
   "Deskripsi",
   "Jumlah Pembayaran",
 ];
