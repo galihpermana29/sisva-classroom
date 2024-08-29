@@ -9,7 +9,7 @@ import { useExcelExport } from "../../hooks/useExcelExport";
 const headers = [
   "ID Tagihan",
   "Custom ID",
-  "Tenggal Waktu",
+  "Tenggat Waktu",
   "Nama",
   "Tipe",
   "Pembayaran",
