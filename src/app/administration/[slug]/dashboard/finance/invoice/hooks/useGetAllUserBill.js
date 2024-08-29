@@ -4,15 +4,25 @@ import { useQuery } from "@tanstack/react-query";
 import { usePagination } from "./usePagination";
 import { paginateData } from "@/utils/paginateData";
 import { FinanceAPI } from "@/api/finance";
+import { useGetAllUsers } from "@/hooks/useGetAllUsers";
+import { useGetAllBills } from "./useGetAllBills";
+import { useSortKey } from "./useSortKey";
+import { useGetAllInvoices } from "./useGetAllInvoices";
+import dayjs from "dayjs";
 
-export const useGetAllUserBill = ({ bill_id, paginated = false }) => {
+export const useGetAllUserBill = ({
+  bill_id,
+  paginated = false,
+  withSort = false,
+}) => {
   const { rowsPerPage } = usePagination();
   const { data, ...query } = useQuery({
     queryKey: ["user-bill", bill_id],
     queryFn: () => FinanceAPI.getAllUserBill({ bill_id }),
   });
 
-  const queryData = data ? data.data.data : undefined;
+  const queryResult = data ? data.data.data : undefined;
+  const queryData = withSort ? sortData(queryResult) : queryResult;
   if (!paginated) {
     return { data: queryData, ...query };
   }
@@ -21,4 +31,81 @@ export const useGetAllUserBill = ({ bill_id, paginated = false }) => {
   const totalPage = paginatedData.length > 0 ? paginatedData.length : 1;
 
   return { data: paginatedData, totalPage, ...query };
+};
+
+const sortData = (data) => {
+  const fields = useSortKey();
+  const { data: users } = useGetAllUsers();
+  const { data: bills } = useGetAllBills();
+  const { data: invoices, isStale: invoicesIsStale } = useGetAllInvoices({
+    paginated: false,
+    withSort: false,
+  });
+
+  const amountPaid = (invoices) => {
+    const paidInvoices =
+      invoices?.filter((invoice) => invoice.status === "done") ?? [];
+    const amountPaid = paidInvoices.reduce(
+      (acc, invoice) => acc + invoice.amount,
+      0
+    );
+
+    return amountPaid;
+  };
+
+  return data?.sort((a, b) => {
+    const userA = users?.find((user) => user?.id === a.user_id);
+    const billA = bills?.find((bill) => bill?.id === a.bill_id);
+    const invoicesA = invoices?.filter(
+      (invoice) => invoice.user_bill_id === a.id
+    );
+    const amountPaidA = amountPaid(invoicesA);
+    const deadlineA = billA
+      ? dayjs(billA.deadline, "DD/MM/YYYY h:mm A Z").unix()
+      : undefined;
+
+    const userB = users?.find((user) => user?.id === b.user_id);
+    const billB = bills?.find((bill) => bill?.id === b.bill_id);
+    const invoicesB = invoices?.filter(
+      (invoice) => invoice.user_bill_id === b.id
+    );
+    const amountPaidB = amountPaid(invoicesB);
+    const deadlineB = billB
+      ? dayjs(billB.deadline, "DD/MM/YYYY h:mm A Z").unix()
+      : undefined;
+
+    for (const field of fields) {
+      let comparison = 0;
+
+      switch (field) {
+        case "id":
+          comparison = a.id - b.id;
+          break;
+        case "deadline":
+          comparison = Boolean(deadlineA && deadlineB)
+            ? deadlineA - deadlineB
+            : comparison;
+          break;
+        case "name":
+          comparison = userA?.name.localeCompare(userB?.name) ?? comparison;
+          break;
+        case "category":
+          comparison = billA?.name.localeCompare(billB?.name) ?? comparison;
+          break;
+        case "totalPrice":
+          comparison = Boolean(billA && billB)
+            ? billA.amount - billB.amount
+            : comparison;
+          break;
+        case "amountPaid":
+          comparison = amountPaidA - amountPaidB;
+          break;
+        default:
+          break;
+      }
+
+      if (comparison !== 0) return comparison;
+    }
+    return 0;
+  });
 };

@@ -1,8 +1,9 @@
-import { Stack } from "@mui/material";
+import { Button, Stack, Typography, useTheme } from "@mui/material";
 import { ModalSelect } from "./ModalSelect";
 import { useGetAllPeriods } from "@/hooks/useGetAllPeriods";
 import { useGetAllStudyPrograms } from "@/hooks/useGetAllStudyPrograms";
 import { useGetAllStudentGroups } from "@/hooks/useGetAllStudentGroups";
+import ResetIcon from "../../../icons/ResetIcon";
 
 export const ModalSiswaFilter = ({ filters, setFilters }) => {
   const { data: periods } = useGetAllPeriods();
@@ -51,6 +52,10 @@ export const ModalSiswaFilter = ({ filters, setFilters }) => {
   const onClassChange = (event) =>
     setFilters((prev) => ({ ...prev, kelas: Number(event.target.value) }));
 
+  const initialFilter = { period: "", studyProgram: "", grade: "", kelas: "" };
+  const onReset = () => setFilters(initialFilter);
+  const theme = useTheme();
+
   return (
     <Stack
       width={{ xs: "100%", md: "max-content" }}
@@ -90,6 +95,19 @@ export const ModalSiswaFilter = ({ filters, setFilters }) => {
           handleChange={onClassChange}
           value={classFilter}
         />
+        <Button
+          className="min-w-max px-3"
+          startIcon={<ResetIcon color={theme.palette.primary.main} />}
+          onClick={onReset}
+        >
+          <Typography
+            fontWeight={"600"}
+            fontSize={"13px"}
+            color={"primary.main"}
+          >
+            Reset
+          </Typography>
+        </Button>
       </Stack>
     </Stack>
   );

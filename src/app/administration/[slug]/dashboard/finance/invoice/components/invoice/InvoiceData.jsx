@@ -1,7 +1,14 @@
 "use client";
 
 import { useMounted } from "@mantine/hooks";
-import { Divider, Paper, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Divider,
+  Paper,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import { usePagination } from "../../hooks/usePagination";
 import { InvoiceStatusBadge } from "./InvoiceStatusBadge";
 import { InvoiceRowActions } from "./InvoiceRowActions";
@@ -14,11 +21,22 @@ import { LoadingDataCard } from "../LoadingDataCard";
 import { formatToRupiah } from "@/utils/formatToRupiah";
 
 export const InvoiceData = () => {
+  const theme = useTheme();
   const mounted = useMounted();
   const { page } = usePagination();
   const { data: rows, isLoading } = useGetAllInvoices({ paginated: true });
 
-  if (isLoading || !mounted) return <div>Loading...</div>;
+  if (isLoading || !mounted)
+    return (
+      <Stack gap={2}>
+        {[...Array(3)].map(() => (
+          <Box
+            className={`w-full h-52 rounded-lg animate-pulse`}
+            sx={{ backgroundColor: theme.palette.base.base30 }}
+          />
+        ))}
+      </Stack>
+    );
 
   const data = rows[page - 1];
 
@@ -36,7 +54,13 @@ export const InvoiceData = () => {
     </Stack>
   ) : (
     // TODO: add empty state here
-    <span>empty</span>
+    <Stack
+      component={Paper}
+      alignItems="center"
+      padding={3}
+    >
+      No data found
+    </Stack>
   );
 };
 

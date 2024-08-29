@@ -1,13 +1,21 @@
 import { TableCellLoading, TableEmptyState } from "@/components/CustomTable";
 import { useGetUserById } from "@/hooks/useGetUserById";
-import { Checkbox, TableCell, TableRow, Typography } from "@mui/material";
+import {
+  Checkbox,
+  IconButton,
+  TableCell,
+  TableRow,
+  Typography,
+} from "@mui/material";
 import { useGetBillById } from "../../../../hooks/useGetBillById";
 import { formatToRupiah } from "@/utils/formatToRupiah";
 import { toggleUniqueIds } from "../utils/toggleUniqueIds";
+import { Delete } from "@mui/icons-material";
 
 export const DaftarPenggunaTerpilihTableBody = ({
   tagihanId,
   selectedUsers,
+  setSelectedUsers,
   columnCount,
   bundledUsers,
   setBundledUsers,
@@ -17,7 +25,6 @@ export const DaftarPenggunaTerpilihTableBody = ({
 
   return selectedUsers.map((id, index) => (
     <TableRow
-      onClick={() => toggleUniqueIds(id, setBundledUsers)}
       key={id}
       hover
     >
@@ -31,7 +38,19 @@ export const DaftarPenggunaTerpilihTableBody = ({
       <PembayaranCell tagihanId={tagihanId} />
       <TotalHargaCell tagihanId={tagihanId} />
       <TableCell>
-        <Checkbox checked={bundledUsers?.includes(id)} />
+        <Checkbox
+          onClick={() => toggleUniqueIds(id, setBundledUsers)}
+          checked={bundledUsers?.includes(id)}
+        />
+      </TableCell>
+      <TableCell>
+        <IconButton
+          onClick={() => toggleUniqueIds(id, setSelectedUsers)}
+          aria-label="hapus"
+          size="small"
+        >
+          <Delete />
+        </IconButton>
       </TableCell>
     </TableRow>
   ));

@@ -5,9 +5,10 @@ import { Button, Stack, Typography } from "@mui/material";
 
 export const TAB_FIELD_NAME = "tab";
 
-export const TabsSelector = ({ tabs, activeTab }) => {
+export const TabsSelector = ({ tabs, activeTab, onChange }) => {
   const { updateQueryParam } = useQueryParam();
-  const changeTab = (value) => updateQueryParam(TAB_FIELD_NAME, value);
+  const handleChange = (value) => updateQueryParam(TAB_FIELD_NAME, value);
+  const changeTab = onChange ?? handleChange;
 
   return (
     <Stack

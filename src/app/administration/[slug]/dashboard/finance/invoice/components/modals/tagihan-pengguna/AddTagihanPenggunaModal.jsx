@@ -64,6 +64,7 @@ const ModalContent = ({ handleClose }) => {
     "Jenis Pembayaran",
     "Total Harga",
     "Buat Invoice",
+    "Action",
   ];
 
   /** Handles selected users which also creates invoice */
@@ -124,6 +125,7 @@ const ModalContent = ({ handleClose }) => {
               tagihanId={tagihanId}
               columnCount={selectedUserColumn.length}
               selectedUsers={selectedUsers}
+              setSelectedUsers={setSelectedUsers}
               bundledUsers={bundledInvoiceUsers}
               setBundledUsers={setBundledInvoiceUsers}
             />

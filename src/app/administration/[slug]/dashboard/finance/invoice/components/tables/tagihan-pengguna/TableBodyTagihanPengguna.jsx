@@ -19,8 +19,11 @@ import { useCheckKategoriFilter } from "../../../hooks/useCheckKategoriFilter";
 
 export const TableBodyTagihanPengguna = ({ columnCount }) => {
   const mounted = useMounted();
-  const { data: rows, isLoading } = useGetAllUserBill({ paginated: true });
   const { page } = usePagination();
+  const { data: rows, isLoading } = useGetAllUserBill({
+    paginated: true,
+    withSort: true,
+  });
 
   if (isLoading || !mounted)
     return (

@@ -46,3 +46,66 @@ export const ROWS_PER_PAGE_NAME = "rows";
 export const DEFAULT_PAGE = 1;
 /** Default rows per page fallback value */
 export const DEFAULT_ROWS_PER_PAGE = 5;
+
+export const invoiceSorts = [
+  {
+    label: "ID Invoice",
+    value: "id",
+  },
+  {
+    label: "Nama Pengguna",
+    value: "name",
+  },
+  {
+    label: "Jenis Pembayaran",
+    value: "category",
+  },
+  {
+    label: "Total Harga",
+    value: "totalPrice",
+  },
+  {
+    label: "Nilai Invoice",
+    value: "amount",
+  },
+  {
+    label: "Status",
+    value: "status",
+  },
+];
+
+export const userBillSorts = [
+  { label: "ID Tagihan", value: "id" },
+  { label: "Tenggat Waktu", value: "deadline" },
+  { label: "Nama Pengguna", value: "name" },
+  { label: "Jenis Pembayaran", value: "category" },
+  { label: "Total Harga", value: "totalPrice" },
+  { label: "Jumlah Terbayar", value: "amountPaid" },
+];
+
+export const tagihanSorts = [
+  {
+    label: "ID Tagihan",
+    value: "id",
+  },
+  {
+    label: "Nama Tagihan",
+    value: "name",
+  },
+  {
+    label: "Total harga",
+    value: "amount",
+  },
+  {
+    label: "Jumlah Pembayaran",
+    value: "total_paid",
+  },
+  {
+    label: "Tenggat Waktu",
+    value: "deadline",
+  },
+  {
+    label: "Status",
+    value: "status",
+  },
+];
