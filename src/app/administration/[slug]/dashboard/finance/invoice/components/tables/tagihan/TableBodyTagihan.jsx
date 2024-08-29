@@ -48,9 +48,7 @@ export const TableBodyTagihan = ({ columnCount }) => {
   return data && data.length > 0 ? (
     data.map((row) => (
       <TableRow hover key={row.id}>
-        <TableCell>
-          #{Boolean(row.custom_id) ? row.custom_id : row.id}
-        </TableCell>
+        <TableCell>#{Boolean(row.custom_id) ? row.custom_id : ""}</TableCell>
         <TableCell>{row.name}</TableCell>
         <TableCell>{formatToRupiah(row.amount)}</TableCell>
         <TableCell>

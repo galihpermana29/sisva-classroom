@@ -19,19 +19,26 @@ const CustomTableHeader = dynamic(() => import("./CustomTableHeader"), {
  * @description If not provided, `minWidth` will take a value of 640 px.
  * @param {{columns: JSX.Element[], minWidth: number, body: JSX.Element, sortKeys?: string[]}}
  */
-export const CustomTable = ({ columns, body, sortKeys, minWidth = 640 }) => {
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+export const CustomTable = ({
+  columns,
+  body,
+  sortKeys,
+  minWidth = 640,
+  id,
+}) => {
   return (
     <TableContainer>
-      <Table
-        stickyHeader
-        sx={{ minWidth }}
-      >
+      <Table stickyHeader sx={{ minWidth }} id={id ?? getRandomInt(0, 100)}>
         <TableHead>
           <Suspense fallback={<TableRowLoading columnCount={columns.length} />}>
-            <CustomTableHeader
-              sortKeys={sortKeys}
-              columns={columns}
-            />
+            <CustomTableHeader sortKeys={sortKeys} columns={columns} />
           </Suspense>
         </TableHead>
         <TableBody>
