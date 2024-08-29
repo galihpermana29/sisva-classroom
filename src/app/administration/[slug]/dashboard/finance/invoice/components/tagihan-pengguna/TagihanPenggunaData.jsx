@@ -5,7 +5,14 @@ import { formatToRupiah } from "@/utils/formatToRupiah";
 import { getUserTimezone } from "@/utils/getUserTimezone";
 
 import { useMounted } from "@mantine/hooks";
-import { Divider, Paper, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Divider,
+  Paper,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import dayjs from "dayjs";
 
 import { useCheckCariFilter } from "../../hooks/useCheckCariFilter";
@@ -19,12 +26,23 @@ import { LoadingDataCard } from "../LoadingDataCard";
 import { DeleteTagihanPenggunaModal } from "../modals/tagihan-pengguna/DeleteTagihanPenggunaModal";
 
 export const TagihanPenggunaData = () => {
+  const theme = useTheme();
   const mounted = useMounted();
   const { data: rows, isLoading } = useGetAllUserBill({ paginated: true });
   const { page } = usePagination();
 
   // TODO: add overall loading state here
-  if (isLoading || !mounted) return <div>Loading...</div>;
+  if (isLoading || !mounted)
+    return (
+      <Stack gap={2}>
+        {[...Array(3)].map(() => (
+          <Box
+            className={`w-full h-52 rounded-lg animate-pulse`}
+            sx={{ backgroundColor: theme.palette.base.base30 }}
+          />
+        ))}
+      </Stack>
+    );
 
   const data = rows[page - 1];
 

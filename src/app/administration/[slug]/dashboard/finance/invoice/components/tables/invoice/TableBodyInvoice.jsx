@@ -21,8 +21,11 @@ import { useCheckStatusFilter } from "../../../hooks/useCheckStatusFilter";
 
 export const TableBodyInvoice = ({ columnCount }) => {
   const mounted = useMounted();
-  const { data: rows, isLoading } = useGetAllInvoices({ paginated: true });
   const { page } = usePagination();
+  const { data: rows, isLoading } = useGetAllInvoices({
+    paginated: true,
+    withSort: true,
+  });
 
   if (isLoading || !mounted)
     return (

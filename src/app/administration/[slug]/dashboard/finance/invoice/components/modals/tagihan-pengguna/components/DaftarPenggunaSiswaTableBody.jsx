@@ -22,6 +22,7 @@ export const DaftarPenggunaSiswaTableBody = ({
   return data.map((student) => (
     <TableRow
       key={`${student.student_id}-${student.student_group_id}`}
+      hover
       className="hover:cursor-pointer"
       onClick={
         hasUserBill(student.student_id)

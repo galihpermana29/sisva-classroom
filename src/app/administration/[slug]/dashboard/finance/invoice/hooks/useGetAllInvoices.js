@@ -4,15 +4,25 @@ import { useQuery } from "@tanstack/react-query";
 import { usePagination } from "./usePagination";
 import { FinanceAPI } from "@/api/finance";
 import { paginateData } from "@/utils/paginateData";
+import { useGetAllUserBill } from "./useGetAllUserBill";
+import { useGetAllUsers } from "@/hooks/useGetAllUsers";
+import { useGetAllBills } from "./useGetAllBills";
+import { useSortKey } from "./useSortKey";
 
-export const useGetAllInvoices = ({ bill_id, user_id, paginated = false }) => {
+export const useGetAllInvoices = ({
+  bill_id,
+  user_id,
+  paginated = false,
+  withSort = false,
+}) => {
   const { rowsPerPage } = usePagination();
   const { data, ...query } = useQuery({
     queryKey: ["invoices", { user_id, bill_id }],
     queryFn: () => FinanceAPI.getAllInvoices({ user_id, bill_id }),
   });
 
-  const queryData = data ? data.data.data : undefined;
+  const queryResult = data ? data.data.data : undefined;
+  const queryData = withSort ? sortData(queryResult) : queryResult;
 
   if (!paginated) {
     return { data: queryData, ...query };
@@ -22,4 +32,57 @@ export const useGetAllInvoices = ({ bill_id, user_id, paginated = false }) => {
   const totalPage = paginatedData.length > 0 ? paginatedData.length : 1;
 
   return { data: paginatedData, totalPage, ...query };
+};
+
+const sortData = (data) => {
+  const fields = useSortKey();
+  const { data: userBills } = useGetAllUserBill({ paginated: false });
+  const { data: users } = useGetAllUsers();
+  const { data: bills } = useGetAllBills();
+
+  return data?.sort((a, b) => {
+    const userBillA = userBills?.find(
+      (userBill) => userBill.id === a.user_bill_id
+    );
+    const userBillB = userBills?.find(
+      (userBill) => userBill.id === b.user_bill_id
+    );
+
+    const userA = users?.find((user) => user?.id === userBillA?.user_id);
+    const billA = bills?.find((bill) => bill?.id === userBillA?.bill_id);
+    const userB = users?.find((user) => user?.id === userBillB?.user_id);
+    const billB = bills?.find((bill) => bill?.id === userBillB?.bill_id);
+
+    for (const field of fields) {
+      let comparison = 0;
+
+      switch (field) {
+        case "id":
+          comparison = a.id - b.id; // ascending order
+          break;
+        case "name":
+          comparison = userA?.name.localeCompare(userB?.name) ?? comparison;
+          break;
+        case "category":
+          comparison = billA?.name.localeCompare(billB?.name) ?? comparison;
+          break;
+        case "totalPrice":
+          comparison = Boolean(billA && billB)
+            ? billA.amount - billB.amount
+            : comparison;
+          break;
+        case "amount":
+          comparison = a.amount - b.amount; // descending order
+          break;
+        case "status":
+          comparison = a.status.localeCompare(b.status); // ascending order
+          break;
+        default:
+          break;
+      }
+
+      if (comparison !== 0) return comparison;
+    }
+    return 0;
+  });
 };

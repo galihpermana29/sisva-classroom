@@ -25,6 +25,7 @@ import { STATUS_FIELD_NAME, StatusSelect } from "../filters/StatusSelect";
 import ResetIcon from "../icons/ResetIcon";
 import { useFormik } from "formik";
 import { useQueryParam } from "@/hooks/useQueryParam";
+import { tagihanSorts } from "../../constants";
 
 const statusFilters = [
   {
@@ -74,7 +75,11 @@ export const TagihanFilters = () => {
 
   return (
     <>
-      <Stack flexDirection="row" alignItems="center" gap={1}>
+      <Stack
+        flexDirection="row"
+        alignItems="center"
+        gap={1}
+      >
         <IconButton
           sx={{
             borderRadius: 2,
@@ -95,7 +100,10 @@ export const TagihanFilters = () => {
             },
           }}
         >
-          <DrawerContent closeDrawer={closeDrawer} sortQuery={sort} />
+          <DrawerContent
+            closeDrawer={closeDrawer}
+            sortQuery={sort}
+          />
         </Drawer>
         <Divider
           orientation="vertical"
@@ -140,33 +148,6 @@ export const TagihanFilters = () => {
   );
 };
 
-const filters = [
-  {
-    label: "ID Tagihan",
-    value: "id",
-  },
-  {
-    label: "Nama Tagihan",
-    value: "name",
-  },
-  {
-    label: "Total harga",
-    value: "amount",
-  },
-  {
-    label: "Jumlah Pembayaran",
-    value: "total_paid",
-  },
-  {
-    label: "Tenggat Waktu",
-    value: "deadline",
-  },
-  {
-    label: "Status",
-    value: "status",
-  },
-];
-
 const DrawerContent = ({ closeDrawer, sortQuery }) => {
   const { updateQueryParam } = useQueryParam();
 
@@ -209,7 +190,10 @@ const DrawerContent = ({ closeDrawer, sortQuery }) => {
         alignItems={"center"}
         justifyContent={"space-between"}
       >
-        <Typography fontWeight={600} fontSize={"18px"}>
+        <Typography
+          fontWeight={600}
+          fontSize={"18px"}
+        >
           Urutkan
         </Typography>
         <IconButton
@@ -222,7 +206,7 @@ const DrawerContent = ({ closeDrawer, sortQuery }) => {
       <Divider sx={{ marginY: "16px" }} />
       <form onSubmit={formik.handleSubmit}>
         <Stack gap={"16px"}>
-          {filters.map(({ label, value }) => (
+          {tagihanSorts.map(({ label, value }) => (
             <Stack gap={"16px"}>
               <Stack
                 flexDirection={"row"}
@@ -245,11 +229,23 @@ const DrawerContent = ({ closeDrawer, sortQuery }) => {
             </Stack>
           ))}
         </Stack>
-        <Stack flexDirection={"row"} gap={"12px"} marginTop={"32px"}>
-          <Button onClick={closeDrawer} variant="outlined" fullWidth>
+        <Stack
+          flexDirection={"row"}
+          gap={"12px"}
+          marginTop={"32px"}
+        >
+          <Button
+            onClick={closeDrawer}
+            variant="outlined"
+            fullWidth
+          >
             Batal
           </Button>
-          <Button type="submit" variant="contained" fullWidth>
+          <Button
+            type="submit"
+            variant="contained"
+            fullWidth
+          >
             Simpan
           </Button>
         </Stack>

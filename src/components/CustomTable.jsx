@@ -8,13 +8,18 @@ import {
   TableRow,
 } from "@mui/material";
 import { Suspense } from "react";
+import dynamic from "next/dynamic";
+
+const CustomTableHeader = dynamic(() => import("./CustomTableHeader"), {
+  ssr: false,
+});
 
 /** Component to display a custom table wrapped with table container to handle scrolling/responsiveness
  * @description Provide a `columns` prop to specify the table header, `minWidth` is used to specify a breakpoint for the table to be scrollable horizontally, `body` is used to display the table's body, and `header` is used to customize the default header.
  * @description If not provided, `minWidth` will take a value of 640 px.
- * @param {{columns: JSX.Element[], minWidth: number, body: JSX.Element, header?: JSX.Element[]}}
+ * @param {{columns: JSX.Element[], minWidth: number, body: JSX.Element, sortKeys?: string[]}}
  */
-export const CustomTable = ({ columns, body, header, minWidth = 640 }) => {
+export const CustomTable = ({ columns, body, sortKeys, minWidth = 640 }) => {
   return (
     <TableContainer>
       <Table
@@ -22,17 +27,12 @@ export const CustomTable = ({ columns, body, header, minWidth = 640 }) => {
         sx={{ minWidth }}
       >
         <TableHead>
-          <TableRow>
-            {header ??
-              columns.map((column, index) => (
-                <TableCell
-                  key={`column-${index}-head`}
-                  sx={{ fontWeight: 600 }}
-                >
-                  {column}
-                </TableCell>
-              ))}
-          </TableRow>
+          <Suspense fallback={<TableRowLoading columnCount={columns.length} />}>
+            <CustomTableHeader
+              sortKeys={sortKeys}
+              columns={columns}
+            />
+          </Suspense>
         </TableHead>
         <TableBody>
           <Suspense
