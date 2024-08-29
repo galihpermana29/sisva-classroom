@@ -10,6 +10,7 @@ function TableTagihan() {
       minWidth={1024}
       columns={columns}
       sortKeys={sortKeys}
+      id={"tagihan-table"}
     />
   );
 }
