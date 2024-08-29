@@ -22,7 +22,6 @@ export const useGetAllInvoices = ({
   });
 
   const queryResult = data ? data.data.data : undefined;
-  /** sort keys: ['id', 'name', 'category', 'totalPrice', 'amount', 'status'] */
   const queryData = withSort ? sortData(queryResult) : queryResult;
 
   if (!paginated) {

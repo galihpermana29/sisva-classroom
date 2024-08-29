@@ -13,7 +13,9 @@ const CustomTableHeader = ({ columns, sortKeys }) => {
   const { updateQueryParam } = useQueryParam();
 
   const columnIsSorted = (index) =>
-    sortKeys !== undefined ? keys.includes(sortKeys[index]) : false;
+    Boolean(sortKeys) && Array.isArray(sortKeys) && sortKeys[index]
+      ? keys.includes(sortKeys[index])
+      : false;
   const onSort = (index) => {
     const set = new Set([...keys]);
     const newSortKey = sortKeys ? sortKeys[index] : undefined;
