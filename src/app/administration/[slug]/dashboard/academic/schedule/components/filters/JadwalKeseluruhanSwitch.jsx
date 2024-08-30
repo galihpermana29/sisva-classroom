@@ -10,7 +10,10 @@ export const JadwalKeseluruhanSwitch = () => {
 
   const { updateQueryParam } = useQueryParam();
   const handleChange = (event) =>
-    updateQueryParam(JADWAL_KESELURUHAN_FIELD_NAME, event.target.checked);
+    updateQueryParam(
+      JADWAL_KESELURUHAN_FIELD_NAME,
+      event.target.checked.toString()
+    );
 
   return (
     <Stack flexDirection={"row"} justifyContent={"end"} alignItems={"center"}>

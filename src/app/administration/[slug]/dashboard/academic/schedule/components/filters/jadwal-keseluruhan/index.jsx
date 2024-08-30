@@ -2,25 +2,18 @@
 
 import { Button, Stack, Typography } from "@mui/material";
 import useTheme from "@mui/material/styles/useTheme";
-import { useSearchParams } from "next/navigation";
+import { useFilterStatus } from "../../../hooks/filters/useFilterStatus";
 import useJadwalKeseluruhanFilter from "../../../hooks/useJadwalKeseluruhanFilter";
 import ResetIcon from "../../icons/ResetIcon";
 import AddAktivitasNonKbmModal from "../../modals/AddAktivitasNonKbmModal";
 import AddJadwalKelasModal from "../../modals/AddJadwalKelasModal";
 import JadwalKeseluruhanOptionalFiltersModal from "../JadwalKeseluruhanOptionalFiltersModal";
-import {
-  JADWAL_KESELURUHAN_FIELD_NAME,
-  JadwalKeseluruhanSwitch,
-} from "../JadwalKeseluruhanSwitch";
-import { PERIODE_FIELD_NAME, PeriodeSelect } from "../PeriodeSelect";
-import { PRODI_FIELD_NAME, ProdiSelect } from "../ProdiSelect";
+import { JadwalKeseluruhanSwitch } from "../JadwalKeseluruhanSwitch";
+import { PeriodeSelect } from "../PeriodeSelect";
+import { ProdiSelect } from "../ProdiSelect";
 
 function JadwalKeseluruhanFilters() {
-  const searchParams = useSearchParams();
-  const periode = searchParams.get(PERIODE_FIELD_NAME);
-  const prodi = searchParams.get(PRODI_FIELD_NAME);
-  const jadwalKeseluruhan =
-    searchParams.get(JADWAL_KESELURUHAN_FIELD_NAME) ?? "true";
+  const { periode, prodi, isJadwalKeseluruhan } = useFilterStatus();
 
   const showProdi = Boolean(periode);
   const showOptionalFilters = Boolean(prodi);
@@ -44,7 +37,7 @@ function JadwalKeseluruhanFilters() {
     >
       <Stack flexDirection={"row"} alignItems={"center"} gap={1}>
         <PeriodeSelect data={periodeSelectData} />
-        {jadwalKeseluruhan === "true" && showProdi && (
+        {isJadwalKeseluruhan === "true" && showProdi && (
           <>
             <ProdiSelect data={prodiSelectData} />
             {showOptionalFilters && (
@@ -77,7 +70,7 @@ function JadwalKeseluruhanFilters() {
         gap={2}
       >
         <JadwalKeseluruhanSwitch />
-        {jadwalKeseluruhan === "true" ? (
+        {isJadwalKeseluruhan === "true" ? (
           <AddJadwalKelasModal />
         ) : (
           <AddAktivitasNonKbmModal />
