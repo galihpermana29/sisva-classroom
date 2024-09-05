@@ -34,7 +34,7 @@ export default function InsertSchoolCode() {
         }}
       >
         <SchoolCodeIllustration
-          color={theme.palette.primary.main}
+          color={'#008CD5'}
           sx={{ maxWidth: '90%', objectFit: 'cover', fontSize: 300 }}
         />
         <Typography
@@ -42,7 +42,7 @@ export default function InsertSchoolCode() {
             textAlign: 'center',
             fontWeight: 700,
             fontSize: 24,
-            color: 'primary.main',
+            color: '#008CD5',
             mt: 2,
           }}
         >

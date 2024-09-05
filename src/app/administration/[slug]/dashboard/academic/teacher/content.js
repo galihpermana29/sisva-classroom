@@ -219,37 +219,41 @@ export default function StaffProfileContent() {
   };
 
   const getAllTeacher = async () => {
-    const {
-      data: { data },
-    } = await AcademicAPI.getAllSubjectTeacher();
+    try {
+      const {
+        data: { data },
+      } = await AcademicAPI.getAllSubjectTeacher();
 
-    const teacherData = await UsersAPI.getAllUsers('teacher');
-    const teachProfile = teacherData.data.data.filter(
-      (td) => td.status == 'active'
-    );
+      const teacherData = await UsersAPI.getAllUsers('teacher');
+      const teachProfile = teacherData.data.data.filter(
+        (td) => td.status == 'active'
+      );
 
-    const mappedData = [];
+      const mappedData = [];
 
-    teachProfile.forEach((tp) => {
-      let subjects = [];
-      let grades = [];
+      teachProfile.forEach((tp) => {
+        let subjects = [];
+        let grades = [];
 
-      data.forEach((dt) => {
-        if (tp.id == dt.teacher_id) {
-          if (!subjects.find((sb) => sb.subject_id == dt.subject_id))
-            subjects.push({
-              subject_id: dt.subject_id,
-              subject_name: dt.subject_name,
-              subject_grade: dt.grade,
-            });
-          if (!grades.includes(dt.grade)) grades.push(dt.grade);
-        }
+        data.forEach((dt) => {
+          if (tp.id == dt.teacher_id) {
+            if (!subjects.find((sb) => sb.subject_id == dt.subject_id))
+              subjects.push({
+                subject_id: dt.subject_id,
+                subject_name: dt.subject_name,
+                subject_grade: dt.grade,
+              });
+            if (!grades.includes(dt.grade)) grades.push(dt.grade);
+          }
+        });
+
+        mappedData.push({ id: tp.id, name: tp.name, subjects, grades });
       });
 
-      mappedData.push({ id: tp.id, name: tp.name, subjects, grades });
-    });
-
-    setDataTeacher(mappedData);
+      setDataTeacher(mappedData);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {

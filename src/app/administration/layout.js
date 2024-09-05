@@ -1,23 +1,23 @@
 'use client';
 
-import '../globals.css';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { themeConfig } from './theme';
-import { useEffect, useState } from 'react';
 import CmsAPI from '@/api/cms';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { useParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import '../globals.css';
+import { themeConfig } from './theme';
 
 export default function RootLayout({ children }) {
+  const { slug } = useParams();
+
   const [color, setColor] = useState();
-  const [user, setUser] = useState();
 
   const fetchTheme = async () => {
     const {
       data: { data },
-    } = await CmsAPI.getSchoolById(
-      JSON.parse(localStorage.getItem('user')).school_id
-    );
+    } = await CmsAPI.getSchoolByCode(slug);
 
-    setColor(data.theme_json_text);
+    if (data && data.theme_json_text) setColor(data.theme_json_text);
   };
 
   if (color) {
@@ -27,10 +27,8 @@ export default function RootLayout({ children }) {
   const theme = createTheme(themeConfig);
 
   useEffect(() => {
-    if (localStorage.getItem('user')) {
-      fetchTheme();
-    }
-  }, []);
+    if (slug) fetchTheme();
+  }, [slug]);
 
   return (
     <html lang='en'>

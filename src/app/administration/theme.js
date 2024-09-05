@@ -5,7 +5,7 @@ export const themeConfig = {
   },
   palette: {
     primary: {
-      main: '#EAEAEA',
+      main: '#98A2B3',
     },
     warning: {
       main: '#F96756',
