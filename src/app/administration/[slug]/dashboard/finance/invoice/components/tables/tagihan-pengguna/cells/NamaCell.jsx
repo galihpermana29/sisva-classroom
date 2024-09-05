@@ -1,0 +1,35 @@
+"use client";
+
+import { TableCell, Typography } from "@mui/material";
+import { useGetUserById } from "@/hooks/useGetUserById";
+import { TableCellLoading } from "@/components/CustomTable";
+
+export const NamaCell = ({ userId }) => {
+  const { data: userData, isLoading, isError } = useGetUserById(userId);
+
+  if (isLoading) return <TableCellLoading />;
+
+  return (
+    <TableCell>
+      {isError ? (
+        "-"
+      ) : (
+        <div className="flex flex-col">
+          <Typography variant="body2">{userData.name}</Typography>
+          <Typography
+            variant="caption"
+            color="gray"
+          >
+            {userTypeMap[userData.type]}
+          </Typography>
+        </div>
+      )}
+    </TableCell>
+  );
+};
+
+const userTypeMap = {
+  student: "Siswa",
+  teacher: "Guru",
+  staff: "Staff",
+};

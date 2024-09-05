@@ -1,0 +1,45 @@
+"use client";
+
+import { MenuItem, Select, Stack, Typography } from "@mui/material";
+
+export const StudentGroupSelect = ({
+  formik,
+  name,
+  label,
+  placeholder,
+  disabled,
+  data,
+}) => {
+  return (
+    <Stack spacing={1}>
+      <Typography fontWeight={600} variant="body2">
+        {label}
+      </Typography>
+      <Select
+        id={name}
+        size="small"
+        name={name}
+        disabled={disabled}
+        value={formik.values ? formik.values[name] : ""}
+        onChange={(event) => formik.setFieldValue(name, event.target.value)}
+        onBlur={formik.handleBlur}
+        error={formik.touched[name] && Boolean(formik.errors[name])}
+        displayEmpty
+      >
+        <MenuItem disabled value={""}>
+          {placeholder}
+        </MenuItem>
+        {data.map(({ label, value }) => (
+          <MenuItem key={`${label}${value}`} value={value}>
+            {label}
+          </MenuItem>
+        ))}
+      </Select>
+      {formik.touched[name] && formik.errors[name] && (
+        <Typography className="text-red-700" fontSize={"12px"}>
+          {formik.errors[name]}
+        </Typography>
+      )}
+    </Stack>
+  );
+};
