@@ -42,7 +42,6 @@ export default function AnnouncementsList() {
         }
         if (values.id) {
           const id = values.id;
-
           delete values.id;
 
           const payload = values;
@@ -119,13 +118,6 @@ export default function AnnouncementsList() {
   }, []);
 
   const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   let [filteredData, setFilteredData] = useState([]);
   const [search, setSearch] = useState('');
@@ -140,7 +132,10 @@ export default function AnnouncementsList() {
 
   useEffect(() => {
     let temp = infoData.filter((item) => {
-      return item.name.toLowerCase().includes(search.toLowerCase());
+      return (
+        item.name.toLowerCase().includes(search.toLowerCase()) &&
+        item.target.join('').toLowerCase().includes(typeFilter.toLowerCase())
+      );
     });
     if (sortSettings && sortSettings.sortBy) {
       temp = temp.sort(function (a, b) {
@@ -213,9 +208,12 @@ export default function AnnouncementsList() {
             ),
           }}
         >
-          {['Murid', 'Guru', 'Staf'].map((option) => (
-            <MenuItem key={option.slug} value={option}>
-              <Typography fontSize={14}>{option}</Typography>
+          {[
+            { slug: 'student', title: 'Siswa' },
+            { slug: 'staff', title: 'Staf' },
+          ].map((option) => (
+            <MenuItem key={option.slug} value={option.slug}>
+              <Typography fontSize={14}>{option.title}</Typography>
             </MenuItem>
           ))}
         </TextField>

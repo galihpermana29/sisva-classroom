@@ -89,11 +89,16 @@ export default function StaffProfileContent() {
 
   let [filteredData, setFilteredData] = useState([]);
   const [search, setSearch] = useState('');
-  const [studyProgramFilter, setStudyProgramFilter] = useState('');
+  const [subjectFilter, setSubjectFilter] = useState('');
+  const [gradeFilter, setGradeFilter] = useState('');
+  const [teacherFilter, setTeacherFilter] = useState('');
   const [sortBy, setSortBy] = useState('');
   const [sortType, setSortType] = useState('ascending');
   const [sortSettings, setSortSettings] = useState('');
   const [openSortModal, setOpenSortModal] = useState(false);
+
+  const [studyProgramOptions, setStudyProgramOptions] = useState('');
+  const [gradeOptions, setGradeOptions] = useState('');
 
   const [openCreateSubjectModal, setOpenCreateSubjectModal] = useState(false);
   const [openCreateTeacherModal, setOpenCreateTeacherModal] = useState(false);
@@ -215,6 +220,11 @@ export default function StaffProfileContent() {
       }
     });
 
+    const grades = [...new Set(subjectOpt.map((so) => so.grade))].sort((a, b) =>
+      a.localeCompare(b)
+    );
+
+    setGradeOptions(grades);
     setGradeList(subjectOpt);
   };
 
@@ -266,10 +276,19 @@ export default function StaffProfileContent() {
     let temp = [];
     activeTab === 0
       ? (temp = subjectData.filter((item) => {
-          return item.name.toLowerCase().includes(search.toLowerCase());
+          return (
+            item.name.toLowerCase().includes(search.toLowerCase()) &&
+            (gradeFilter == ''
+              ? item
+              : item.grade.toLowerCase() == gradeFilter.toLowerCase()) &&
+            item.name.toLowerCase().includes(subjectFilter.toLowerCase())
+          );
         }))
       : (temp = dataTeacher.filter((item) => {
-          return item.name.toLowerCase().includes(search.toLowerCase());
+          return (
+            item.name.toLowerCase().includes(search.toLowerCase()) &&
+            item.name.toLowerCase().includes(teacherFilter.toLowerCase())
+          );
         }));
     // if (sortSettings && sortSettings.sortBy) {
     //   temp = temp.sort(function (a, b) {
@@ -337,9 +356,11 @@ export default function StaffProfileContent() {
   }, [
     subjectData,
     search,
-    studyProgramFilter,
+    subjectFilter,
     sortSettings,
     activeTab,
+    gradeFilter,
+    teacherFilter,
     dataTeacher,
   ]);
 
@@ -364,86 +385,9 @@ export default function StaffProfileContent() {
           <TextField
             select
             size='small'
-            label='Periode'
-            value={studyProgramFilter}
-            onChange={(e) => setStudyProgramFilter(e.target.value)}
-            sx={{
-              flex: { xs: 1, lg: 0 },
-              minWidth: 'fit-content',
-            }}
-            InputProps={{
-              sx: { minWidth: 140, width: { xs: '100%', lg: 'fit-content' } },
-              startAdornment: studyProgramFilter && (
-                <Cancel
-                  onClick={() => {
-                    setStudyProgramFilter('');
-                  }}
-                  sx={{
-                    fontSize: 14,
-                    color: 'base.base50',
-                    cursor: 'pointer',
-                    transform: 'translateX(-4px)',
-                    '&:hover': {
-                      color: 'base.base60',
-                    },
-                  }}
-                />
-              ),
-            }}
-          >
-            {[
-              'Tahun Ajaran 2024/2025',
-              'Tahun Ajaran 2023/2024',
-              'Tahun Ajaran 2022/2023',
-            ].map((option, index) => (
-              <MenuItem key={index} value={option}>
-                <Typography fontSize={14}>{option}</Typography>
-              </MenuItem>
-            ))}
-          </TextField>
-          <TextField
-            select
-            size='small'
-            label='Program Studi'
-            value={studyProgramFilter}
-            onChange={(e) => setStudyProgramFilter(e.target.value)}
-            sx={{
-              flex: { xs: 1, lg: 0 },
-              minWidth: 'fit-content',
-              ml: 1,
-            }}
-            InputProps={{
-              sx: { minWidth: 140, width: { xs: '100%', lg: 'fit-content' } },
-              startAdornment: studyProgramFilter && (
-                <Cancel
-                  onClick={() => {
-                    setStudyProgramFilter('');
-                  }}
-                  sx={{
-                    fontSize: 14,
-                    color: 'base.base50',
-                    cursor: 'pointer',
-                    transform: 'translateX(-4px)',
-                    '&:hover': {
-                      color: 'base.base60',
-                    },
-                  }}
-                />
-              ),
-            }}
-          >
-            {['IPA', 'IPS', 'IPA-U', 'IPS-U'].map((option, index) => (
-              <MenuItem key={index} value={option}>
-                <Typography fontSize={14}>{option}</Typography>
-              </MenuItem>
-            ))}
-          </TextField>
-          <TextField
-            select
-            size='small'
-            label='Tingkatan'
-            value={studyProgramFilter}
-            onChange={(e) => setStudyProgramFilter(e.target.value)}
+            label='Mata Pelajaran'
+            value={subjectFilter}
+            onChange={(e) => setSubjectFilter(e.target.value)}
             sx={{
               flex: { xs: 1, lg: 0 },
               minWidth: 'fit-content',
@@ -452,10 +396,10 @@ export default function StaffProfileContent() {
             }}
             InputProps={{
               sx: { minWidth: 140, width: { xs: '100%', lg: 'fit-content' } },
-              startAdornment: studyProgramFilter && (
+              startAdornment: subjectFilter && (
                 <Cancel
                   onClick={() => {
-                    setStudyProgramFilter('');
+                    setSubjectFilter('');
                   }}
                   sx={{
                     fontSize: 14,
@@ -470,11 +414,90 @@ export default function StaffProfileContent() {
               ),
             }}
           >
-            {['X', 'XI', 'XII'].map((option, index) => (
-              <MenuItem key={index} value={option}>
-                <Typography fontSize={14}>{option}</Typography>
-              </MenuItem>
-            ))}
+            {subjectList &&
+              subjectList.map((option, index) => (
+                <MenuItem key={index} value={option.name}>
+                  <Typography fontSize={14}>{option.name}</Typography>
+                </MenuItem>
+              ))}
+          </TextField>
+          <TextField
+            select
+            size='small'
+            label='Tingkatan'
+            value={gradeFilter}
+            onChange={(e) => setGradeFilter(e.target.value)}
+            sx={{
+              flex: { xs: 1, lg: 0 },
+              minWidth: 'fit-content',
+              ml: 1,
+              display: activeTab === 1 ? 'none' : 'flex',
+            }}
+            InputProps={{
+              sx: { minWidth: 140, width: { xs: '100%', lg: 'fit-content' } },
+              startAdornment: gradeFilter && (
+                <Cancel
+                  onClick={() => {
+                    setGradeFilter('');
+                  }}
+                  sx={{
+                    fontSize: 14,
+                    color: 'base.base50',
+                    cursor: 'pointer',
+                    transform: 'translateX(-4px)',
+                    '&:hover': {
+                      color: 'base.base60',
+                    },
+                  }}
+                />
+              ),
+            }}
+          >
+            {gradeOptions &&
+              gradeOptions.map((option, index) => (
+                <MenuItem key={index} value={option}>
+                  <Typography fontSize={14}>{option}</Typography>
+                </MenuItem>
+              ))}
+          </TextField>
+          <TextField
+            select
+            size='small'
+            label='Guru'
+            value={teacherFilter}
+            onChange={(e) => setTeacherFilter(e.target.value)}
+            sx={{
+              flex: { xs: 1, lg: 0 },
+              minWidth: 'fit-content',
+              ml: 1,
+              display: activeTab === 0 ? 'none' : 'flex',
+            }}
+            InputProps={{
+              sx: { minWidth: 140, width: { xs: '100%', lg: 'fit-content' } },
+              startAdornment: teacherFilter && (
+                <Cancel
+                  onClick={() => {
+                    setTeacherFilter('');
+                  }}
+                  sx={{
+                    fontSize: 14,
+                    color: 'base.base50',
+                    cursor: 'pointer',
+                    transform: 'translateX(-4px)',
+                    '&:hover': {
+                      color: 'base.base60',
+                    },
+                  }}
+                />
+              ),
+            }}
+          >
+            {dataTeacher &&
+              dataTeacher.map((option, index) => (
+                <MenuItem key={index} value={option.name}>
+                  <Typography fontSize={14}>{option.name}</Typography>
+                </MenuItem>
+              ))}
           </TextField>
         </Stack>
       </Stack>
@@ -784,7 +807,7 @@ export default function StaffProfileContent() {
                 }}
                 onClick={() => {
                   setActiveTab(index);
-                  setStudyProgramFilter('');
+                  setSubjectFilter('');
                   setSearch('');
                   setSortBy('');
                   setSortSettings('');

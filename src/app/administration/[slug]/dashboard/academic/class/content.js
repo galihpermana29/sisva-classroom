@@ -137,6 +137,12 @@ export default function StaffProfileContent() {
   const [periodList, setPeriodList] = useState([]);
   const [studyProgramList, setStudyProgramList] = useState([]);
 
+  const [gradeOpt, setGradeOpt] = useState();
+  const [classOpt, setClassOpt] = useState();
+  const [homeroomOpt, setHomeroomOpt] = useState();
+  const [studentClassOpt, setStudentClassOpt] = useState();
+  const [studentGradeOpt, setStudentGradeOpt] = useState();
+
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -148,7 +154,6 @@ export default function StaffProfileContent() {
 
   let [filteredData, setFilteredData] = useState([]);
   const [search, setSearch] = useState('');
-  const [studyProgramFilter, setStudyProgramFilter] = useState('');
   const [sortBy, setSortBy] = useState('');
   const [sortType, setSortType] = useState('ascending');
   const [sortSettings, setSortSettings] = useState('');
@@ -158,6 +163,10 @@ export default function StaffProfileContent() {
   const [openCreateClassModal, setOpenCreateClassModal] = useState(false);
   const [openCreateStudentGroupModal, setOpenCreateStudentGroupModal] =
     useState(false);
+
+  const [classFilter, setClassFilter] = useState('');
+  const [gradeFilter, setGradeFilter] = useState('');
+  const [homeroomFilter, setHomeroomFilter] = useState('');
 
   const [activeTab, setActiveTab] = useState(0);
   let tabs = [
@@ -207,15 +216,7 @@ export default function StaffProfileContent() {
       const studentData = fetchStudent.data.data;
       const allStudentData = fetchAllStudent.data.data;
 
-      const resTeachers = fetchTeachers.data.data.filter((ft) => {
-        const exist = groupData.find(
-          (fg) => fg.detail.homeroom_teacher_id == ft.id
-        );
-
-        if (ft.status == 'active' && !exist) {
-          return ft;
-        }
-      });
+      const resTeachers = fetchTeachers.data.data;
 
       const filterStudent = allStudentData.reduce((a, b) => {
         const exist = studentData.find((sd) => sd.student_id == b.id);
@@ -266,8 +267,34 @@ export default function StaffProfileContent() {
       });
 
       setStudentData(studentRes);
-
       setStudentGroupData(groupRes);
+
+      const guardianList = [...new Set(groupRes.map((gr) => gr.guardian))].sort(
+        (a, b) => a.localeCompare(b)
+      );
+
+      const classList = [...new Set(groupRes.map((gr) => gr.class))].sort(
+        (a, b) => a.localeCompare(b)
+      );
+
+      const gradeList = [...new Set(groupRes.map((gr) => gr.grade))].sort(
+        (a, b) => a.localeCompare(b)
+      );
+
+      const gradeStudentList = [
+        ...new Set(studentRes.map((gr) => gr.grade)),
+      ].sort((a, b) => a.localeCompare(b));
+
+      const classStudentList = [
+        ...new Set(studentRes.map((gr) => gr.class)),
+      ].sort((a, b) => a.localeCompare(b));
+
+      setHomeroomOpt(guardianList);
+      setClassOpt(classList);
+      setGradeOpt(gradeList);
+
+      setStudentGradeOpt(gradeStudentList);
+      setStudentClassOpt(classStudentList);
     } catch (error) {
       console.log(error);
     }
@@ -297,6 +324,13 @@ export default function StaffProfileContent() {
       ? (temp = studentGroupData.filter((item) => {
           return (
             item.class.toLowerCase().includes(search.toLowerCase()) &&
+            (gradeFilter == ''
+              ? item
+              : item.grade.toLowerCase() == gradeFilter.toLowerCase()) &&
+            item.class.toLowerCase().includes(classFilter.toLowerCase()) &&
+            item.guardian
+              .toLowerCase()
+              .includes(homeroomFilter.toLowerCase()) &&
             item.type === 'homeroom'
           );
         }))
@@ -308,7 +342,13 @@ export default function StaffProfileContent() {
           );
         }))
       : (temp = studentData.filter((item) => {
-          return item.student.toLowerCase().includes(search.toLowerCase());
+          return (
+            item.student.toLowerCase().includes(search.toLowerCase()) &&
+            (gradeFilter == ''
+              ? item
+              : item.grade.toLowerCase() == gradeFilter.toLowerCase()) &&
+            item.class.toLowerCase().includes(classFilter.toLowerCase())
+          );
         }));
     // if (sortSettings && sortSettings.sortBy) {
     //   temp = temp.sort(function (a, b) {
@@ -374,10 +414,12 @@ export default function StaffProfileContent() {
     formik.setValues(emptyData);
   }, [
     search,
-    studyProgramFilter,
     sortSettings,
     activeTab,
     studentGroupData,
+    classFilter,
+    homeroomFilter,
+    gradeFilter,
     studentData,
   ]);
 
@@ -402,97 +444,19 @@ export default function StaffProfileContent() {
           <TextField
             select
             size='small'
-            label='Periode'
-            value={studyProgramFilter}
-            onChange={(e) => setStudyProgramFilter(e.target.value)}
-            sx={{
-              flex: { xs: 1, lg: 0 },
-              minWidth: 'fit-content',
-            }}
-            InputProps={{
-              sx: { minWidth: 140, width: { xs: '100%', lg: 'fit-content' } },
-              startAdornment: studyProgramFilter && (
-                <Cancel
-                  onClick={() => {
-                    setStudyProgramFilter('');
-                  }}
-                  sx={{
-                    fontSize: 14,
-                    color: 'base.base50',
-                    cursor: 'pointer',
-                    transform: 'translateX(-4px)',
-                    '&:hover': {
-                      color: 'base.base60',
-                    },
-                  }}
-                />
-              ),
-            }}
-          >
-            {[
-              'Tahun Ajaran 2024/2025',
-              'Tahun Ajaran 2023/2024',
-              'Tahun Ajaran 2022/2023',
-            ].map((option, index) => (
-              <MenuItem key={index} value={option}>
-                <Typography fontSize={14}>{option}</Typography>
-              </MenuItem>
-            ))}
-          </TextField>
-          <TextField
-            select
-            size='small'
-            label='Program Studi'
-            value={studyProgramFilter}
-            onChange={(e) => setStudyProgramFilter(e.target.value)}
-            sx={{
-              flex: { xs: 1, lg: 0 },
-              minWidth: 'fit-content',
-              ml: 1,
-            }}
-            InputProps={{
-              sx: { minWidth: 140, width: { xs: '100%', lg: 'fit-content' } },
-              startAdornment: studyProgramFilter && (
-                <Cancel
-                  onClick={() => {
-                    setStudyProgramFilter('');
-                  }}
-                  sx={{
-                    fontSize: 14,
-                    color: 'base.base50',
-                    cursor: 'pointer',
-                    transform: 'translateX(-4px)',
-                    '&:hover': {
-                      color: 'base.base60',
-                    },
-                  }}
-                />
-              ),
-            }}
-          >
-            {['IPA', 'IPS', 'IPA-U', 'IPS-U'].map((option, index) => (
-              <MenuItem key={index} value={option}>
-                <Typography fontSize={14}>{option}</Typography>
-              </MenuItem>
-            ))}
-          </TextField>
-          <TextField
-            select
-            size='small'
             label='Tingkatan'
-            value={studyProgramFilter}
-            onChange={(e) => setStudyProgramFilter(e.target.value)}
+            value={gradeFilter}
+            onChange={(e) => setGradeFilter(e.target.value)}
             sx={{
               flex: { xs: 1, lg: 0 },
               minWidth: 'fit-content',
-              ml: 1,
             }}
             InputProps={{
               sx: { minWidth: 140, width: { xs: '100%', lg: 'fit-content' } },
-              startAdornment: studyProgramFilter && (
+              startAdornment: gradeFilter && (
                 <Cancel
                   onClick={() => {
-                    setStudyProgramFilter('');
+                    setGradeFilter('');
                   }}
                   sx={{
                     fontSize: 14,
@@ -507,13 +471,105 @@ export default function StaffProfileContent() {
               ),
             }}
           >
-            {['X', 'XI', 'XII'].map((option, index) => (
-              <MenuItem key={index} value={option}>
-                <Typography fontSize={14}>{option}</Typography>
-              </MenuItem>
-            ))}
+            {activeTab == 0
+              ? gradeOpt &&
+                gradeOpt.map((option, index) => (
+                  <MenuItem key={index} value={option}>
+                    <Typography fontSize={14}>{option}</Typography>
+                  </MenuItem>
+                ))
+              : studentGradeOpt &&
+                studentGradeOpt.map((option, index) => (
+                  <MenuItem key={index} value={option}>
+                    <Typography fontSize={14}>{option}</Typography>
+                  </MenuItem>
+                ))}
           </TextField>
           <TextField
+            select
+            size='small'
+            label='Kelas'
+            value={classFilter}
+            onChange={(e) => setClassFilter(e.target.value)}
+            sx={{
+              flex: { xs: 1, lg: 0 },
+              minWidth: 'fit-content',
+              ml: 1,
+            }}
+            InputProps={{
+              sx: { minWidth: 140, width: { xs: '100%', lg: 'fit-content' } },
+              startAdornment: classFilter && (
+                <Cancel
+                  onClick={() => {
+                    setClassFilter('');
+                  }}
+                  sx={{
+                    fontSize: 14,
+                    color: 'base.base50',
+                    cursor: 'pointer',
+                    transform: 'translateX(-4px)',
+                    '&:hover': {
+                      color: 'base.base60',
+                    },
+                  }}
+                />
+              ),
+            }}
+          >
+            {activeTab == 1
+              ? classOpt &&
+                classOpt.map((option, index) => (
+                  <MenuItem key={index} value={option}>
+                    <Typography fontSize={14}>{option}</Typography>
+                  </MenuItem>
+                ))
+              : studentClassOpt &&
+                studentClassOpt.map((option, index) => (
+                  <MenuItem key={index} value={option}>
+                    <Typography fontSize={14}>{option}</Typography>
+                  </MenuItem>
+                ))}
+          </TextField>
+          <TextField
+            select
+            size='small'
+            label='Wali Kelas'
+            value={homeroomFilter}
+            onChange={(e) => setHomeroomFilter(e.target.value)}
+            sx={{
+              flex: { xs: 1, lg: 0 },
+              minWidth: 'fit-content',
+              ml: 1,
+              display: activeTab === 0 ? 'flex' : 'none',
+            }}
+            InputProps={{
+              sx: { minWidth: 140, width: { xs: '100%', lg: 'fit-content' } },
+              startAdornment: homeroomFilter && (
+                <Cancel
+                  onClick={() => {
+                    setHomeroomFilter('');
+                  }}
+                  sx={{
+                    fontSize: 14,
+                    color: 'base.base50',
+                    cursor: 'pointer',
+                    transform: 'translateX(-4px)',
+                    '&:hover': {
+                      color: 'base.base60',
+                    },
+                  }}
+                />
+              ),
+            }}
+          >
+            {homeroomOpt &&
+              homeroomOpt.map((option, index) => (
+                <MenuItem key={index} value={option}>
+                  <Typography fontSize={14}>{option}</Typography>
+                </MenuItem>
+              ))}
+          </TextField>
+          {/* <TextField
             select
             size='small'
             label='Kelas'
@@ -552,7 +608,7 @@ export default function StaffProfileContent() {
                 </MenuItem>
               )
             )}
-          </TextField>
+          </TextField> */}
         </Stack>
       </Stack>
     );
@@ -859,9 +915,11 @@ export default function StaffProfileContent() {
                 }}
                 onClick={() => {
                   setActiveTab(index);
-                  setStudyProgramFilter('');
                   setSearch('');
                   setSortBy('');
+                  setGradeFilter('');
+                  setClassFilter('');
+                  setHomeroomFilter('');
                   setSortSettings('');
                   formik.setValues(emptyData);
                   index === 0 ? setFilteredData(studentGroupData) : null;

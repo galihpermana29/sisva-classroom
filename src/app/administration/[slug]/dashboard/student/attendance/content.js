@@ -25,6 +25,7 @@ import { useEffect, useState } from 'react';
 import { FormAddStaff } from './components/FormAddStaff';
 import DataTable from './components/Table';
 
+import AcademicAPI from '@/api/academic';
 import AttendanceApi from '@/api/attendance';
 import UsersAPI from '@/api/users';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -65,32 +66,6 @@ export default function StaffProfileListContent() {
     },
   });
 
-  // let data = [
-  //   {
-  //     id: 'bb28c1b4-4a84-48a7-8d01-20bf157d1c61',
-  //     class: 'X MIPA 1',
-  //     username: 'doni.alamsyah',
-  //     nik: '78901234567890',
-  //     name: 'Doni Alamsyah',
-  //     class: 'X MIPA 1',
-  //     type: 'student',
-  //     detail: {},
-  //     profile_image_uri:
-  //       'https://images.unsplash.com/photo-1695642579321-fcb1fc79b976?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=302&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY5NzIyMTM4NA&ixlib=rb-4.0.3&q=80&w=300',
-  //     roles: ['student'],
-  //     permissions: [
-  //       'school',
-  //       'student',
-  //       'academic',
-  //       'student',
-  //       'report',
-  //       'information',
-  //       'finance',
-  //     ],
-  //     status: 'absent',
-  //   },
-  // ];
-
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -104,13 +79,14 @@ export default function StaffProfileListContent() {
   const [pickedDate, setPickedDate] = useState(dayjs(new Date()));
 
   let [filteredData, setFilteredData] = useState([]);
+  const [statusFilter, setStatusFilter] = useState('');
+  const [classFilter, setClassFilter] = useState('');
   const [search, setSearch] = useState('');
-  const [typeFilter, setTypeFilter] = useState('');
-  const [permissionFilter, setPermissionFilter] = useState('');
   const [sortBy, setSortBy] = useState('');
   const [sortType, setSortType] = useState('ascending');
   const [sortSettings, setSortSettings] = useState('');
   const [openSortModal, setOpenSortModal] = useState(false);
+  const [classOptions, setClassOptions] = useState([]);
 
   const [openCreateModal, setOpenCreateModal] = useState(false);
 
@@ -125,6 +101,9 @@ export default function StaffProfileListContent() {
       const {
         data: { data },
       } = await AttendanceApi.getStudentClassAttendanceByDateId(dateCode);
+      const fetchStudent = await AcademicAPI.getAllStudentInGroup();
+
+      const studentData = fetchStudent.data.data;
 
       const studentDetailData = await (
         await UsersAPI.getAllUsers('student')
@@ -132,10 +111,22 @@ export default function StaffProfileListContent() {
 
       const newMappedData = studentDetailData.map((user) => {
         const stats = data.find((dt) => user.id == dt.student_id)?.status;
+        const studentClass = studentData.find(
+          (sd) => sd.student_id == user.id
+        )?.student_group_name;
 
-        return { ...user, status: stats ? stats : 'present' };
+        return {
+          ...user,
+          status: stats ? stats : 'present',
+          class: studentClass ? studentClass : '-',
+        };
       });
 
+      const classes = [
+        ...new Set(studentData.map((sd) => sd.student_group_name)),
+      ];
+
+      setClassOptions(classes);
       setStudentAttendanceData(newMappedData);
     } catch (error) {
       console.log(error);
@@ -148,11 +139,12 @@ export default function StaffProfileListContent() {
 
   useEffect(() => {
     let temp = attendanceData.filter((item) => {
+      console.log(item);
       return (
         (item.name.toLowerCase().includes(search.toLowerCase()) ||
           item.username.toLowerCase().includes(search.toLowerCase())) &&
-        item.type.toLowerCase().includes(typeFilter.toLowerCase()) &&
-        (!permissionFilter || item.permissions.includes(permissionFilter))
+        item.class.toLowerCase().includes(classFilter.toLowerCase()) &&
+        item.status.toLowerCase().includes(statusFilter.toLowerCase())
       );
     });
     if (sortSettings && sortSettings.sortBy) {
@@ -186,9 +178,7 @@ export default function StaffProfileListContent() {
       });
     }
     setFilteredData(temp);
-  }, [attendanceData, search, typeFilter, permissionFilter, sortSettings]);
-
-  let [studyProgramFilter, setStudyProgramFilter] = useState('');
+  }, [attendanceData, search, classFilter, statusFilter, sortSettings]);
 
   function Filters() {
     return (
@@ -217,46 +207,9 @@ export default function StaffProfileListContent() {
         <TextField
           select
           size='small'
-          label='Program Studi'
-          value={studyProgramFilter}
-          onChange={(e) => setStudyProgramFilter(e.target.value)}
-          sx={{
-            flex: { xs: 1, lg: 0 },
-            minWidth: 'fit-content',
-            ml: 1,
-          }}
-          InputProps={{
-            sx: { minWidth: 140, width: { xs: '100%', lg: 'fit-content' } },
-            startAdornment: studyProgramFilter && (
-              <Cancel
-                onClick={() => {
-                  setStudyProgramFilter('');
-                }}
-                sx={{
-                  fontSize: 14,
-                  color: 'base.base50',
-                  cursor: 'pointer',
-                  transform: 'translateX(-4px)',
-                  '&:hover': {
-                    color: 'base.base60',
-                  },
-                }}
-              />
-            ),
-          }}
-        >
-          {['IPA', 'IPS', 'IPA-U', 'IPS-U'].map((option, index) => (
-            <MenuItem key={index} value={option}>
-              <Typography fontSize={14}>{option}</Typography>
-            </MenuItem>
-          ))}
-        </TextField>
-        <TextField
-          select
-          size='small'
           label='Kelas'
-          value={studyProgramFilter}
-          onChange={(e) => setStudyProgramFilter(e.target.value)}
+          value={classFilter}
+          onChange={(e) => setClassFilter(e.target.value)}
           sx={{
             flex: { xs: 1, lg: 0 },
             minWidth: 'fit-content',
@@ -264,10 +217,10 @@ export default function StaffProfileListContent() {
           }}
           InputProps={{
             sx: { minWidth: 140, width: { xs: '100%', lg: 'fit-content' } },
-            startAdornment: studyProgramFilter && (
+            startAdornment: classFilter && (
               <Cancel
                 onClick={() => {
-                  setStudyProgramFilter('');
+                  setClassFilter('');
                 }}
                 sx={{
                   fontSize: 14,
@@ -282,20 +235,21 @@ export default function StaffProfileListContent() {
             ),
           }}
         >
-          {['X IPA 1', 'X IPA 2', 'X IPA 3', 'X IPA 4', 'X IPA 5'].map(
-            (option, index) => (
+          {classOptions &&
+            classOptions?.map((option, index) => (
               <MenuItem key={index} value={option}>
                 <Typography fontSize={14}>{option}</Typography>
               </MenuItem>
-            )
-          )}
+            ))}
         </TextField>
         <TextField
           select
           size='small'
           label='Status'
-          value={studyProgramFilter}
-          onChange={(e) => setStudyProgramFilter(e.target.value)}
+          value={statusFilter}
+          onChange={(e) => {
+            setStatusFilter(e.target.value);
+          }}
           sx={{
             flex: { xs: 1, lg: 0 },
             minWidth: 'fit-content',
@@ -303,10 +257,10 @@ export default function StaffProfileListContent() {
           }}
           InputProps={{
             sx: { minWidth: 140, width: { xs: '100%', lg: 'fit-content' } },
-            startAdornment: studyProgramFilter && (
+            startAdornment: statusFilter && (
               <Cancel
                 onClick={() => {
-                  setStudyProgramFilter('');
+                  setStatusFilter('');
                 }}
                 sx={{
                   fontSize: 14,
@@ -321,9 +275,14 @@ export default function StaffProfileListContent() {
             ),
           }}
         >
-          {['Hadir', 'Izin', 'Sakit', 'Alfa'].map((option, index) => (
-            <MenuItem key={index} value={option}>
-              <Typography fontSize={14}>{option}</Typography>
+          {[
+            { slug: 'present', show: 'Hadir' },
+            { slug: 'sick', show: 'Sakit' },
+            { slug: 'leave', show: 'Izin' },
+            { slug: 'absent', show: 'Alpha' },
+          ].map((option, index) => (
+            <MenuItem key={index} value={option.slug}>
+              <Typography fontSize={14}>{option.show}</Typography>
             </MenuItem>
           ))}
         </TextField>

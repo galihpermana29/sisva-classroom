@@ -62,7 +62,6 @@ export default function StaffProfileContent() {
             await AcademicAPI.updateExtra(id, payload);
           }
         } else {
-          console.log(values);
           if (!values.id) {
             const extra_id = values.title;
 
@@ -130,7 +129,7 @@ export default function StaffProfileContent() {
 
   let [filteredData, setFilteredData] = useState([]);
   const [search, setSearch] = useState('');
-  const [studyProgramFilter, setStudyProgramFilter] = useState('');
+  const [extraFilter, setExtraFilter] = useState('');
   const [sortBy, setSortBy] = useState('');
   const [sortType, setSortType] = useState('ascending');
   const [sortSettings, setSortSettings] = useState('');
@@ -196,6 +195,8 @@ export default function StaffProfileContent() {
       };
     });
 
+    console.log(mappedData);
+
     setDataExtra(mappedData);
   };
 
@@ -203,15 +204,6 @@ export default function StaffProfileContent() {
     const resMem = await AcademicAPI.getAllExtraStudent();
 
     const memData = resMem.data.data;
-
-    // {
-    // id: 1,
-    // period_name: 'Tahun Ajaran 2024/2025',
-    // grade: 'X',
-    // extracurricular: 'Paskibra',
-    // class: 'X IPA 1',
-    // student: 'Widi Astuti',
-    // },
 
     const mappedData = memData.map((md, idx) => {
       return {
@@ -289,7 +281,12 @@ export default function StaffProfileContent() {
             .includes(search.toLowerCase());
         }))
       : (temp = dataMemExtra.filter((item) => {
-          return item.student.toLowerCase().includes(search.toLowerCase());
+          return (
+            item.student.toLowerCase().includes(search.toLowerCase()) &&
+            item.extracurricular
+              .toLowerCase()
+              .includes(extraFilter.toLowerCase())
+          );
         }));
     // if (sortSettings && sortSettings.sortBy) {
     //   temp = temp.sort(function (a, b) {
@@ -353,7 +350,7 @@ export default function StaffProfileContent() {
     // }
     setFilteredData(temp);
     formik.setValues(emptyData);
-  }, [search, studyProgramFilter, sortSettings, activeTab, dataExtra]);
+  }, [search, extraFilter, sortSettings, activeTab, dataExtra]);
 
   function Filters() {
     return (
@@ -378,18 +375,18 @@ export default function StaffProfileContent() {
             select
             size='small'
             label='Ekstrakurikuler'
-            value={studyProgramFilter}
-            onChange={(e) => setStudyProgramFilter(e.target.value)}
+            value={extraFilter}
+            onChange={(e) => setExtraFilter(e.target.value)}
             sx={{
               flex: { xs: 1, lg: 0 },
               minWidth: 'fit-content',
             }}
             InputProps={{
               sx: { minWidth: 140, width: { xs: '100%', lg: 'fit-content' } },
-              startAdornment: studyProgramFilter && (
+              startAdornment: extraFilter && (
                 <Cancel
                   onClick={() => {
-                    setStudyProgramFilter('');
+                    setExtraFilter('');
                   }}
                   sx={{
                     fontSize: 14,
@@ -404,17 +401,14 @@ export default function StaffProfileContent() {
               ),
             }}
           >
-            {[
-              'Paskibra',
-              'Pramuka',
-              'Musik',
-              'Tari Tradisional',
-              'Olimpiade Sains',
-            ].map((option, index) => (
-              <MenuItem key={index} value={option}>
-                <Typography fontSize={14}>{option}</Typography>
-              </MenuItem>
-            ))}
+            {dataExtra &&
+              dataExtra.map((option, index) => (
+                <MenuItem key={index} value={option.extracurricular}>
+                  <Typography fontSize={14}>
+                    {option.extracurricular}
+                  </Typography>
+                </MenuItem>
+              ))}
           </TextField>
         </Stack>
       </Stack>
@@ -722,7 +716,7 @@ export default function StaffProfileContent() {
                 }}
                 onClick={() => {
                   setActiveTab(index);
-                  setStudyProgramFilter('');
+                  setExtraFilter('');
                   setSearch('');
                   setSortBy('');
                   setSortSettings('');
