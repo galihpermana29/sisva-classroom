@@ -6,12 +6,6 @@ module.exports = {
   },
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
-    colors: {
-      primary: "#F96756",
-      primary_hover: "#fb7c6e",
-      button_disabled: "#eaeaea",
-      button_text_disabled: "#a0a0a0",
-    },
     screens: {
       sm: "640px",
       // => @media (min-width: 640px) { ... }
@@ -33,6 +27,12 @@ module.exports = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      },
+      colors: {
+        primary: "#F96756",
+        primary_hover: "#fb7c6e",
+        button_disabled: "#eaeaea",
+        button_text_disabled: "#a0a0a0",
       },
     },
   },
