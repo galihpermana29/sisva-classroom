@@ -1,8 +1,8 @@
 import { Select } from "antd";
 import clsx from "clsx";
-import { BiChevronDown } from "react-icons/bi";
 
 import "./style.css";
+import { ChevronDown } from "@untitled-ui/icons-react";
 export function SisvaSelect({
   customSize,
   shadow = false,
@@ -41,7 +41,7 @@ export function SisvaSelect({
       allowClear={allowClear}
       showSearch={showSearch}
       filterOption={filterOption}
-      suffixIcon={<BiChevronDown size={20} />}
+      suffixIcon={<ChevronDown width={20} height={20} />}
       className={clsx(
         customClass,
         shadow ? "shadow-[0_1px_2px_0px_rgb(16,24,40,0.05)]" : "",

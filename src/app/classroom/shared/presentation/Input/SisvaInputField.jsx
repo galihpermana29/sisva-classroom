@@ -1,8 +1,8 @@
+import { SearchLg } from "@untitled-ui/icons-react";
 import { Input, InputNumber, Spin } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import clsx from "clsx";
 import { forwardRef } from "react";
-import { BiSearch } from "react-icons/bi";
 
 export const SisvaInput = forwardRef(
   (
@@ -84,7 +84,11 @@ export function SisvaInputSearch({
         loading ? (
           <Spin size="small" />
         ) : (
-          <BiSearch size={iconSize[customSize] || 20} color="#98A2B3" />
+          <SearchLg
+            width={iconSize[customSize] || 20}
+            height={iconSize[customSize] || 20}
+            color="#98A2B3"
+          />
         )
       }
       className={clsx(
