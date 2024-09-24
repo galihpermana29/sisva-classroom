@@ -4,9 +4,14 @@ module.exports = {
     // due to https://github.com/tailwindlabs/tailwindcss/issues/6602 - buttons disappear
     preflight: false,
   },
-  content: [
-    "./src/**/*.{js,ts,jsx,tsx,mdx}",],
+  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
+    colors: {
+      primary: "#F96756",
+      primary_hover: "#fb7c6e",
+      button_disabled: "#eaeaea",
+      button_text_disabled: "#a0a0a0",
+    },
     screens: {
       sm: "640px",
       // => @media (min-width: 640px) { ... }
