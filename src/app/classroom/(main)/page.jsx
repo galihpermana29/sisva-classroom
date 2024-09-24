@@ -4,5 +4,5 @@ export const metadata = {
 };
 
 export default function Home() {
-  return <div className="min-h-[200vh]">Main Classroom Page</div>;
+  return <>Main Classroom Page</>;
 }
