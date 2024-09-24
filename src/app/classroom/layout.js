@@ -4,6 +4,7 @@ import "../globals.css";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { themeConfig } from "./theme";
 import { store } from "./shared/store/classroom-store";
+import { Provider } from "react-redux";
 
 const theme = createTheme(themeConfig);
 
