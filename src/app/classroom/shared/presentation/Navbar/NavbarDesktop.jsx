@@ -15,7 +15,7 @@ const navItems = [
 const NavItem = ({ icon: Icon, label, path, isActive, onClick }) => (
   <Link
     href={path}
-    className={`flex items-center flex-col gap-2 ${
+    className={`flex items-center mb-2 sm:mb-0 sm:flex-col gap-2 ${
       isActive ? "text-primary" : "text-[#5D5D5D]"
     }`}
     onClick={onClick}
