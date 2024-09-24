@@ -1,0 +1,58 @@
+.ant-btn.ant-btn-text.app-btn {
+  @apply h-auto w-auto inline-flex items-center;
+  &.app-btn-primary {
+    @apply bg-primary text-[#F9FAFB] border-primary;
+  }
+  &.app-btn-primary:hover {
+    @apply bg-primary_hover text-[#F9FAFB];
+  }
+  &.app-btn-primary:disabled {
+    @apply bg-button_disabled border-button_disabled text-button_text_disabled;
+  }
+
+  &.app-btn-secondary {
+    @apply border-primary text-primary;
+  }
+  &.app-btn-secondary:hover {
+    @apply bg-[#fff4f4] text-primary;
+  }
+  &.app-btn-secondary:disabled {
+    @apply bg-button_disabled border-button_disabled text-button_text_disabled;
+  }
+
+  &.app-btn-full-rounded {
+    @apply rounded-full;
+  }
+
+  &.app-btn-sm {
+    @apply text-sm py-2 px-2.5;
+  }
+  &.app-btn-md {
+    @apply text-sm py-2.5 px-3.5;
+  }
+  &.app-btn-lg {
+    @apply py-2.5 px-4;
+  }
+  &.app-btn-xl {
+    @apply py-3 px-[18px];
+  }
+  &.app-btn-2xl {
+    @apply text-lg py-4 px-[22px];
+  }
+
+  &.app-btn-icon-sm {
+    @apply p-2.5 inline-flex items-center;
+  }
+  &.app-btn-icon-md {
+    @apply p-2.5 inline-flex items-center;
+  }
+  &.app-btn-icon-lg {
+    @apply p-3 inline-flex items-center;
+  }
+  &.app-btn-icon-xl {
+    @apply p-[14px] inline-flex items-center;
+  }
+  &.app-btn-icon-2xl {
+    @apply p-4 inline-flex items-center;
+  }
+}

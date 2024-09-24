@@ -4,8 +4,7 @@ module.exports = {
     // due to https://github.com/tailwindlabs/tailwindcss/issues/6602 - buttons disappear
     preflight: false,
   },
-  content: [
-    "./src/**/*.{js,ts,jsx,tsx,mdx}",],
+  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     screens: {
       sm: "640px",
@@ -28,6 +27,12 @@ module.exports = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      },
+      colors: {
+        primary: "#F96756",
+        primary_hover: "#fb7c6e",
+        button_disabled: "#eaeaea",
+        button_text_disabled: "#a0a0a0",
       },
     },
   },

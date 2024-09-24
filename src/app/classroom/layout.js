@@ -3,15 +3,17 @@
 import "../globals.css";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { themeConfig } from "./theme";
+import { store } from "./shared/store/classroom-store";
 
 const theme = createTheme(themeConfig);
-
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body suppressHydrationWarning={true}>
-        <ThemeProvider theme={theme}>{children}</ThemeProvider>
+        <Provider store={store}>
+          <ThemeProvider theme={theme}>{children}</ThemeProvider>
+        </Provider>
       </body>
     </html>
   );
