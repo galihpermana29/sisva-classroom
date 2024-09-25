@@ -23,6 +23,9 @@ module.exports = {
       // => @media (min-width: 1536px) { ... }
     },
     extend: {
+      fontFamily: {
+        kumbh: ["var(--font-kumbh)", "sans-serif"],
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -49,6 +52,13 @@ module.exports = {
         padding: {
           DEFAULT: "16px",
           lg: "250px",
+        },
+      },
+      boxShadow: {
+        card: "0px 1px 12px 0px rgba(0, 0, 0, 0.08)",
+
+        copy_text: {
+          description: "#555555",
         },
       },
       boxShadow: {

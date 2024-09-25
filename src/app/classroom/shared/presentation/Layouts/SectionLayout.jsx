@@ -2,9 +2,9 @@ import { Flex } from "antd";
 
 const SectionLayout = ({ title, suffixContent, children, divider }) => {
   return (
-    <div className="lg:shadow-card lg:p-6 lg:rounded-xl w-full ">
+    <div className={`w-full pr-3 lg:shadow-card lg:p-6 lg:rounded-xl`}>
       <Flex justify="space-between">
-        <h2 className="text-base text-base90 font-bold block mb-3">{title}</h2>
+        <h2 className="block mb-3 text-base font-bold text-base90">{title}</h2>
         {suffixContent}
       </Flex>
       {children}

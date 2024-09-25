@@ -1,0 +1,11 @@
+
+
+@media screen and (min-width: 768px) {
+  .scrollableDiv::-webkit-scrollbar-thumb {
+    background: #fb7c6e;
+  }
+
+  .scrollableDiv:hover::-webkit-scrollbar-thumb {
+    background: #e27063;
+  }
+}
