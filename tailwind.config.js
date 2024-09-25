@@ -33,6 +33,26 @@ module.exports = {
         primary_hover: "#fb7c6e",
         button_disabled: "#eaeaea",
         button_text_disabled: "#a0a0a0",
+        light_red_base: "#E92C2C",
+
+        secondary10: "#FEECE9",
+        secondary20: "#FDD9D4",
+        secondary50: "#F96756",
+        secondary70: "#C63423",
+
+        base10: "#F9FAFB",
+        base90: "#1D2939",
+        text_description: "#555555",
+      },
+      container: {
+        center: true,
+        padding: {
+          DEFAULT: "16px",
+          lg: "250px",
+        },
+      },
+      boxShadow: {
+        card: "0px 1px 12px 0px rgba(0, 0, 0, 0.08)",
       },
     },
   },
