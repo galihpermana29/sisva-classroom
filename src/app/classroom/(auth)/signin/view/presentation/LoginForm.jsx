@@ -9,9 +9,16 @@ import React from "react";
 import { useSignIn } from "../../usecase/use-signin";
 
 const LoginForm = () => {
-  const { form } = useSignIn();
+  const { form, handleSubmitLoginForm, isLoading } = useSignIn();
   return (
-    <Form name="login-form" form={form} layout="vertical" requiredMark={false}>
+    <Form
+      name="login-form"
+      form={form}
+      layout="vertical"
+      requiredMark={false}
+      onFinish={handleSubmitLoginForm}
+      disabled={isLoading}
+    >
       <Form.Item
         className="my-[15px]"
         name="school_code"
@@ -60,7 +67,9 @@ const LoginForm = () => {
       <SisvaButton
         btn_type="primary"
         btn_size="xl"
+        htmlType="submit"
         shape="default mt-2 !w-full"
+        disabled={isLoading}
       >
         Masuk
       </SisvaButton>
