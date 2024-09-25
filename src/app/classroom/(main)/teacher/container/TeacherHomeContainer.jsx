@@ -9,7 +9,7 @@ const TeacherHomeContainer = () => {
     <div className="max-w-6xl mx-auto font-kumbh">
       <HeaderSection />
       <MenuKBMSection />
-      <div className="flex flex-col w-full gap-6 mt-8 md:flex-row">
+      <div className="flex flex-col w-full gap-6 mt-8 mb-6 md:flex-row">
         <TaskSection />
         <ScheduleSection />
       </div>

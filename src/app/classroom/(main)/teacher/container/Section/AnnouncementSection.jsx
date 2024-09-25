@@ -1,11 +1,20 @@
-import CardAnnouncement from "@/app/classroom/shared/presentation/Card/CardAnnouncement";
-import { Flex } from "antd";
+'use client'
+
 import React from "react";
-import AnnouncementImage from "@/assets/images/announcement.png";
-import SectionLayout from "@/app/classroom/shared/presentation/Layouts/SectionLayout";
+import { Flex } from "antd";
 import Link from "next/link";
 
+import CardAnnouncement from "@/app/classroom/shared/presentation/Card/CardAnnouncement";
+import SectionLayout from "@/app/classroom/shared/presentation/Layouts/SectionLayout";
+
+import { useGetAllAnnouncements } from "../../usecase/useGetAllAnnouncements";
+
+import AnnouncementImage from "@/assets/images/announcement.png";
+
+
 const AnnouncementSection = () => {
+    const { data: announcements, isLoading } = useGetAllAnnouncements();
+    
     return (
         <SectionLayout
             title={"Pengumuman"}
@@ -17,12 +26,25 @@ const AnnouncementSection = () => {
         >
             <div className="lg:h-[250px] overflow-scroll lg:pr-3 py-1">
                 <Flex className="flex-row lg:flex-col " gap={12}>
-                    {Array.from({ length: 5 }).map((_, index) => (
+                    {
+                    isLoading ? 
+                    (<div>
+                        {
+                            Array.from({ length: 1 }).map((_, index) => (
+                                <div
+                                    key={index}
+                                    className="rounded-lg flex h-[80px] gap-3 animate-pulse bg-text_description md:mr-3"
+                                ></div>
+                            ))
+                        }
+                    </div>)
+                    :
+                    announcements.map((announcement, index) => (
                         <CardAnnouncement
                             image={AnnouncementImage}
-                            announcementName={"Teacher’s Best Practice Session"}
-                            description={"lorem ipsum"}
-                            key={index}
+                            announcementName={announcement.title}
+                            description={announcement.text}
+                            key={'announcement'+index}
                         />
                     ))}
                 </Flex>
