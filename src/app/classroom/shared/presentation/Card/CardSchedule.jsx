@@ -1,11 +1,11 @@
 import { Flex } from "antd";
-import { BoxTop } from "../box/Box";
+import { BoxTop } from "../Box/Box";
 
-const CardSchedule = ({ isEven }) => {
+const CardSchedule = ({ time, scheduleName, teacherName, isEven }) => {
   return (
     <div>
       <Flex align="center" gap={8}>
-        <p className="text-xs font-medium text-[#29292B]">07:00</p>
+        <p className="text-xs font-medium text-[#29292B]">{time}</p>
         <div
           className={`w-full p-3 rounded-xl border border-secondary50  shadow-card mr-3 relative overflow-hidden ${
             isEven ? "bg-white" : "bg-secondary50"
@@ -29,10 +29,10 @@ const CardSchedule = ({ isEven }) => {
                 isEven ? " text-base90" : "text-white"
               }`}
             >
-              Upacara
+              {scheduleName}
             </h3>
             <p className={`text-xs  ${isEven ? " text-base90" : "text-white"}`}>
-              Maryam S.Pd
+              {teacherName}
             </p>
           </Flex>
         </div>
