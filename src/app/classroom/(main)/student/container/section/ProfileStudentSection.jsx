@@ -8,10 +8,13 @@ import {
   BoxTop,
 } from "@/app/classroom/shared/presentation/Box/Box";
 import { Bell01 } from "@untitled-ui/icons-react/build/cjs";
+import { useQueryStudentProfile } from "@/app/classroom/(main)/student/usecase/useQueryStudentProfile";
 
 const ProfileStudentSection = () => {
+  const student = useQueryStudentProfile();
+
   return (
-    <div className="-mx-3 lg:mx-0">
+    <div className="-mx-3 -mt-7 lg:mx-0 lg:mt-0">
       <div
         className="w-full relative  px-6 py-16 lg:py-10 lg:rounded-xl rounded-b-3xl lg:h-fit h-[202px]"
         style={{
@@ -27,10 +30,14 @@ const ProfileStudentSection = () => {
         <BoxRight />
         <Flex justify="space-between">
           <Flex gap={16} className="flex-col lg:flex-row">
-            <Avatar src={ProfileImage.src} size={54} />
+            <Avatar src={student.student_image || ProfileImage.src} size={54} />
             <Flex vertical gap={4} className="text-white">
-              <h3 className="text-xl font-bold">Halo, Santika! 👋</h3>
-              <p className="lg:text-[15px] sm:text-xs">Siswi. XI MIPA 1</p>
+              <h3 className="text-xl font-bold">
+                Halo, {student.student_name || ""}! 👋
+              </h3>
+              <p className="lg:text-[15px] sm:text-xs">
+                Siswi. {student.student_group_name || ""}
+              </p>
             </Flex>
           </Flex>
           <div className="size-10 rounded-full bg-white flex items-center justify-center">
