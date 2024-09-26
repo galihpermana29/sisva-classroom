@@ -30,7 +30,6 @@ export async function AppFetchApi(url, options = {}) {
   const defaultHeaders = {
     Authorization: `Bearer ${accessToken}`,
     "Content-Type": "application/json",
-    "X-Sisva-Source": process.env.PROVIDED_SOURCE_HEADER || "",
     "X-Sisva-UserID": userData.id,
     "X-Sisva-SchoolID": userData.school_id,
   };

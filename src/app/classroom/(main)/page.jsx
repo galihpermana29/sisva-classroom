@@ -12,6 +12,9 @@ async function getUserById() {
     "/user/v1/users/0710e3fc-86d5-4ada-829e-38952c75a9ea",
     {
       method: "GET",
+      headers: {
+        "X-Sisva-Source": "test",
+      },
     }
   );
 

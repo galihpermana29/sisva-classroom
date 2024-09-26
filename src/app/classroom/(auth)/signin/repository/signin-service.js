@@ -9,7 +9,7 @@ export async function getSchoolByCode(code) {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "X-Sisva-Source": process.env.PROVIDED_SOURCE_HEADER,
+        "X-Sisva-Source": "test",
       },
     }
   );
@@ -28,7 +28,7 @@ export async function postLogin(data) {
       body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
-        "X-Sisva-Source": process.env.PROVIDED_SOURCE_HEADER,
+        "X-Sisva-Source": "test",
       },
     }
   );
@@ -42,7 +42,7 @@ export async function getUserById(id, schoolId, token) {
     {
       method: "GET",
       headers: {
-        "X-Sisva-Source": process.env.PROVIDED_SOURCE_HEADER,
+        "X-Sisva-Source": "test",
         "X-Sisva-UserID": id,
         "X-Sisva-SchoolID": schoolId,
         Authorization: `Bearer ${token}`,
