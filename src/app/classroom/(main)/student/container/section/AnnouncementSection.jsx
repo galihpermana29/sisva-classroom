@@ -1,10 +1,15 @@
+"use client";
+
 import Link from "next/link";
 import { Flex } from "antd";
 import CardAnnouncement from "@/app/classroom/shared/presentation/Card/CardAnnouncement";
 import SectionLayout from "@/app/classroom/shared/presentation/Layouts/SectionLayout";
 import AnnouncementImage from "@/assets/images/announcement.png";
+import { useGetStudentAnnouncement } from "@/app/classroom/(main)/student/usecase/useGetStudentAnnouncement";
+import CardAnnouncementSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardAnnouncementSkeleton";
 
 const AnnouncementSection = () => {
+  const { announcements, isLoading } = useGetStudentAnnouncement();
   return (
     <SectionLayout
       title={"Pengumuman"}
@@ -14,16 +19,28 @@ const AnnouncementSection = () => {
         </Link>
       }
     >
-      <div className="lg:h-[250px] overflow-scroll lg:pr-3 py-1">
-        <Flex className="flex-row lg:flex-col " gap={12}>
-          {[...new Array(10)].map((_, index) => (
-            <CardAnnouncement
-              image={AnnouncementImage}
-              announcementName={"Teacher’s Best Practice Session"}
-              description={"lorem ipsum"}
-              key={index}
-            />
-          ))}
+      <div className="lg:h-full lg:max-h-[250px] overflow-scroll lg:pr-3 py-1">
+        <Flex className="flex-row lg:flex-col p-1 " gap={12}>
+          {isLoading ? (
+            [...new Array(3)].map((_, index) => (
+              <CardAnnouncementSkeleton key={index} />
+            ))
+          ) : announcements.length > 0 ? (
+            announcements.map((announcement, index) => (
+              <>
+                <CardAnnouncement
+                  image={AnnouncementImage}
+                  announcementName={announcement.title}
+                  description={announcement.text}
+                  key={index}
+                />
+              </>
+            ))
+          ) : (
+            <div>
+              <p>Tidak ada pengumuman</p>
+            </div>
+          )}
         </Flex>
       </div>
     </SectionLayout>

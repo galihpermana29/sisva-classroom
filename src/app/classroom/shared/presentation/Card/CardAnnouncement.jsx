@@ -9,6 +9,8 @@ const CardAnnouncement = ({ image, announcementName, description }) => {
           <Image
             src={image}
             alt={announcementName}
+            width={60}
+            height={60}
             className="size-14 rounded-md object-cover overflow-clip "
           />
           <Flex vertical gap={8}>
