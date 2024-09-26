@@ -36,7 +36,7 @@ export const getAllSubjectTeached = async () => {
   return subjectsByTeacher;
 };
 
-const endpoint_user = process.env.NEXT_PUBLIC_API + "/user/v1";
+const endpoint_user = process.env.NEXT_PUBLIC_API_SERVICE_BASE_URL + "/user/v1";
 export const getUserById = async (id = mockUser.teacher_id_mock) => {
   const res = await fetch(`${endpoint_user}/users/${id}`, {
     method: "GET",
@@ -51,12 +51,10 @@ export const getUserById = async (id = mockUser.teacher_id_mock) => {
 
   const { data } = await res.json();
 
-  console.log(data);
-
   return data;
 };
 
-const endpoint_class = process.env.NEXT_PUBLIC_API + "/classroom/v1";
+const endpoint_class = process.env.NEXT_PUBLIC_API_SERVICE_BASE_URL + "/classroom/v1";
 export const getTeacherTasksById = async () => {
   const res = await fetch(`${endpoint_class}/tasks`, {
     method: "GET",
@@ -145,8 +143,6 @@ export const getAllAnnouncements = async () => {
   }
 
   const { data } = await res.json();
-
-  console.log(data);
 
   return data;
 }
