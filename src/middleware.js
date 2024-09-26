@@ -34,6 +34,20 @@ export function middleware(request) {
     }
   }
 
+  /**
+   * Dont delete, this will enable soon to redirect users to the teacher or student page based on their user type while access /classroom
+   */
+
+  /** 
+  if (request.nextUrl.pathname === "/classroom") {
+    if (userData && userData.type === "teacher") {
+      return NextResponse.redirect(new URL("/classroom/teacher", request.url));
+    } else if (userData && userData.type === "student") {
+      return NextResponse.redirect(new URL("/classroom/student", request.url));
+    }
+  }
+    */
+
   return NextResponse.next();
 }
 

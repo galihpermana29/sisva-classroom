@@ -38,8 +38,12 @@ export const useSignIn = () => {
         if (userResponse.success) {
           const decodedToken = jwtDecode(loginResponse.data.token);
           const expirationTime = new Date(decodedToken.exp * 1000);
+          const userDataPayload = {
+            ...userResponse.data,
+            school_id: loginResponse.data.school_id,
+          };
 
-          setCookie("userData", JSON.stringify(userResponse.data), {
+          setCookie("userData", JSON.stringify(userDataPayload), {
             expires: expirationTime,
             path: "/",
           });
