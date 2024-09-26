@@ -6,6 +6,7 @@ import CardSchedule from "@/app/classroom/shared/presentation/Card/CardSchedule"
 import SectionLayout from "@/app/classroom/shared/presentation/Layouts/SectionLayout";
 
 import { useGetAllTeacherClassSchedules } from "../../usecase/useGetAllTeacherClassSchedules";
+import { convertTime12To24 } from "../../usecase/convertTime12To24";
 
 const ScheduleSection = () => {
   const { data: schedules, isLoading } = useGetAllTeacherClassSchedules();
@@ -28,7 +29,7 @@ const ScheduleSection = () => {
               <CardSchedule
                 scheduleName={schedule.class_name}
                 teacherName={schedule.teacher_name}
-                time={schedule.start_time}
+                time={convertTime12To24(schedule.start_time)}
                 key={index}
                 isEven={index % 2 == 0}
               />
@@ -41,3 +42,4 @@ const ScheduleSection = () => {
 };
 
 export default ScheduleSection;
+
