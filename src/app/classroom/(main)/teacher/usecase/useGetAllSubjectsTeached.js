@@ -1,25 +1,36 @@
 import { useEffect, useState } from "react";
-import { getAllSubjectTeached } from "../repositories/apiService";
-
+import { getAllTeachersSubjects } from "../repositories/apiService";
+import { getCookie } from "cookies-next";
 
 export const useGetAllSubjectsTeached = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
 
+  const {id: teacherId} = JSON.parse(getCookie("userData"))
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
 
-      try {
-        const subjects = await getAllSubjectTeached();
-        const subjectsName = subjects.map((subject) => subject.subject_name);
-        setData(subjectsName);
-      } catch (error) {
-        setError(error);
-      } finally {
+      const {
+        data: subjects,
+        message,
+        success,
+      } = await getAllTeachersSubjects();
+
+      if (!success) {
+        setError(message);
         setIsLoading(false);
+        return;
       }
+
+      const subjectsByTeacher = subjects.filter(
+        (subject) => subject.teacher_id == teacherId
+      );
+
+      setData(subjectsByTeacher);
+      setIsLoading(false);
     };
 
     fetchData();

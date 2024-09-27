@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { getAllAnnouncements } from "../repositories/apiService";
 
-
 export const useGetAllAnnouncements = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -11,16 +10,21 @@ export const useGetAllAnnouncements = () => {
     const fetchData = async () => {
       setIsLoading(true);
 
-      try {
-        const announcements = await getAllAnnouncements();
-        setData(announcements);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+      const {
+        data: announcements,
+        message,
+        success,
+      } = await getAllAnnouncements();
 
+      if (!success) {
+        setError(message);
+        setIsLoading(false);
+        return;
+      }
+
+      setData(announcements);
+      setIsLoading(false);
+    };
     fetchData();
   }, []);
 
