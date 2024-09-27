@@ -1,9 +1,9 @@
-import ProfileStudentSection from "./section/ProfileStudentSection";
-import MenuKBMSection from "./section/MenuKBMSection";
-import StudentTaskSection from "./section/StudentTaskSection";
-import StudentScheduleSection from "./section/StudentScheduleSection";
-import AnnouncementSection from "./section/AnnouncementSection";
-import ClassReviewSection from "./section/ClassReviewSection";
+import ProfileStudentSection from "./Section/ProfileStudentSection";
+import MenuKBMSection from "./Section/MenuKBMSection";
+import StudentTaskSection from "./Section/StudentTaskSection";
+import StudentScheduleSection from "./Section/StudentScheduleSection";
+import AnnouncementSection from "./Section/AnnouncementSection";
+import ClassReviewSection from "./Section/ClassReviewSection";
 import { Flex } from "antd";
 
 const StudentHomeContainer = () => {

@@ -14,7 +14,7 @@ const ProfileStudentSection = () => {
   return (
     <div className="-mx-3 -mt-7 lg:mx-0 lg:mt-0">
       <div
-        className="w-full relative  px-6 py-16 lg:py-10 lg:rounded-xl rounded-b-3xl lg:h-fit h-[202px]"
+        className="w-full relative  px-6 py-16 lg:py-10 lg:rounded-xl rounded-b-3xl lg:h-fit h-[202px] "
         style={{
           background:
             "linear-gradient(103deg, #FA8D80 -31.55%, #F96756 53.14%)",
@@ -29,7 +29,7 @@ const ProfileStudentSection = () => {
         <Flex justify="space-between">
           <Flex gap={16} className="flex-col lg:flex-row">
             {isLoading ? (
-              <div className="rounded-full bg-text_description animate-pulse size-14" />
+              <div className="rounded-full bg-text_description/40 animate-pulse size-14" />
             ) : (
               <Avatar
                 src={student.student_image || ProfileImage.src}
@@ -39,8 +39,8 @@ const ProfileStudentSection = () => {
             <Flex vertical gap={4} className="text-white">
               {isLoading ? (
                 <>
-                  <div className="w-40 h-6 rounded-md bg-text_description animate-pulse" />
-                  <div className="w-20 h-4 bg-text_description rounded-md animate-pulse" />
+                  <div className="w-40 h-6 rounded-md bg-text_description/40 animate-pulse" />
+                  <div className="w-20 h-4 bg-text_description/40 rounded-md animate-pulse" />
                 </>
               ) : (
                 <>

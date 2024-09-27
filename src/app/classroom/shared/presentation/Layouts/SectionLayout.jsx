@@ -9,7 +9,7 @@ const SectionLayout = ({ title, suffixContent, children, divider }) => {
       </Flex>
       {children}
       {divider && (
-        <Flex align="center" className="mt-2 -mb-6 max-sm:hidden">
+        <Flex align="center" className="mt-2 -mb-4 max-sm:hidden">
           <div className="w-2 h-1.5 rounded-full bg-[#2A393F]" />
           <div className="w-full h-[1px] bg-[#2A393F]" />
         </Flex>

@@ -32,7 +32,7 @@ const SisvaNavbar = () => {
   const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
-    <nav className="bg-white px-4 sm:px-5 py-3 sm:py-4 sticky top-0 border-b border-b-[#F5F5F5] shadow-md">
+    <nav className="bg-white px-4 sm:px-5 py-3 sm:py-4 sticky top-0 border-b border-b-[#F5F5F5] shadow-md z-10">
       <div className="flex justify-between items-center">
         <Image src={BrandLogo} alt="brand-logo" className="w-24 sm:w-auto" />
         <div className="hidden sm:flex items-center gap-7">

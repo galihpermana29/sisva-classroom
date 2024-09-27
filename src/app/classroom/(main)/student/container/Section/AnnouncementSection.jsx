@@ -7,6 +7,7 @@ import SectionLayout from "@/app/classroom/shared/presentation/Layouts/SectionLa
 import AnnouncementImage from "@/assets/images/announcement.png";
 import { useGetStudentAnnouncement } from "@/app/classroom/(main)/student/usecase/useGetStudentAnnouncement";
 import CardAnnouncementSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardAnnouncementSkeleton";
+import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
 
 const AnnouncementSection = () => {
   const { announcements, isLoading } = useGetStudentAnnouncement();
@@ -19,7 +20,7 @@ const AnnouncementSection = () => {
         </Link>
       }
     >
-      <div className="lg:h-full lg:max-h-[250px] overflow-scroll lg:pr-3 py-1">
+      <div className="lg:h-full lg:max-h-[250px] overflow-auto lg:pr-3 py-1">
         <Flex className="flex-row lg:flex-col p-1 " gap={12}>
           {isLoading ? (
             [...new Array(3)].map((_, index) => (
@@ -37,8 +38,11 @@ const AnnouncementSection = () => {
               </>
             ))
           ) : (
-            <div>
-              <p>Tidak ada pengumuman</p>
+            <div className="mx-auto">
+              <EmptyState
+                title="Tidak ada Pengumuman Tersedia!"
+                description="Tidak ada pengumuman yang tersedia untuk saat ini."
+              />
             </div>
           )}
         </Flex>
