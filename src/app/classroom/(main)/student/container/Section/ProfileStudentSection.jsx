@@ -1,6 +1,6 @@
 "use client";
 import { Avatar, Badge, Flex } from "antd";
-import ProfileImage from "@/assets/images/Profile.png";
+import PlaceholderProfile from "@/assets/placeholder.jpg";
 import {
   BoxLeft,
   BoxRight,
@@ -32,8 +32,9 @@ const ProfileStudentSection = () => {
               <div className="rounded-full bg-text_description/40 animate-pulse size-14" />
             ) : (
               <Avatar
-                src={student.student_image || ProfileImage.src}
-                size={54}
+                src={student.student_image || PlaceholderProfile.src}
+                alt={`profile image ${student.student_name}`}
+                size={56}
               />
             )}
             <Flex vertical gap={4} className="text-white">
