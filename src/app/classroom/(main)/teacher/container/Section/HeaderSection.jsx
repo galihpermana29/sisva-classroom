@@ -48,7 +48,7 @@ const HeaderSection = () => {
           ) : (
             <>
               <h2 className="text-xl font-bold text-white">
-                Halo, {profile.name}! 👋
+                Halo, {profile?.name}! 👋
               </h2>
               <p className="text-white text-[15px] line-clamp-1">
                 Guru{" "}

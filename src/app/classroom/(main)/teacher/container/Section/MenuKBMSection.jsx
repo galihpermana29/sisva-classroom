@@ -5,10 +5,10 @@ import Link from "next/link";
 
 const MenuKBMSection = () => {
   return (
-    <div className="mt-8 ">
+    <div className="mt-10 ">
       <h2 className="text-base font-bold md:hidden">Fitur</h2>
 
-      <div className="grid grid-cols-3 gap-12 mx-auto w-fit">
+      <div className="grid grid-cols-3 gap-4 mt-4 md:gap-12 md:mx-auto w-fit">
         {getMenuKBM().map((menu, index) => (
           <Link href="" key={"kbmMenu_" + index}>
             <div className="flex flex-col items-center">

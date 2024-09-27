@@ -7,6 +7,8 @@ import SectionLayout from "@/app/classroom/shared/presentation/Layouts/SectionLa
 
 import { useGetAllTeacherClassSchedules } from "../../usecase/useGetAllTeacherClassSchedules";
 import { convertTime12To24 } from "../../usecase/convertTime12To24";
+import CardScheduleSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardScheduleSkeleton";
+import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
 
 const ScheduleSection = () => {
   const { data: schedules, isLoading } = useGetAllTeacherClassSchedules();
@@ -18,12 +20,14 @@ const ScheduleSection = () => {
           {isLoading ? (
             <div className="grid gap-2">
               {Array.from({ length: 2 }).map((_, index) => (
-                <div
-                  key={index}
-                  className="rounded-lg flex h-[70px] gap-3 animate-pulse bg-text_description md:mr-3"
-                ></div>
+                <CardScheduleSkeleton key={index} isEven={index % 2 == 0} />
               ))}
             </div>
+          ) : !schedules | schedules.length == 0 ? (
+            <EmptyState
+              title="Tidak ada jadwal"
+              description="Tidak ada jadwal kelas hari ini"
+            />
           ) : (
             schedules.map((schedule, index) => (
               <CardSchedule
@@ -42,4 +46,3 @@ const ScheduleSection = () => {
 };
 
 export default ScheduleSection;
-

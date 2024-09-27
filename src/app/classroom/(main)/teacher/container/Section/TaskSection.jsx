@@ -7,6 +7,8 @@ import { Flex } from "antd";
 import styles from "./TaskSection.module.css";
 import { useGetAllTeacherTasks } from "../../usecase/useGetAllTeacherTasks";
 import { convertDateTime12To24 } from "../../usecase/convertDateTime12To24";
+import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
+import CardTaskSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardTaskSkeleton";
 
 const TaskSection = () => {
   const { data: tasks, isLoading } = useGetAllTeacherTasks();
@@ -18,21 +20,24 @@ const TaskSection = () => {
           {isLoading ? (
             <div className="flex gap-2 md:flex-col">
               {Array.from({ length: 3 }).map((_, index) => (
-                <div className="rounded-lg flex h-[110px] gap-3 animate-pulse bg-text_description md:mr-3"></div>
+                <CardTaskSkeleton key={index} />
               ))}
             </div>
+          ) : !tasks || tasks.length == 0 ? (
+            <EmptyState
+              title="Tidak ada tugas"
+              description="Tidak ada tugas yang diberikan oleh guru"
+            />
           ) : (
-            tasks.map((task, index) => {
-              return (
-                <Cardtask
-                  key={index}
-                  deadline={convertDateTime12To24(task.deadline)}
-                  teacherName={task.teacher_name}
-                  taskName={task.name}
-                  lessonName={task.subject_name}
-                />
-              );
-            })
+            tasks.map((task, index) => (
+              <Cardtask
+                key={task.id || index}
+                deadline={convertDateTime12To24(task.deadline)}
+                teacherName={task.teacher_name}
+                taskName={task.name}
+                lessonName={task.subject_name}
+              />
+            ))
           )}
         </Flex>
       </div>
@@ -41,4 +46,3 @@ const TaskSection = () => {
 };
 
 export default TaskSection;
-
