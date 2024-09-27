@@ -11,7 +11,7 @@ const Cardtask = ({ taskName, lessonName, teacherName, deadline }) => {
           <p className="text-xs my-1">{lessonName}</p>
           <p className="text-xs">{teacherName}</p>
         </div>
-        <Flex justify="space-between" className="mt-0.5">
+        <Flex justify="space-between" className="mt-0.5" gap={2}>
           <p className="text-[10px]">Deadline</p>
           <p className="text-[10px]">{deadline}</p>
         </Flex>

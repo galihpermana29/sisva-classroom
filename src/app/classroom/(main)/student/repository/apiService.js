@@ -1,18 +1,13 @@
-const headers = {
-  "X-Sisva-Source": "academic.curriculum.test",
-  "X-Sisva-UserID": "0710e3fc-86d5-4ada-829e-38952c75a9ea",
-  "X-Sisva-SchoolID": "0a49a174-9ff5-464d-86c2-3eb1cd0b284e",
-  Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMDcxMGUzZmMtODZkNS00YWRhLTgyOWUtMzg5NTJjNzVhOWVhIiwidXNlcm5hbWUiOiJkZXN0YSIsInNjaG9vbF9pZCI6IjBhNDlhMTc0LTlmZjUtNDY0ZC04NmMyLTNlYjFjZDBiMjg0ZSIsImV4cCI6MTcyNzM3MDc1Mn0.2fGurS7Atq-QicUAUK2JylXfAKgP9LdeQzB3aM-Bn2s`,
-};
-
-const BASE_URL = process.env.NEXT_PUBLIC_API_SERVICE_BASE_URL;
+import { AppFetchApi } from "@/app/classroom/shared/usecase/global-fetch-api";
 
 export async function getStudentGroups() {
-  const studentsRes = await fetch(
-    `${BASE_URL}/academic/v1/student-groups/students`,
+  const studentsRes = await AppFetchApi(
+    "/academic/v1/student-groups/students",
     {
       method: "GET",
-      headers: headers,
+      headers: {
+        "X-Sisva-Source": "academic.curriculum.test",
+      },
     }
   );
   if (!studentsRes.ok) {
@@ -23,9 +18,11 @@ export async function getStudentGroups() {
 }
 
 export async function getUserById(id) {
-  const userRes = await fetch(`${BASE_URL}/user/v1/users/${id}`, {
+  const userRes = await AppFetchApi(`/user/v1/users/${id}`, {
     method: "GET",
-    headers: headers,
+    headers: {
+      "X-Sisva-Source": "academic.curriculum.test",
+    },
   });
 
   if (!userRes.ok) {
@@ -37,11 +34,13 @@ export async function getUserById(id) {
 }
 
 export async function getAllClasses() {
-  const classesRes = await fetch(
-    `${BASE_URL}/academic/v1/student-groups?type=homeroom`,
+  const classesRes = await AppFetchApi(
+    "/academic/v1/student-groups?type=homeroom",
     {
       method: "GET",
-      headers: headers,
+      headers: {
+        "X-Sisva-Source": "academic.curriculum.test",
+      },
     }
   );
 
@@ -54,9 +53,11 @@ export async function getAllClasses() {
 }
 
 export async function getAllTasks() {
-  const tasksRes = await fetch(`${BASE_URL}/classroom/v1/tasks`, {
+  const tasksRes = await AppFetchApi("/classroom/v1/tasks", {
     method: "GET",
-    headers: headers,
+    headers: {
+      "X-Sisva-Source": "academic.curriculum.test",
+    },
   });
 
   if (!tasksRes.ok) {
@@ -68,9 +69,11 @@ export async function getAllTasks() {
 }
 
 export async function getAllClassSchedules() {
-  const schedulesRes = await fetch(`${BASE_URL}/academic/v1/class-schedules`, {
+  const schedulesRes = await AppFetchApi(`/academic/v1/class-schedules`, {
     method: "GET",
-    headers: headers,
+    headers: {
+      "X-Sisva-Source": "academic.curriculum.test",
+    },
   });
 
   if (!schedulesRes.ok) {
@@ -82,13 +85,12 @@ export async function getAllClassSchedules() {
 }
 
 export async function getAllAnnouncements() {
-  const announcementsRes = await fetch(
-    `${BASE_URL}/academic/v1/announcements`,
-    {
-      method: "GET",
-      headers: headers,
-    }
-  );
+  const announcementsRes = await AppFetchApi("/academic/v1/announcements", {
+    method: "GET",
+    headers: {
+      "X-Sisva-Source": "academic.curriculum.test",
+    },
+  });
 
   if (!announcementsRes.ok) {
     throw new Error("Failed to fetch user data");
