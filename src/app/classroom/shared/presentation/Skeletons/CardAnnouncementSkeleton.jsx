@@ -9,10 +9,10 @@ const CardAnnouncementSkeleton = () => {
 
           <Flex vertical gap={8}>
             <div className="w-32 h-4 bg-gray-300 rounded"></div>
-            <div className="w-48 h-3 bg-gray-300 rounded max-sm:hidden"></div>
+            <div className="max-sm:hidden w-48 h-3 bg-gray-300 rounded"></div>
           </Flex>
         </Flex>
-        <div className="w-full h-3 bg-gray-300 rounded lg:hidden"></div>
+        <div className="lg:hidden w-full h-3 bg-gray-300 rounded"></div>
       </Flex>
     </div>
   );

@@ -1,5 +1,5 @@
 import { Flex } from "antd";
-import OptionMenu from "../option/OptionMenu";
+import OptionMenu from "../Option/OptionMenu";
 import TugasIcon from "@/assets/svgs/tugas.svg";
 import BahanAjarIcon from "@/assets/svgs/bahan-ajar.svg";
 import AbsensiIcon from "@/assets/svgs/absensi.svg";
