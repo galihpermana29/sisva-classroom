@@ -11,6 +11,7 @@ import { useGetAllAnnouncements } from "../../usecase/useGetAllAnnouncements";
 
 import AnnouncementImage from "@/assets/images/announcement.png";
 import CardAnnouncementSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardAnnouncementSkeleton";
+import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
 
 const AnnouncementSection = () => {
   const { data: announcements, isLoading } = useGetAllAnnouncements();
@@ -28,7 +29,12 @@ const AnnouncementSection = () => {
         <Flex className="flex-row lg:flex-col " gap={12}>
           {isLoading ? (
             <CardAnnouncementSkeleton />
-          ) : !announcements | announcements.length == 0  (
+          ) : !announcements | (announcements.length == 0) ? (
+            <EmptyState
+              title="Belum ada pengumuman"
+              description="Tidak ada pengumuman yang tersedia saat ini"
+            />
+          ) : (
             announcements.map((announcement, index) => (
               <CardAnnouncement
                 image={AnnouncementImage}

@@ -26,7 +26,7 @@ const TaskSection = () => {
           ) : !tasks || tasks.length == 0 ? (
             <EmptyState
               title="Tidak ada tugas"
-              description="Tidak ada tugas yang diberikan oleh guru"
+              description="Tidak ada tugas yang sedang aktif"
             />
           ) : (
             tasks.map((task, index) => (
