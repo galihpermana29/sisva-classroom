@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { getUserById } from "../repositories/apiService";
-import { getCookie } from "cookies-next";
+import { getUserDataCookie } from "./getUserDataCookie";
 
 export const useGetUserProfile = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
 
-  const {id: teacherId} = JSON.parse(getCookie("userData"))
+  const {id: teacherId} = getUserDataCookie()
 
   useEffect(() => {
     const fetchData = async () => {

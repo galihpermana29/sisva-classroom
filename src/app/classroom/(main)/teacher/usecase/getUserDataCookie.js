@@ -1,10 +1,6 @@
-'use server'
-
-import { cookies } from "next/headers";
+import { getCookie } from "cookies-next";
 
 export function getUserDataCookie() {
-  const cookieStore = cookies();
-  const userDataCookie = cookieStore.get("userData")?.value;
-  const userData = userDataCookie ? JSON.parse(userDataCookie) : null;
-  return userData;
+  const userData = getCookie("userData");
+  return userData ? JSON.parse(userData) : {};
 }
