@@ -1,31 +1,81 @@
+import { useState, useEffect } from "react";
 import {
   getAllClasses,
   getAllClassSchedules,
   getStudentGroups,
 } from "../repository/apiService";
-import getUserCookie from "./getUserCookie";
+import { getCookie } from "cookies-next";
 
-export async function useGetStudentSchedule() {
-  const userData = getUserCookie();
+export function useGetStudentSchedule() {
+  const [schedules, setSchedules] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const studentsGroup = await getStudentGroups();
-  const foundStudent = studentsGroup.find(
-    (student) => student.student_id === userData.id
-  );
-  const studentGroupId = foundStudent.student_group_id;
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      const user = JSON.stringify(getCookie("userData"));
 
-  const classes = await getAllClasses();
+      const {
+        data: studentGroups,
+        success,
+        message,
+      } = await getStudentGroups();
 
-  const classStudent = classes.filter(
-    (studentClass) => studentClass.student_group_id == studentGroupId
-  );
+      if (!success) {
+        setError(message);
+        setIsLoading(false);
+        return;
+      }
 
-  const schedules = await getAllClassSchedules();
+      const foundStudent = studentGroups.find(
+        (student) => student.student_id === user.id
+      );
+      const studentGroupId = foundStudent.student_group_id;
 
-  const filteredSchedule = classStudent.map((cls) => {
-    const schedule = schedules.filter((sch) => sch.class_id === cls.id);
-    return schedule;
-  });
+      const {
+        data: classes,
+        success: classesResSuccess,
+        message: classesResMessage,
+      } = await getAllClasses();
 
-  return filteredSchedule;
+      if (!classesResSuccess) {
+        setError(classesResMessage);
+        setIsLoading(false);
+        return;
+      }
+
+      const classStudent = classes.filter(
+        (studentClass) => studentClass.student_group_id == studentGroupId
+      );
+
+      const {
+        data: schedules,
+        success: scheduleResSuccess,
+        message: scheduleResMessage,
+      } = await getAllClassSchedules();
+
+      if (!scheduleResSuccess) {
+        setError(scheduleResMessage);
+        setIsLoading(false);
+        return;
+      }
+
+      const filteredSchedule = classStudent.map((cls) => {
+        const schedule = schedules.filter((sch) => sch.class_id === cls.id);
+        return schedule;
+      });
+
+      setSchedules(filteredSchedule);
+      setIsLoading(false);
+    };
+
+    fetchData();
+  }, []);
+
+  return {
+    schedules,
+    error,
+    isLoading,
+  };
 }

@@ -1,4 +1,7 @@
+"use server";
+
 import { AppFetchApi } from "@/app/classroom/shared/usecase/global-fetch-api";
+import { serverResponseHandler } from "@/app/classroom/shared/usecase/server-response-handler";
 
 export async function getStudentGroups() {
   const studentsRes = await AppFetchApi(
@@ -10,11 +13,11 @@ export async function getStudentGroups() {
       },
     }
   );
-  if (!studentsRes.ok) {
-    throw new Error("Failed to fetch student data");
-  }
-  const { data } = await studentsRes.json();
-  return data;
+  return serverResponseHandler(
+    studentsRes,
+    "Failed to get student data",
+    "Success to get student data"
+  );
 }
 
 export async function getUserById(id) {
@@ -25,12 +28,11 @@ export async function getUserById(id) {
     },
   });
 
-  if (!userRes.ok) {
-    throw new Error("Failed to fetch user data");
-  }
-
-  const { data } = await userRes.json();
-  return data;
+  return serverResponseHandler(
+    userRes,
+    "Failed to get user data",
+    "Success to get user data"
+  );
 }
 
 export async function getAllClasses() {
@@ -44,12 +46,11 @@ export async function getAllClasses() {
     }
   );
 
-  if (!classesRes.ok) {
-    throw new Error("Failed to fetch user data");
-  }
-
-  const { data } = await classesRes.json();
-  return data;
+  return serverResponseHandler(
+    classesRes,
+    "Failed to get all classess ",
+    "Success to get all classes"
+  );
 }
 
 export async function getAllTasks() {
@@ -60,12 +61,11 @@ export async function getAllTasks() {
     },
   });
 
-  if (!tasksRes.ok) {
-    throw new Error("Failed to fetch user data");
-  }
-
-  const { data } = await tasksRes.json();
-  return data;
+  return serverResponseHandler(
+    tasksRes,
+    "Failed to get all tasks",
+    "Success to get all tasks"
+  );
 }
 
 export async function getAllClassSchedules() {
@@ -76,12 +76,11 @@ export async function getAllClassSchedules() {
     },
   });
 
-  if (!schedulesRes.ok) {
-    throw new Error("Failed to fetch user data");
-  }
-
-  const { data } = await schedulesRes.json();
-  return data;
+  return serverResponseHandler(
+    schedulesRes,
+    "Failed to get all schedules",
+    "Success to get all schedules"
+  );
 }
 
 export async function getAllAnnouncements() {
@@ -92,10 +91,9 @@ export async function getAllAnnouncements() {
     },
   });
 
-  if (!announcementsRes.ok) {
-    throw new Error("Failed to fetch user data");
-  }
-
-  const { data } = await announcementsRes.json();
-  return data;
+  return serverResponseHandler(
+    announcementsRes,
+    "Failed to get all announcements",
+    "Success to get all announcements"
+  );
 }
