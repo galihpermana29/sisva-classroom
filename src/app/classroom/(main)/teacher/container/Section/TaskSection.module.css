@@ -1,0 +1,7 @@
+.scrollableDiv::-webkit-scrollbar-thumb:vertical {
+  background: #fb7c6e;
+}
+
+.scrollableDiv:hover::-webkit-scrollbar-thumb:vertical {
+  background: #e27063;
+}
