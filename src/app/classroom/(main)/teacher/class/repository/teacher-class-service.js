@@ -27,7 +27,7 @@ export async function getTeacherClassList() {
   );
 
   if (structuredResponse.success) {
-    const session = getServerSession();
+    const session = await getServerSession();
     const teacherId = session?.id;
 
     // Filter classes by teacher id
