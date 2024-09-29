@@ -6,7 +6,6 @@ import {
 } from "../repository/signin-service";
 import toast from "react-hot-toast";
 import { useState } from "react";
-import { jwtDecode } from "jwt-decode";
 import { setCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 
@@ -36,8 +35,9 @@ export const useSignIn = () => {
         );
 
         if (userResponse.success) {
-          const decodedToken = jwtDecode(loginResponse.data.token);
-          const expirationTime = new Date(decodedToken.exp * 1000);
+          // const expirationTime = new Date(Date.now() + decodedToken.exp * 1000);
+          const expirationTime = new Date(Date.now() + 24 * 60 * 60 * 1000);
+
           const userDataPayload = {
             ...userResponse.data,
             school_id: loginResponse.data.school_id,

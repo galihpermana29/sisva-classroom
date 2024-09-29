@@ -1,0 +1,152 @@
+import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  getGradeDropdownById,
+  getStudentGroupList,
+} from "../../repository/teacher-class-service";
+import {
+  createDropdown,
+  getUniqueClasses,
+  searchFilter,
+} from "../data-mapper-service";
+import { useDebounce } from "use-debounce";
+
+export const useTeacherClass = (initialData) => {
+  const [teacherClassData, setTeacherClassData] = useState(initialData);
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [dropDownData, setDropdownData] = useState({
+    periodData: initialData.periodData,
+    studyProgramDropdown: [],
+    gradeDropdown: [],
+    classroomDropdown: getUniqueClasses(initialData.teacherClass),
+  });
+
+  const [queryFilter, setQueryFilter] = useState({
+    period: "",
+    grade: "",
+    study_program: "",
+    search: "",
+    classroom: "",
+  });
+
+  const hasActiveFilters = useMemo(
+    () => Object.values(queryFilter).some((value) => value !== ""),
+    [queryFilter]
+  );
+
+  const [debouncedQueryFilter] = useDebounce(queryFilter, 200);
+
+  const fetchStudentGroupList = async () => {
+    setIsLoading(true);
+    const response = await getStudentGroupList(
+      queryFilter.period,
+      queryFilter.grade,
+      queryFilter.study_program
+    );
+    if (response.success) {
+      let filteredClassList = initialData.teacherClass.filter((classItem) =>
+        response.data.some(
+          (studentGroup) => studentGroup.id === classItem.student_group_id
+        )
+      );
+
+      if (queryFilter.classroom) {
+        filteredClassList = filteredClassList.filter(
+          (classItem) => classItem.student_group_name === queryFilter.classroom
+        );
+      }
+
+      if (queryFilter.search) {
+        const searchTerm = queryFilter.search.toLowerCase();
+        filteredClassList = searchFilter(filteredClassList, searchTerm);
+      }
+
+      setIsLoading(false);
+      setTeacherClassData((prev) => ({
+        ...prev,
+        teacherClass: filteredClassList,
+      }));
+    }
+  };
+
+  useEffect(() => {
+    if (hasActiveFilters) {
+      fetchStudentGroupList();
+    }
+  }, [debouncedQueryFilter]);
+
+  const handlePeriodFilter = (e) => {
+    const filteredPeriodList = teacherClassData.periodData.find(
+      (period) => period.id === e
+    );
+    setDropdownData((prev) => ({
+      ...prev,
+      studyProgramDropdown: filteredPeriodList?.study_programs,
+    }));
+
+    handleFilterChange("period", e);
+  };
+
+  const handleStudyProgramFilter = async (e) => {
+    const studyProgram = await getGradeDropdownById(e);
+    if (studyProgram.success) {
+      setDropdownData((prev) => ({
+        ...prev,
+        gradeDropdown: studyProgram.data?.grades,
+      }));
+    }
+
+    handleFilterChange("study_program", e);
+  };
+
+  const handleFilterChange = useCallback((filterName, value) => {
+    setQueryFilter((prevFilter) => ({
+      ...prevFilter,
+      [filterName]: value,
+    }));
+  }, []);
+
+  const mappedDropdownData = useMemo(
+    () => ({
+      periodData: createDropdown(dropDownData.periodData, "name", "id"),
+      studyProgramDropdown: createDropdown(
+        dropDownData.studyProgramDropdown,
+        "code",
+        "id"
+      ),
+      gradeDropdown: createDropdown(dropDownData.gradeDropdown),
+      classroomDropdown: createDropdown(
+        dropDownData.classroomDropdown,
+        "student_group_name",
+        "student_group_name"
+      ),
+    }),
+    [dropDownData]
+  );
+
+  const dropDownMappedHandler = useMemo(
+    () => ({
+      handlePeriodFilter,
+      handleStudyProgramFilter,
+    }),
+    [handlePeriodFilter, handleStudyProgramFilter]
+  );
+
+  const classData = useMemo(
+    () =>
+      hasActiveFilters
+        ? teacherClassData.teacherClass
+        : initialData.teacherClass,
+    [hasActiveFilters, teacherClassData.teacherClass, initialData.teacherClass]
+  );
+
+  return {
+    isLoading,
+    classData,
+    dropDownData: mappedDropdownData,
+
+    dropdownHandler: dropDownMappedHandler,
+    generalHandleFilter: handleFilterChange,
+  };
+};
