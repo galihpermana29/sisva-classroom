@@ -37,11 +37,7 @@ const SisvaNavbar = () => {
           <Image src={BrandLogo} alt="brand-logo" />
           <div className="flex items-center gap-7">
             {navItems.map((item) => (
-              <NavItem
-                key={item.path}
-                {...item}
-                isActive={pathname.startsWith(item.path)}
-              />
+              <NavItem key={item.path} {...item} isActive={item.isActive} />
             ))}
           </div>
         </div>
@@ -54,11 +50,7 @@ const SisvaNavbar = () => {
       >
         <div className="flex justify-around items-center py-6">
           {navItems.map((item) => (
-            <NavItem
-              key={item.path}
-              {...item}
-              isActive={pathname.startsWith(item.path)}
-            />
+            <NavItem key={item.path} {...item} isActive={item.isActive} />
           ))}
         </div>
       </nav>
