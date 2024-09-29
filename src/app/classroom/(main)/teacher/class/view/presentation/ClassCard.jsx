@@ -32,7 +32,9 @@ const ClassCard = ({ subject, group, taskName, timeStamp, isEmptyTask }) => {
             <h2 className="text-lg font-[500] text-[#1D2939] mb-1">
               {taskName}
             </h2>
-            <p className="text-sm text-[#555]">{timeStamp}</p>
+            <p className="text-sm text-[#555]">
+              {timeStamp.replace("+00:00", "")}
+            </p>
           </>
         )}
       </div>

@@ -53,7 +53,7 @@ export const useSignIn = () => {
             path: "/",
           });
 
-          router.push("/classroom");
+          router.push(`/classroom/${userResponse.data.type}`);
           toast.success(loginResponse.message);
         } else {
           toast.error("Login Failed, " + userResponse.message);
