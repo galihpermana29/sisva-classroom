@@ -11,7 +11,7 @@ const EmptyState = ({ title, description }) => {
           alt="empty-state"
           className="size-32 lg:size-40"
         />
-        <h1 className="text-sm lg:text-base text-primary100 font-semibold">
+        <h1 className="text-sm font-semibold lg:text-base text-primary100">
           {title}
         </h1>
         <p className="text-xs lg:text-sm text-base50 mt-0.5 lg:mt-2">

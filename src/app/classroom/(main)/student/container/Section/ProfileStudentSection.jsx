@@ -1,6 +1,6 @@
 "use client";
 
-import { Avatar, Badge, Flex } from "antd";
+import { Avatar, Badge } from "antd";
 import PlaceholderProfile from "@/assets/placeholder.jpg";
 import {
   BoxLeft,
@@ -27,8 +27,8 @@ const ProfileStudentSection = () => {
           rotate={-67.677}
         />
         <BoxRight />
-        <Flex justify="space-between">
-          <Flex gap={16} className="flex-col lg:flex-row">
+        <div className="flex justify-between">
+          <div className="flex flex-col lg:flex-row gap-4">
             {isLoading ? (
               <div className="rounded-full bg-text_description/40 animate-pulse size-14" />
             ) : (
@@ -39,7 +39,7 @@ const ProfileStudentSection = () => {
               />
             )}
 
-            <Flex vertical gap={4} className="text-white">
+            <div className="flex flex-col gap-1 text-white">
               {isLoading ? (
                 <>
                   <div className="w-40 h-6 rounded-md bg-text_description/40 animate-pulse" />
@@ -55,14 +55,14 @@ const ProfileStudentSection = () => {
                   </p>
                 </>
               )}
-            </Flex>
-          </Flex>
+            </div>
+          </div>
           <div className="size-10 rounded-full bg-white flex items-center justify-center">
             <Badge count={5} overflowCount={9} offset={[-3, 1]} size="small">
               <Bell01 className="text-[rgb(68,68,68)]" size={20} />
             </Badge>
           </div>
-        </Flex>
+        </div>
       </div>
     </div>
   );

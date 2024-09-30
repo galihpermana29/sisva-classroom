@@ -56,7 +56,7 @@ export default function Home() {
               className="mt-[1svh] px-[3svh] text-[2svh] lg:text-[2.2svh]  py-[1.25svh] font-semibold text-white kumb-sans rounded-[1svh]"
               style={{
                 background:
-                "linear-gradient(142deg, #F96756  11.11%, #F03721  86.15%)",
+                  "linear-gradient(142deg, #F96756  11.11%, #F03721  86.15%)",
               }}
             >
               Sisva Classroom

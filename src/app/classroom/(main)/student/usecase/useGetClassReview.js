@@ -10,7 +10,7 @@ import {
 export function useGetClassReviews() {
   const [classReviews, setClassReviews] = useState([]);
   const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {

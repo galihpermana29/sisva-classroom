@@ -13,7 +13,7 @@ const StudentTaskSection = () => {
   return (
     <SectionLayout title={"Tugas yang Akan Datang"}>
       <div className="lg:h-full lg:max-h-[228px] p-1 overflow-auto">
-        <Flex gap={12} className="flex-row lg:flex-col ">
+        <div className="flex flex-row lg:flex-col gap-3">
           {isLoading ? (
             [...new Array(3)].map((_, index) => (
               <CardTaskSkeleton key={index} />
@@ -36,7 +36,7 @@ const StudentTaskSection = () => {
               />
             </div>
           )}
-        </Flex>
+        </div>
       </div>
     </SectionLayout>
   );

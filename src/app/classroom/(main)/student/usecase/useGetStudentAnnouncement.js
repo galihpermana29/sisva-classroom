@@ -3,7 +3,7 @@ import { getAllAnnouncements } from "../repository/apiService";
 
 export function useGetStudentAnnouncement() {
   const [announcements, setAnnouncements] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
