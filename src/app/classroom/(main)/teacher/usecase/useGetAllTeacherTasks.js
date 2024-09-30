@@ -7,7 +7,7 @@ export const useGetAllTeacherTasks = () => {
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
 
-  const {id: teacherId} = getUserDataCookie()
+  const { id: teacherId } = getUserDataCookie();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,14 +29,14 @@ export const useGetAllTeacherTasks = () => {
         return;
       }
 
-      const teachedClasses = classes.filter(
+      const teachedClasses = classes?.filter(
         (classroom) => classroom.teacher_id == teacherId
       );
-      const teacherTasks = tasks.filter((task) =>
+      const teacherTasks = tasks?.filter((task) =>
         teachedClasses.some((classroom) => classroom.id == task.class_id)
       );
 
-      const finalData = teacherTasks.map((task) => {
+      const finalData = teacherTasks?.map((task) => {
         const { teacher_name, subject_name } =
           teachedClasses.find((classroom) => classroom.id === task.class_id) ||
           {};
