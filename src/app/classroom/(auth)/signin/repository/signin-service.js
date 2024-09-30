@@ -12,6 +12,7 @@ export async function getSchoolByCode(code) {
           "Content-Type": "application/json",
           "X-Sisva-Source": "test",
         },
+        cache: "no-store",
       }
     );
 
@@ -35,6 +36,7 @@ export async function postLogin(data) {
           "Content-Type": "application/json",
           "X-Sisva-Source": "test",
         },
+        cache: "no-store",
       }
     );
     return serverResponseHandler(res, "Login Failed", "Login Success");
@@ -55,6 +57,7 @@ export async function getUserById(id, schoolId, token) {
           "X-Sisva-SchoolID": schoolId,
           Authorization: `Bearer ${token}`,
         },
+        cache: "no-store",
       }
     );
 

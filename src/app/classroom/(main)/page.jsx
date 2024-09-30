@@ -1,5 +1,6 @@
 import { AppFetchApi } from "../shared/usecase/global-fetch-api";
 import { serverResponseHandler } from "../shared/usecase/server-response-handler";
+import { getServerSession } from "../shared/usecase/session/get-server-session";
 
 export const metadata = {
   title: "Beranda | Sisva",
@@ -8,15 +9,14 @@ export const metadata = {
 
 /** JUST FOR EXAMPLE */
 async function getUserById() {
-  const res = await AppFetchApi(
-    "/user/v1/users/0710e3fc-86d5-4ada-829e-38952c75a9ea",
-    {
-      method: "GET",
-      headers: {
-        "X-Sisva-Source": "test",
-      },
-    }
-  );
+  const session = await getServerSession();
+
+  const res = await AppFetchApi(`/user/v1/users/${session?.id}`, {
+    method: "GET",
+    headers: {
+      "X-Sisva-Source": "test",
+    },
+  });
 
   return serverResponseHandler(res, "error message", "success message");
 }
