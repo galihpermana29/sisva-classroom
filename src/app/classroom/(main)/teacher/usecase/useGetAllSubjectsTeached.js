@@ -25,11 +25,9 @@ export const useGetAllSubjectsTeached = () => {
         return;
       }
 
-      const subjectsByTeacher = subjects?.filter(
-        (subject) => subject.teacher_id == teacherId
-      );
-
-      console.log("subjectsByTeacher", subjectsByTeacher);
+      const subjectsByTeacher = subjects
+      ?.filter((subject) => subject.teacher_id == teacherId)
+      .map((subject) => subject.subject_name);
 
       setData(subjectsByTeacher);
       setIsLoading(false);

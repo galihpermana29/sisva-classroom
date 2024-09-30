@@ -52,14 +52,14 @@ const HeaderSection = () => {
               </h2>
               <p className="text-white text-[15px] line-clamp-1">
                 Guru{" "}
-                {/* {subjects.map((subject, index) => {
+                {subjects.map((subject, index) => {
                   return (
                     <span key={index}>
                       {subject}
                       {index < subjects.length - 1 && ", "}
                     </span>
                   );
-                })} */}
+                })}
               </p>
             </>
           )}
