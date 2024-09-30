@@ -9,8 +9,6 @@ export function useGetStudentProfile() {
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true);
-
       const user = JSON.stringify(getCookie("userData"));
 
       const {

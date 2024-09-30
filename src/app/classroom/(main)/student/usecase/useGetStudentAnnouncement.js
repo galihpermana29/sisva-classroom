@@ -8,13 +8,13 @@ export function useGetStudentAnnouncement() {
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true);
       const {
         data: announcements,
         success: announcementsResSucces,
         message: announcementsResMessage,
       } = await getAllAnnouncements();
-      if (!announcementsResSucces) {
+
+      if (!announcementsResSucces || !Array.isArray(announcements)) {
         setError(announcementsResMessage);
         setIsLoading(false);
         return;

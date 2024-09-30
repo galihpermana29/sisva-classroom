@@ -1,13 +1,13 @@
 import Link from "next/link";
-import { Avatar, Flex } from "antd";
+import { Avatar } from "antd";
 
 const OptionMenu = ({ href, icon, text }) => {
   return (
     <Link href={href}>
-      <Flex vertical align="center" gap={8}>
+      <div className="flex flex-col gap-2 items-center">
         <Avatar src={icon} size={54} />
         <p className="text-base90 text-xs lg:text-sm">{text}</p>
-      </Flex>
+      </div>
     </Link>
   );
 };

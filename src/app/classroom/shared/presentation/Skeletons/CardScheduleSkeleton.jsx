@@ -1,5 +1,3 @@
-import { Flex } from "antd";
-
 const CardScheduleSkeleton = ({ isEven }) => {
   return (
     <div>
