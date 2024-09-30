@@ -24,10 +24,14 @@ const ScheduleSection = () => {
               ))}
             </div>
           ) : !schedules | schedules.length == 0 ? (
-            <EmptyState
-              title="Tidak ada jadwal"
-              description="Tidak ada jadwal kelas hari ini"
-            />
+            <div
+              className="mx-auto"
+            >
+              <EmptyState
+                title="Tidak ada jadwal"
+                description="Tidak ada jadwal kelas hari ini"
+              />
+            </div>
           ) : (
             schedules.map((schedule, index) => (
               <CardSchedule

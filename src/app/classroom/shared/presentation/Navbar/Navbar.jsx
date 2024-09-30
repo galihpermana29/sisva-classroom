@@ -33,7 +33,7 @@ const SisvaNavbar = () => {
   return (
     <>
       <nav className="bg-white px-5 py-4 hidden sm:block sticky top-0 border-b border-b-[#F5F5F5] shadow-md z-[9999]">
-        <div className="flex justify-between items-center">
+        <div className="flex items-center justify-between">
           <Image src={BrandLogo} alt="brand-logo" />
           <div className="flex items-center gap-7">
             {navItems.map((item) => (
@@ -48,7 +48,7 @@ const SisvaNavbar = () => {
           borderTop: "1px solid #F5F5F5",
         }}
       >
-        <div className="flex justify-around items-center py-6">
+        <div className="flex items-center justify-around py-6">
           {navItems.map((item) => (
             <NavItem key={item.path} {...item} isActive={item.isActive} />
           ))}

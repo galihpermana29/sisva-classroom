@@ -6,7 +6,7 @@ import TaskSection from "./Section/TaskSection";
 
 const TeacherHomeContainer = () => {
   return (
-    <div className="max-w-6xl mx-auto font-kumbh">
+    <div className="max-w-6xl mx-auto mb-[8dvh] md:mb-0 font-kumbh -mt-20 md:mt-auto">
       <HeaderSection />
       <MenuKBMSection />
       <div className="flex flex-col w-full gap-6 mt-8 mb-6 md:flex-row">

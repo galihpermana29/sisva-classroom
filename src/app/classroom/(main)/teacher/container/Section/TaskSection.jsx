@@ -24,10 +24,12 @@ const TaskSection = () => {
               ))}
             </div>
           ) : !tasks || tasks.length == 0 ? (
-            <EmptyState
-              title="Tidak ada tugas"
-              description="Tidak ada tugas yang sedang aktif"
-            />
+            <div className="mx-auto">
+              <EmptyState
+                title="Tidak ada tugas"
+                description="Tidak ada tugas yang sedang aktif"
+              />
+            </div>
           ) : (
             tasks.map((task, index) => (
               <Cardtask
