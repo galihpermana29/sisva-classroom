@@ -5,12 +5,21 @@ export function getClassByTeacherId(response, teacherId) {
 }
 
 function findNearestDeadlineTask(tasks) {
+  const today = new Date();
+
   return tasks.reduce((nearest, currentTask) => {
     const currentDeadline = new Date(currentTask.deadline);
-    const nearestDeadline = new Date(nearest.deadline);
 
-    return currentDeadline < nearestDeadline ? currentTask : nearest;
-  }, tasks[0]);
+    if (currentDeadline < today) {
+      return nearest;
+    }
+
+    if (!nearest || currentDeadline < new Date(nearest.deadline)) {
+      return currentTask;
+    }
+
+    return nearest;
+  }, null);
 }
 
 export function getClassWithTaskList(taskList, classList) {

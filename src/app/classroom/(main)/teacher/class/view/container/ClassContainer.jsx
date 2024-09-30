@@ -10,6 +10,8 @@ const TeacherClassContainer = ({ initialData }) => {
     dropDownData,
     dropdownHandler,
     generalHandleFilter,
+    queryFilter,
+    handleResetFilter,
     isLoading,
   } = useTeacherClass(initialData);
   return (
@@ -19,6 +21,8 @@ const TeacherClassContainer = ({ initialData }) => {
         dropDownData={dropDownData}
         dropdownHandler={dropdownHandler}
         generalHandleFilter={generalHandleFilter}
+        queryFilter={queryFilter}
+        handleResetFilter={handleResetFilter}
       />
       <ClassListGroup classData={classData} isLoading={isLoading} />
     </div>
