@@ -16,7 +16,7 @@ const TaskSection = () => {
   return (
     <SectionLayout title="Tugasku">
       <div className={`md:h-[225px] overflow-y-auto ${styles.scrollableDiv}`}>
-        <Flex className="flex-row md:flex-col md:gap-3">
+        <div className="flex flex-row md:flex-col md:gap-3">
           {isLoading ? (
             <div className="flex gap-2 md:flex-col">
               {Array.from({ length: 3 }).map((_, index) => (
@@ -39,7 +39,7 @@ const TaskSection = () => {
               />
             ))
           )}
-        </Flex>
+        </div>
       </div>
     </SectionLayout>
   );

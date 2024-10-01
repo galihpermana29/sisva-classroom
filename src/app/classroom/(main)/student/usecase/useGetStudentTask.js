@@ -9,11 +9,10 @@ import { getCookie } from "cookies-next";
 export function useGetStudentTask() {
   const [tasks, setTasks] = useState([]);
   const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true);
       const user = JSON.stringify(getCookie("userData"));
 
       const {
@@ -39,7 +38,7 @@ export function useGetStudentTask() {
         message: classesResMessage,
       } = await getAllClasses();
 
-      if (!classesResSuccess) {
+      if (!classesResSuccess || !Array.isArray(classes)) {
         setError(classesResMessage);
         setIsLoading(false);
         return;
@@ -55,7 +54,7 @@ export function useGetStudentTask() {
         message: tasksResMessage,
       } = await getAllTasks();
 
-      if (!tasksResSuccess) {
+      if (!tasksResSuccess || !Array.isArray(tasks)) {
         setError(tasksResMessage);
         setIsLoading(false);
         return;

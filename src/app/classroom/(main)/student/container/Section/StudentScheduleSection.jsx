@@ -1,6 +1,5 @@
 "use client";
 
-import { Flex } from "antd";
 import SectionLayout from "@/app/classroom/shared/presentation/Layouts/SectionLayout";
 import CardSchedule from "@/app/classroom/shared/presentation/Card/CardSchedule";
 import { useGetStudentSchedule } from "@/app/classroom/(main)/student/usecase/useGetStudentSchedule";
@@ -13,7 +12,7 @@ const StudentScheduleSection = () => {
   return (
     <SectionLayout title={"Jadwal Hari Ini"} divider>
       <div className="h-[228px] overflow-auto">
-        <Flex vertical gap={12}>
+        <div className="flex flex-col gap-3">
           {isLoading ? (
             [...new Array(3)].map((_, index) => (
               <CardScheduleSkeleton key={index} />
@@ -36,7 +35,7 @@ const StudentScheduleSection = () => {
               />
             </div>
           )}
-        </Flex>
+        </div>
       </div>
     </SectionLayout>
   );

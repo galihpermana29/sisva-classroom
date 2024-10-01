@@ -1,10 +1,9 @@
-import { Flex } from "antd";
 import { BoxTop } from "../Box/Box";
 
 const CardSchedule = ({ time, scheduleName, teacherName, isEven }) => {
   return (
     <div>
-      <Flex align="center" gap={8}>
+      <div className="flex items-center gap-2">
         <p className="text-xs font-medium text-[#29292B]">{time}</p>
         <div
           className={`w-full p-3 rounded-xl border border-secondary50  shadow-card mr-3 relative overflow-hidden ${
@@ -23,7 +22,7 @@ const CardSchedule = ({ time, scheduleName, teacherName, isEven }) => {
               isEven ? "bg-secondary50" : "bg-secondary70"
             }`}
           ></div>
-          <Flex vertical gap={2}>
+          <div className="flex flex-col gap-0.5">
             <h3
               className={`text-base font-medium ${
                 isEven ? " text-base90" : "text-white"
@@ -34,9 +33,9 @@ const CardSchedule = ({ time, scheduleName, teacherName, isEven }) => {
             <p className={`text-xs  ${isEven ? " text-base90" : "text-white"}`}>
               {teacherName}
             </p>
-          </Flex>
+          </div>
         </div>
-      </Flex>
+      </div>
     </div>
   );
 };

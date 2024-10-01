@@ -8,12 +8,11 @@ import { getCookie } from "cookies-next";
 
 export function useGetStudentSchedule() {
   const [schedules, setSchedules] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true);
       const user = JSON.stringify(getCookie("userData"));
 
       const {
@@ -39,7 +38,7 @@ export function useGetStudentSchedule() {
         message: classesResMessage,
       } = await getAllClasses();
 
-      if (!classesResSuccess) {
+      if (!classesResSuccess || !Array.isArray(classes)) {
         setError(classesResMessage);
         setIsLoading(false);
         return;
@@ -55,7 +54,7 @@ export function useGetStudentSchedule() {
         message: scheduleResMessage,
       } = await getAllClassSchedules();
 
-      if (!scheduleResSuccess) {
+      if (!scheduleResSuccess || !Array.isArray(schedules)) {
         setError(scheduleResMessage);
         setIsLoading(false);
         return;

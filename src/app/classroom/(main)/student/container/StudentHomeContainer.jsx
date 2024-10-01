@@ -1,24 +1,23 @@
-import ProfileStudentSection from "./Section/ProfileStudentSection";
 import MenuKBMSection from "./Section/MenuKBMSection";
 import StudentTaskSection from "./Section/StudentTaskSection";
 import StudentScheduleSection from "./Section/StudentScheduleSection";
 import AnnouncementSection from "./Section/AnnouncementSection";
 import ClassReviewSection from "./Section/ClassReviewSection";
-import { Flex } from "antd";
+import ProfileStudentSection from "./Section/ProfileStudentSection";
 
 const StudentHomeContainer = () => {
   return (
-    <div className="pb-10">
+    <div className="max-w-6xl mx-auto pb-10">
       <ProfileStudentSection />
-      <Flex vertical gap={24}>
+      <div className="flex flex-col gap-6">
         <MenuKBMSection />
-        <Flex gap={20} className="flex-col lg:flex-row ">
+        <div className=" flex flex-col lg:flex-row gap-5">
           <StudentTaskSection />
           <StudentScheduleSection />
-        </Flex>
+        </div>
         <AnnouncementSection />
         <ClassReviewSection />
-      </Flex>
+      </div>
     </div>
   );
 };

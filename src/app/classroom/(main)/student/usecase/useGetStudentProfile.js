@@ -4,13 +4,11 @@ import { getStudentGroups, getUserById } from "../repository/apiService";
 
 export function useGetStudentProfile() {
   const [student, setStudent] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true);
-
       const user = JSON.stringify(getCookie("userData"));
 
       const {

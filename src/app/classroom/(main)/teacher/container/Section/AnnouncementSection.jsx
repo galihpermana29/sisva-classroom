@@ -1,14 +1,10 @@
 "use client";
 
 import React from "react";
-import { Flex } from "antd";
 import Link from "next/link";
-
 import CardAnnouncement from "@/app/classroom/shared/presentation/Card/CardAnnouncement";
 import SectionLayout from "@/app/classroom/shared/presentation/Layouts/SectionLayout";
-
 import { useGetAllAnnouncements } from "../../usecase/useGetAllAnnouncements";
-
 import AnnouncementImage from "@/assets/images/announcement.png";
 import CardAnnouncementSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardAnnouncementSkeleton";
 import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
@@ -26,7 +22,7 @@ const AnnouncementSection = () => {
       }
     >
       <div className="lg:h-[250px] overflow-scroll lg:pr-3 py-1">
-        <Flex className="flex-row lg:flex-col " gap={12}>
+        <div className="flex flex-row lg:flex-col gap-3 ">
           {isLoading ? (
             <CardAnnouncementSkeleton />
           ) : !announcements | (announcements.length == 0) ? (
@@ -44,7 +40,7 @@ const AnnouncementSection = () => {
               />
             ))
           )}
-        </Flex>
+        </div>
       </div>
     </SectionLayout>
   );

@@ -1,9 +1,7 @@
-import { Flex } from "antd";
-
 const CardScheduleSkeleton = ({ isEven }) => {
   return (
     <div>
-      <Flex align="center" gap={8} className="animate-pulse">
+      <div className="flex items-center gap-2 animate-pulse">
         <div className="h-4 bg-gray-300 rounded w-10"></div>
         <div
           className={`w-full p-3 rounded-xl border  shadow-card mr-3 relative overflow-hidden ${
@@ -15,12 +13,12 @@ const CardScheduleSkeleton = ({ isEven }) => {
               isEven ? "bg-gray-400" : "bg-gray-500"
             }`}
           ></div>
-          <Flex vertical gap={3}>
+          <div className="flex flex-col gap-[3px]">
             <div className="h-4 bg-gray-300 rounded w-3/4"></div>
             <div className="h-3 bg-gray-300 rounded w-1/2"></div>
-          </Flex>
+          </div>
         </div>
-      </Flex>
+      </div>
     </div>
   );
 };
