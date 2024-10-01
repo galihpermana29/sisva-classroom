@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { Flex } from "antd";
 import CardAnnouncement from "@/app/classroom/shared/presentation/Card/CardAnnouncement";
 import SectionLayout from "@/app/classroom/shared/presentation/Layouts/SectionLayout";
 import AnnouncementImage from "@/assets/images/announcement.png";
@@ -21,7 +20,7 @@ const AnnouncementSection = () => {
       }
     >
       <div className="lg:h-full lg:max-h-[250px] overflow-auto lg:pr-3 py-1">
-        <Flex className="flex-row lg:flex-col p-1 " gap={12}>
+        <div className="flex flex-row lg:flex-col p-1 gap-3">
           {isLoading ? (
             [...new Array(3)].map((_, index) => (
               <CardAnnouncementSkeleton key={index} />
@@ -45,7 +44,7 @@ const AnnouncementSection = () => {
               />
             </div>
           )}
-        </Flex>
+        </div>
       </div>
     </SectionLayout>
   );

@@ -38,12 +38,15 @@ module.exports = {
         button_text_disabled: "#a0a0a0",
         light_red_base: "#E92C2C",
 
+        primary100: "#001C2B",
+
         secondary10: "#FEECE9",
         secondary20: "#FDD9D4",
         secondary50: "#F96756",
         secondary70: "#C63423",
 
         base10: "#F9FAFB",
+        base50: "#98A2B3",
         base90: "#1D2939",
         text_description: "#555555",
       },
@@ -56,15 +59,9 @@ module.exports = {
       },
       boxShadow: {
         card: "0px 1px 12px 0px rgba(0, 0, 0, 0.08)",
-
         copy_text: {
           description: "#555555",
         },
-      },
-      boxShadow: {
-        card: "0px 1px 12px 0px rgba(0, 0, 0, 0.08)",
-      },
-      boxShadow: {
         top: "0 -4px 6px -1px rgba(0, 0, 0, 0.1), 0 -2px 4px -1px rgba(0, 0, 0, 0.06)",
       },
     },

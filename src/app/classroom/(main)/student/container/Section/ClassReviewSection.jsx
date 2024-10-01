@@ -1,6 +1,5 @@
 "use client";
 
-import { Flex } from "antd";
 import CardClass from "@/app/classroom/shared/presentation/Card/CardClass";
 import SectionLayout from "@/app/classroom/shared/presentation/Layouts/SectionLayout";
 import { useGetClassReviews } from "@/app/classroom/(main)/student/usecase/useGetClassReview";
@@ -14,7 +13,7 @@ const ClassReviewSection = () => {
   return (
     <SectionLayout title="Tinjauan Kelas">
       <div className="h-[228px] overflow-auto">
-        <Flex className="flex-col lg:flex-row" gap={12}>
+        <div className="flex flex-col lg:flex-row gap-3">
           {isLoading ? (
             [...new Array(3)].map((_, index) => (
               <CardClassSkeleton key={index} />
@@ -39,7 +38,7 @@ const ClassReviewSection = () => {
               />
             </div>
           )}
-        </Flex>
+        </div>
       </div>
     </SectionLayout>
   );

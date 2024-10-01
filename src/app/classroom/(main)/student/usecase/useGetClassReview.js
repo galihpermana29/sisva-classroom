@@ -10,11 +10,10 @@ import {
 export function useGetClassReviews() {
   const [classReviews, setClassReviews] = useState([]);
   const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true);
       const user = JSON.stringify(getCookie("userData"));
 
       const {
@@ -40,8 +39,7 @@ export function useGetClassReviews() {
         message: classesResMessage,
       } = await getAllClasses();
 
-      if (!classesResSuccess) {
-        console.log(classesResMessage);
+      if (!classesResSuccess || !Array.isArray(classes)) {
         setError(classesResMessage);
         setIsLoading(false);
         return;
@@ -57,7 +55,7 @@ export function useGetClassReviews() {
         message: tasksResMessage,
       } = await getAllTasks();
 
-      if (!tasksResSuccess) {
+      if (!tasksResSuccess || !Array.isArray(tasks)) {
         setError(tasksResMessage);
         setIsLoading(false);
         return;

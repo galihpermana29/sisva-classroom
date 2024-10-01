@@ -1,4 +1,3 @@
-import { Flex } from "antd";
 import OptionMenu from "../Option/OptionMenu";
 import TugasIcon from "@/assets/svgs/tugas.svg";
 import BahanAjarIcon from "@/assets/svgs/bahan-ajar.svg";
@@ -26,7 +25,7 @@ const MenuKBMSection = () => {
   return (
     <div className="mt-6">
       <h2 className="lg:hidden text-base text-base90 font-bold mb-3">Fitur</h2>
-      <Flex className="justify-start lg:justify-center gap-10 lg:gap-[54px] ">
+      <div className="flex justify-center gap-10 lg:gap-[54px] ">
         {optionMenus.map((optionMenu, index) => (
           <OptionMenu
             key={index}
@@ -35,7 +34,7 @@ const MenuKBMSection = () => {
             text={optionMenu.text}
           />
         ))}
-      </Flex>
+      </div>
     </div>
   );
 };

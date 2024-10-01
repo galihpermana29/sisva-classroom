@@ -1,11 +1,10 @@
 import Image from "next/image";
 import EmptyStateGif from "@/assets/empty-state.gif";
-import { Flex } from "antd";
 
 const EmptyState = ({ title, description }) => {
   return (
     <div>
-      <Flex vertical align="center">
+      <div className="flex flex-col items-center">
         <Image
           src={EmptyStateGif}
           alt="empty-state"
@@ -17,7 +16,7 @@ const EmptyState = ({ title, description }) => {
         <p className="text-xs lg:text-sm text-base50 mt-0.5 lg:mt-2">
           {description}
         </p>
-      </Flex>
+      </div>
     </div>
   );
 };

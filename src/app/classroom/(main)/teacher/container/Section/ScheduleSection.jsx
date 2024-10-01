@@ -16,7 +16,7 @@ const ScheduleSection = () => {
   return (
     <SectionLayout title={"Jadwal Hari Ini"} divider>
       <div className="h-[228px] overflow-scroll">
-        <Flex vertical gap={12}>
+        <div className="flex flex-col gap-3">
           {isLoading ? (
             <div className="grid gap-2">
               {Array.from({ length: 2 }).map((_, index) => (
@@ -43,7 +43,7 @@ const ScheduleSection = () => {
               />
             ))
           )}
-        </Flex>
+        </div>
       </div>
     </SectionLayout>
   );

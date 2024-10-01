@@ -8,19 +8,24 @@ export const useNavbar = (userType) => {
       icon: Home05,
       label: "Beranda",
       path: `/classroom/${userType}`,
-      isActive: pathname === `/classroom/${userType}`,
+      isActive:
+        pathname === "/classroom/student" || pathname === "/classroom/teacher",
     },
     {
       icon: Users01,
       label: "Kelas",
       path: `/classroom/${userType}/class`,
-      isActive: pathname.startsWith(`/classroom/${userType}/class`),
+      isActive:
+        pathname.startsWith(`/classroom/student/class`) ||
+        pathname.startsWith(`/classroom/teacher/class`),
     },
     {
       icon: User01,
       label: "Profil",
       path: `/classroom/${userType}/profile`,
-      isActive: pathname.startsWith(`/classroom/${userType}/profile`),
+      isActive:
+        pathname.startsWith("/classroom/student/profile") ||
+        pathname.startsWith("/classroom/teacher/profile"),
     },
   ];
 
