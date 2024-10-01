@@ -23,11 +23,15 @@ const ScheduleSection = () => {
                 <CardScheduleSkeleton key={index} isEven={index % 2 == 0} />
               ))}
             </div>
-          ) : !schedules | (schedules.length == 0) ? (
-            <EmptyState
-              title="Tidak ada jadwal"
-              description="Tidak ada jadwal kelas hari ini"
-            />
+          ) : !schedules | schedules.length == 0 ? (
+            <div
+              className="mx-auto"
+            >
+              <EmptyState
+                title="Tidak ada jadwal"
+                description="Tidak ada jadwal kelas hari ini"
+              />
+            </div>
           ) : (
             schedules.map((schedule, index) => (
               <CardSchedule

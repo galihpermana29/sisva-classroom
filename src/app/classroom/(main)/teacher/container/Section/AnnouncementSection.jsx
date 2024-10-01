@@ -10,7 +10,9 @@ import CardAnnouncementSkeleton from "@/app/classroom/shared/presentation/Skelet
 import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
 
 const AnnouncementSection = () => {
-  const { data: announcements, isLoading } = useGetAllAnnouncements();
+  // const { data: announcements, isLoading } = useGetAllAnnouncements();
+  const isLoading = false
+  const announcements = []
 
   return (
     <SectionLayout
@@ -26,10 +28,12 @@ const AnnouncementSection = () => {
           {isLoading ? (
             <CardAnnouncementSkeleton />
           ) : !announcements | (announcements.length == 0) ? (
-            <EmptyState
-              title="Belum ada pengumuman"
-              description="Tidak ada pengumuman yang tersedia saat ini"
-            />
+            <div className="mx-auto">
+              <EmptyState
+                title="Belum ada pengumuman"
+                description="Tidak ada pengumuman yang tersedia saat ini"
+              />
+            </div>
           ) : (
             announcements.map((announcement, index) => (
               <CardAnnouncement

@@ -21,7 +21,7 @@ export const useGetAllTeacherClassSchedules = () => {
         return;
       }
       
-      const teachingSchedule = subjects.filter(
+      const teachingSchedule = subjects?.filter(
         (schedule) => schedule.teacher_id == teacherId
       );
 
