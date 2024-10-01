@@ -22,13 +22,14 @@ export const useTeacherClass = (initialData) => {
     classroomDropdown: getUniqueClasses(initialData.teacherClass),
   });
 
-  const [queryFilter, setQueryFilter] = useState({
+  const initialQueryFilter = {
     period: "",
     grade: "",
     study_program: "",
     search: "",
     classroom: "",
-  });
+  };
+  const [queryFilter, setQueryFilter] = useState(initialQueryFilter);
 
   const hasActiveFilters = useMemo(
     () => Object.values(queryFilter).some((value) => value !== ""),
@@ -75,6 +76,10 @@ export const useTeacherClass = (initialData) => {
       fetchStudentGroupList();
     }
   }, [debouncedQueryFilter]);
+
+  const handleResetFilter = () => {
+    setQueryFilter(initialQueryFilter);
+  };
 
   const handlePeriodFilter = (e) => {
     const filteredPeriodList = teacherClassData.periodData.find(
@@ -148,5 +153,7 @@ export const useTeacherClass = (initialData) => {
 
     dropdownHandler: dropDownMappedHandler,
     generalHandleFilter: handleFilterChange,
+    queryFilter,
+    handleResetFilter,
   };
 };
