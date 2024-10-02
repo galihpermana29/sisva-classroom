@@ -6,10 +6,12 @@ const Tabs = ({ defaultActiveKey, tabList, centered = true, tabPosition }) => {
       theme={{
         token: {
           colorPrimary: "#F96756",
+          colorText: "#98A2B3"
         },
       }}
     >
       <AntdTabs
+        className="font-bold"
         defaultActiveKey={defaultActiveKey}
         centered={centered}
         tabPosition={tabPosition}
