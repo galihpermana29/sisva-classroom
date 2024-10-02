@@ -1,6 +1,12 @@
 import { ConfigProvider, Tabs as AntdTabs } from "antd";
 
-const Tabs = ({ defaultActiveKey, tabList, centered = true, tabPosition }) => {
+const Tabs = ({
+  defaultActiveKey,
+  tabList,
+  centered = true,
+  tabPosition,
+  ...props
+}) => {
   return (
     <ConfigProvider
       theme={{
@@ -17,6 +23,7 @@ const Tabs = ({ defaultActiveKey, tabList, centered = true, tabPosition }) => {
         centered={centered}
         tabPosition={tabPosition}
         items={tabList}
+        {...props}
       />
     </ConfigProvider>
   );
