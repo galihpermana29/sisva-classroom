@@ -3,7 +3,7 @@ import ClassDetailTabs from '@/app/classroom/shared/presentation/Tabs/ClassDetai
 
 const ClassDetailContainer = () => {
   return (
-    <div className="-mt-16">
+    <div className="max-w-6xl mx-auto -mt-16">
       <ClassDetailTabs />
     </div>
   );
