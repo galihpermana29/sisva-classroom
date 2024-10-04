@@ -1,16 +1,17 @@
 import { DotsVertical } from "@untitled-ui/icons-react";
 import { Popover } from "antd";
-import { useDeleteTeachingPlan } from "../../../../usecase/hooks/use-delete-teaching-plan";
+
 import CustomModal from "./CustomModal";
+import { useDeleteTeachingPlan } from "../../../../usecase/hooks/use-delete-teaching-plan";
 
 const PopoverContent = ({ handleOpenModal, isDeleting }) => {
   return (
     <div className="flex flex-col -m-2">
-      <button className="flex w-full hover:bg-base40/40 rounded-md">
+      <button className="flex w-full rounded-md hover:bg-base40/40">
         <span className="text-sm font-medium text-black">Edit</span>
       </button>
       <button
-        className="flex w-full hover:bg-base40/40 rounded-md"
+        className="flex w-full rounded-md hover:bg-base40/40"
         onClick={handleOpenModal}
         disabled={isDeleting}
       >
@@ -54,6 +55,12 @@ const PopOverActions = ({ id }) => {
         open={isModalVisible}
         onOk={() => handleDeleteTeachingPlan(id)}
         onCancel={handleCancel}
+        footer={(_, { OkBtn, CancelBtn }) => (
+          <>
+            <CancelBtn loading={isDeleting}/>
+            <OkBtn loading={isDeleting}>Delete</OkBtn>
+          </>
+        )}
       >
         <p>Are you sure you want to delete this teaching plan?</p>
       </CustomModal>

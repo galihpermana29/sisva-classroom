@@ -1,5 +1,5 @@
-import Image from "next/image";
 import { Fragment } from "react";
+import Image from "next/image";
 
 import PopOverActions from "./PopOverActions";
 import TeachingPlanSection from "./TeachingPlanSection";
@@ -41,6 +41,7 @@ const TeachingPlanList = ({
       ))}
       {tasks?.map((task, idx) => (
         <TeachingPlanSection
+          key={"task" + idx}
           title={
             <div className="flex items-center gap-2">
               <Image

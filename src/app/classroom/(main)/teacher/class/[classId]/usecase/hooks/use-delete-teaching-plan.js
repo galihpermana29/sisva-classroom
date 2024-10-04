@@ -1,25 +1,30 @@
-import { useEffect, useState } from "react";
-import { deleteTeachingPlan } from "../../repository/class-detail-service";
+import { useState } from "react";
 import toast from "react-hot-toast";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+import { deleteTeachingPlan } from "../../repository/class-detail-service";
 
 export const useDeleteTeachingPlan = () => {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
+  const queryClient = useQueryClient();
 
-  const handleDeleteTeachingPlan = async (id) => {
-    setIsDeleting(true);
-    setIsModalVisible(false);
+  const { mutate, isLoading } = useMutation({
+    mutationFn: deleteTeachingPlan,
+    onError: (error) => {
+      setIsModalVisible(false);
+      toast.error(error.message);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      setIsModalVisible(false);
+      toast.success(data.message);
+      queryClient.invalidateQueries("teachingPlans");
+    },
+  });
 
-    const response = await deleteTeachingPlan(id);
-
-    if (!response.success) {
-      toast.error(response.message);
-    } else {
-      toast.success(response.message);
-    }
-
-    setIsDeleting(false);
+  const handleDeleteTeachingPlan = (id) => {
+    mutate(id);
   };
 
   const handleOpenModal = () => {
@@ -37,11 +42,11 @@ export const useDeleteTeachingPlan = () => {
 
   return {
     isPopupVisible,
-    isDeleting,
     isModalVisible,
-    handleOpenPopup,
-    handleOpenModal,
+    isDeleting: isLoading,
     handleDeleteTeachingPlan,
+    handleOpenModal,
     handleCancel,
+    handleOpenPopup,
   };
 };
