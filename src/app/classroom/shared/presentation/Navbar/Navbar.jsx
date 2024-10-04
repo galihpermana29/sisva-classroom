@@ -32,7 +32,7 @@ const SisvaNavbar = () => {
 
   return (
     <>
-      <nav className="bg-white px-5 py-4 hidden sm:block sticky top-0 border-b border-b-[#F5F5F5] shadow-md z-[9999]">
+      <nav className="bg-white px-5 py-4 hidden sm:block sticky top-0 border-b border-b-[#F5F5F5] shadow-md z-20">
         <div className="flex items-center justify-between">
           <Image src={BrandLogo} alt="brand-logo" />
           <div className="flex items-center gap-7">
@@ -43,7 +43,7 @@ const SisvaNavbar = () => {
         </div>
       </nav>
       <nav
-        className="sm:hidden fixed bottom-0 left-0 right-0 bg-white shadow-top rounded-l-[20px] rounded-r-[20px] z-[9999]"
+        className="sm:hidden fixed bottom-0 left-0 right-0 bg-white shadow-top rounded-l-[20px] rounded-r-[20px] z-20"
         style={{
           borderTop: "1px solid #F5F5F5",
         }}

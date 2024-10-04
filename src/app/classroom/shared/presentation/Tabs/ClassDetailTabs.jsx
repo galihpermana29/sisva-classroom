@@ -1,3 +1,4 @@
+import TeachingMaterialTabs from "@/app/classroom/(main)/teacher/class/[slug]/view/container/Tabs/TeachingMaterialTabs";
 import Tabs from "./Tabs";
 
 const ClassDetailTabs = () => {
@@ -22,7 +23,7 @@ const classDetailTabList = [
   {
     key: "bahan_ajar",
     label: "Bahan Ajar",
-    children: <div></div>,
+    children: <TeachingMaterialTabs />,
   },
   {
     key: "tugas",

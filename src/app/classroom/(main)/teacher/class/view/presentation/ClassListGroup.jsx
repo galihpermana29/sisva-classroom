@@ -1,21 +1,11 @@
 import React from "react";
 import ClassCard from "./ClassCard";
-import EmptyData from "@/app/classroom/shared/presentation/EmptyData";
-import { Card, Col, Row, Skeleton } from "antd";
+import CardGridSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardGridSkeleton";
+import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
 
 const ClassListGroup = ({ classData, isLoading }) => {
   if (isLoading) {
-    return (
-      <Row gutter={[16, 16]} className="py-3">
-        {[...Array(6)].map((_, index) => (
-          <Col key={index} xs={24} sm={12} xl={8}>
-            <Card>
-              <Skeleton active />
-            </Card>
-          </Col>
-        ))}
-      </Row>
-    );
+    return <CardGridSkeleton />;
   }
   return (
     <div className="bg-white rounded-lg shadow-md p-5">
@@ -33,9 +23,9 @@ const ClassListGroup = ({ classData, isLoading }) => {
           ))}
         </div>
       ) : (
-        <EmptyData
+        <EmptyState
           title="Tidak ada kelas"
-          subtitle="Tidak ada kelas yang tersedia untuk saat ini"
+          description="Tidak ada kelas yang tersedia untuk saat ini"
         />
       )}
     </div>

@@ -6,12 +6,13 @@ import React, { useState } from "react";
 import { Modal } from "antd";
 import { FilterFunnel01 } from "@untitled-ui/icons-react";
 
-const ListFilter = ({
+const TeachingMaterialListFilter = ({
   dropDownData,
-  dropdownHandler,
   generalHandleFilter,
-  queryFilter,
   handleResetFilter,
+  handleStudyProgramFilter,
+  isLoading,
+  queryFilter,
 }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -22,18 +23,18 @@ const ListFilter = ({
     <>
       <SisvaSelect
         customSize="md"
-        placeholder="Periode"
+        placeholder="Kurikulum"
         customClassName="min-w-full lg:min-w-40 mb-2 lg:mb-0"
-        options={dropDownData.periodData}
-        onChange={dropdownHandler.handlePeriodFilter}
-        value={queryFilter.period === "" ? null : queryFilter.period}
+        options={dropDownData.curriculumDropdown}
+        onChange={(e) => generalHandleFilter("curriculum", e)}
+        value={queryFilter.curriculum === "" ? null : queryFilter.curriculum}
       />
       <SisvaSelect
         customSize="md"
-        placeholder="Prodi"
+        placeholder="Program Studi"
         customClassName="min-w-full lg:min-w-40 mb-2 lg:mb-0"
         options={dropDownData.studyProgramDropdown}
-        onChange={dropdownHandler.handleStudyProgramFilter}
+        onChange={handleStudyProgramFilter}
         disabled={dropDownData.studyProgramDropdown.length === 0}
         value={
           queryFilter.study_program === "" ? null : queryFilter.study_program
@@ -41,20 +42,28 @@ const ListFilter = ({
       />
       <SisvaSelect
         customSize="md"
+        placeholder="Mata Pelajaran"
+        customClassName="min-w-full lg:min-w-40 mb-2 lg:mb-0"
+        options={dropDownData.subjectDropdown}
+        onChange={(e) => generalHandleFilter("subject", e)}
+        value={queryFilter.subject === "" ? null : queryFilter.subject}
+      />
+      <SisvaSelect
+        customSize="md"
         placeholder="Tingkatan"
         customClassName="min-w-full lg:min-w-40 mb-2 lg:mb-0"
         options={dropDownData.gradeDropdown}
         onChange={(e) => generalHandleFilter("grade", e)}
-        disabled={dropDownData.gradeDropdown.length === 0}
         value={queryFilter.grade === "" ? null : queryFilter.grade}
+        disabled={dropDownData.gradeDropdown.length === 0}
       />
       <SisvaSelect
         customSize="md"
-        placeholder="Kelas"
+        placeholder="Guru"
         customClassName="min-w-full lg:min-w-40 mb-2 lg:mb-0"
-        options={dropDownData.classroomDropdown}
-        onChange={(e) => generalHandleFilter("classroom", e)}
-        value={queryFilter.classroom === "" ? null : queryFilter.classroom}
+        options={dropDownData.teacherDropdwon}
+        onChange={(e) => generalHandleFilter("teacher", e)}
+        value={queryFilter.teacher === "" ? null : queryFilter.teacher}
       />
     </>
   );
@@ -78,7 +87,7 @@ const ListFilter = ({
             Filters
           </SisvaButton>
         </div>
-        <div className="hidden lg:flex gap-2 flex-wrap items-center justify-center">
+        <div className="hidden lg:flex gap-2">
           <FilterContent />
           <SisvaButton
             btn_type="primary"
@@ -113,4 +122,4 @@ const ListFilter = ({
   );
 };
 
-export default ListFilter;
+export default TeachingMaterialListFilter;
