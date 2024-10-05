@@ -1,12 +1,20 @@
-"use client";
-import React, { useState } from "react";
+import React from "react";
 import SisvaButton from "../../../../../shared/presentation/Button/GlobalButton";
 import { Plus } from "@untitled-ui/icons-react";
-import CreateTeachingMaterialModal from "../../../../../shared/presentation/Modal/CreateTeachingMaterialModal";
 import TeachingMaterialListFilter from "../presentation/TeachingMaterialListFilter";
 import { useTeachingMaterial } from "../../usecase/use-teaching-material";
 import TeachingMaterialCardList from "../presentation/TeachingMaterialCardList";
+import { useModal } from "../../../class/[slug]/create-rpp/view/container/Provider/ModalProvider";
+import { useTeachingMaterialForm } from "../../usecase/use-teaching-material-form";
+import dynamic from "next/dynamic";
 
+const CreateTeachingMaterialModal = dynamic(() =>
+  import("../../../../../shared/presentation/Modal/CreateTeachingMaterialModal")
+);
+
+const DeleteConfirmation = dynamic(() =>
+  import("@/app/classroom/shared/presentation/Modal/DeleteConfirmation")
+);
 const TeachingMaterialContainer = ({ initialData }) => {
   const {
     materialData,
@@ -16,12 +24,16 @@ const TeachingMaterialContainer = ({ initialData }) => {
     handleStudyProgramFilter,
     isLoading,
     queryFilter,
+    setQueryFilter,
   } = useTeachingMaterial(initialData);
 
-  const [isOpen, setIsOpen] = useState(false);
-
-  const showModal = () => setIsOpen(true);
-  const handleCancel = () => setIsOpen(false);
+  const { modalState, setModalState, handleClose } = useModal();
+  const {
+    handleSubmitForm,
+    handleDeleteTeachingMaterial,
+    handleUploadFile,
+    isLoadingForm,
+  } = useTeachingMaterialForm(setQueryFilter);
 
   return (
     <div className="flex flex-col gap-3">
@@ -31,7 +43,13 @@ const TeachingMaterialContainer = ({ initialData }) => {
           btn_type="primary"
           btn_size="md"
           icon={<Plus width={20} height={20} />}
-          onClick={showModal}
+          onClick={() => {
+            setModalState({
+              isOpen: true,
+              title: "Tambah Bahan Ajar",
+              type: "create-teaching-material",
+            });
+          }}
           className="!w-fit"
         >
           Add Bahan Ajar
@@ -49,7 +67,30 @@ const TeachingMaterialContainer = ({ initialData }) => {
         materialData={materialData}
         isLoading={isLoading}
       />
-      <CreateTeachingMaterialModal open={isOpen} handleClose={handleCancel} />
+
+      {/* MODALS */}
+      <CreateTeachingMaterialModal
+        open={
+          modalState?.isOpen &&
+          (modalState?.type === "create-teaching-material" ||
+            modalState?.type === "edit-teaching-material")
+        }
+        title={modalState?.title}
+        handleOk={handleSubmitForm}
+        handleFileUpload={handleUploadFile}
+        isLoading={isLoadingForm}
+        handleClose={handleClose}
+        initialData={initialData}
+      />
+      <DeleteConfirmation
+        open={
+          modalState?.isOpen && modalState?.type === "delete-teaching-material"
+        }
+        title={modalState?.title}
+        handleOk={handleDeleteTeachingMaterial}
+        handleClose={handleClose}
+        loading={isLoadingForm}
+      />
     </div>
   );
 };

@@ -9,37 +9,80 @@ import { Card, Divider, Dropdown } from "antd";
 import PdfIcon from "@/assets/classroom/teacher/PDFIcon.png";
 import Banner from "@/assets/classroom/teacher/BannerCard.png";
 import Image from "next/image";
+import { useModal } from "../../../../class/[slug]/create-rpp/view/container/Provider/ModalProvider";
+import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
+import { generateRandomColor } from "../../../usecase/custom-function";
 
 const MaterialCard = ({ item }) => {
+  const { setModalState } = useModal();
+  const userData = getClientSession();
+  const schoolId = userData?.school_id;
+
   const items = [
     {
       label: (
-        <div className="flex items-center gap-2 text-[#555555]">
-          <Download01 width={20} height={20} /> Download
-        </div>
+        <a
+          href={`${process.env.NEXT_PUBLIC_API_BASE_URL}/file/v1/files/${item.attachment_file_uri}?school_id=${schoolId}`}
+          download
+        >
+          <div className="flex items-center gap-2 text-[#555555]">
+            <Download01 width={20} height={20} /> Download
+          </div>
+        </a>
       ),
       key: "0",
     },
-    {
-      label: (
-        <div className="flex items-center gap-2 text-primary">
-          <Trash01 width={20} height={20} /> Delete
-        </div>
-      ),
-      key: "1",
-    },
+    ...(item.isOwner
+      ? [
+          {
+            label: (
+              <div className="flex items-center gap-2 text-[#555555]">
+                <Edit01 width={20} height={20} /> Edit
+              </div>
+            ),
+            key: "1",
+            onClick: () => {
+              setModalState({
+                isOpen: true,
+                title: "Edit Bahan Ajar",
+                type: "edit-teaching-material",
+                data: item,
+              });
+            },
+          },
+          {
+            label: (
+              <div className="flex items-center gap-2 text-primary">
+                <Trash01 width={20} height={20} /> Delete
+              </div>
+            ),
+            key: "2",
+            onClick: () => {
+              setModalState({
+                isOpen: true,
+                title: "Delete Bahan Ajar",
+                type: "delete-teaching-material",
+                data: item,
+              });
+            },
+          },
+        ]
+      : []),
   ];
+
+  const randomColor = generateRandomColor();
 
   return (
     <Card
       cover={
-        <Image
-          src={Banner}
-          alt="banner-teaching-file"
-          width={200}
-          height={100}
-          objectFit="cover"
-        />
+        // <Image
+        //   src={Banner}
+        //   alt="banner-teaching-file"
+        //   width={200}
+        //   height={100}
+        //   objectFit="cover"
+        // />
+        <div className={`h-20 bg-red-200 w-full ${randomColor}`} />
       }
       className="relative rounded-xl shadow-sm bg-white text-[#1D2939]"
     >

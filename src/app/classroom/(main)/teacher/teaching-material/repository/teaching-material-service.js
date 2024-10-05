@@ -2,6 +2,7 @@
 
 import { AppFetchApi } from "@/app/classroom/shared/usecase/global-fetch-api";
 import { serverResponseHandler } from "@/app/classroom/shared/usecase/server-response-handler";
+import { getServerSession } from "@/app/classroom/shared/usecase/session/get-server-session";
 
 export async function getTeachingMaterialList(
   subjectId = "",
@@ -21,6 +22,20 @@ export async function getTeachingMaterialList(
     res,
     "Error fetch teaching material list",
     "Success fetch teaching material list"
+  );
+}
+
+export async function getTeachingMaterialById(id) {
+  const res = await AppFetchApi(`/classroom/v1/teaching_materials/${id}`, {
+    method: "GET",
+    headers: {
+      "X-Sisva-Source": "tenant.user.test",
+    },
+  });
+  return serverResponseHandler(
+    res,
+    "Error fetch teaching material",
+    "Success fetch teaching material"
   );
 }
 
@@ -83,3 +98,78 @@ export async function getAllTeacher() {
     "Success fetch teacher list"
   );
 }
+
+export async function postTeachingMaterial(value) {
+  const res = await AppFetchApi("/classroom/v1/teaching_materials", {
+    method: "POST",
+    headers: {
+      "X-Sisva-Source": "tenant.user.test",
+    },
+    body: JSON.stringify(value),
+  });
+  return serverResponseHandler(
+    res,
+    "Error create teaching material",
+    "Success create teaching material"
+  );
+}
+
+export async function patchTeachingMaterial(id, value) {
+  const res = await AppFetchApi(`/classroom/v1/teaching_materials/${id}`, {
+    method: "PATCH",
+    headers: {
+      "X-Sisva-Source": "tenant.user.test",
+    },
+    body: JSON.stringify(value),
+  });
+  return serverResponseHandler(
+    res,
+    "Error update teaching material",
+    "Success update teaching material"
+  );
+}
+
+export async function deleteTeachingMaterial(id) {
+  const res = await AppFetchApi(`/classroom/v1/teaching_materials/${id}`, {
+    method: "DELETE",
+    headers: {
+      "X-Sisva-Source": "tenant.user.test",
+    },
+  });
+  return serverResponseHandler(
+    res,
+    "Error delete teaching material",
+    "Success delete teaching material"
+  );
+}
+
+export async function postUploadFile(payload) {
+  const res = await AppFetchApi(
+    "/file/v1/files/",
+    {
+      method: "POST",
+      headers: {
+        "X-Sisva-Source": "test",
+      },
+      body: payload,
+    },
+    true
+  );
+
+  return serverResponseHandler(res, "Error upload file", "Success upload file");
+}
+
+// export async function getDownloadFile(id) {
+//   const userData = getServerSession();
+//   const schoolId = userData.school_id;
+
+//   const res = await AppFetchApi(`/file/v1/files/${id}?school_id=${schoolId}`, {
+//     method: "GET",
+//   });
+
+//   return serverResponseHandler(
+//     res,
+//     "Error download file",
+//     "Success download file"
+//   );
+// }

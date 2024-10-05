@@ -1,5 +1,4 @@
 import React from "react";
-import TeachingMaterialContainer from "./view/container/TeachingMaterialContainer";
 import {
   getTeachingMaterialList,
   getAllCurriculum,
@@ -7,7 +6,7 @@ import {
   getAllSubjectName,
   getAllTeacher,
 } from "./repository/teaching-material-service";
-import { resturctureTeachingMaterialList } from "./model/data-mapper";
+import TeachingMaterialMainPage from "./view/container/TeachingMaterialMainPage";
 
 async function getTeachingMaterialPageData() {
   const [
@@ -35,7 +34,7 @@ async function getTeachingMaterialPageData() {
 
 const TeachingMaterialPage = async () => {
   const initialData = await getTeachingMaterialPageData();
-  return <TeachingMaterialContainer initialData={initialData} />;
+  return <TeachingMaterialMainPage initialData={initialData} />;
 };
 
 export default TeachingMaterialPage;

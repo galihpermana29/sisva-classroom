@@ -1,4 +1,9 @@
+import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
+
 export function resturctureTeachingMaterialList(data) {
+  const userData = getClientSession();
+  const userId = userData?.id;
+
   const mappedData = Object.values(
     data.reduce((acc, item) => {
       if (!acc[item.subject_name]) {
@@ -8,7 +13,10 @@ export function resturctureTeachingMaterialList(data) {
         };
       }
 
-      acc[item.subject_name].items.push(item);
+      acc[item.subject_name].items.push({
+        ...item,
+        isOwner: item.create_by === userId,
+      });
 
       return acc;
     }, {})
