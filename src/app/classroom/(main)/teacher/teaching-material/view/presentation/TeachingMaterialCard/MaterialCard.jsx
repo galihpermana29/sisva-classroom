@@ -7,7 +7,6 @@ import {
 import React, { useMemo } from "react";
 import { Card, Divider, Dropdown } from "antd";
 import PdfIcon from "@/assets/classroom/teacher/PDFIcon.png";
-import Banner from "@/assets/classroom/teacher/BannerCard.png";
 import Image from "next/image";
 import { useModal } from "../../../../class/[slug]/create-rpp/view/container/Provider/ModalProvider";
 import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";

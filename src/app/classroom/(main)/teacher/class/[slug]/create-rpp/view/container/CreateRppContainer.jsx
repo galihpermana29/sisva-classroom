@@ -1,6 +1,6 @@
 import React from "react";
 import { SisvaInput } from "@/app/classroom/shared/presentation/Input/SisvaInputField";
-import { Divider, Form } from "antd";
+import { Divider, Form, Skeleton } from "antd";
 import { useCreateRpp } from "../../usecase/use-create-rpp";
 import TeachingMaterialTable from "../presentation/Table/TeachingMaterialTable";
 import TaskTable from "../presentation/Table/TaskTable";
@@ -16,16 +16,16 @@ import { useSelector } from "react-redux";
 import { useDeleteRpp } from "../../../usecase/use-delete-rpp";
 
 const FormTaskModal = dynamic(() =>
-  import("../../../../../../../shared/presentation/Modal/FormTaskModal")
+  import("@/app/classroom/shared/presentation/Modal/FormTaskModal")
 );
 const CreateTeachingMaterialModal = dynamic(() =>
   import(
-    "../../../../../../../shared/presentation/Modal/CreateTeachingMaterialModal"
+    "@/app/classroom/shared/presentation/Modal/CreateTeachingMaterialModal"
   )
 );
 const SelectTeachingMaterialModal = dynamic(() =>
   import(
-    "../../../../../../../shared/presentation/Modal/SelectTeachingMaterialModal"
+    "@/app/classroom/shared/presentation/Modal/SelectTeachingMaterialModal"
   )
 );
 const DeleteConfirmation = dynamic(() =>
@@ -56,7 +56,9 @@ const CreateRppContainer = ({ initialData, headerText }) => {
       <div className="flex items-center gap-2">
         <h3 className="text-lg font-bold text-[#1D2939]">{headerText}</h3>
         <div className="rounded-lg bg-[#FAE1E1] text-[#001C2B] p-2 text-sm font-bold">
-          {classData?.student_group_name ?? "Dummy"}
+          {classData?.student_group_name ?? (
+            <Skeleton.Button active size="large" shape="square" block />
+          )}
         </div>
       </div>
       <p className="text-[#1D2939] font-bold mb-2">Informasi Pembelajaran</p>
