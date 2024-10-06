@@ -4,7 +4,7 @@ import {
   Edit01,
   Trash01,
 } from "@untitled-ui/icons-react";
-import React from "react";
+import React, { useMemo } from "react";
 import { Card, Divider, Dropdown } from "antd";
 import PdfIcon from "@/assets/classroom/teacher/PDFIcon.png";
 import Banner from "@/assets/classroom/teacher/BannerCard.png";
@@ -70,7 +70,7 @@ const MaterialCard = ({ item }) => {
       : []),
   ];
 
-  const randomColor = generateRandomColor();
+  const randomColor = useMemo(() => generateRandomColor(), []);
 
   return (
     <Card

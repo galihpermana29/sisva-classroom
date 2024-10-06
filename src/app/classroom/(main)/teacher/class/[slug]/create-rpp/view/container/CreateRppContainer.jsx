@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { SisvaInput } from "@/app/classroom/shared/presentation/Input/SisvaInputField";
 import { Divider, Form } from "antd";
-import { useForm } from "antd/es/form/Form";
 import { useCreateRpp } from "../../usecase/use-create-rpp";
 import TeachingMaterialTable from "../presentation/Table/TeachingMaterialTable";
 import TaskTable from "../presentation/Table/TaskTable";
@@ -12,8 +11,9 @@ import BoxAction from "../presentation/BoxAction";
 import { useModal } from "./Provider/ModalProvider";
 import dynamic from "next/dynamic";
 import { useCreateRppModalForm } from "../../usecase/use-create-rpp-modal-form";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
+import { useDeleteRpp } from "../../../usecase/use-delete-rpp";
 
 const FormTaskModal = dynamic(() =>
   import("../../../../../../../shared/presentation/Modal/FormTaskModal")
@@ -45,9 +45,11 @@ const CreateRppContainer = ({ initialData, headerText }) => {
     handleAddFromExistingTeachingMaterial,
   } = useCreateRppModalForm();
 
-  const { handleSubmitCreateRPPForm, isLoading, form } =
+  const { handleSubmitCreateRPPForm, isLoading, form, isEditRpp } =
     useCreateRpp(initialData);
-  const { classData } = useSelector((state) => state.classData);
+  const { id } = useParams();
+  const { handleDeleteRpp, loadingDelete } = useDeleteRpp(id);
+  const classData = useSelector((state) => state.classData.detailClass);
 
   return (
     <div className="flex flex-col gap-4 font-kumbh">
@@ -117,7 +119,7 @@ const CreateRppContainer = ({ initialData, headerText }) => {
         </div>
         <p className="text-[#1D2939] font-bold my-3">Informasi Administratif</p>
         <Form.Item
-          name="teaching_goals"
+          name="teaching_goal"
           label="Tujuan Pembelajaran"
           rules={[{ required: true, message: "Teaching goals must be filled" }]}
         >
@@ -148,9 +150,27 @@ const CreateRppContainer = ({ initialData, headerText }) => {
             customSize="md"
             htmlType="submit"
             loading={isLoading}
+            disabled={materials.length === 0 || tasks.length === 0}
           >
             Save Changes
           </SisvaButton>
+          {isEditRpp && (
+            <SisvaButton
+              btn_type="primary"
+              customSize="md"
+              loading={loadingDelete}
+              disabled={isLoading || loadingDelete}
+              onClick={() => {
+                setModalState({
+                  isOpen: true,
+                  type: "delete-rpp",
+                  title: "Delete Rencana Pembelajaran",
+                });
+              }}
+            >
+              Delete
+            </SisvaButton>
+          )}
           <SisvaButton
             btn_type="secondary"
             customSize="md"
@@ -201,10 +221,13 @@ const CreateRppContainer = ({ initialData, headerText }) => {
         open={
           modalState?.isOpen &&
           (modalState?.type === "delete-teaching-material" ||
-            modalState?.type === "delete-task")
+            modalState?.type === "delete-task" ||
+            modalState?.type === "delete-rpp")
         }
         title={modalState?.title}
-        handleOk={handleDeleteRow}
+        handleOk={
+          modalState?.type === "delete-rpp" ? handleDeleteRpp : handleDeleteRow
+        }
         handleClose={handleClose}
         loading={isLoadingForm}
       />

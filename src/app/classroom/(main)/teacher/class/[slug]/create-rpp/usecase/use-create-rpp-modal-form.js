@@ -23,16 +23,14 @@ import {
   deleteTask,
   editTask,
 } from "@/app/classroom/shared/redux/taskSlice";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import dayjs from "dayjs";
 
 export const useCreateRppModalForm = () => {
   const [isLoadingForm, setIsLoadingForm] = useState(false);
   const { handleClose, modalState } = useModal();
   const [fileURI, setFileURI] = useState("");
-  const router = useRouter();
-  const getParam = useParams();
-  const { slug } = getParam;
+  const { slug } = useParams();
 
   const materials = useSelector((state) => state.teachingMaterials.materials);
   const tasks = useSelector((state) => state.tasks.tasks);
@@ -137,7 +135,7 @@ export const useCreateRppModalForm = () => {
     setIsLoadingForm(false);
   };
 
-  const handleSubmitForm = (value) => {
+  const handleSubmitForm = async (value) => {
     setIsLoadingForm(true);
 
     const teachingMaterialPayload = {
@@ -158,13 +156,13 @@ export const useCreateRppModalForm = () => {
     };
 
     if (modalState?.type === "create-teaching-material") {
-      handleCreateTeachingMaterial(teachingMaterialPayload);
+      await handleCreateTeachingMaterial(teachingMaterialPayload);
     } else if (modalState?.type === "edit-teaching-material") {
-      handleEditTeachingMaterial(teachingMaterialPayload);
+      await handleEditTeachingMaterial(teachingMaterialPayload);
     } else if (modalState?.type === "create-task") {
-      handleCreateTask(taskPayload);
+      await handleCreateTask(taskPayload);
     } else if (modalState?.type === "edit-task") {
-      handleEditTask(taskPayload);
+      await handleEditTask(taskPayload);
     }
 
     handleClose();
@@ -177,20 +175,6 @@ export const useCreateRppModalForm = () => {
     } else if (modalState?.type === "delete-task") {
       handleDeleteTask();
     }
-  };
-
-  const handleDeleteRpp = async () => {
-    setIsLoadingForm(true);
-    const rppId = modalState?.data?.id;
-    const response = await deleteRpp(rppId);
-    if (response.success) {
-      toast.success("Success delete rpp");
-      handleClose();
-      router.push(`/classroom/teacher/class/${slug}`);
-    } else {
-      toast.error("Error delete rpp");
-    }
-    setIsLoadingForm(false);
   };
 
   const handleAddFromExistingTeachingMaterial = (value) => {
@@ -209,6 +193,5 @@ export const useCreateRppModalForm = () => {
     materials,
     tasks,
     handleAddFromExistingTeachingMaterial,
-    handleDeleteRpp,
   };
 };

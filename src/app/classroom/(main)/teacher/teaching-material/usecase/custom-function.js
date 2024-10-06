@@ -1,10 +1,10 @@
 const colors = [
-  "bg-red-200",
-  "bg-blue-200",
-  "bg-green-200",
-  "bg-yellow-200",
-  "bg-purple-200",
-  "bg-pink-200",
+  "bg-red-600",
+  "bg-blue-600",
+  "bg-green-600",
+  "bg-yellow-600",
+  "bg-purple-600",
+  "bg-pink-600",
 ];
 
 export function generateRandomString() {

@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  classData: null,
+  detailClass: null,
+  isFetching: false,
 };
 
 const classSlice = createSlice({
@@ -9,11 +10,14 @@ const classSlice = createSlice({
   initialState,
   reducers: {
     setClassData: (state, action) => {
-      state.classData = action.payload;
+      state.detailClass = action.payload;
+    },
+    setIsFetching: (state, action) => {
+      state.isFetching = action.payload;
     },
   },
 });
 
-export const { setClassData } = classSlice.actions;
+export const { setClassData, setIsFetching } = classSlice.actions;
 
 export default classSlice.reducer;

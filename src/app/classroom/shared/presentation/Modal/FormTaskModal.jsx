@@ -6,6 +6,8 @@ import { SisvaInput } from "../Input/SisvaInputField";
 import SisvaButton from "../Button/GlobalButton";
 import { useModal } from "@/app/classroom/(main)/teacher/class/[slug]/create-rpp/view/container/Provider/ModalProvider";
 import { useGetDetailTask } from "@/app/classroom/(main)/teacher/class/[slug]/create-rpp/usecase/task/use-get-detail-task";
+import dayjs from "dayjs";
+import { useWatch } from "antd/es/form/Form";
 
 const FormTaskModal = ({
   open,
@@ -38,6 +40,11 @@ const FormTaskModal = ({
     );
   }, [modalState]);
 
+  const handleOkModal = (value) => {
+    handleOk(value);
+    form.resetFields();
+  };
+
   return (
     <Modal
       title={title}
@@ -50,7 +57,7 @@ const FormTaskModal = ({
       <Form
         form={form}
         layout="vertical"
-        onFinish={handleOk}
+        onFinish={handleOkModal}
         disabled={isLoading || isLoadingGetDetail}
         requiredMark={false}
       >
@@ -95,9 +102,8 @@ const FormTaskModal = ({
               border: "1px solid #D0D5DD",
             }}
           >
-            <Form.Item name="deadline" label="Deadline" valuePropName="date">
+            <Form.Item name="deadline" label="Deadline">
               <DatePicker
-                format="DD/MM/YYYY"
                 className="w-full h-[44px]"
                 placeholder="Pilih tanggal"
               />

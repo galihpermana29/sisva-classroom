@@ -48,20 +48,18 @@ export const useCreateRpp = (initialData) => {
       class_id: parseInt(slug),
       title: value.title,
       markdown: value.markdown,
-      teachingMaterials: materials.map((item) => ({
+      teaching_materials: materials.map((item) => ({
         id: item.id,
       })),
       tasks: tasks.map((item) => ({
         id: item.id,
       })),
-      teaching_goals: value.teaching_goals,
+      teaching_goal: value.teaching_goal,
       teaching_activity: value.teaching_activity,
       teaching_scoring: value.teaching_scoring,
     };
 
     setIsLoading(true);
-
-    console.log(payload);
 
     const response = isEditRpp
       ? await patchUpdateRpp(id, payload)
@@ -80,5 +78,6 @@ export const useCreateRpp = (initialData) => {
     handleSubmitCreateRPPForm,
     isLoading,
     form,
+    isEditRpp,
   };
 };

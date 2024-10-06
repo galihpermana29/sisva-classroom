@@ -43,6 +43,11 @@ const CreateTeachingMaterialModal = ({
     );
   }, [modalState]);
 
+  const handleOkModal = (value) => {
+    handleOk(value);
+    form.resetFields();
+  };
+
   return (
     <Modal
       title={title}
@@ -54,7 +59,7 @@ const CreateTeachingMaterialModal = ({
       <Form
         form={form}
         name="create-teaching-material"
-        onFinish={handleOk}
+        onFinish={handleOkModal}
         layout="vertical"
         disabled={isLoading || isLoadingGetDetail}
         requiredMark={false}
