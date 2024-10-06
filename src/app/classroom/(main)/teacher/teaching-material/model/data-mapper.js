@@ -25,6 +25,32 @@ export function resturctureTeachingMaterialList(data) {
   return mappedData;
 }
 
+export function restructTeachingMaterialListOwner(data) {
+  const userData = getClientSession();
+  const userId = userData?.id;
+  const ownerData = data.filter((item) => item.create_by === userId);
+
+  const mappedData = Object.values(
+    ownerData.reduce((acc, item) => {
+      if (!acc[item.subject_name]) {
+        acc[item.subject_name] = {
+          topic: item.subject_name,
+          items: [],
+        };
+      }
+
+      acc[item.subject_name].items.push({
+        ...item,
+        isOwner: false, // false to hide the edit and delete buttons
+      });
+
+      return acc;
+    }, {})
+  );
+
+  return mappedData;
+}
+
 export function mapTeacherName(data) {
   return data.map((item) => item.id);
 }

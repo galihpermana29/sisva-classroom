@@ -1,26 +1,30 @@
 import React from "react";
 import CustomRppTable from "./CustomRppTable";
 import { Edit01, File05, Trash01 } from "@untitled-ui/icons-react";
+import pdfIcon from "@/assets/classroom/teacher/PDFIcon.png";
+import Image from "next/image";
+import { useModal } from "../../container/Provider/ModalProvider";
 
-const TaskTable = () => {
+const TaskTable = ({ dataSource }) => {
+  const { setModalState } = useModal();
   const column = [
     {
       title: "Nama Tugas",
-      dataIndex: "task_name",
-      key: "task_name",
+      dataIndex: "name",
+      key: "name",
     },
     {
       title: "Deskripsi Tugas",
-      dataIndex: "task_description",
-      key: "task_description",
+      dataIndex: "description",
+      key: "description",
     },
     {
       title: "Attachment",
-      dataIndex: "attachment",
-      key: "attachment",
+      dataIndex: "attachment_file_uri",
+      key: "attachment_file_uri",
       render: (data) => (
         <div className="flex items-center gap-2">
-          <File05 width={20} height={20} />
+          <Image src={pdfIcon} width={20} height={20} alt="pdf-icon" />
           <span className="text-[#1D2939]">{data}</span>
         </div>
       ),
@@ -29,38 +33,41 @@ const TaskTable = () => {
       title: "Action",
       dataIndex: "action",
       key: "action",
-      render: () => (
+      render: (_, record) => (
         <div className="flex items-center gap-2">
-          <Trash01 width={18} height={18} />
-          <Edit01 width={18} height={18} />
+          <Trash01
+            className="cursor-pointer"
+            width={18}
+            height={18}
+            onClick={() => {
+              setModalState({
+                isOpen: true,
+                type: "delete-task",
+                title: "Hapus Tugas",
+                data: record,
+              });
+            }}
+          />
+          <Edit01
+            className="cursor-pointer"
+            width={18}
+            height={18}
+            onClick={() => {
+              setModalState({
+                isOpen: true,
+                type: "edit-task",
+                title: "Edit Tugas",
+                data: record,
+              });
+            }}
+          />
         </div>
       ),
       width: 120,
     },
   ];
-  const data = [
-    {
-      task_name: "Tugas Teorema Pyhtagoras 1",
-      task_description: "Deskripsi tugas akan ditulis disini",
-      attachment: "Modul KBM 1",
-    },
-    {
-      task_name: "Tugas Teorema Pyhtagoras 1",
-      task_description: "Deskripsi tugas akan ditulis disini",
-      attachment: "Modul KBM 1",
-    },
-    {
-      task_name: "Tugas Teorema Pyhtagoras 1",
-      task_description: "Deskripsi tugas akan ditulis disini",
-      attachment: "Modul KBM 1",
-    },
-    {
-      task_name: "Tugas Teorema Pyhtagoras 1",
-      task_description: "Deskripsi tugas akan ditulis disini",
-      attachment: "Modul KBM 1",
-    },
-  ];
-  return <CustomRppTable columns={column} dataSource={data} />;
+
+  return <CustomRppTable columns={column} dataSource={dataSource} />;
 };
 
 export default TaskTable;

@@ -42,6 +42,7 @@ export const useTeachingMaterial = (initialData) => {
   const fetchTeachingMaterialList = async () => {
     setIsLoading(true);
     const response = await getTeachingMaterialList(
+      "",
       queryFilter.subject,
       queryFilter.curriculum,
       queryFilter.study_program
@@ -145,9 +146,18 @@ export const useTeachingMaterial = (initialData) => {
     [hasActiveFilters, teachingMaterialData, initialData.teachingMaterialList]
   );
 
+  const rawStructureMaterialData = useMemo(
+    () =>
+      hasActiveFilters
+        ? teachingMaterialData
+        : initialData.teachingMaterialList,
+    [hasActiveFilters, teachingMaterialData, initialData.teachingMaterialList]
+  );
+
   return {
     isLoading,
     materialData,
+    rawStructureMaterialData,
     dropDownData: mappedDropdownData,
 
     handleStudyProgramFilter: handleStudyProgramFilter,

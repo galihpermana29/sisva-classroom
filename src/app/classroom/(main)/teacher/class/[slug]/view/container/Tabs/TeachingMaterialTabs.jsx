@@ -1,29 +1,27 @@
-"use client";
-import React, { Fragment } from "react";
-import MaterialCard from "@/app/classroom/(main)/teacher/teaching-material/view/presentation/TeachingMaterialCard/MaterialCard";
-import TopicBanner from "@/app/classroom/(main)/teacher/teaching-material/view/presentation/TopicBanner";
+import React from "react";
+import { useRppTeachingMaterial } from "../../../usecase/use-rpp-teaching-material";
 import { SisvaInputSearch } from "@/app/classroom/shared/presentation/Input/SisvaInputField";
+import TeachingMaterialCardList from "@/app/classroom/(main)/teacher/teaching-material/view/presentation/TeachingMaterialCardList";
 
 const TeachingMaterialTabs = () => {
+  const { materialData, isLoading, queryFilter, handleFilterChange } =
+    useRppTeachingMaterial();
+
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex md:justify-end w-full">
-        <SisvaInputSearch customSize="md" placeholder="Search" />
+      <div className="flex justify-end w-full">
+        <SisvaInputSearch
+          customSize="md"
+          placeholder="Search"
+          onChange={(e) => handleFilterChange("search", e.target.value)}
+          value={queryFilter.search === "" ? null : queryFilter.search}
+        />
       </div>
-      <div className="flex flex-col gap-8 mt-3">
-        {[...Array(5)].map((_, index) => (
-          <div key={index} className="flex flex-col gap-5">
-            <TopicBanner />
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-              {[...Array(5)].map((_, index) => (
-                <Fragment key={index}>
-                  <MaterialCard />
-                </Fragment>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
+
+      <TeachingMaterialCardList
+        materialData={materialData}
+        isLoading={isLoading}
+      />
     </div>
   );
 };

@@ -1,48 +1,95 @@
-import React from "react";
+import React, { useState } from "react";
 import CustomRppTable from "./CustomRppTable";
-import { Edit01, File05, Trash01 } from "@untitled-ui/icons-react";
+import { Download01, Edit01, Trash01 } from "@untitled-ui/icons-react";
+import Image from "next/image";
+import pdfIcon from "@/assets/classroom/teacher/PDFIcon.png";
+import { useModal } from "../../container/Provider/ModalProvider";
+import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
+const TeachingMaterialTable = ({
+  dataSource,
+  type,
+  isLoading,
+  rowSelection,
+}) => {
+  const { setModalState } = useModal();
+  const userData = getClientSession();
+  const schoolId = userData?.school_id;
 
-const TeachingMaterialTable = () => {
   const column = [
     {
       title: "Nama Bahan Ajar",
-      dataIndex: "title",
-      key: "title",
+      dataIndex: "description",
+      key: "description",
       render: (data) => (
         <div className="flex items-center gap-2">
-          <File05 width={20} height={20} />
+          <Image src={pdfIcon} width={20} height={20} alt="pdf-icon" />
           <span className="text-[#1D2939]">{data}</span>
         </div>
       ),
     },
     {
       title: "Action",
-      dataIndex: "action",
-      key: "action",
-      render: () => (
+      dataIndex: "id",
+      key: "id",
+      render: (_, record) => (
         <div className="flex items-center gap-2">
-          <Trash01 className="cursor-pointer" width={18} height={18} />
-          <Edit01 className="cursor-pointer" width={18} height={18} />
+          {type === "summary" ? (
+            <>
+              <Trash01
+                className="cursor-pointer"
+                width={18}
+                height={18}
+                onClick={() => {
+                  setModalState({
+                    isOpen: true,
+                    type: "delete-teaching-material",
+                    title: "Hapus Bahan Ajar",
+                    data: record,
+                  });
+                }}
+              />
+              <Edit01
+                className="cursor-pointer"
+                width={18}
+                height={18}
+                onClick={() => {
+                  setModalState({
+                    isOpen: true,
+                    type: "edit-teaching-material",
+                    title: "Edit Bahan Ajar",
+                    data: record,
+                  });
+                }}
+              />
+            </>
+          ) : (
+            <a
+              href={`${process.env.NEXT_PUBLIC_API_BASE_URL}/file/v1/files/${record.attachment_file_uri}?school_id=${schoolId}`}
+              download
+            >
+              <Download01 width={20} height={20} className="text-[#555555]" />
+            </a>
+          )}
         </div>
       ),
       width: 120,
     },
   ];
-  const data = [
-    {
-      title: "Modul Teorema Pyhtagoras 1",
-    },
-    {
-      title: "Modul Teorema Pyhtagoras 2",
-    },
-    {
-      title: "Modul Teorema Pyhtagoras 3",
-    },
-    {
-      title: "Modul Teorema Pyhtagoras 4",
-    },
-  ];
-  return <CustomRppTable columns={column} dataSource={data} />;
+  return (
+    <CustomRppTable
+      pagination={
+        type === "summary"
+          ? false
+          : {
+              pageSize: 7,
+            }
+      }
+      columns={column}
+      dataSource={dataSource}
+      rowSelection={type !== "summary" ? rowSelection : null}
+      loading={isLoading}
+    />
+  );
 };
 
 export default TeachingMaterialTable;

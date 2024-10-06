@@ -2,13 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Modal, Form, Row, Col } from "antd";
 import { SisvaSelect } from "../Input/SelectField";
 import SisvaButton from "../Button/GlobalButton";
-import { useForm } from "antd/es/form/Form";
 import { SisvaInput } from "../Input/SisvaInputField";
 import SisvaInputFile from "@/app/classroom/shared/presentation/Input/InputFile";
-import { useTeachingMaterial } from "@/app/classroom/(main)/teacher/teaching-material/usecase/use-teaching-material";
-import { useTeachingMaterialForm } from "@/app/classroom/(main)/teacher/teaching-material/usecase/use-teaching-material-form";
 import { useModal } from "@/app/classroom/(main)/teacher/class/[slug]/create-rpp/view/container/Provider/ModalProvider";
 import { useGetDetailTeachingMaterial } from "@/app/classroom/(main)/teacher/teaching-material/usecase/use-get-detail-material";
+import { useGetTeachingMaterialDropdown } from "@/app/classroom/(main)/teacher/class/[slug]/create-rpp/usecase/teaching-material/use-get-teaching-material-dropdown";
 
 const CreateTeachingMaterialModal = ({
   open,
@@ -21,7 +19,7 @@ const CreateTeachingMaterialModal = ({
 }) => {
   const [fileList, setFileList] = useState(null);
   const { dropDownData, handleGetGradeDropdown } =
-    useTeachingMaterial(initialData);
+    useGetTeachingMaterialDropdown(initialData);
   const { modalState } = useModal();
   const { form, handleGetDetailTeachingMaterial, isLoadingGetDetail } =
     useGetDetailTeachingMaterial();
@@ -79,7 +77,7 @@ const CreateTeachingMaterialModal = ({
           </Col>
           <Col span={12}>
             <Form.Item
-              name="subject_id"
+              name="study_program_id"
               label="Program Studi"
               rules={[
                 { required: true, message: "Program studi must be selected" },

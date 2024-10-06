@@ -3,10 +3,13 @@ import React from "react";
 import { ModalProvider } from "./Provider/ModalProvider";
 import CreateRppContainer from "./CreateRppContainer";
 
-const CreateRppMainPage = () => {
+const CreateRppMainPage = ({
+  initialData,
+  headerText = "Tambah Rencana Pembelajaran Kelas:",
+}) => {
   return (
     <ModalProvider>
-      <CreateRppContainer />
+      <CreateRppContainer initialData={initialData} headerText={headerText} />
     </ModalProvider>
   );
 };

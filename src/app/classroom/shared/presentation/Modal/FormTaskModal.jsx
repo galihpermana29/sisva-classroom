@@ -1,42 +1,72 @@
-import { Checkbox, DatePicker, Form, Modal, Radio, Space } from "antd";
-import { useForm } from "antd/es/form/Form";
-import React from "react";
+import { DatePicker, Form, Modal, Radio, Space } from "antd";
+import React, { useEffect, useState } from "react";
 import SisvaRichText from "../Input/RichText";
 import SisvaInputFile from "../Input/InputFile";
 import { SisvaInput } from "../Input/SisvaInputField";
 import SisvaButton from "../Button/GlobalButton";
+import { useModal } from "@/app/classroom/(main)/teacher/class/[slug]/create-rpp/view/container/Provider/ModalProvider";
+import { useGetDetailTask } from "@/app/classroom/(main)/teacher/class/[slug]/create-rpp/usecase/task/use-get-detail-task";
 
-const FormTaskModal = ({ open, handleClose, handleOk, title }) => {
-  const [form] = useForm();
+const FormTaskModal = ({
+  open,
+  handleClose,
+  handleOk,
+  title = "Tambah Tugas",
+  handleFileUpload,
+  isLoading,
+}) => {
+  const [fileList, setFileList] = useState(null);
+  const { modalState } = useModal();
+  const { form, handleGetDetailTask, isLoadingGetDetail } = useGetDetailTask();
+
+  const handleCloseModal = () => {
+    form.resetFields();
+    handleClose();
+  };
+
+  useEffect(() => {
+    const getDetail = async () => {
+      await handleGetDetailTask(modalState?.data?.id);
+    };
+    if (modalState?.type === "edit-task") {
+      getDetail();
+    }
+    setFileList(
+      modalState?.data?.attachment_file_uri
+        ? [modalState?.data?.attachment_file_uri]
+        : null
+    );
+  }, [modalState]);
+
   return (
     <Modal
-      open={open}
-      onOk={handleOk}
-      onCancel={handleClose}
       title={title}
+      open={open}
+      onCancel={handleCloseModal}
       width={940}
       footer={null}
       className="max-w-[calc(100vw-32px)]"
     >
-      <div className="flex flex-col md:flex-row gap-6">
-        {/* left column */}
-        <div className="w-full md:flex-[2]">
-          <Form form={form} layout="vertical">
-            <Form.Item name="title" label="Title">
+      <Form
+        form={form}
+        layout="vertical"
+        onFinish={handleOk}
+        disabled={isLoading || isLoadingGetDetail}
+        requiredMark={false}
+      >
+        <div className="flex flex-col md:flex-row gap-6">
+          {/* left column */}
+          <div className="w-full md:flex-[2]">
+            <Form.Item
+              name="name"
+              label="Title"
+              rules={[{ required: true, message: "Title must be filled" }]}
+            >
               <SisvaInput placeholder="Text field" customSize="md" />
             </Form.Item>
 
             <Form.Item name="description" label="Description">
               <SisvaRichText />
-            </Form.Item>
-
-            <Form.Item name="displayDescription" valuePropName="checked">
-              <div
-                className="p-3 rounded-md"
-                style={{ border: "1px solid #D0D5DD" }}
-              >
-                <Checkbox>Display description on page</Checkbox>
-              </div>
             </Form.Item>
 
             <Form.Item
@@ -49,28 +79,32 @@ const FormTaskModal = ({ open, handleClose, handleOk, title }) => {
               }
               className="mb-6"
             >
-              <SisvaInputFile text="Upload file here" />
+              <SisvaInputFile
+                onFileSelect={handleFileUpload}
+                fileList={fileList}
+                setFileList={setFileList}
+                text="Upload file here"
+              />
             </Form.Item>
-          </Form>
-        </div>
+          </div>
 
-        {/* right column */}
-        <div
-          className="w-full md:flex-1 bg-white rounded-md p-3"
-          style={{
-            border: "1px solid #D0D5DD",
-          }}
-        >
-          <Form form={form} layout="vertical">
-            <Form.Item name="deadline" label="Deadline">
+          {/* right column */}
+          <div
+            className="w-full md:flex-1 bg-white rounded-md p-3"
+            style={{
+              border: "1px solid #D0D5DD",
+            }}
+          >
+            <Form.Item name="deadline" label="Deadline" valuePropName="date">
               <DatePicker
+                format="DD/MM/YYYY"
                 className="w-full h-[44px]"
                 placeholder="Pilih tanggal"
               />
             </Form.Item>
 
             <Form.Item
-              name="allowSubmission"
+              name="allow_submission"
               label={
                 <span className="text-[#1D2939] font-semibold">
                   Allow Submission
@@ -80,7 +114,7 @@ const FormTaskModal = ({ open, handleClose, handleOk, title }) => {
             >
               <Radio.Group className="w-full">
                 <Space direction="vertical" className="w-full">
-                  <Radio value="1" className="w-full">
+                  <Radio value={true} className="w-full">
                     <div className="flex flex-col">
                       <span className="text-[#1D2939] font-semibold">
                         Option 1
@@ -91,7 +125,7 @@ const FormTaskModal = ({ open, handleClose, handleOk, title }) => {
                       </span>
                     </div>
                   </Radio>
-                  <Radio value="2" className="w-full">
+                  <Radio value={false} className="w-full">
                     <div className="flex flex-col">
                       <span className="text-[#1D2939] font-semibold">
                         Option 2
@@ -107,7 +141,7 @@ const FormTaskModal = ({ open, handleClose, handleOk, title }) => {
             </Form.Item>
 
             <Form.Item
-              name="allowOverdueSubmission"
+              name="allow_overdue_submission"
               label={
                 <span className="text-[#1D2939] font-semibold">
                   Allow overdue submission
@@ -117,7 +151,7 @@ const FormTaskModal = ({ open, handleClose, handleOk, title }) => {
             >
               <Radio.Group className="w-full">
                 <Space direction="vertical" className="w-full">
-                  <Radio value="1" className="w-full">
+                  <Radio value={true} className="w-full">
                     <div className="flex flex-col">
                       <span className="text-[#1D2939] font-semibold">
                         Option 1
@@ -128,7 +162,7 @@ const FormTaskModal = ({ open, handleClose, handleOk, title }) => {
                       </span>
                     </div>
                   </Radio>
-                  <Radio value="2" className="w-full">
+                  <Radio value={false} className="w-full">
                     <div className="flex flex-col">
                       <span className="text-[#1D2939] font-semibold">
                         Option 2
@@ -142,27 +176,29 @@ const FormTaskModal = ({ open, handleClose, handleOk, title }) => {
                 </Space>
               </Radio.Group>
             </Form.Item>
-          </Form>
+          </div>
         </div>
-      </div>
 
-      <div className="flex flex-col-reverse md:flex-row justify-end w-full gap-3 mt-6">
-        <SisvaButton
-          btn_type="secondary"
-          btn_size="md"
-          onClick={handleClose}
-          className="w-full md:w-auto"
-        >
-          Batal
-        </SisvaButton>
-        <SisvaButton
-          btn_type="primary"
-          btn_size="md"
-          className="w-full md:w-auto"
-        >
-          Simpan
-        </SisvaButton>
-      </div>
+        <div className="flex flex-col-reverse md:flex-row justify-end w-full gap-3 mt-6">
+          <SisvaButton
+            btn_type="secondary"
+            btn_size="md"
+            onClick={handleCloseModal}
+            className="w-full md:w-auto"
+          >
+            Batal
+          </SisvaButton>
+          <SisvaButton
+            btn_type="primary"
+            btn_size="md"
+            className="w-full md:w-auto"
+            htmlType="submit"
+            loading={isLoading || isLoadingGetDetail}
+          >
+            Simpan
+          </SisvaButton>
+        </div>
+      </Form>
     </Modal>
   );
 };

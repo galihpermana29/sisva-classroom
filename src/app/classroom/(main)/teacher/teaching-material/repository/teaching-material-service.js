@@ -2,15 +2,15 @@
 
 import { AppFetchApi } from "@/app/classroom/shared/usecase/global-fetch-api";
 import { serverResponseHandler } from "@/app/classroom/shared/usecase/server-response-handler";
-import { getServerSession } from "@/app/classroom/shared/usecase/session/get-server-session";
 
 export async function getTeachingMaterialList(
+  classId = "",
   subjectId = "",
   curriculumId = "",
   studyProgramId = ""
 ) {
   const res = await AppFetchApi(
-    `/classroom/v1/teaching_materials?subject_id=${subjectId}&curriculum_id=${curriculumId}&study_program_id=${studyProgramId}`,
+    `/classroom/v1/teaching_materials?class_id=${classId}&subject_id=${subjectId}&curriculum_id=${curriculumId}&study_program_id=${studyProgramId}`,
     {
       method: "GET",
       headers: {
@@ -18,6 +18,7 @@ export async function getTeachingMaterialList(
       },
     }
   );
+
   return serverResponseHandler(
     res,
     "Error fetch teaching material list",
@@ -158,18 +159,3 @@ export async function postUploadFile(payload) {
 
   return serverResponseHandler(res, "Error upload file", "Success upload file");
 }
-
-// export async function getDownloadFile(id) {
-//   const userData = getServerSession();
-//   const schoolId = userData.school_id;
-
-//   const res = await AppFetchApi(`/file/v1/files/${id}?school_id=${schoolId}`, {
-//     method: "GET",
-//   });
-
-//   return serverResponseHandler(
-//     res,
-//     "Error download file",
-//     "Success download file"
-//   );
-// }

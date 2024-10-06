@@ -5,14 +5,60 @@ import { SisvaSelect } from "../Input/SelectField";
 import TeachingMaterialTable from "../../../(main)/teacher/class/[slug]/create-rpp/view/presentation/Table/TeachingMaterialTable";
 import SisvaButton from "../Button/GlobalButton";
 import { FilterFunnel01 } from "@untitled-ui/icons-react";
+import { useTeachingMaterial } from "@/app/classroom/(main)/teacher/teaching-material/usecase/use-teaching-material";
 
 const SelectTeachingMaterialModal = ({
   open,
   handleClose,
   handleOk,
   title,
+  initialData,
 }) => {
+  /**
+   * Modal for mobile filter
+   */
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const {
+    dropDownData,
+    handleStudyProgramFilter,
+    generalHandleFilter,
+    handleResetFilter,
+    queryFilter,
+    rawStructureMaterialData,
+    isLoading,
+  } = useTeachingMaterial(initialData);
+
+  /**
+   *  Selecting existing teaching material
+   */
+  const [selectedState, setSelectedState] = useState([]);
+
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+
+  const onSelectChange = (newSelectedRowKeys) => {
+    setSelectedRowKeys(newSelectedRowKeys);
+    const getRecord = rawStructureMaterialData.filter((item) =>
+      newSelectedRowKeys.includes(item.id)
+    );
+    setSelectedState(getRecord);
+  };
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: onSelectChange,
+  };
+
+  const handleCloseModal = () => {
+    handleClose();
+    setSelectedState([]);
+    setSelectedRowKeys([]);
+  };
+
+  const handleOkModal = () => {
+    handleOk(selectedState);
+    setSelectedState([]);
+    setSelectedRowKeys([]);
+  };
 
   const showModal = () => setIsModalVisible(true);
   const handleCancel = () => setIsModalVisible(false);
@@ -20,45 +66,73 @@ const SelectTeachingMaterialModal = ({
   const FilterContent = () => (
     <>
       <SisvaSelect
+        customSize="md"
         placeholder="Kurikulum"
-        customSize="md"
         customClassName="w-full md:w-fit mb-2 md:mb-0"
+        options={dropDownData.curriculumDropdown}
+        onChange={(e) => generalHandleFilter("curriculum", e)}
+        value={queryFilter.curriculum === "" ? null : queryFilter.curriculum}
       />
       <SisvaSelect
+        customSize="md"
         placeholder="Program Studi"
-        customSize="md"
         customClassName="w-full md:w-fit mb-2 md:mb-0"
+        options={dropDownData.studyProgramDropdown}
+        onChange={handleStudyProgramFilter}
+        disabled={dropDownData.studyProgramDropdown.length === 0}
+        value={
+          queryFilter.study_program === "" ? null : queryFilter.study_program
+        }
       />
       <SisvaSelect
+        customSize="md"
         placeholder="Mata Pelajaran"
-        customSize="md"
         customClassName="w-full md:w-fit mb-2 md:mb-0"
+        options={dropDownData.subjectDropdown}
+        onChange={(e) => generalHandleFilter("subject", e)}
+        value={queryFilter.subject === "" ? null : queryFilter.subject}
       />
       <SisvaSelect
+        customSize="md"
         placeholder="Tingkatan"
-        customSize="md"
         customClassName="w-full md:w-fit mb-2 md:mb-0"
+        options={dropDownData.gradeDropdown}
+        onChange={(e) => generalHandleFilter("grade", e)}
+        value={queryFilter.grade === "" ? null : queryFilter.grade}
+        disabled={dropDownData.gradeDropdown.length === 0}
       />
       <SisvaSelect
-        placeholder="Guru"
         customSize="md"
+        placeholder="Guru"
         customClassName="w-full md:w-fit mb-2 md:mb-0"
+        options={dropDownData.teacherDropdwon}
+        onChange={(e) => generalHandleFilter("teacher", e)}
+        value={queryFilter.teacher === "" ? null : queryFilter.teacher}
       />
     </>
   );
   return (
     <Modal
       open={open}
-      onOk={handleOk}
-      onCancel={handleClose}
+      onOk={handleOkModal}
+      onCancel={handleCloseModal}
       title={title}
       width={940}
       footer={
         <div className="flex justify-end w-full gap-3">
-          <SisvaButton btn_type="secondary" btn_size="md" onClick={handleClose}>
+          <SisvaButton
+            btn_type="secondary"
+            btn_size="md"
+            onClick={handleCloseModal}
+          >
             Batal
           </SisvaButton>
-          <SisvaButton btn_type="primary" btn_size="md">
+          <SisvaButton
+            btn_type="primary"
+            btn_size="md"
+            onClick={handleOkModal}
+            disabled={selectedState.length === 0}
+          >
             Simpan
           </SisvaButton>
         </div>
@@ -69,8 +143,8 @@ const SelectTeachingMaterialModal = ({
           <SisvaInputSearch
             customSize="md"
             placeholder="Search"
-            //   onChange={(e) => generalHandleFilter("search", e.target.value)}
-            //   value={queryFilter.search === "" ? null : queryFilter.search}
+            onChange={(e) => generalHandleFilter("search", e.target.value)}
+            value={queryFilter.search === "" ? null : queryFilter.search}
           />
           <div className="lg:hidden">
             <SisvaButton
@@ -87,7 +161,7 @@ const SelectTeachingMaterialModal = ({
             <SisvaButton
               btn_type="primary"
               btn_size="md"
-              // onClick={handleResetFilter}
+              onClick={handleResetFilter}
             >
               Reset Filter
             </SisvaButton>
@@ -102,7 +176,7 @@ const SelectTeachingMaterialModal = ({
             <SisvaButton
               btn_type="secondary"
               btn_size="md"
-              // onClick={handleResetFilter}
+              onClick={handleResetFilter}
             >
               Reset Filter
             </SisvaButton>,
@@ -118,7 +192,11 @@ const SelectTeachingMaterialModal = ({
           <FilterContent />
         </Modal>
 
-        <TeachingMaterialTable />
+        <TeachingMaterialTable
+          dataSource={rawStructureMaterialData}
+          isLoading={isLoading}
+          rowSelection={rowSelection}
+        />
       </div>
     </Modal>
   );

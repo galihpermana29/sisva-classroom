@@ -1,5 +1,5 @@
 import { Table } from "antd";
-import React from "react";
+import React, { useState } from "react";
 
 const CustomRppTable = ({ columns, data, ...props }) => {
   return (
@@ -8,7 +8,7 @@ const CustomRppTable = ({ columns, data, ...props }) => {
       dataSource={data}
       bordered
       scroll={{ x: "max-content" }}
-      pagination={false}
+      rowKey="id"
       {...props}
     />
   );
