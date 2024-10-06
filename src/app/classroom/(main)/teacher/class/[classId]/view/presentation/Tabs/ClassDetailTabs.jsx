@@ -1,13 +1,26 @@
+"use client";
+
+import Tabs from "src/app/classroom/shared/presentation/Tabs/Tabs";
+import TeachingPlanPane from "../Pane/TeachingPlan/TeachingPlan";
 import TeachingMaterialTabs from "@/app/classroom/(main)/teacher/class/[slug]/view/container/Tabs/TeachingMaterialTabs";
-import Tabs from "./Tabs";
+import { useQueryParam } from "@/hooks/useQueryParam";
+import { useSearchParams } from "next/navigation";
 
 const ClassDetailTabs = () => {
+  const searchParams = useSearchParams();
+  const { updateQueryParam } = useQueryParam();
+
+  const selectedTab = searchParams.get("tab");
+
   return (
     <Tabs
-      defaultActiveKey="rencana_pembelajaran"
+      defaultActiveKey={selectedTab || "rencana_pembelajaran"}
       tabList={classDetailTabList}
       centered={true}
       tabPosition="top"
+      onChange={(key) => {
+        updateQueryParam("tab", key);
+      }}
     />
   );
 };
@@ -18,7 +31,7 @@ const classDetailTabList = [
   {
     key: "rencana_pembelajaran",
     label: "Rencana Pembelajaran",
-    children: <div></div>,
+    children: <TeachingPlanPane />,
   },
   {
     key: "bahan_ajar",
