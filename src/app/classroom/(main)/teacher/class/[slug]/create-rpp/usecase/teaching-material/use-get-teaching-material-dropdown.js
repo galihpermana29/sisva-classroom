@@ -29,7 +29,7 @@ export const useGetTeachingMaterialDropdown = (initialData) => {
       ),
       studyProgramDropdown: createDropdown(
         dropDownData.studyProgramDropdown,
-        "code",
+        "name",
         "id"
       ),
       gradeDropdown: dropDownData.gradeDropdown

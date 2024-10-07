@@ -22,6 +22,7 @@ const SelectTeachingMaterialModal = ({
   const {
     dropDownData,
     handleStudyProgramFilter,
+    handleCurriculumFilter,
     generalHandleFilter,
     handleResetFilter,
     queryFilter,
@@ -70,7 +71,7 @@ const SelectTeachingMaterialModal = ({
         placeholder="Kurikulum"
         customClassName="w-full md:w-fit mb-2 md:mb-0"
         options={dropDownData.curriculumDropdown}
-        onChange={(e) => generalHandleFilter("curriculum", e)}
+        onChange={handleCurriculumFilter}
         value={queryFilter.curriculum === "" ? null : queryFilter.curriculum}
       />
       <SisvaSelect

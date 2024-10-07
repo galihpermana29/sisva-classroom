@@ -117,7 +117,7 @@ export const useTeacherClass = (initialData) => {
       periodData: createDropdown(dropDownData.periodData, "name", "id"),
       studyProgramDropdown: createDropdown(
         dropDownData.studyProgramDropdown,
-        "code",
+        "name",
         "id"
       ),
       gradeDropdown: createDropdown(dropDownData.gradeDropdown),

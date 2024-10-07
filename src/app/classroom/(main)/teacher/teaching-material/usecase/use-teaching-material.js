@@ -97,8 +97,24 @@ export const useTeachingMaterial = (initialData) => {
     }
   };
 
+  const handleGetSubjectDropdown = async (curriculumId, studyProgramId) => {
+    const filteredSubject = initialData.subjectDropdown.filter(
+      (item) => item.curriculum_id === curriculumId
+    );
+    setDropdownData((prev) => ({
+      ...prev,
+      subjectDropdown: filteredSubject,
+    }));
+  };
+
+  const handleCurriculumFilter = async (e) => {
+    handleGetSubjectDropdown(e, queryFilter.study_program);
+    handleFilterChange("curriculum", e);
+  };
+
   const handleStudyProgramFilter = async (e) => {
     handleGetGradeDropdown(e);
+    handleGetSubjectDropdown(queryFilter.curriculum, e);
     handleFilterChange("study_program", e);
   };
 
@@ -118,7 +134,7 @@ export const useTeachingMaterial = (initialData) => {
       ),
       studyProgramDropdown: createDropdown(
         dropDownData.studyProgramDropdown,
-        "code",
+        "name",
         "id"
       ),
       gradeDropdown: dropDownData.gradeDropdown
@@ -160,7 +176,8 @@ export const useTeachingMaterial = (initialData) => {
     rawStructureMaterialData,
     dropDownData: mappedDropdownData,
 
-    handleStudyProgramFilter: handleStudyProgramFilter,
+    handleCurriculumFilter,
+    handleStudyProgramFilter,
     handleGetGradeDropdown,
     generalHandleFilter: handleFilterChange,
     queryFilter,

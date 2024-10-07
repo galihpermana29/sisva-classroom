@@ -22,6 +22,7 @@ const TeachingMaterialContainer = ({ initialData }) => {
     generalHandleFilter,
     handleResetFilter,
     handleStudyProgramFilter,
+    handleCurriculumFilter,
     isLoading,
     queryFilter,
     setQueryFilter,
@@ -60,6 +61,7 @@ const TeachingMaterialContainer = ({ initialData }) => {
         generalHandleFilter={generalHandleFilter}
         handleResetFilter={handleResetFilter}
         handleStudyProgramFilter={handleStudyProgramFilter}
+        handleCurriculumFilter={handleCurriculumFilter}
         isLoading={isLoading}
         queryFilter={queryFilter}
       />

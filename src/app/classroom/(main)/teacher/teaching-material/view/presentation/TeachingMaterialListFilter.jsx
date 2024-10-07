@@ -12,6 +12,7 @@ const TeachingMaterialListFilter = ({
   handleResetFilter,
   handleStudyProgramFilter,
   isLoading,
+  handleCurriculumFilter,
   queryFilter,
 }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -26,7 +27,7 @@ const TeachingMaterialListFilter = ({
         placeholder="Kurikulum"
         customClassName="min-w-full lg:min-w-40 mb-2 lg:mb-0"
         options={dropDownData.curriculumDropdown}
-        onChange={(e) => generalHandleFilter("curriculum", e)}
+        onChange={handleCurriculumFilter}
         value={queryFilter.curriculum === "" ? null : queryFilter.curriculum}
       />
       <SisvaSelect
