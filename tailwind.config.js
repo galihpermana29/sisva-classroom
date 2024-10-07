@@ -46,6 +46,7 @@ module.exports = {
         secondary70: "#C63423",
 
         base10: "#F9FAFB",
+        base40: "#D0D5DD",
         base50: "#98A2B3",
         base90: "#1D2939",
         text_description: "#555555",

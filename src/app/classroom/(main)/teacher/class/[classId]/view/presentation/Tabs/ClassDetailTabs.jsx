@@ -5,10 +5,12 @@ import TeachingPlanPane from "../Pane/TeachingPlan/TeachingPlan";
 import TeachingMaterialTabs from "@/app/classroom/(main)/teacher/class/[slug]/view/container/Tabs/TeachingMaterialTabs";
 import { useQueryParam } from "@/hooks/useQueryParam";
 import { useSearchParams } from "next/navigation";
+import { useMediaQuery } from "@/app/classroom/shared/usecase/hooks/use-mediaquery";
 
 const ClassDetailTabs = () => {
   const searchParams = useSearchParams();
   const { updateQueryParam } = useQueryParam();
+  const isAboveMobile = useMediaQuery("(min-width: 768px)");
 
   const selectedTab = searchParams.get("tab");
 
@@ -16,7 +18,7 @@ const ClassDetailTabs = () => {
     <Tabs
       defaultActiveKey={selectedTab || "rencana_pembelajaran"}
       tabList={classDetailTabList}
-      centered={true}
+      centered={isAboveMobile}
       tabPosition="top"
       onChange={(key) => {
         updateQueryParam("tab", key);

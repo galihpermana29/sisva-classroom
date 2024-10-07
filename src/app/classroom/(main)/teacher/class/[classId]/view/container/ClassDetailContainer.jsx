@@ -1,12 +1,14 @@
 "use client";
 import React from "react";
-import ClassDetailTabs from "@/app/classroom/shared/presentation/Tabs/ClassDetailTabs";
 import { ModalProvider } from "../../create-rpp/view/container/Provider/ModalProvider";
+import ClassDetailTabs from "../presentation/Tabs/ClassDetailTabs";
 
 const ClassDetailContainer = () => {
   return (
     <ModalProvider>
-      <ClassDetailTabs />
+      <div className="max-w-6xl mx-auto -mt-16 mb-[8dvh] md:mb-0">
+        <ClassDetailTabs />
+      </div>
     </ModalProvider>
   );
 };
