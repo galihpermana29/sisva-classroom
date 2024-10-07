@@ -12,8 +12,12 @@ const Tabs = ({
       theme={{
         token: {
           colorPrimary: "#F96756",
-          colorText: "#98A2B3",
-          fontFamily: "--var(--font-kumbh)",
+        },
+        components: {
+          Tabs: {
+            colorText: "#98A2B3",
+            fontFamily: "--var(--font-kumbh)",
+          },
         },
       }}
     >
