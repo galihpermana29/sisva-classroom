@@ -1,7 +1,6 @@
 "use client";
 
 import Tabs from "src/app/classroom/shared/presentation/Tabs/Tabs";
-import TeachingPlanPane from "../Pane/TeachingPlan/TeachingPlan";
 import { useQueryParam } from "@/hooks/useQueryParam";
 import { useSearchParams } from "next/navigation";
 
@@ -30,7 +29,7 @@ const classDetailTabList = [
   {
     key: "rencana_pembelajaran",
     label: "Rencana Pembelajaran",
-    children: <TeachingPlanPane />,
+    children: <div>hello</div>,
   },
   {
     key: "bahan_ajar",
