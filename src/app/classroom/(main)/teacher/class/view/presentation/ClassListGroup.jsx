@@ -2,6 +2,7 @@ import React from "react";
 import ClassCard from "./ClassCard";
 import EmptyData from "@/app/classroom/shared/presentation/EmptyData";
 import { Card, Col, Row, Skeleton } from "antd";
+import Link from "next/link";
 
 const ClassListGroup = ({ classData, isLoading }) => {
   if (isLoading) {
@@ -18,18 +19,23 @@ const ClassListGroup = ({ classData, isLoading }) => {
     );
   }
   return (
-    <div className="bg-white rounded-lg shadow-md p-5">
+    <div className="p-5 bg-white rounded-lg shadow-md">
       {classData.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
           {classData.map((classItem, idx) => (
-            <ClassCard
+            <Link
               key={idx}
-              group={classItem.student_group_name}
-              subject={classItem.subject_name}
-              taskName={classItem.task_list[0]?.name}
-              timeStamp={classItem.task_list[0]?.deadline}
-              isEmptyTask={classItem.task_list.length === 0}
-            />
+              href={`/classroom/teacher/class/${classItem.id}`}
+              passHref
+            >
+              <ClassCard
+                group={classItem.student_group_name}
+                subject={classItem.subject_name}
+                taskName={classItem.task_list[0]?.name}
+                timeStamp={classItem.task_list[0]?.deadline}
+                isEmptyTask={classItem.task_list.length === 0}
+              />
+            </Link>
           ))}
         </div>
       ) : (

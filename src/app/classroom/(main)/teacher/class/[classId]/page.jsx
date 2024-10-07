@@ -1,5 +1,11 @@
-import ClassDetailTabs from "./view/presentation/Tabs/ClassDetailTabs";
+import ClassDetailContainer from "./view/container/ClassDetailContainer";
 
-export default function page() {
-  return <ClassDetailTabs />;
-}
+const TeachingPlanPage = async ({ params }) => {
+  return (
+    <div>
+      <ClassDetailContainer />
+    </div>
+  );
+};
+
+export default TeachingPlanPage;
