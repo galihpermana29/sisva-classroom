@@ -17,7 +17,7 @@ const ListFilter = ({
   const handleCancel = () => setIsModalVisible(false);
 
   return (
-    <div className="flex items-center gap-3 mt-3 md:mt-6">
+    <div className="flex items-center justify-between gap-3 mt-3 md:mt-6">
       <SisvaInputSearch
         customSize="md"
         placeholder="Search"
@@ -25,7 +25,7 @@ const ListFilter = ({
         onChange={(e) => handleFilterChange("search", e.target.value)}
       />
 
-      <div className="hidden lg:flex">
+      <div className="hidden gap-3 lg:flex">
         <FilterContent
           filter={filter}
           dropdownFilterData={dropdownFilterData}
