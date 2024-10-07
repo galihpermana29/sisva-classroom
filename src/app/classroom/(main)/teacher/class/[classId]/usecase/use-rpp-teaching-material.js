@@ -11,7 +11,7 @@ import { useParams } from "next/navigation";
 export const useRppTeachingMaterial = () => {
   const [teachingMaterialData, setTeachingMaterialData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const { slug } = useParams();
+  const { classId } = useParams();
 
   const initialQueryFilter = {
     search: "",
@@ -28,7 +28,7 @@ export const useRppTeachingMaterial = () => {
   const fetchTeachingMaterialList = async () => {
     setIsLoading(true);
     const response = await getTeachingMaterialList(
-      slug,
+      classId,
       queryFilter.subject,
       queryFilter.curriculum,
       queryFilter.study_program

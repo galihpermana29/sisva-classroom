@@ -8,7 +8,7 @@ import React, { useMemo } from "react";
 import { Card, Divider, Dropdown } from "antd";
 import PdfIcon from "@/assets/classroom/teacher/PDFIcon.png";
 import Image from "next/image";
-import { useModal } from "../../../../class/[slug]/create-rpp/view/container/Provider/ModalProvider";
+import { useModal } from "../../../../class/[classId]/create-rpp/view/container/Provider/ModalProvider";
 import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
 import { generateRandomColor } from "../../../usecase/custom-function";
 

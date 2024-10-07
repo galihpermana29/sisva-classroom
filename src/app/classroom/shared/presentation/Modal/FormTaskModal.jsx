@@ -4,8 +4,8 @@ import SisvaRichText from "../Input/RichText";
 import SisvaInputFile from "../Input/InputFile";
 import { SisvaInput } from "../Input/SisvaInputField";
 import SisvaButton from "../Button/GlobalButton";
-import { useModal } from "@/app/classroom/(main)/teacher/class/[slug]/create-rpp/view/container/Provider/ModalProvider";
-import { useGetDetailTask } from "@/app/classroom/(main)/teacher/class/[slug]/create-rpp/usecase/task/use-get-detail-task";
+import { useModal } from "@/app/classroom/(main)/teacher/class/[classId]/create-rpp/view/container/Provider/ModalProvider";
+import { useGetDetailTask } from "@/app/classroom/(main)/teacher/class/[classId]/create-rpp/usecase/task/use-get-detail-task";
 import dayjs from "dayjs";
 import { useWatch } from "antd/es/form/Form";
 

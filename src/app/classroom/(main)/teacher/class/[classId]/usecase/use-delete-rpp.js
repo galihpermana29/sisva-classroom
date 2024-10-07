@@ -8,7 +8,7 @@ export const useDeleteRpp = (id) => {
   const [loadingDelete, setLoadingDelete] = useState(false);
   const { handleClose } = useModal();
   const router = useRouter();
-  const { slug } = useParams();
+  const { classId } = useParams();
   const handleDeleteRpp = async () => {
     setLoadingDelete(true);
 
@@ -16,7 +16,7 @@ export const useDeleteRpp = (id) => {
     if (response.success) {
       toast.success("Success delete rpp");
       handleClose();
-      router.push(`/classroom/teacher/class/${slug}`);
+      router.push(`/classroom/teacher/class/${classId}`);
     } else {
       toast.error("Error delete rpp");
     }

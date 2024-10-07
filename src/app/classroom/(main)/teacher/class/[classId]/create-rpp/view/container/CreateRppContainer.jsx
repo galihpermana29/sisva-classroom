@@ -55,11 +55,13 @@ const CreateRppContainer = ({ initialData, headerText }) => {
     <div className="flex flex-col gap-4 font-kumbh">
       <div className="flex items-center gap-2">
         <h3 className="text-lg font-bold text-[#1D2939]">{headerText}</h3>
-        <div className="rounded-lg bg-[#FAE1E1] text-[#001C2B] p-2 text-sm font-bold">
-          {classData?.student_group_name ?? (
-            <Skeleton.Button active size="large" shape="square" block />
-          )}
-        </div>
+        {classData?.isFetching ? (
+          <Skeleton.Button active size="large" shape="square" block />
+        ) : (
+          <div className="rounded-lg bg-[#FAE1E1] text-[#001C2B] p-2 text-sm font-bold">
+            {classData?.student_group_name}
+          </div>
+        )}
       </div>
       <p className="text-[#1D2939] font-bold mb-2">Informasi Pembelajaran</p>
       <Form

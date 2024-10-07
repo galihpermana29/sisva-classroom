@@ -4,16 +4,19 @@ import {
   getPeriodDropdown,
   getTeacherClassList,
 } from "./repository/teacher-class-service";
+import { getAllStudyProgram } from "../teaching-material/repository/teaching-material-service";
 
 async function getTeacherClassListPageData() {
-  const [classList, periodList] = await Promise.all([
+  const [classList, periodList, studyProgramList] = await Promise.all([
     getTeacherClassList(),
     getPeriodDropdown(),
+    getAllStudyProgram(),
   ]);
 
   return {
     teacherClass: classList.data ?? [],
     periodData: periodList.data ?? [],
+    studyProgramList: studyProgramList.data ?? [],
   };
 }
 const TeacherClassPage = async () => {

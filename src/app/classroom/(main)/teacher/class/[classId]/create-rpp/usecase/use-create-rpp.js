@@ -18,7 +18,7 @@ export const useCreateRpp = (initialData) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const getParam = useParams();
-  const { slug, id } = getParam;
+  const { classId, id } = getParam;
 
   const isEditRpp = initialData.initialFormData !== undefined;
 
@@ -45,7 +45,7 @@ export const useCreateRpp = (initialData) => {
 
   const handleSubmitCreateRPPForm = async (value) => {
     const payload = {
-      class_id: parseInt(slug),
+      class_id: parseInt(classId),
       title: value.title,
       markdown: value.markdown,
       teaching_materials: materials.map((item) => ({
@@ -66,8 +66,9 @@ export const useCreateRpp = (initialData) => {
       : await postCreateRpp(payload);
 
     if (response.success) {
-      router.push(`/classroom/teacher/class/${slug}`);
+      router.push(`/classroom/teacher/class/${classId}`);
       toast.success(`Success ${isEditRpp ? "edit" : "create"} teaching plan`);
+      console.log(response.data);
     } else {
       toast.error(`Error ${isEditRpp ? "edit" : "create"} teaching plan`);
     }

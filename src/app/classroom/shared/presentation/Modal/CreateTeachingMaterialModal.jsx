@@ -4,9 +4,9 @@ import { SisvaSelect } from "../Input/SelectField";
 import SisvaButton from "../Button/GlobalButton";
 import { SisvaInput } from "../Input/SisvaInputField";
 import SisvaInputFile from "@/app/classroom/shared/presentation/Input/InputFile";
-import { useModal } from "@/app/classroom/(main)/teacher/class/[slug]/create-rpp/view/container/Provider/ModalProvider";
+import { useModal } from "@/app/classroom/(main)/teacher/class/[classId]/create-rpp/view/container/Provider/ModalProvider";
 import { useGetDetailTeachingMaterial } from "@/app/classroom/(main)/teacher/teaching-material/usecase/use-get-detail-material";
-import { useGetTeachingMaterialDropdown } from "@/app/classroom/(main)/teacher/class/[slug]/create-rpp/usecase/teaching-material/use-get-teaching-material-dropdown";
+import { useGetTeachingMaterialDropdown } from "@/app/classroom/(main)/teacher/class/[classId]/create-rpp/usecase/teaching-material/use-get-teaching-material-dropdown";
 
 const CreateTeachingMaterialModal = ({
   open,
@@ -18,11 +18,15 @@ const CreateTeachingMaterialModal = ({
   isLoading,
 }) => {
   const [fileList, setFileList] = useState(null);
-  const { dropDownData, handleGetGradeDropdown } =
-    useGetTeachingMaterialDropdown(initialData);
   const { modalState } = useModal();
   const { form, handleGetDetailTeachingMaterial, isLoadingGetDetail } =
     useGetDetailTeachingMaterial();
+  const {
+    dropDownData,
+    handleGetGradeDropdown,
+    handleChangeCurriculum,
+    handleChangeStudyProgram,
+  } = useGetTeachingMaterialDropdown(initialData, form);
 
   const handleCloseModal = () => {
     form.resetFields();
@@ -77,6 +81,7 @@ const CreateTeachingMaterialModal = ({
                 customSize="md"
                 placeholder="Pilih kurikulum"
                 options={dropDownData.curriculumDropdown}
+                onChange={handleChangeCurriculum}
               />
             </Form.Item>
           </Col>
@@ -92,8 +97,7 @@ const CreateTeachingMaterialModal = ({
                 customSize="md"
                 placeholder="Pilih program studi"
                 options={dropDownData.studyProgramDropdown}
-                onChange={handleGetGradeDropdown}
-                disabled={dropDownData.studyProgramDropdown.length === 0}
+                onChange={handleChangeStudyProgram}
               />
             </Form.Item>
           </Col>
@@ -128,6 +132,7 @@ const CreateTeachingMaterialModal = ({
                 customSize="md"
                 placeholder="Pilih mata pelajaran"
                 options={dropDownData.subjectDropdown}
+                disabled={dropDownData.subjectDropdown.length === 0}
               />
             </Form.Item>
           </Col>

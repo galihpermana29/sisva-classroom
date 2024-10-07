@@ -4,6 +4,7 @@ import { Edit01, File05, Trash01 } from "@untitled-ui/icons-react";
 import pdfIcon from "@/assets/classroom/teacher/PDFIcon.png";
 import Image from "next/image";
 import { useModal } from "../../container/Provider/ModalProvider";
+import DOMPurify from "dompurify";
 
 const TaskTable = ({ dataSource }) => {
   const { setModalState } = useModal();
@@ -17,6 +18,13 @@ const TaskTable = ({ dataSource }) => {
       title: "Deskripsi Tugas",
       dataIndex: "description",
       key: "description",
+      render: (description) => (
+        <div
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(description),
+          }}
+        />
+      ),
     },
     {
       title: "Attachment",

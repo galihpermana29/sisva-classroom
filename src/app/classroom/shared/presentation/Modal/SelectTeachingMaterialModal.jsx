@@ -2,7 +2,7 @@ import { Modal } from "antd";
 import React, { useState } from "react";
 import { SisvaInputSearch } from "../Input/SisvaInputField";
 import { SisvaSelect } from "../Input/SelectField";
-import TeachingMaterialTable from "../../../(main)/teacher/class/[slug]/create-rpp/view/presentation/Table/TeachingMaterialTable";
+import TeachingMaterialTable from "../../../(main)/teacher/class/[classId]/create-rpp/view/presentation/Table/TeachingMaterialTable";
 import SisvaButton from "../Button/GlobalButton";
 import { FilterFunnel01 } from "@untitled-ui/icons-react";
 import { useTeachingMaterial } from "@/app/classroom/(main)/teacher/teaching-material/usecase/use-teaching-material";

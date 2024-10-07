@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
 import { generateRandomString } from "./custom-function";
-import { useModal } from "../../class/[slug]/create-rpp/view/container/Provider/ModalProvider";
+import { useModal } from "../../class/[classId]/create-rpp/view/container/Provider/ModalProvider";
 import {
   deleteTeachingMaterial,
   getTeachingMaterialById,

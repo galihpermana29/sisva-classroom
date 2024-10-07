@@ -30,7 +30,7 @@ export const useCreateRppModalForm = () => {
   const [isLoadingForm, setIsLoadingForm] = useState(false);
   const { handleClose, modalState } = useModal();
   const [fileURI, setFileURI] = useState("");
-  const { slug } = useParams();
+  const { classId } = useParams();
 
   const materials = useSelector((state) => state.teachingMaterials.materials);
   const tasks = useSelector((state) => state.tasks.tasks);
@@ -146,7 +146,7 @@ export const useCreateRppModalForm = () => {
     };
 
     const taskPayload = {
-      class_id: parseInt(slug),
+      class_id: parseInt(classId),
       name: value.name,
       description: value.description,
       deadline: dayjs(value.deadline).format("DD/MM/YYYY h:mm A Z"),

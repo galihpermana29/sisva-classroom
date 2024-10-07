@@ -85,6 +85,10 @@ export const useTeachingMaterial = (initialData) => {
 
   const handleResetFilter = () => {
     setQueryFilter(initialQueryFilter);
+    setDropdownData((prev) => ({
+      ...prev,
+      gradeDropdown: [],
+    }));
   };
 
   const handleGetGradeDropdown = async (e) => {
@@ -97,24 +101,11 @@ export const useTeachingMaterial = (initialData) => {
     }
   };
 
-  const handleGetSubjectDropdown = async (curriculumId, studyProgramId) => {
-    const filteredSubject = initialData.subjectDropdown.filter(
-      (item) => item.curriculum_id === curriculumId
-    );
-    setDropdownData((prev) => ({
-      ...prev,
-      subjectDropdown: filteredSubject,
-    }));
-  };
-
-  const handleCurriculumFilter = async (e) => {
-    handleGetSubjectDropdown(e, queryFilter.study_program);
-    handleFilterChange("curriculum", e);
-  };
-
   const handleStudyProgramFilter = async (e) => {
+    if (dropDownData.gradeDropdown.length !== 0) {
+      handleFilterChange("grade", "");
+    }
     handleGetGradeDropdown(e);
-    handleGetSubjectDropdown(queryFilter.curriculum, e);
     handleFilterChange("study_program", e);
   };
 
@@ -176,7 +167,6 @@ export const useTeachingMaterial = (initialData) => {
     rawStructureMaterialData,
     dropDownData: mappedDropdownData,
 
-    handleCurriculumFilter,
     handleStudyProgramFilter,
     handleGetGradeDropdown,
     generalHandleFilter: handleFilterChange,

@@ -4,7 +4,7 @@ import { Plus } from "@untitled-ui/icons-react";
 import TeachingMaterialListFilter from "../presentation/TeachingMaterialListFilter";
 import { useTeachingMaterial } from "../../usecase/use-teaching-material";
 import TeachingMaterialCardList from "../presentation/TeachingMaterialCardList";
-import { useModal } from "../../../class/[slug]/create-rpp/view/container/Provider/ModalProvider";
+import { useModal } from "../../../class/[classId]/create-rpp/view/container/Provider/ModalProvider";
 import { useTeachingMaterialForm } from "../../usecase/use-teaching-material-form";
 import dynamic from "next/dynamic";
 
@@ -22,7 +22,6 @@ const TeachingMaterialContainer = ({ initialData }) => {
     generalHandleFilter,
     handleResetFilter,
     handleStudyProgramFilter,
-    handleCurriculumFilter,
     isLoading,
     queryFilter,
     setQueryFilter,
@@ -61,7 +60,6 @@ const TeachingMaterialContainer = ({ initialData }) => {
         generalHandleFilter={generalHandleFilter}
         handleResetFilter={handleResetFilter}
         handleStudyProgramFilter={handleStudyProgramFilter}
-        handleCurriculumFilter={handleCurriculumFilter}
         isLoading={isLoading}
         queryFilter={queryFilter}
       />
