@@ -6,7 +6,7 @@ import ClassDetailTabs from "../presentation/Tabs/ClassDetailTabs";
 const ClassDetailContainer = () => {
   return (
     <ModalProvider>
-      <div className="max-w-6xl mx-auto -mt-16 mb-[8dvh] md:mb-0">
+      <div className="max-w-6xl mx-auto">
         <ClassDetailTabs />
       </div>
     </ModalProvider>
