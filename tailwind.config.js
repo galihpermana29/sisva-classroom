@@ -48,6 +48,7 @@ module.exports = {
         base10: "#F9FAFB",
         base40: "#D0D5DD",
         base50: "#98A2B3",
+        base60: "#667085",
         base90: "#1D2939",
         text_description: "#555555",
       },
@@ -60,6 +61,7 @@ module.exports = {
       },
       boxShadow: {
         card: "0px 1px 12px 0px rgba(0, 0, 0, 0.08)",
+        table: "0px 0px 10px 0px rgba(0, 0, 0, 0.12)",
         copy_text: {
           description: "#555555",
         },
