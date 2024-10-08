@@ -16,7 +16,7 @@ import { redirect } from "next/navigation";
  * @param {SisvaFetchOptions} [options={}] - Fetch options
  * @returns {Promise<Response>}
  */
-export async function AppFetchApi(url, options = {}) {
+export async function AppFetchApi(url, options = {}, isFormData = false) {
   const cookieStore = cookies();
   const accessToken = cookieStore.get("token")?.value;
   const userDataCookie = cookieStore.get("userData")?.value;
@@ -29,10 +29,13 @@ export async function AppFetchApi(url, options = {}) {
 
   const defaultHeaders = {
     Authorization: `Bearer ${accessToken}`,
-    "Content-Type": "application/json",
     "X-Sisva-UserID": userData.id,
     "X-Sisva-SchoolID": userData.school_id,
   };
+
+  if (!isFormData) {
+    defaultHeaders["Content-Type"] = "application/json";
+  }
 
   try {
     const res = await fetch(`${process.env.API_SERVICE_BASE_URL}${url}`, {

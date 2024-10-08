@@ -52,6 +52,8 @@ function btnStyle(type) {
       return "app-btn-primary";
     case "secondary":
       return "app-btn-secondary";
+    case "secondary-gray":
+      return "app-btn-secondary-gray";
     default:
       return "app-btn-primary";
   }
