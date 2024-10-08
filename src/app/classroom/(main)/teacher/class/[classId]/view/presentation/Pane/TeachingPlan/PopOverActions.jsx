@@ -1,15 +1,24 @@
 import { DotsVertical } from "@untitled-ui/icons-react";
 import { Popover } from "antd";
+import Image from "next/image";
+import { useParams } from "next/navigation";
 
 import CustomModal from "./CustomModal";
 import { useDeleteTeachingPlan } from "../../../../usecase/hooks/use-delete-teaching-plan";
+import SisvaButton from "@/app/classroom/shared/presentation/Button/GlobalButton";
+import TrashIcon from "@/assets/icons/trash.png";
+import Link from "next/link";
 
-const PopoverContent = ({ handleOpenModal, isDeleting }) => {
+const PopoverContent = ({ handleOpenModal, isDeleting, id }) => {
+  const { classId } = useParams();
+
   return (
     <div className="flex flex-col -m-2">
-      <button className="flex w-full rounded-md hover:bg-base40/40">
-        <span className="text-sm font-medium text-black">Edit</span>
-      </button>
+      <Link href={`/classroom/teacher/class/${classId}/edit-rpp/${id}`}>
+        <button className="flex w-full rounded-md hover:bg-base40/40">
+          <span className="text-sm font-medium text-black">Edit</span>
+        </button>
+      </Link>
       <button
         className="flex w-full rounded-md hover:bg-base40/40"
         onClick={handleOpenModal}
@@ -50,22 +59,49 @@ const PopOverActions = ({ id }) => {
           <DotsVertical color="#5E5E5E" className="flex-shrink-0 size-5" />
         </button>
       </Popover>
-      <CustomModal
-        title="Delete Teaching Plan"
-        open={isModalVisible}
-        onOk={() => handleDeleteTeachingPlan(id)}
-        onCancel={handleCancel}
-        footer={(_, { OkBtn, CancelBtn }) => (
-          <>
-            <CancelBtn loading={isDeleting}/>
-            <OkBtn loading={isDeleting}>Delete</OkBtn>
-          </>
-        )}
-      >
-        <p>Are you sure you want to delete this teaching plan?</p>
-      </CustomModal>
+
+      <DeleteModal
+        isModalVisible={isModalVisible}
+        handleDeleteTeachingPlan={handleDeleteTeachingPlan}
+        handleCancel={handleCancel}
+        isDeleting={isDeleting}
+      />
     </div>
   );
 };
 
 export default PopOverActions;
+
+const DeleteModal = ({
+  isModalVisible,
+  handleDeleteTeachingPlan,
+  handleCancel,
+  isDeleting,
+}) => {
+  return (
+    <CustomModal
+      open={isModalVisible}
+      onCancel={handleCancel}
+      footer={[
+        <div className="grid grid-cols-2 gap-2">
+          <SisvaButton onClick={handleCancel} btn_type="secondary">
+            Batal
+          </SisvaButton>
+          <SisvaButton
+            onClick={() => handleDeleteTeachingPlan(id)}
+            disabled={isDeleting}
+          >
+            Hapus
+          </SisvaButton>
+        </div>,
+      ]}
+    >
+      <div className="text-center">
+        <Image src={TrashIcon} alt="Trash" className="size-36" />
+
+        <h3>Hapus Rencana Pembelajaran</h3>
+        <p>Anda akan menghapus rencana pembelajaran. Apakah anda yakin?</p>
+      </div>
+    </CustomModal>
+  );
+};
