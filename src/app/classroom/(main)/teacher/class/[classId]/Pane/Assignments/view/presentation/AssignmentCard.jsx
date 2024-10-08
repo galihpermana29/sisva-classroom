@@ -9,16 +9,18 @@ const AssignmentCard = ({ assignment, assignmentName, desc, deadline }) => {
     <div className="p-4 shadow-card">
       <h3 className="text-xl">{assignmentName}</h3>
 
-      <CardSection title="Deadline">
-        <p>{deadline.replace("+00:00", "")}</p>
-      </CardSection>
+      <div className="pl-4">
+        <CardSection title="Deadline">
+          <p>{deadline.replace("+00:00", "")}</p>
+        </CardSection>
 
-      <CardSection title="Deskripsi">
-        <div
-          className="h-10 border line-clamp-2"
-          dangerouslySetInnerHTML={{ __html: desc }}
-        ></div>
-      </CardSection>
+        <CardSection title="Deskripsi">
+          <div
+            className="h-10 border line-clamp-2"
+            dangerouslySetInnerHTML={{ __html: desc }}
+          ></div>
+        </CardSection>
+      </div>
 
       <div className="grid grid-cols-2 gap-2 mt-6">
         <SisvaButton
