@@ -1,15 +1,15 @@
 import toast from "react-hot-toast";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "antd/es/form/Form";
 import { getTaskById } from "../../repository/create-rpp-service";
 import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
-
-dayjs.extend(utc);
+import { useModal } from "../../view/container/Provider/ModalProvider";
 
 export const useGetDetailTask = () => {
   const [form] = useForm();
+  const [fileList, setFileList] = useState(null);
   const [isLoadingGetDetail, setIsLoadingGetDetail] = useState(false);
+  const { modalState } = useModal();
 
   const handleGetDetailTask = async (id) => {
     setIsLoadingGetDetail(true);
@@ -26,9 +26,25 @@ export const useGetDetailTask = () => {
     setIsLoadingGetDetail(false);
   };
 
+  useEffect(() => {
+    const getDetail = async () => {
+      await handleGetDetailTask(modalState?.data?.id);
+    };
+    if (modalState?.type === "edit-task") {
+      getDetail();
+    }
+    setFileList(
+      modalState?.data?.attachment_file_uri
+        ? [modalState?.data?.attachment_file_uri]
+        : null
+    );
+  }, [modalState]);
+
   return {
     form,
     isLoadingGetDetail,
     handleGetDetailTask,
+    setFileList,
+    fileList,
   };
 };

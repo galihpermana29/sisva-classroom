@@ -14,15 +14,12 @@ const SelectTeachingMaterialModal = ({
   title,
   initialData,
 }) => {
-  /**
-   * Modal for mobile filter
-   */
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isMobileFilterVisible, setIsMobileFilterVisible] = useState(false);
+  const [isMoreFiltersVisible, setIsMoreFiltersVisible] = useState(false);
 
   const {
     dropDownData,
     handleStudyProgramFilter,
-    handleCurriculumFilter,
     generalHandleFilter,
     handleResetFilter,
     queryFilter,
@@ -30,11 +27,7 @@ const SelectTeachingMaterialModal = ({
     isLoading,
   } = useTeachingMaterial(initialData);
 
-  /**
-   *  Selecting existing teaching material
-   */
   const [selectedState, setSelectedState] = useState([]);
-
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
   const onSelectChange = (newSelectedRowKeys) => {
@@ -44,6 +37,7 @@ const SelectTeachingMaterialModal = ({
     );
     setSelectedState(getRecord);
   };
+
   const rowSelection = {
     selectedRowKeys,
     onChange: onSelectChange,
@@ -61,23 +55,20 @@ const SelectTeachingMaterialModal = ({
     setSelectedRowKeys([]);
   };
 
-  const showModal = () => setIsModalVisible(true);
-  const handleCancel = () => setIsModalVisible(false);
-
-  const FilterContent = () => (
+  const MainFilters = () => (
     <>
       <SisvaSelect
         customSize="md"
         placeholder="Kurikulum"
-        customClassName="w-full md:w-fit mb-2 md:mb-0"
+        customClassName="w-full lg:w-[200px] mb-2 lg:mb-0"
         options={dropDownData.curriculumDropdown}
-        onChange={handleCurriculumFilter}
+        onChange={(e) => generalHandleFilter("curriculum", e)}
         value={queryFilter.curriculum === "" ? null : queryFilter.curriculum}
       />
       <SisvaSelect
         customSize="md"
         placeholder="Program Studi"
-        customClassName="w-full md:w-fit mb-2 md:mb-0"
+        customClassName="w-full lg:w-[200px] mb-2 lg:mb-0"
         options={dropDownData.studyProgramDropdown}
         onChange={handleStudyProgramFilter}
         disabled={dropDownData.studyProgramDropdown.length === 0}
@@ -85,10 +76,15 @@ const SelectTeachingMaterialModal = ({
           queryFilter.study_program === "" ? null : queryFilter.study_program
         }
       />
+    </>
+  );
+
+  const MoreFilters = () => (
+    <div className="flex flex-col gap-3">
       <SisvaSelect
         customSize="md"
         placeholder="Mata Pelajaran"
-        customClassName="w-full md:w-fit mb-2 md:mb-0"
+        customClassName="w-full"
         options={dropDownData.subjectDropdown}
         onChange={(e) => generalHandleFilter("subject", e)}
         value={queryFilter.subject === "" ? null : queryFilter.subject}
@@ -96,7 +92,7 @@ const SelectTeachingMaterialModal = ({
       <SisvaSelect
         customSize="md"
         placeholder="Tingkatan"
-        customClassName="w-full md:w-fit mb-2 md:mb-0"
+        customClassName="w-full"
         options={dropDownData.gradeDropdown}
         onChange={(e) => generalHandleFilter("grade", e)}
         value={queryFilter.grade === "" ? null : queryFilter.grade}
@@ -105,13 +101,21 @@ const SelectTeachingMaterialModal = ({
       <SisvaSelect
         customSize="md"
         placeholder="Guru"
-        customClassName="w-full md:w-fit mb-2 md:mb-0"
+        customClassName="w-full"
         options={dropDownData.teacherDropdwon}
         onChange={(e) => generalHandleFilter("teacher", e)}
         value={queryFilter.teacher === "" ? null : queryFilter.teacher}
       />
-    </>
+    </div>
   );
+
+  const AllFilters = () => (
+    <div className="flex flex-col gap-3">
+      <MainFilters />
+      <MoreFilters />
+    </div>
+  );
+
   return (
     <Modal
       open={open}
@@ -147,18 +151,27 @@ const SelectTeachingMaterialModal = ({
             onChange={(e) => generalHandleFilter("search", e.target.value)}
             value={queryFilter.search === "" ? null : queryFilter.search}
           />
+          {/* Mobile Filter Button */}
           <div className="lg:hidden">
             <SisvaButton
               btn_size="md"
               btn_type="primary"
-              onClick={showModal}
+              onClick={() => setIsMobileFilterVisible(true)}
               icon={<FilterFunnel01 width={20} height={20} />}
             >
               Filters
             </SisvaButton>
           </div>
-          <div className="hidden lg:flex gap-2">
-            <FilterContent />
+          {/* Desktop Filters */}
+          <div className="hidden lg:flex items-center gap-2">
+            <MainFilters />
+            <SisvaButton
+              btn_type="secondary"
+              btn_size="md"
+              onClick={() => setIsMoreFiltersVisible(true)}
+            >
+              More Filters
+            </SisvaButton>
             <SisvaButton
               btn_type="primary"
               btn_size="md"
@@ -169,12 +182,14 @@ const SelectTeachingMaterialModal = ({
           </div>
         </div>
 
+        {/* Mobile Filters Modal */}
         <Modal
           title="Filter"
-          open={isModalVisible}
-          onCancel={handleCancel}
+          open={isMobileFilterVisible}
+          onCancel={() => setIsMobileFilterVisible(false)}
           footer={[
             <SisvaButton
+              key="reset"
               btn_type="secondary"
               btn_size="md"
               onClick={handleResetFilter}
@@ -182,15 +197,43 @@ const SelectTeachingMaterialModal = ({
               Reset Filter
             </SisvaButton>,
             <SisvaButton
+              key="apply"
               btn_type="primary"
               btn_size="md"
-              onClick={handleCancel}
+              onClick={() => setIsMobileFilterVisible(false)}
             >
               Apply
             </SisvaButton>,
           ]}
         >
-          <FilterContent />
+          <AllFilters />
+        </Modal>
+
+        {/* Desktop More Filters Modal */}
+        <Modal
+          title="More Filters"
+          open={isMoreFiltersVisible}
+          onCancel={() => setIsMoreFiltersVisible(false)}
+          footer={[
+            <SisvaButton
+              key="reset"
+              btn_type="secondary"
+              btn_size="md"
+              onClick={handleResetFilter}
+            >
+              Reset Filter
+            </SisvaButton>,
+            <SisvaButton
+              key="apply"
+              btn_type="primary"
+              btn_size="md"
+              onClick={() => setIsMoreFiltersVisible(false)}
+            >
+              Apply
+            </SisvaButton>,
+          ]}
+        >
+          <MoreFilters />
         </Modal>
 
         <TeachingMaterialTable
