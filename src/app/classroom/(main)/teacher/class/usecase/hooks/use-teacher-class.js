@@ -79,21 +79,41 @@ export const useTeacherClass = (initialData) => {
 
   const handleResetFilter = () => {
     setQueryFilter(initialQueryFilter);
+    setDropdownData((prev) => ({
+      ...prev,
+      gradeDropdown: [],
+      studyProgramDropdown: [],
+    }));
   };
 
   const handlePeriodFilter = (e) => {
+    if (dropDownData.studyProgramDropdown.length !== 0) {
+      handleFilterChange("study_program", "");
+      handleFilterChange("grade", "");
+    }
+
     const filteredPeriodList = teacherClassData.periodData.find(
       (period) => period.id === e
     );
+
+    const filteredStudyProgramList = initialData.studyProgramList.filter(
+      (program) =>
+        filteredPeriodList?.study_programs.some(
+          (idObj) => idObj.id === program.id
+        )
+    );
     setDropdownData((prev) => ({
       ...prev,
-      studyProgramDropdown: filteredPeriodList?.study_programs,
+      studyProgramDropdown: filteredStudyProgramList,
     }));
 
     handleFilterChange("period", e);
   };
 
   const handleStudyProgramFilter = async (e) => {
+    if (dropDownData.gradeDropdown.length !== 0) {
+      handleFilterChange("grade", "");
+    }
     const studyProgram = await getGradeDropdownById(e);
     if (studyProgram.success) {
       setDropdownData((prev) => ({
@@ -117,7 +137,7 @@ export const useTeacherClass = (initialData) => {
       periodData: createDropdown(dropDownData.periodData, "name", "id"),
       studyProgramDropdown: createDropdown(
         dropDownData.studyProgramDropdown,
-        "code",
+        "name",
         "id"
       ),
       gradeDropdown: createDropdown(dropDownData.gradeDropdown),

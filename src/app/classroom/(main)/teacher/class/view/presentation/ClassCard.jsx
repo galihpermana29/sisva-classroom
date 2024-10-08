@@ -3,9 +3,16 @@ import SisvaCard from "./SisvaCard";
 import Image from "next/image";
 
 import NoTask from "@/assets/classroom/images/NoTask.png";
-const ClassCard = ({ subject, group, taskName, timeStamp, isEmptyTask }) => {
+const ClassCard = ({
+  onClick,
+  subject,
+  group,
+  taskName,
+  timeStamp,
+  isEmptyTask,
+}) => {
   return (
-    <SisvaCard className="flex flex-col gap-7">
+    <SisvaCard className="flex flex-col gap-7" onClick={onClick}>
       <div className="rounded-lg bg-[#FEECE9] px-2 py-1 w-fit">
         <span className="text-primary text-sm font-semibold">
           {subject} - {group}

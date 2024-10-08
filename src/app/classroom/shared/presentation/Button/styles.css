@@ -20,6 +20,16 @@
     @apply bg-button_disabled border-button_disabled text-button_text_disabled;
   }
 
+  &.app-btn-secondary-gray {
+    @apply bg-[#EAECF0] border-[#EAECF0] text-[#001C2B];
+  }
+  &.app-btn-secondary-gray:hover {
+    @apply bg-[#ccced2] text-[#001C2B];
+  }
+  &.app-btn-secondary-gray:disabled {
+    @apply bg-button_disabled border-button_disabled text-button_text_disabled;
+  }
+
   &.app-btn-full-rounded {
     @apply rounded-full;
   }

@@ -3,8 +3,7 @@ import { SisvaSelect } from "@/app/classroom/shared/presentation/Input/SelectFie
 import { SisvaInputSearch } from "@/app/classroom/shared/presentation/Input/SisvaInputField";
 import React, { useState } from "react";
 
-import { Button, Modal } from "antd";
-import { FilterOutlined } from "@ant-design/icons";
+import { Modal } from "antd";
 import { FilterFunnel01 } from "@untitled-ui/icons-react";
 
 const ListFilter = ({

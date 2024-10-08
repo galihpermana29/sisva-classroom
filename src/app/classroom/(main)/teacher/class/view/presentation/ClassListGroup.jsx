@@ -1,23 +1,18 @@
 import React from "react";
 import ClassCard from "./ClassCard";
-import EmptyData from "@/app/classroom/shared/presentation/EmptyData";
-import { Card, Col, Row, Skeleton } from "antd";
+import CardGridSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardGridSkeleton";
+import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
+import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
 import Link from "next/link";
 
 const ClassListGroup = ({ classData, isLoading }) => {
+  const router = useRouter();
+  const dispatch = useDispatch();
   if (isLoading) {
-    return (
-      <Row gutter={[16, 16]} className="py-3">
-        {[...Array(6)].map((_, index) => (
-          <Col key={index} xs={24} sm={12} xl={8}>
-            <Card>
-              <Skeleton active />
-            </Card>
-          </Col>
-        ))}
-      </Row>
-    );
+    return <CardGridSkeleton />;
   }
+
   return (
     <div className="p-5 bg-white rounded-lg shadow-md">
       {classData.length > 0 ? (
@@ -39,9 +34,9 @@ const ClassListGroup = ({ classData, isLoading }) => {
           ))}
         </div>
       ) : (
-        <EmptyData
+        <EmptyState
           title="Tidak ada kelas"
-          subtitle="Tidak ada kelas yang tersedia untuk saat ini"
+          description="Tidak ada kelas yang tersedia untuk saat ini"
         />
       )}
     </div>
