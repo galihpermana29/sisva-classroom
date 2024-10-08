@@ -1,21 +1,19 @@
-import { DotsVertical } from "@untitled-ui/icons-react";
-import React from "react";
+import HtmlRenderer from "@/app/classroom/shared/presentation/HtmlRenderer/HtmlRenderer";
 
-const TeachingPlanSection = ({ title, content }) => {
+const TeachingPlanSection = ({ title, content, htmlContent }) => {
   return (
-    <div>
+    <div className="w-full pl-5">
       <div className="flex items-center gap-1 font-kumbh">
-        <div className="flex items-center">
-          <DotsVertical color="#5E5E5E" className="size-5 " />
-          <DotsVertical color="#5E5E5E" className="-ml-[14px] size-5" />
-        </div>
-
-        <div className="font-bold text-xs">{title}</div>
+        <div className="text-xs font-bold list-disc list-item">{title}</div>
       </div>
 
-      {content && (
-        <div className="pl-8 pb-2 text-sm font-normal">{content}</div>
-      )}
+      <div>
+        {content && (
+          <div className="pb-2 text-sm font-normal">{content}</div>
+        )}
+
+        {htmlContent && <HtmlRenderer htmlContent={htmlContent} />}
+      </div>
     </div>
   );
 };
