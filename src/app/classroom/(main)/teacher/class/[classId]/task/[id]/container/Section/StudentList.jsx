@@ -3,6 +3,7 @@ import StudentCardScore from "../Card/StudentCardScore";
 import { useSearchParams } from "next/navigation";
 import SkeletonStudentCardScore from "../Skeleton/SkeletonStudentCardScore";
 import { useGetStudentList } from "../../usecase/use-student-list";
+import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
 
 export default function StudentList() {
   const { students, loading } = useGetStudentList();
@@ -39,20 +40,29 @@ export default function StudentList() {
       </div>
 
       <div className="flex flex-col max-h-[200px] lg:max-h-[500px] overflow-y-auto">
-        {loading
-          ? [...new Array(5)].map((_, index) => (
-              <SkeletonStudentCardScore key={index} />
-            ))
-          : students?.map((student, i) => (
-              <StudentCardScore
-                name={student.student_name}
-                image={student.student_image}
-                score={student.student_score}
-                selected={student.student_id == student_id}
-                id={student.student_id}
-                key={i}
-              />
-            ))}
+        {loading ? (
+          [...new Array(5)].map((_, index) => (
+            <SkeletonStudentCardScore key={index} />
+          ))
+        ) : Array.isArray(students) ? (
+          students?.map((student, i) => (
+            <StudentCardScore
+              name={student.student_name}
+              image={student.student_image}
+              score={student.student_score}
+              selected={student.student_id == student_id}
+              id={student.student_id}
+              key={i}
+            />
+          ))
+        ) : (
+          <div className="px-3">
+            <EmptyState
+              title={"Siswa tidak ditemukan"}
+              description={"Belum ada siswa yang bergabung pada kelas ini"}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

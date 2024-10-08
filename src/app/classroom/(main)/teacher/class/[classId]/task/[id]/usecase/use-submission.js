@@ -29,8 +29,6 @@ export function useSubmission() {
         message,
       } = await getSubmissionTask(id);
 
-      console.log(submissions);
-
       if (!success || !Array.isArray(submissions)) {
         setLoading(false);
         setError(message);

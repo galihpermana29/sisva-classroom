@@ -44,6 +44,12 @@ export function useGetStudentList() {
       (student) => student.student_group_id == classId
     );
 
+    if (!Array.isArray(studentsGroup) || studentsGroup.length <= 0) {
+      setLoading(false);
+      setStudents(null);
+      return;
+    }
+
     const fetchFinalStudentScores = async () => {
       const finalStudentScores = await Promise.all(
         studentScores.data.map(async (score, index) => {

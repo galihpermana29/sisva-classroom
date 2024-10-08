@@ -97,11 +97,10 @@ const ScoringSection = ({ deadline }) => {
             rules={[
               {
                 required: true,
-                message: "Masukkan nilai",
               },
             ]}
           >
-            <SisvaInputNumber min={0} customSize="md" />
+            <SisvaInputNumber min={0} max={100} customSize="md" />
           </Form.Item>
         </div>
         <div>

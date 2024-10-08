@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getTaskById } from "../repository/scoring-submission-service";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
 
 export function useDetailTask() {
@@ -8,6 +8,7 @@ export function useDetailTask() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const teacherInfo = getClientSession();
+  const router = useRouter();
 
   const params = useParams();
   const { id } = params;
@@ -23,6 +24,7 @@ export function useDetailTask() {
       if (!successTaskId) {
         setLoading(false);
         setError(messageTaskId);
+        router.back();
       }
 
       setTask({
