@@ -1,10 +1,17 @@
+import { ConfigProvider } from "antd";
 import SisvaNavbar from "../shared/presentation/Navbar/Navbar";
 
 export default function MainLayout({ children }) {
   return (
-    <div>
+    <ConfigProvider
+      theme={{
+        token: { fontFamily: "var(--font-kumbh)" },
+      }}
+    >
       <SisvaNavbar />
-      <div className="px-3 md:px-10 lg:px-20 py-20">{children}</div>
-    </div>
+      <div className="px-3 md:px-10 lg:px-20 pt-10 pb-32 font-kumbh">
+        {children}
+      </div>
+    </ConfigProvider>
   );
 }

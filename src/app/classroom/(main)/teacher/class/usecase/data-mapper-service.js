@@ -4,6 +4,10 @@ export function getClassByTeacherId(response, teacherId) {
   );
 }
 
+export function getClassById(response, id) {
+  return response.data.find((classItem) => classItem.id === id);
+}
+
 function findNearestDeadlineTask(tasks) {
   const today = new Date();
 

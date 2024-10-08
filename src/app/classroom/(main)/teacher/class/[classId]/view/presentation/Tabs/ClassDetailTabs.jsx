@@ -2,6 +2,7 @@
 
 import Tabs from "src/app/classroom/shared/presentation/Tabs/Tabs";
 import TeachingPlanPane from "../Pane/TeachingPlan/TeachingPlan";
+import TeachingMaterialTabs from "@/app/classroom/(main)/teacher/class/[classId]/view/container/Tabs/TeachingMaterialTabs";
 import { useQueryParam } from "@/hooks/useQueryParam";
 import { useSearchParams } from "next/navigation";
 import { useMediaQuery } from "@/app/classroom/shared/usecase/hooks/use-mediaquery";
@@ -37,7 +38,7 @@ const classDetailTabList = [
   {
     key: "bahan_ajar",
     label: "Bahan Ajar",
-    children: <div></div>,
+    children: <TeachingMaterialTabs />,
   },
   {
     key: "tugas",

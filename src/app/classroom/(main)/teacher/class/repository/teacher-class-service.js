@@ -8,6 +8,7 @@ import {
 } from "@/app/classroom/shared/usecase/server-response-handler";
 import { getServerSession } from "@/app/classroom/shared/usecase/session/get-server-session";
 import {
+  getClassById,
   getClassByTeacherId,
   getClassWithTaskList,
 } from "../usecase/data-mapper-service";
@@ -61,6 +62,37 @@ export async function getTeacherClassList() {
     return generateErrorMessageFromServerError(
       structuredResponse.code,
       "Error fetch class list",
+      null
+    );
+  }
+}
+
+export async function getClassDataById(id) {
+  const res = await AppFetchApi(`/academic/v1/classes`, {
+    method: "GET",
+    headers: {
+      "X-Sisva-Source": "academic.curriculum.test",
+    },
+  });
+
+  const structuredResponse = await serverResponseHandler(
+    res,
+    "Error fetch class by id",
+    "Success fetch class by id"
+  );
+
+  if (structuredResponse.success) {
+    // filter class by id
+    const destructListById = getClassById(structuredResponse, id);
+
+    return generateSuccessResponseFromServer(
+      "Success fetch class by id",
+      destructListById
+    );
+  } else {
+    return generateErrorMessageFromServerError(
+      structuredResponse.code,
+      "Error fetch class by id",
       null
     );
   }
