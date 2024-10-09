@@ -83,7 +83,7 @@ const FilterContent = ({ filter, dropdownFilterData, handleFilterChange }) => {
         placeholder="Mata Pelajaran"
         customClassName="min-w-full lg:min-w-40 mb-2 lg:mb-0"
         options={dropdownFilterData?.subject || []}
-        value={filter.subject || ""}
+        value={filter.subject == "" ? null : filter.subject}
         onChange={(value) => handleFilterChange("subject", value)}
       />
       <SisvaSelect
@@ -91,7 +91,7 @@ const FilterContent = ({ filter, dropdownFilterData, handleFilterChange }) => {
         placeholder="Guru"
         customClassName="min-w-full lg:min-w-40 mb-2 lg:mb-0"
         options={dropdownFilterData?.teacherName || []}
-        value={filter.teacherName || ""}
+        value={filter.teacherName == "" ? null : filter.teacherName}
         onChange={(value) => handleFilterChange("teacherName", value)}
       />
     </>

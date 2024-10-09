@@ -1,9 +1,7 @@
-import { useState } from "react";
-import { Upload } from "antd";
+import { Spin, Upload } from "antd";
 import { File05, SearchMd, Trash01 } from "@untitled-ui/icons-react";
 import SisvaButton from "../Button/GlobalButton";
 import toast from "react-hot-toast";
-import Card from "antd/es/card/Card";
 
 const SisvaInputFile = ({
   text = "Upload file here",
@@ -12,6 +10,7 @@ const SisvaInputFile = ({
   onFileSelect,
   fileList,
   setFileList,
+  isLoading,
 }) => {
   const beforeUpload = (file) => {
     const isAcceptedType = [
@@ -83,30 +82,36 @@ const SisvaInputFile = ({
           )}
 
           <div className="mt-2 text-sm text-gray-500">
-            Support for JPG, PNG, GIF, PDF, and DOC. Max file size: 5MB
+            Support for JPG, PNG, PDF. Max file size: 5MB
           </div>
         </div>
       </Upload>
       {fileList?.length > 0 && (
-        <div
-          className="p-3 rounded-lg mt-2 flex items-center justify-between"
-          style={{
-            border: "1px solid #E5E7EB",
-          }}
-        >
-          <div className="flex items-center gap-2">
-            <File05 width={20} height={20} />
-            <span className="text-sm text-[#475467]">
-              {getFileName(fileList[0])}
-            </span>
-          </div>
-          <div
-            className="flex items-center gap-2 text-primary cursor-pointer"
-            onClick={onRemove}
-          >
-            <Trash01 width={20} height={20} />
-          </div>
-        </div>
+        <>
+          {isLoading ? (
+            <Spin />
+          ) : (
+            <div
+              className="p-3 rounded-lg mt-2 flex items-center justify-between"
+              style={{
+                border: "1px solid #E5E7EB",
+              }}
+            >
+              <div className="flex items-center gap-2">
+                <File05 width={20} height={20} />
+                <span className="text-sm text-[#475467]">
+                  {getFileName(fileList[0])}
+                </span>
+              </div>
+              <div
+                className="flex items-center gap-2 text-primary cursor-pointer"
+                onClick={onRemove}
+              >
+                <Trash01 width={20} height={20} />
+              </div>
+            </div>
+          )}
+        </>
       )}
     </div>
   );

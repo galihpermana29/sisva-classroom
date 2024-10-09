@@ -1,13 +1,10 @@
 import { DatePicker, Form, Modal, Radio, Space } from "antd";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import SisvaRichText from "../Input/RichText";
 import SisvaInputFile from "../Input/InputFile";
 import { SisvaInput } from "../Input/SisvaInputField";
 import SisvaButton from "../Button/GlobalButton";
-import { useModal } from "@/app/classroom/(main)/teacher/class/[classId]/create-rpp/view/container/Provider/ModalProvider";
 import { useGetDetailTask } from "@/app/classroom/(main)/teacher/class/[classId]/create-rpp/usecase/task/use-get-detail-task";
-import dayjs from "dayjs";
-import { useWatch } from "antd/es/form/Form";
 
 const FormTaskModal = ({
   open,
@@ -17,28 +14,13 @@ const FormTaskModal = ({
   handleFileUpload,
   isLoading,
 }) => {
-  const [fileList, setFileList] = useState(null);
-  const { modalState } = useModal();
-  const { form, handleGetDetailTask, isLoadingGetDetail } = useGetDetailTask();
+  const { form, isLoadingGetDetail, fileList, setFileList } =
+    useGetDetailTask();
 
   const handleCloseModal = () => {
     form.resetFields();
     handleClose();
   };
-
-  useEffect(() => {
-    const getDetail = async () => {
-      await handleGetDetailTask(modalState?.data?.id);
-    };
-    if (modalState?.type === "edit-task") {
-      getDetail();
-    }
-    setFileList(
-      modalState?.data?.attachment_file_uri
-        ? [modalState?.data?.attachment_file_uri]
-        : null
-    );
-  }, [modalState]);
 
   const handleOkModal = (value) => {
     handleOk(value);
@@ -91,6 +73,7 @@ const FormTaskModal = ({
                 fileList={fileList}
                 setFileList={setFileList}
                 text="Upload file here"
+                isLoading={isLoading}
               />
             </Form.Item>
           </div>
@@ -102,7 +85,11 @@ const FormTaskModal = ({
               border: "1px solid #D0D5DD",
             }}
           >
-            <Form.Item name="deadline" label="Deadline">
+            <Form.Item
+              name="deadline"
+              label="Deadline"
+              rules={[{ required: true, message: "Select deadline" }]}
+            >
               <DatePicker
                 className="w-full h-[44px]"
                 placeholder="Pilih tanggal"

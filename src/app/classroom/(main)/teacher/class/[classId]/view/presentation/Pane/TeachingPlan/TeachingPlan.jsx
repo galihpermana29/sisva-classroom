@@ -22,7 +22,7 @@ const TeachingPlanPane = () => {
         </SisvaButton>
       </div>
 
-      <div className="grid gap-4 divide-y md:mt-6">
+      <div className="grid gap-4 md:mt-6">
         {isLoading ? (
           <TeachingPlanListSkeleton />
         ) : (
@@ -32,7 +32,7 @@ const TeachingPlanPane = () => {
               id={plan.id}
               title={plan.title}
               tasks={plan.tasks}
-              description={plan.description}
+              description={plan.markdown}
               teaching_materials={plan.teaching_materials}
               teaching_goal={plan.teaching_goal}
               teaching_activity={plan.teaching_activity}

@@ -8,6 +8,8 @@ import { useSearchParams } from "next/navigation";
 import { useMediaQuery } from "@/app/classroom/shared/usecase/hooks/use-mediaquery";
 import TableScore from "../Pane/Score/TableScore";
 
+import Assignment from "../../../Pane/Assignments";
+
 const ClassDetailTabs = () => {
   const searchParams = useSearchParams();
   const { updateQueryParam } = useQueryParam();
@@ -44,7 +46,7 @@ const classDetailTabList = [
   {
     key: "tugas",
     label: "Tugas",
-    children: <div></div>,
+    children: <Assignment />,
   },
   {
     key: "nilai",
