@@ -27,7 +27,7 @@ const TeachingPlanList = ({
         content={
           <div className="grid gap-3 mt-2">
             {teaching_materials.map((material, idx) => (
-              <div className="flex items-center gap-2">
+              <div key={"materials_" + idx} className="flex items-center gap-2">
                 <Image src={MaterialIcon} alt="Materi" width={20} height={20} />
                 <span className="font-medium">{material.description}</span>
               </div>
@@ -42,7 +42,7 @@ const TeachingPlanList = ({
         content={
           <div className="grid gap-3 mt-2">
             {tasks?.map((task, idx) => (
-              <div className="flex items-center gap-2">
+              <div key={"tasks_" + idx} className="flex items-center gap-2">
                 <Image src={TaskIcon} alt="Tugas" width={20} height={20} />
                 <span className="font-medium">{task.name}</span>
               </div>
