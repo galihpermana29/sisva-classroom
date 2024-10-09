@@ -122,9 +122,7 @@ const MaterialCard = ({ item }) => {
         <Divider className="bg-[#FCB3AA] my-2 h-[2px] rounded-full" />
         <div className="flex items-center gap-2">
           <div className="w-5 h-5 rounded-full bg-[#FCB3AA]" />
-          <span className="text-sm text-[#555555]">
-            Recently uploaded by teacher
-          </span>
+          <span className="text-sm text-[#555555]">{item.curriculum_name}</span>
         </div>
       </div>
     </Card>
