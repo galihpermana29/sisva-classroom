@@ -1,5 +1,3 @@
-import { DotsVertical } from "@untitled-ui/icons-react";
-import React from "react";
 
 const TeachingPlanTitle = ({ title, className, prefix }) => {
   return (

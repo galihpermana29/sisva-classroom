@@ -1,7 +1,7 @@
 import { useParams } from "next/navigation";
 
 import { useQuery } from "@tanstack/react-query";
-import { getTeachingPlans } from "../../repository/class-detail-service";
+import { getTeachingPlans } from "../repository/teaching-plan-service";
 
 export const useTeachingPlan = () => {
   const params = useParams();

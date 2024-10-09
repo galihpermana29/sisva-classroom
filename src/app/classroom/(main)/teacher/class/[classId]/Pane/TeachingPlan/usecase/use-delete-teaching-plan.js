@@ -1,8 +1,8 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteTeachingPlan } from "../repository/teaching-plan-service";
 
-import { deleteTeachingPlan } from "../../repository/class-detail-service";
 
 export const useDeleteTeachingPlan = () => {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
@@ -16,7 +16,6 @@ export const useDeleteTeachingPlan = () => {
       toast.error(error.message);
     },
     onSuccess: (data) => {
-      console.log(data);
       setIsModalVisible(false);
       toast.success(data.message);
       queryClient.invalidateQueries("teachingPlans");
