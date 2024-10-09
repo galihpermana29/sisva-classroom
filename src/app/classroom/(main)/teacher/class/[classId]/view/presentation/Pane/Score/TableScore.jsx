@@ -65,7 +65,7 @@ const EditableCell = ({
   children,
   ...restProps
 }) => {
-  const inputNode = <InputNumber />;
+  const inputNode = <InputNumber max={100} min={0} />;
   return (
     <td {...restProps}>
       {editing ? (
@@ -154,7 +154,7 @@ export default function TableScore() {
         dataIndex: "siswa",
         editable: false,
         align: "center",
-        width: 170,
+        width: 160,
         fixed: "left",
         className: `${kumbh.className}`,
         render: (text, record) => {
@@ -166,7 +166,7 @@ export default function TableScore() {
                 <Image
                   src={AverageImage}
                   alt="average score icon"
-                  className="size-6"
+                  className="size-6 max-sm:hidden"
                 />
                 {text}
               </div>
@@ -180,6 +180,7 @@ export default function TableScore() {
                 <Avatar
                   src={record.student_image || placeholderImage.src}
                   size={30}
+                  className="max-sm:hidden"
                 />
               </div>
               {text}
@@ -189,7 +190,7 @@ export default function TableScore() {
       },
       ...taskIds.map((taskId) => ({
         title: (
-          <div className="flex flex-col items-start justify-start text-base90 bg-white p-4 -m-4">
+          <div className="flex flex-col items-center justify-start text-base90 bg-white p-4 -m-4">
             <span>Nilai {data[0].tasks[taskId]?.task_name}</span>
             <span className="text-base90 font-normal text-xs mt-2 text-left">
               {dateTimeFormatter(
