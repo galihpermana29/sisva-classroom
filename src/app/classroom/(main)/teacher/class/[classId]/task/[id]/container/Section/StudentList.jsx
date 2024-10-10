@@ -42,7 +42,7 @@ export default function StudentList() {
           placeholder={"Cari Siswa"}
           loading={loading}
           onChange={(e) => setSearchQuery(e.target.value)}
-          customClassName="w-[270px]"
+          customClassName="w-full"
         />
       </div>
 
