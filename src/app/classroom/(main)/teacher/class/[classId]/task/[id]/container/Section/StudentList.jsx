@@ -1,14 +1,20 @@
-import { SisvaSelect } from "@/app/classroom/shared/presentation/Input/SelectField";
 import StudentCardScore from "../Card/StudentCardScore";
 import { useSearchParams } from "next/navigation";
 import SkeletonStudentCardScore from "../Skeleton/SkeletonStudentCardScore";
 import { useGetStudentList } from "../../usecase/use-student-list";
 import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
+import { SisvaInputSearch } from "@/app/classroom/shared/presentation/Input/SisvaInputField";
+import { useState } from "react";
 
 export default function StudentList() {
+  const [searchQuery, setSearchQuery] = useState("");
   const { students, loading } = useGetStudentList();
   const params = useSearchParams();
   const student_id = params.get("student_id");
+
+  const filteredStudents = students?.filter((student) =>
+    student.student_name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div
@@ -32,10 +38,11 @@ export default function StudentList() {
           borderBottom: "solid 1px #D0D5DD",
         }}
       >
-        <SisvaSelect
-          customSize="sm"
-          placeholder="Ditugaskan"
-          customClassName="font-kumbh"
+        <SisvaInputSearch
+          placeholder={"Cari Siswa"}
+          loading={loading}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          customClassName="w-[270px]"
         />
       </div>
 
@@ -44,8 +51,8 @@ export default function StudentList() {
           [...new Array(5)].map((_, index) => (
             <SkeletonStudentCardScore key={index} />
           ))
-        ) : Array.isArray(students) ? (
-          students?.map((student, i) => (
+        ) : filteredStudents.length > 0 ? (
+          filteredStudents.map((student, i) => (
             <StudentCardScore
               name={student.student_name}
               image={student.student_image}
@@ -55,11 +62,18 @@ export default function StudentList() {
               key={i}
             />
           ))
+        ) : searchQuery.length <= 0 ? (
+          <div className="px-3">
+            <EmptyState
+              title={"Belum ada siswa yang bergabung"}
+              description={"Kelas ini belum memiliki siswa yang terdaftar."}
+            />
+          </div>
         ) : (
           <div className="px-3">
             <EmptyState
               title={"Siswa tidak ditemukan"}
-              description={"Belum ada siswa yang bergabung pada kelas ini"}
+              description={"Siswa dengan nama yang anda cari tidak ditemukan."}
             />
           </div>
         )}
