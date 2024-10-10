@@ -9,7 +9,7 @@ export default function DetailTaskContainer() {
   const { task, loading: taskLoading } = useDetailTask();
 
   return (
-    <div>
+    <div className="max-w-6xl mx-auto">
       <DetailTaskSectionTop task={task} loading={taskLoading} />
       <div className="bg-white shadow-card mt-6">
         <div className="flex flex-col lg:flex-row">
