@@ -3,6 +3,50 @@
 import { AppFetchApi } from "@/app/classroom/shared/usecase/global-fetch-api";
 import { serverResponseHandler } from "@/app/classroom/shared/usecase/server-response-handler";
 
+export async function getStudentGroups() {
+  const students = await AppFetchApi(`/academic/v1/student-groups/students`, {
+    method: "GET",
+    headers: {
+      "X-Sisva-Source": "academic.curriculum.test",
+    },
+  });
+  return serverResponseHandler(
+    students,
+    "Failed get scores by class id",
+    "Success get scores by class id"
+  );
+}
+
+export async function getAllClasses() {
+  const classes = await AppFetchApi("/academic/v1/classes", {
+    method: "GET",
+    headers: {
+      "X-Sisva-Source": "academic.curriculum.test",
+    },
+  });
+
+  return serverResponseHandler(
+    classes,
+    "Failed to get all classess ",
+    "Success to get all classes"
+  );
+}
+
+export async function getAllTasks() {
+  const tasks = await AppFetchApi("/classroom/v1/tasks", {
+    method: "GET",
+    headers: {
+      "X-Sisva-Source": "tenant.user.test",
+    },
+  });
+
+  return serverResponseHandler(
+    tasks,
+    "Failed to get all classess ",
+    "Success to get all classes"
+  );
+}
+
 export async function getScoreByClassId(id) {
   const scores = await AppFetchApi(
     `/classroom/v1/tasks/scores?class_id=${id}`,
