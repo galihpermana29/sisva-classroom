@@ -12,9 +12,10 @@ export default function StudentList() {
   const params = useSearchParams();
   const student_id = params.get("student_id");
 
-  const filteredStudents = students?.filter((student) =>
-    student.student_name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredStudents =
+    students?.filter((student) =>
+      student.student_name.toLowerCase().includes(searchQuery.toLowerCase())
+    ) ?? [];
 
   return (
     <div

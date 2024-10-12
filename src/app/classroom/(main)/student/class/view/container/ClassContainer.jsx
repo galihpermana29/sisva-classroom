@@ -15,7 +15,7 @@ const StudentClassContainer = () => {
   } = useStudentClass();
 
   return (
-    <div className="max-w-6xl mx-auto mb-[8dvh] md:mb-0 font-kumbh -mt-10">
+    <div className="max-w-6xl mx-auto mb-[8dvh] md:mb-0 font-kumbh mt-10">
       <h1 className="text-xl font-bold md:text-2xl ">List Mata Pelajaran</h1>
       <ListFilter
         filter={filter}

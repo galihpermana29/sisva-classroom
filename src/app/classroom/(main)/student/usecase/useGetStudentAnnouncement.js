@@ -13,7 +13,7 @@ export function useGetStudentAnnouncement() {
         success: announcementsResSucces,
         message: announcementsResMessage,
       } = await getAllAnnouncements();
-
+      console.log(announcements, "announcement");
       if (!announcementsResSucces || !Array.isArray(announcements)) {
         setError(announcementsResMessage);
         setIsLoading(false);

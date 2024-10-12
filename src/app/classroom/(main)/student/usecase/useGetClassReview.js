@@ -14,7 +14,7 @@ export function useGetClassReviews() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const user = JSON.stringify(getCookie("userData"));
+      const user = JSON.parse(getCookie("userData"));
 
       const {
         data: studentGroups,
@@ -38,7 +38,6 @@ export function useGetClassReviews() {
         success: classesResSuccess,
         message: classesResMessage,
       } = await getAllClasses();
-
       if (!classesResSuccess || !Array.isArray(classes)) {
         setError(classesResMessage);
         setIsLoading(false);
@@ -65,10 +64,13 @@ export function useGetClassReviews() {
         const { data: profile } = await getUserById(teacherId);
         return profile.data.profile_image_uri;
       };
+      console.log(classStudent, "class");
+      console.log(tasks, "class");
 
       const classReviews = await Promise.all(
         tasks.map(async (task) => {
           const classData = classStudent.find((cls) => cls.id == task.class_id);
+          console.log(classData, "?ada gak");
           if (classData) {
             const profileImageUri = await getTeacherProfileImage(
               classData.detail.homeroom_teacher_id

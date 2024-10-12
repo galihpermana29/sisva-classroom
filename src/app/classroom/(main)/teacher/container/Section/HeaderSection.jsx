@@ -66,11 +66,11 @@ const HeaderSection = () => {
         </div>
       </div>
 
-      <div className="flex items-center justify-center flex-shrink-0 bg-white rounded-full size-12">
+      {/* <div className="flex items-center justify-center flex-shrink-0 bg-white rounded-full size-12">
         <Badge count={5} overflowCount={9} offset={[-3, 1]} size="small">
           <Bell01 className="text-[rgb(68,68,68)]" size={20} />
         </Badge>
-      </div>
+      </div> */}
     </div>
   );
 };

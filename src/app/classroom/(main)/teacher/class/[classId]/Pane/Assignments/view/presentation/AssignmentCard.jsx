@@ -1,9 +1,12 @@
 import React from "react";
 import { useModal } from "../../../../create-rpp/view/container/Provider/ModalProvider";
 import SisvaButton from "@/app/classroom/shared/presentation/Button/GlobalButton";
+import { useParams, useRouter } from "next/navigation";
 
 const AssignmentCard = ({ assignment, assignmentName, desc, deadline }) => {
   const { setModalState } = useModal();
+  const router = useRouter();
+  const { classId } = useParams();
 
   return (
     <div className="p-4 shadow-card">
@@ -31,7 +34,15 @@ const AssignmentCard = ({ assignment, assignmentName, desc, deadline }) => {
         >
           Edit
         </SisvaButton>
-        <SisvaButton>Detail</SisvaButton>
+        <SisvaButton
+          onClick={() =>
+            router.push(
+              `/classroom/teacher/class/${classId}/task/${assignment.id}`
+            )
+          }
+        >
+          Detail
+        </SisvaButton>
       </div>
     </div>
   );

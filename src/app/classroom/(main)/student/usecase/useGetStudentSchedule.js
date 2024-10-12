@@ -13,13 +13,15 @@ export function useGetStudentSchedule() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const user = JSON.stringify(getCookie("userData"));
+      const user = JSON.parse(getCookie("userData"));
 
       const {
         data: studentGroups,
         success,
         message,
       } = await getStudentGroups();
+
+      console.log(user, "??foundstudent");
 
       if (!success) {
         setError(message);

@@ -13,7 +13,7 @@ export function useGetStudentTask() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const user = JSON.stringify(getCookie("userData"));
+      const user = JSON.parse(getCookie("userData"));
 
       const {
         data: studentGroups,

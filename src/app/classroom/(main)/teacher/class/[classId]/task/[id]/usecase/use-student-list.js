@@ -14,7 +14,6 @@ export function useGetStudentList() {
 
   const params = useParams();
   const { classId, id } = params;
-
   const { data: studentInGroup = [], isLoading: isGroupLoading } = useQuery({
     queryKey: ["student-groups", classId],
     queryFn: getStudentInGroups,
