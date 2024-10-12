@@ -53,12 +53,18 @@ const CreateRppContainer = ({ initialData, headerText }) => {
 
   return (
     <div className="flex flex-col gap-4 font-kumbh">
-      <div className="flex items-center gap-2">
+      <div className="flex flex-col md:flex-row md:items-center gap-2">
         <h3 className="text-lg font-bold text-[#1D2939]">{headerText}</h3>
         {classData?.isFetching ? (
-          <Skeleton.Button active size="large" shape="square" block />
+          <Skeleton.Button
+            active
+            size="large"
+            shape="square"
+            block
+            className="w-fit"
+          />
         ) : (
-          <div className="rounded-lg bg-[#FAE1E1] text-[#001C2B] p-2 text-sm font-bold">
+          <div className="rounded-lg bg-[#FAE1E1] text-[#001C2B] p-2 text-sm font-bold w-fit">
             {classData?.student_group_name}
           </div>
         )}

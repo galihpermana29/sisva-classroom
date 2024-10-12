@@ -100,7 +100,7 @@ const FormTaskModal = ({
               name="allow_submission"
               label={
                 <span className="text-[#1D2939] font-semibold">
-                  Allow Submission
+                  Pengumpulan Tugas
                 </span>
               }
               className="mb-6"
@@ -110,22 +110,22 @@ const FormTaskModal = ({
                   <Radio value={true} className="w-full">
                     <div className="flex flex-col">
                       <span className="text-[#1D2939] font-semibold">
-                        Option 1
+                        Terima pengumpulan tugas
                       </span>
                       <span className="text-[#98A2B3] text-xs mt-1 break-words">
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry.
+                        Pengumpulan tugas diizinkan dalam periode yang telah
+                        ditentukan.
                       </span>
                     </div>
                   </Radio>
                   <Radio value={false} className="w-full">
                     <div className="flex flex-col">
                       <span className="text-[#1D2939] font-semibold">
-                        Option 2
+                        Jangan terima pengumpulan tugas
                       </span>
                       <span className="text-[#98A2B3] text-xs mt-1 break-words">
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry.
+                        Pengumpulan tugas tidak diizinkan, dan formulir tidak
+                        akan menerima tugas.
                       </span>
                     </div>
                   </Radio>
@@ -137,7 +137,7 @@ const FormTaskModal = ({
               name="allow_overdue_submission"
               label={
                 <span className="text-[#1D2939] font-semibold">
-                  Allow overdue submission
+                  Pengumpulan Tugas Terlambat
                 </span>
               }
               className="mb-6"
@@ -147,22 +147,22 @@ const FormTaskModal = ({
                   <Radio value={true} className="w-full">
                     <div className="flex flex-col">
                       <span className="text-[#1D2939] font-semibold">
-                        Option 1
+                        Terima pengumpulan tugas terlambat
                       </span>
                       <span className="text-[#98A2B3] text-xs mt-1 break-words">
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry.
+                        Pengumpulan tugas setelah batas waktu masih
+                        diperbolehkan.
                       </span>
                     </div>
                   </Radio>
                   <Radio value={false} className="w-full">
                     <div className="flex flex-col">
                       <span className="text-[#1D2939] font-semibold">
-                        Option 2
+                        Jangan terima pengumpulan tugas terlambat
                       </span>
                       <span className="text-[#98A2B3] text-xs mt-1 break-words">
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry.
+                        Pengumpulan tugas setelah batas waktu tidak
+                        diperbolehkan.
                       </span>
                     </div>
                   </Radio>
