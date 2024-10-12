@@ -36,15 +36,12 @@ export async function getUserById(id) {
 }
 
 export async function getAllClasses() {
-  const classesRes = await AppFetchApi(
-    "/academic/v1/student-groups?type=homeroom",
-    {
-      method: "GET",
-      headers: {
-        "X-Sisva-Source": "academic.curriculum.test",
-      },
-    }
-  );
+  const classesRes = await AppFetchApi("/academic/v1/classes", {
+    method: "GET",
+    headers: {
+      "X-Sisva-Source": "academic.curriculum.test",
+    },
+  });
 
   return serverResponseHandler(
     classesRes,

@@ -4,15 +4,22 @@
  * @returns {string}
  */
 export function convertDateTime12To24(dateTime) {
-  const [datePart, timePart] = dateTime.split(" +")[0].split(" ");
+  const [datePart, timePart, ampm] = dateTime.split(" ");
 
-  const fullDateString = `${datePart} ${timePart}`;
+  const [day, month, year] = datePart.split("/");
 
-  const date = new Date(fullDateString);
+  let [hours, minutes] = timePart.split(":");
 
-  const formattedDate = date.toLocaleDateString("en-GB");
-  const hours = date.getHours().toString().padStart(2, "0");
-  const minutes = date.getMinutes().toString().padStart(2, "0");
+  if (ampm === "PM" && hours !== "12") {
+    hours = (parseInt(hours, 10) + 12).toString();
+  } else if (ampm === "AM" && hours === "12") {
+    hours = "00";
+  }
 
-  return `${formattedDate} ${hours}:${minutes}`;
+  hours = hours.padStart(2, "0");
+
+  const formattedDate = `${day}/${month}/${year}`;
+  const formattedTime = `${hours}:${minutes}`;
+
+  return `${formattedDate} ${formattedTime}`;
 }

@@ -21,8 +21,6 @@ export function useGetStudentSchedule() {
         message,
       } = await getStudentGroups();
 
-      console.log(user, "??foundstudent");
-
       if (!success) {
         setError(message);
         setIsLoading(false);
@@ -49,7 +47,6 @@ export function useGetStudentSchedule() {
       const classStudent = classes.filter(
         (studentClass) => studentClass.student_group_id == studentGroupId
       );
-
       const {
         data: schedules,
         success: scheduleResSuccess,
@@ -62,9 +59,9 @@ export function useGetStudentSchedule() {
         return;
       }
 
-      const filteredSchedule = classStudent.map((cls) => {
+      const filteredSchedule = classStudent.flatMap((cls, i) => {
         const schedule = schedules.filter((sch) => sch.class_id === cls.id);
-        return schedule;
+        return schedule.length > 0 ? schedule[i] : [];
       });
 
       setSchedules(filteredSchedule);
