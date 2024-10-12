@@ -45,7 +45,7 @@ export function useGetStudentTask() {
       }
 
       const classStudent = classes.filter(
-        (studentClass) => studentClass.id == studentGroupId
+        (studentClass) => studentClass.student_group_id == studentGroupId
       );
 
       const {
@@ -65,15 +65,21 @@ export function useGetStudentTask() {
           const classData = classStudent.find((cls) => cls.id == task.class_id);
           if (classData) {
             return {
-              subject_name: classData.study_program_name,
-              teacher_name: classData.detail.homeroom_teacher_name,
+              subject_name: classData.subject_name,
+              teacher_name: classData.teacher_name,
               name: task.name,
               deadline: task.deadline,
             };
           }
           return null;
         })
-        .filter((task) => task != null);
+        .filter((task) => task != null)
+        .filter((task) => {
+          const [day, month, yearAndTime] = task.deadline.split("/");
+          const [year, time] = yearAndTime.split(" ");
+          const deadline = `${month}/${day}/${year} ${time}`;
+          return new Date(deadline) > new Date();
+        });
 
       setTasks(filteredTask);
       setIsLoading(false);

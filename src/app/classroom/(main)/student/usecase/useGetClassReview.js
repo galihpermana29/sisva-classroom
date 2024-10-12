@@ -45,7 +45,7 @@ export function useGetClassReviews() {
       }
 
       const classStudent = classes.filter(
-        (studentClass) => studentClass.id == studentGroupId
+        (studentClass) => studentClass.student_group_id == studentGroupId
       );
 
       const {
@@ -62,24 +62,20 @@ export function useGetClassReviews() {
 
       const getTeacherProfileImage = async (teacherId) => {
         const { data: profile } = await getUserById(teacherId);
-        return profile.data.profile_image_uri;
+        return profile.profile_image_uri;
       };
-      console.log(classStudent, "class");
-      console.log(tasks, "class");
 
       const classReviews = await Promise.all(
         tasks.map(async (task) => {
           const classData = classStudent.find((cls) => cls.id == task.class_id);
-          console.log(classData, "?ada gak");
           if (classData) {
             const profileImageUri = await getTeacherProfileImage(
-              classData.detail.homeroom_teacher_id
+              classData.teacher_id
             );
-
             return {
-              subject_name: classData.study_program_name,
-              class_name: classData.name,
-              teacher_name: classData.detail.homeroom_teacher_name,
+              subject_name: classData.subject_name,
+              class_name: classData.student_group_name,
+              teacher_name: classData.teacher_name,
               name: task.name,
               deadline: task.deadline,
               profile_uri: profileImageUri,
@@ -89,7 +85,16 @@ export function useGetClassReviews() {
         })
       );
 
-      setClassReviews(classReviews.filter((cls) => cls != null));
+      setClassReviews(
+        classReviews
+          .filter((cls) => cls != null)
+          .filter((task) => {
+            const [day, month, yearAndTime] = task.deadline.split("/");
+            const [year, time] = yearAndTime.split(" ");
+            const deadline = `${month}/${day}/${year} ${time}`;
+            return new Date(deadline) > new Date();
+          })
+      );
       setIsLoading(false);
     };
 
