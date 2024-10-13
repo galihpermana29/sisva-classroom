@@ -51,21 +51,7 @@ export const useStudentClass = () => {
         throw new Error("Failed to fetch data.");
       }
 
-      // const joinedGroups = filterJoinedGroups(studentsInGroups, userId);
-      const joinedGroups = [
-        {
-          student_group_id: 8,
-        },
-        {
-          student_group_id: 9,
-        },
-        {
-          student_group_id: 12,
-        },
-        {
-          student_group_id: 13,
-        },
-      ];
+      const joinedGroups = filterJoinedGroups(studentsInGroups, userId);
       const joinedClasses = matchClassesToGroups(allClasses, joinedGroups);
 
       if (!joinedClasses.length) {
@@ -174,10 +160,6 @@ const fetchTasksForClasses = async (classes) => {
 
       const filteredTasks =
         tasks.filter((task) => !isOverdue(task, task.deadline)) ?? [];
-
-        console.log("filteredTasks", filteredTasks);
-
-      
 
       return {
         ...classItem,
