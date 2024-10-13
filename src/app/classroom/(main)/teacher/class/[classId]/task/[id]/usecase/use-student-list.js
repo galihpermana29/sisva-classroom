@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import {
+  getAllClasses,
+  getAllTasks,
   getStudentInGroups,
   getStudentScores,
   getUserById,
@@ -17,6 +19,16 @@ export function useGetStudentList() {
   const { data: studentInGroup = [], isLoading: isGroupLoading } = useQuery({
     queryKey: ["student-groups", classId],
     queryFn: getStudentInGroups,
+  });
+
+  const { data: classes } = useQuery({
+    queryKey: ["clasess"],
+    queryFn: getAllClasses,
+  });
+
+  const { data: tasks } = useQuery({
+    queryKey: ["tasks"],
+    queryFn: getAllTasks,
   });
 
   const { data: studentScores = [], isLoading: isScoresLoading } = useQuery({
@@ -39,8 +51,14 @@ export function useGetStudentList() {
       return;
     }
 
+    if (!Array.isArray(classes?.data) || !Array.isArray(tasks?.data)) {
+      setLoading(false);
+    }
+
+    const classDetail = classes?.data?.find((cls) => cls.id == classId);
+
     const studentsGroup = studentInGroup.data.filter(
-      (student) => student.student_group_id == classId
+      (student) => student.student_group_id == classDetail.student_group_id
     );
 
     if (!Array.isArray(studentsGroup) || studentsGroup.length <= 0) {
@@ -51,26 +69,18 @@ export function useGetStudentList() {
 
     const fetchFinalStudentScores = async () => {
       const finalStudentScores = await Promise.all(
-        studentScores.data.map(async (score, index) => {
-          const studentImage = await getStudentImage(
-            studentsGroup[index].student_id
+        studentsGroup.map(async (student) => {
+          const studentImage = await getStudentImage(student.student_id);
+          const scoreStudent = studentScores.data.find(
+            (score) => score.student_id == student.student_id
           );
-          const scoreStudent = studentsGroup.find(
-            (student) => student.student_id == score.student_id
-          );
-          if (scoreStudent) {
-            return {
-              student_image: studentImage,
-              student_name: scoreStudent.student_name,
-              student_id: scoreStudent.student_id,
-              student_score: score.value,
-            };
-          }
+          const studentScore = scoreStudent ? scoreStudent.value : null;
+
           return {
-            student_image: studentDetail,
-            student_name: scoreStudent.student_name,
-            student_id: scoreStudent.student_id,
-            student_score: null,
+            student_image: studentImage,
+            student_name: student.student_name,
+            student_id: student.student_id,
+            student_score: studentScore,
           };
         })
       );
