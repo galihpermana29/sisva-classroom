@@ -14,13 +14,14 @@ import {
   getAllTaskByClassId,
 } from "../../repository/student-class-service";
 import { useDebounce } from "use-debounce";
+import { isOverdue } from "../date-helper";
 
 export const useStudentClass = () => {
   const [initialClasses, setInitialClasses] = useState([]);
   const [classes, setClasses] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const {id: userId} = getUserDataCookie();
+  const { id: userId } = getUserDataCookie();
 
   const initialFilter = {
     subject: "",
@@ -157,9 +158,12 @@ const fetchTasksForClasses = async (classes) => {
         throw new Error(teacherMessage);
       }
 
+      const filteredTasks =
+        tasks.filter((task) => !isOverdue(task, task.deadline)) ?? [];
+
       return {
         ...classItem,
-        tasks,
+        tasks: filteredTasks,
         teacher_photo: teacherProfile.profile_image_uri,
       };
     });

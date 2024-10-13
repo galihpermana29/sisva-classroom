@@ -24,8 +24,8 @@ const StudentClassList = ({ classes, isLoading }) => {
                   teacherPhoto={classItem.teacher_photo}
                   teacherName={classItem.teacher_name}
                   group={classItem.student_group_name}
-                  taskName={classItem.tasks[0]?.name}
-                  timeStamp={classItem.tasks[0]?.deadline}
+                  taskName={classItem?.tasks[0]?.name}
+                  timeStamp={classItem?.tasks[0]?.deadline}
                   isEmptyTask={classItem.tasks.length === 0}
                 />
               ))}
