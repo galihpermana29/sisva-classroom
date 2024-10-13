@@ -19,7 +19,7 @@ const HeaderSection = () => {
   const { data: profile, isLoading: isLoadingProfile } = useGetUserProfile();
 
   return (
-    <div className="relative flex justify-between px-4 py-6 pt-16 -mx-3 -my-7 md:m-0 md:pt-6 bg-gradient-to-br from-primary_hover to-primary rounded-b-3xl md:rounded-xl">
+    <div className="relative flex items-center justify-between px-4 py-6 pt-16 -mx-3 -my-7 md:m-0 md:pt-6 bg-gradient-to-br from-primary_hover to-primary rounded-b-3xl md:rounded-xl">
       <BoxLeft />
       <BoxTop
         className="size-[103px] lg:size-[204px] left-1/2 -translate-x-1/3 -top-1/4 lg:-top-full"
@@ -66,11 +66,11 @@ const HeaderSection = () => {
         </div>
       </div>
 
-      {/* <div className="flex items-center justify-center flex-shrink-0 bg-white rounded-full size-12">
+      <div className="flex items-center justify-center flex-shrink-0 bg-white rounded-full size-12">
         <Badge count={5} overflowCount={9} offset={[-3, 1]} size="small">
           <Bell01 className="text-[rgb(68,68,68)]" size={20} />
         </Badge>
-      </div> */}
+      </div>
     </div>
   );
 };

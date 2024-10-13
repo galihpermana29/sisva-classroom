@@ -10,9 +10,7 @@ import CardAnnouncementSkeleton from "@/app/classroom/shared/presentation/Skelet
 import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
 
 const AnnouncementSection = () => {
-  // const { data: announcements, isLoading } = useGetAllAnnouncements();
-  const isLoading = false
-  const announcements = []
+  const { data: announcements, isLoading } = useGetAllAnnouncements();
 
   return (
     <SectionLayout
@@ -24,7 +22,7 @@ const AnnouncementSection = () => {
       }
     >
       <div className="lg:h-[250px] overflow-scroll lg:pr-3 py-1">
-        <div className="flex flex-row lg:flex-col gap-3 ">
+        <div className="flex flex-row gap-3 lg:flex-col ">
           {isLoading ? (
             <CardAnnouncementSkeleton />
           ) : !announcements | (announcements.length == 0) ? (
