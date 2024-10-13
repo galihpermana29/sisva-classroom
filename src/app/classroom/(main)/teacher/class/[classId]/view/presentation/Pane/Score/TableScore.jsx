@@ -72,8 +72,8 @@ const EditableCell = ({
         <Form.Item
           name={dataIndex}
           style={{ margin: 0 }}
-          rules={[{ required: true, message: `Please Input ${title}!` }]}
-          initialValue={record.tasks[dataIndex]?.task_score}
+          rules={[{ required: true, message: `Please Input scores!` }]}
+          initialValue={record.tasks[dataIndex]?.task_score ?? 0}
         >
           {inputNode}
         </Form.Item>
@@ -91,6 +91,8 @@ export default function TableScore() {
   const [taskIds, setTaskIds] = useState([]);
   const [editingKey, setEditingKey] = useState("");
   const { updateScoreStudent, loading: loadingUpdate } = useUpdateScore();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
   useEffect(() => {
     if (!loading && scores.length > 0) {
@@ -110,7 +112,7 @@ export default function TableScore() {
       siswa: record.siswa,
     };
     taskIds.forEach((taskId) => {
-      formValues[taskId] = record.tasks[taskId]?.task_score;
+      formValues[taskId] = record.tasks[taskId]?.task_score || 0;
     });
     form.setFieldsValue(formValues);
     setEditingKey(record.key);
@@ -124,26 +126,39 @@ export default function TableScore() {
     try {
       const row = await form.validateFields();
       const record = data.find((item) => item.key === key);
+
       if (record) {
         for (const taskId of taskIds) {
-          if (row[taskId] !== record.tasks[taskId]?.task_score) {
+          const currentScore = record.tasks[taskId]?.task_score;
+          const newScore = row[taskId];
+
+          if (newScore !== currentScore) {
             await updateScoreStudent(taskId, {
-              value: row[taskId],
+              value: newScore,
               student_id: scores.find((s) => s.student_name === record.siswa)
                 .student_id,
             });
-            record.tasks[taskId].task_score = row[taskId];
+
+            record.tasks[taskId].task_score = newScore;
           }
         }
+
         const updatedData = [...data];
+        const updatedRecordIndex = updatedData.findIndex(
+          (item) => item.key === key
+        );
+
+        updatedData[updatedRecordIndex] = record;
+
         const processedData = updatedData.slice(1);
         const newAverageRow = calculateAverages(processedData, taskIds);
 
         setData([newAverageRow, ...processedData]);
+
         setEditingKey("");
       }
     } catch (errInfo) {
-      console.log("Validate Failed:", errInfo);
+      console.log("Validation Failed:", errInfo);
     }
   };
 
@@ -190,7 +205,7 @@ export default function TableScore() {
       },
       ...taskIds.map((taskId) => ({
         title: (
-          <div className="flex flex-col items-center justify-start text-base90 bg-white p-4 -m-4">
+          <div className="flex flex-col items-center justify-start text-base90">
             <span>Nilai {data[0].tasks[taskId]?.task_name}</span>
             <span className="text-base90 font-normal text-xs mt-2 text-left">
               {dateTimeFormatter(
@@ -203,8 +218,12 @@ export default function TableScore() {
         editable: true,
         align: "center",
         width: 170,
-        className: `${kumbh.className} bg-[#F9F9F9] font-normal text-base90`,
-        render: (_, record) => record.tasks[taskId]?.task_score,
+        className: `${kumbh.className} bg-white font-normal text-base90`,
+        render: (_, record) => (
+          <div className="bg-[#F9F9F9] p-[25px] -mx-4 -mt-[26%] -mb-[26%]">
+            <div>{record.tasks[taskId]?.task_score || 0}</div>
+          </div>
+        ),
       })),
       {
         title: "Aksi",
@@ -278,11 +297,19 @@ export default function TableScore() {
           components={{ body: { cell: EditableCell } }}
           dataSource={data}
           columns={mergedColumns}
-          pagination={false}
-          className={`${kumbh.className} shadow-table  rounded-xl`}
+          className={`${kumbh.className} shadow-table  rounded-xl `}
           loading={loading || loadingUpdate || scores.length <= 0}
           tableLayout="auto"
           bordered
+          pagination={{
+            current: currentPage,
+            pageSize: pageSize,
+            total: data.length,
+            onChange: (page, pageSize) => {
+              setCurrentPage(page);
+              setPageSize(pageSize);
+            },
+          }}
           scroll={{
             x: "max-content",
           }}
