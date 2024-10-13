@@ -1,5 +1,12 @@
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+
+dayjs.extend(utc);
+dayjs.extend(customParseFormat);
+
 export function dateFormatterDayName(dateString) {
-  const date = new Date(dateString);
+  const date = dayjs.utc(dateString, "DD/MM/YYYY h:mm A Z");
 
   const daysInIndonesian = [
     "Minggu",
@@ -11,10 +18,10 @@ export function dateFormatterDayName(dateString) {
     "Sabtu",
   ];
 
-  const dayName = daysInIndonesian[date.getUTCDay()];
-  const day = String(date.getUTCDate()).padStart(2, "0");
-  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
-  const year = date.getUTCFullYear();
+  const dayName = daysInIndonesian[date.day()];
+  const day = String(date.date()).padStart(2, "0");
+  const month = String(date.month() + 1).padStart(2, "0");
+  const year = date.year();
 
   return `${dayName}, ${day}/${month}/${year}`;
 }

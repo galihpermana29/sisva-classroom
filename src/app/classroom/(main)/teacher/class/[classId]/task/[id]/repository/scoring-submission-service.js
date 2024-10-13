@@ -95,3 +95,33 @@ export async function setScoreStudentTask(id, data) {
     "Success set score student"
   );
 }
+
+export async function getAllClasses() {
+  const classes = await AppFetchApi("/academic/v1/classes", {
+    method: "GET",
+    headers: {
+      "X-Sisva-Source": "academic.curriculum.test",
+    },
+  });
+
+  return serverResponseHandler(
+    classes,
+    "Failed to get all classess ",
+    "Success to get all classes"
+  );
+}
+
+export async function getAllTasks() {
+  const tasks = await AppFetchApi("/classroom/v1/tasks", {
+    method: "GET",
+    headers: {
+      "X-Sisva-Source": "tenant.user.test",
+    },
+  });
+
+  return serverResponseHandler(
+    tasks,
+    "Failed to get all classess ",
+    "Success to get all classes"
+  );
+}
