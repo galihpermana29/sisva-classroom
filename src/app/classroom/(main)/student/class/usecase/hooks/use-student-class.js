@@ -14,13 +14,14 @@ import {
   getAllTaskByClassId,
 } from "../../repository/student-class-service";
 import { useDebounce } from "use-debounce";
+import { isOverdue } from "../date-helper";
 
 export const useStudentClass = () => {
   const [initialClasses, setInitialClasses] = useState([]);
   const [classes, setClasses] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const {id: userId} = getUserDataCookie();
+  const { id: userId } = getUserDataCookie();
 
   const initialFilter = {
     subject: "",
@@ -50,7 +51,21 @@ export const useStudentClass = () => {
         throw new Error("Failed to fetch data.");
       }
 
-      const joinedGroups = filterJoinedGroups(studentsInGroups, userId);
+      // const joinedGroups = filterJoinedGroups(studentsInGroups, userId);
+      const joinedGroups = [
+        {
+          student_group_id: 8,
+        },
+        {
+          student_group_id: 9,
+        },
+        {
+          student_group_id: 12,
+        },
+        {
+          student_group_id: 13,
+        },
+      ];
       const joinedClasses = matchClassesToGroups(allClasses, joinedGroups);
 
       if (!joinedClasses.length) {
@@ -157,9 +172,16 @@ const fetchTasksForClasses = async (classes) => {
         throw new Error(teacherMessage);
       }
 
+      const filteredTasks =
+        tasks.filter((task) => !isOverdue(task, task.deadline)) ?? [];
+
+        console.log("filteredTasks", filteredTasks);
+
+      
+
       return {
         ...classItem,
-        tasks,
+        tasks: filteredTasks,
         teacher_photo: teacherProfile.profile_image_uri,
       };
     });
