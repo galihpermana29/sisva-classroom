@@ -5,6 +5,8 @@ import { useQueryParam } from "@/hooks/useQueryParam";
 import { useSearchParams } from "next/navigation";
 import { useMediaQuery } from "@/app/classroom/shared/usecase/hooks/use-mediaquery";
 import TableScore from "../Pane/Score/TableScore";
+import TeachingPlanPane from "../../../Pane/TeachingPlan";
+import AssignmentPane from "../../../Pane/Assignments";
 
 const ClassDetailTabs = () => {
   const searchParams = useSearchParams();
@@ -32,7 +34,7 @@ const classDetailTabList = [
   {
     key: "rencana_pembelajaran",
     label: "Rencana Pembelajaran",
-    children: <div></div>,
+    children: <TeachingPlanPane />,
   },
   {
     key: "bahan_ajar",
@@ -42,14 +44,14 @@ const classDetailTabList = [
   {
     key: "tugas",
     label: "Tugas",
-    children: <div></div>,
+    children: <AssignmentPane />,
   },
   {
     key: "nilai",
     label: "Nilai",
     children: (
       <div>
-        <h1 className="text-base text-base90 font-bold mb-6 ">
+        <h1 className="mb-6 text-base font-bold text-base90 ">
           List Nilai Siswa
         </h1>
         <TableScore />

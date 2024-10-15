@@ -2,6 +2,7 @@ import React from "react";
 import ClassCard from "./ClassCard";
 import EmptyData from "@/app/classroom/shared/presentation/EmptyData";
 import CardClassSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardClassSkeleton";
+import Link from "next/link";
 
 const StudentClassList = ({ classes, isLoading }) => {
   return (
@@ -18,16 +19,18 @@ const StudentClassList = ({ classes, isLoading }) => {
                 <CardClassSkeleton key={index} />
               ))
             : classes.map((classItem, index) => (
-                <ClassCard
-                  key={"class_" + index}
-                  subject={classItem.subject_name}
-                  teacherPhoto={classItem.teacher_photo}
-                  teacherName={classItem.teacher_name}
-                  group={classItem.student_group_name}
-                  taskName={classItem?.tasks[0]?.name}
-                  timeStamp={classItem?.tasks[0]?.deadline}
-                  isEmptyTask={classItem.tasks.length === 0}
-                />
+                <Link href={`/classroom/student/class/${classItem.id}`}>
+                  <ClassCard
+                    key={"class_" + index}
+                    subject={classItem.subject_name}
+                    teacherPhoto={classItem.teacher_photo}
+                    teacherName={classItem.teacher_name}
+                    group={classItem.student_group_name}
+                    taskName={classItem?.tasks[0]?.name}
+                    timeStamp={classItem?.tasks[0]?.deadline}
+                    isEmptyTask={classItem.tasks.length === 0}
+                  />
+                </Link>
               ))}
         </div>
       )}
