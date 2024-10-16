@@ -4,7 +4,7 @@ import AssignmentCard from "./AssignmentCard";
 import TeachingPlanTitle from "@/app/classroom/(main)/teacher/class/[classId]/Pane/TeachingPlan/view/presentation/TeachingPlanTitle";
 import AssignmentCardSkeleton from "./AssignmentCardSkeleton";
 
-const AssignmentListGroup = ({ assignmentGroup, isLoading }) => {
+const AssignmentListGroup = ({ assignmentGroups, isLoading }) => {
   return (
     <div className="grid mt-6 md:mt-8">
       {isLoading ? (
@@ -29,7 +29,7 @@ const AssignmentListGroup = ({ assignmentGroup, isLoading }) => {
           />
         </div>
       ) : (
-        assignmentGroup.map((group, index) => (
+        assignmentGroups.map((group, index) => (
           <div key={"assignment_group_" + index} className="mt-6 first:mt-0">
             <TeachingPlanTitle title={group.title} />
             <div className="grid gap-6 mt-3 md:grid-cols-2">

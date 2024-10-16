@@ -6,7 +6,7 @@ import { useClassAssignment } from "../usecase/hooks/use-class-assignment";
 
 const AssignmentContainer = () => {
   const { id: classId } = useParams();
-  const { assignmentGroup, isLoading, filter, handleFilterChange } =
+  const { assignmentGroups, isLoading, filter, handleFilterChange } =
     useClassAssignment(classId);
   return (
     <div>
@@ -17,7 +17,7 @@ const AssignmentContainer = () => {
         onChange={(e) => handleFilterChange("search", e.target.value)}
       />
 
-      <AssignmentListGroup assignmentGroup={assignmentGroup} isLoading={isLoading} />
+      <AssignmentListGroup assignmentGroups={assignmentGroups} isLoading={isLoading} />
     </div>
   );
 };

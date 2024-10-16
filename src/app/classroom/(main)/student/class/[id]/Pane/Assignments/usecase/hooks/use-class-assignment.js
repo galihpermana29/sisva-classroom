@@ -14,12 +14,12 @@ export const useClassAssignment = (classId) => {
   const [debouncedFilter] = useDebounce(filter, 500);
 
   const {
-    data: assignmentGroup = [],
+    data: assignmentGroups = [],
     isLoading,
     error,
     refetch,
   } = useQuery({
-    queryKey: ["class-assignment", classId],
+    queryKey: ["student-class-assignments", classId],
     queryFn: () => getTaskWithGrouping(classId),
     select: (data) => {
       if (!debouncedFilter.search) return data;
@@ -37,7 +37,7 @@ export const useClassAssignment = (classId) => {
   }
 
   return {
-    assignmentGroup,
+    assignmentGroups,
     isLoading,
     error,
     filter,
