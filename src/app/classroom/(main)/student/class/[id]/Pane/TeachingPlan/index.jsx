@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import TeachingPlanContainer from "./view/container/TeachingPlanContainer";
 
 const TeachingPlanPane = () => {
   return (
-    <div>TeachingPlanPane</div>
-  )
-}
+    <div className="font-normal text-black">
+      <TeachingPlanContainer />
+    </div>
+  );
+};
 
-export default TeachingPlanPane
+export default TeachingPlanPane;
