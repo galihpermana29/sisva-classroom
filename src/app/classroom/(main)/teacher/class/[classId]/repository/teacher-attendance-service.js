@@ -21,6 +21,21 @@ export async function getAttendanceStudent(date_id) {
   );
 }
 
+export async function getUserById(id) {
+  const student = await AppFetchApi(`/user/v1/users/${id}`, {
+    method: "GET",
+    headers: {
+      "X-Sisva-Source": "tenant.user.test",
+    },
+  });
+
+  return serverResponseHandler(
+    student,
+    "Failed get student detail",
+    "Success get student detail"
+  );
+}
+
 export async function getAllClasses() {
   const clasess = await AppFetchApi(`/academic/v1/classes`, {
     method: "GET",

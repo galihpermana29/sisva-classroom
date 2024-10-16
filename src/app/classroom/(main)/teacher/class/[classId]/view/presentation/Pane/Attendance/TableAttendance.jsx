@@ -14,6 +14,7 @@ import SisvaButton from "@/app/classroom/shared/presentation/Button/GlobalButton
 import clsx from "clsx";
 import { formatDateDay } from "../../../../usecase/dateFormatter";
 import BadgeAttendance from "../../../container/BadgeAttendance/BadgeAttendance";
+import { useClass } from "../../../../usecase/use-class";
 
 const kumbh = Kumbh_Sans({ subsets: ["latin"] });
 
@@ -29,9 +30,9 @@ export default function TableAttendances() {
   const [selectedRecord, setSelectedRecord] = useState(null);
   const [selectedOption, setSelectedOption] = useState("");
   const { attendances, loading } = useAttendance();
+  const { classData } = useClass();
   const [attendanceData, setAttendanceData] = useState([]);
   const { loading: loadingUpdate, updateAttendance } = useUpdateAttendance();
-  const { profile_image_uri, detail } = getClientSession();
 
   useEffect(() => {
     if (attendances.length > 0) {
@@ -58,7 +59,8 @@ export default function TableAttendances() {
         grouped[attendance.student_id] = {
           student_id: attendance.student_id,
           student_name: attendance.student_name,
-          profile_image_uri: profile_image_uri || placeholderImage.src,
+          profile_image_uri:
+            attendance.student_profile_uri || placeholderImage.src,
           attendance: {},
         };
       }
@@ -66,7 +68,7 @@ export default function TableAttendances() {
         attendance.status;
     });
     return Object.values(grouped);
-  }, [attendanceData, profile_image_uri]);
+  }, [attendanceData]);
 
   const uniqueDates = useMemo(() => {
     const dates = [...new Set(attendanceData.map((a) => a.date))];
@@ -211,7 +213,9 @@ export default function TableAttendances() {
                 <span className="text-sm font-medium text-[#444444]">
                   {selectedRecord.student_name}
                 </span>
-                <span className="text-xs text-[#969696] ">{detail.grade}</span>
+                <span className="text-xs text-[#969696] ">
+                  {classData.class_name}
+                </span>
               </div>
             </div>
 

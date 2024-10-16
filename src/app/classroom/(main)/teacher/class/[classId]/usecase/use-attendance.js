@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import {
   getAttendanceStudent,
   getStudentGroups,
+  getUserById,
   setAttendanceStudent,
 } from "../repository/teacher-attendance-service";
 import { useParams } from "next/navigation";
@@ -55,6 +56,8 @@ export function useAttendance() {
         for (const student of foundStudentGroup) {
           const { student_id } = student;
 
+          const { data: studentDetail } = await getUserById(student_id);
+
           const { data, message, success } = await getAttendanceStudent(
             formattedDate
           );
@@ -69,12 +72,14 @@ export function useAttendance() {
                 date: formattedDate,
                 student_id: studentAttendance.student_id,
                 student_name: student.student_name,
+                student_profile_uri: studentDetail.profile_image_uri,
                 status: studentAttendance.status,
               });
             } else {
               fetchedAttendances.push({
                 date: formattedDate,
                 student_id: student.student_id,
+                student_profile_uri: studentDetail.profile_image_uri,
                 student_name: student.student_name,
                 status: "absent",
               });
@@ -83,6 +88,7 @@ export function useAttendance() {
             fetchedAttendances.push({
               date: formattedDate,
               student_id: student.student_id,
+              student_profile_uri: studentDetail.profile_image_uri,
               student_name: student.student_name,
               status: "absent",
             });
