@@ -61,25 +61,13 @@ export function useSubmission() {
         (score) => score.student_id == student_id
       );
 
-      if (studentScore) {
-        setSubmission({
-          student_name: profile.name,
-          attachment_file_uri: studentSubmission.attachment_file_uri,
-          note: studentSubmission.note,
-          submission_time: studentSubmission.submission_time,
-          score: studentScore.value,
-          feedback: studentScore.feedback,
-          is_submitted: true,
-        });
-        return;
-      }
       setSubmission({
         student_name: profile.name,
         attachment_file_uri: studentSubmission.attachment_file_uri,
         note: studentSubmission.note,
         submission_time: studentSubmission.submission_time,
-        score: 0,
-        feedback: "",
+        score: studentScore?.value ?? 0,
+        feedback: studentScore?.feedback ?? "",
         is_submitted: true,
       });
 
