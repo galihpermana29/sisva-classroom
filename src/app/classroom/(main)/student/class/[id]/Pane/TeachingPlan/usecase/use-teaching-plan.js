@@ -14,8 +14,6 @@ export const useTeachingPlan = () => {
     },
   });
 
-  console.log(data);
-
   const teachingPlans = data?.filter((plan) => {
     return plan.class_id === parseInt(classId);
   });
