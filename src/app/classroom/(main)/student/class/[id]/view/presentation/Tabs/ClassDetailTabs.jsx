@@ -5,6 +5,7 @@ import { useQueryParam } from "@/hooks/useQueryParam";
 import { useSearchParams } from "next/navigation";
 import { useMediaQuery } from "@/app/classroom/shared/usecase/hooks/use-mediaquery";
 import TableScore from "../Pane/Score/TableScore";
+import TableAttendances from "../Pane/Attendance/TableAttendance";
 
 const ClassDetailTabs = () => {
   const searchParams = useSearchParams();
@@ -59,6 +60,13 @@ const classDetailTabList = [
   {
     key: "kehadiran",
     label: "Kehadiran",
-    children: <div></div>,
+    children: (
+      <div>
+        <h1 className="text-base text-base90 font-bold mb-6 ">
+          List Kehadiran Siswa
+        </h1>
+        <TableAttendances />
+      </div>
+    ),
   },
 ];

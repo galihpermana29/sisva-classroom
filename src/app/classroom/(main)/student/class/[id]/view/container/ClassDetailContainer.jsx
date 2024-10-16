@@ -8,7 +8,7 @@ const ClassDetailContainer = () => {
   const tab = searchParams.get("tab");
   return (
     <div
-      className={`max-w-6xl mx-auto -mt-16 mb-[8dvh] md:mb-0 ${
+      className={`max-w-6xl mx-auto -mt-5 mb-[8dvh] md:mb-0 ${
         !tab && "hidden"
       }`}
     >
