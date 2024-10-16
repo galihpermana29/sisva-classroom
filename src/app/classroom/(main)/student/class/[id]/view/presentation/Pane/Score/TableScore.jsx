@@ -105,7 +105,6 @@ export default function TableScore() {
       <Table
         dataSource={loading ? [] : dataSource}
         columns={columns}
-        pagination={false}
         className={`${kumbh.className} shadow-table  rounded-xl`}
         loading={loading}
         tableLayout="auto"
