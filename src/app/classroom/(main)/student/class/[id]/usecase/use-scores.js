@@ -1,101 +1,89 @@
 import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import {
+  getAllTasks,
   getScoreByClassId,
   getTaskById,
-  getUserById,
 } from "../repository/score-service";
+import { parseDateTimeSort } from "./dateFormatter";
 import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
-import { useParams } from "next/navigation";
+import { useCalculateAverage } from "./use-average";
 
 export function useGetScores() {
-  const [scores, setScores] = useState({ data: [], userData: {} });
+  const [scores, setScores] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const { id: student_id } = getClientSession();
+
   const params = useParams();
   const { id } = params;
-  const { id: student_id } = getClientSession();
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
+      try {
+        const scoreByClass = await getScoreByClassId(id);
 
-      const {
-        data: scoresByClass,
-        success: isSuccessScoresByClass,
-        message: messageScoresByClass,
-      } = await getScoreByClassId(id);
+        if (!scoreByClass.success || !Array.isArray(scoreByClass.data)) {
+          setError(scoreByClass.message || "Error fetching scores");
+          setLoading(false);
+          return;
+        }
 
-      if (!isSuccessScoresByClass || !Array.isArray(scoresByClass)) {
-        console.error("Error fetching scores:", messageScoresByClass);
-        setError(messageScoresByClass);
-        setLoading(false);
-        return;
-      }
-
-      const studentId = "8bd5ae22-10f6-4167-92be-740f02e1ed48";
-      const studentScores = scoresByClass.filter(
-        (score) => score.student_id === studentId
-      );
-
-      if (!studentScores.length) {
-        setError("No scores found for this student.");
-        setLoading(false);
-        return;
-      }
-
-      function calculateAverage(scores, taskId) {
-        const taskScores = scores
-          .filter((score) => score.task_id === taskId)
-          .map((score) => score.value);
-        const total = taskScores.reduce((sum, value) => sum + value, 0);
-        return taskScores.length ? total / taskScores.length : 0;
-      }
-
-      const { data: student } = await getUserById(studentId);
-
-      const result = await Promise.all(
-        studentScores.map(async (studentScore) => {
-          const {
-            data: task,
-            success: isSuccessTask,
-            message: messageTask,
-          } = await getTaskById(studentScore.task_id);
-
-          if (!isSuccessTask || !task) {
-            console.error("Error fetching task:", messageTask);
-            return null;
-          }
-
-          const averageScore = calculateAverage(
-            scoresByClass,
-            studentScore.task_id
-          );
-
+        const getTaskDetail = async (id) => {
+          const { data: task } = await getTaskById(id);
           return {
-            student_score: studentScore.value,
             task_name: task.name,
-            task_start_time: task.start_time,
-            task_average: averageScore,
+            task_date: task.start_time,
           };
-        })
-      );
+        };
 
-      const filteredResults = result.filter((item) => item !== null);
+        const tasks = await getAllTasks();
+        if (!tasks.success || !Array.isArray(tasks.data)) {
+          setError(tasks.message || "Error fetching tasks");
+          setLoading(false);
+          return;
+        }
 
-      setScores({
-        data: filteredResults,
-        userData: {
-          student_name: student.name,
-          student_image: student.profile_image_uri,
-        },
-      });
+        const classTask = tasks.data
+          .filter((task) => task.class_id == id)
+          .sort((a, b) => {
+            const dateA = parseDateTimeSort(a.start_time);
+            const dateB = parseDateTimeSort(b.start_time);
+            return dateB - dateA;
+          });
 
-      setLoading(false);
+        const scoreStudent = await Promise.all(
+          classTask.map(async (task) => {
+            const studentScore = scoreByClass.data.find(
+              (score) =>
+                score.student_id == student_id && score.task_id == task.id
+            );
+
+            const averageScore = useCalculateAverage(
+              scoreByClass.data,
+              task.id
+            );
+
+            return {
+              task_name: task.name,
+              task_start_time: task.start_time,
+              student_score: studentScore ? studentScore.value : 0,
+              task_average: averageScore,
+            };
+          })
+        );
+
+        setScores(scoreStudent);
+      } catch (error) {
+        setError("An error occurred while fetching data");
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchData();
-  }, []);
+  }, [id]);
 
   return {
     scores,
