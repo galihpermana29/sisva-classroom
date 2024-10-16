@@ -9,7 +9,7 @@ export default function MainLayout({ children }) {
       }}
     >
       <SisvaNavbar />
-      <div className="px-3 md:px-10 lg:px-20 pt-10 pb-32 font-kumbh">
+      <div className="px-3 md:px-10 lg:px-20 pt-10 pb-32 md:pb-10 font-kumbh">
         {children}
       </div>
     </ConfigProvider>

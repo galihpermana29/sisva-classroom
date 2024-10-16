@@ -1,17 +1,16 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDebounce } from "use-debounce";
-import { getTeachingMaterialList } from "../../../teaching-material/repository/teaching-material-service";
+import { getTeachingMaterialList } from "../../../(main)/teacher/teaching-material/repository/teaching-material-service";
 import {
-  restructTeachingMaterialListOwner,
-  resturctureTeachingMaterialList,
+  restructTeachingMaterialListRpp,
   searchFilter,
-} from "../../../teaching-material/model/data-mapper";
+} from "../../../(main)/teacher/teaching-material/model/data-mapper";
 import { useParams } from "next/navigation";
 
-export const useRppTeachingMaterial = () => {
+export const useRppTeachingMaterial = (initialData, type) => {
   const [teachingMaterialData, setTeachingMaterialData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const { classId } = useParams();
+  const { classId, id } = useParams();
 
   const initialQueryFilter = {
     search: "",
@@ -25,10 +24,15 @@ export const useRppTeachingMaterial = () => {
 
   const [debouncedQueryFilter] = useDebounce(queryFilter, 200);
 
+  const hasActiveFilters = useMemo(
+    () => Object.values(queryFilter).some((value) => value !== ""),
+    [queryFilter]
+  );
+
   const fetchTeachingMaterialList = async () => {
     setIsLoading(true);
     const response = await getTeachingMaterialList(
-      classId,
+      type === "student" ? id : classId,
       queryFilter.subject,
       queryFilter.curriculum,
       queryFilter.study_program
@@ -36,6 +40,7 @@ export const useRppTeachingMaterial = () => {
 
     if (response.success) {
       let filteredTeachingMaterialList = response.data;
+      console.log(filteredTeachingMaterialList);
 
       if (queryFilter.search) {
         const searchTerm = queryFilter.search.toLowerCase();
@@ -59,10 +64,24 @@ export const useRppTeachingMaterial = () => {
   }, []);
 
   useEffect(() => {
-    fetchTeachingMaterialList();
+    if (hasActiveFilters) {
+      fetchTeachingMaterialList();
+    }
   }, [debouncedQueryFilter]);
 
-  const materialData = restructTeachingMaterialListOwner(teachingMaterialData);
+  const materialData = useMemo(
+    () =>
+      hasActiveFilters
+        ? restructTeachingMaterialListRpp(
+            initialData.teachingPlanData,
+            teachingMaterialData
+          )
+        : restructTeachingMaterialListRpp(
+            initialData.teachingPlanData,
+            initialData.teachingMaterialData
+          ),
+    [hasActiveFilters, teachingMaterialData, initialData.teachingMaterialData]
+  );
 
   return {
     isLoading,

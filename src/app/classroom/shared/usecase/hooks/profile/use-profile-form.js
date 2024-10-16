@@ -1,12 +1,7 @@
 import { useForm } from "antd/es/form/Form";
 import { useEffect } from "react";
 
-export const useProfileForm = (initialData) => {
-  const [form] = useForm();
-  useEffect(() => {
-    form.setFieldsValue(initialData);
-  }, [initialData]);
-
+export const useProfileForm = () => {
   const jenisKelaminDropdown = [
     {
       label: "Laki-laki",
@@ -205,7 +200,6 @@ export const useProfileForm = (initialData) => {
     },
   ];
   return {
-    form,
     jenisKelaminDropdown,
     kewarganegaraanDropdown,
     agamaDropdown,

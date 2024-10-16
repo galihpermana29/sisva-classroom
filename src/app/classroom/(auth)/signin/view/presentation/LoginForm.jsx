@@ -69,7 +69,7 @@ const LoginForm = () => {
         btn_size="xl"
         htmlType="submit"
         shape="default mt-2 !w-full"
-        disabled={isLoading}
+        loading={isLoading}
       >
         Masuk
       </SisvaButton>

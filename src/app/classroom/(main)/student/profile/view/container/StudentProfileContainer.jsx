@@ -1,8 +1,8 @@
 import ProfileContainer from "@/app/classroom/shared/view/Profile/ProfileContainer";
-import { User01, UserSquare } from "@untitled-ui/icons-react";
+import { Lock01, User01, Users03, UserSquare } from "@untitled-ui/icons-react";
 import React from "react";
 
-const TeacherProfileContainer = ({ initialData }) => {
+const StudentProfileContainer = ({ initialData }) => {
   const profileMenus = [
     {
       icon: <User01 width={20} height={20} />,
@@ -16,10 +16,23 @@ const TeacherProfileContainer = ({ initialData }) => {
       subtitle: "Buat perubahan akunmu",
       key: "akun",
     },
+    {
+      icon: <Users03 width={20} height={20} />,
+      title: "Wali Murid",
+      subtitle: "Informasi wali muridmu",
+      key: "wali-murid",
+    },
+    {
+      icon: <Lock01 width={20} height={20} />,
+      title: "Keamanan",
+      subtitle: "Pengaturan password akunmu",
+      key: "password",
+    },
   ];
+
   return (
     <ProfileContainer initialData={initialData} profileMenus={profileMenus} />
   );
 };
 
-export default TeacherProfileContainer;
+export default StudentProfileContainer;
