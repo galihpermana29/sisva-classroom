@@ -7,8 +7,6 @@ import {
   useAttendance,
   useUpdateAttendance,
 } from "../../../../usecase/use-attendance";
-
-import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
 import { Check } from "@untitled-ui/icons-react";
 import SisvaButton from "@/app/classroom/shared/presentation/Button/GlobalButton";
 import clsx from "clsx";
