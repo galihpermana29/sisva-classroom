@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import CardProfile from "@/app/classroom/shared/presentation/Card/CardProfile";
 import MenuItem from "@/app/classroom/shared/presentation/Profile/MenuItem";
 import { LogOut04 } from "@untitled-ui/icons-react";
-import FormItem from "@/app/classroom/shared/presentation/Profile/FormItem";
+import FormFields from "@/app/classroom/shared/presentation/Profile/FormFields";
 import { useProfile } from "../../usecase/hooks/profile/use-profile";
 import { useSignOut } from "../../usecase/hooks/profile/use-signout";
 import dynamic from "next/dynamic";
@@ -24,7 +24,8 @@ const ProfileContainer = ({ initialData, profileMenus }) => {
     handleChangeProfilePicture,
     loading,
     form,
-    handleChangeSection,
+    handleSubmitSection,
+    handleCancelEdit,
   } = useProfile(initialData);
 
   const { signOut } = useSignOut(setLogoutModal);
@@ -63,7 +64,7 @@ const ProfileContainer = ({ initialData, profileMenus }) => {
           </div>
         </div>
         <div className="w-full mt-6 md:mt-0 md:h-[calc(100vh-150px)] md:overflow-y-auto no-scrollbar">
-          <FormItem
+          <FormFields
             loading={loading}
             imageLoading={imageLoading}
             formData={data}
@@ -72,7 +73,8 @@ const ProfileContainer = ({ initialData, profileMenus }) => {
             isEdit={isEdit}
             setIsEdit={setIsEdit}
             handleFileUpload={handleChangeProfilePicture}
-            handleChangeSection={handleChangeSection}
+            handleSubmitSection={handleSubmitSection}
+            handleCancelEdit={handleCancelEdit}
           />
         </div>
       </div>

@@ -65,31 +65,27 @@ export const useProfileForm = () => {
   const aksesDropdown = [
     {
       label: "Sekolah",
-      value: "Sekolah",
+      value: "manage_school",
     },
     {
       label: "Karyawan",
-      value: "Karyawan",
+      value: "manage_staff",
     },
     {
       label: "Akademik",
-      value: "Akademik",
+      value: "manage_academic",
     },
     {
       label: "Siswa",
-      value: "Siswa",
-    },
-    {
-      label: "Rapot",
-      value: "Rapot",
+      value: "manage_student",
     },
     {
       label: "Informasi",
-      value: "Informasi",
+      value: "manage_information",
     },
     {
       label: "Keuangan",
-      value: "Keuangan",
+      value: "manage_finance",
     },
   ];
 
@@ -199,6 +195,7 @@ export const useProfileForm = () => {
       value: "Lainnya",
     },
   ];
+
   return {
     jenisKelaminDropdown,
     kewarganegaraanDropdown,

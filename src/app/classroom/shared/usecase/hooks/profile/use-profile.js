@@ -3,7 +3,9 @@ import { useForm } from "antd/es/form/Form";
 import { toast } from "react-hot-toast";
 import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
 import {
+  changePassword,
   getProfileDetail,
+  resetPassword,
   updateProfile,
 } from "@/app/classroom/shared/repository/profile-detail-service";
 import { postUploadFile } from "../../../../(main)/teacher/teaching-material/repository/teaching-material-service";
@@ -21,16 +23,20 @@ export const useProfile = (initialData) => {
   const [loading, setLoading] = useState(false);
   const [form] = useForm();
 
-  useEffect(() => {
-    form.setFieldsValue(profileData.detail.json_text.json_text);
-  }, []);
-
-  const setFieldsValue = useCallback(
-    (value) => {
-      form.setFieldsValue(value);
+  const setFormValues = useCallback(
+    (newStep, data) => {
+      const formValues =
+        newStep === "akun" || newStep === "password"
+          ? data
+          : data.detail.json_text.json_text;
+      form.setFieldsValue(formValues);
     },
     [form]
   );
+
+  useEffect(() => {
+    setFormValues(step, profileData);
+  }, []);
 
   const handleClickTab = useCallback(
     (newStep) => {
@@ -39,14 +45,9 @@ export const useProfile = (initialData) => {
       setStep(newStep);
       setIsEdit(false);
       form.resetFields();
-
-      const formValues =
-        newStep === "akun" || newStep === "password"
-          ? profileData
-          : profileData.detail.json_text.json_text;
-      setFieldsValue(formValues);
+      setFormValues(newStep, profileData);
     },
-    [step, profileData, form, setFieldsValue]
+    [step, profileData, form, setFormValues]
   );
 
   const fetchProfileData = useCallback(async () => {
@@ -54,12 +55,14 @@ export const useProfile = (initialData) => {
     setLoading(true);
     const response = await getProfileDetail(id);
     if (response.success) {
-      setProfileData(destructProfileData(response.data));
+      const destructedData = destructProfileData(response.data);
+      setProfileData(destructedData);
+      setFormValues(step, destructedData);
     } else {
       toast.error(response.message);
     }
     setLoading(false);
-  }, []);
+  }, [step, setFormValues]);
 
   const handleChangeProfilePicture = useCallback(
     async (file) => {
@@ -165,17 +168,60 @@ export const useProfile = (initialData) => {
       toast.error("Error update profile");
     }
 
-    setIsEdit(false);
     setLoading(false);
+    handleCancelEdit();
   }, []);
 
-  const handleChangeSection = useCallback(
-    (value, section) => {
-      const payload = createUpdatePayload(value, section);
-      handleUpdateProfile(payload);
+  const handleChangeResetPassword = useCallback(
+    async (value, passwordSection) => {
+      const { id } = getClientSession();
+      const changePasswordpayload = {
+        current_password: value.current_password,
+        new_password: value.new_password_change,
+        user_id: id,
+      };
+      const resetPasswordPayload = {
+        new_password: value.new_password_reset,
+        user_id: id,
+      };
+
+      setLoading(true);
+      const fetchFunction =
+        passwordSection === "change-password" ? changePassword : resetPassword;
+      const response = await fetchFunction(
+        passwordSection === "change-password"
+          ? changePasswordpayload
+          : resetPasswordPayload
+      );
+
+      if (response.success) {
+        toast.success("Success change password");
+        setFetchQuery(generateRandomString());
+        form.resetFields();
+      } else {
+        toast.error(response.message);
+      }
+      setLoading(false);
     },
-    [createUpdatePayload, handleUpdateProfile]
+    []
   );
+
+  const handleSubmitSection = useCallback(
+    (value, section, passwordSection) => {
+      const payload = createUpdatePayload(value, section);
+      if (section !== "password") {
+        handleUpdateProfile(payload);
+      } else {
+        handleChangeResetPassword(value, passwordSection);
+      }
+    },
+    [createUpdatePayload, handleUpdateProfile, handleChangeResetPassword]
+  );
+
+  const handleCancelEdit = useCallback(() => {
+    setIsEdit(false);
+    setFormValues(step, profileData);
+  }, [step, profileData, setFormValues]);
 
   useEffect(() => {
     if (fetchQuery) {
@@ -200,6 +246,7 @@ export const useProfile = (initialData) => {
     imageLoading,
     loading,
     form,
-    handleChangeSection,
+    handleSubmitSection,
+    handleCancelEdit,
   };
 };

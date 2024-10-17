@@ -5,7 +5,7 @@ export default function MainLayout({ children }) {
   return (
     <ConfigProvider
       theme={{
-        token: { fontFamily: "var(--font-kumbh)" },
+        token: { fontFamily: "var(--font-kumbh)", colorPrimary: "#F96756" },
       }}
     >
       <SisvaNavbar />

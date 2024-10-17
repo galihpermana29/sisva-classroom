@@ -33,3 +33,35 @@ export async function updateProfile(userId, payload) {
     "Success update profile"
   );
 }
+
+export async function changePassword(payload) {
+  const res = await AppFetchApi("/tenant/v1/user/password", {
+    method: "PATCH",
+    body: JSON.stringify(payload),
+    headers: {
+      "X-Sisva-Source": "test",
+    },
+  });
+
+  return serverResponseHandler(
+    res,
+    "Error change password",
+    "Success change password"
+  );
+}
+
+export async function resetPassword(payload) {
+  const res = await AppFetchApi("/tenant/v1/user/password", {
+    method: "PUT",
+    body: JSON.stringify(payload),
+    headers: {
+      "X-Sisva-Source": "test",
+    },
+  });
+
+  return serverResponseHandler(
+    res,
+    "Error reset password",
+    "Success reset password"
+  );
+}
