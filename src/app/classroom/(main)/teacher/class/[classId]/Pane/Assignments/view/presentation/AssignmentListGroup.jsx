@@ -4,7 +4,7 @@ import AssignmentCardSkeleton from "./AssignmentCardSkeleton";
 import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
 import TeachingPlanTitle from "../../../TeachingPlan/view/presentation/TeachingPlanTitle";
 
-const AssignmentListGroup = ({ assignments, isLoading }) => {
+const AssignmentListGroup = ({ assignmentGroups, isLoading }) => {
   return (
     <div className="grid mt-6 md:mt-8">
       {isLoading ? (
@@ -21,7 +21,7 @@ const AssignmentListGroup = ({ assignments, isLoading }) => {
             ))}
           </div>
         </div>
-      ) : assignments.length == 0 ? (
+      ) : assignmentGroups.length == 0 ? (
         <div className="mx-auto">
           <EmptyState
             title="Tidak ada Tugas Tersedia!"
@@ -29,20 +29,22 @@ const AssignmentListGroup = ({ assignments, isLoading }) => {
           />
         </div>
       ) : (
-        <>
-          <TeachingPlanTitle title="Termodinamika" />
-          <div className="grid gap-6 mt-6 md:grid-cols-2">
-            {assignments?.map((assignment, index) => (
-              <AssignmentCard
-                key={index}
-                assignment={assignment}
-                assignmentName={assignment.name}
-                desc={assignment.description}
-                deadline={assignment.deadline}
-              />
-            ))}
+        assignmentGroups.map((group, index) => (
+          <div key={"assignment_group_" + index} className="mt-6 first:mt-0">
+            <TeachingPlanTitle title={group.title} />
+            <div className="grid gap-6 mt-3 md:grid-cols-2">
+              {group.tasks.map((assignment, index) => (
+                <AssignmentCard
+                  key={index}
+                  assignment={assignment}
+                  assignmentName={assignment.name}
+                  desc={assignment.description}
+                  deadline={assignment.deadline}
+                />
+              ))}
+            </div>
           </div>
-        </>
+        ))
       )}
     </div>
   );
