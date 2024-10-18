@@ -7,6 +7,7 @@ import TeachingPlanTitle from "./TeachingPlanTitle";
 
 import MaterialIcon from "@/assets/images/teaching-plan/material.svg";
 import TaskIcon from "@/assets/images/teaching-plan/task.png";
+import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
 
 const TeachingPlanList = ({
   id,
@@ -18,6 +19,9 @@ const TeachingPlanList = ({
   teaching_activity,
   teaching_scoring,
 }) => {
+  const userData = getClientSession();
+  const schoolId = userData?.school_id;
+
   return (
     <Fragment>
       <TeachingPlanTitle title={title} prefix={<PopOverActions id={id} />} />
@@ -27,10 +31,14 @@ const TeachingPlanList = ({
         content={
           <div className="grid gap-3 mt-2">
             {teaching_materials.map((material, idx) => (
-              <div key={"materials_" + idx} className="flex items-center gap-2">
+              <a
+                key={"materials_" + idx}
+                className="flex items-center gap-2 text-black"
+                href={`${process.env.NEXT_PUBLIC_API_BASE_URL}/file/v1/files/${material.attachment_file_uri}?school_id=${schoolId}`}
+              >
                 <Image src={MaterialIcon} alt="Materi" width={20} height={20} />
                 <span className="font-medium">{material.description}</span>
-              </div>
+              </a>
               //   {/* material.attachment_file_uri */}
             ))}
           </div>

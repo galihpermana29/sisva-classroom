@@ -13,6 +13,7 @@ import {
 import ProfileImage from "@/assets/images/Profile.png";
 import { useGetAllSubjectsTeached } from "../../usecase/useGetAllSubjectsTeached";
 import { useGetUserProfile } from "../../usecase/useGetUserProfile";
+import AvatarProfile from "@/app/classroom/shared/presentation/Profile/AvatarProfile";
 
 const HeaderSection = () => {
   const { data: subjects, isLoading } = useGetAllSubjectsTeached();
@@ -31,12 +32,13 @@ const HeaderSection = () => {
         {isLoadingProfile ? (
           <div className="rounded-full bg-text_description animate-pulse size-14"></div>
         ) : (
-          <Image
-            src={profile?.profile_image_uri || ProfileImage.src}
-            alt={profile?.name || "Profile Image"}
-            width={56}
-            height={56}
-          />
+          <AvatarProfile url={profile?.profile_image_uri} />
+          // <Image
+          //   src={profile?.profile_image_uri || ProfileImage.src}
+          //   alt={profile?.name || "Profile Image"}
+          //   width={56}
+          //   height={56}
+          // />
         )}
 
         <div>

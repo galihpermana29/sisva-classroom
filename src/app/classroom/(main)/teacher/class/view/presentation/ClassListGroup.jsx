@@ -2,13 +2,9 @@ import React from "react";
 import ClassCard from "./ClassCard";
 import CardGridSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardGridSkeleton";
 import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
-import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
 import Link from "next/link";
 
 const ClassListGroup = ({ classData, isLoading }) => {
-  const router = useRouter();
-  const dispatch = useDispatch();
   if (isLoading) {
     return <CardGridSkeleton />;
   }

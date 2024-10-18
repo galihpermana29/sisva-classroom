@@ -1,3 +1,6 @@
+import dayjs from "dayjs";
+import "dayjs/locale/id";
+
 export function dateTimeFormatter(dateString) {
   const months = [
     "Januari",
@@ -21,6 +24,7 @@ export function dateTimeFormatter(dateString) {
   return `${parseInt(day)}, ${months[parseInt(month) - 1]} ${year}`;
 }
 
+
 export function parseDateTimeSort(dateString) {
   const [datePart, timePart] = dateString.split(" ");
   const [day, month, year] = datePart.split("/").map(Number);
@@ -34,4 +38,17 @@ export function parseDateTimeSort(dateString) {
   }
 
   return new Date(Date.UTC(year, month - 1, day, hours, minutes));
+}
+
+export function formatDateDay(dateString) {
+  const date = dayjs(dateString, "YYYYMMDD").locale("id");
+  const day = date.format("dddd");
+  const fullDate = `${date.format("D")} ${date.format("MMMM")} ${date.format(
+    "YYYY"
+  )}`;
+
+  return {
+    day,
+    fullDate,
+  };
 }
