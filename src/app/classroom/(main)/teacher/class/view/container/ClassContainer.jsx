@@ -15,7 +15,7 @@ const TeacherClassContainer = ({ initialData }) => {
     isLoading,
   } = useTeacherClass(initialData);
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 max-w-6xl mx-auto font-kumbh">
       <span className="text-[#1D2939] text-xl font-bold">List Kelas</span>
       <ListFilter
         dropDownData={dropDownData}

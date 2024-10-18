@@ -10,11 +10,13 @@ import {
 import CreateRppMainPage from "../../create-rpp/view/container/CreateRppMainPage";
 import { getAllTaskList } from "../../../repository/teacher-class-service";
 import { notFound } from "next/navigation";
+import { getTeachingPlans } from "../../Pane/TeachingPlan/repository/teaching-plan-service";
 
 async function getEditRppPageData(id) {
   const [
     initialFormData,
     teachingMaterialList,
+    teachingPlanData,
     taskList,
     curriculumDropdown,
     studyProgramDropdown,
@@ -23,6 +25,7 @@ async function getEditRppPageData(id) {
   ] = await Promise.all([
     getRppById(id),
     getTeachingMaterialList(),
+    getTeachingPlans(),
     getAllTaskList(),
     getAllCurriculum(),
     getAllStudyProgram(),
@@ -37,6 +40,7 @@ async function getEditRppPageData(id) {
   return {
     initialFormData: initialFormData.data ?? {},
     teachingMaterialList: teachingMaterialList.data ?? [],
+    teachingPlanData: teachingPlanData.data ?? [],
     taskList: taskList.data ?? [],
     curriculumDropdown: curriculumDropdown.data ?? [],
     studyProgramDropdown: studyProgramDropdown.data ?? [],

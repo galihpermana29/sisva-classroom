@@ -1,14 +1,16 @@
 import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
 
-export function resturctureTeachingMaterialList(
+export function restructureTeachingMaterialList(
   teachingPlans,
   teachingMaterials
 ) {
   const userData = getClientSession();
   const userId = userData?.id;
 
-  const combinedData = teachingPlans
+  return teachingPlans
     .map((item) => {
+      if (!item.teaching_materials) return null;
+
       const matchedMaterials = item.teaching_materials
         .map((material) => {
           const fullMaterial = teachingMaterials.find(
@@ -24,42 +26,32 @@ export function resturctureTeachingMaterialList(
         })
         .filter(Boolean);
 
-      if (matchedMaterials.length > 0) {
-        return {
-          topic: item.title,
-          items: matchedMaterials,
-        };
-      }
-      return null;
+      return matchedMaterials.length > 0
+        ? { topic: item.title, items: matchedMaterials }
+        : null;
     })
     .filter(Boolean);
-
-  return combinedData;
 }
 
 export function restructTeachingMaterialListRpp(
   teachingPlans,
   teachingMaterials
 ) {
-  const combinedData = teachingPlans
+  return teachingPlans
     .map((item) => {
+      if (!item.teaching_materials) return null;
+
       const matchedMaterials = item.teaching_materials
         .map((material) =>
           teachingMaterials.find((tm) => tm.id === material.id)
         )
         .filter(Boolean);
 
-      if (matchedMaterials.length > 0) {
-        return {
-          topic: item.title,
-          items: matchedMaterials,
-        };
-      }
-      return null;
+      return matchedMaterials.length > 0
+        ? { topic: item.title, items: matchedMaterials }
+        : null;
     })
     .filter(Boolean);
-
-  return combinedData;
 }
 
 export function mapTeacherName(data) {

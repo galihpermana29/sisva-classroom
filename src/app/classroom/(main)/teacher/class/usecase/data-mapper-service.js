@@ -1,3 +1,5 @@
+import { generalDateParser } from "@/app/classroom/shared/usecase/helper";
+
 export function getClassByTeacherId(response, teacherId) {
   return response.data.filter(
     (teacherClass) => teacherClass.teacher_id === teacherId
@@ -9,16 +11,16 @@ export function getClassById(response, id) {
 }
 
 function findNearestDeadlineTask(tasks) {
-  const today = new Date();
+  const now = new Date();
 
   return tasks.reduce((nearest, currentTask) => {
-    const currentDeadline = new Date(currentTask.deadline);
+    const currentDeadline = generalDateParser(currentTask.deadline);
 
-    if (currentDeadline < today) {
+    if (currentDeadline <= now) {
       return nearest;
     }
 
-    if (!nearest || currentDeadline < new Date(nearest.deadline)) {
+    if (!nearest || currentDeadline < generalDateParser(nearest.deadline)) {
       return currentTask;
     }
 
@@ -36,7 +38,7 @@ export function getClassWithTaskList(taskList, classList) {
 
     return {
       ...teacherClass,
-      task_list: nearestTask ? [nearestTask] : [],
+      nearest_task: nearestTask ? nearestTask : null,
     };
   });
 }
@@ -56,9 +58,8 @@ export function searchFilter(filteredClassList, searchTerm) {
     (classItem) =>
       classItem.subject_name.toLowerCase().includes(searchTerm) ||
       classItem.student_group_name.toLowerCase().includes(searchTerm) ||
-      classItem.task_list.some((task) =>
-        task.name.toLowerCase().includes(searchTerm)
-      )
+      (classItem.nearest_task &&
+        classItem.nearest_task.name.toLowerCase().includes(searchTerm))
   );
 }
 export function createDropdown(dataList, name, value) {

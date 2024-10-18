@@ -3,10 +3,10 @@ import { usePathname } from "next/navigation";
 import { useSelector } from "react-redux";
 
 const PATHS = {
-  TEACHING_MATERIAL: "/classroom/teacher/teaching-material",
-  CLASS: "/classroom/teacher/class",
+  TEACHING_MATERIAL: `/classroom/teacher/teaching-material`,
+  CLASS: `/classroom/teacher/class`,
+  STUDENT_CLASS: `/classroom/student/class`,
 };
-
 export const useNavbar = (userType) => {
   const pathname = usePathname();
   const classData = useSelector((state) => state.classData.detailClass);
@@ -23,8 +23,9 @@ export const useNavbar = (userType) => {
     // dynamic navbar text
     if (classData) {
       if (
-        pathname.startsWith(PATHS.CLASS) &&
-        pathname !== "/classroom/teacher/class"
+        pathname.startsWith(PATHS.CLASS) ||
+        (pathname.startsWith(PATHS.STUDENT_CLASS) &&
+          pathname !== "/classroom/teacher/class")
       ) {
         return `${classData?.subject_name} - ${classData?.student_group_name}`;
       }
@@ -37,8 +38,9 @@ export const useNavbar = (userType) => {
     if (!classData && !isFetching) return "";
     if (classData) {
       if (
-        pathname.startsWith(PATHS.CLASS) &&
-        pathname !== "/classroom/teacher/class"
+        pathname.startsWith(PATHS.CLASS) ||
+        (pathname.startsWith(PATHS.STUDENT_CLASS) &&
+          pathname !== "/classroom/teacher/class")
       ) {
         return classData?.teacher_name;
       }

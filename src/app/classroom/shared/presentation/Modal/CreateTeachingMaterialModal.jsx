@@ -19,14 +19,16 @@ const CreateTeachingMaterialModal = ({
 }) => {
   const [fileList, setFileList] = useState(null);
   const { modalState } = useModal();
-  const { form, handleGetDetailTeachingMaterial, isLoadingGetDetail } =
-    useGetDetailTeachingMaterial();
   const {
+    form,
+    handleGetDetailTeachingMaterial,
+    isLoadingGetDetail,
     dropDownData,
-    handleGetGradeDropdown,
     handleChangeCurriculum,
     handleChangeStudyProgram,
-  } = useGetTeachingMaterialDropdown(initialData, form);
+    initialDropdownData,
+    setDropdownData,
+  } = useGetDetailTeachingMaterial(initialData);
 
   const handleCloseModal = () => {
     form.resetFields();
@@ -39,6 +41,8 @@ const CreateTeachingMaterialModal = ({
     };
     if (modalState?.type === "edit-teaching-material") {
       getDetail();
+    } else if (modalState?.type === "create-teaching-material") {
+      setDropdownData(initialDropdownData);
     }
     setFileList(
       modalState?.data?.attachment_file_uri

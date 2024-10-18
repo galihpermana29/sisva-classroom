@@ -7,16 +7,19 @@ import {
   getAllTeacher,
   getTeachingMaterialList,
 } from "../../../teaching-material/repository/teaching-material-service";
+import { getTeachingPlans } from "../Pane/TeachingPlan/repository/teaching-plan-service";
 
 async function getCreateRppPageData() {
   const [
     teachingMaterialList,
+    teachingPlanData,
     curriculumDropdown,
     studyProgramDropdown,
     subjectDropdown,
     teacherDropdown,
   ] = await Promise.all([
     getTeachingMaterialList(),
+    getTeachingPlans(),
     getAllCurriculum(),
     getAllStudyProgram(),
     getAllSubjectName(),
@@ -25,6 +28,7 @@ async function getCreateRppPageData() {
 
   return {
     teachingMaterialList: teachingMaterialList.data ?? [],
+    teachingPlanData: teachingPlanData.data ?? [],
     curriculumDropdown: curriculumDropdown.data ?? [],
     studyProgramDropdown: studyProgramDropdown.data ?? [],
     subjectDropdown: subjectDropdown.data ?? [],
@@ -33,6 +37,7 @@ async function getCreateRppPageData() {
 }
 const CreateRppPage = async () => {
   const initialData = await getCreateRppPageData();
+
   return <CreateRppMainPage initialData={initialData} />;
 };
 

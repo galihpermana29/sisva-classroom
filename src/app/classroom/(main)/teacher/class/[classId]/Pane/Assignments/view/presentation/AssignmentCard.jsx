@@ -2,6 +2,7 @@ import React from "react";
 import { useModal } from "../../../../create-rpp/view/container/Provider/ModalProvider";
 import SisvaButton from "@/app/classroom/shared/presentation/Button/GlobalButton";
 import { useParams, useRouter } from "next/navigation";
+import { generalDateFormatter } from "@/app/classroom/shared/usecase/helper";
 
 const AssignmentCard = ({ assignment, assignmentName, desc, deadline }) => {
   const { setModalState } = useModal();
@@ -14,7 +15,7 @@ const AssignmentCard = ({ assignment, assignmentName, desc, deadline }) => {
 
       <div className="pl-4">
         <CardSection title="Deadline">
-          <p>{deadline.replace("+00:00", "")}</p>
+          <p>{generalDateFormatter(deadline)}</p>
         </CardSection>
 
         <CardSection title="Deskripsi">
