@@ -87,7 +87,10 @@ export const useTeacherClass = (initialData) => {
   };
 
   const handlePeriodFilter = (e) => {
-    if (dropDownData.studyProgramDropdown.length !== 0) {
+    if (
+      dropDownData.studyProgramDropdown &&
+      dropDownData.studyProgramDropdown.length !== 0
+    ) {
       handleFilterChange("study_program", "");
       handleFilterChange("grade", "");
     }
@@ -111,7 +114,7 @@ export const useTeacherClass = (initialData) => {
   };
 
   const handleStudyProgramFilter = async (e) => {
-    if (dropDownData.gradeDropdown.length !== 0) {
+    if (dropDownData.gradeDropdown && dropDownData.gradeDropdown.length !== 0) {
       handleFilterChange("grade", "");
     }
     const studyProgram = await getGradeDropdownById(e);

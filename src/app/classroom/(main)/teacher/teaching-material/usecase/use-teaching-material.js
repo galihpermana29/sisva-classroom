@@ -3,10 +3,11 @@ import { useDebounce } from "use-debounce";
 import { getTeachingMaterialList } from "../repository/teaching-material-service";
 import {
   searchFilter,
-  resturctureTeachingMaterialList,
+  restructureTeachingMaterialList,
 } from "../model/data-mapper";
 import { getGradeDropdownById } from "../../class/repository/teacher-class-service";
 import { createDropdown } from "../../class/usecase/data-mapper-service";
+import { generateRandomString } from "./custom-function";
 
 export const useTeachingMaterial = (initialData) => {
   const [teachingMaterialData, setTeachingMaterialData] = useState(
@@ -83,13 +84,16 @@ export const useTeachingMaterial = (initialData) => {
     }
   }, [debouncedQueryFilter]);
 
-  const handleResetFilter = () => {
-    setQueryFilter(initialQueryFilter);
+  const handleResetFilter = useCallback(() => {
+    setQueryFilter({
+      ...initialQueryFilter,
+      tag: generateRandomString(),
+    });
     setDropdownData((prev) => ({
       ...prev,
       gradeDropdown: [],
     }));
-  };
+  }, []);
 
   const handleGetGradeDropdown = async (e) => {
     const response = await getGradeDropdownById(e);
@@ -102,7 +106,7 @@ export const useTeachingMaterial = (initialData) => {
   };
 
   const handleStudyProgramFilter = async (e) => {
-    if (dropDownData.gradeDropdown.length !== 0) {
+    if (dropDownData.gradeDropdown && dropDownData.gradeDropdown.length !== 0) {
       handleFilterChange("grade", "");
     }
     handleGetGradeDropdown(e);
@@ -148,11 +152,11 @@ export const useTeachingMaterial = (initialData) => {
   const materialData = useMemo(
     () =>
       hasActiveFilters
-        ? resturctureTeachingMaterialList(
+        ? restructureTeachingMaterialList(
             initialData.teachingPlanData,
             teachingMaterialData
           )
-        : resturctureTeachingMaterialList(
+        : restructureTeachingMaterialList(
             initialData.teachingPlanData,
             initialData.teachingMaterialList
           ),

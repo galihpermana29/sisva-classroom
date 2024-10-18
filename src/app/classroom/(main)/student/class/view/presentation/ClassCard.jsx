@@ -4,6 +4,7 @@ import Image from "next/image";
 import NoTask from "@/assets/classroom/images/NoTask.png";
 import SisvaCard from "@/app/classroom/(main)/teacher/class/view/presentation/SisvaCard";
 import DefaultProfileImage from "@/assets/images/Profile.png";
+import { generalDateFormatter } from "@/app/classroom/shared/usecase/helper";
 
 const ClassCard = ({
   subject,
@@ -54,7 +55,7 @@ const ClassCard = ({
               {taskName}
             </h2>
             <p className="text-sm text-[#555]">
-              {timeStamp.replace("+00:00", "")}
+              {generalDateFormatter(timeStamp)}
             </p>
           </>
         )}

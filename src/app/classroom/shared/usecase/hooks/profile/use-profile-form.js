@@ -54,11 +54,11 @@ export const useProfileForm = () => {
   const tipeDropdown = [
     {
       label: "Staf",
-      value: "Staf",
+      value: "staff",
     },
     {
       label: "Guru",
-      value: "Guru",
+      value: "teacher",
     },
   ];
 

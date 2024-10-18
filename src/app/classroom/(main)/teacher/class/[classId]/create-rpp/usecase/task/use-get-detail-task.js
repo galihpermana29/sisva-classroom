@@ -18,7 +18,7 @@ export const useGetDetailTask = () => {
     if (response.success) {
       form.setFieldsValue({
         ...response.data,
-        deadline: dayjs(response.data.deadline, "DD/MM/YYYY"),
+        deadline: dayjs(response.data.deadline, "DD/MM/YYYY h:mm A Z"),
       });
     } else {
       toast.error("Error get teaching material");

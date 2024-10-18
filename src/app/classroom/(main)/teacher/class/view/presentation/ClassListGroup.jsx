@@ -22,9 +22,9 @@ const ClassListGroup = ({ classData, isLoading }) => {
               <ClassCard
                 group={classItem.student_group_name}
                 subject={classItem.subject_name}
-                taskName={classItem.task_list[0]?.name}
-                timeStamp={classItem.task_list[0]?.deadline}
-                isEmptyTask={classItem.task_list.length === 0}
+                taskName={classItem.nearest_task?.name}
+                timeStamp={classItem.nearest_task?.deadline}
+                isEmptyTask={!classItem.nearest_task}
               />
             </Link>
           ))}

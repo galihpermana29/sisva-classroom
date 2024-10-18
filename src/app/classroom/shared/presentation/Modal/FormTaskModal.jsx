@@ -91,6 +91,8 @@ const FormTaskModal = ({
               rules={[{ required: true, message: "Select deadline" }]}
             >
               <DatePicker
+                showTime
+                format="DD/MM/YYYY hh:mm A"
                 className="w-full h-[44px]"
                 placeholder="Pilih tanggal"
               />

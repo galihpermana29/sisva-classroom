@@ -4,8 +4,8 @@ import React from "react";
 import BrandLogo from "@/assets/classroom/images/BrandLogo.svg";
 import { useRouter } from "next/navigation";
 import { getClientSession } from "../../usecase/session/get-client-session";
-import { useNavbar } from "../../usecase/hooks/use-navbar";
 import { Skeleton } from "antd";
+import { useNavbar } from "../../usecase/hooks/use-navbar";
 
 const NavItem = ({ icon: Icon, label, path, isActive }) => {
   const router = useRouter();
