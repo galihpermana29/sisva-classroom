@@ -10,10 +10,10 @@ import {
 import { Check, Edit01 } from "@untitled-ui/icons-react";
 import SisvaButton from "@/app/classroom/shared/presentation/Button/GlobalButton";
 import clsx from "clsx";
-import { formatDateDay } from "../../../../usecase/dateFormatter";
 import BadgeAttendance from "../../../container/BadgeAttendance/BadgeAttendance";
 import { useClass } from "../../../../usecase/use-class";
 import AvatarProfile from "@/app/classroom/shared/presentation/Profile/AvatarProfile";
+import { formatDateDay } from "../../../../usecase/dateFormatter";
 
 const kumbh = Kumbh_Sans({ subsets: ["latin"] });
 

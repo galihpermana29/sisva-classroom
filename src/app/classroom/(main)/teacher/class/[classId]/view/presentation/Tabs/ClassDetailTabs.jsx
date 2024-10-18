@@ -50,10 +50,14 @@ const ClassDetailTabs = ({ initialData }) => {
     {
       key: "kehadiran",
       label: "Kehadiran",
-      children:       <div>
-        <h1 className="mb-5 text-base font-bold text-base90">List Kehadiran</h1>
-        <TableAttendances />
-      </div>,
+      children: (
+        <div>
+          <h1 className="mb-5 text-base font-bold text-base90">
+            List Kehadiran
+          </h1>
+          <TableAttendances />
+        </div>
+      ),
     },
   ];
 
