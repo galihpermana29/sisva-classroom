@@ -58,12 +58,12 @@ const LoginForm = () => {
       >
         <SisvaInputPassword customSize="md" placeholder="Masukkan password" />
       </Form.Item>
-      <div className="my-[15px] flex justify-between items-center">
+      {/* <div className="my-[15px] flex justify-between items-center">
         <Checkbox>Ingat Saya</Checkbox>
         <span className="cursor-pointer text-primary text-sm transition-all hover:text-primary_hover">
           Lupa Password?
         </span>
-      </div>
+      </div> */}
       <SisvaButton
         btn_type="primary"
         btn_size="xl"

@@ -1,12 +1,6 @@
 import React from "react";
 
 const PermissionBadge = ({ permission }) => {
-  manage_school;
-  manage_staff;
-  manage_academic;
-  manage_student;
-  manage_information;
-  manage_finance;
   const getBadgeText = () => {
     switch (permission) {
       case "manage_school":
@@ -27,7 +21,7 @@ const PermissionBadge = ({ permission }) => {
   };
   return (
     <div className="px-3 py-1 rounded-full bg-primary text-white font-semibold text-sm">
-      {permission}
+      {getBadgeText()}
     </div>
   );
 };
