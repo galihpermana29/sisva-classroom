@@ -7,12 +7,13 @@ import {
   useAttendance,
   useUpdateAttendance,
 } from "../../../../usecase/use-attendance";
-import { Check } from "@untitled-ui/icons-react";
+import { Check, Edit01 } from "@untitled-ui/icons-react";
 import SisvaButton from "@/app/classroom/shared/presentation/Button/GlobalButton";
 import clsx from "clsx";
 import { formatDateDay } from "../../../../usecase/dateFormatter";
 import BadgeAttendance from "../../../container/BadgeAttendance/BadgeAttendance";
 import { useClass } from "../../../../usecase/use-class";
+import AvatarProfile from "@/app/classroom/shared/presentation/Profile/AvatarProfile";
 
 const kumbh = Kumbh_Sans({ subsets: ["latin"] });
 
@@ -85,9 +86,9 @@ export default function TableAttendances() {
         render: (text, record) => (
           <div className="inline-flex items-center">
             <div>
-              <Avatar
-                src={record.profile_image_uri || placeholderImage.src}
-                size={30}
+              <AvatarProfile
+                size={24}
+                url={record.profile_image_uri || placeholderImage.src}
               />
             </div>
             <span className="text-sm font-normal text-[#333333]">
