@@ -3,7 +3,7 @@ import SkeletonAvatar from "antd/es/skeleton/Avatar";
 import { getClientSession } from "../../usecase/session/get-client-session";
 import { Avatar } from "antd";
 
-const AvatarProfile = ({ url }) => {
+const AvatarProfile = ({ url, size = 60 }) => {
   const [schoolId, setSchoolId] = useState(null);
 
   useEffect(() => {
@@ -14,10 +14,10 @@ const AvatarProfile = ({ url }) => {
   return (
     <>
       {!schoolId ? (
-        <SkeletonAvatar size={60} active />
+        <SkeletonAvatar size={size} active />
       ) : (
         <Avatar
-          size={60}
+          size={size}
           src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/file/v1/files/${url}?school_id=${schoolId}`}
         />
       )}

@@ -7,6 +7,7 @@ import TeachingPlanTitle from "./TeachingPlanTitle";
 
 import MaterialIcon from "@/assets/images/teaching-plan/material.svg";
 import TaskIcon from "@/assets/images/teaching-plan/task.png";
+import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
 
 const TeachingPlanList = ({
   id,

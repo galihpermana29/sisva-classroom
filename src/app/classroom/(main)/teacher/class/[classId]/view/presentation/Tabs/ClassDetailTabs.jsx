@@ -8,6 +8,7 @@ import { useMediaQuery } from "@/app/classroom/shared/usecase/hooks/use-mediaque
 import TableScore from "../Pane/Score/TableScore";
 import AssignmentPane from "../../../Pane/Assignments";
 import TeachingPlanPane from "../../../Pane/TeachingPlan";
+import TableAttendances from "../Pane/Attendance/TableAttendance";
 
 const ClassDetailTabs = ({ initialData }) => {
   const searchParams = useSearchParams();
@@ -49,7 +50,10 @@ const ClassDetailTabs = ({ initialData }) => {
     {
       key: "kehadiran",
       label: "Kehadiran",
-      children: <div></div>,
+      children:       <div>
+        <h1 className="mb-5 text-base font-bold text-base90">List Kehadiran</h1>
+        <TableAttendances />
+      </div>,
     },
   ];
 
