@@ -9,16 +9,17 @@ import placeholderImage from "@/assets/placeholder.jpg";
 import AverageImage from "@/assets/average-score.png";
 import { useGetScores } from "../../../../usecase/use-scores";
 import { dateTimeFormatter } from "../../../../usecase/dateFormatter";
+import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
 
 const kumbh = Kumbh_Sans({ subsets: ["latin"] });
 
 export default function TableScore() {
+  const { profile_image_uri, name } = getClientSession();
   const { scores, loading } = useGetScores();
-  console.log(scores);
 
   const dataSource = useMemo(() => {
-    if (!loading && scores.data) {
-      return scores.data.map((item, index) => ({
+    if (!loading && scores) {
+      return scores.map((item, index) => ({
         key: index,
         task_name: item.task_name,
         task_start_time: item.task_start_time,
@@ -72,13 +73,11 @@ export default function TableScore() {
           >
             <div>
               <Avatar
-                src={scores.userData.student_image || placeholderImage.src}
+                src={profile_image_uri || placeholderImage.src}
                 size={30}
               />
             </div>
-            <span className="text-xs lg:text-sm text-[#333333]">
-              {scores.userData.student_name}
-            </span>
+            <span className="text-xs lg:text-sm text-[#333333]">{name}</span>
           </div>
         ),
         dataIndex: "student_score",
@@ -106,7 +105,6 @@ export default function TableScore() {
       <Table
         dataSource={loading ? [] : dataSource}
         columns={columns}
-        pagination={false}
         className={`${kumbh.className} shadow-table  rounded-xl`}
         loading={loading}
         tableLayout="auto"

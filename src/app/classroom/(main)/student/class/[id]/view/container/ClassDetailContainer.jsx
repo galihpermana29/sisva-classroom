@@ -8,7 +8,6 @@ const ClassDetailContainer = ({ initialData }) => {
   const searchParams = useSearchParams();
   const tab = searchParams.get("tab");
   return (
-
     <ModalProvider>
       <div className={`max-w-6xl mx-auto mb-[8dvh] md:mb-0`}>
         <ClassDetailTabs initialData={initialData} />
