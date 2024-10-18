@@ -148,8 +148,14 @@ export const useTeachingMaterial = (initialData) => {
   const materialData = useMemo(
     () =>
       hasActiveFilters
-        ? resturctureTeachingMaterialList(teachingMaterialData)
-        : resturctureTeachingMaterialList(initialData.teachingMaterialList),
+        ? resturctureTeachingMaterialList(
+            initialData.teachingPlanData,
+            teachingMaterialData
+          )
+        : resturctureTeachingMaterialList(
+            initialData.teachingPlanData,
+            initialData.teachingMaterialList
+          ),
     [hasActiveFilters, teachingMaterialData, initialData.teachingMaterialList]
   );
 

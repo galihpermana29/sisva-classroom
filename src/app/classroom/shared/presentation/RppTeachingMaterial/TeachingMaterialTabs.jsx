@@ -1,15 +1,15 @@
 import React from "react";
-import { useRppTeachingMaterial } from "../../../usecase/use-rpp-teaching-material";
+import { useRppTeachingMaterial } from "../../usecase/hooks/use-rpp-teaching-material";
 import { SisvaInputSearch } from "@/app/classroom/shared/presentation/Input/SisvaInputField";
 import TeachingMaterialCardList from "@/app/classroom/(main)/teacher/teaching-material/view/presentation/TeachingMaterialCardList";
 
-const TeachingMaterialTabs = () => {
+const TeachingMaterialTabs = ({ initialData, type }) => {
   const { materialData, isLoading, queryFilter, handleFilterChange } =
-    useRppTeachingMaterial();
+    useRppTeachingMaterial(initialData, type);
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex justify-end w-full">
+      <div className="flex justify-start w-full">
         <SisvaInputSearch
           customSize="md"
           placeholder="Search"

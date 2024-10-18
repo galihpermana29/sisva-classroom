@@ -22,3 +22,21 @@ export const getAllTasks = async (classId) => {
   }
 };
 
+export async function getAllTeachingPlan() {
+  try {
+    const res = await AppFetchApi(`/classroom/v1/teaching_plans`, {
+      method: "GET",
+      headers: {
+        "X-Sisva-Source": "academic.curriculum.test",
+      },
+    });
+
+    return serverResponseHandler(
+      res,
+      "Error fetch teaching plan",
+      "Success fetch teaching plan"
+    );
+  } catch (error) {
+    throw error;
+  }
+}
