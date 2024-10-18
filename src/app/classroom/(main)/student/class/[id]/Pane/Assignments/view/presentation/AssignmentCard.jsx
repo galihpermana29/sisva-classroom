@@ -4,7 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 
 const AssignmentCard = ({ assignment, assignmentName, desc, deadline }) => {
   const router = useRouter();
-  const { classId } = useParams();
+  const { id } = useParams();
 
   return (
     <div className="p-4 rounded-md shadow-card">
@@ -26,9 +26,7 @@ const AssignmentCard = ({ assignment, assignmentName, desc, deadline }) => {
       <div className="grid mt-6">
         <SisvaButton
           onClick={() =>
-            router.push(
-              `/classroom/teacher/class/${classId}/task/${assignment.id}`
-            )
+            router.push(`/classroom/student/class/${id}/task/${assignment.id}`)
           }
         >
           Detail
