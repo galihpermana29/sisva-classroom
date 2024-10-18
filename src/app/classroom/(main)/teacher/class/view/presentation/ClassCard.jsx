@@ -12,7 +12,7 @@ const ClassCard = ({
   isEmptyTask,
 }) => {
   return (
-    <SisvaCard className="flex flex-col gap-7" onClick={onClick}>
+    <SisvaCard className="flex flex-col gap-7 min-h-56" onClick={onClick}>
       <div className="rounded-lg bg-[#FEECE9] px-2 py-1 w-fit">
         <span className="text-primary text-sm font-semibold">
           {subject} - {group}
