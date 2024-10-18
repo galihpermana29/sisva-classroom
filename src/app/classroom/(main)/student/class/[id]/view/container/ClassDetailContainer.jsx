@@ -2,18 +2,21 @@
 
 import { useSearchParams } from "next/navigation";
 import ClassDetailTabs from "../presentation/Tabs/ClassDetailTabs";
+import { ModalProvider } from "@/app/classroom/(main)/teacher/class/[classId]/create-rpp/view/container/Provider/ModalProvider";
 
-const ClassDetailContainer = () => {
+const ClassDetailContainer = ({ initialData }) => {
   const searchParams = useSearchParams();
   const tab = searchParams.get("tab");
   return (
-    <div
-      className={`max-w-6xl mx-auto -mt-16 mb-[8dvh] md:mb-0 ${
-        !tab && "hidden"
-      }`}
-    >
-      <ClassDetailTabs />
-    </div>
+    <ModalProvider>
+      <div
+        className={`max-w-6xl mx-auto -mt-16 mb-[8dvh] md:mb-0 ${
+          !tab && "hidden"
+        }`}
+      >
+        <ClassDetailTabs initialData={initialData} />
+      </div>
+    </ModalProvider>
   );
 };
 
