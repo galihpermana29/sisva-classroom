@@ -66,10 +66,11 @@ export function useSubmission() {
         attachment_file_uri: studentSubmission.attachment_file_uri,
         note: studentSubmission.note,
         submission_time: studentSubmission.submission_time,
-        score: studentScore.value,
-        feedback: studentScore.feedback,
+        score: studentScore?.value ?? 0,
+        feedback: studentScore?.feedback ?? "",
         is_submitted: true,
       });
+
       setLoading(false);
     };
     fetchData();
