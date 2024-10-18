@@ -1,9 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useDebounce } from "use-debounce";
-
-import { getAllTasks, getAllTeachingPlan } from "../../repository/class-assignment-service";
-import { groupTaskByTeachingPlan, searchFilter } from "../data-mapper-service";
+import {
+  getAllTasks,
+  getAllTeachingPlan,
+} from "../../repository/student-assignment-service";
+import { groupTaskByTeachingPlan, searchFilter } from "../data-mapper";
 
 export const useClassAssignment = (classId) => {
   const [filter, setFilter] = useState({
@@ -17,13 +19,13 @@ export const useClassAssignment = (classId) => {
     error,
     refetch,
   } = useQuery({
-    queryKey: ["teacher-class-assignments", classId],
+    queryKey: ["student-class-assignments", classId],
     queryFn: () => getTaskWithGrouping(classId),
-    select: ( data ) => {
+    select: (data) => {
       if (!debouncedFilter.search) return data;
-      return searchFilter(data, debouncedFilter.search.toLowerCase());
+      return searchFilter(data, debouncedFilter.search);
     },
-    onError: () => "Failed to fetch data.",
+    onError: () => "Gagal memuat data.",
     keepPreviousData: true,
   });
 
@@ -33,8 +35,6 @@ export const useClassAssignment = (classId) => {
       [name]: value,
     });
   }
-
-  console.log("assignmentGroups", assignmentGroups);
 
   return {
     assignmentGroups,
@@ -52,9 +52,6 @@ async function getTaskWithGrouping(classId) {
       getAllTasks(classId),
       getAllTeachingPlan(),
     ]);
-
-    console.log("taskRes", taskRes);
-    console.log("teachingPlanRes", teachingPlanRes);
 
     const tasks = taskRes?.data || [];
     const teachingPlans = teachingPlanRes?.data || [];

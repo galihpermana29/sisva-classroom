@@ -5,6 +5,8 @@ import { useQueryParam } from "@/hooks/useQueryParam";
 import { useSearchParams } from "next/navigation";
 import { useMediaQuery } from "@/app/classroom/shared/usecase/hooks/use-mediaquery";
 import TableScore from "../Pane/Score/TableScore";
+import TeachingPlanPane from "../../../Pane/TeachingPlan";
+import AssignmentPane from "../../../Pane/Assignments";
 import TeachingMaterialTabs from "@/app/classroom/shared/presentation/RppTeachingMaterial/TeachingMaterialTabs";
 
 const ClassDetailTabs = ({ initialData }) => {
@@ -18,7 +20,7 @@ const ClassDetailTabs = ({ initialData }) => {
     {
       key: "rencana_pembelajaran",
       label: "Rencana Pembelajaran",
-      children: <div></div>,
+      children: <TeachingPlanPane />,
     },
     {
       key: "bahan_ajar",
@@ -30,14 +32,14 @@ const ClassDetailTabs = ({ initialData }) => {
     {
       key: "tugas",
       label: "Tugas",
-      children: <div></div>,
+      children: <AssignmentPane />,
     },
     {
       key: "nilai",
       label: "Nilai",
       children: (
         <div>
-          <h1 className="text-base text-base90 font-bold mb-6 ">
+          <h1 className="mb-6 text-base font-bold text-base90 ">
             List Nilai Siswa
           </h1>
           <TableScore />

@@ -10,7 +10,7 @@ const ClassDetailContainer = ({ initialData }) => {
   return (
     <ModalProvider>
       <div
-        className={`max-w-6xl mx-auto -mt-16 mb-[8dvh] md:mb-0 ${
+        className={`max-w-6xl mx-auto mb-[8dvh] md:mb-0 ${
           !tab && "hidden"
         }`}
       >

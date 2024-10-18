@@ -9,7 +9,7 @@ import AssignmentListGroup from "./presentation/AssignmentListGroup";
 
 const AssignmentContainer = () => {
   const { classId } = useParams();
-  const { assignments, isLoading, handleFilterChange, filter, refetch } =
+  const { assignmentGroups, isLoading, handleFilterChange, filter, refetch } =
     useClassAssignment(classId);
   const { modalState, handleClose } = useModal();
 
@@ -33,7 +33,7 @@ const AssignmentContainer = () => {
         onChange={(e) => handleFilterChange("search", e.target.value)}
       />
 
-      <AssignmentListGroup assignments={assignments} isLoading={isLoading} />
+      <AssignmentListGroup assignmentGroups={assignmentGroups} isLoading={isLoading} />
       <FormTaskModal
         open={modalState.isOpen}
         title="Edit Tugas"
