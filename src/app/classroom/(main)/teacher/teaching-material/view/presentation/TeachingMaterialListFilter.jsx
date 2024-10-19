@@ -20,11 +20,11 @@ const TeachingMaterialListFilter = ({
   const handleCancel = () => setIsModalVisible(false);
 
   const FilterContent = () => (
-    <>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2">
       <SisvaSelect
         customSize="md"
         placeholder="Kurikulum"
-        customClassName="min-w-full lg:min-w-40 lg:max-w-40 mb-2 lg:mb-0"
+        customClassName="w-full mb-2 sm:mb-0"
         options={dropDownData.curriculumDropdown}
         onChange={(e) => generalHandleFilter("curriculum", e)}
         value={queryFilter.curriculum === "" ? null : queryFilter.curriculum}
@@ -32,7 +32,7 @@ const TeachingMaterialListFilter = ({
       <SisvaSelect
         customSize="md"
         placeholder="Program Studi"
-        customClassName="min-w-full lg:min-w-40 lg:max-w-40 mb-2 lg:mb-0"
+        customClassName="w-full mb-2 sm:mb-0"
         options={dropDownData.studyProgramDropdown}
         onChange={handleStudyProgramFilter}
         disabled={dropDownData.studyProgramDropdown.length === 0}
@@ -43,7 +43,7 @@ const TeachingMaterialListFilter = ({
       <SisvaSelect
         customSize="md"
         placeholder="Mata Pelajaran"
-        customClassName="min-w-full lg:min-w-40 lg:max-w-40 mb-2 lg:mb-0"
+        customClassName="w-full mb-2 sm:mb-0"
         options={dropDownData.subjectDropdown}
         onChange={(e) => generalHandleFilter("subject", e)}
         value={queryFilter.subject === "" ? null : queryFilter.subject}
@@ -51,7 +51,7 @@ const TeachingMaterialListFilter = ({
       <SisvaSelect
         customSize="md"
         placeholder="Tingkatan"
-        customClassName="min-w-full lg:min-w-40 lg:max-w-40 mb-2 lg:mb-0"
+        customClassName="w-full mb-2 sm:mb-0"
         options={dropDownData.gradeDropdown}
         onChange={(e) => generalHandleFilter("grade", e)}
         value={queryFilter.grade === "" ? null : queryFilter.grade}
@@ -60,37 +60,40 @@ const TeachingMaterialListFilter = ({
       <SisvaSelect
         customSize="md"
         placeholder="Guru"
-        customClassName="min-w-full lg:min-w-40 lg:max-w-40 mb-2 lg:mb-0"
+        customClassName="w-full mb-2 sm:mb-0"
         options={dropDownData.teacherDropdwon}
         onChange={(e) => generalHandleFilter("teacher", e)}
         value={queryFilter.teacher === "" ? null : queryFilter.teacher}
       />
-    </>
+    </div>
   );
 
   return (
-    <div className="flex flex-col gap-3">
-      <div className="flex flex-wrap justify-between items-center gap-3">
+    <div className="space-y-4">
+      <div className="flex flex-col sm:flex-row justify-between gap-4">
         <SisvaInputSearch
           customSize="md"
           placeholder="Search"
           onChange={(e) => generalHandleFilter("search", e.target.value)}
           value={queryFilter.search === "" ? null : queryFilter.search}
         />
+
         <div className="lg:hidden">
           <SisvaButton
             btn_size="md"
-            btn_type="primary"
+            btn_type="secondary"
             onClick={showModal}
             icon={<FilterFunnel01 width={20} height={20} />}
           >
             Filters
           </SisvaButton>
         </div>
-        <div className="hidden lg:flex gap-2">
-          <FilterContent />
+      </div>
+      <div className="hidden lg:block">
+        <FilterContent />
+        <div className="mt-4 flex justify-end">
           <SisvaButton
-            btn_type="primary"
+            btn_type="secondary"
             btn_size="md"
             onClick={handleResetFilter}
           >
@@ -105,13 +108,19 @@ const TeachingMaterialListFilter = ({
         onCancel={handleCancel}
         footer={[
           <SisvaButton
+            key="reset"
             btn_type="secondary"
             btn_size="md"
             onClick={handleResetFilter}
           >
             Reset Filter
           </SisvaButton>,
-          <SisvaButton btn_type="primary" btn_size="md" onClick={handleCancel}>
+          <SisvaButton
+            key="apply"
+            btn_type="primary"
+            btn_size="md"
+            onClick={handleCancel}
+          >
             Apply
           </SisvaButton>,
         ]}

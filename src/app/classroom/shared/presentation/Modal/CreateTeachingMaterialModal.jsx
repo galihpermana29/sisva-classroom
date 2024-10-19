@@ -145,7 +145,7 @@ const CreateTeachingMaterialModal = ({
         <Form.Item
           name="description"
           label="Title"
-          rules={[{ required: true, message: "Title must be selected" }]}
+          rules={[{ required: true, message: "Title must be filled" }]}
         >
           <SisvaInput placeholder="Masukan judul" customSize="md" shadow />
         </Form.Item>
