@@ -1,36 +1,28 @@
 import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
 
-export function restructureTeachingMaterialList(
-  teachingPlans,
-  teachingMaterials
-) {
+export function restructureTeachingMaterialList(teachingMaterials) {
   const userData = getClientSession();
   const userId = userData?.id;
 
-  return teachingPlans
-    .map((item) => {
-      if (!item.teaching_materials) return null;
+  const groupBySubject = Object.values(
+    teachingMaterials.reduce((acc, item) => {
+      if (!acc[item.subject_name]) {
+        acc[item.subject_name] = {
+          topic: item.subject_name,
+          items: [],
+        };
+      }
 
-      const matchedMaterials = item.teaching_materials
-        .map((material) => {
-          const fullMaterial = teachingMaterials.find(
-            (tm) => tm.id === material.id
-          );
-          if (fullMaterial) {
-            return {
-              ...fullMaterial,
-              isOwner: fullMaterial.create_by === userId,
-            };
-          }
-          return null;
-        })
-        .filter(Boolean);
+      acc[item.subject_name].items.push({
+        ...item,
+        isOwner: item.create_by === userId,
+      });
 
-      return matchedMaterials.length > 0
-        ? { topic: item.title, items: matchedMaterials }
-        : null;
-    })
-    .filter(Boolean);
+      return acc;
+    }, {})
+  );
+
+  return groupBySubject;
 }
 
 export function restructTeachingMaterialListRpp(

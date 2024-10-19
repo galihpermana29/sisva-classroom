@@ -7,18 +7,15 @@ import {
   getAllTeacher,
 } from "./repository/teaching-material-service";
 import TeachingMaterialMainPage from "./view/container/TeachingMaterialMainPage";
-import { getTeachingPlans } from "../class/[classId]/Pane/TeachingPlan/repository/teaching-plan-service";
 
 async function getTeachingMaterialPageData() {
   const [
-    teachingPlanData,
     teachingMaterialList,
     curriculumDropdown,
     studyProgramDropdown,
     subjectDropdown,
     teacherDropdown,
   ] = await Promise.all([
-    getTeachingPlans(),
     getTeachingMaterialList(),
     getAllCurriculum(),
     getAllStudyProgram(),
@@ -27,7 +24,6 @@ async function getTeachingMaterialPageData() {
   ]);
 
   return {
-    teachingPlanData: teachingPlanData.data ?? [],
     teachingMaterialList: teachingMaterialList.data ?? [],
     curriculumDropdown: curriculumDropdown.data ?? [],
     studyProgramDropdown: studyProgramDropdown.data ?? [],

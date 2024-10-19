@@ -18,7 +18,7 @@ const MaterialCard = ({ item }) => {
   const schoolId = userData?.school_id;
 
   const items = [
-    {
+    item.attachment_file_uri && {
       label: (
         <a
           href={`${process.env.NEXT_PUBLIC_API_BASE_URL}/file/v1/files/${item.attachment_file_uri}?school_id=${schoolId}`}

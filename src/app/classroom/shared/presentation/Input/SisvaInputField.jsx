@@ -134,7 +134,7 @@ export function SisvaInputSearch({
         )
       }
       className={clsx(
-        "w-[320px] border-[#D0D5DD] border",
+        "w-full sm:w-[320px] border-[#D0D5DD] border",
         customClass,
         shadow ? "shadow-[0_1px_2px_0px_rgb(16,24,40,0.05)]" : "shadow-none",
         fullRounded ? "rounded-full" : "rounded-[8px]",

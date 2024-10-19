@@ -24,7 +24,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        kumbh: ["var(--font-kumbh)", "sans-serif"],
+        kumbh: ["var(--font-kumbh)"],
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

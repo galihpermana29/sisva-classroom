@@ -36,7 +36,7 @@ const TeachingMaterialContainer = ({ initialData }) => {
   } = useTeachingMaterialForm(setQueryFilter);
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 max-w-6xl mx-auto">
       <div className="flex flex-col md:justify-between md:flex-row gap-3">
         <h4 className="text-[#1D2939] text-xl font-bold">List Bahan Ajar</h4>
         <SisvaButton
