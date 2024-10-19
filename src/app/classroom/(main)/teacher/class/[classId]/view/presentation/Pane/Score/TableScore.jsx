@@ -1,16 +1,16 @@
 "use client";
 
 import React, { useState, useMemo, useEffect } from "react";
-import { Avatar, Form, InputNumber, Popconfirm, Table, Typography } from "antd";
+import { Form, InputNumber, Popconfirm, Table, Typography } from "antd";
 import { ConfigProvider } from "antd";
 import { Kumbh_Sans } from "next/font/google";
 import { Edit03 } from "@untitled-ui/icons-react";
-import placeholderImage from "@/assets/placeholder.jpg";
 import Image from "next/image";
 import AverageImage from "@/assets/average-score.png";
 import { useGetScores } from "../../../../usecase/hooks/use-scores";
 import { useUpdateScore } from "../../../../usecase/hooks/use-update-score";
 import { dateTimeFormatter } from "../../../../usecase/dateFormatter";
+import AvatarProfile from "@/app/classroom/shared/presentation/Profile/AvatarProfile";
 
 const kumbh = Kumbh_Sans({ subsets: ["latin"] });
 
@@ -192,11 +192,7 @@ export default function TableScore() {
               className={`${kumbh.className} flex items-center justify-center gap-2 font-normal text-base90`}
             >
               <div>
-                <Avatar
-                  src={record.student_image || placeholderImage.src}
-                  size={30}
-                  className="max-sm:hidden"
-                />
+                <AvatarProfile size={30} url={record.student_image} />
               </div>
               {text}
             </div>

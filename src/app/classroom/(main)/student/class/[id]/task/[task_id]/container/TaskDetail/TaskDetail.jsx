@@ -4,13 +4,10 @@ import { Divider } from "antd";
 import InfoItem from "../InfoItem/InfoItem";
 import parse from "html-react-parser";
 import { dateFormatterDayName } from "../../usecase/dateFormatter";
-import { useTask } from "../../usecase/use-task-detail";
 import SkeletonDetailTask from "../Skeleton/SkeletonDetailTask";
 import CardFile from "../Card/CardFile";
 
-export default function TaskDetail() {
-  const { task, loading } = useTask();
-
+export default function TaskDetail({ task, loading }) {
   if (loading) {
     return <SkeletonDetailTask />;
   }

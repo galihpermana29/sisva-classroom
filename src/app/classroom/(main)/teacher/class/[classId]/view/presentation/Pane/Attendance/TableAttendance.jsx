@@ -103,7 +103,7 @@ export default function TableAttendances() {
       title: (
         <div className="w-fit mx-auto">
           <div className="flex flex-col items-start justify-center">
-            <span>Status</span>
+            <span>{formatDateDay(date).day}</span>
             <span className="text-xs text-base50 font-normal">
               {formatDateDay(date).fullDate}
             </span>

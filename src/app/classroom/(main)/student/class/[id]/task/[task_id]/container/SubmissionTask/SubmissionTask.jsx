@@ -11,7 +11,7 @@ import SkeletonSubmissionTask from "../Skeleton/SkeletonSubmissionTask";
 import CardFile from "../Card/CardFile";
 import InputFile from "../InputFile/InputFile";
 
-const SubmissionTask = () => {
+const SubmissionTask = ({ allowSubmission, allowOverdueSubmission }) => {
   const [fileList, setFileList] = useState(null);
   const { name } = getClientSession();
   const { submission, loading } = useGetSubmission();
@@ -47,6 +47,7 @@ const SubmissionTask = () => {
         requiredMark={false}
         onFinish={handleSubmitSubmission}
         className="font-kumbh mt-4"
+        disabled={!allowOverdueSubmission || !allowSubmission}
       >
         <Form.Item name="file">
           {!submission.value && (
@@ -79,6 +80,7 @@ const SubmissionTask = () => {
                 placeholder="Tulis catatan disini"
                 rows={5}
                 customClassName="font-kumbh p-3"
+                disabled={!allowOverdueSubmission || !allowSubmission}
               />
             </Form.Item>
           </div>
@@ -90,6 +92,7 @@ const SubmissionTask = () => {
               htmlType="submit"
               className="font-kumbh"
               loading={loadingSubmission}
+              disabled={!allowOverdueSubmission || !allowSubmission}
             >
               Submit Tugas
             </SisvaButton>
