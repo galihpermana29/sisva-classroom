@@ -6,7 +6,6 @@ import { SisvaInput } from "../Input/SisvaInputField";
 import SisvaInputFile from "@/app/classroom/shared/presentation/Input/InputFile";
 import { useModal } from "@/app/classroom/(main)/teacher/class/[classId]/create-rpp/view/container/Provider/ModalProvider";
 import { useGetDetailTeachingMaterial } from "@/app/classroom/(main)/teacher/teaching-material/usecase/use-get-detail-material";
-import { useGetTeachingMaterialDropdown } from "@/app/classroom/(main)/teacher/class/[classId]/create-rpp/usecase/teaching-material/use-get-teaching-material-dropdown";
 
 const CreateTeachingMaterialModal = ({
   open,
@@ -72,8 +71,8 @@ const CreateTeachingMaterialModal = ({
         disabled={isLoading || isLoadingGetDetail}
         requiredMark={false}
       >
-        <Row gutter={16}>
-          <Col span={12}>
+        <Row gutter={[16, 1]}>
+          <Col xs={24} sm={12}>
             <Form.Item
               name="curriculum_id"
               label="Kurikulum"
@@ -89,7 +88,7 @@ const CreateTeachingMaterialModal = ({
               />
             </Form.Item>
           </Col>
-          <Col span={12}>
+          <Col xs={24} sm={12}>
             <Form.Item
               name="study_program_id"
               label="Program Studi"
@@ -105,10 +104,7 @@ const CreateTeachingMaterialModal = ({
               />
             </Form.Item>
           </Col>
-        </Row>
-
-        <Row gutter={16}>
-          <Col span={12}>
+          <Col xs={24} sm={12}>
             <Form.Item
               name="grade"
               label="Tingkatan"
@@ -124,7 +120,7 @@ const CreateTeachingMaterialModal = ({
               />
             </Form.Item>
           </Col>
-          <Col span={12}>
+          <Col xs={24} sm={12}>
             <Form.Item
               name="subject_id"
               label="Mata Pelajaran"
