@@ -1,14 +1,13 @@
 "use client";
 
-import React from "react";
 import Cardtask from "@/app/classroom/shared/presentation/Card/CardTask";
-import SectionLayout from "@/app/classroom/shared/presentation/Layouts/SectionLayout";
-import { Flex } from "antd";
-import styles from "./TaskSection.module.css";
-import { useGetAllTeacherTasks } from "../../usecase/useGetAllTeacherTasks";
-import { convertDateTime12To24 } from "../../usecase/convertDateTime12To24";
 import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
+import SectionLayout from "@/app/classroom/shared/presentation/Layouts/SectionLayout";
 import CardTaskSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardTaskSkeleton";
+import { generalDateFormatter } from "@/app/classroom/shared/usecase/helper";
+import Link from "next/link";
+import { useGetAllTeacherTasks } from "../../usecase/useGetAllTeacherTasks";
+import styles from "./TaskSection.module.css";
 
 const TaskSection = () => {
   const { data: tasks, isLoading } = useGetAllTeacherTasks();
@@ -32,13 +31,15 @@ const TaskSection = () => {
             </div>
           ) : (
             tasks.map((task, index) => (
-              <Cardtask
-                key={task.id || index}
-                deadline={convertDateTime12To24(task.deadline)}
-                teacherName={task.teacher_name}
-                taskName={task.name}
-                lessonName={task.subject_name}
-              />
+              <Link href={`/classroom/teacher/class/${task.class_id}/task/${task.id}`}>
+                <Cardtask
+                  key={task.id || index}
+                  deadline={generalDateFormatter(task.deadline)}
+                  teacherName={task.teacher_name}
+                  taskName={task.name}
+                  lessonName={task.subject_name}
+                />
+              </Link>
             ))
           )}
         </div>

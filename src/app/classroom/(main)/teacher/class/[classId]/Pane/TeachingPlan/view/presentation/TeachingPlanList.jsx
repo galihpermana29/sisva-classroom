@@ -8,6 +8,8 @@ import TeachingPlanTitle from "./TeachingPlanTitle";
 import MaterialIcon from "@/assets/images/teaching-plan/material.svg";
 import TaskIcon from "@/assets/images/teaching-plan/task.png";
 import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 
 const TeachingPlanList = ({
   id,
@@ -21,7 +23,8 @@ const TeachingPlanList = ({
 }) => {
   const userData = getClientSession();
   const schoolId = userData?.school_id;
-
+  const { classId } = useParams();
+  
   return (
     <Fragment>
       <TeachingPlanTitle title={title} prefix={<PopOverActions id={id} />} />
@@ -30,7 +33,7 @@ const TeachingPlanList = ({
         title="Bahan Ajar"
         content={
           <div className="grid gap-3 mt-2">
-            {teaching_materials.map((material, idx) => (
+            {teaching_materials?.map((material, idx) => (
               <a
                 key={"materials_" + idx}
                 className="flex items-center gap-2 text-black"
@@ -50,10 +53,14 @@ const TeachingPlanList = ({
         content={
           <div className="grid gap-3 mt-2">
             {tasks?.map((task, idx) => (
-              <div key={"tasks_" + idx} className="flex items-center gap-2">
-                <Image src={TaskIcon} alt="Tugas" width={20} height={20} />
-                <span className="font-medium">{task.name}</span>
-              </div>
+              <Link
+                href={`/classroom/teacher/class/${classId}/task/${task.id}`}
+              >
+                <div key={"tasks_" + idx} className="flex items-center gap-2">
+                  <Image src={TaskIcon} alt="Tugas" width={20} height={20} />
+                  <span className="font-medium">{task.name}</span>
+                </div>
+              </Link>
               //   {/* task.attachment_file_uri */}
             ))}
           </div>

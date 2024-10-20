@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { getAllClasses, getTeacherTasks } from "../repositories/apiService";
 import { getUserDataCookie } from "./getUserDataCookie";
+import dayjs from "dayjs";
+import { isOverdue } from "../../student/class/usecase/date-helper";
+import { convertDateTime12To24 } from "./convertDateTime12To24";
 
 export const useGetAllTeacherTasks = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -36,17 +39,19 @@ export const useGetAllTeacherTasks = () => {
         teachedClasses.some((classroom) => classroom.id == task.class_id)
       );
 
-      const finalData = teacherTasks?.map((task) => {
-        const { teacher_name, subject_name } =
-          teachedClasses.find((classroom) => classroom.id === task.class_id) ||
-          {};
-
-        return {
-          ...task,
-          teacher_name,
-          subject_name,
-        };
-      });
+      const finalData = teacherTasks
+        ?.filter((task) => !isOverdue(task.deadline))
+        ?.map((task) => {
+          const { teacher_name, subject_name } =
+            teachedClasses.find(
+              (classroom) => classroom.id === task.class_id
+            ) || {};
+          return {
+            ...task,
+            teacher_name,
+            subject_name,
+          };
+        });
 
       setData(finalData);
       setIsLoading(false);

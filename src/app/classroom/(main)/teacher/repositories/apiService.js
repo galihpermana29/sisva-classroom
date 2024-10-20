@@ -44,6 +44,7 @@ export const getTeacherTasks = async () => {
   try {
     const res = await AppFetchApi(`${endpoint_class}/tasks`, {
       method: "GET",
+      headers: { "X-Sisva-Source": "academic.curriculum.test" },
     });
 
     return serverResponseHandler(
@@ -60,6 +61,7 @@ export const getAllClasses = async () => {
   try {
     const res = await AppFetchApi(`${endpoint_academic}/classes`, {
       method: "GET",
+      headers: { "X-Sisva-Source": "academic.curriculum.test" },
     });
 
     return serverResponseHandler(

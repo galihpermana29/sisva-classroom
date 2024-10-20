@@ -27,7 +27,7 @@ const TeachingPlanContainer = () => {
         {isLoading ? (
           <TeachingPlanListSkeleton />
         ) : (
-          teachingPlans.map((plan, idx) => {
+          teachingPlans?.map((plan, idx) => {
             return (
               <TeachingPlanList
                 key={"teaching_plan" + idx}
