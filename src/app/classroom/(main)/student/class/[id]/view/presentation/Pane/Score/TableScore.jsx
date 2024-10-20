@@ -40,7 +40,7 @@ export default function TableScore() {
         width: 170,
         className: `${kumbh.className}`,
         render: (text, record) => (
-          <div className="flex flex-col items-start justify-start text-base90 bg-white p-4 -m-4">
+          <div className="flex flex-col items-start justify-start text-base90">
             <span className="text-sm font-semibold text-base90">{text}</span>
             <span className="text-base50 font-normal text-xs mt-2 text-left">
               {dateTimeFormatter(record.task_start_time)}
@@ -63,13 +63,13 @@ export default function TableScore() {
         ),
         dataIndex: "task_average",
         align: "center",
-        className: "text-base90 text-sm bg-[#F9F9F9] font-normal",
+        className: "text-base90 text-sm font-normal",
         width: 170,
       },
       {
         title: (
           <div
-            className={`${kumbh.className} flex items-center justify-center gap-2 font-normal text-base90 bg-white p-4 -m-4`}
+            className={`${kumbh.className} flex items-center justify-center gap-2 font-normal text-base90 `}
           >
             <div>
               <Avatar
@@ -83,7 +83,7 @@ export default function TableScore() {
         dataIndex: "student_score",
         align: "center",
         width: 210,
-        className: "text-base90 text-sm bg-[#F9F9F9] font-normal",
+        className: "text-base90 text-sm font-normal",
       },
     ],
     [scores]

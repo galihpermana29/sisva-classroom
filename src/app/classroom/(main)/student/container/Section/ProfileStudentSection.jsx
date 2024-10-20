@@ -1,6 +1,6 @@
 "use client";
 
-import { Avatar, Badge } from "antd";
+import { Badge } from "antd";
 import PlaceholderProfile from "@/assets/placeholder.jpg";
 import {
   BoxLeft,
@@ -9,6 +9,7 @@ import {
 } from "@/app/classroom/shared/presentation/Box/Box";
 import { Bell01 } from "@untitled-ui/icons-react/build/cjs";
 import { useGetStudentProfile } from "@/app/classroom/(main)/student/usecase/useGetStudentProfile";
+import AvatarProfile from "@/app/classroom/shared/presentation/Profile/AvatarProfile";
 
 const ProfileStudentSection = () => {
   const { student, isLoading } = useGetStudentProfile();
@@ -32,9 +33,8 @@ const ProfileStudentSection = () => {
             {isLoading ? (
               <div className="rounded-full bg-text_description/40 animate-pulse size-14" />
             ) : (
-              <Avatar
+              <AvatarProfile
                 src={student.student_image || PlaceholderProfile.src}
-                alt={`profile image ${student.student_name}`}
                 size={56}
               />
             )}

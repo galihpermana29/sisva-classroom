@@ -65,6 +65,7 @@ export function useTask() {
         task_name: taskData.name,
         task_deadline: taskData.deadline,
         task_allow_submission: taskData.allow_submission,
+        task_allow_overdue_submission: taskData.allow_overdue_submission,
         teacher_name: classStudent.teacher_name,
         task_description: taskData.description,
         task_file: taskData.attachment_file_uri,

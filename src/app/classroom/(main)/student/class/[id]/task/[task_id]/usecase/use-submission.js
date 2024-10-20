@@ -42,6 +42,7 @@ export function useSubmission() {
     setLoading(true);
     if (!fileUrl) {
       toast.error("Failed send submission file submission is empty");
+      setLoading(false);
       return;
     }
     const submissionPayload = {

@@ -1,6 +1,7 @@
-import { Avatar, Divider } from "antd";
+import { Divider } from "antd";
 import { BoxTop } from "@/app/classroom/shared/presentation/Box/Box";
 import { generalDateFormatter } from "../../usecase/helper";
+import AvatarProfile from "../Profile/AvatarProfile";
 
 const CardClass = ({
   image,
@@ -14,7 +15,7 @@ const CardClass = ({
     <div className="flex-none bg-secondary50 p-3 rounded-xl relative overflow-hidden w-full lg:w-fit">
       <BoxTop className="size-[104px] -right-5 -top-12" rotate={-67.677} />
       <div className="flex gap-4">
-        <Avatar src={image} size={48} />
+        <AvatarProfile src={image} size={48} />
         <div className="flex flex-col gap-2.5">
           <h2 className="text-[#F96756] text-sm font-semibold bg-secondary10 rounded-full px-2 py-0.5">
             {lessonName} - {studentClass}
