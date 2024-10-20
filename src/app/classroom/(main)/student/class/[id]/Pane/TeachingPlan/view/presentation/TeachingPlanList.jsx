@@ -7,6 +7,8 @@ import TeachingPlanTitle from "./TeachingPlanTitle";
 import MaterialIcon from "@/assets/images/teaching-plan/material.svg";
 import TaskIcon from "@/assets/images/teaching-plan/task.png";
 import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 
 const TeachingPlanList = ({
   id,
@@ -20,6 +22,7 @@ const TeachingPlanList = ({
 }) => {
   const userData = getClientSession();
   const schoolId = userData?.school_id;
+  const { id: classId } = useParams();
 
   return (
     <Fragment>
@@ -49,10 +52,12 @@ const TeachingPlanList = ({
         content={
           <div className="grid gap-3 mt-2">
             {tasks?.map((task, idx) => (
-              <div key={"tasks_" + idx} className="flex items-center gap-2">
+              <Link 
+                href={`/classroom/student/class/${classId}/task/${task.id}`}
+              key={"tasks_" + idx} className="flex items-center gap-2">
                 <Image src={TaskIcon} alt="Tugas" width={20} height={20} />
                 <span className="font-medium">{task.name}</span>
-              </div>
+              </Link>
               //   {/* task.attachment_file_uri */}
             ))}
           </div>
