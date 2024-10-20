@@ -32,7 +32,11 @@ const ListFilter = ({
           handleFilterChange={handleFilterChange}
         />
 
-        <SisvaButton onClick={handleClearFilter}>Reset Filter</SisvaButton>
+        {(filter.search !== "" ||
+          filter.subject !== "" ||
+          filter.teacherName !== "") && (
+          <SisvaButton onClick={handleClearFilter}>Reset Filter</SisvaButton>
+        )}
       </div>
 
       <div className="lg:hidden">
