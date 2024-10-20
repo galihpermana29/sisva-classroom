@@ -3,14 +3,10 @@
  * @param {string} dateTime
  * @returns {boolean}
  */
-export function isOverdue(task, dateTime) {
-  const [datePart, timePart] = dateTime.split(" +")[0].split(" ");
-
-  const fullDateString = `${datePart} ${timePart}`;
-
-  const date = new Date(fullDateString);
-
-  const now = new Date();
-
-  return date < now;
+export function isOverdue(dateTime) {
+  console.log(dateTime);
+  const [day, month, yearAndTime] = dateTime.split("/");
+  const [year, time] = yearAndTime.split(" ");
+  const formatted = `${month}/${day}/${year} ${time}`;
+  return new Date(formatted) < new Date();
 }

@@ -159,7 +159,7 @@ const fetchTasksForClasses = async (classes) => {
       }
 
       const filteredTasks =
-        tasks.filter((task) => !isOverdue(task, task.deadline)) ?? [];
+        tasks.filter((task) => !isOverdue(task.deadline)) ?? [];
 
       return {
         ...classItem,
