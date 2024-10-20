@@ -5,6 +5,7 @@ import NoTask from "@/assets/classroom/images/NoTask.png";
 import SisvaCard from "@/app/classroom/(main)/teacher/class/view/presentation/SisvaCard";
 import DefaultProfileImage from "@/assets/images/Profile.png";
 import { generalDateFormatter } from "@/app/classroom/shared/usecase/helper";
+import AvatarProfile from "@/app/classroom/shared/presentation/Profile/AvatarProfile";
 
 const ClassCard = ({
   subject,
@@ -18,11 +19,7 @@ const ClassCard = ({
   return (
     <SisvaCard className="flex flex-col gap-7">
       <div className="flex gap-2">
-        <img
-          className="flex rounded-full bg-neutral-500 size-12 aspect-square"
-          src={teacherPhoto || DefaultProfileImage.src}
-          alt={"teacher_" + teacherName}
-        />
+        <AvatarProfile url={teacherPhoto} size={48}/>
         <div>
           <div className="rounded-full bg-[#FEECE9] px-2 py-[2px] w-fit h-fit">
             <span className="text-sm font-semibold break-all text-primary line-clamp-1">
