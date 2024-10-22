@@ -1,5 +1,7 @@
 'use client';
 
+import { ExcelIcon, ExportIcon, SortIcon } from '@/assets/SVGs';
+import { permissions, types } from '@/globalcomponents/Variable';
 import {
   Add,
   Cancel,
@@ -21,15 +23,13 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import DataTable from './components/Table';
-import { ExcelIcon, ExportIcon, SortIcon } from '@/assets/SVGs';
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { permissions, types } from '@/globalcomponents/Variable';
+import { useEffect, useState } from 'react';
 import { FormAddStaff } from './components/FormAddStaff';
+import DataTable from './components/Table';
 
-import { useFormik } from 'formik';
 import UsersAPI from '@/api/users';
+import { useFormik } from 'formik';
 
 export default function StaffProfileListContent() {
   const [initialData, setinitialData] = useState({
@@ -203,8 +203,8 @@ export default function StaffProfileListContent() {
       >
         <TextField
           select
-          size='small'
-          label='Tipe'
+          size="small"
+          label="Tipe"
           value={typeFilter}
           onChange={(e) => setTypeFilter(e.target.value)}
           sx={{ flex: { xs: 1, lg: 0 }, minWidth: 100, width: 'fit-content' }}
@@ -236,8 +236,8 @@ export default function StaffProfileListContent() {
         </TextField>
         <TextField
           select
-          size='small'
-          label='Akses'
+          size="small"
+          label="Akses"
           value={permissionFilter}
           onChange={(e) => setPermissionFilter(e.target.value)}
           sx={{
@@ -317,7 +317,7 @@ export default function StaffProfileListContent() {
             }}
           >
             <Button
-              variant='outlined'
+              variant="outlined"
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenCreateModal(false);
@@ -327,8 +327,8 @@ export default function StaffProfileListContent() {
               Batal
             </Button>
             <Button
-              type='submit'
-              variant='contained'
+              type="submit"
+              variant="contained"
               sx={{ flex: 1 }}
               onClick={() => {
                 formik.handleSubmit();
@@ -363,8 +363,8 @@ export default function StaffProfileListContent() {
           </Typography>
           <TextField
             select
-            size='small'
-            label='Data'
+            size="small"
+            label="Data"
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
             sx={{ flex: 1, mt: 2 }}
@@ -398,8 +398,8 @@ export default function StaffProfileListContent() {
           </TextField>
           <TextField
             select
-            size='small'
-            label='Jenis Urutan'
+            size="small"
+            label="Jenis Urutan"
             value={sortType}
             disabled={!sortBy}
             onChange={(e) => setSortType(e.target.value)}
@@ -420,7 +420,7 @@ export default function StaffProfileListContent() {
             }}
           >
             <Button
-              variant='outlined'
+              variant="outlined"
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenSortModal(false);
@@ -431,7 +431,7 @@ export default function StaffProfileListContent() {
               Batal
             </Button>
             <Button
-              variant='contained'
+              variant="contained"
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenSortModal(false);
@@ -457,7 +457,7 @@ export default function StaffProfileListContent() {
       </Stack>
       <Stack
         component={Paper}
-        variant='outlined'
+        variant="outlined"
         sx={{
           borderRadius: { xs: 0, lg: 2 },
           overflowY: 'auto',
@@ -488,9 +488,9 @@ export default function StaffProfileListContent() {
           >
             <TextField
               // id="outlined-search"
-              placeholder='Cari Karyawan'
-              size='small'
-              type='text'
+              placeholder="Cari Karyawan"
+              size="small"
+              type="text"
               sx={{
                 maxWidth: { xs: '100%', lg: '200px' },
                 flex: 1,
@@ -519,7 +519,7 @@ export default function StaffProfileListContent() {
                   />
                 ),
                 endAdornment: (
-                  <InputAdornment position='end'>
+                  <InputAdornment position="end">
                     <Search />
                   </InputAdornment>
                 ),
@@ -538,8 +538,8 @@ export default function StaffProfileListContent() {
             }}
           >
             <Button
-              variant='outlined'
-              color='primary'
+              variant="outlined"
+              color="primary"
               startIcon={<ExcelIcon />}
               sx={{
                 display: { xs: 'none', lg: 'flex' },
@@ -554,9 +554,9 @@ export default function StaffProfileListContent() {
                   backgroundColor: 'base:base20',
                 },
               }}
-              id='profile-button'
+              id="profile-button"
               aria-controls={open ? 'profile-menu' : undefined}
-              aria-haspopup='true'
+              aria-haspopup="true"
               aria-expanded={open ? 'true' : undefined}
               onClick={handleClick}
             >
@@ -566,8 +566,8 @@ export default function StaffProfileListContent() {
             </Button>
             <Menu
               elevation={2}
-              id='profile-menu'
-              aria-labelledby='profile-button'
+              id="profile-menu"
+              aria-labelledby="profile-button"
               anchorEl={anchorEl}
               open={open}
               onClose={handleClose}
@@ -587,15 +587,15 @@ export default function StaffProfileListContent() {
                 </Stack>
               </MenuItem>
               <MenuItem onClick={handleClose} sx={{ padding: 1 }}>
-                <label htmlFor='import-csv'>
+                <label htmlFor="import-csv">
                   <Stack flexDirection={'row'} alignItems={'center'}>
                     <UploadFileRounded sx={{ fontSize: 18, mr: 1 }} />
                     <Typography sx={{ fontSize: 14 }}>Import</Typography>
                     <input
                       name={'import_csv'}
-                      accept='csv'
-                      id='import-csv'
-                      type='file'
+                      accept="csv"
+                      id="import-csv"
+                      type="file"
                       style={{
                         position: 'absolute',
                         opacity: '0',
@@ -609,8 +609,8 @@ export default function StaffProfileListContent() {
             </Menu>
 
             <Button
-              variant='contained'
-              color='primary'
+              variant="contained"
+              color="primary"
               startIcon={<Add />}
               sx={{
                 width: 100,
@@ -634,7 +634,7 @@ export default function StaffProfileListContent() {
         >
           <Filters />
           <Stack sx={{ flexDirection: 'row', py: 1 }}>
-            <Divider orientation='vertical' sx={{ mx: 1 }} />
+            <Divider orientation="vertical" sx={{ mx: 1 }} />
             <Button
               sx={{
                 backgroundColor: 'base.base30',
