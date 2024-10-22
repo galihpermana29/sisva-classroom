@@ -15,7 +15,7 @@ import { formStaffBiodataFields } from '@/globalcomponents/FormFields';
 import { genders, nationalities, religions } from '@/globalcomponents/Variable';
 import { Cancel } from '@mui/icons-material';
 
-import MediaIcon from '@/assets/icon-Media.svg';
+import MediaIcon from '@/assets/Icon-Media.svg';
 
 export const FormStaffBiodata = ({
   formik,
@@ -62,12 +62,12 @@ export const FormStaffBiodata = ({
               key={field.name}
             >
               <Grid item xs={12} md={12}>
-                <Typography variant='body2' fontWeight={500} fontSize={14}>
+                <Typography variant="body2" fontWeight={500} fontSize={14}>
                   {field.label}
                 </Typography>
               </Grid>
               <Grid item xs={12} md={12}>
-                <Typography variant='body2' fontWeight={400} fontSize={14}>
+                <Typography variant="body2" fontWeight={400} fontSize={14}>
                   {formik.values[field.name] ? formik.values[field.name] : ''}
                 </Typography>
               </Grid>
@@ -81,12 +81,12 @@ export const FormStaffBiodata = ({
               key={field.name}
             >
               <Grid item xs={12} md={12}>
-                <Typography variant='body2' fontWeight={500} fontSize={14}>
+                <Typography variant="body2" fontWeight={500} fontSize={14}>
                   {field.label}
                 </Typography>
               </Grid>
               <Grid item xs={12} md={12}>
-                <Typography variant='body2' fontWeight={400} fontSize={14}>
+                <Typography variant="body2" fontWeight={400} fontSize={14}>
                   {field.name === 'gender' ? (
                     <RenderGender value={formik.values[field.name]} />
                   ) : field.name === 'nationality' ? (
@@ -100,7 +100,7 @@ export const FormStaffBiodata = ({
             </Grid>
           ) : field.type === 'photo' ? (
             <Grid xs={12} item key={field.name}>
-              <Typography variant='body2' fontWeight={500} fontSize={14}>
+              <Typography variant="body2" fontWeight={500} fontSize={14}>
                 {field.label}
               </Typography>
               <Box
@@ -114,12 +114,12 @@ export const FormStaffBiodata = ({
               >
                 <Box sx={{ height: 96, width: 96, position: 'relative' }}>
                   <Image
-                    alt='Image'
+                    alt="Image"
                     src={`https://api-staging.sisva.id/file/v1/files/${
                       formik.values[field.name]
                     }?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
-                    layout='fill'
-                    objectFit='cover'
+                    layout="fill"
+                    objectFit="cover"
                   />
                 </Box>
               </Box>
@@ -134,7 +134,7 @@ export const FormStaffBiodata = ({
         {formStaffBiodataFields.map((field) =>
           field.type === 'text' ? (
             <Grid item xs={12} md={field.md} key={field.name}>
-              <Typography variant='body2' fontWeight={600} mb={1}>
+              <Typography variant="body2" fontWeight={600} mb={1}>
                 {field.label}
               </Typography>
               <TextField
@@ -149,7 +149,7 @@ export const FormStaffBiodata = ({
             </Grid>
           ) : field.type === 'select' ? (
             <Grid item xs={12} md={field.md} key={field.name}>
-              <Typography variant='body2' fontWeight={600} mb={1}>
+              <Typography variant="body2" fontWeight={600} mb={1}>
                 {field.label}
               </Typography>
 
@@ -188,7 +188,7 @@ export const FormStaffBiodata = ({
             </Grid>
           ) : field.type === 'photo' ? (
             <Grid xs={12} item key={field.name}>
-              <Typography variant='body2' fontWeight={500} fontSize={14}>
+              <Typography variant="body2" fontWeight={500} fontSize={14}>
                 {field.label}
               </Typography>
               <Stack
@@ -207,12 +207,12 @@ export const FormStaffBiodata = ({
                   {formik.values[field.name] ? (
                     <Box sx={{ height: 96, width: 96, position: 'relative' }}>
                       <Image
-                        alt='Image'
+                        alt="Image"
                         src={`https://api-staging.sisva.id/file/v1/files/${
                           formik.values[field.name]
                         }?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
-                        layout='fill'
-                        objectFit='cover'
+                        layout="fill"
+                        objectFit="cover"
                       />
                     </Box>
                   ) : (
@@ -224,7 +224,7 @@ export const FormStaffBiodata = ({
                       }}
                     >
                       <Image
-                        alt='Image'
+                        alt="Image"
                         src={MediaIcon}
                         // layout='fill'
                         // objectFit='cover'
@@ -232,19 +232,19 @@ export const FormStaffBiodata = ({
                     </Box>
                   )}
                 </Box>
-                <label htmlFor='image-input'>
+                <label htmlFor="image-input">
                   <Button
                     fullWidth
-                    variant='outlined'
-                    size='small'
+                    variant="outlined"
+                    size="small"
                     sx={{ m: '8px 0 4px' }}
                   >
                     Ubah Foto
                     <input
                       name={'profile_image_uri'}
-                      accept='image/*'
-                      id='image-input'
-                      type='file'
+                      accept="image/*"
+                      id="image-input"
+                      type="file"
                       style={{
                         position: 'absolute',
                         opacity: '0',
@@ -254,7 +254,7 @@ export const FormStaffBiodata = ({
                     />
                   </Button>
                 </label>
-                <Button fullWidth variant='outlined' size='small'>
+                <Button fullWidth variant="outlined" size="small">
                   Hapus
                 </Button>
               </Stack>
