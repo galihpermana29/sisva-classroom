@@ -30,6 +30,7 @@ import DataTable from './components/Table';
 
 import UsersAPI from '@/api/users';
 import { useFormik } from 'formik';
+import handleXLSXUpload from './utils/handleXLSXUpload';
 
 export default function StaffProfileListContent() {
   const [initialData, setinitialData] = useState({
@@ -72,6 +73,8 @@ export default function StaffProfileListContent() {
         },
         password,
       };
+
+      console.log(payload);
 
       try {
         const res = await UsersAPI.createUser(payload);
@@ -586,7 +589,7 @@ export default function StaffProfileListContent() {
                   <Typography sx={{ fontSize: 14 }}>Export</Typography>
                 </Stack>
               </MenuItem>
-              <MenuItem onClick={handleClose} sx={{ padding: 1 }}>
+              <MenuItem sx={{ padding: 1 }}>
                 <label htmlFor="import-csv">
                   <Stack flexDirection={'row'} alignItems={'center'}>
                     <UploadFileRounded sx={{ fontSize: 18, mr: 1 }} />
@@ -601,7 +604,9 @@ export default function StaffProfileListContent() {
                         opacity: '0',
                         border: '1px solid red',
                       }}
-                      // onChange={handleImageChange}
+                      onChange={(e) => {
+                        handleXLSXUpload(e.target.files[0]);
+                      }}
                     />
                   </Stack>
                 </label>
