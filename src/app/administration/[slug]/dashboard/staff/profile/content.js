@@ -74,8 +74,6 @@ export default function StaffProfileListContent() {
         password,
       };
 
-      console.log(payload);
-
       try {
         const res = await UsersAPI.createUser(payload);
 
@@ -590,14 +588,14 @@ export default function StaffProfileListContent() {
                 </Stack>
               </MenuItem>
               <MenuItem sx={{ padding: 1 }}>
-                <label htmlFor="import-csv">
+                <label htmlFor="import-xlsx">
                   <Stack flexDirection={'row'} alignItems={'center'}>
                     <UploadFileRounded sx={{ fontSize: 18, mr: 1 }} />
                     <Typography sx={{ fontSize: 14 }}>Import</Typography>
                     <input
-                      name={'import_csv'}
-                      accept="csv"
-                      id="import-csv"
+                      name={'import_xlsx'}
+                      accept=".xlsx"
+                      id="import-xlsx"
                       type="file"
                       style={{
                         position: 'absolute',
@@ -605,7 +603,8 @@ export default function StaffProfileListContent() {
                         border: '1px solid red',
                       }}
                       onChange={(e) => {
-                        handleXLSXUpload(e.target.files[0]);
+                        handleXLSXUpload(e.target.files[0], getAllUsers);
+                        handleClose();
                       }}
                     />
                   </Stack>

@@ -25,7 +25,7 @@ import * as XLSX from 'xlsx';
 
 const MAX_ROW = 30;
 
-export default function handleXLSXUpload(file: File) {
+export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
   const reader = new FileReader();
   reader.onload = async (e) => {
     const file = e.target.result;
@@ -85,11 +85,11 @@ export default function handleXLSXUpload(file: File) {
           },
           password: data.password,
         };
-        console.log(payload);
         return UsersAPI.createUser(payload);
       });
 
       await Promise.all(promises);
+      afterSuccess();
     } catch (error) {
       console.log(error);
       window.alert('Import Gagal');
