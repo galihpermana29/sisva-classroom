@@ -30,6 +30,7 @@ import DataTable from './components/Table';
 
 import UsersAPI from '@/api/users';
 import { useFormik } from 'formik';
+import handleXLSXUpload from './utils/handleXLSXUpload';
 
 export default function SchoolProfileListContent() {
   const [initialData, setinitialData] = useState({
@@ -472,22 +473,25 @@ export default function SchoolProfileListContent() {
                   <Typography sx={{ fontSize: 14 }}>Export</Typography>
                 </Stack>
               </MenuItem>
-              <MenuItem onClick={handleClose} sx={{ padding: 1 }}>
-                <label htmlFor="import-csv">
+              <MenuItem sx={{ padding: 1 }}>
+                <label htmlFor="import-xlsx">
                   <Stack flexDirection={'row'} alignItems={'center'}>
                     <UploadFileRounded sx={{ fontSize: 18, mr: 1 }} />
                     <Typography sx={{ fontSize: 14 }}>Import</Typography>
                     <input
-                      name={'import_csv'}
-                      accept="csv"
-                      id="import-csv"
+                      name={'import_xlsx'}
+                      accept=".xlsx"
+                      id="import-xlsx"
                       type="file"
                       style={{
                         position: 'absolute',
                         opacity: '0',
                         border: '1px solid red',
                       }}
-                      // onChange={handleImageChange}
+                      onChange={(e) => {
+                        handleXLSXUpload(e.target.files[0], getAllStudent);
+                        handleClose();
+                      }}
                     />
                   </Stack>
                 </label>

@@ -7,4 +7,4 @@ export type Permission =
   | 'manage_information'
   | 'manage_finance';
 
-export type Role = 'staff' | 'teacher' | 'management';
+export type Role = 'staff' | 'teacher' | 'management' | 'student';
