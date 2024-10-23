@@ -1,3 +1,4 @@
+import AuthAPI from '@/api/auth';
 import UsersAPI from '@/api/users';
 import type {
   Gender,
@@ -45,6 +46,19 @@ export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
   reader.onload = async (e) => {
     const file = e.target.result;
     try {
+      const {
+        data: { data },
+      } = await UsersAPI.getAllUsers('staff,teacher');
+
+      const filteredData = data
+        .map((user) => {
+          const additionalJson = JSON.parse(user.detail.json_text);
+          delete additionalJson.username;
+          return { ...user, ...additionalJson };
+        })
+        .filter((user) => user.status == 'active');
+      const usernames = filteredData.map((user) => user.username) as string[];
+
       const template = XLSX.read(file);
       const sheet = template.Sheets[template.SheetNames[0]];
       const rawData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
@@ -132,7 +146,12 @@ export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
         })
         .filter((data) => data.name);
 
-      const promises = dataObject.map((data) => {
+      const dataUpdate = dataObject.filter((user) =>
+        usernames.includes(user.username)
+      );
+      const dataCreate = dataObject.filter((user) => !user.username);
+
+      const promisesCreate = dataCreate.map((data) => {
         const payload = {
           user: {
             name: data.name,
@@ -159,7 +178,51 @@ export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
         return UsersAPI.createUser(payload);
       });
 
-      await Promise.all(promises);
+      const promisesUpdate = dataUpdate.map((data) => {
+        const user_id = filteredData.find(
+          (user) => user.username == data.username
+        ).id;
+        const payload = {
+          name: data.name,
+          type: data.type,
+          detail: {
+            json_text: JSON.stringify({
+              username: data.username,
+              email: data.email,
+              phone: data.phone,
+              gender: data.gender,
+              nationality: data.nationality,
+              personal_id: data.personal_id,
+              education_id: data.education_id,
+              religion: data.religion,
+              address: data.address,
+            }),
+          },
+          profile_image_uri: data.profile_image_uri,
+          roles: [data.type],
+          permissions: data.permissions,
+        };
+        return UsersAPI.updateUserById(payload, user_id);
+      });
+
+      const promisesUpdatePassword = dataUpdate.map((data) => {
+        const user_id = filteredData.find(
+          (user) => user.username == data.username
+        ).id;
+        const payload = {
+          user_id: user_id,
+          new_password: data.password,
+        };
+        console.log(payload);
+        // return AuthAPI.changeUserPass(payload);
+      });
+
+      const res = await Promise.all([
+        ...promisesCreate,
+        ...promisesUpdate,
+        ...promisesUpdatePassword,
+      ]);
+      console.log(res);
       afterSuccess();
     } catch (error) {
       console.log(error);
