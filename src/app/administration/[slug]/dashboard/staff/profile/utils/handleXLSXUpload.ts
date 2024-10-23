@@ -1,5 +1,11 @@
 import UsersAPI from '@/api/users';
-import type { Permission, Role } from '@/globalcomponents/types';
+import type {
+  Gender,
+  Nationality,
+  Permission,
+  Religion,
+  Role,
+} from '@/globalcomponents/types';
 import * as XLSX from 'xlsx';
 
 /*
@@ -20,6 +26,15 @@ import * as XLSX from 'xlsx';
   8: permissions "Informasi"
   9: permissions "Keuangan"
   10: password
+  11: email
+  12: phone
+  13: gender
+  14: nationality
+  15: personal_id
+  16: education_id
+  17: religion
+  18: address
+  19: profile_image_uri
 
 */
 
@@ -59,12 +74,60 @@ export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
             }
           }
 
+          function getGender(): Gender {
+            switch (row[13]) {
+              case 'Laki-laki':
+                return 'male';
+              case 'Perempuan':
+                return 'female';
+              case 'Lainnya':
+                return 'others';
+            }
+          }
+
+          function getNationality(): Nationality {
+            switch (row[14]) {
+              case 'Warga Negara Indonesia':
+                return 'wni';
+              case 'Warga Negara Asing':
+                return 'wna';
+            }
+          }
+
+          function getReligion(): Religion {
+            switch (row[17]) {
+              case 'Islam':
+                return 'islam';
+              case 'Kristen Protestan':
+                return 'christian_protestant';
+              case 'Kristen Katolik':
+                return 'christian_catholic';
+              case 'Hindu':
+                return 'hindu';
+              case 'Buddha':
+                return 'buddha';
+              case 'Konghucu':
+                return 'konghucu';
+              case 'Lainnya':
+                return 'others';
+            }
+          }
+
           return {
             name: row[0],
             username: row[1],
             type: getRole(),
             permissions: getPermissions(),
             password: row[10],
+            email: row[11],
+            phone: row[12],
+            gender: getGender(),
+            nationality: getNationality(),
+            personal_id: row[15],
+            education_id: row[16],
+            religion: getReligion(),
+            address: row[18],
+            profile_image_uri: row[19],
           };
         })
         .filter((data) => data.name);
@@ -77,9 +140,17 @@ export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
             detail: {
               json_text: JSON.stringify({
                 username: data.username,
+                email: data.email,
+                phone: data.phone,
+                gender: data.gender,
+                nationality: data.nationality,
+                personal_id: data.personal_id,
+                education_id: data.education_id,
+                religion: data.religion,
+                address: data.address,
               }),
             },
-            profile_image_uri: '',
+            profile_image_uri: data.profile_image_uri,
             roles: [data.type],
             permissions: data.permissions,
           },
