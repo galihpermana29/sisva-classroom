@@ -214,7 +214,7 @@ export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
           new_password: data.password,
         };
         console.log(payload);
-        // return AuthAPI.changeUserPass(payload);
+        return AuthAPI.resetUserPass(payload);
       });
 
       const res = await Promise.all([
@@ -222,11 +222,10 @@ export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
         ...promisesUpdate,
         ...promisesUpdatePassword,
       ]);
-      console.log(res);
       afterSuccess();
     } catch (error) {
       console.log(error);
-      window.alert('Import Gagal');
+      window.alert('Import Bermasalah');
     }
   };
   reader.readAsArrayBuffer(file);
