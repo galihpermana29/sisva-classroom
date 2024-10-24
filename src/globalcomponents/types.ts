@@ -78,3 +78,86 @@ export function getReligion(text: ReligionText): Religion {
       return 'others';
   }
 }
+
+export type Guardian = 'father' | 'mother' | 'guardian' | 'student';
+export type GuardianText = 'Ayah' | 'Ibu' | 'Wali' | 'Murid';
+export function getGuardian(text: GuardianText): Guardian {
+  switch (text) {
+    case 'Ayah':
+      return 'father';
+    case 'Ibu':
+      return 'mother';
+    case 'Wali':
+      return 'guardian';
+    case 'Murid':
+      return 'student';
+  }
+}
+
+export type EducationLevel =
+  | 'elementary'
+  | 'junior_high'
+  | 'senior_high'
+  | 'undergraduate'
+  | 'graduate'
+  | 'doctorate'
+  | 'other';
+export type EducationLevelText =
+  | 'SD'
+  | 'SMP'
+  | 'SMA/SMK/MA'
+  | 'S1/D3/D4'
+  | 'S2'
+  | 'S3'
+  | 'Lainnya';
+export function getEducationLevel(text: EducationLevelText): EducationLevel {
+  switch (text) {
+    case 'SD':
+      return 'elementary';
+    case 'SMP':
+      return 'junior_high';
+    case 'SMA/SMK/MA':
+      return 'senior_high';
+    case 'S1/D3/D4':
+      return 'undergraduate';
+    case 'S2':
+      return 'graduate';
+    case 'S3':
+      return 'doctorate';
+    case 'Lainnya':
+      return 'other';
+  }
+}
+
+export type IncomeLevel = '0-1' | '1-10' | '10-50' | '50-100' | '100+';
+export type IncomeLevelText =
+  | '0 - Rp1.000.000'
+  | 'Rp1.000.000 - Rp10.000.000'
+  | 'Rp10.000.000 - Rp50.000.000'
+  | 'Rp50.000.000 - Rp100.000.000'
+  | 'Rp100.000.000+';
+export function getIncomeLevel(text: IncomeLevelText): IncomeLevel {
+  switch (text) {
+    case '0 - Rp1.000.000':
+      return '0-1';
+    case 'Rp1.000.000 - Rp10.000.000':
+      return '1-10';
+    case 'Rp10.000.000 - Rp50.000.000':
+      return '10-50';
+    case 'Rp50.000.000 - Rp100.000.000':
+      return '50-100';
+    case 'Rp100.000.000+':
+      return '100+';
+  }
+}
+
+export type LifeStatus = 'alive' | 'dead';
+export type LifeStatusText = 'Masih Hidup' | 'Meninggal Dunia';
+export function getLifeStatus(text: LifeStatusText): LifeStatus {
+  switch (text) {
+    case 'Masih Hidup':
+      return 'alive';
+    case 'Meninggal Dunia':
+      return 'dead';
+  }
+}
