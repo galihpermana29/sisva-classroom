@@ -1,15 +1,11 @@
 import AuthAPI from '@/api/auth';
 import UsersAPI from '@/api/users';
-import type {
-  Gender,
-  GenderText,
-  Nationality,
-  NationalityText,
-  Permission,
-  Religion,
-  ReligionText,
-  Role,
-  RoleText,
+import type { Permission } from '@/globalcomponents/types';
+import {
+  getGender,
+  getNationality,
+  getReligion,
+  getRole,
 } from '@/globalcomponents/types';
 import * as XLSX from 'xlsx';
 
@@ -79,56 +75,6 @@ export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
             if (row[8]) permissions.push('manage_information');
             if (row[9]) permissions.push('manage_finance');
             return permissions;
-          }
-
-          function getRole(text: RoleText): Role {
-            switch (text) {
-              case 'Staf':
-                return 'staff';
-              case 'Guru':
-                return 'teacher';
-              case 'Manajemen':
-                return 'management';
-            }
-          }
-
-          function getGender(text: GenderText): Gender {
-            switch (text) {
-              case 'Laki-laki':
-                return 'male';
-              case 'Perempuan':
-                return 'female';
-              case 'Lainnya':
-                return 'others';
-            }
-          }
-
-          function getNationality(text: NationalityText): Nationality {
-            switch (text) {
-              case 'Warga Negara Indonesia':
-                return 'wni';
-              case 'Warga Negara Asing':
-                return 'wna';
-            }
-          }
-
-          function getReligion(text: ReligionText): Religion {
-            switch (text) {
-              case 'Islam':
-                return 'islam';
-              case 'Kristen Protestan':
-                return 'christian_protestant';
-              case 'Kristen Katolik':
-                return 'christian_catholic';
-              case 'Hindu':
-                return 'hindu';
-              case 'Buddha':
-                return 'buddha';
-              case 'Konghucu':
-                return 'konghucu';
-              case 'Lainnya':
-                return 'others';
-            }
           }
 
           return {
