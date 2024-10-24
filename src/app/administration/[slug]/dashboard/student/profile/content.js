@@ -114,6 +114,7 @@ export default function SchoolProfileListContent() {
       const newMappedData = data
         .map((user) => {
           const additionalJson = JSON.parse(user.detail.json_text);
+          delete additionalJson.username;
           return { ...user, ...additionalJson };
         })
         .filter((user) => user.status === 'active');

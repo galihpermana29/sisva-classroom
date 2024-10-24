@@ -131,10 +131,10 @@ export default function StaffProfileListContent() {
       const {
         data: { data },
       } = await UsersAPI.getAllUsers('staff,teacher');
-
       const newMappedData = data
         .map((user) => {
           const additionalJson = JSON.parse(user.detail.json_text);
+          delete additionalJson.username;
           return { ...user, ...additionalJson };
         })
         .filter((user) => user.status == 'active');
