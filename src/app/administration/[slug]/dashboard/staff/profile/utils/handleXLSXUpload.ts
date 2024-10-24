@@ -2,10 +2,14 @@ import AuthAPI from '@/api/auth';
 import UsersAPI from '@/api/users';
 import type {
   Gender,
+  GenderText,
   Nationality,
+  NationalityText,
   Permission,
   Religion,
+  ReligionText,
   Role,
+  RoleText,
 } from '@/globalcomponents/types';
 import * as XLSX from 'xlsx';
 
@@ -77,8 +81,8 @@ export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
             return permissions;
           }
 
-          function getRole(): Role {
-            switch (row[2]) {
+          function getRole(text: RoleText): Role {
+            switch (text) {
               case 'Staf':
                 return 'staff';
               case 'Guru':
@@ -88,8 +92,8 @@ export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
             }
           }
 
-          function getGender(): Gender {
-            switch (row[13]) {
+          function getGender(text: GenderText): Gender {
+            switch (text) {
               case 'Laki-laki':
                 return 'male';
               case 'Perempuan':
@@ -99,8 +103,8 @@ export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
             }
           }
 
-          function getNationality(): Nationality {
-            switch (row[14]) {
+          function getNationality(text: NationalityText): Nationality {
+            switch (text) {
               case 'Warga Negara Indonesia':
                 return 'wni';
               case 'Warga Negara Asing':
@@ -108,8 +112,8 @@ export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
             }
           }
 
-          function getReligion(): Religion {
-            switch (row[17]) {
+          function getReligion(text: ReligionText): Religion {
+            switch (text) {
               case 'Islam':
                 return 'islam';
               case 'Kristen Protestan':
@@ -130,16 +134,16 @@ export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
           return {
             name: row[0],
             username: row[1],
-            type: getRole(),
+            type: getRole(row[2]),
             permissions: getPermissions(),
             password: row[10],
             email: row[11],
             phone: row[12],
-            gender: getGender(),
-            nationality: getNationality(),
+            gender: getGender(row[13]),
+            nationality: getNationality(row[14]),
             personal_id: row[15],
             education_id: row[16],
-            religion: getReligion(),
+            religion: getReligion(row[17]),
             address: row[18],
             profile_image_uri: row[19],
           };

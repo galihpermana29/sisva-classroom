@@ -8,10 +8,13 @@ export type Permission =
   | 'manage_finance';
 
 export type Role = 'staff' | 'teacher' | 'management' | 'student';
+export type RoleText = 'Staf' | 'Guru' | 'Manajemen' | 'Siswa';
 
 export type Gender = 'male' | 'female' | 'others';
+export type GenderText = 'Laki-laki' | 'Perempuan' | 'Lainnya';
 
 export type Nationality = 'wni' | 'wna';
+export type NationalityText = 'Warga Negara Indonesia' | 'Warga Negara Asing';
 
 export type Religion =
   | 'islam'
@@ -21,3 +24,11 @@ export type Religion =
   | 'buddha'
   | 'konghucu'
   | 'others';
+export type ReligionText =
+  | 'Islam'
+  | 'Kristen Protestan'
+  | 'Kristen Katolik'
+  | 'Hindu'
+  | 'Buddha'
+  | 'Konghucu'
+  | 'Lainnya';
