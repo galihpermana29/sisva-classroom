@@ -1,6 +1,5 @@
 import AuthAPI from '@/api/auth';
 import UsersAPI from '@/api/users';
-import type { Permission } from '@/globalcomponents/types';
 import {
   getGender,
   getNationality,
@@ -41,6 +40,24 @@ import * as XLSX from 'xlsx';
 */
 
 const MAX_ROW = 30;
+
+function getJsonText(data) {
+  return JSON.stringify({
+    username: data.username,
+    email: data.email,
+    phone: data.phone,
+    gender: data.gender,
+    nationality: data.nationality,
+    personal_id: data.personal_id,
+    education_id: data.education_id,
+    religion: data.religion,
+    address: data.address,
+  });
+}
+
+function getUserId(users, username: string) {
+  return users.find((user) => user.username == username).id;
+}
 
 export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
   const reader = new FileReader();
@@ -99,6 +116,7 @@ export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
         usernames.includes(user.username)
       );
       const dataCreate = dataObject.filter((user) => !user.username);
+      console.log(dataObject);
 
       const promisesCreate = dataCreate.map((data) => {
         const payload = {
@@ -106,17 +124,7 @@ export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
             name: data.name,
             type: data.type,
             detail: {
-              json_text: JSON.stringify({
-                username: data.username,
-                email: data.email,
-                phone: data.phone,
-                gender: data.gender,
-                nationality: data.nationality,
-                personal_id: data.personal_id,
-                education_id: data.education_id,
-                religion: data.religion,
-                address: data.address,
-              }),
+              json_text: getJsonText(data),
             },
             profile_image_uri: data.profile_image_uri,
             roles: [data.type],
@@ -128,41 +136,27 @@ export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
       });
 
       const promisesUpdate = dataUpdate.map((data) => {
-        const user_id = filteredData.find(
-          (user) => user.username == data.username
-        ).id;
         const payload = {
           name: data.name,
           type: data.type,
           detail: {
-            json_text: JSON.stringify({
-              username: data.username,
-              email: data.email,
-              phone: data.phone,
-              gender: data.gender,
-              nationality: data.nationality,
-              personal_id: data.personal_id,
-              education_id: data.education_id,
-              religion: data.religion,
-              address: data.address,
-            }),
+            json_text: getJsonText(data),
           },
           profile_image_uri: data.profile_image_uri,
           roles: [data.type],
           permissions: data.permissions,
         };
-        return UsersAPI.updateUserById(payload, user_id);
+        return UsersAPI.updateUserById(
+          payload,
+          getUserId(filteredData, data.username)
+        );
       });
 
       const promisesUpdatePassword = dataUpdate.map((data) => {
-        const user_id = filteredData.find(
-          (user) => user.username == data.username
-        ).id;
         const payload = {
-          user_id: user_id,
+          user_id: getUserId(filteredData, data.username),
           new_password: data.password,
         };
-        console.log(payload);
         return AuthAPI.resetUserPass(payload);
       });
 
@@ -171,6 +165,7 @@ export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
         ...promisesUpdate,
         ...promisesUpdatePassword,
       ]);
+      console.log(res);
       afterSuccess();
     } catch (error) {
       console.log(error);
