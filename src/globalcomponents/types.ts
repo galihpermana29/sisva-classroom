@@ -6,6 +6,25 @@ export type Permission =
   | 'report'
   | 'manage_information'
   | 'manage_finance';
+export function getPermissions(data: {
+  manage_school: boolean;
+  manage_staff: boolean;
+  manage_academic: boolean;
+  manage_student: boolean;
+  report: boolean;
+  manage_information: boolean;
+  manage_finance: boolean;
+}): Permission[] {
+  const permissions: Permission[] = [];
+  if (data.manage_school) permissions.push('manage_school');
+  if (data.manage_staff) permissions.push('manage_staff');
+  if (data.manage_academic) permissions.push('manage_academic');
+  if (data.manage_student) permissions.push('manage_student');
+  if (data.report) permissions.push('report');
+  if (data.manage_information) permissions.push('manage_information');
+  if (data.manage_finance) permissions.push('manage_finance');
+  return permissions;
+}
 
 export type Role = 'staff' | 'teacher' | 'management' | 'student';
 export type RoleText = 'Staf' | 'Guru' | 'Manajemen' | 'Siswa';

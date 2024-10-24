@@ -4,6 +4,7 @@ import type { Permission } from '@/globalcomponents/types';
 import {
   getGender,
   getNationality,
+  getPermissions,
   getReligion,
   getRole,
 } from '@/globalcomponents/types';
@@ -65,23 +66,21 @@ export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
       const rawDataWithoutHeader = rawData.slice(3, MAX_ROW + 3);
       const dataObject = rawDataWithoutHeader
         .map((row) => {
-          function getPermissions() {
-            const permissions: Permission[] = [];
-            if (row[3]) permissions.push('manage_school');
-            if (row[4]) permissions.push('manage_staff');
-            if (row[5]) permissions.push('manage_academic');
-            if (row[6]) permissions.push('manage_student');
-            if (row[7]) permissions.push('report');
-            if (row[8]) permissions.push('manage_information');
-            if (row[9]) permissions.push('manage_finance');
-            return permissions;
-          }
+          const permissions = getPermissions({
+            manage_school: row[3],
+            manage_staff: row[4],
+            manage_academic: row[5],
+            manage_student: row[6],
+            report: row[7],
+            manage_information: row[8],
+            manage_finance: row[9],
+          });
 
           return {
             name: row[0],
             username: row[1],
             type: getRole(row[2]),
-            permissions: getPermissions(),
+            permissions: permissions,
             password: row[10],
             email: row[11],
             phone: row[12],
