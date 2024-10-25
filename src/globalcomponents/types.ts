@@ -180,3 +180,34 @@ export function getLifeStatus(text: LifeStatusText): LifeStatus {
       return 'dead';
   }
 }
+
+export type Relationship =
+  | 'parents'
+  | 'siblings'
+  | 'family'
+  | 'friends'
+  | 'spouse'
+  | 'others';
+export type RelationshipText =
+  | 'Orang Tua'
+  | 'Kakak/Adik'
+  | 'Saudara'
+  | 'Teman'
+  | 'Suami/Istri'
+  | 'Lainnya';
+export function getRelationship(text: RelationshipText): Relationship {
+  switch (text) {
+    case 'Orang Tua':
+      return 'parents';
+    case 'Kakak/Adik':
+      return 'siblings';
+    case 'Saudara':
+      return 'family';
+    case 'Teman':
+      return 'friends';
+    case 'Suami/Istri':
+      return 'spouse';
+    case 'Lainnya':
+      return 'others';
+  }
+}

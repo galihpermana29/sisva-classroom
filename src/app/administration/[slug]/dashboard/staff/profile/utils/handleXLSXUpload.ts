@@ -116,7 +116,6 @@ export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
         usernames.includes(user.username)
       );
       const dataCreate = dataObject.filter((user) => !user.username);
-      console.log(dataObject);
 
       const promisesCreate = dataCreate.map((data) => {
         const payload = {
@@ -165,7 +164,6 @@ export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
         ...promisesUpdate,
         ...promisesUpdatePassword,
       ]);
-      console.log(res);
       afterSuccess();
     } catch (error) {
       console.log(error);
