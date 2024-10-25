@@ -14,7 +14,7 @@ import * as XLSX from 'xlsx';
 
 - index 0 - 2 is the header
 - index 3 - MAX_ROW is the data
-- set MAX_ROW to be 30 max
+- set MAX_ROW to be 1000 max
 - index in data array hold this information:
   0: name
   1: username
@@ -39,7 +39,7 @@ import * as XLSX from 'xlsx';
 
 */
 
-const MAX_ROW = 30;
+const MAX_ROW = 1000;
 
 function getJsonText(data) {
   return JSON.stringify({
@@ -80,7 +80,7 @@ export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
       const template = XLSX.read(file);
       const sheet = template.Sheets[template.SheetNames[0]];
       const rawData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-      const rawDataWithoutHeader = rawData.slice(3, MAX_ROW + 3);
+      const rawDataWithoutHeader = rawData.slice(3, MAX_ROW);
       const dataObject = rawDataWithoutHeader
         .map((row) => {
           const permissions = getPermissions({
