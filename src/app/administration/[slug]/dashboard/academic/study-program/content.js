@@ -29,20 +29,26 @@ import GradeTable from './components/GradeTable';
 import StudyProgramTable from './components/StudyProgramTable';
 
 import AcademicAPI from '@/api/academic';
-import { useFormik } from 'formik';
-import StudentTable from './components/StudentTable';
 import UsersAPI from '@/api/users';
+import { useFormik } from 'formik';
 import { FormAddStudent } from './components/FormAddStudent';
+import StudentTable from './components/StudentTable';
 export default function StaffProfileContent() {
-  const [emptyData, setEmptyData] = useState({});
+  const initialValues = {
+    code: '',
+    name: '',
+    status: 'active',
+    grades: [],
+  };
 
   const formik = useFormik({
-    initialValues: { emptyData },
+    initialValues: initialValues,
 
     onSubmit: async (values) => {
       if (activeTab == 0) {
         try {
           if (!values.id) {
+            console.log(values);
             await AcademicAPI.createProdi(values);
           } else {
             const id = values.id;
@@ -339,7 +345,6 @@ export default function StaffProfileContent() {
       });
     }
     setFilteredData(temp);
-    formik.setValues(emptyData);
   }, [
     tableData,
     search,
@@ -370,8 +375,8 @@ export default function StaffProfileContent() {
           >
             <TextField
               select
-              size='small'
-              label='Program Studi'
+              size="small"
+              label="Program Studi"
               value={studyProgramFilter}
               onChange={(e) => setStudyProgramFilter(e.target.value)}
               sx={{
@@ -417,7 +422,7 @@ export default function StaffProfileContent() {
         open={openCreateGradeModal}
         onClose={() => {
           setOpenCreateGradeModal(false);
-          formik.setValues({ code: '', grades: [] });
+          formik.setValues(initialValues);
         }}
       >
         <Stack
@@ -458,22 +463,22 @@ export default function StaffProfileContent() {
             }}
           >
             <Button
-              variant='outlined'
+              variant="outlined"
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenCreateGradeModal(false);
-                formik.setValues(emptyData);
+                formik.setValues(initialValues);
               }}
             >
               Batal
             </Button>
             <Button
-              variant='contained'
+              variant="contained"
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenCreateGradeModal(false);
                 formik.handleSubmit();
-                formik.setValues(emptyData);
+                formik.setValues(initialValues);
               }}
             >
               Simpan
@@ -523,22 +528,23 @@ export default function StaffProfileContent() {
             }}
           >
             <Button
-              variant='outlined'
+              variant="outlined"
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenCreateStudyProgramModal(false);
-                formik.setValues(emptyData);
+                formik.setValues(initialValues);
               }}
             >
               Batal
             </Button>
             <Button
-              variant='contained'
+              variant="contained"
               sx={{ flex: 1 }}
               onClick={() => {
-                setOpenCreateStudyProgramModal(false);
+                console.log(formik.values);
                 formik.handleSubmit();
-                formik.setValues(emptyData);
+                formik.setValues(initialValues);
+                setOpenCreateStudyProgramModal(false);
               }}
             >
               Simpan
@@ -592,22 +598,21 @@ export default function StaffProfileContent() {
             }}
           >
             <Button
-              variant='outlined'
+              variant="outlined"
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenCreateStudentModal(false);
-                formik.setValues(emptyData);
+                formik.setValues(initialValues);
               }}
             >
               Batal
             </Button>
             <Button
-              variant='contained'
+              variant="contained"
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenCreateStudentModal(false);
                 formik.handleSubmit();
-                // formik.setValues(emptyData);
               }}
             >
               Simpan
@@ -638,8 +643,8 @@ export default function StaffProfileContent() {
           </Typography>
           <TextField
             select
-            size='small'
-            label='Data'
+            size="small"
+            label="Data"
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
             sx={{ flex: 1, mt: 2 }}
@@ -680,8 +685,8 @@ export default function StaffProfileContent() {
           </TextField>
           <TextField
             select
-            size='small'
-            label='Jenis Urutan'
+            size="small"
+            label="Jenis Urutan"
             value={sortType}
             disabled={!sortBy}
             onChange={(e) => setSortType(e.target.value)}
@@ -702,7 +707,7 @@ export default function StaffProfileContent() {
             }}
           >
             <Button
-              variant='outlined'
+              variant="outlined"
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenSortModal(false);
@@ -713,7 +718,7 @@ export default function StaffProfileContent() {
               Batal
             </Button>
             <Button
-              variant='contained'
+              variant="contained"
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenSortModal(false);
@@ -740,7 +745,7 @@ export default function StaffProfileContent() {
 
       <Stack
         component={Paper}
-        variant='outlined'
+        variant="outlined"
         sx={{
           borderRadius: { xs: 0, lg: 2 },
           flex: 1,
@@ -777,7 +782,7 @@ export default function StaffProfileContent() {
                   setSearch('');
                   setSortBy('');
                   setSortSettings('');
-                  formik.setValues(emptyData);
+                  formik.setValues(initialValues);
                   index === 0 ? setFilteredData(tableData) : null;
                 }}
               >
@@ -811,8 +816,8 @@ export default function StaffProfileContent() {
             <TextField
               // id="outlined-search"
               placeholder={`Cari ${tabs[activeTab].title}`}
-              size='small'
-              type='text'
+              size="small"
+              type="text"
               sx={{
                 maxWidth: { xs: '100%', lg: '200px' },
                 flex: 1,
@@ -840,7 +845,7 @@ export default function StaffProfileContent() {
                   />
                 ),
                 endAdornment: (
-                  <InputAdornment position='end'>
+                  <InputAdornment position="end">
                     <Search />
                   </InputAdornment>
                 ),
@@ -883,8 +888,8 @@ export default function StaffProfileContent() {
             }}
           >
             <Button
-              variant='outlined'
-              color='primary'
+              variant="outlined"
+              color="primary"
               startIcon={<ExcelIcon />}
               sx={{
                 display: { xs: 'none', lg: 'flex' },
@@ -899,9 +904,9 @@ export default function StaffProfileContent() {
                   backgroundColor: 'base:base20',
                 },
               }}
-              id='profile-button'
+              id="profile-button"
               aria-controls={open ? 'profile-menu' : undefined}
-              aria-haspopup='true'
+              aria-haspopup="true"
               aria-expanded={open ? 'true' : undefined}
               onClick={handleClick}
             >
@@ -911,8 +916,8 @@ export default function StaffProfileContent() {
             </Button>
             <Menu
               elevation={2}
-              id='profile-menu'
-              aria-labelledby='profile-button'
+              id="profile-menu"
+              aria-labelledby="profile-button"
               anchorEl={anchorEl}
               open={open}
               onClose={handleClose}
@@ -932,15 +937,15 @@ export default function StaffProfileContent() {
                 </Stack>
               </MenuItem>
               <MenuItem onClick={handleClose} sx={{ padding: 1 }}>
-                <label htmlFor='import-csv'>
+                <label htmlFor="import-csv">
                   <Stack flexDirection={'row'} alignItems={'center'}>
                     <UploadFileRounded sx={{ fontSize: 18, mr: 1 }} />
                     <Typography sx={{ fontSize: 14 }}>Import</Typography>
                     <input
                       name={'import_csv'}
-                      accept='csv'
-                      id='import-csv'
-                      type='file'
+                      accept="csv"
+                      id="import-csv"
+                      type="file"
                       style={{
                         position: 'absolute',
                         opacity: '0',
@@ -954,8 +959,8 @@ export default function StaffProfileContent() {
             </Menu>
 
             <Button
-              variant='contained'
-              color='primary'
+              variant="contained"
+              color="primary"
               startIcon={<Add />}
               sx={{
                 width: 100,
@@ -987,7 +992,7 @@ export default function StaffProfileContent() {
             sx={{ flexDirection: 'row', py: 1, flex: activeTab === 0 ? 1 : 0 }}
           >
             <Divider
-              orientation='vertical'
+              orientation="vertical"
               sx={{ mx: 1, display: activeTab === 0 ? 'none' : 'flex' }}
             />
             <Button
