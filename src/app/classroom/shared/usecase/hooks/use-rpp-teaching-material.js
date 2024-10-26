@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { useDebounce } from "use-debounce";
-import { getTeachingMaterialList } from "../../../(main)/teacher/teaching-material/repository/teaching-material-service";
+import { useParams } from 'next/navigation';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useDebounce } from 'use-debounce';
 import {
   restructTeachingMaterialListRpp,
   searchFilter,
-} from "../../../(main)/teacher/teaching-material/model/data-mapper";
-import { useParams } from "next/navigation";
+} from '../../../(main)/teacher/teaching-material/model/data-mapper';
+import { getTeachingMaterialList } from '../../../(main)/teacher/teaching-material/repository/teaching-material-service';
 
 export const useRppTeachingMaterial = (initialData, type) => {
   const [teachingMaterialData, setTeachingMaterialData] = useState([]);
@@ -13,11 +13,11 @@ export const useRppTeachingMaterial = (initialData, type) => {
   const { classId, id } = useParams();
 
   const initialQueryFilter = {
-    search: "",
-    curriculum: "",
-    study_program: "",
-    subject: "",
-    tag: "",
+    search: '',
+    curriculum: '',
+    study_program: '',
+    subject: '',
+    tag: '',
   };
 
   const [queryFilter, setQueryFilter] = useState(initialQueryFilter);
@@ -25,14 +25,14 @@ export const useRppTeachingMaterial = (initialData, type) => {
   const [debouncedQueryFilter] = useDebounce(queryFilter, 200);
 
   const hasActiveFilters = useMemo(
-    () => Object.values(queryFilter).some((value) => value !== ""),
+    () => Object.values(queryFilter).some((value) => value !== ''),
     [queryFilter]
   );
 
   const fetchTeachingMaterialList = async () => {
     setIsLoading(true);
     const response = await getTeachingMaterialList(
-      type === "student" ? id : classId,
+      type === 'student' ? id : classId,
       queryFilter.subject,
       queryFilter.curriculum,
       queryFilter.study_program
@@ -40,7 +40,6 @@ export const useRppTeachingMaterial = (initialData, type) => {
 
     if (response.success) {
       let filteredTeachingMaterialList = response.data;
-      console.log(filteredTeachingMaterialList);
 
       if (queryFilter.search) {
         const searchTerm = queryFilter.search.toLowerCase();

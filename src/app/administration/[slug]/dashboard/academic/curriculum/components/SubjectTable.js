@@ -1,6 +1,5 @@
-import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import Image from 'next/image';
+import { permissions, subject_types, types } from '@/globalcomponents/Variable';
+import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
 import {
   Avatar,
   Box,
@@ -15,9 +14,10 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material';
-import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
+import { DataGrid } from '@mui/x-data-grid';
+import Image from 'next/image';
 import Link from 'next/link';
-import { types, permissions, subject_types } from '@/globalcomponents/Variable';
+import * as React from 'react';
 import { useState } from 'react';
 import { FormAddCurriculum, FormAddSubject } from './FormAddSubject';
 
@@ -38,7 +38,7 @@ const columns = [
         <Box sx={{ width: '100%', mx: 2, py: 0.5 }}>
           <Stack
             component={Paper}
-            variant='outlined'
+            variant="outlined"
             sx={{
               justifyContent: 'flex-start',
               borderRadius: 2,
@@ -257,7 +257,7 @@ function ChipList({ params }) {
               fontSize: 12,
             }}
             label={studyProgram}
-            color='primary'
+            color="primary"
           />
         );
       })}
@@ -358,7 +358,7 @@ export default function SubjectTable({
             }}
           >
             <Button
-              variant='outlined'
+              variant="outlined"
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenEditModal(false);
@@ -368,7 +368,7 @@ export default function SubjectTable({
               Batal
             </Button>
             <Button
-              variant='contained'
+              variant="contained"
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenEditModal(false);
@@ -491,7 +491,7 @@ export default function SubjectTable({
             }}
           >
             <Button
-              variant='outlined'
+              variant="outlined"
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenDeleteModal(false);
@@ -500,7 +500,7 @@ export default function SubjectTable({
               Batal
             </Button>
             <Button
-              variant='contained'
+              variant="contained"
               sx={{
                 flex: 1,
                 backgroundColor: 'warning.main',
@@ -509,7 +509,6 @@ export default function SubjectTable({
                 },
               }}
               onClick={() => {
-                console.log(activeRow.id);
                 setOpenDeleteModal(false);
                 deleteSubject(activeRow.id);
               }}

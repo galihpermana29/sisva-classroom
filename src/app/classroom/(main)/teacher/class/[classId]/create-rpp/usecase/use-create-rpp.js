@@ -1,13 +1,13 @@
-import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { postCreateRpp } from "../repository/create-rpp-service";
-import toast from "react-hot-toast";
-import { useForm } from "antd/es/form/Form";
-import { setMaterials } from "@/app/classroom/shared/redux/teachingMaterialSlice";
-import { setTasks } from "@/app/classroom/shared/redux/taskSlice";
-import { filterTableListById } from "../../edit-rpp/[id]/model/edit-rpp-data-mapper";
-import { patchUpdateRpp } from "../../edit-rpp/[id]/repository/edit-rpp-service";
+import { setTasks } from '@/app/classroom/shared/redux/taskSlice';
+import { setMaterials } from '@/app/classroom/shared/redux/teachingMaterialSlice';
+import { useForm } from 'antd/es/form/Form';
+import { useParams, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { filterTableListById } from '../../edit-rpp/[id]/model/edit-rpp-data-mapper';
+import { patchUpdateRpp } from '../../edit-rpp/[id]/repository/edit-rpp-service';
+import { postCreateRpp } from '../repository/create-rpp-service';
 
 export const useCreateRpp = (initialData) => {
   const [form] = useForm();
@@ -67,10 +67,9 @@ export const useCreateRpp = (initialData) => {
 
     if (response.success) {
       router.push(`/classroom/teacher/class/${classId}`);
-      toast.success(`Success ${isEditRpp ? "edit" : "create"} teaching plan`);
-      console.log(response.data);
+      toast.success(`Success ${isEditRpp ? 'edit' : 'create'} teaching plan`);
     } else {
-      toast.error(`Error ${isEditRpp ? "edit" : "create"} teaching plan`);
+      toast.error(`Error ${isEditRpp ? 'edit' : 'create'} teaching plan`);
     }
     setIsLoading(false);
   };

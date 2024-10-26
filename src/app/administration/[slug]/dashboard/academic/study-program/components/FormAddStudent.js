@@ -6,7 +6,6 @@ import { formAddStudent } from '@/globalcomponents/FormFields';
 import { useEffect, useState } from 'react';
 
 export const FormAddStudent = ({ formik, editing, tableData, studentList }) => {
-  console.log(formik);
   const [gradeData, setGradeData] = useState();
 
   const updatedSubjectFields = formAddStudent.map((field) => {
@@ -34,7 +33,6 @@ export const FormAddStudent = ({ formik, editing, tableData, studentList }) => {
   });
 
   const fetchGrade = async (val) => {
-    console.log(val);
     const grade = tableData.find((td) => td.id == val)?.grades;
     const name = tableData.find((td) => td.id == val)?.name;
 
@@ -59,7 +57,7 @@ export const FormAddStudent = ({ formik, editing, tableData, studentList }) => {
         field.type === 'select' ? (
           field.name === 'student' ? (
             <Stack sx={{ my: 1 }} key={field.name}>
-              <Typography variant='body2' fontWeight={600} mb={0.5}>
+              <Typography variant="body2" fontWeight={600} mb={0.5}>
                 {field.label}
               </Typography>
               <TextField
@@ -91,7 +89,7 @@ export const FormAddStudent = ({ formik, editing, tableData, studentList }) => {
             </Stack>
           ) : field.name === 'study_program' ? (
             <Stack sx={{ my: 1 }} key={field.name}>
-              <Typography variant='body2' fontWeight={600} mb={0.5}>
+              <Typography variant="body2" fontWeight={600} mb={0.5}>
                 {field.label}
               </Typography>
               <TextField
@@ -112,7 +110,7 @@ export const FormAddStudent = ({ formik, editing, tableData, studentList }) => {
             </Stack>
           ) : (
             <Stack sx={{ my: 1 }} key={field.name}>
-              <Typography variant='body2' fontWeight={600} mb={0.5}>
+              <Typography variant="body2" fontWeight={600} mb={0.5}>
                 {field.label}
               </Typography>
               <TextField

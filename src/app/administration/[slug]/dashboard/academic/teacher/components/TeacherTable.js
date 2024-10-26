@@ -13,8 +13,8 @@ import {
 } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { useState } from 'react';
-import { FormEditPeriod } from './FormEditPeriod';
 import { FormAddSubjectTeacher } from './FormAddSubjectTeacher';
+import { FormEditPeriod } from './FormEditPeriod';
 
 const columns = [
   {
@@ -27,7 +27,7 @@ const columns = [
         <Box sx={{ width: '100%', mx: 2, py: 0.5 }}>
           <Stack
             component={Paper}
-            variant='outlined'
+            variant="outlined"
             sx={{
               justifyContent: 'flex-start',
               borderRadius: 2,
@@ -164,7 +164,7 @@ function ChipList({ params, compact }) {
               fontSize: 12,
             }}
             label={datum.subject_name ? datum.subject_name : datum}
-            color='primary'
+            color="primary"
           />
         );
       })}
@@ -196,7 +196,6 @@ function ActionButton({ params }) {
         onClick={() => {
           params.value.setOpenEditModal(true);
           params.value.setActiveRow(params.value.data);
-          console.log(params.value.data);
           params.value.formik.setValues({
             grades: params.value.data.grades,
             subjects: params.value.data.subjects,
@@ -307,7 +306,7 @@ export default function TeacherTable({
             }}
           >
             <Button
-              variant='outlined'
+              variant="outlined"
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenCreateTeacherModal(false);
@@ -317,7 +316,7 @@ export default function TeacherTable({
               Batal
             </Button>
             <Button
-              variant='contained'
+              variant="contained"
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenCreateTeacherModal(false);

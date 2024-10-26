@@ -24,10 +24,9 @@ export const searchFilter = (assignments, searchTerm) => {
       const filteredTasks = assignment.tasks.filter(
         (task) =>
           task.name.toLowerCase().includes(searchTerm) ||
-          (task.description || "").toLowerCase().includes(searchTerm)
+          (task.description || '').toLowerCase().includes(searchTerm)
       );
 
-      console.log(filteredTasks);
       if (filteredTasks.length > 0) {
         return {
           ...assignment,

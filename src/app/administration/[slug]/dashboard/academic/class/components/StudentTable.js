@@ -25,7 +25,7 @@ const columns = [
         <Box sx={{ width: '100%', mx: 2, py: 0.5 }}>
           <Stack
             component={Paper}
-            variant='outlined'
+            variant="outlined"
             sx={{
               justifyContent: 'flex-start',
               borderRadius: 2,
@@ -219,8 +219,6 @@ export default function StudentTable({
 
   let rows = [];
 
-  console.log(data);
-
   data.map((data, idx) => {
     let tempObject = {
       id: idx,
@@ -301,7 +299,7 @@ export default function StudentTable({
             }}
           >
             <Button
-              variant='outlined'
+              variant="outlined"
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenEditModal(false);
@@ -311,7 +309,7 @@ export default function StudentTable({
               Batal
             </Button>
             <Button
-              variant='contained'
+              variant="contained"
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenEditModal(false);
@@ -420,7 +418,7 @@ export default function StudentTable({
             }}
           >
             <Button
-              variant='outlined'
+              variant="outlined"
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenDeleteModal(false);
@@ -429,7 +427,7 @@ export default function StudentTable({
               Batal
             </Button>
             <Button
-              variant='contained'
+              variant="contained"
               sx={{
                 flex: 1,
                 backgroundColor: 'warning.main',

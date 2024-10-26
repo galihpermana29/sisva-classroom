@@ -1,13 +1,16 @@
-import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
-import { useDebounce } from "use-debounce";
+import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
+import { useDebounce } from 'use-debounce';
 
-import { getAllTasks, getAllTeachingPlan } from "../../repository/class-assignment-service";
-import { groupTaskByTeachingPlan, searchFilter } from "../data-mapper-service";
+import {
+  getAllTasks,
+  getAllTeachingPlan,
+} from '../../repository/class-assignment-service';
+import { groupTaskByTeachingPlan, searchFilter } from '../data-mapper-service';
 
 export const useClassAssignment = (classId) => {
   const [filter, setFilter] = useState({
-    search: "",
+    search: '',
   });
   const [debouncedFilter] = useDebounce(filter, 500);
 
@@ -17,13 +20,13 @@ export const useClassAssignment = (classId) => {
     error,
     refetch,
   } = useQuery({
-    queryKey: ["teacher-class-assignments", classId],
+    queryKey: ['teacher-class-assignments', classId],
     queryFn: () => getTaskWithGrouping(classId),
-    select: ( data ) => {
+    select: (data) => {
       if (!debouncedFilter.search) return data;
       return searchFilter(data, debouncedFilter.search.toLowerCase());
     },
-    onError: () => "Failed to fetch data.",
+    onError: () => 'Failed to fetch data.',
     keepPreviousData: true,
   });
 
@@ -33,8 +36,6 @@ export const useClassAssignment = (classId) => {
       [name]: value,
     });
   }
-
-  console.log("assignmentGroups", assignmentGroups);
 
   return {
     assignmentGroups,
@@ -53,9 +54,6 @@ async function getTaskWithGrouping(classId) {
       getAllTeachingPlan(),
     ]);
 
-    console.log("taskRes", taskRes);
-    console.log("teachingPlanRes", teachingPlanRes);
-
     const tasks = taskRes?.data || [];
     const teachingPlans = teachingPlanRes?.data || [];
 
@@ -63,7 +61,7 @@ async function getTaskWithGrouping(classId) {
 
     return groupedTasks;
   } catch (error) {
-    console.error("Error fetching tasks or teaching plans:", error);
+    console.error('Error fetching tasks or teaching plans:', error);
     throw error;
   }
 }
