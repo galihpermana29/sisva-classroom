@@ -1,4 +1,4 @@
-import { Typography, Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 
 const DashboardAcademicLayout = ({ children }) => {
   return (

@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
-import {
-  getAllClasses,
-  getAllTasks,
-  getStudentGroups,
-} from "../repository/apiService";
 import { getCookie } from "cookies-next";
+import { useEffect, useState } from "react";
+import {
+    getAllClasses,
+    getAllTasks,
+    getStudentGroups,
+} from "../repository/apiService";
 
 export function useGetStudentTask() {
   const [tasks, setTasks] = useState([]);

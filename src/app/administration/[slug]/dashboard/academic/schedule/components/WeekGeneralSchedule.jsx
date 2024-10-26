@@ -1,12 +1,12 @@
 "use client";
 
-import {
-  Inject,
-  ScheduleComponent,
-  WorkWeek,
-} from "@syncfusion/ej2-react-schedule";
-import { Internationalization } from "@syncfusion/ej2-base";
 import { Typography } from "@mui/material";
+import { Internationalization } from "@syncfusion/ej2-base";
+import {
+    Inject,
+    ScheduleComponent,
+    WorkWeek,
+} from "@syncfusion/ej2-react-schedule";
 
 const WeekGeneralSchedule = ({ data }) => {
   const instance = new Internationalization();

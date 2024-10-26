@@ -1,11 +1,11 @@
 import { Divider, Paper, Stack } from "@mui/material";
-import { BobotSKS } from "./components/BobotSKS";
-import { TabsSelector } from "./components/TabSelector";
 import { Suspense } from "react";
-import { PengaturanJadwal } from "./components/tabs/PengaturanJadwal";
-import { JadwalKelas } from "./components/tabs/JadwalKelas";
+import { BobotSKS } from "./components/BobotSKS";
 import { JadwalGuru } from "./components/tabs/JadwalGuru";
+import { JadwalKelas } from "./components/tabs/JadwalKelas";
 import JadwalKeseluruhan from "./components/tabs/JadwalKeseluruhan";
+import { PengaturanJadwal } from "./components/tabs/PengaturanJadwal";
+import { TabsSelector } from "./components/TabSelector";
 
 const DEFAULT_TAB = 0;
 

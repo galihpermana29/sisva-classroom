@@ -1,8 +1,8 @@
+import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
+import CardGridSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardGridSkeleton";
+import Link from "next/link";
 import React from "react";
 import ClassCard from "./ClassCard";
-import CardGridSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardGridSkeleton";
-import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
-import Link from "next/link";
 
 const ClassListGroup = ({ classData, isLoading }) => {
   if (isLoading) {

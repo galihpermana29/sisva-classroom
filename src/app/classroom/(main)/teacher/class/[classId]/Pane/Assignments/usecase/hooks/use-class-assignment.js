@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { useDebounce } from 'use-debounce';
 
 import {
-  getAllTasks,
-  getAllTeachingPlan,
+    getAllTasks,
+    getAllTeachingPlan,
 } from '../../repository/class-assignment-service';
 import { groupTaskByTeachingPlan, searchFilter } from '../data-mapper-service';
 

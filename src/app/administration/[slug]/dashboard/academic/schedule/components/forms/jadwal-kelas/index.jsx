@@ -14,11 +14,11 @@ import { ClassSelect } from "../../form-items/ClassSelect";
 import { DaySelectDynamic } from "../../form-items/DaySelectDynamic";
 import { LevelSelect } from "../../form-items/LevelSelect";
 import { PeriodSelect } from "../../form-items/PeriodSelect";
+import { StudentGroupSelect } from "../../form-items/StudentGroupSelect";
 import { StudyProgramSelect } from "../../form-items/StudyProgramSelect";
+import { TimeSelect } from "../../form-items/TimeSelect";
 import ErrorJadwalKelasModal from "../../modals/ErrorJadwalKelasModal";
 import { jadwalKelasSchema } from "./jadwalKelasSchema";
-import { StudentGroupSelect } from "../../form-items/StudentGroupSelect";
-import { TimeSelect } from "../../form-items/TimeSelect";
 
 function parseTime(timeString) {
   return dayjs(timeString, "h:mm A Z");

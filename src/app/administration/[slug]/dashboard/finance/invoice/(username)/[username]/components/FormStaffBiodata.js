@@ -1,32 +1,23 @@
 'use client';
 
 import {
-  Avatar,
-  Box,
-  Button,
-  Chip,
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  Stack,
-  TextField,
-  Typography,
+    Box,
+    Button,
+    Grid,
+    MenuItem,
+    Stack,
+    TextField,
+    Typography
 } from '@mui/material';
 import Image from 'next/image';
 
 import { formStaffBiodataFields } from '@/globalcomponents/FormFields';
-import { Cancel } from '@mui/icons-material';
-import { useState } from 'react';
 import {
-  genders,
-  nationalities,
-  permissions,
-  religions,
-  types,
+    genders,
+    nationalities,
+    religions
 } from '@/globalcomponents/Variable';
+import { Cancel } from '@mui/icons-material';
 
 export const FormStaffBiodata = ({ formik, editing }) => {
   function RenderGender({ value }) {

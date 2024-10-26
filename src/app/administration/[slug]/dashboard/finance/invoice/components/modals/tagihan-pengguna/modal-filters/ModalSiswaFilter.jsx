@@ -1,9 +1,9 @@
-import { Button, Stack, Typography, useTheme } from "@mui/material";
-import { ModalSelect } from "./ModalSelect";
 import { useGetAllPeriods } from "@/hooks/useGetAllPeriods";
-import { useGetAllStudyPrograms } from "@/hooks/useGetAllStudyPrograms";
 import { useGetAllStudentGroups } from "@/hooks/useGetAllStudentGroups";
+import { useGetAllStudyPrograms } from "@/hooks/useGetAllStudyPrograms";
+import { Button, Stack, Typography, useTheme } from "@mui/material";
 import ResetIcon from "../../../icons/ResetIcon";
+import { ModalSelect } from "./ModalSelect";
 
 export const ModalSiswaFilter = ({ filters, setFilters }) => {
   const { data: periods } = useGetAllPeriods();

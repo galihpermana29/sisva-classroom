@@ -1,28 +1,23 @@
 "use client";
 
 import {
-  Avatar,
-  Box,
-  Button,
-  Chip,
-  FormControl,
-  Grid,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  Stack,
-  TextField,
-  Typography,
+    Box,
+    Chip,
+    FormControl,
+    IconButton,
+    InputAdornment,
+    MenuItem,
+    OutlinedInput,
+    Select,
+    Stack,
+    TextField,
+    Typography
 } from "@mui/material";
-import Image from "next/image";
 
 import { formAddStaffFields } from "@/globalcomponents/FormFields";
-import { Cancel, Visibility, VisibilityOff } from "@mui/icons-material";
-import { useState } from "react";
 import { permissions } from "@/globalcomponents/Variable";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useState } from "react";
 
 export const FormAddStaff = ({ formik, editing }) => {
   const [showPassword, setShowPassword] = useState(false);

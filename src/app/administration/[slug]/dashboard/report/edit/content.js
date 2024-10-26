@@ -1,40 +1,36 @@
 "use client";
 
+import { ExcelIcon, SortIcon } from "@/assets/SVGs";
 import {
-  Add,
-  Cancel,
-  DownloadRounded,
-  Search,
-  UploadFileRounded,
+    Add,
+    Cancel,
+    DownloadRounded,
+    Search,
+    UploadFileRounded,
 } from "@mui/icons-material";
 import {
-  Box,
-  Button,
-  Divider,
-  Hidden,
-  IconButton,
-  InputAdornment,
-  Menu,
-  MenuItem,
-  Modal,
-  Paper,
-  Stack,
-  TextField,
-  Typography,
+    Box,
+    Button,
+    Divider,
+    Hidden,
+    InputAdornment,
+    Menu,
+    MenuItem,
+    Modal,
+    Paper,
+    Stack,
+    TextField,
+    Typography
 } from "@mui/material";
-import StudyProgramTable from "./components/StudyProgramTable";
-import { ExcelIcon, ExportIcon, SortIcon } from "@/assets/SVGs";
 import { useEffect, useState } from "react";
-import Link from "next/link";
-import { permissions, types } from "@/globalcomponents/Variable";
 
 import { useFormik } from "formik";
 import CurriculumTable from "./components/CurriculumTable";
 import { FormAddCurriculum } from "./components/FormAddCurriculum";
-import SubjectTable from "./components/SubjectTable";
 import { FormAddSubject } from "./components/FormAddSubject";
-import SyllabusTable from "./components/SyllabusTable";
 import { FormAddSyllabus } from "./components/FormAddSyllabus";
+import SubjectTable from "./components/SubjectTable";
+import SyllabusTable from "./components/SyllabusTable";
 export default function StaffProfileContent() {
   const [emptyData, setEmptyData] = useState({
     name: "",

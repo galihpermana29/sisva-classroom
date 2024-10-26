@@ -1,16 +1,15 @@
 "use client";
 
-import React, { useState, useMemo, useEffect } from "react";
-import { Form, InputNumber, Popconfirm, Table, Typography } from "antd";
-import { ConfigProvider } from "antd";
-import { Kumbh_Sans } from "next/font/google";
-import { Edit03 } from "@untitled-ui/icons-react";
-import Image from "next/image";
+import AvatarProfile from "@/app/classroom/shared/presentation/Profile/AvatarProfile";
 import AverageImage from "@/assets/average-score.png";
+import { Edit03 } from "@untitled-ui/icons-react";
+import { ConfigProvider, Form, InputNumber, Popconfirm, Table, Typography } from "antd";
+import { Kumbh_Sans } from "next/font/google";
+import Image from "next/image";
+import React, { useEffect, useMemo, useState } from "react";
+import { dateTimeFormatter } from "../../../../usecase/dateFormatter";
 import { useGetScores } from "../../../../usecase/hooks/use-scores";
 import { useUpdateScore } from "../../../../usecase/hooks/use-update-score";
-import { dateTimeFormatter } from "../../../../usecase/dateFormatter";
-import AvatarProfile from "@/app/classroom/shared/presentation/Profile/AvatarProfile";
 
 const kumbh = Kumbh_Sans({ subsets: ["latin"] });
 

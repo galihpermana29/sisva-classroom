@@ -1,8 +1,8 @@
+import { ModalBody } from "@/components/CustomModal";
 import { Button, Modal } from "@mui/material";
 import { useState } from "react";
-import { ModalBody } from "@/components/CustomModal";
-import FilterIcon from "../icons/FilterIcon";
 import JadwalKeseluruhanOptionalFilterForm from "../forms/jadwal-keseluruhan-optional-filters";
+import FilterIcon from "../icons/FilterIcon";
 
 function JadwalKeseluruhanOptionalFiltersModal({
   tingkatanData,

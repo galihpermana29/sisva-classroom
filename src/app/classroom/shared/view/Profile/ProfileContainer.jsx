@@ -1,12 +1,12 @@
 "use client";
-import React, { useState } from "react";
 import CardProfile from "@/app/classroom/shared/presentation/Card/CardProfile";
+import FormFields from "@/app/classroom/shared/presentation/Profile/FormFields";
 import MenuItem from "@/app/classroom/shared/presentation/Profile/MenuItem";
 import { LogOut04 } from "@untitled-ui/icons-react";
-import FormFields from "@/app/classroom/shared/presentation/Profile/FormFields";
+import dynamic from "next/dynamic";
+import React, { useState } from "react";
 import { useProfile } from "../../usecase/hooks/profile/use-profile";
 import { useSignOut } from "../../usecase/hooks/profile/use-signout";
-import dynamic from "next/dynamic";
 
 const DeleteConfirmation = dynamic(() =>
   import("@/app/classroom/shared/presentation/Modal/DeleteConfirmation")

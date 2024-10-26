@@ -1,29 +1,28 @@
 'use client';
 
-import { ExcelIcon, ExportIcon, SortIcon } from '@/assets/SVGs';
+import { ExcelIcon, SortIcon } from '@/assets/SVGs';
 import { permissions, types } from '@/globalcomponents/Variable';
 import {
-  Add,
-  Cancel,
-  DownloadRounded,
-  Search,
-  UploadFileRounded,
+    Add,
+    Cancel,
+    DownloadRounded,
+    Search,
+    UploadFileRounded,
 } from '@mui/icons-material';
 import {
-  Box,
-  Button,
-  Divider,
-  Hidden,
-  InputAdornment,
-  Menu,
-  MenuItem,
-  Modal,
-  Paper,
-  Stack,
-  TextField,
-  Typography,
+    Box,
+    Button,
+    Divider,
+    Hidden,
+    InputAdornment,
+    Menu,
+    MenuItem,
+    Modal,
+    Paper,
+    Stack,
+    TextField,
+    Typography,
 } from '@mui/material';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { FormAddStaff } from './components/FormAddStaff';
 import DataTable from './components/Table';

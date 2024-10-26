@@ -1,38 +1,22 @@
 'use client';
 
 import {
-  Avatar,
-  Box,
-  Button,
-  Chip,
-  FormControl,
-  Grid,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  Stack,
-  TextField,
-  Typography,
+    Button,
+    MenuItem,
+    Stack,
+    TextField,
+    Typography
 } from '@mui/material';
-import Image from 'next/image';
 
 import {
-  Add,
-  Cancel,
-  DragIndicatorRounded,
-  Visibility,
-  VisibilityOff,
+    Add
 } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
-import { permissions } from '@/globalcomponents/Variable';
 
-import { DndProvider } from 'react-dnd';
-import { DragAndDropContainer } from './DragAndDropContainer';
-import { MultiBackend } from 'react-dnd-multi-backend';
 import { HTML5toTouch } from 'rdndmb-html5-to-touch'; // or any other pipeline
+import { DndProvider } from 'react-dnd';
+import { MultiBackend } from 'react-dnd-multi-backend';
+import { DragAndDropContainer } from './DragAndDropContainer';
 
 export const FormAddGrade = ({ formik, editing, tableData }) => {
   let [gradeInput, setGradeInput] = useState('');

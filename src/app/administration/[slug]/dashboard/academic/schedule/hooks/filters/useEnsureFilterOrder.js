@@ -2,10 +2,10 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
+import { GURU_FIELD_NAME } from "../../components/filters/GuruSelect";
+import { KELAS_FIELD_NAME } from "../../components/filters/KelasSelect";
 import { PRODI_FIELD_NAME } from "../../components/filters/ProdiSelect";
 import { TINGKAT_FIELD_NAME } from "../../components/filters/TingkatSelect";
-import { KELAS_FIELD_NAME } from "../../components/filters/KelasSelect";
-import { GURU_FIELD_NAME } from "../../components/filters/GuruSelect";
 
 export const useEnsureFilterOrder = (periode, prodi) => {
   const router = useRouter();

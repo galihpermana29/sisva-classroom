@@ -1,10 +1,10 @@
+import { useGetDetailTask } from "@/app/classroom/(main)/teacher/class/[classId]/create-rpp/usecase/task/use-get-detail-task";
 import { DatePicker, Form, Modal, Radio, Space } from "antd";
 import React from "react";
-import SisvaRichText from "../Input/RichText";
-import SisvaInputFile from "../Input/InputFile";
-import { SisvaInput } from "../Input/SisvaInputField";
 import SisvaButton from "../Button/GlobalButton";
-import { useGetDetailTask } from "@/app/classroom/(main)/teacher/class/[classId]/create-rpp/usecase/task/use-get-detail-task";
+import SisvaInputFile from "../Input/InputFile";
+import SisvaRichText from "../Input/RichText";
+import { SisvaInput } from "../Input/SisvaInputField";
 
 const FormTaskModal = ({
   open,

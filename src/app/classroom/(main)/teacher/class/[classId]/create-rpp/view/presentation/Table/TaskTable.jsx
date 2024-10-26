@@ -1,10 +1,10 @@
-import React from "react";
-import CustomRppTable from "./CustomRppTable";
-import { Edit01, File05, Trash01 } from "@untitled-ui/icons-react";
 import pdfIcon from "@/assets/classroom/teacher/PDFIcon.png";
-import Image from "next/image";
-import { useModal } from "../../container/Provider/ModalProvider";
+import { Edit01, Trash01 } from "@untitled-ui/icons-react";
 import DOMPurify from "dompurify";
+import Image from "next/image";
+import React from "react";
+import { useModal } from "../../container/Provider/ModalProvider";
+import CustomRppTable from "./CustomRppTable";
 
 const TaskTable = ({ dataSource }) => {
   const { setModalState } = useModal();

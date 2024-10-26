@@ -1,10 +1,10 @@
 "use client";
 
+import { useGetFilterJadwalGuru } from "../../../hooks/filters/jadwal-guru";
+import { useGetShowFilterStatus } from "../../../hooks/filters/useGetShowFilterStatus";
+import { GuruSelect } from "../GuruSelect";
 import { PeriodeSelect } from "../PeriodeSelect";
 import { ProdiSelect } from "../ProdiSelect";
-import { GuruSelect } from "../GuruSelect";
-import { useGetShowFilterStatus } from "../../../hooks/filters/useGetShowFilterStatus";
-import { useGetFilterJadwalGuru } from "../../../hooks/filters/jadwal-guru";
 
 export const JadwalGuruFilters = () => {
   const { showProdi, showGuru } = useGetShowFilterStatus();

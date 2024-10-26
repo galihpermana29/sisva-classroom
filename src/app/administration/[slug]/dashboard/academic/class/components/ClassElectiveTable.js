@@ -1,27 +1,20 @@
-import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import Image from 'next/image';
-import {
-  Avatar,
-  Box,
-  Button,
-  Chip,
-  Divider,
-  IconButton,
-  Modal,
-  Paper,
-  Stack,
-  TextField,
-  Typography,
-  useMediaQuery,
-} from '@mui/material';
 import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
-import Link from 'next/link';
-import { types, permissions } from '@/globalcomponents/Variable';
+import {
+    Box,
+    Button,
+    Chip,
+    Divider,
+    IconButton,
+    Modal,
+    Paper,
+    Stack,
+    Typography,
+    useMediaQuery
+} from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
+import * as React from 'react';
 import { useState } from 'react';
-import { FormAddStudyProgram } from './FormAddStudent';
-import { FormEdiPeriod, FormEditPeriod } from './FormEditPeriod';
-import dayjs from 'dayjs';
+import { FormEditPeriod } from './FormEditPeriod';
 
 const columns = [
   {

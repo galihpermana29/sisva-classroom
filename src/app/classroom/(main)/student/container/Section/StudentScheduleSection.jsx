@@ -1,11 +1,11 @@
 "use client";
 
-import SectionLayout from "@/app/classroom/shared/presentation/Layouts/SectionLayout";
-import CardSchedule from "@/app/classroom/shared/presentation/Card/CardSchedule";
-import { useGetStudentSchedule } from "@/app/classroom/(main)/student/usecase/useGetStudentSchedule";
-import CardScheduleSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardScheduleSkeleton";
-import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
 import { convertTime12To24 } from "@/app/classroom/(main)/student/usecase/convertTime12To24";
+import { useGetStudentSchedule } from "@/app/classroom/(main)/student/usecase/useGetStudentSchedule";
+import CardSchedule from "@/app/classroom/shared/presentation/Card/CardSchedule";
+import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
+import SectionLayout from "@/app/classroom/shared/presentation/Layouts/SectionLayout";
+import CardScheduleSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardScheduleSkeleton";
 
 const StudentScheduleSection = () => {
   const { schedules, isLoading } = useGetStudentSchedule();

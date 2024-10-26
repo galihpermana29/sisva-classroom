@@ -1,13 +1,13 @@
 'use client';
 
 import {
-  Box,
-  Button,
-  Divider,
-  Grid,
-  Paper,
-  Stack,
-  Typography,
+    Box,
+    Button,
+    Divider,
+    Grid,
+    Paper,
+    Stack,
+    Typography,
 } from '@mui/material';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';

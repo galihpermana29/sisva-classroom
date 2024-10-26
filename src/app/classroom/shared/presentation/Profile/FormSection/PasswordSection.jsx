@@ -1,8 +1,7 @@
 import { Form, Tabs } from "antd";
 import React, { useState } from "react";
-import { SisvaInputPassword } from "../../Input/SisvaInputField";
 import SisvaButton from "../../Button/GlobalButton";
-import { Edit05 } from "@untitled-ui/icons-react";
+import { SisvaInputPassword } from "../../Input/SisvaInputField";
 
 const PasswordSection = ({ form, loading, handleSubmitSection, setIsEdit }) => {
   const [passwordSection, setPasswordSection] = useState("change-password");

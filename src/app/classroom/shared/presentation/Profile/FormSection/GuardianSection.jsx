@@ -1,11 +1,11 @@
+import { Edit05 } from "@untitled-ui/icons-react";
+import { Divider, Form } from "antd";
 import React from "react";
 import { useProfileForm } from "../../../usecase/hooks/profile/use-profile-form";
-import { Divider, Form } from "antd";
-import FormItem from "../FormItem";
+import SisvaButton from "../../Button/GlobalButton";
 import { SisvaSelect } from "../../Input/SelectField";
 import { SisvaInput } from "../../Input/SisvaInputField";
-import SisvaButton from "../../Button/GlobalButton";
-import { Edit05 } from "@untitled-ui/icons-react";
+import FormItem from "../FormItem";
 
 const GuardianSection = ({
   form,

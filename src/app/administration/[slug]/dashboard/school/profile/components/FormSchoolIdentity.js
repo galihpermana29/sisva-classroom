@@ -1,13 +1,13 @@
 import { useState } from 'react';
 
 import {
-  Box,
-  Button,
-  Grid,
-  Modal,
-  Paper,
-  Stack,
-  Typography,
+    Box,
+    Button,
+    Grid,
+    Modal,
+    Paper,
+    Stack,
+    Typography,
 } from '@mui/material';
 
 import checklist from '@/assets/Checklist.png';

@@ -1,7 +1,6 @@
 import Image from "next/image";
 
 import EmptyStateImg from "@/assets/svgs/empty-state.svg";
-import { useParams } from "next/navigation";
 
 const EmptyState = ({ className }) => {
   return (

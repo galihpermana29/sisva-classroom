@@ -1,11 +1,8 @@
 import {
-  CancelOutlined,
-  ClearAllRounded,
-  ClearRounded,
-  DeleteForeverRounded,
-  DragIndicatorRounded,
+    ClearRounded,
+    DragIndicatorRounded
 } from "@mui/icons-material";
-import { Box, Button, IconButton, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 // import { ItemTypes } from "./ItemTypes.js";

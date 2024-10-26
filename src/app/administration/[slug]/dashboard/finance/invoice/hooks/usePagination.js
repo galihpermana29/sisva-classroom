@@ -1,13 +1,13 @@
 "use client";
 
+import { useQueryParam } from "@/hooks/useQueryParam";
 import { useSearchParams } from "next/navigation";
 import {
-  CURRENT_PAGE_NAME,
-  DEFAULT_PAGE,
-  DEFAULT_ROWS_PER_PAGE,
-  ROWS_PER_PAGE_NAME,
+    CURRENT_PAGE_NAME,
+    DEFAULT_PAGE,
+    DEFAULT_ROWS_PER_PAGE,
+    ROWS_PER_PAGE_NAME,
 } from "../constants";
-import { useQueryParam } from "@/hooks/useQueryParam";
 
 /** Get values needed for pagination, such as current page (`page`), current rows per page value (`rowsPerPage`), functions to navigate page.
  * Default value for page is 1, and rowsPerPage's default value is 5.

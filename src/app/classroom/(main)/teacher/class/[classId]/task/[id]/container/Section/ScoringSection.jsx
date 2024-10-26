@@ -1,19 +1,19 @@
-import {
-  SisvaInputNumber,
-  SisvaTextArea,
-} from "@/app/classroom/shared/presentation/Input/SisvaInputField";
-import CardFile from "../Card/CardFile";
 import SisvaButton from "@/app/classroom/shared/presentation/Button/GlobalButton";
+import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
+import {
+    SisvaInputNumber,
+    SisvaTextArea,
+} from "@/app/classroom/shared/presentation/Input/SisvaInputField";
+import { Form } from "antd";
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 import { dateFormatterHours } from "../../usecase/dateFormatter";
 import { isOverdue } from "../../usecase/use-overdue";
 import { useSetScore } from "../../usecase/use-set-score";
-import { Form } from "antd";
-import { useEffect } from "react";
-import { useSearchParams } from "next/navigation";
-import SkeletonScoringSection from "../Skeleton/SkeletonScoringSection";
-import EmptyStateStudentScore from "../EmptyState/EmptyState";
 import { useSubmission } from "../../usecase/use-submission";
-import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
+import CardFile from "../Card/CardFile";
+import EmptyStateStudentScore from "../EmptyState/EmptyState";
+import SkeletonScoringSection from "../Skeleton/SkeletonScoringSection";
 
 const ScoringSection = ({ deadline }) => {
   const { submission, loading } = useSubmission();

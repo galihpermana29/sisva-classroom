@@ -1,8 +1,8 @@
+import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
 import React from "react";
+import TeachingPlanTitle from "../../../TeachingPlan/view/presentation/TeachingPlanTitle";
 import AssignmentCard from "./AssignmentCard";
 import AssignmentCardSkeleton from "./AssignmentCardSkeleton";
-import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
-import TeachingPlanTitle from "../../../TeachingPlan/view/presentation/TeachingPlanTitle";
 
 const AssignmentListGroup = ({ assignmentGroups, isLoading }) => {
   return (

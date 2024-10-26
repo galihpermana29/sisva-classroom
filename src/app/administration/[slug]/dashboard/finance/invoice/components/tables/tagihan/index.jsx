@@ -1,6 +1,6 @@
 import { CustomTable } from "@/components/CustomTable";
-import { TableBodyTagihan } from "./TableBodyTagihan";
 import { tagihanSorts } from "../../../constants";
+import { TableBodyTagihan } from "./TableBodyTagihan";
 
 function TableTagihan() {
   const sortKeys = tagihanSorts.map((sort) => sort.value);

@@ -1,10 +1,10 @@
 import React from "react";
 import {
-  getTeachingMaterialList,
-  getAllCurriculum,
-  getAllStudyProgram,
-  getAllSubjectName,
-  getAllTeacher,
+    getAllCurriculum,
+    getAllStudyProgram,
+    getAllSubjectName,
+    getAllTeacher,
+    getTeachingMaterialList,
 } from "./repository/teaching-material-service";
 import TeachingMaterialMainPage from "./view/container/TeachingMaterialMainPage";
 

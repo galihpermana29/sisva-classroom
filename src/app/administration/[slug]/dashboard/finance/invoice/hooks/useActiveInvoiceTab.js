@@ -2,8 +2,8 @@
 
 import { TAB_FIELD_NAME } from "@/components/TabSelector";
 import { useSearchParams } from "next/navigation";
-import { isValidInvoiceTab } from "../utils/isValidInvoiceTab";
 import { DEFAULT_INVOICE_TAB, INVOICE_TABS } from "../constants";
+import { isValidInvoiceTab } from "../utils/isValidInvoiceTab";
 
 /**
  * Get the current active tab from URL param, this is supposed to be used as a hook

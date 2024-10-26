@@ -1,38 +1,33 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
-import Image from 'next/image';
 import {
-  Avatar,
-  Box,
-  Button,
-  Divider,
-  Grid,
-  IconButton,
-  OutlinedInput,
-  Paper,
-  Stack,
-  Typography,
+    Avatar,
+    Box,
+    Button,
+    Grid,
+    IconButton,
+    Paper,
+    Stack,
+    Typography
 } from '@mui/material';
-import SchoolLogo from '@/assets/School-Logo-Blue.png';
-import LandingImage from '@/assets/Login-Library.png';
+import Image from 'next/image';
+import { useEffect, useRef, useState } from 'react';
 
 import {
-  ArrowBackIosNewRounded,
-  BorderColorRounded,
+    ArrowBackIosNewRounded,
+    BorderColorRounded,
 } from '@mui/icons-material';
 
 import { useFormik } from 'formik';
 
+import AuthAPI from '@/api/auth';
+import FilesAPI from '@/api/files';
+import UsersAPI from '@/api/users';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { FormStaffBasic } from './components/FormStaffBasic';
 import { FormStaffBiodata } from './components/FormStaffBiodata';
 import { FormStaffPassword } from './components/FormStaffPassword';
-import Link from 'next/link';
-import UsersAPI from '@/api/users';
-import { object } from 'yup';
-import AuthAPI from '@/api/auth';
-import FilesAPI from '@/api/files';
-import { useParams } from 'next/navigation';
 
 export default function StaffProfileContent({ user_id }) {
   const { slug } = useParams();

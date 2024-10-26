@@ -1,7 +1,7 @@
 import { Divider, Paper, Stack } from "@mui/material";
 import TableTagihan from "../tables/tagihan";
-import { TagihanPagination } from "../tagihan/TagihanPagination";
 import { TagihanData } from "../tagihan/TagihanData";
+import { TagihanPagination } from "../tagihan/TagihanPagination";
 
 function Tagihan() {
   return (

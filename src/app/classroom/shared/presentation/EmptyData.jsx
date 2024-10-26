@@ -1,6 +1,6 @@
+import NoData from "@/assets/classroom/images/NoData.png";
 import Image from "next/image";
 import React from "react";
-import NoData from "@/assets/classroom/images/NoData.png";
 
 const EmptyData = ({ title, subtitle }) => {
   return (

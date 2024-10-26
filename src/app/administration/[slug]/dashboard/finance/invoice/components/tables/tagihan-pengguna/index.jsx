@@ -1,6 +1,6 @@
 import { CustomTable } from "@/components/CustomTable";
-import { TableBodyTagihanPengguna } from "./TableBodyTagihanPengguna";
 import { userBillSorts } from "../../../constants";
+import { TableBodyTagihanPengguna } from "./TableBodyTagihanPengguna";
 
 export const TableTagihanPengguna = () => {
   const sortKeys = userBillSorts.map((sort) => sort.value);

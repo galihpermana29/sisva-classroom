@@ -1,9 +1,9 @@
-import MenuKBMSection from "./Section/MenuKBMSection";
-import StudentTaskSection from "./Section/StudentTaskSection";
-import StudentScheduleSection from "./Section/StudentScheduleSection";
 import AnnouncementSection from "./Section/AnnouncementSection";
 import ClassReviewSection from "./Section/ClassReviewSection";
+import MenuKBMSection from "./Section/MenuKBMSection";
 import ProfileStudentSection from "./Section/ProfileStudentSection";
+import StudentScheduleSection from "./Section/StudentScheduleSection";
+import StudentTaskSection from "./Section/StudentTaskSection";
 
 const StudentHomeContainer = () => {
   return (

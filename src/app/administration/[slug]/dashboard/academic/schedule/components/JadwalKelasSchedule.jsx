@@ -4,9 +4,9 @@ import { Stack } from "@mui/material";
 import { useFilterStatus } from "../hooks/filters/useFilterStatus";
 import { useGetAvailableClassSchedules } from "../hooks/useGetAvailableClassSchedules";
 import { FilterIncompleteState } from "./FilterIncompleteState";
-import WeekGeneralSchedule from "./schedule/WeekGeneralSchedule";
-import { NonLearningCell } from "./schedule/NonLearningCell";
 import { KelasLearningCell } from "./schedule/KelasLearningCell";
+import { NonLearningCell } from "./schedule/NonLearningCell";
+import WeekGeneralSchedule from "./schedule/WeekGeneralSchedule";
 
 export const JadwalKelasSchedule = () => {
   const { periode, prodi, tingkat, kelas } = useFilterStatus();

@@ -1,12 +1,11 @@
-import { useMemo } from "react";
-import { Avatar, Table } from "antd";
-import { ConfigProvider } from "antd";
+import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
 import placeholderImage from "@/assets/placeholder.jpg";
+import { Avatar, ConfigProvider, Table } from "antd";
+import { Kumbh_Sans } from "next/font/google";
+import { useMemo } from "react";
 import { formatDateDay } from "../../../../usecase/dateFormatter";
 import { useAttendance } from "../../../../usecase/use-attendance";
 import BadgeAttendance from "../../../container/BadgeAttendance/BadgeAttendance";
-import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
-import { Kumbh_Sans } from "next/font/google";
 
 const kumh_sans = Kumbh_Sans({ subsets: ["latin"] });
 

@@ -1,8 +1,8 @@
 import { Select } from "antd";
 import clsx from "clsx";
 
-import "./style.css";
 import { ChevronDown } from "@untitled-ui/icons-react";
+import "./style.css";
 export function SisvaSelect({
   customSize,
   shadow = false,

@@ -1,10 +1,10 @@
 import React from "react";
-import TeacherClassContainer from "./view/container/ClassContainer";
-import {
-  getPeriodDropdown,
-  getTeacherClassList,
-} from "./repository/teacher-class-service";
 import { getAllStudyProgram } from "../teaching-material/repository/teaching-material-service";
+import {
+    getPeriodDropdown,
+    getTeacherClassList,
+} from "./repository/teacher-class-service";
+import TeacherClassContainer from "./view/container/ClassContainer";
 
 async function getTeacherClassListPageData() {
   const [classList, periodList, studyProgramList] = await Promise.all([

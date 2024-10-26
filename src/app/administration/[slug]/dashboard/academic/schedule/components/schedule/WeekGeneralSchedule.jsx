@@ -1,14 +1,14 @@
 "use client";
 
-import {
-  Inject,
-  ScheduleComponent,
-  Week,
-} from "@syncfusion/ej2-react-schedule";
-import { Internationalization } from "@syncfusion/ej2-base";
-import { Typography } from "@mui/material";
-import dayjs from "dayjs";
 import { font } from "@/app/layout";
+import { Typography } from "@mui/material";
+import { Internationalization } from "@syncfusion/ej2-base";
+import {
+    Inject,
+    ScheduleComponent,
+    Week,
+} from "@syncfusion/ej2-react-schedule";
+import dayjs from "dayjs";
 
 const WeekGeneralSchedule = ({ data, cellTemplate }) => {
   const instance = new Internationalization();

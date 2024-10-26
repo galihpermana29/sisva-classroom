@@ -1,7 +1,7 @@
 import { Divider, Paper, Stack } from "@mui/material";
 import { InvoiceData } from "../invoice/InvoiceData";
-import { TableInvoice } from "../tables/invoice";
 import { InvoicePagination } from "../invoice/InvoicePagination";
+import { TableInvoice } from "../tables/invoice";
 
 /** @description Component showing the main content of tagihan pengguna tab */
 export const Invoice = () => {

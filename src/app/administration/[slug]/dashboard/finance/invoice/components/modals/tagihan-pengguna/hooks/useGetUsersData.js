@@ -1,7 +1,7 @@
+import { useGetAllStudentGroups } from "@/hooks/useGetAllStudentGroups";
+import { useGetAllUsers } from "@/hooks/useGetAllUsers";
 import { paginateData } from "@/utils/paginateData";
 import { useGetStudentsInStudentGroup } from "../../../../hooks/useGetStudentsInStudentGroup";
-import { useGetAllUsers } from "@/hooks/useGetAllUsers";
-import { useGetAllStudentGroups } from "@/hooks/useGetAllStudentGroups";
 import { hasFilter } from "../utils/hasFilter";
 
 export const useGetUsersData = ({

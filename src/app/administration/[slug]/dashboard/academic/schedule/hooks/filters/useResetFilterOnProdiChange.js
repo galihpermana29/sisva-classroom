@@ -2,9 +2,9 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
-import { TINGKAT_FIELD_NAME } from "../../components/filters/TingkatSelect";
-import { KELAS_FIELD_NAME } from "../../components/filters/KelasSelect";
 import { GURU_FIELD_NAME } from "../../components/filters/GuruSelect";
+import { KELAS_FIELD_NAME } from "../../components/filters/KelasSelect";
+import { TINGKAT_FIELD_NAME } from "../../components/filters/TingkatSelect";
 
 export const useResetFilterOnProdiChange = (prodi) => {
   const router = useRouter();

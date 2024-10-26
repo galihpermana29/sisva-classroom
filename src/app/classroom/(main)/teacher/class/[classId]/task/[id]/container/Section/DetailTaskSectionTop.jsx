@@ -1,10 +1,10 @@
-import { Divider } from "antd";
-import InfoItem from "../InfoItem/InfoItem";
-import { dateFormatterDayName } from "../../usecase/dateFormatter";
-import SkeletonDetailTaskSection from "../Skeleton/SkeletonDetailTaskSection";
-import Image from "next/image";
-import parse from "html-react-parser";
 import PDFImage from "@/assets/pdf.png";
+import { Divider } from "antd";
+import parse from "html-react-parser";
+import Image from "next/image";
+import { dateFormatterDayName } from "../../usecase/dateFormatter";
+import InfoItem from "../InfoItem/InfoItem";
+import SkeletonDetailTaskSection from "../Skeleton/SkeletonDetailTaskSection";
 
 export default function DetailTaskSectionTop({ task, loading }) {
   if (loading) {

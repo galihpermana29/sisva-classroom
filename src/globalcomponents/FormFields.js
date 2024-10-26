@@ -1,16 +1,15 @@
 import {
-  educationLevels,
-  genders,
-  guardians,
-  incomeLevels,
-  lifeStatus,
-  nationalities,
-  nationality,
-  permissions,
-  relationships,
-  religions,
-  subject_types,
-  types,
+    educationLevels,
+    genders,
+    guardians,
+    incomeLevels,
+    lifeStatus,
+    nationalities,
+    permissions,
+    relationships,
+    religions,
+    subject_types,
+    types
 } from '@/globalcomponents/Variable';
 
 export const formAddCurriculumFields = [

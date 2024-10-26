@@ -1,25 +1,19 @@
 'use client';
 
 import {
-  Avatar,
-  Box,
-  Button,
-  Chip,
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  Stack,
-  TextField,
-  Typography,
+    Box,
+    Chip,
+    FormControl,
+    Grid,
+    MenuItem,
+    OutlinedInput,
+    Select,
+    Stack,
+    TextField,
+    Typography
 } from '@mui/material';
-import Image from 'next/image';
 
 import { formStaffBasicFields } from '@/globalcomponents/FormFields';
-import { Cancel } from '@mui/icons-material';
-import { useState } from 'react';
 import { permissions, types } from '@/globalcomponents/Variable';
 
 export const FormStaffBasic = ({ formik, editing }) => {

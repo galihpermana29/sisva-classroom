@@ -1,12 +1,12 @@
 "use client";
-import Image from "next/image";
-import React from "react";
 import BrandLogo from "@/assets/classroom/images/BrandLogo.svg";
-import { useRouter } from "next/navigation";
-import { getClientSession } from "../../usecase/session/get-client-session";
 import { Skeleton } from "antd";
-import { useNavbar } from "../../usecase/hooks/use-navbar";
 import { Kumbh_Sans } from "next/font/google";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import React from "react";
+import { useNavbar } from "../../usecase/hooks/use-navbar";
+import { getClientSession } from "../../usecase/session/get-client-session";
 
 const kumbh = Kumbh_Sans({
   subsets: ["latin"],

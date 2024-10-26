@@ -1,11 +1,11 @@
 "use client";
 
-import CardTask from "@/app/classroom/shared/presentation/Card/CardTask";
-import SectionLayout from "@/app/classroom/shared/presentation/Layouts/SectionLayout";
-import { useGetStudentTask } from "@/app/classroom/(main)/student/usecase/useGetStudentTask";
-import CardTaskSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardTaskSkeleton";
-import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
 import { convertDateTime12To24 } from "@/app/classroom/(main)/student/usecase/convertDateTime12To24";
+import { useGetStudentTask } from "@/app/classroom/(main)/student/usecase/useGetStudentTask";
+import CardTask from "@/app/classroom/shared/presentation/Card/CardTask";
+import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
+import SectionLayout from "@/app/classroom/shared/presentation/Layouts/SectionLayout";
+import CardTaskSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardTaskSkeleton";
 
 const StudentTaskSection = () => {
   const { tasks, isLoading } = useGetStudentTask();

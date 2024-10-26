@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import {
-  getAllClasses,
-  getAllTasks,
-  getScoreByClassId,
-  getStudentGroups,
-  getTaskById,
-  getUserById,
+    getAllClasses,
+    getAllTasks,
+    getScoreByClassId,
+    getStudentGroups,
+    getTaskById,
+    getUserById,
 } from "../../repository/teacher-score-service";
 import { parseDateTimeSort } from "../dateFormatter";
 

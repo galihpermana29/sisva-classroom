@@ -1,10 +1,9 @@
 "use client";
-import React from "react";
-import { useRouter } from "next/navigation";
-import { FileSearch02 } from "@untitled-ui/icons-react";
-import SisvaButton from "./Button/GlobalButton";
-import Image from "next/image";
 import EmptyStateImg from "@/assets/svgs/empty-state.svg";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import React from "react";
+import SisvaButton from "./Button/GlobalButton";
 
 const NotFoundPageComponent = ({ title = "Halaman Tidak Ada" }) => {
   const router = useRouter();

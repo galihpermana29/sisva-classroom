@@ -1,9 +1,9 @@
 "use client";
 
-import { IconButton, Modal, Tooltip } from "@mui/material";
-import { useState } from "react";
 import { ModalBody } from "@/components/CustomModal";
 import { ModeEdit } from "@mui/icons-material";
+import { IconButton, Modal, Tooltip } from "@mui/material";
+import { useState } from "react";
 import { EditJamSekolahForm } from "../forms/jam-sekolah/editJamSekolah";
 
 export const EditJamSekolahModal = ({ data }) => {

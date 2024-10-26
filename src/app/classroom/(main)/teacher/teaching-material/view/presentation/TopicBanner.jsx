@@ -1,4 +1,3 @@
-import { DotsGrid } from "@untitled-ui/icons-react";
 import React from "react";
 
 const TopicBanner = ({ title }) => {

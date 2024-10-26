@@ -13,12 +13,10 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import Image from 'next/image';
 
-import AcademicAPI from '@/api/academic';
 import { formAddSubjectFields } from '@/globalcomponents/FormFields';
 import { permissions } from '@/globalcomponents/Variable';
-import { Cancel, Visibility, VisibilityOff } from '@mui/icons-material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
 
 export const FormAddSubject = ({

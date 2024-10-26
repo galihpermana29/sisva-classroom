@@ -1,8 +1,8 @@
 "use client";
 
+import { ModalProvider } from "@/app/classroom/(main)/teacher/class/[classId]/create-rpp/view/container/Provider/ModalProvider";
 import { useSearchParams } from "next/navigation";
 import ClassDetailTabs from "../presentation/Tabs/ClassDetailTabs";
-import { ModalProvider } from "@/app/classroom/(main)/teacher/class/[classId]/create-rpp/view/container/Provider/ModalProvider";
 
 const ClassDetailContainer = ({ initialData }) => {
   const searchParams = useSearchParams();

@@ -1,14 +1,13 @@
 "use client";
 
-import { Flex } from "antd";
 
 import CardSchedule from "@/app/classroom/shared/presentation/Card/CardSchedule";
 import SectionLayout from "@/app/classroom/shared/presentation/Layouts/SectionLayout";
 
-import { useGetAllTeacherClassSchedules } from "../../usecase/useGetAllTeacherClassSchedules";
-import { convertTime12To24 } from "../../usecase/convertTime12To24";
-import CardScheduleSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardScheduleSkeleton";
 import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
+import CardScheduleSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardScheduleSkeleton";
+import { convertTime12To24 } from "../../usecase/convertTime12To24";
+import { useGetAllTeacherClassSchedules } from "../../usecase/useGetAllTeacherClassSchedules";
 
 const ScheduleSection = () => {
   const { data: schedules, isLoading } = useGetAllTeacherClassSchedules();

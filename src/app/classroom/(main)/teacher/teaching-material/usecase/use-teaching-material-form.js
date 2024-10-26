@@ -1,14 +1,13 @@
+import { useState } from "react";
 import toast from "react-hot-toast";
-import { generateRandomString } from "./custom-function";
 import { useModal } from "../../class/[classId]/create-rpp/view/container/Provider/ModalProvider";
 import {
-  deleteTeachingMaterial,
-  getTeachingMaterialById,
-  patchTeachingMaterial,
-  postTeachingMaterial,
-  postUploadFile,
+    deleteTeachingMaterial,
+    patchTeachingMaterial,
+    postTeachingMaterial,
+    postUploadFile
 } from "../repository/teaching-material-service";
-import { useState } from "react";
+import { generateRandomString } from "./custom-function";
 
 export const useTeachingMaterialForm = (setQueryFilter) => {
   const [isLoadingForm, setIsLoadingForm] = useState(false);

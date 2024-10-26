@@ -2,18 +2,16 @@
 
 import { Bell01 } from "@untitled-ui/icons-react";
 import { Badge } from "antd";
-import Image from "next/image";
 
 import {
-  BoxLeft,
-  BoxRight,
-  BoxTop,
+    BoxLeft,
+    BoxRight,
+    BoxTop,
 } from "@/app/classroom/shared/presentation/Box/Box";
 
-import ProfileImage from "@/assets/images/Profile.png";
+import AvatarProfile from "@/app/classroom/shared/presentation/Profile/AvatarProfile";
 import { useGetAllSubjectsTeached } from "../../usecase/useGetAllSubjectsTeached";
 import { useGetUserProfile } from "../../usecase/useGetUserProfile";
-import AvatarProfile from "@/app/classroom/shared/presentation/Profile/AvatarProfile";
 
 const HeaderSection = () => {
   const { data: subjects, isLoading } = useGetAllSubjectsTeached();

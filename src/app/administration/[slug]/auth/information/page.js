@@ -1,7 +1,6 @@
 'use client';
-import React, { useState } from 'react';
-import Image from 'next/image';
-import { Button, Stack, Typography, List, ListItem } from '@mui/material';
+import { Button, List, ListItem, Stack, Typography } from '@mui/material';
+import React from 'react';
 
 import { ArrowBackIosNewRounded } from '@mui/icons-material';
 import Link from 'next/link';

@@ -1,7 +1,7 @@
-import React from "react";
-import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
-import AssignmentCard from "./AssignmentCard";
 import TeachingPlanTitle from "@/app/classroom/(main)/teacher/class/[classId]/Pane/TeachingPlan/view/presentation/TeachingPlanTitle";
+import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
+import React from "react";
+import AssignmentCard from "./AssignmentCard";
 import AssignmentCardSkeleton from "./AssignmentCardSkeleton";
 import TitleBarSkeleton from "./TitleBarSkeleton";
 

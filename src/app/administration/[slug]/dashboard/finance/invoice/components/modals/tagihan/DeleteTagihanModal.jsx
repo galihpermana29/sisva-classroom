@@ -1,18 +1,18 @@
 "use client";
 
-import {
-  Button,
-  IconButton,
-  Modal,
-  Stack,
-  Tooltip,
-  Typography,
-} from "@mui/material";
-import { useState } from "react";
 import { ModalBody } from "@/components/CustomModal";
 import { Delete } from "@mui/icons-material";
-import useMutateDeleteTagihan from "../../../hooks/useMutateDeleteTagihan";
+import {
+    Button,
+    IconButton,
+    Modal,
+    Stack,
+    Tooltip,
+    Typography,
+} from "@mui/material";
 import { useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
+import useMutateDeleteTagihan from "../../../hooks/useMutateDeleteTagihan";
 
 export const DeleteTagihanModal = ({ id }) => {
   const [open, setOpen] = useState(false);

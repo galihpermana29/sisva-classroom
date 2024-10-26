@@ -1,9 +1,9 @@
 "use client";
 
-import { MenuItem, Select, Stack, Typography } from "@mui/material";
-import { KELAS_FIELD_NAME } from "../../filters/KelasSelect";
-import { useSearchParams } from "next/navigation";
 import { useQueryParam } from "@/hooks/useQueryParam";
+import { MenuItem, Select, Stack, Typography } from "@mui/material";
+import { useSearchParams } from "next/navigation";
+import { KELAS_FIELD_NAME } from "../../filters/KelasSelect";
 
 function FilterClassSelect({
   formik,

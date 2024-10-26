@@ -1,10 +1,10 @@
 import { Box, Divider, Paper, Stack } from "@mui/material";
 import { Suspense } from "react";
-import { TabLayoutTitle } from "./components/layouts/TabLayoutTitle";
-import { TabActions } from "./components/layouts/TabActions";
 import { InvoiceTabs } from "./components/layouts/InvoiceTabs";
-import { TabSearch } from "./components/layouts/TabSearch";
+import { TabActions } from "./components/layouts/TabActions";
 import { TabFilters } from "./components/layouts/TabFilters";
+import { TabLayoutTitle } from "./components/layouts/TabLayoutTitle";
+import { TabSearch } from "./components/layouts/TabSearch";
 
 export default function InvoiceLayout({ children }) {
   return (

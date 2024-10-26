@@ -1,11 +1,11 @@
 "use client";
 
+import dayjs from "dayjs";
 import { useState } from "react";
 import useJadwalKeseluruhanCalendar from "../hooks/useJadwalKeseluruhanCalendar";
 import EditAktivitasNonKbmModal from "./modals/EditAktivitasNonKbmModal";
-import TimelineWeekSchedule from "./TimelineWeekSchedule";
-import dayjs from "dayjs";
 import EditJadwalKelasModal from "./modals/EditJadwalKelasModal";
+import TimelineWeekSchedule from "./TimelineWeekSchedule";
 
 export const JadwalKeseluruhanSchedule = () => {
   const {

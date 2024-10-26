@@ -1,9 +1,9 @@
+import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
 import CardGridSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardGridSkeleton";
+import { Card } from "antd";
 import React from "react";
 import MaterialCard from "./TeachingMaterialCard/MaterialCard";
 import TopicBanner from "./TopicBanner";
-import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
-import { Card } from "antd";
 
 const TeachingMaterialCardList = ({ materialData, isLoading }) => {
   if (isLoading) {

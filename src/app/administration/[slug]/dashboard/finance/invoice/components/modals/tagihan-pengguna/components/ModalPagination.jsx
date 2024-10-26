@@ -1,6 +1,6 @@
+import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import { Stack, Typography } from "@mui/material";
 import { PaginationButton } from "../../../paginations/PaginationButton";
-import { ArrowBack, ArrowForward } from "@mui/icons-material";
 
 export const ModalPagination = ({ page, totalPage, setPage }) => {
   const goToNextPage = () => setPage((prev) => prev + 1);

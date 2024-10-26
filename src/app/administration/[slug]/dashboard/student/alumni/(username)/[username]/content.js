@@ -1,21 +1,17 @@
 'use client';
 
-import LandingImage from '@/assets/Login-Library.png';
-import SchoolLogo from '@/assets/School-Logo-Blue.png';
 import {
   Avatar,
   Box,
   Button,
-  Divider,
   Grid,
   IconButton,
-  OutlinedInput,
   Paper,
   Stack,
-  Typography,
+  Typography
 } from '@mui/material';
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import {
   ArrowBackIosNewRounded,

@@ -1,37 +1,27 @@
 'use client';
 
 import {
-  Avatar,
-  Box,
-  Button,
-  Chip,
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  Stack,
-  TextField,
-  Typography,
+    Box,
+    Button,
+    Grid,
+    MenuItem,
+    Stack,
+    TextField,
+    Typography
 } from '@mui/material';
 import Image from 'next/image';
 
 import { formStudentParentsFields } from '@/globalcomponents/FormFields';
-import { Cancel } from '@mui/icons-material';
-import { useState } from 'react';
 import {
-  educationLevels,
-  genders,
-  guardians,
-  incomeLevels,
-  lifeStatus,
-  nationalities,
-  permissions,
-  relationships,
-  religions,
-  types,
+    educationLevels,
+    genders,
+    guardians,
+    incomeLevels,
+    lifeStatus,
+    relationships,
+    religions
 } from '@/globalcomponents/Variable';
+import { Cancel } from '@mui/icons-material';
 
 export const FormStudentParents = ({ formik, editing }) => {
   function RenderGender({ value }) {

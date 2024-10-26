@@ -2,22 +2,21 @@
 import React, { useState } from 'react';
 
 import {
-  Box,
-  Checkbox,
   Button,
+  Checkbox,
   FormControl,
   FormControlLabel,
   IconButton,
   InputAdornment,
   OutlinedInput,
   Stack,
-  Typography,
+  Typography
 } from '@mui/material';
 
+import AuthAPI from '@/api/auth';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
-import AuthAPI from '@/api/auth';
 
 export default function Home() {
   const router = useRouter();

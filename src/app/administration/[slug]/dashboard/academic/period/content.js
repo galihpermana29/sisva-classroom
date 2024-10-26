@@ -2,25 +2,25 @@
 
 import { ExcelIcon, SortIcon } from '@/assets/SVGs';
 import {
-  Add,
-  Cancel,
-  DownloadRounded,
-  Search,
-  UploadFileRounded,
+    Add,
+    Cancel,
+    DownloadRounded,
+    Search,
+    UploadFileRounded,
 } from '@mui/icons-material';
 import {
-  Box,
-  Button,
-  Divider,
-  Hidden,
-  InputAdornment,
-  Menu,
-  MenuItem,
-  Modal,
-  Paper,
-  Stack,
-  TextField,
-  Typography,
+    Box,
+    Button,
+    Divider,
+    Hidden,
+    InputAdornment,
+    Menu,
+    MenuItem,
+    Modal,
+    Paper,
+    Stack,
+    TextField,
+    Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { FormAddPeriod } from './components/FormAddPeriod';

@@ -1,28 +1,16 @@
 "use client";
 
 import {
-  Avatar,
-  Box,
-  Button,
-  Chip,
-  FormControl,
-  Grid,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  Stack,
-  TextField,
-  Typography,
+    IconButton,
+    InputAdornment,
+    Stack,
+    TextField,
+    Typography
 } from "@mui/material";
-import Image from "next/image";
 
 import { formAddStudentFields } from "@/globalcomponents/FormFields";
-import { Cancel, Visibility, VisibilityOff } from "@mui/icons-material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
-import { permissions } from "@/globalcomponents/Variable";
 
 export const FormAddStudent = ({ formik, editing }) => {
   const [showPassword, setShowPassword] = useState(false);

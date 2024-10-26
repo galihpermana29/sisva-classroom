@@ -1,33 +1,25 @@
 'use client';
 
 import {
-  Avatar,
-  Box,
-  Button,
-  Chip,
-  FormControl,
-  Grid,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  Stack,
-  TextField,
-  Typography,
+    Box,
+    Chip,
+    FormControl,
+    IconButton,
+    InputAdornment,
+    MenuItem,
+    OutlinedInput,
+    Select,
+    Stack,
+    TextField,
+    Typography
 } from '@mui/material';
-import Image from 'next/image';
 
 import {
-  formAddCurriculumFields,
-  formAddStaffFields,
-  formAddStudyProgramFields,
-  formAddSubjectFields,
+    formAddCurriculumFields
 } from '@/globalcomponents/FormFields';
-import { Cancel, Visibility, VisibilityOff } from '@mui/icons-material';
-import { useEffect, useState } from 'react';
 import { permissions } from '@/globalcomponents/Variable';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { useEffect, useState } from 'react';
 
 export const FormAddCurriculum = ({
   formik,

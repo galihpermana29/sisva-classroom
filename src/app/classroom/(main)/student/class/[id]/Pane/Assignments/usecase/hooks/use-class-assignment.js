@@ -2,8 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useDebounce } from "use-debounce";
 import {
-  getAllTasks,
-  getAllTeachingPlan,
+    getAllTasks,
+    getAllTeachingPlan,
 } from "../../repository/student-assignment-service";
 import { groupTaskByTeachingPlan, searchFilter } from "../data-mapper";
 

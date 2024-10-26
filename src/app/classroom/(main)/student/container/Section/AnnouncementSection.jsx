@@ -1,12 +1,12 @@
 "use client";
 
-import Link from "next/link";
-import CardAnnouncement from "@/app/classroom/shared/presentation/Card/CardAnnouncement";
-import SectionLayout from "@/app/classroom/shared/presentation/Layouts/SectionLayout";
-import AnnouncementImage from "@/assets/images/announcement.png";
 import { useGetStudentAnnouncement } from "@/app/classroom/(main)/student/usecase/useGetStudentAnnouncement";
-import CardAnnouncementSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardAnnouncementSkeleton";
+import CardAnnouncement from "@/app/classroom/shared/presentation/Card/CardAnnouncement";
 import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
+import SectionLayout from "@/app/classroom/shared/presentation/Layouts/SectionLayout";
+import CardAnnouncementSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardAnnouncementSkeleton";
+import AnnouncementImage from "@/assets/images/announcement.png";
+import Link from "next/link";
 
 const AnnouncementSection = () => {
   const { announcements, isLoading } = useGetStudentAnnouncement();

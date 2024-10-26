@@ -1,5 +1,5 @@
-import { Divider } from "antd";
 import { BoxTop } from "@/app/classroom/shared/presentation/Box/Box";
+import { Divider } from "antd";
 
 const ClassCardSkeleton = () => {
   return (

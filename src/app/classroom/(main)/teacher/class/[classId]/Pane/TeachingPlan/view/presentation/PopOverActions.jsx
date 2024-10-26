@@ -3,8 +3,8 @@ import { Popover } from "antd";
 import { useParams } from "next/navigation";
 
 import Link from "next/link";
-import DeleteConfirmationModal from "./DeleteConfirmation";
 import { useDeleteTeachingPlan } from "../../usecase/use-delete-teaching-plan";
+import DeleteConfirmationModal from "./DeleteConfirmation";
 
 const PopOverActions = ({ id }) => {
   const {

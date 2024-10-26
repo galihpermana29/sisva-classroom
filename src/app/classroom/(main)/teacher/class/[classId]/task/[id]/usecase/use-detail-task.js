@@ -1,7 +1,7 @@
+import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getTaskById } from "../repository/scoring-submission-service";
-import { useParams, useRouter } from "next/navigation";
-import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
 
 export function useDetailTask() {
   const [task, setTask] = useState({});

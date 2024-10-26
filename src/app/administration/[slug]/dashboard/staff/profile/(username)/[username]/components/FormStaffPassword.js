@@ -1,32 +1,26 @@
 'use client';
 
 import {
-  Avatar,
-  Box,
-  Button,
-  Chip,
-  FormControl,
-  Grid,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  MenuItem,
-  Modal,
-  OutlinedInput,
-  Paper,
-  Select,
-  Stack,
-  TextField,
-  Typography,
+    Avatar,
+    Box,
+    Button,
+    Grid,
+    IconButton,
+    InputAdornment,
+    Modal,
+    Paper,
+    Stack,
+    TextField,
+    Typography
 } from '@mui/material';
 import Image from 'next/image';
 
 import {
-  formChangePasswordFields,
-  formResetPasswordFields,
+    formChangePasswordFields,
+    formResetPasswordFields,
 } from '@/globalcomponents/FormFields';
-import { useState } from 'react';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { useState } from 'react';
 
 export const FormStaffPassword = ({
   formik,

@@ -1,6 +1,7 @@
 "use client";
 
 import AcademicAPI from "@/api/academic";
+import { formatDayToLabel } from "@/utils/formatDay";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { JADWAL_KESELURUHAN_FIELD_NAME } from "../components/filters/JadwalKeseluruhanSwitch";
@@ -8,7 +9,6 @@ import { KELAS_FIELD_NAME } from "../components/filters/KelasSelect";
 import { PERIODE_FIELD_NAME } from "../components/filters/PeriodeSelect";
 import { PRODI_FIELD_NAME } from "../components/filters/ProdiSelect";
 import { TINGKAT_FIELD_NAME } from "../components/filters/TingkatSelect";
-import { formatDayToLabel } from "@/utils/formatDay";
 
 function useJadwalKeseluruhanFilter() {
   const searchParams = useSearchParams();

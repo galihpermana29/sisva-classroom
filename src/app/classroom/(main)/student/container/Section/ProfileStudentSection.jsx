@@ -1,15 +1,15 @@
 "use client";
 
-import { Badge } from "antd";
-import PlaceholderProfile from "@/assets/placeholder.jpg";
-import {
-  BoxLeft,
-  BoxRight,
-  BoxTop,
-} from "@/app/classroom/shared/presentation/Box/Box";
-import { Bell01 } from "@untitled-ui/icons-react/build/cjs";
 import { useGetStudentProfile } from "@/app/classroom/(main)/student/usecase/useGetStudentProfile";
+import {
+    BoxLeft,
+    BoxRight,
+    BoxTop,
+} from "@/app/classroom/shared/presentation/Box/Box";
 import AvatarProfile from "@/app/classroom/shared/presentation/Profile/AvatarProfile";
+import PlaceholderProfile from "@/assets/placeholder.jpg";
+import { Bell01 } from "@untitled-ui/icons-react/build/cjs";
+import { Badge } from "antd";
 
 const ProfileStudentSection = () => {
   const { student, isLoading } = useGetStudentProfile();

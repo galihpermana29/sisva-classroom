@@ -1,22 +1,16 @@
 'use client';
 
-import { Dialog, Disclosure, Popover, Transition } from '@headlessui/react';
+import { Dialog, Popover } from '@headlessui/react';
 import {
-  ChevronDownIcon,
   PhoneIcon,
-  PlayCircleIcon,
+  PlayCircleIcon
 } from '@heroicons/react/20/solid';
 import {
-  ArrowPathIcon,
   Bars3Icon,
-  ChartPieIcon,
-  CursorArrowRaysIcon,
-  FingerPrintIcon,
-  SquaresPlusIcon,
-  XMarkIcon,
+  XMarkIcon
 } from '@heroicons/react/24/outline';
 import Image from 'next/image';
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 
 import { usePathname } from 'next/navigation';
 

@@ -1,15 +1,15 @@
 "use client";
 
-import { useEnsureFilterOrder } from "../useEnsureFilterOrder";
-import { useSetDefaultPeriod } from "../useSetDefaultPeriod";
-import { useResetFilterOnProdiChange } from "../useResetFilterOnProdiChange";
-import { useResetFilterOnPeriodeChange } from "../useResetFilterOnPeriodeChange";
-import { useGetAvailableStudyPrograms } from "../useGetAvailableStudyPrograms";
-import { useGetAvailableGrades } from "../useGetAvailableGrades";
-import { useFilterStatus } from "../useFilterStatus";
-import { useGetShowFilterStatus } from "../useGetShowFilterStatus";
 import { useGetAllPeriods } from "@/hooks/useGetAllPeriods";
 import { useGetAllStudyPrograms } from "@/hooks/useGetAllStudyPrograms";
+import { useEnsureFilterOrder } from "../useEnsureFilterOrder";
+import { useFilterStatus } from "../useFilterStatus";
+import { useGetAvailableGrades } from "../useGetAvailableGrades";
+import { useGetAvailableStudyPrograms } from "../useGetAvailableStudyPrograms";
+import { useGetShowFilterStatus } from "../useGetShowFilterStatus";
+import { useResetFilterOnPeriodeChange } from "../useResetFilterOnPeriodeChange";
+import { useResetFilterOnProdiChange } from "../useResetFilterOnProdiChange";
+import { useSetDefaultPeriod } from "../useSetDefaultPeriod";
 
 export const useGetFilterPengaturanJadwal = () => {
   const { periode, prodi } = useFilterStatus();

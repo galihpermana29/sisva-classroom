@@ -1,4 +1,4 @@
-import api, { getBearerToken, getUserId, getSchoolId } from '.';
+import api, { getBearerToken, getSchoolId, getUserId } from '.';
 
 const BEARER_TOKEN = getBearerToken();
 const USER_ID = getUserId();

@@ -1,11 +1,10 @@
-import React from "react";
 import Image from "next/image";
+import React from "react";
 
-import NoTask from "@/assets/classroom/images/NoTask.png";
 import SisvaCard from "@/app/classroom/(main)/teacher/class/view/presentation/SisvaCard";
-import DefaultProfileImage from "@/assets/images/Profile.png";
-import { generalDateFormatter } from "@/app/classroom/shared/usecase/helper";
 import AvatarProfile from "@/app/classroom/shared/presentation/Profile/AvatarProfile";
+import { generalDateFormatter } from "@/app/classroom/shared/usecase/helper";
+import NoTask from "@/assets/classroom/images/NoTask.png";
 
 const ClassCard = ({
   subject,

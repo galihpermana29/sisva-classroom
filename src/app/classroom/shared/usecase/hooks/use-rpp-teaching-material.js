@@ -2,8 +2,8 @@ import { useParams } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDebounce } from 'use-debounce';
 import {
-  restructTeachingMaterialListRpp,
-  searchFilter,
+    restructTeachingMaterialListRpp,
+    searchFilter,
 } from '../../../(main)/teacher/teaching-material/model/data-mapper';
 import { getTeachingMaterialList } from '../../../(main)/teacher/teaching-material/repository/teaching-material-service';
 

@@ -1,9 +1,9 @@
+import Image from "next/image";
 import React from "react";
 import SisvaCard from "./SisvaCard";
-import Image from "next/image";
 
-import NoTask from "@/assets/classroom/images/NoTask.png";
 import { generalDateFormatter } from "@/app/classroom/shared/usecase/helper";
+import NoTask from "@/assets/classroom/images/NoTask.png";
 const ClassCard = ({
   onClick,
   subject,

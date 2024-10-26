@@ -3,9 +3,6 @@
 import { MenuItem, Stack, TextField, Typography } from '@mui/material';
 
 import { formAddExtracurriculer } from '@/globalcomponents/FormFields';
-import { permissions } from '@/globalcomponents/Variable';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { useState } from 'react';
 
 export const FormAddExtracurriculer = ({ formik, editing, teacherList }) => {
   return (

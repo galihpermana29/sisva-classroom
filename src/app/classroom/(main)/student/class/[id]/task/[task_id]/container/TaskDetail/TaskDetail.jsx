@@ -1,11 +1,11 @@
 "use client";
 
 import { Divider } from "antd";
-import InfoItem from "../InfoItem/InfoItem";
 import parse from "html-react-parser";
 import { dateFormatterDayName } from "../../usecase/dateFormatter";
-import SkeletonDetailTask from "../Skeleton/SkeletonDetailTask";
 import CardFile from "../Card/CardFile";
+import InfoItem from "../InfoItem/InfoItem";
+import SkeletonDetailTask from "../Skeleton/SkeletonDetailTask";
 
 export default function TaskDetail({ task, loading }) {
   if (loading) {

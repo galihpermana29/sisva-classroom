@@ -1,43 +1,41 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
 import {
-  Avatar,
-  Box,
-  Button,
-  Divider,
-  Menu,
-  MenuItem,
-  Modal,
-  Paper,
-  Stack,
-  Typography,
+    Avatar,
+    Box,
+    Button,
+    Divider,
+    Menu,
+    MenuItem,
+    Modal,
+    Paper,
+    Stack,
+    Typography,
 } from '@mui/material';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useParams, usePathname } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 
+import CmsAPI from '@/api/cms';
+import UsersAPI from '@/api/users';
 import SchoolLogoBlue from '@/assets/School-Logo-Blue.png';
 import {
-  ArrowBackIosNewRounded,
-  Cookie,
-  LogoutRounded,
-  SettingsOutlined,
-} from '@mui/icons-material';
-import {
-  AcademicIcon,
-  DashboardIcon,
-  FinanceIcon,
-  InformationIcon,
-  MenuIcon,
-  ReportIcon,
-  SchoolIcon,
-  StaffIcon,
-  StudentIcon,
+    AcademicIcon,
+    FinanceIcon,
+    InformationIcon,
+    MenuIcon,
+    ReportIcon,
+    SchoolIcon,
+    StaffIcon,
+    StudentIcon
 } from '@/assets/SVGs';
+import {
+    ArrowBackIosNewRounded,
+    LogoutRounded,
+    SettingsOutlined
+} from '@mui/icons-material';
 import Head from 'next/head';
-import UsersAPI from '@/api/users';
-import CmsAPI from '@/api/cms';
 
 export const metadata = {
   title: 'Beranda | Sisva',

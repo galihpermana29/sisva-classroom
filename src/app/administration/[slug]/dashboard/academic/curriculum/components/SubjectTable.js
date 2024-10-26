@@ -1,25 +1,21 @@
-import { permissions, subject_types, types } from '@/globalcomponents/Variable';
+import { subject_types } from '@/globalcomponents/Variable';
 import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
 import {
-  Avatar,
-  Box,
-  Button,
-  Chip,
-  Divider,
-  IconButton,
-  Modal,
-  Paper,
-  Stack,
-  TextField,
-  Typography,
-  useMediaQuery,
+    Box,
+    Button,
+    Chip,
+    Divider,
+    IconButton,
+    Modal,
+    Paper,
+    Stack,
+    Typography,
+    useMediaQuery
 } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
-import Image from 'next/image';
-import Link from 'next/link';
 import * as React from 'react';
 import { useState } from 'react';
-import { FormAddCurriculum, FormAddSubject } from './FormAddSubject';
+import { FormAddSubject } from './FormAddSubject';
 
 const columns = [
   {

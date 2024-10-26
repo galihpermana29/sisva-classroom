@@ -1,6 +1,6 @@
 import { ConfigProvider } from "antd";
-import SisvaNavbar from "../shared/presentation/Navbar/Navbar";
 import { Kumbh_Sans } from "next/font/google";
+import SisvaNavbar from "../shared/presentation/Navbar/Navbar";
 
 const kumbh = Kumbh_Sans({
   subsets: ["latin"],

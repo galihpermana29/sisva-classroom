@@ -1,11 +1,11 @@
 "use client";
 
-import CardClass from "@/app/classroom/shared/presentation/Card/CardClass";
-import SectionLayout from "@/app/classroom/shared/presentation/Layouts/SectionLayout";
-import { useGetClassReviews } from "@/app/classroom/(main)/student/usecase/useGetClassReview";
-import CardClassSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardClassSkeleton";
-import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
 import { convertDateTime12To24 } from "@/app/classroom/(main)/student/usecase/convertDateTime12To24";
+import { useGetClassReviews } from "@/app/classroom/(main)/student/usecase/useGetClassReview";
+import CardClass from "@/app/classroom/shared/presentation/Card/CardClass";
+import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
+import SectionLayout from "@/app/classroom/shared/presentation/Layouts/SectionLayout";
+import CardClassSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardClassSkeleton";
 
 const ClassReviewSection = () => {
   const { classReviews, isLoading } = useGetClassReviews();

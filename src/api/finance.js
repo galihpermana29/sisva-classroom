@@ -1,7 +1,7 @@
 import axios from "axios";
 
-import { getBearerToken, getSchoolId, getUserId } from ".";
 import { createQueryParam } from "@/utils/createQueryParam";
+import { getBearerToken, getSchoolId, getUserId } from ".";
 
 const BEARER_TOKEN = getBearerToken();
 const USER_ID = getUserId();

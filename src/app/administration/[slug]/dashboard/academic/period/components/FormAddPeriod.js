@@ -1,37 +1,24 @@
 'use client';
 
 import {
-  Avatar,
-  Box,
-  Button,
-  Chip,
-  FormControl,
-  Grid,
-  IconButton,
-  Input,
-  InputAdornment,
-  InputLabel,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  Stack,
-  TextField,
-  Typography,
+    IconButton,
+    Input,
+    InputAdornment,
+    MenuItem,
+    Stack,
+    TextField,
+    Typography
 } from '@mui/material';
-import Image from 'next/image';
 
 import {
-  formAddPeriodFields,
-  formAddStudyProgramFields,
+    formAddPeriodFields
 } from '@/globalcomponents/FormFields';
 import { Cancel, Visibility, VisibilityOff } from '@mui/icons-material';
 import { useState } from 'react';
-import { permissions } from '@/globalcomponents/Variable';
 
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 export const FormAddPeriod = ({ formik, editing }) => {
   const [showPassword, setShowPassword] = useState(false);

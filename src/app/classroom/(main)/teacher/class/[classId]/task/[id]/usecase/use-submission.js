@@ -1,10 +1,10 @@
+import { useParams, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
-  getStudentScores,
-  getSubmissionTask,
-  getUserById,
+    getStudentScores,
+    getSubmissionTask,
+    getUserById,
 } from "../repository/scoring-submission-service";
-import { useParams, useSearchParams } from "next/navigation";
 
 export function useSubmission() {
   const [submission, setSubmission] = useState({});

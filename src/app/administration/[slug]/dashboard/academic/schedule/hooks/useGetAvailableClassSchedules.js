@@ -4,10 +4,10 @@ import { useMemo } from "react";
 import { useFilterStatus } from "./filters/useFilterStatus";
 import { useGetClassSchedule } from "./useGetClassSchedule";
 
-import { useGetNonLearningSchedule } from "./useGetNonLearningSchedule";
-import { formatAndCombineSchedule } from "../utils/formatAndCombineSchedule";
-import { countConsecutiveAppearances } from "../utils/countScheduleConsecutiveAppearance";
 import { useGetAllClasses } from "@/hooks/useGetAllClasses";
+import { countConsecutiveAppearances } from "../utils/countScheduleConsecutiveAppearance";
+import { formatAndCombineSchedule } from "../utils/formatAndCombineSchedule";
+import { useGetNonLearningSchedule } from "./useGetNonLearningSchedule";
 
 export const useGetAvailableClassSchedules = () => {
   const { kelas: studentGroupFilter } = useFilterStatus();

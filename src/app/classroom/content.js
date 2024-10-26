@@ -1,10 +1,9 @@
 "use client";
 
-import { Box, Button, OutlinedInput, Stack, Typography } from "@mui/material";
 import { SchoolCodeIllustration } from "@/assets/SVGs";
+import { Button, OutlinedInput, Stack, Typography } from "@mui/material";
 import useTheme from "@mui/material/styles/useTheme";
 
-import Link from "next/link";
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";

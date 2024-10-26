@@ -1,7 +1,7 @@
-import { Spin, Upload } from "antd";
 import { File05, SearchMd, Trash01 } from "@untitled-ui/icons-react";
-import SisvaButton from "../Button/GlobalButton";
+import { Spin, Upload } from "antd";
 import toast from "react-hot-toast";
+import SisvaButton from "../Button/GlobalButton";
 
 const SisvaInputFile = ({
   text = "Upload file here",

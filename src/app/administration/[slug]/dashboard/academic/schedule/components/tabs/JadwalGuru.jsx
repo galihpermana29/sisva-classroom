@@ -1,8 +1,8 @@
 import { Stack, TableContainer } from "@mui/material";
 import { Suspense } from "react";
 import { JadwalGuruFilters } from "../filters/jadwal-guru";
-import { JadwalGuruSchedule } from "../JadwalGuruSchedule";
 import { JadwalGuruFilterAlert } from "../JadwalGuruFilterAlert";
+import { JadwalGuruSchedule } from "../JadwalGuruSchedule";
 
 export const JadwalGuru = () => {
   return (

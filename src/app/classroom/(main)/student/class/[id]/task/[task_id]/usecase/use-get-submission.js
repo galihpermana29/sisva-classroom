@@ -1,10 +1,10 @@
+import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
-  getScoreByTaskId,
-  getSubmissionByTaskId,
+    getScoreByTaskId,
+    getSubmissionByTaskId,
 } from "../repository/task-submission-repository";
-import { useParams } from "next/navigation";
-import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
 
 export function useGetSubmission() {
   const [submission, setSubmission] = useState({});

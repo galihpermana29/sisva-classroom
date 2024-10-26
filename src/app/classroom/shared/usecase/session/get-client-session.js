@@ -1,4 +1,4 @@
-import { getCookie, setCookie, removeCookie } from "cookies-next";
+import { getCookie } from "cookies-next";
 
 export function getClientSession() {
   const userDataCookie = getCookie("userData");

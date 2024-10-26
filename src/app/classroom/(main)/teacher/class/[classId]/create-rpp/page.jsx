@@ -1,12 +1,12 @@
 import React from "react";
-import CreateRppMainPage from "./view/container/CreateRppMainPage";
 import {
-  getAllCurriculum,
-  getAllStudyProgram,
-  getAllSubjectName,
-  getAllTeacher,
-  getTeachingMaterialList,
+    getAllCurriculum,
+    getAllStudyProgram,
+    getAllSubjectName,
+    getAllTeacher,
+    getTeachingMaterialList,
 } from "../../../teaching-material/repository/teaching-material-service";
+import CreateRppMainPage from "./view/container/CreateRppMainPage";
 
 async function getCreateRppPageData() {
   const [
