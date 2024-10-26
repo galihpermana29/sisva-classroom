@@ -10,7 +10,7 @@ import MaterialIcon from '@/assets/images/teaching-plan/material.svg';
 import TaskIcon from '@/assets/images/teaching-plan/task.png';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import process from "node:process";
+
 
 const TeachingPlanList = ({
   id,

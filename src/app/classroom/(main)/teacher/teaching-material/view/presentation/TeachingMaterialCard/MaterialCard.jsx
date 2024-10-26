@@ -8,7 +8,7 @@ import {
 } from "@untitled-ui/icons-react";
 import { Card, Divider, Dropdown } from "antd";
 import Image from "next/image";
-import process from "node:process";
+
 import React, { useMemo } from "react";
 import { useModal } from "../../../../class/[classId]/create-rpp/view/container/Provider/ModalProvider";
 import { generateRandomColor } from "../../../usecase/custom-function";

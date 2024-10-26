@@ -1,6 +1,6 @@
 import { Avatar } from "antd";
 import SkeletonAvatar from "antd/es/skeleton/Avatar";
-import process from "node:process";
+
 import React, { useEffect, useState } from "react";
 import { getClientSession } from "../../usecase/session/get-client-session";
 

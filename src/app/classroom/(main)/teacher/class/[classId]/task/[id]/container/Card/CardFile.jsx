@@ -1,7 +1,7 @@
 import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
 import PDFImage from "@/assets/pdf.png";
 import Image from "next/image";
-import process from "node:process";
+
 
 const CardFile = ({ file_name, file_type }) => {
   const { school_id } = getClientSession();
