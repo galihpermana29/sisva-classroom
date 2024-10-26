@@ -30,11 +30,5 @@ export default function RootLayout({ children }) {
     if (slug) fetchTheme();
   }, [slug]);
 
-  return (
-    <html lang='en'>
-      <body suppressHydrationWarning={true}>
-        <ThemeProvider theme={theme}>{children}</ThemeProvider>
-      </body>
-    </html>
-  );
+  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 }
