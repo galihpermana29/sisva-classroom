@@ -1,13 +1,13 @@
-import { Avatar, Divider, Form, Upload } from "antd";
-import SkeletonAvatar from "antd/es/skeleton/Avatar";
-import React from "react";
-import AvatarProfile from "../AvatarProfile";
-import FormItem from "../FormItem";
-import { SisvaInput } from "../../Input/SisvaInputField";
-import { useProfileForm } from "../../../usecase/hooks/profile/use-profile-form";
-import { SisvaSelect } from "../../Input/SelectField";
-import SisvaButton from "../../Button/GlobalButton";
-import { Edit05 } from "@untitled-ui/icons-react";
+import { Edit05, UserCircle } from '@untitled-ui/icons-react';
+import { Avatar, Divider, Form, Upload } from 'antd';
+import SkeletonAvatar from 'antd/es/skeleton/Avatar';
+import React from 'react';
+import { useProfileForm } from '../../../usecase/hooks/profile/use-profile-form';
+import SisvaButton from '../../Button/GlobalButton';
+import { SisvaSelect } from '../../Input/SelectField';
+import { SisvaInput } from '../../Input/SisvaInputField';
+import AvatarProfile from '../AvatarProfile';
+import FormItem from '../FormItem';
 
 const BiodataSection = ({
   form,
@@ -27,7 +27,7 @@ const BiodataSection = ({
     <Form
       form={form}
       name="biodata"
-      onFinish={(val) => handleSubmitSection(val, "biodata")}
+      onFinish={(val) => handleSubmitSection(val, 'biodata')}
       layout="vertical"
       className="w-full"
       disabled={loading}
@@ -38,7 +38,7 @@ const BiodataSection = ({
           <SkeletonAvatar size={60} active />
         ) : (
           <>
-            {formData?.profile_image_uri === "" ? (
+            {formData?.profile_image_uri === '' ? (
               <Avatar size={60} icon={<UserCircle />} />
             ) : (
               <AvatarProfile url={formData?.profile_image_uri} />
@@ -125,14 +125,14 @@ const BiodataSection = ({
 
           <FormItem
             name="education_id"
-            label={isTeacher ? "NUPTK" : "NISN"}
+            label={isTeacher ? 'NUPTK' : 'NISN'}
             isEdit={isEdit}
             formData={formData}
           >
             <SisvaInput
               customSize="md"
               shadow
-              placeholder={isTeacher ? "NUPTK" : "NISN"}
+              placeholder={isTeacher ? 'NUPTK' : 'NISN'}
             />
           </FormItem>
 
@@ -170,7 +170,7 @@ const BiodataSection = ({
           btn_size="lg"
           icon={isEdit ? null : <Edit05 width={20} height={20} />}
         >
-          {isEdit ? "Batal" : "Edit"}
+          {isEdit ? 'Batal' : 'Edit'}
         </SisvaButton>
         {isEdit && (
           <SisvaButton

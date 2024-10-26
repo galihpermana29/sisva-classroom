@@ -2,6 +2,7 @@
 
 import {
   Box,
+  Chip,
   FormControl,
   IconButton,
   InputAdornment,
@@ -14,11 +15,11 @@ import {
 } from '@mui/material';
 import Image from 'next/image';
 
+import AcademicAPI from '@/api/academic';
 import { formAddSubjectFields } from '@/globalcomponents/FormFields';
+import { permissions } from '@/globalcomponents/Variable';
 import { Cancel, Visibility, VisibilityOff } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
-import { permissions } from '@/globalcomponents/Variable';
-import AcademicAPI from '@/api/academic';
 
 export const FormAddSubject = ({
   formik,
@@ -64,7 +65,7 @@ export const FormAddSubject = ({
       {updatedSubjectFields.map((field) =>
         field.type === 'text' ? (
           <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant='body2' fontWeight={600} mb={0.5}>
+            <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <TextField
@@ -77,7 +78,7 @@ export const FormAddSubject = ({
           </Stack>
         ) : field.type === 'password' ? (
           <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant='body2' fontWeight={600} mb={0.5}>
+            <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <TextField
@@ -89,7 +90,7 @@ export const FormAddSubject = ({
               onChange={(e) => formik.setFieldValue(field.name, e.target.value)}
               InputProps={{
                 endAdornment: (
-                  <InputAdornment position='end'>
+                  <InputAdornment position="end">
                     <IconButton
                       onClick={() =>
                         field.name === 'password'
@@ -118,7 +119,7 @@ export const FormAddSubject = ({
         ) : field.type === 'select' ? (
           field.name === 'curriculum_name' ? (
             <Stack sx={{ my: 1 }} key={field.name}>
-              <Typography variant='body2' fontWeight={600} mb={0.5}>
+              <Typography variant="body2" fontWeight={600} mb={0.5}>
                 {field.label}
               </Typography>
               <TextField
@@ -139,7 +140,7 @@ export const FormAddSubject = ({
             </Stack>
           ) : field.name === 'study_program' ? (
             <Stack sx={{ my: 1 }} key={field.name}>
-              <Typography variant='body2' fontWeight={600} mb={0.5}>
+              <Typography variant="body2" fontWeight={600} mb={0.5}>
                 {field.label}
               </Typography>
               <TextField
@@ -170,7 +171,7 @@ export const FormAddSubject = ({
             </Stack>
           ) : (
             <Stack sx={{ my: 1 }} key={field.name}>
-              <Typography variant='body2' fontWeight={600} mb={0.5}>
+              <Typography variant="body2" fontWeight={600} mb={0.5}>
                 {field.label}
               </Typography>
               <TextField
@@ -191,7 +192,7 @@ export const FormAddSubject = ({
           )
         ) : field.type === 'multiple-select' ? (
           <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant='body2' fontWeight={600}>
+            <Typography variant="body2" fontWeight={600}>
               {field.label}
             </Typography>
 
@@ -217,7 +218,7 @@ export const FormAddSubject = ({
                         <Chip
                           key={permission}
                           label={tempPermission}
-                          color='primary'
+                          color="primary"
                         />
                       );
                     })}
