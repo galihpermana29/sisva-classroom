@@ -259,7 +259,7 @@ export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
       afterSuccess();
     } catch (error) {
       console.log(error);
-      window.alert('Import Gagal');
+      globalThis.alert('Import Gagal');
     }
   };
   reader.readAsArrayBuffer(file);

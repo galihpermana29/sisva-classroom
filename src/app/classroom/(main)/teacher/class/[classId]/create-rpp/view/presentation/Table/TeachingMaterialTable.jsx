@@ -5,6 +5,7 @@ import Image from "next/image";
 import pdfIcon from "@/assets/classroom/teacher/PDFIcon.png";
 import { useModal } from "../../container/Provider/ModalProvider";
 import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
+import process from "node:process";
 const TeachingMaterialTable = ({
   dataSource,
   type,

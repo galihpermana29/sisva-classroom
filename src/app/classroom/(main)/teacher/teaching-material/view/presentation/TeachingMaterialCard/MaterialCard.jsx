@@ -11,6 +11,7 @@ import Image from "next/image";
 import { useModal } from "../../../../class/[classId]/create-rpp/view/container/Provider/ModalProvider";
 import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
 import { generateRandomColor } from "../../../usecase/custom-function";
+import process from "node:process";
 
 const MaterialCard = ({ item }) => {
   const { setModalState } = useModal();

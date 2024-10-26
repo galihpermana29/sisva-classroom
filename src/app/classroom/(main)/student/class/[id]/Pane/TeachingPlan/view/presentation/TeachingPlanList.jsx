@@ -9,6 +9,7 @@ import TaskIcon from "@/assets/images/teaching-plan/task.png";
 import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import process from "node:process";
 
 const TeachingPlanList = ({
   id,

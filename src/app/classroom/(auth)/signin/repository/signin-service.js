@@ -1,6 +1,7 @@
 "use server";
 
 import { serverResponseHandler } from "@/app/classroom/shared/usecase/server-response-handler";
+import process from "node:process";
 
 export async function getSchoolByCode(code) {
   try {

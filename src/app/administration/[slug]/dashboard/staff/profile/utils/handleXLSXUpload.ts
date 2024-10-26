@@ -167,7 +167,7 @@ export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
       afterSuccess();
     } catch (error) {
       console.log(error);
-      window.alert('Import Bermasalah');
+      globalThis.alert('Import Bermasalah');
     }
   };
   reader.readAsArrayBuffer(file);

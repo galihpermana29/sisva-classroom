@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import SkeletonAvatar from "antd/es/skeleton/Avatar";
 import { getClientSession } from "../../usecase/session/get-client-session";
 import { Avatar } from "antd";
+import process from "node:process";
 
 const AvatarProfile = ({ url, size = 60 }) => {
   const [schoolId, setSchoolId] = useState(null);
