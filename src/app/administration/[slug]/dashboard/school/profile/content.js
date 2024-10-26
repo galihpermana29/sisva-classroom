@@ -174,10 +174,10 @@ export default function SchoolProfileContent() {
           sx={{
             display: !editing ? 'flex' : 'none',
             padding: '8px 14px',
-            position: 'fixed',
+            position: 'absolute',
             width: 'fit-content',
             justifySelf: 'flex-end',
-            right: { xs: 32, md: 48, lg: 64 },
+            right: 16,
             mt: 2,
             backgroundColor: 'white',
           }}
