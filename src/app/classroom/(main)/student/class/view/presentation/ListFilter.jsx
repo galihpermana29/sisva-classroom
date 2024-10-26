@@ -1,9 +1,9 @@
-import SisvaButton from "@/app/classroom/shared/presentation/Button/GlobalButton";
-import { SisvaSelect } from "@/app/classroom/shared/presentation/Input/SelectField";
-import { SisvaInputSearch } from "@/app/classroom/shared/presentation/Input/SisvaInputField";
-import { FilterFunnel01 } from "@untitled-ui/icons-react";
-import { Modal } from "antd";
-import React, { useState } from "react";
+import SisvaButton from '@/app/classroom/shared/presentation/Button/GlobalButton';
+import { SisvaSelect } from '@/app/classroom/shared/presentation/Input/SelectField';
+import { SisvaInputSearch } from '@/app/classroom/shared/presentation/Input/SisvaInputField';
+import { FilterFunnel01 } from '@untitled-ui/icons-react';
+import { Modal } from 'antd';
+import React, { useState } from 'react';
 
 const ListFilter = ({
   filter,
@@ -21,8 +21,8 @@ const ListFilter = ({
       <SisvaInputSearch
         customSize="md"
         placeholder="Search"
-        value={filter.search === "" ? null : filter.search}
-        onChange={(e) => handleFilterChange("search", e.target.value)}
+        value={filter.search === '' ? null : filter.search}
+        onChange={(e) => handleFilterChange('search', e.target.value)}
       />
 
       <div className="hidden gap-3 lg:flex">
@@ -32,9 +32,9 @@ const ListFilter = ({
           handleFilterChange={handleFilterChange}
         />
 
-        {(filter.search !== "" ||
-          filter.subject !== "" ||
-          filter.teacherName !== "") && (
+        {(filter.search !== '' ||
+          filter.subject !== '' ||
+          filter.teacherName !== '') && (
           <SisvaButton onClick={handleClearFilter}>Reset Filter</SisvaButton>
         )}
       </div>
@@ -56,13 +56,19 @@ const ListFilter = ({
         onCancel={handleCancel}
         footer={[
           <SisvaButton
+            key="reset"
             btn_type="secondary"
             btn_size="md"
             onClick={handleClearFilter}
           >
             Reset Filter
           </SisvaButton>,
-          <SisvaButton btn_type="primary" btn_size="md" onClick={handleCancel}>
+          <SisvaButton
+            btn_type="primary"
+            btn_size="md"
+            onClick={handleCancel}
+            key="apply"
+          >
             Apply
           </SisvaButton>,
         ]}
@@ -87,16 +93,16 @@ const FilterContent = ({ filter, dropdownFilterData, handleFilterChange }) => {
         placeholder="Mata Pelajaran"
         customClassName="min-w-full lg:min-w-40 mb-2 lg:mb-0"
         options={dropdownFilterData?.subject || []}
-        value={filter.subject == "" ? null : filter.subject}
-        onChange={(value) => handleFilterChange("subject", value)}
+        value={filter.subject == '' ? null : filter.subject}
+        onChange={(value) => handleFilterChange('subject', value)}
       />
       <SisvaSelect
         customSize="md"
         placeholder="Guru"
         customClassName="min-w-full lg:min-w-40 mb-2 lg:mb-0"
         options={dropdownFilterData?.teacherName || []}
-        value={filter.teacherName == "" ? null : filter.teacherName}
-        onChange={(value) => handleFilterChange("teacherName", value)}
+        value={filter.teacherName == '' ? null : filter.teacherName}
+        onChange={(value) => handleFilterChange('teacherName', value)}
       />
     </>
   );

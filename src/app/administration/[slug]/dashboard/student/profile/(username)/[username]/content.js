@@ -242,7 +242,7 @@ export default function SchoolProfileContent({ user_id }) {
       </Stack>
       <Stack
         component={Paper}
-        variant='outlined'
+        variant="outlined"
         sx={{
           padding: { xs: '16px', md: '16px 32px' },
           borderRadius: 2,
@@ -254,7 +254,7 @@ export default function SchoolProfileContent({ user_id }) {
         <Avatar sx={{ height: 70, width: 70, position: 'relative', mr: 2 }}>
           {initialData.profile_image_uri !== '' ? (
             <Image
-              alt='Image'
+              alt="Image"
               src={`https://api-staging.sisva.id/file/v1/files/${initialData.profile_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
               layout={'fill'}
               objectFit={'cover'}
@@ -275,7 +275,7 @@ export default function SchoolProfileContent({ user_id }) {
       <Stack
         component={Paper}
         ref={containerRef}
-        variant='outlined'
+        variant="outlined"
         sx={{
           borderRadius: 2,
           flex: 1,
@@ -294,6 +294,7 @@ export default function SchoolProfileContent({ user_id }) {
           {tabs.map((item, index) => {
             return (
               <Button
+                key={index}
                 sx={{
                   p: { xs: '16px 12px', lg: 2 },
                   minWidth: { xs: 100, lg: 110 },
@@ -316,7 +317,7 @@ export default function SchoolProfileContent({ user_id }) {
         </Stack>
         <Stack
           ref={containerRef}
-          variant='outlined'
+          variant="outlined"
           sx={{
             flex: 1,
             overflowY: 'scroll',
@@ -327,8 +328,8 @@ export default function SchoolProfileContent({ user_id }) {
         >
           {' '}
           <Button
-            variant='outlined'
-            size='small'
+            variant="outlined"
+            size="small"
             fullWidth={false}
             startIcon={<BorderColorRounded />}
             onClick={() => {
@@ -348,7 +349,7 @@ export default function SchoolProfileContent({ user_id }) {
           >
             <Box component={'span'}>Edit</Box>
           </Button>
-          <Stack width='100%'>
+          <Stack width="100%">
             <Grid container>
               <Grid item xs={12}>
                 <Grid
@@ -386,7 +387,7 @@ export default function SchoolProfileContent({ user_id }) {
               }}
             >
               <Button
-                variant='outlined'
+                variant="outlined"
                 sx={{ mr: 1, width: 120 }}
                 onClick={() => {
                   setEditing(false);
@@ -397,7 +398,7 @@ export default function SchoolProfileContent({ user_id }) {
                 Batal
               </Button>
               <Button
-                variant='contained'
+                variant="contained"
                 sx={{ width: 120 }}
                 onClick={() => {
                   setEditing(false);

@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
-import Image from 'next/image';
+import LandingImage from '@/assets/Login-Library.png';
+import SchoolLogo from '@/assets/School-Logo-Blue.png';
 import {
   Avatar,
   Box,
@@ -14,8 +14,8 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import SchoolLogo from '@/assets/School-Logo-Blue.png';
-import LandingImage from '@/assets/Login-Library.png';
+import Image from 'next/image';
+import { useEffect, useRef, useState } from 'react';
 
 import {
   ArrowBackIosNewRounded,
@@ -24,12 +24,12 @@ import {
 
 import { useFormik } from 'formik';
 
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { FormStudentBasic } from './components/FormStudentBasic';
 import { FormStudentBiodata } from './components/FormStudentBiodata';
 import { FormStudentParents } from './components/FormStudentParents';
 import { FormStudentPassword } from './components/FormStudentPassword';
-import Link from 'next/link';
-import { useParams } from 'next/navigation';
 
 export default function SchoolProfileContent() {
   const { slug } = useParams();
@@ -136,7 +136,7 @@ export default function SchoolProfileContent() {
       </Stack>
       <Stack
         component={Paper}
-        variant='outlined'
+        variant="outlined"
         sx={{
           padding: { xs: '16px', md: '16px 32px' },
           borderRadius: 2,
@@ -147,7 +147,7 @@ export default function SchoolProfileContent() {
       >
         <Avatar sx={{ height: 70, width: 70, position: 'relative', mr: 2 }}>
           <Image
-            alt='Image'
+            alt="Image"
             src={
               'https://images.unsplash.com/photo-1695642579321-fcb1fc79b976?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=302&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY5NzIyMTM4NA&ixlib=rb-4.0.3&q=80&w=300'
             }
@@ -167,7 +167,7 @@ export default function SchoolProfileContent() {
       <Stack
         component={Paper}
         ref={containerRef}
-        variant='outlined'
+        variant="outlined"
         sx={{
           borderRadius: 2,
           flex: 1,
@@ -186,6 +186,7 @@ export default function SchoolProfileContent() {
           {tabs.map((item, index) => {
             return (
               <Button
+                key={index}
                 sx={{
                   p: { xs: '16px 12px', lg: 2 },
                   minWidth: { xs: 100, lg: 110 },
@@ -208,7 +209,7 @@ export default function SchoolProfileContent() {
         </Stack>
         <Stack
           ref={containerRef}
-          variant='outlined'
+          variant="outlined"
           sx={{
             flex: 1,
             overflowY: 'scroll',
@@ -219,8 +220,8 @@ export default function SchoolProfileContent() {
         >
           {' '}
           <Button
-            variant='outlined'
-            size='small'
+            variant="outlined"
+            size="small"
             fullWidth={false}
             startIcon={<BorderColorRounded />}
             onClick={() => {
@@ -240,7 +241,7 @@ export default function SchoolProfileContent() {
           >
             <Box component={'span'}>Edit</Box>
           </Button>
-          <Stack width='100%'>
+          <Stack width="100%">
             <Grid container>
               <Grid item xs={12}>
                 <Grid
@@ -278,7 +279,7 @@ export default function SchoolProfileContent() {
               }}
             >
               <Button
-                variant='outlined'
+                variant="outlined"
                 sx={{ mr: 1, width: 120 }}
                 onClick={() => {
                   setEditing(false);
@@ -289,7 +290,7 @@ export default function SchoolProfileContent() {
                 Batal
               </Button>
               <Button
-                variant='contained'
+                variant="contained"
                 sx={{ width: 120 }}
                 onClick={() => {
                   setEditing(false);

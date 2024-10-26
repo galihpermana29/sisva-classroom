@@ -84,7 +84,7 @@ export const FormAddSubjectTeacher = ({
       {updatedFields.map((field) =>
         field.type === 'text' ? (
           <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant='body2' fontWeight={600} mb={0.5}>
+            <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <TextField
@@ -104,7 +104,7 @@ export const FormAddSubjectTeacher = ({
                 setClicked(false);
               }}
             >
-              <Typography variant='body2' fontWeight={600} mb={0.5}>
+              <Typography variant="body2" fontWeight={600} mb={0.5}>
                 {field.label}
               </Typography>
               <TextField
@@ -135,7 +135,7 @@ export const FormAddSubjectTeacher = ({
                 setClicked(false);
               }}
             >
-              <Typography variant='body2' fontWeight={600} mb={0.5}>
+              <Typography variant="body2" fontWeight={600} mb={0.5}>
                 {field.label}
               </Typography>
               <TextField
@@ -156,7 +156,7 @@ export const FormAddSubjectTeacher = ({
                   ))
                 ) : (
                   <MenuItem>
-                    <Typography fontSize={14} color='gray'>
+                    <Typography fontSize={14} color="gray">
                       Pilih Guru Terlebih Dahulu
                     </Typography>
                   </MenuItem>
@@ -172,22 +172,23 @@ export const FormAddSubjectTeacher = ({
               setClicked(true);
             }}
           >
-            <Typography variant='body2' fontWeight={600} mb={0.5}>
+            <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <Stack
               sx={{ my: 1, flexDirection: 'row', gap: 1, overflowY: 'auto' }}
             >
-              {previewSubject.map((option) => (
+              {previewSubject.map((option, i) => (
                 <Chip
+                  key={i}
                   label={option.subject_name}
-                  variant='outlined'
-                  color='primary'
+                  variant="outlined"
+                  color="primary"
                 />
               ))}
             </Stack>
             <TextField
-              type='text'
+              type="text"
               placeholder={field.placeholder}
               value={searchTerms}
               onChange={(e) => setSearchTerms(e.target.value)}
@@ -233,7 +234,7 @@ export const FormAddSubjectTeacher = ({
                     </MenuItem>
                   ))
                 ) : (
-                  <Typography fontSize={14} color='gray'>
+                  <Typography fontSize={14} color="gray">
                     Pilih Tingkatan Terlebih Dahulu
                   </Typography>
                 )}

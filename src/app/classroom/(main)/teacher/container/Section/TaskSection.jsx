@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import Cardtask from "@/app/classroom/shared/presentation/Card/CardTask";
-import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
-import SectionLayout from "@/app/classroom/shared/presentation/Layouts/SectionLayout";
-import CardTaskSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardTaskSkeleton";
-import { generalDateFormatter } from "@/app/classroom/shared/usecase/helper";
-import Link from "next/link";
-import { useGetAllTeacherTasks } from "../../usecase/useGetAllTeacherTasks";
-import styles from "./TaskSection.module.css";
+import Cardtask from '@/app/classroom/shared/presentation/Card/CardTask';
+import EmptyState from '@/app/classroom/shared/presentation/EmptyState/EmptyState';
+import SectionLayout from '@/app/classroom/shared/presentation/Layouts/SectionLayout';
+import CardTaskSkeleton from '@/app/classroom/shared/presentation/Skeletons/CardTaskSkeleton';
+import { generalDateFormatter } from '@/app/classroom/shared/usecase/helper';
+import Link from 'next/link';
+import { useGetAllTeacherTasks } from '../../usecase/useGetAllTeacherTasks';
+import styles from './TaskSection.module.css';
 
 const TaskSection = () => {
   const { data: tasks, isLoading } = useGetAllTeacherTasks();
@@ -31,7 +31,10 @@ const TaskSection = () => {
             </div>
           ) : (
             tasks.map((task, index) => (
-              <Link href={`/classroom/teacher/class/${task.class_id}/task/${task.id}`}>
+              <Link
+                href={`/classroom/teacher/class/${task.class_id}/task/${task.id}`}
+                key={index}
+              >
                 <Cardtask
                   key={task.id || index}
                   deadline={generalDateFormatter(task.deadline)}
