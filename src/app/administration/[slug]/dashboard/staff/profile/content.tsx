@@ -3,25 +3,25 @@
 import { ExcelIcon, SortIcon } from '@/assets/SVGs';
 import { permissions, types } from '@/globalcomponents/Variable';
 import {
-    Add,
-    Cancel,
-    DownloadRounded,
-    Search,
-    UploadFileRounded,
+  Add,
+  Cancel,
+  DownloadRounded,
+  Search,
+  UploadFileRounded,
 } from '@mui/icons-material';
 import {
-    Box,
-    Button,
-    Divider,
-    Hidden,
-    InputAdornment,
-    Menu,
-    MenuItem,
-    Modal,
-    Paper,
-    Stack,
-    TextField,
-    Typography,
+  Box,
+  Button,
+  Divider,
+  Hidden,
+  InputAdornment,
+  Menu,
+  MenuItem,
+  Modal,
+  Paper,
+  Stack,
+  TextField,
+  Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { FormAddStaff } from './components/FormAddStaff';
@@ -106,9 +106,15 @@ export default function StaffProfileListContent() {
   const [search, setSearch] = useState('');
   const [typeFilter, setTypeFilter] = useState('');
   const [permissionFilter, setPermissionFilter] = useState('');
-  const [sortBy, setSortBy] = useState('');
-  const [sortType, setSortType] = useState('ascending');
-  const [sortSettings, setSortSettings] = useState('');
+
+  type SortBy = 'name' | 'username' | '';
+  type SortType = 'ascending' | 'descending' | '';
+  type SortSettings = { sortBy: SortBy; sortType: SortType };
+
+  const [sortBy, setSortBy] = useState<SortBy>('');
+  const [sortType, setSortType] = useState<SortType>('ascending');
+  const [sortSettings, setSortSettings] = useState<SortSettings | null>(null);
+
   const [openSortModal, setOpenSortModal] = useState(false);
 
   const [openCreateModal, setOpenCreateModal] = useState(false);
@@ -307,7 +313,7 @@ export default function StaffProfileListContent() {
           </Box>
           <Divider />
           <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
-            <FormAddStaff handleSubmit={formik.handleSubmit} formik={formik} />
+            <FormAddStaff formik={formik} />
           </Box>
           <Divider />
           <Stack
@@ -366,7 +372,7 @@ export default function StaffProfileListContent() {
             size="small"
             label="Data"
             value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
+            onChange={(e) => setSortBy(e.target.value as SortBy)}
             sx={{ flex: 1, mt: 2 }}
             InputProps={{
               startAdornment: sortBy && (
@@ -402,7 +408,7 @@ export default function StaffProfileListContent() {
             label="Jenis Urutan"
             value={sortType}
             disabled={!sortBy}
-            onChange={(e) => setSortType(e.target.value)}
+            onChange={(e) => setSortType(e.target.value as SortType)}
             sx={{ flex: 1, mt: 2, mb: 2 }}
           >
             {[
@@ -424,8 +430,6 @@ export default function StaffProfileListContent() {
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenSortModal(false);
-                setSortBy(sortSettings.sortBy);
-                setSortType(sortSettings.sortType);
               }}
             >
               Batal
@@ -545,7 +549,6 @@ export default function StaffProfileListContent() {
                 display: { xs: 'none', lg: 'flex' },
                 width: 'fit-content',
                 height: '100%',
-                width: 100,
                 mr: 1,
                 borderColor: 'green',
                 backgroundColor: 'white',

@@ -1,17 +1,17 @@
 'use client';
 
 import {
-    Box,
-    Chip,
-    FormControl,
-    IconButton,
-    InputAdornment,
-    MenuItem,
-    OutlinedInput,
-    Select,
-    Stack,
-    TextField,
-    Typography,
+  Box,
+  Chip,
+  FormControl,
+  IconButton,
+  InputAdornment,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  Stack,
+  TextField,
+  Typography,
 } from '@mui/material';
 
 import { formAddStaffFields } from '@/globalcomponents/FormFields';
@@ -19,7 +19,7 @@ import { permissions } from '@/globalcomponents/Variable';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useState } from 'react';
 
-export const FormAddStaff = ({ formik, editing }) => {
+export const FormAddStaff = ({ formik }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
   return (
@@ -27,7 +27,7 @@ export const FormAddStaff = ({ formik, editing }) => {
       {formAddStaffFields.map((field) =>
         field.type === 'text' ? (
           <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant='body2' fontWeight={600} mb={0.5}>
+            <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <TextField
@@ -40,7 +40,7 @@ export const FormAddStaff = ({ formik, editing }) => {
           </Stack>
         ) : field.type === 'password' ? (
           <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant='body2' fontWeight={600} mb={0.5}>
+            <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <TextField
@@ -52,7 +52,7 @@ export const FormAddStaff = ({ formik, editing }) => {
               onChange={(e) => formik.setFieldValue(field.name, e.target.value)}
               InputProps={{
                 endAdornment: (
-                  <InputAdornment position='end'>
+                  <InputAdornment position="end">
                     <IconButton
                       onClick={() =>
                         field.name === 'password'
@@ -80,7 +80,7 @@ export const FormAddStaff = ({ formik, editing }) => {
           </Stack>
         ) : field.type === 'select' ? (
           <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant='body2' fontWeight={600} mb={0.5}>
+            <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <TextField
@@ -98,7 +98,7 @@ export const FormAddStaff = ({ formik, editing }) => {
           </Stack>
         ) : field.type === 'multiple-select' ? (
           <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant='body2' fontWeight={600}>
+            <Typography variant="body2" fontWeight={600}>
               {field.label}
             </Typography>
 
@@ -124,7 +124,7 @@ export const FormAddStaff = ({ formik, editing }) => {
                         <Chip
                           key={permission}
                           label={tempPermission}
-                          color='primary'
+                          color="primary"
                         />
                       );
                     })}
