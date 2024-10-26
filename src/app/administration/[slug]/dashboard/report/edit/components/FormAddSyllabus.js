@@ -13,7 +13,7 @@ export const FormAddSyllabus = ({ formik, editing }) => {
       {formAddSyllabusFields.map((field) =>
         field.type === 'text' ? (
           <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant='body2' fontWeight={600} mb={0.5}>
+            <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <TextField
@@ -26,7 +26,7 @@ export const FormAddSyllabus = ({ formik, editing }) => {
           </Stack>
         ) : field.type === 'select' ? (
           <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant='body2' fontWeight={600} mb={0.5}>
+            <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <TextField
@@ -44,7 +44,7 @@ export const FormAddSyllabus = ({ formik, editing }) => {
           </Stack>
         ) : field.type === 'file' ? (
           <Stack>
-            <Typography variant='body2' fontWeight={600} mb={0.5}>
+            <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <Stack
@@ -58,16 +58,16 @@ export const FormAddSyllabus = ({ formik, editing }) => {
                 display: editing ? 'flex' : 'none',
               }}
             >
-              <Image src={PDFIcon} height={18} />
+              <Image src={PDFIcon} height={18} alt="" />
               <Typography sx={{ fontSize: 13, ml: 1 }}>
                 Silabus Matematika-Kurikulum Merdeka-IPA-X.pdf
               </Typography>
             </Stack>
 
-            <label htmlFor='import-csv'>
+            <label htmlFor="import-csv">
               <Button
                 fullWidth
-                variant='outlined'
+                variant="outlined"
                 flexDirection={'row'}
                 alignItems={'center'}
                 sx={{ mb: 0.5 }}
@@ -75,9 +75,9 @@ export const FormAddSyllabus = ({ formik, editing }) => {
                 {editing ? 'Ubah' : 'Upload'}
                 <input
                   name={'import_csv'}
-                  accept='csv'
-                  id='import-csv'
-                  type='file'
+                  accept="csv"
+                  id="import-csv"
+                  type="file"
                   style={{
                     position: 'absolute',
                     opacity: '0',
@@ -89,7 +89,7 @@ export const FormAddSyllabus = ({ formik, editing }) => {
             </label>
             <Button
               fullWidth
-              variant='outlined'
+              variant="outlined"
               flexDirection={'row'}
               alignItems={'center'}
               sx={{ mb: 1, display: editing ? 'flex' : 'none' }}

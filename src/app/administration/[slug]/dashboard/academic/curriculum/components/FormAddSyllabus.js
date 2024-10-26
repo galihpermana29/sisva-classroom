@@ -76,7 +76,7 @@ export const FormAddSyllabus = ({
       {updatedSubjectFields?.map((field) =>
         field.type === 'text' ? (
           <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant='body2' fontWeight={600} mb={0.5}>
+            <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <TextField
@@ -90,7 +90,7 @@ export const FormAddSyllabus = ({
         ) : field.type === 'select' ? (
           field.name === 'curriculum_name' ? (
             <Stack sx={{ my: 1 }} key={field.name}>
-              <Typography variant='body2' fontWeight={600} mb={0.5}>
+              <Typography variant="body2" fontWeight={600} mb={0.5}>
                 {field.label}
               </Typography>
               <TextField
@@ -111,7 +111,7 @@ export const FormAddSyllabus = ({
             </Stack>
           ) : field.name === 'study_program' ? (
             <Stack sx={{ my: 1 }} key={field.name}>
-              <Typography variant='body2' fontWeight={600} mb={0.5}>
+              <Typography variant="body2" fontWeight={600} mb={0.5}>
                 {field.label}
               </Typography>
               <TextField
@@ -143,7 +143,7 @@ export const FormAddSyllabus = ({
             </Stack>
           ) : field.name === 'subject' ? (
             <Stack sx={{ my: 1 }} key={field.name}>
-              <Typography variant='body2' fontWeight={600} mb={0.5}>
+              <Typography variant="body2" fontWeight={600} mb={0.5}>
                 {field.label}
               </Typography>
               <TextField
@@ -174,7 +174,7 @@ export const FormAddSyllabus = ({
             </Stack>
           ) : (
             <Stack sx={{ my: 1 }} key={field.name}>
-              <Typography variant='body2' fontWeight={600} mb={0.5}>
+              <Typography variant="body2" fontWeight={600} mb={0.5}>
                 {field.label}
               </Typography>
               <TextField
@@ -206,7 +206,7 @@ export const FormAddSyllabus = ({
           )
         ) : field.type === 'file' ? (
           <Stack sx={{ overflowX: 'hidden' }}>
-            <Typography variant='body2' fontWeight={600} mb={0.5}>
+            <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <Stack
@@ -220,7 +220,7 @@ export const FormAddSyllabus = ({
                 display: 'flex',
               }}
             >
-              <Image src={PDFIcon} height={18} />
+              <Image src={PDFIcon} height={18} alt="" />
               <Typography sx={{ fontSize: 13, ml: 1 }}>
                 {formik.values.syllabus_uri
                   ? formik.values.syllabus_uri
@@ -228,10 +228,10 @@ export const FormAddSyllabus = ({
               </Typography>
             </Stack>
 
-            <label htmlFor='syllabus_uri'>
+            <label htmlFor="syllabus_uri">
               <Button
                 fullWidth
-                variant='outlined'
+                variant="outlined"
                 flexDirection={'row'}
                 alignItems={'center'}
                 sx={{ mb: 0.5 }}
@@ -239,9 +239,9 @@ export const FormAddSyllabus = ({
                 {formik.values.syllabus_uri ? 'Ubah' : 'Upload'}
                 <input
                   name={'syllabus_uri'}
-                  accept='pdf'
-                  id='syllabus_uri'
-                  type='file'
+                  accept="pdf"
+                  id="syllabus_uri"
+                  type="file"
                   style={{
                     position: 'absolute',
                     opacity: '0',
@@ -253,7 +253,7 @@ export const FormAddSyllabus = ({
             </label>
             <Button
               fullWidth
-              variant='outlined'
+              variant="outlined"
               flexDirection={'row'}
               alignItems={'center'}
               sx={{
