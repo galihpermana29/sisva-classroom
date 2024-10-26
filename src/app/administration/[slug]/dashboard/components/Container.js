@@ -1,16 +1,16 @@
 'use client';
 
 import {
-    Avatar,
-    Box,
-    Button,
-    Divider,
-    Menu,
-    MenuItem,
-    Modal,
-    Paper,
-    Stack,
-    Typography,
+  Avatar,
+  Box,
+  Button,
+  Divider,
+  Menu,
+  MenuItem,
+  Modal,
+  Paper,
+  Stack,
+  Typography,
 } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -21,19 +21,19 @@ import CmsAPI from '@/api/cms';
 import UsersAPI from '@/api/users';
 import SchoolLogoBlue from '@/assets/School-Logo-Blue.png';
 import {
-    AcademicIcon,
-    FinanceIcon,
-    InformationIcon,
-    MenuIcon,
-    ReportIcon,
-    SchoolIcon,
-    StaffIcon,
-    StudentIcon
+  AcademicIcon,
+  FinanceIcon,
+  InformationIcon,
+  MenuIcon,
+  ReportIcon,
+  SchoolIcon,
+  StaffIcon,
+  StudentIcon,
 } from '@/assets/SVGs';
 import {
-    ArrowBackIosNewRounded,
-    LogoutRounded,
-    SettingsOutlined
+  ArrowBackIosNewRounded,
+  LogoutRounded,
+  SettingsOutlined,
 } from '@mui/icons-material';
 import Head from 'next/head';
 
@@ -212,13 +212,13 @@ export default function Container(props) {
         <Box>
           <Head>
             <title>{`${pathname} | Sisva`}</title>
-            <meta name='description' content='Sisva' />
+            <meta name="description" content="Sisva" />
           </Head>
           <Stack
             component={Button}
-            id='profile-button'
+            id="profile-button"
             aria-controls={open ? 'profile-menu' : undefined}
-            aria-haspopup='true'
+            aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
             onClick={handleClick}
             sx={{
@@ -237,11 +237,11 @@ export default function Container(props) {
                 ml: 1,
               }}
             >
-              {currentUser?.profile_image_uri !== '' ? (
+              {currentUser?.profile_image_uri ? (
                 <Image
-                  alt='Web Image'
+                  alt="Web Image"
                   fill
-                  sizes='100%'
+                  sizes="100%"
                   style={{ objectFit: 'cover' }}
                   src={`https://api-staging.sisva.id/file/v1/files/${currentUser?.profile_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
                 />
@@ -261,8 +261,8 @@ export default function Container(props) {
             </Typography>
           </Stack>
           <Menu
-            id='profile-menu'
-            aria-labelledby='profile-button'
+            id="profile-menu"
+            aria-labelledby="profile-button"
             anchorEl={anchorEl}
             open={open}
             onClose={handleClose}
@@ -292,11 +292,11 @@ export default function Container(props) {
                   ml: 1,
                 }}
               >
-                {currentUser?.profile_image_uri !== '' ? (
+                {currentUser?.profile_image_uri ? (
                   <Image
-                    alt='Web Image'
+                    alt="Web Image"
                     fill
-                    sizes='100%'
+                    sizes="100%"
                     style={{ objectFit: 'cover' }}
                     src={`https://api-staging.sisva.id/file/v1/files/${currentUser?.profile_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
                   />
@@ -304,7 +304,7 @@ export default function Container(props) {
                   currentUser?.name.toUpperCase()[0]
                 )}
               </Avatar>
-              <Typography color='black' fontWeight={600} mr={1}>
+              <Typography color="black" fontWeight={600} mr={1}>
                 {currentUser?.name}
               </Typography>
             </Stack>
@@ -361,13 +361,15 @@ export default function Container(props) {
             alignItems: 'center',
           }}
         >
-          <Image
-            alt='Web Image'
-            src={`https://api-staging.sisva.id/file/v1/files/${currentSchool?.logo_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
-            height={36}
-            width={36}
-          />
-          <Typography fontWeight='700' ml={1} fontSize={18}>
+          {currentSchool?.logo_uri ? (
+            <Image
+              alt="Web Image"
+              src={`https://api-staging.sisva.id/file/v1/files/${currentSchool?.logo_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+              height={36}
+              width={36}
+            />
+          ) : null}
+          <Typography fontWeight="700" ml={1} fontSize={18}>
             {currentSchool?.name}
           </Typography>
         </Stack>
@@ -386,7 +388,7 @@ export default function Container(props) {
           >
             <MenuIcon />
           </Box>
-          <Typography fontWeight='700' ml={1} fontSize={{ xs: 16, md: 18 }}>
+          <Typography fontWeight="700" ml={1} fontSize={{ xs: 16, md: 18 }}>
             {renderTitle()}
           </Typography>
         </Stack>
@@ -479,8 +481,8 @@ export default function Container(props) {
               slug: 'extracurricular',
             },
             {
-              title: "Jadwal Pelajaran",
-              slug: "schedule",
+              title: 'Jadwal Pelajaran',
+              slug: 'schedule',
             },
           ],
         },
@@ -687,9 +689,9 @@ export default function Container(props) {
       }
       return (
         <Stack
-          direction='column'
-          alignItems='center'
-          justifyContent='center'
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
           sx={{
             gap: '8px',
             p: '16px',
@@ -741,12 +743,12 @@ export default function Container(props) {
               }}
             >
               <Image
-                alt='Web Image'
+                alt="Web Image"
                 src={SchoolLogoBlue}
                 height={36}
                 width={36}
               />
-              <Typography fontWeight='700' ml={1} fontSize={18}>
+              <Typography fontWeight="700" ml={1} fontSize={18}>
                 Sekolah Sisva
               </Typography>
             </Stack>
