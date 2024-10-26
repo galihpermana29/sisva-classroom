@@ -16,7 +16,7 @@ export const FormSchoolDetails = ({
         {formSchoolDetailsFields.map((field) =>
           field.image ? (
             <Grid xs={12} item key={field.name}>
-              <Typography variant='body2' fontWeight={500} fontSize={14}>
+              <Typography variant="body2" fontWeight={500} fontSize={14}>
                 {field.label}
               </Typography>
               <Box
@@ -29,14 +29,16 @@ export const FormSchoolDetails = ({
                 }}
               >
                 <Box sx={{ height: 96, width: 96, position: 'relative' }}>
-                  <Image
-                    alt='Image'
-                    src={`https://api-staging.sisva.id/file/v1/files/${
-                      formik.values[field.name]
-                    }?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
-                    layout='fill'
-                    objectFit='contain'
-                  />
+                  {formik.values[field.name] ? (
+                    <Image
+                      alt="Image"
+                      src={`https://api-staging.sisva.id/file/v1/files/${
+                        formik.values[field.name]
+                      }?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+                      layout="fill"
+                      objectFit="contain"
+                    />
+                  ) : null}
                 </Box>
               </Box>
             </Grid>
@@ -49,12 +51,12 @@ export const FormSchoolDetails = ({
               key={field.name}
             >
               <Grid item xs={12} md={12}>
-                <Typography variant='body2' fontWeight={500} fontSize={14}>
+                <Typography variant="body2" fontWeight={500} fontSize={14}>
                   {field.label}
                 </Typography>
               </Grid>
               <Grid item xs={12} md={12}>
-                <Typography variant='body2' fontWeight={400} fontSize={14}>
+                <Typography variant="body2" fontWeight={400} fontSize={14}>
                   {formik.values[field.name] ? formik.values[field.name] : ''}
                 </Typography>
               </Grid>
@@ -69,7 +71,7 @@ export const FormSchoolDetails = ({
         {formSchoolDetailsFields.map((field) =>
           field.image ? (
             <Grid xs={12} item key={field.name}>
-              <Typography variant='body2' fontWeight={500} fontSize={14}>
+              <Typography variant="body2" fontWeight={500} fontSize={14}>
                 {field.label}
               </Typography>
               <Stack
@@ -87,29 +89,31 @@ export const FormSchoolDetails = ({
                   }}
                 >
                   <Box sx={{ height: 96, width: 96, position: 'relative' }}>
-                    <Image
-                      alt='Image'
-                      src={`https://api-staging.sisva.id/file/v1/files/${
-                        formik.values[field.name]
-                      }?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
-                      layout='fill'
-                      objectFit='contain'
-                    />
+                    {formik.values[field.name] ? (
+                      <Image
+                        alt="Image"
+                        src={`https://api-staging.sisva.id/file/v1/files/${
+                          formik.values[field.name]
+                        }?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+                        layout="fill"
+                        objectFit="contain"
+                      />
+                    ) : null}
                   </Box>
                 </Box>
-                <label htmlFor='image-input'>
+                <label htmlFor="image-input">
                   <Button
                     fullWidth
-                    variant='outlined'
-                    size='small'
+                    variant="outlined"
+                    size="small"
                     sx={{ m: '8px 0 4px' }}
                   >
                     Ubah Foto
                     <input
                       name={'logo_uri'}
-                      accept='image/*'
-                      id='image-input'
-                      type='file'
+                      accept="image/*"
+                      id="image-input"
+                      type="file"
                       style={{
                         position: 'absolute',
                         opacity: '0',
@@ -119,14 +123,14 @@ export const FormSchoolDetails = ({
                     />
                   </Button>
                 </label>
-                <Button fullWidth variant='outlined' size='small'>
+                <Button fullWidth variant="outlined" size="small">
                   Hapus
                 </Button>
               </Stack>
             </Grid>
           ) : (
             <Grid item xs={12} md={field.md} key={field.name}>
-              <Typography variant='body2' fontWeight={600} sx={{ mb: '8px' }}>
+              <Typography variant="body2" fontWeight={600} sx={{ mb: '8px' }}>
                 {field.label}
               </Typography>
               <TextField

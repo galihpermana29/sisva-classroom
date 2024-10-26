@@ -1,13 +1,13 @@
 'use client';
 
 import {
-    Box,
-    Button,
-    Divider,
-    Grid,
-    Paper,
-    Stack,
-    Typography,
+  Box,
+  Button,
+  Divider,
+  Grid,
+  Paper,
+  Stack,
+  Typography,
 } from '@mui/material';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
@@ -122,7 +122,7 @@ export default function SchoolProfileContent() {
       </Stack>
       <Stack
         component={Paper}
-        variant='outlined'
+        variant="outlined"
         sx={{
           padding: { xs: '16px', md: '16px 32px' },
           borderRadius: 2,
@@ -132,12 +132,14 @@ export default function SchoolProfileContent() {
         }}
       >
         <Box sx={{ height: 70, width: 70, position: 'relative', mr: 2 }}>
-          <Image
-            alt='Image'
-            src={`https://api-staging.sisva.id/file/v1/files/${logo_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
-            layout={'fill'}
-            objectFit={'contain'}
-          />
+          {logo_uri ? (
+            <Image
+              alt="Image"
+              src={`https://api-staging.sisva.id/file/v1/files/${logo_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+              layout={'fill'}
+              objectFit={'contain'}
+            />
+          ) : null}
         </Box>
         <Stack>
           <Typography sx={{ fontSize: 18, fontWeight: 600 }}>{name}</Typography>
@@ -149,7 +151,7 @@ export default function SchoolProfileContent() {
       <Stack
         component={Paper}
         ref={containerRef}
-        variant='outlined'
+        variant="outlined"
         sx={{
           borderRadius: 2,
           overflowY: 'scroll',
@@ -161,8 +163,8 @@ export default function SchoolProfileContent() {
       >
         {' '}
         <Button
-          variant='outlined'
-          size='small'
+          variant="outlined"
+          size="small"
           fullWidth={false}
           startIcon={<BorderColorRounded />}
           onClick={() => {
@@ -182,8 +184,8 @@ export default function SchoolProfileContent() {
         >
           <Box component={'span'}>Edit</Box>
         </Button>
-        <Stack id='school_form' direction={'row'} width='100%'>
-          <Stack width='100%'>
+        <Stack id="school_form" direction={'row'} width="100%">
+          <Stack width="100%">
             <Grid container>
               <Grid item xs={12}>
                 <Grid
@@ -208,7 +210,7 @@ export default function SchoolProfileContent() {
                           src={formOneIcon}
                           height={20}
                           width={20}
-                          alt='icon'
+                          alt="icon"
                         />
                       </Grid>
                       <Grid item xs={11}>
@@ -250,7 +252,7 @@ export default function SchoolProfileContent() {
                           src={formTwoIcon}
                           height={20}
                           width={20}
-                          alt='icon'
+                          alt="icon"
                         />
                       </Grid>
                       <Grid item xs={11}>
@@ -288,7 +290,7 @@ export default function SchoolProfileContent() {
                           src={formThreeIcon}
                           height={20}
                           width={20}
-                          alt='icon'
+                          alt="icon"
                         />
                       </Grid>
                       <Grid item xs={11}>
@@ -317,7 +319,7 @@ export default function SchoolProfileContent() {
           }}
         >
           <Button
-            variant='outlined'
+            variant="outlined"
             sx={{ mr: 1, width: 120 }}
             onClick={() => {
               setEditing(false);
@@ -328,14 +330,14 @@ export default function SchoolProfileContent() {
             Batal
           </Button>
           <Button
-            variant='contained'
+            variant="contained"
             sx={{ width: 120 }}
             onClick={() => {
               setEditing(false);
               formik.handleSubmit();
               containerRef.current.scrollTo({ top: 0 });
             }}
-            type='submit'
+            type="submit"
           >
             Simpan
           </Button>

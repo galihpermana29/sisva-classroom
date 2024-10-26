@@ -1,13 +1,13 @@
 import { useState } from 'react';
 
 import {
-    Box,
-    Button,
-    Grid,
-    Modal,
-    Paper,
-    Stack,
-    Typography,
+  Box,
+  Button,
+  Grid,
+  Modal,
+  Paper,
+  Stack,
+  Typography,
 } from '@mui/material';
 
 import checklist from '@/assets/Checklist.png';
@@ -96,7 +96,7 @@ export const FormSchoolIdentity = ({
                       }}
                     >
                       {activeColor === color && (
-                        <Image alt='cek' src={checklist} />
+                        <Image alt="cek" src={checklist} />
                       )}
                     </Box>
                   </Grid>
@@ -110,14 +110,14 @@ export const FormSchoolIdentity = ({
             }}
           >
             <Button
-              variant='outlined'
+              variant="outlined"
               sx={{ flex: 1, mr: 1 }}
               onClick={() => setOpenModal(false)}
             >
               Batal
             </Button>
             <Button
-              variant='contained'
+              variant="contained"
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenModal(false);
@@ -137,7 +137,7 @@ export const FormSchoolIdentity = ({
       <>
         <ModalTema open={openModal} />
         <Grid xs={12} item>
-          <Typography variant='body2' fontWeight={500} fontSize={14}>
+          <Typography variant="body2" fontWeight={500} fontSize={14}>
             Gambar Latar
           </Typography>
 
@@ -159,17 +159,19 @@ export const FormSchoolIdentity = ({
                 overflow: 'hidden',
               }}
             >
-              <Image
-                alt='Image'
-                src={`https://api-staging.sisva.id/file/v1/files/${formik.values['landing_image_uri']}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
-                layout='fill'
-                objectFit='cover'
-              />
+              {formik.values['landing_image_uri'] ? (
+                <Image
+                  alt="Image"
+                  src={`https://api-staging.sisva.id/file/v1/files/${formik.values['landing_image_uri']}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+                  layout="fill"
+                  objectFit="cover"
+                />
+              ) : null}
             </Box>
           </Box>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant='body2' fontWeight={500}>
+          <Typography variant="body2" fontWeight={500}>
             Warna Tema
           </Typography>
           <Box
@@ -199,7 +201,7 @@ export const FormSchoolIdentity = ({
       <>
         <ModalTema />
         <Grid xs={12} item>
-          <Typography variant='body2' fontWeight={500} fontSize={14}>
+          <Typography variant="body2" fontWeight={500} fontSize={14}>
             Gambar Latar
           </Typography>
           <Stack
@@ -226,26 +228,26 @@ export const FormSchoolIdentity = ({
                 }}
               >
                 <Image
-                  alt='Image'
+                  alt="Image"
                   src={`https://api-staging.sisva.id/file/v1/files/${formik.values['landing_image_uri']}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
-                  layout='fill'
-                  objectFit='cover'
+                  layout="fill"
+                  objectFit="cover"
                 />
               </Box>
             </Box>
-            <label htmlFor='image-input'>
+            <label htmlFor="image-input">
               <Button
                 fullWidth
-                variant='outlined'
-                size='small'
+                variant="outlined"
+                size="small"
                 sx={{ m: '8px 0 4px' }}
               >
                 Ubah Foto
                 <input
                   name={'landing_image_uri'}
-                  accept='image/*'
-                  id='image-input'
-                  type='file'
+                  accept="image/*"
+                  id="image-input"
+                  type="file"
                   style={{
                     position: 'absolute',
                     opacity: '0',
@@ -255,14 +257,14 @@ export const FormSchoolIdentity = ({
                 />
               </Button>
             </label>
-            <Button fullWidth variant='outlined' size='small'>
+            <Button fullWidth variant="outlined" size="small">
               Hapus
             </Button>
           </Stack>
         </Grid>
         <Grid item xs={12}>
           <Stack width={112}>
-            <Typography variant='body2' fontWeight={500}>
+            <Typography variant="body2" fontWeight={500}>
               Warna Tema
             </Typography>
             <Box
@@ -289,8 +291,8 @@ export const FormSchoolIdentity = ({
             <Button
               onClick={() => setOpenModal(true)}
               fullWidth
-              variant='outlined'
-              size='small'
+              variant="outlined"
+              size="small"
             >
               Ubah Tema
             </Button>
