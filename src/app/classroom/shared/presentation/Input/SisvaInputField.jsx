@@ -1,92 +1,88 @@
-import { SearchLg } from "@untitled-ui/icons-react";
-import { Input, InputNumber, Spin } from "antd";
-import TextArea from "antd/es/input/TextArea";
-import clsx from "clsx";
-import { forwardRef } from "react";
+import { SearchLg } from '@untitled-ui/icons-react';
+import { Input, InputNumber, Spin } from 'antd';
+import TextArea from 'antd/es/input/TextArea';
+import clsx from 'clsx';
+import { forwardRef } from 'react';
 
-export const SisvaInput = forwardRef(
-  (
-    {
-      customSize,
-      shadow,
-      customClassName,
-      value,
-      onChange,
-      placeholder,
-      disabled,
-      readOnly,
-    },
-    ref
-  ) => {
-    let customClass = "";
-    if (customSize === "sm") {
-      customClass = "h-[40px]";
-    } else if (customSize === "md") {
-      customClass = "h-[44px]";
-    } else if (customSize === "xl") {
-      customClass = "h-[60px]";
-    }
-
-    return (
-      <Input
-        ref={ref}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        disabled={disabled}
-        readOnly={readOnly}
-        className={clsx(
-          "border border-[#D0D5DD] rounded-[8px]",
-          customClass,
-          shadow ? "shadow-[0_1px_2px_0px_rgb(16,24,40,0.05)]" : "",
-          customClassName
-        )}
-      />
-    );
+export const SisvaInput = forwardRef(function SisvaInput(
+  {
+    customSize,
+    shadow,
+    customClassName,
+    value,
+    onChange,
+    placeholder,
+    disabled,
+    readOnly,
+  },
+  ref
+) {
+  let customClass = '';
+  if (customSize === 'sm') {
+    customClass = 'h-[40px]';
+  } else if (customSize === 'md') {
+    customClass = 'h-[44px]';
+  } else if (customSize === 'xl') {
+    customClass = 'h-[60px]';
   }
-);
 
-export const SisvaInputPassword = forwardRef(
-  (
-    {
-      customSize,
-      shadow,
-      customClassName,
-      value,
-      onChange,
-      placeholder,
-      disabled,
-      readOnly,
-    },
-    ref
-  ) => {
-    let customClass = "";
-    if (customSize === "sm") {
-      customClass = "h-[40px]";
-    } else if (customSize === "md") {
-      customClass = "h-[44px]";
-    } else if (customSize === "xl") {
-      customClass = "h-[60px]";
-    }
+  return (
+    <Input
+      ref={ref}
+      value={value}
+      onChange={onChange}
+      placeholder={placeholder}
+      disabled={disabled}
+      readOnly={readOnly}
+      className={clsx(
+        'border border-[#D0D5DD] rounded-[8px]',
+        customClass,
+        shadow ? 'shadow-[0_1px_2px_0px_rgb(16,24,40,0.05)]' : '',
+        customClassName
+      )}
+    />
+  );
+});
 
-    return (
-      <Input.Password
-        ref={ref}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        disabled={disabled}
-        readOnly={readOnly}
-        className={clsx(
-          "border border-[#D0D5DD] rounded-[8px]",
-          customClass,
-          shadow ? "shadow-[0_1px_2px_0px_rgb(16,24,40,0.05)]" : "",
-          customClassName
-        )}
-      />
-    );
+export const SisvaInputPassword = forwardRef(function SisvaInputPassword(
+  {
+    customSize,
+    shadow,
+    customClassName,
+    value,
+    onChange,
+    placeholder,
+    disabled,
+    readOnly,
+  },
+  ref
+) {
+  let customClass = '';
+  if (customSize === 'sm') {
+    customClass = 'h-[40px]';
+  } else if (customSize === 'md') {
+    customClass = 'h-[44px]';
+  } else if (customSize === 'xl') {
+    customClass = 'h-[60px]';
   }
-);
+
+  return (
+    <Input.Password
+      ref={ref}
+      value={value}
+      onChange={onChange}
+      placeholder={placeholder}
+      disabled={disabled}
+      readOnly={readOnly}
+      className={clsx(
+        'border border-[#D0D5DD] rounded-[8px]',
+        customClass,
+        shadow ? 'shadow-[0_1px_2px_0px_rgb(16,24,40,0.05)]' : '',
+        customClassName
+      )}
+    />
+  );
+});
 
 export function SisvaInputSearch({
   customSize,
@@ -100,13 +96,13 @@ export function SisvaInputSearch({
   disabled,
   fullRounded = true,
 }) {
-  let customClass = "";
-  if (customSize === "sm") {
-    customClass = "h-[40px]";
-  } else if (customSize === "md") {
-    customClass = "h-[44px]";
-  } else if (customSize === "xl") {
-    customClass = "h-[60px]";
+  let customClass = '';
+  if (customSize === 'sm') {
+    customClass = 'h-[40px]';
+  } else if (customSize === 'md') {
+    customClass = 'h-[44px]';
+  } else if (customSize === 'xl') {
+    customClass = 'h-[60px]';
   }
 
   const iconSize = {
@@ -134,10 +130,10 @@ export function SisvaInputSearch({
         )
       }
       className={clsx(
-        "w-full sm:w-[320px] border-[#D0D5DD] border",
+        'w-full sm:w-[320px] border-[#D0D5DD] border',
         customClass,
-        shadow ? "shadow-[0_1px_2px_0px_rgb(16,24,40,0.05)]" : "shadow-none",
-        fullRounded ? "rounded-full" : "rounded-[8px]",
+        shadow ? 'shadow-[0_1px_2px_0px_rgb(16,24,40,0.05)]' : 'shadow-none',
+        fullRounded ? 'rounded-full' : 'rounded-[8px]',
         customClassName
       )}
     />
@@ -156,13 +152,13 @@ export function SisvaTextArea({
   disabled,
   readOnly,
 }) {
-  let customClass = "";
-  if (customSize === "sm") {
-    customClass = "h-[40px]";
-  } else if (customSize === "md") {
-    customClass = "h-[44px]";
-  } else if (customSize === "xl") {
-    customClass = "h-[60px]";
+  let customClass = '';
+  if (customSize === 'sm') {
+    customClass = 'h-[40px]';
+  } else if (customSize === 'md') {
+    customClass = 'h-[44px]';
+  } else if (customSize === 'xl') {
+    customClass = 'h-[60px]';
   }
 
   return (
@@ -175,9 +171,9 @@ export function SisvaTextArea({
       disabled={disabled}
       readOnly={readOnly}
       className={clsx(
-        "rounded-[8px] border border-[#D0D5DD]",
+        'rounded-[8px] border border-[#D0D5DD]',
         customClass,
-        shadow ? "shadow-[0_1px_2px_0px_rgb(16,24,40,0.05)]" : "",
+        shadow ? 'shadow-[0_1px_2px_0px_rgb(16,24,40,0.05)]' : '',
         customClassName
       )}
     />
@@ -185,7 +181,7 @@ export function SisvaTextArea({
 }
 
 export function SisvaInputNumber({
-  customSize = "sm",
+  customSize = 'sm',
   shadow = false,
   customClassName,
   value,
@@ -196,13 +192,13 @@ export function SisvaInputNumber({
   disabled,
   readOnly,
 }) {
-  let customClass = "";
-  if (customSize === "sm") {
-    customClass = "h-[40px] height-sm";
-  } else if (customSize === "md") {
-    customClass = "h-[44px] height-md";
-  } else if (customSize === "xl") {
-    customClass = "h-[60px] height-xl";
+  let customClass = '';
+  if (customSize === 'sm') {
+    customClass = 'h-[40px] height-sm';
+  } else if (customSize === 'md') {
+    customClass = 'h-[44px] height-md';
+  } else if (customSize === 'xl') {
+    customClass = 'h-[60px] height-xl';
   }
 
   return (
@@ -215,11 +211,11 @@ export function SisvaInputNumber({
       disabled={disabled}
       readOnly={readOnly}
       className={clsx(
-        "!rounded-[8px] border-border-primary",
+        '!rounded-[8px] border-border-primary',
         customClass,
-        shadow ? "shadow-[0_1px_2px_0px_rgb(16,24,40,0.05)]" : "",
+        shadow ? 'shadow-[0_1px_2px_0px_rgb(16,24,40,0.05)]' : '',
         customClassName,
-        "custom-input-number-osx"
+        'custom-input-number-osx'
       )}
     />
   );
