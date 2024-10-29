@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   Button,
@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 
 import AuthAPI from '@/api/auth';
+import CmsAPI from '@/api/cms';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
@@ -30,9 +31,23 @@ export default function Home() {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [schoolId, setSchoolId] = useState(
-    '0a49a174-9ff5-464d-86c2-3eb1cd0b284e'
-  );
+  const [schoolId, setSchoolId] = useState('');
+
+  const fetchProfile = async (slug) => {
+    try {
+      const {
+        data: { data },
+      } = await CmsAPI.getSchoolByCode(slug);
+
+      setSchoolId(data.id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchProfile(slug);
+  }, [slug]);
 
   async function login() {
     let payload = JSON.stringify({
