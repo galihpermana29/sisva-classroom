@@ -10,7 +10,7 @@ import {
   InputAdornment,
   OutlinedInput,
   Stack,
-  Typography
+  Typography,
 } from '@mui/material';
 
 import AuthAPI from '@/api/auth';
@@ -61,15 +61,15 @@ export default function Home() {
   return (
     <Stack sx={{ width: '100%', mt: 4, mb: 2 }}>
       <Stack mb={2}>
-        <Typography fontSize={18} fontWeight='bold'>
+        <Typography fontSize={18} fontWeight="bold">
           Login
         </Typography>
-        <Typography variant='body2' color='grey'>
+        <Typography variant="body2" color="grey">
           Silakan masukkan detail akun anda.
         </Typography>
       </Stack>
       <Stack
-        component='form'
+        component="form"
         sx={{
           gap: '8px',
           mb: 2,
@@ -80,11 +80,11 @@ export default function Home() {
             gap: '8px',
           }}
         >
-          <Typography variant='body2' fontWeight='500'>
+          <Typography variant="body2" fontWeight="500">
             Username
           </Typography>
           <OutlinedInput
-            placeholder='Masukkan Username'
+            placeholder="Masukkan Username"
             onChange={(e) => {
               setUsername(e.target.value);
             }}
@@ -95,21 +95,21 @@ export default function Home() {
             gap: '8px',
           }}
         >
-          <Typography variant='body2' fontWeight='500'>
+          <Typography variant="body2" fontWeight="500">
             Password
           </Typography>
-          <FormControl variant='outlined'>
+          <FormControl variant="outlined">
             <OutlinedInput
-              id='outlined-adornment-password'
-              placeholder='Masukkan Password'
+              id="outlined-adornment-password"
+              placeholder="Masukkan Password"
               type={showPassword ? 'text' : 'password'}
               endAdornment={
-                <InputAdornment position='end'>
+                <InputAdornment position="end">
                   <IconButton
-                    aria-label='toggle password visibility'
+                    aria-label="toggle password visibility"
                     onClick={handleClickShowPassword}
                     onMouseDown={handleMouseDownPassword}
-                    edge='end'
+                    edge="end"
                   >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
@@ -127,11 +127,11 @@ export default function Home() {
           </FormControl>
         </Stack>
         <Stack
-          direction='row'
-          justifyContent='space-between'
-          alignItems='center'
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
         >
-          <FormControlLabel control={<Checkbox />} label='Ingat Saya' />
+          <FormControlLabel control={<Checkbox />} label="Ingat Saya" />
         </Stack>
       </Stack>
       <Button
@@ -140,21 +140,21 @@ export default function Home() {
         onClick={() => {
           login();
         }}
-        variant='contained'
+        variant="contained"
       >
         <Typography textTransform={'none'}>Masuk</Typography>
       </Button>
-      <Typography variant='body2' mt={3} align='center'>
+      <Typography variant="body2" mt={3} align="center">
         Tidak bisa masuk?
       </Typography>
 
       <Typography
         component={Link}
         href={`/administration/${slug}/auth/information`}
-        color='primary'
-        variant='body2'
-        fontWeight='500'
-        align='center'
+        color="primary"
+        variant="body2"
+        fontWeight="500"
+        align="center"
       >
         Lihat informasi selengkapnya.
       </Typography>
