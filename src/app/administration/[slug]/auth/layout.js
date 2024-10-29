@@ -39,12 +39,14 @@ export default function RootLayout({ children }) {
           position: 'relative',
         }}
       >
-        <Image
-          alt="Web Image"
-          src={`https://api-staging.sisva.id/file/v1/files/${profileData?.landing_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
-          layout={'fill'}
-          objectFit={'cover'}
-        />
+        {profileData?.landing_image_uri ? (
+          <Image
+            alt="Web Image"
+            src={`https://api-staging.sisva.id/file/v1/files/${profileData?.landing_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+            layout={'fill'}
+            objectFit={'cover'}
+          />
+        ) : null}
       </Box>
       <Stack
         sx={{
