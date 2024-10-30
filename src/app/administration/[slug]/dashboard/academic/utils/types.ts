@@ -1,0 +1,44 @@
+// Sheets structure
+export type Sheet =
+  | 'Program Studi'
+  | 'Program Studi Siswa'
+  | 'Kurikulum dan Mata Pelajaran'
+  | 'Tingkatan dan Silabus'
+  | 'Periode'
+  | 'Periode dan Kurikulum'
+  | 'Guru'
+  | 'Kelas'
+  | 'Murid'
+  | 'Ekstrakulikuler'
+  | 'Anggota';
+
+export type Grade =
+  | 'I'
+  | 'II'
+  | 'III'
+  | 'IV'
+  | 'V'
+  | 'VI'
+  | 'VII'
+  | 'VIII'
+  | 'IX'
+  | 'X'
+  | 'XI'
+  | 'XII';
+
+export type ProgramStudiData = [
+  string, // 0 - name
+  string, // 1 - code
+  boolean, // 2 - tingkatan I
+  boolean, // 3 - tingkatan II
+  boolean, // 4 - tingkatan III
+  boolean, // 5 - tingkatan IV
+  boolean, // 6 - tingkatan V
+  boolean, // 7 - tingkatan VI
+  boolean, // 8 - tingkatan VII
+  boolean, // 9 - tingkatan VIII
+  boolean, // 10 - tingkatan IX
+  boolean, // 11 - tingkatan X
+  boolean, // 12 - tingkatan XI
+  boolean // 13 - tingkatan XII
+][];

@@ -2,25 +2,25 @@
 
 import { ExcelIcon, SortIcon } from '@/assets/SVGs';
 import {
-    Add,
-    Cancel,
-    DownloadRounded,
-    Search,
-    UploadFileRounded,
+  Add,
+  Cancel,
+  DownloadRounded,
+  Search,
+  UploadFileRounded,
 } from '@mui/icons-material';
 import {
-    Box,
-    Button,
-    Divider,
-    Hidden,
-    InputAdornment,
-    Menu,
-    MenuItem,
-    Modal,
-    Paper,
-    Stack,
-    TextField,
-    Typography,
+  Box,
+  Button,
+  Divider,
+  Hidden,
+  InputAdornment,
+  Menu,
+  MenuItem,
+  Modal,
+  Paper,
+  Stack,
+  TextField,
+  Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { FormAddGrade } from './components/FormAddGrade';
@@ -31,8 +31,10 @@ import StudyProgramTable from './components/StudyProgramTable';
 import AcademicAPI from '@/api/academic';
 import UsersAPI from '@/api/users';
 import { useFormik } from 'formik';
+import handleUploadAcademicXLSX from '../utils/handleUploadAcademicXLSX';
 import { FormAddStudent } from './components/FormAddStudent';
 import StudentTable from './components/StudentTable';
+
 export default function StaffProfileContent() {
   const initialValues = {
     code: '',
@@ -934,22 +936,25 @@ export default function StaffProfileContent() {
                   <Typography sx={{ fontSize: 14 }}>Export</Typography>
                 </Stack>
               </MenuItem>
-              <MenuItem onClick={handleClose} sx={{ padding: 1 }}>
-                <label htmlFor="import-csv">
+              <MenuItem sx={{ padding: 1 }}>
+                <label htmlFor="import-xlsx">
                   <Stack flexDirection={'row'} alignItems={'center'}>
                     <UploadFileRounded sx={{ fontSize: 18, mr: 1 }} />
                     <Typography sx={{ fontSize: 14 }}>Import</Typography>
                     <input
-                      name={'import_csv'}
-                      accept="csv"
-                      id="import-csv"
+                      name={'import_xlsx'}
+                      accept="xlsx"
+                      id="import-xlsx"
                       type="file"
                       style={{
                         position: 'absolute',
                         opacity: '0',
                         border: '1px solid red',
                       }}
-                      // onChange={handleImageChange}
+                      onChange={(e) => {
+                        handleUploadAcademicXLSX(e.target.files[0]);
+                        handleClose();
+                      }}
                     />
                   </Stack>
                 </label>
