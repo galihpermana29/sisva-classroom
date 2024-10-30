@@ -30,13 +30,14 @@ export default async function handleKurikulumDanMataPelajaran(
   let curriculumNames = allCurriculum.map((curriculum) => curriculum.name);
 
   // study programs
-  const allStudyProgram = (await AcademicAPI.getAllProdi()).data.data;
+  const allStudyProgram: ProgramStudi[] = (await AcademicAPI.getAllProdi()).data
+    .data;
   const studyProgramNames = allStudyProgram.map(
     (studyProgram) => studyProgram.name
   );
 
   // subjects
-  const allSubject = (await AcademicAPI.getAllSubject()).data.data;
+  const allSubject: Subject[] = (await AcademicAPI.getAllSubject()).data.data;
   const subjectNames = allSubject.map((subject) => subject.name);
 
   const dataObject = data.map((row) => {
@@ -53,14 +54,6 @@ export default async function handleKurikulumDanMataPelajaran(
     .map((data) => data.nama_kurikulum)
     .filter(onlyUnique);
 
-  const createSubjectObject = dataObject.filter(
-    (data) => !subjectNames.includes(data.nama_mata_pelajaran)
-  );
-
-  const updateSubjectObject = dataObject.filter((data) =>
-    subjectNames.includes(data.nama_mata_pelajaran)
-  );
-
   const promisesCreateCurriculum = createCurriculumNameArray.map((name) => {
     const payload = {
       name: name,
@@ -72,6 +65,20 @@ export default async function handleKurikulumDanMataPelajaran(
   await Promise.all(promisesCreateCurriculum);
   allCurriculum = (await AcademicAPI.getAllCurriculum()).data.data;
   curriculumNames = allCurriculum.map((curriculum) => curriculum.name);
+
+  const createSubjectObject = dataObject.filter(
+    (data) =>
+      !subjectNames.includes(data.nama_mata_pelajaran) &&
+      curriculumNames.includes(data.nama_kurikulum) &&
+      studyProgramNames.includes(data.nama_program_studi)
+  );
+
+  const updateSubjectObject = dataObject.filter(
+    (data) =>
+      subjectNames.includes(data.nama_mata_pelajaran) &&
+      curriculumNames.includes(data.nama_kurikulum) &&
+      studyProgramNames.includes(data.nama_program_studi)
+  );
 
   const promisesCreateSubject = createSubjectObject.map((data) => {
     const payload = {
