@@ -1,5 +1,5 @@
 import * as XLSX from 'xlsx';
-import type { ProgramStudiData, Sheet } from './types';
+import type { ProgramStudiInputData, Sheet } from './types';
 
 import handleProgramStudiXLSX from './handleProgramStudiXLSX';
 
@@ -44,7 +44,7 @@ export default function handleUploadAcademicXLSX(file: File) {
           return data.filter((row) => row[0]);
         });
 
-      handleProgramStudiXLSX(sheetRawData[0] as ProgramStudiData);
+      handleProgramStudiXLSX(sheetRawData[0] as ProgramStudiInputData);
     } catch (error) {
       console.log(error);
       globalThis.alert('Import Gagal');

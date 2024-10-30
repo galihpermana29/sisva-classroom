@@ -26,7 +26,7 @@ export type Grade =
   | 'XI'
   | 'XII';
 
-export type ProgramStudiData = [
+export type ProgramStudiInputData = [
   string, // 0 - name
   string, // 1 - code
   boolean, // 2 - tingkatan I
@@ -42,3 +42,13 @@ export type ProgramStudiData = [
   boolean, // 12 - tingkatan XI
   boolean // 13 - tingkatan XII
 ][];
+
+export type ProgramStudiStatus = 'active' | 'inactive';
+
+export type ProgramStudi = {
+  id: string;
+  name: string;
+  code: string;
+  grades: Grade[];
+  status: ProgramStudiStatus;
+};

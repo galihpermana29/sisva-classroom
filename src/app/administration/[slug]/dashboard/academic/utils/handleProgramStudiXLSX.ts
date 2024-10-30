@@ -1,11 +1,29 @@
-import type { Grade, ProgramStudiData } from './types';
+import AcademicAPI from '@/api/academic';
+import type {
+  Grade,
+  ProgramStudi,
+  ProgramStudiInputData,
+  ProgramStudiStatus,
+} from './types';
 
 function getGrade(checkmark: boolean, grade: Grade): Grade | null {
   if (checkmark) return grade;
   return null;
 }
 
-export default function handleProgramStudiXLSX(data: ProgramStudiData) {
+function getProgramStudiId(allProgramStudi: ProgramStudi[], name: string) {
+  return allProgramStudi.find((programStudi) => programStudi.name === name).id;
+}
+export default async function handleProgramStudiXLSX(
+  data: ProgramStudiInputData
+) {
+  const allProgramStudi: ProgramStudi[] = await (
+    await AcademicAPI.getAllProdi()
+  ).data.data;
+  const programStudiNames = allProgramStudi.map(
+    (programStudi) => programStudi.name
+  );
+  console.log(allProgramStudi);
   const dataObject = data.map((row) => {
     return {
       name: row[0],
@@ -26,5 +44,37 @@ export default function handleProgramStudiXLSX(data: ProgramStudiData) {
       ].filter((grade) => grade),
     };
   });
-  console.log(dataObject);
+
+  const dataCreate = dataObject.filter(
+    (programStudi) => !programStudiNames.includes(programStudi.name)
+  );
+  const dataUpdate = dataObject.filter((programStudi) =>
+    programStudiNames.includes(programStudi.name)
+  );
+
+  const promisesCreate = dataCreate.map((data) => {
+    const status: ProgramStudiStatus = 'active';
+    const payload = {
+      name: data.name,
+      code: data.code,
+      grades: data.grade,
+      status: status,
+    };
+    return AcademicAPI.createProdi(payload);
+  });
+
+  const promisesUpdate = dataUpdate.map((data) => {
+    const payload = {
+      name: data.name,
+      code: data.code,
+      grades: data.grade,
+    };
+    return AcademicAPI.updateProdi(
+      payload,
+      getProgramStudiId(allProgramStudi, data.name)
+    );
+  });
+
+  const res = await Promise.all([...promisesCreate, ...promisesUpdate]);
+  console.log(res);
 }
