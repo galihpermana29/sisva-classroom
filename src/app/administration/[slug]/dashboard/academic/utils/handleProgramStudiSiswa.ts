@@ -80,5 +80,4 @@ export default async function handleProgramStudiSiswa(
   });
 
   const res = await Promise.all(promisesUpdate);
-  console.log(res);
 }

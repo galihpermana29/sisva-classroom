@@ -1,10 +1,12 @@
 import * as XLSX from 'xlsx';
 import type {
+  KurikulumDanMataPelajaranInputData,
   ProgramStudiInputData,
   ProgramStudiSiswaInputData,
   Sheet,
 } from './types';
 
+import handleKurikulumDanMataPelajaran from './handleKurikulumDanMataPelajaran';
 import handleProgramStudi from './handleProgramStudi';
 import handleProgramStudiSiswa from './handleProgramStudiSiswa';
 
@@ -52,6 +54,9 @@ export default function handleUploadAcademicXLSX(file: File) {
       await handleProgramStudi(sheetRawData[0] as ProgramStudiInputData);
       await handleProgramStudiSiswa(
         sheetRawData[1] as ProgramStudiSiswaInputData
+      );
+      await handleKurikulumDanMataPelajaran(
+        sheetRawData[2] as KurikulumDanMataPelajaranInputData
       );
     } catch (error) {
       console.log(error);

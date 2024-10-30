@@ -15,9 +15,8 @@ function getProgramStudiId(allProgramStudi: ProgramStudi[], name: string) {
   return allProgramStudi.find((programStudi) => programStudi.name === name).id;
 }
 export default async function handleProgramStudi(data: ProgramStudiInputData) {
-  const allProgramStudi: ProgramStudi[] = await (
-    await AcademicAPI.getAllProdi()
-  ).data.data;
+  const allProgramStudi: ProgramStudi[] = (await AcademicAPI.getAllProdi()).data
+    .data;
   const programStudiNames = allProgramStudi.map(
     (programStudi) => programStudi.name
   );

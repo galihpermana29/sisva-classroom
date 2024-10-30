@@ -1,3 +1,5 @@
+import type { SubjectType } from '@/globalcomponents/types';
+
 // Sheets structure
 export type Sheet =
   | 'Program Studi'
@@ -74,4 +76,34 @@ export type User = {
   roles: string[]; // ???
   permissions: string[]; // ???
   status: string; // active, inactive ???
+};
+
+export type KurikulumDanMataPelajaranInputData = [
+  string, // 0 - nama kurikulum
+  string, // 1 - nama program studi
+  string, // 2 - nama mata pelajaran
+  SubjectType // 3 - type mata pelajaran
+][];
+
+export type Curriculum = {
+  id: string;
+  name: string;
+  description: string;
+  study_programs:
+    | {
+        id: string;
+        code: string;
+      }[]
+    | null;
+  total_subjects: number;
+};
+
+export type Subject = {
+  id: string;
+  name: string;
+  type: SubjectType;
+  study_program_id: string;
+  study_program_name: string;
+  curriculum_id: string;
+  curriculum_name: string;
 };

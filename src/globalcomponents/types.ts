@@ -211,3 +211,14 @@ export function getRelationship(text: RelationshipText): Relationship {
       return 'others';
   }
 }
+
+export type SubjectType = 'mandatory' | 'optional';
+export type SubjectTypeText = 'Wajib' | 'Pilihan';
+export function getSubjectType(text: SubjectTypeText): SubjectType {
+  switch (text) {
+    case 'Wajib':
+      return 'mandatory';
+    case 'Pilihan':
+      return 'optional';
+  }
+}
