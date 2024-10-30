@@ -52,3 +52,26 @@ export type ProgramStudi = {
   grades: Grade[];
   status: ProgramStudiStatus;
 };
+
+export type ProgramStudiSiswaInputData = [
+  string, // 0 - name
+  string, // 1 - username (opsional)
+  string, // 2 - Nama Program Studi
+  Grade // 3 - Tingkatan
+][];
+
+export type User = {
+  id: string;
+  username: string;
+  nik: string;
+  name: string;
+  type: string; // student, teacher, staff ???
+  detail: {
+    json_text: string;
+    grade: Grade;
+  };
+  profile_image_uri: string;
+  roles: string[]; // ???
+  permissions: string[]; // ???
+  status: string; // active, inactive ???
+};

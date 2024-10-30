@@ -14,16 +14,13 @@ function getGrade(checkmark: boolean, grade: Grade): Grade | null {
 function getProgramStudiId(allProgramStudi: ProgramStudi[], name: string) {
   return allProgramStudi.find((programStudi) => programStudi.name === name).id;
 }
-export default async function handleProgramStudiXLSX(
-  data: ProgramStudiInputData
-) {
+export default async function handleProgramStudi(data: ProgramStudiInputData) {
   const allProgramStudi: ProgramStudi[] = await (
     await AcademicAPI.getAllProdi()
   ).data.data;
   const programStudiNames = allProgramStudi.map(
     (programStudi) => programStudi.name
   );
-  console.log(allProgramStudi);
   const dataObject = data.map((row) => {
     return {
       name: row[0],
@@ -76,5 +73,4 @@ export default async function handleProgramStudiXLSX(
   });
 
   const res = await Promise.all([...promisesCreate, ...promisesUpdate]);
-  console.log(res);
 }

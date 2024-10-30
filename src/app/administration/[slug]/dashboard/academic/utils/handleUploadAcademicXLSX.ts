@@ -1,7 +1,12 @@
 import * as XLSX from 'xlsx';
-import type { ProgramStudiInputData, Sheet } from './types';
+import type {
+  ProgramStudiInputData,
+  ProgramStudiSiswaInputData,
+  Sheet,
+} from './types';
 
-import handleProgramStudiXLSX from './handleProgramStudiXLSX';
+import handleProgramStudi from './handleProgramStudi';
+import handleProgramStudiSiswa from './handleProgramStudiSiswa';
 
 const MAX_ROW = 1000;
 
@@ -44,7 +49,10 @@ export default function handleUploadAcademicXLSX(file: File) {
           return data.filter((row) => row[0]);
         });
 
-      handleProgramStudiXLSX(sheetRawData[0] as ProgramStudiInputData);
+      await handleProgramStudi(sheetRawData[0] as ProgramStudiInputData);
+      await handleProgramStudiSiswa(
+        sheetRawData[1] as ProgramStudiSiswaInputData
+      );
     } catch (error) {
       console.log(error);
       globalThis.alert('Import Gagal');
