@@ -2,8 +2,8 @@ import AcademicAPI from '@/api/academic';
 import dayjs from 'dayjs';
 import type { Period, PeriodeInputData } from './types';
 
-function getPeriodId(allPeriod: Period[], name: string) {
-  return allPeriod.find((period) => period.name === name).id;
+function getPeriod(allPeriod: Period[], name: string) {
+  return allPeriod.find((period) => period.name === name);
 }
 
 export default async function handlePeriode(data: PeriodeInputData) {
@@ -38,13 +38,18 @@ export default async function handlePeriode(data: PeriodeInputData) {
   });
 
   const promisesUpdate = dataUpdate.map((data) => {
+    const period = getPeriod(allPeriod, data.name);
     const payload = {
-      period_id: getPeriodId(allPeriod, data.name),
-      period: data.name,
+      name: data.name,
       start_time: data.start_date,
       end_time: data.end_date,
+      status: period.status,
     };
-    return AcademicAPI.updatePeriod(payload, getPeriodId(allPeriod, data.name));
+    if (period.status === 'active' || period.status === 'finished') {
+      delete payload.start_time;
+      delete payload.end_time;
+    }
+    return AcademicAPI.updatePeriod(payload, period.id);
   });
 
   const res = await Promise.all([...promisesCreate, ...promisesUpdate]);
