@@ -4,11 +4,13 @@ import type {
   ProgramStudiInputData,
   ProgramStudiSiswaInputData,
   Sheet,
+  TingkatanDanSilabusInputData,
 } from './types';
 
 import handleKurikulumDanMataPelajaran from './handleKurikulumDanMataPelajaran';
 import handleProgramStudi from './handleProgramStudi';
 import handleProgramStudiSiswa from './handleProgramStudiSiswa';
+import handleTingkatanDanSilabus from './handleTingkatanDanSilabus';
 
 const MAX_ROW = 1000;
 
@@ -57,6 +59,9 @@ export default function handleUploadAcademicXLSX(file: File) {
       );
       await handleKurikulumDanMataPelajaran(
         sheetRawData[2] as KurikulumDanMataPelajaranInputData
+      );
+      await handleTingkatanDanSilabus(
+        sheetRawData[3] as TingkatanDanSilabusInputData
       );
     } catch (error) {
       console.log(error);

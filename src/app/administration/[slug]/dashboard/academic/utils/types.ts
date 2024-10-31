@@ -107,3 +107,21 @@ export type Subject = {
   curriculum_id: string;
   curriculum_name: string;
 };
+
+export type TingkatanDanSilabusInputData = [
+  string, // 0 - nama mata pelajaran
+  Grade, // 1 - tingkatan
+  string // 2 - uri silabus
+][];
+
+export type Syllabus = {
+  id: string;
+  file_uri: string;
+  study_program_id: string;
+  study_program_name: string;
+  curriculum_id: string;
+  curriculum_name: string;
+  subject_id: string;
+  subject_name: string;
+  grade: Grade;
+};
