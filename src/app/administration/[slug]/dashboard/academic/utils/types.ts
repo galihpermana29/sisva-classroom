@@ -240,3 +240,16 @@ export type Ekstrakulikuler = {
   teacher_id: string;
   teacher_name: string;
 };
+
+export type AnggotaInputData = [
+  string, // 0 - nama ekstrakulikuler
+  string, // 1 - nama anggota
+  string // 2 - username anggota
+][];
+
+export type EkstrakulikulerStudent = {
+  extracurricular_id: string;
+  extracurricular_name: string;
+  student_id: string;
+  student_name: string;
+};
