@@ -1,6 +1,7 @@
 import * as XLSX from 'xlsx';
 import type {
   KurikulumDanMataPelajaranInputData,
+  PeriodeDanKurikulumInputData,
   PeriodeInputData,
   ProgramStudiInputData,
   ProgramStudiSiswaInputData,
@@ -10,6 +11,7 @@ import type {
 
 import handleKurikulumDanMataPelajaran from './handleKurikulumDanMataPelajaran';
 import handlePeriode from './handlePeriode';
+import handlePeriodeDanKurikulum from './handlePeriodeDanKurikulum';
 import handleProgramStudi from './handleProgramStudi';
 import handleProgramStudiSiswa from './handleProgramStudiSiswa';
 import handleTingkatanDanSilabus from './handleTingkatanDanSilabus';
@@ -66,6 +68,9 @@ export default function handleUploadAcademicXLSX(file: File) {
         sheetRawData[3] as TingkatanDanSilabusInputData
       );
       await handlePeriode(sheetRawData[4] as PeriodeInputData);
+      await handlePeriodeDanKurikulum(
+        sheetRawData[5] as PeriodeDanKurikulumInputData
+      );
     } catch (error) {
       console.log(error);
       globalThis.alert('Import Gagal');

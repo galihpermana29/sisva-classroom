@@ -145,3 +145,20 @@ export type Period = {
       }[]
     | null;
 };
+
+export type PeriodeDanKurikulumInputData = [
+  string, // 0 - nama periode
+  string, // 1 - nama kurikulum
+  string, // 2 - nama program studi
+  Grade // 3 - tingkatan
+][];
+
+export type PeriodCurriculum = {
+  period_id: string;
+  period_name: string;
+  study_program_id: string;
+  study_program_name: string;
+  grade: Grade;
+  curriculum_id: string;
+  curriculum_name: string;
+};
