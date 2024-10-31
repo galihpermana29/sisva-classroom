@@ -1,5 +1,6 @@
 import * as XLSX from 'xlsx';
 import type {
+  GuruInputData,
   KurikulumDanMataPelajaranInputData,
   PeriodeDanKurikulumInputData,
   PeriodeInputData,
@@ -9,6 +10,7 @@ import type {
   TingkatanDanSilabusInputData,
 } from './types';
 
+import handleGuru from './handleGuru';
 import handleKurikulumDanMataPelajaran from './handleKurikulumDanMataPelajaran';
 import handlePeriode from './handlePeriode';
 import handlePeriodeDanKurikulum from './handlePeriodeDanKurikulum';
@@ -22,6 +24,7 @@ function getSheet(template: XLSX.WorkBook, sheetName: Sheet) {
   return template.Sheets[sheetName];
 }
 
+// prettier-ignore
 export default function handleUploadAcademicXLSX(file: File) {
   const reader = new FileReader();
   reader.onload = async (e) => {
@@ -58,22 +61,16 @@ export default function handleUploadAcademicXLSX(file: File) {
         });
 
       await handleProgramStudi(sheetRawData[0] as ProgramStudiInputData);
-      await handleProgramStudiSiswa(
-        sheetRawData[1] as ProgramStudiSiswaInputData
-      );
-      await handleKurikulumDanMataPelajaran(
-        sheetRawData[2] as KurikulumDanMataPelajaranInputData
-      );
-      await handleTingkatanDanSilabus(
-        sheetRawData[3] as TingkatanDanSilabusInputData
-      );
+      await handleProgramStudiSiswa(sheetRawData[1] as ProgramStudiSiswaInputData);
+      await handleKurikulumDanMataPelajaran(sheetRawData[2] as KurikulumDanMataPelajaranInputData);
+      await handleTingkatanDanSilabus(sheetRawData[3] as TingkatanDanSilabusInputData);
       await handlePeriode(sheetRawData[4] as PeriodeInputData);
-      await handlePeriodeDanKurikulum(
-        sheetRawData[5] as PeriodeDanKurikulumInputData
-      );
+      await handlePeriodeDanKurikulum(sheetRawData[5] as PeriodeDanKurikulumInputData);
+      await handleGuru(sheetRawData[6] as GuruInputData);
+
     } catch (error) {
       console.log(error);
-      globalThis.alert('Import Gagal');
+      globalThis.alert('Import Bermasalah');
     }
   };
   reader.readAsArrayBuffer(file);

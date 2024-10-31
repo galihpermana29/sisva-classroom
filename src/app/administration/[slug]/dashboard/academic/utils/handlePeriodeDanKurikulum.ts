@@ -82,5 +82,4 @@ export default async function handlePeriodeDanKurikulum(
   });
 
   const res = await Promise.all(promisesCreate);
-  console.log(res);
 }

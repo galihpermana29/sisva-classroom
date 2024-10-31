@@ -162,3 +162,27 @@ export type PeriodCurriculum = {
   curriculum_id: string;
   curriculum_name: string;
 };
+
+export type GuruInputData = [
+  string, // 0 - nama guru
+  string, // 1 - username (opsional)
+  string, // 2 - nama program studi
+  Grade // 3 - tingkatan
+][];
+
+export type SubjectTeacher = {
+  teacher_id: string;
+  teacher_name: string;
+  subject_id: string;
+  subject_name: string;
+  grade: Grade;
+  subject_detail: {
+    id: string;
+    name: string;
+    type: SubjectType;
+    study_program_id: string;
+    study_program_name: string;
+    curriculum_id: string;
+    curriculum_name: string;
+  };
+};
