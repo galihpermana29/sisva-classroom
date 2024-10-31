@@ -1,4 +1,4 @@
-import type { SubjectType } from '@/globalcomponents/types';
+import type { PeriodStatus, SubjectType } from '@/globalcomponents/types';
 
 // Sheets structure
 export type Sheet =
@@ -124,4 +124,24 @@ export type Syllabus = {
   subject_id: string;
   subject_name: string;
   grade: Grade;
+};
+
+export type PeriodeInputData = [
+  string, // 0 - nama periode
+  number, // 1 - tanggal mulai, Excel serial date format
+  number // 2 - tanggal selesai, Excel serial date format
+][];
+
+export type Period = {
+  id: string;
+  name: string;
+  start_date: string;
+  end_date: string;
+  status: PeriodStatus;
+  study_programs:
+    | {
+        id: string;
+        code: string;
+      }[]
+    | null;
 };

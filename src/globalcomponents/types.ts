@@ -222,3 +222,16 @@ export function getSubjectType(text: SubjectTypeText): SubjectType {
       return 'optional';
   }
 }
+
+export type PeriodStatus = 'active' | 'inactive' | 'finished';
+export type PeriodStatusText = 'Aktif' | 'Belum Aktif' | 'Selesai';
+export function getPeriodStatus(text: PeriodStatusText): PeriodStatus {
+  switch (text) {
+    case 'Aktif':
+      return 'active';
+    case 'Belum Aktif':
+      return 'inactive';
+    case 'Selesai':
+      return 'finished';
+  }
+}
