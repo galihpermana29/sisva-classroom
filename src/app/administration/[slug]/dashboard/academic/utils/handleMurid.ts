@@ -67,11 +67,7 @@ export default async function handleMurid(data: MuridInputData) {
           name: data.nama_siswa,
           username: data.username_siswa,
         });
-        const studentGroup = getStudentGroup(allStudentGroup, data.nama_kelas);
-        return (
-          studentGroupStudent.student_id === student.id &&
-          studentGroupStudent.student_group_id === studentGroup.id
-        );
+        return studentGroupStudent.student_id === student.id;
       })
   );
 
