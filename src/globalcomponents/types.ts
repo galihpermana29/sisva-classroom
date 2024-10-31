@@ -235,3 +235,14 @@ export function getPeriodStatus(text: PeriodStatusText): PeriodStatus {
       return 'finished';
   }
 }
+
+export type ClassType = 'homeroom' | 'moving';
+export type ClassTypeText = 'Kelas Wajib' | 'Kelas Pilihan';
+export function getClassType(text: ClassTypeText): ClassType {
+  switch (text) {
+    case 'Kelas Wajib':
+      return 'homeroom';
+    case 'Kelas Pilihan':
+      return 'moving';
+  }
+}

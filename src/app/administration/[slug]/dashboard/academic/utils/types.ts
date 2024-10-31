@@ -1,4 +1,8 @@
-import type { PeriodStatus, SubjectType } from '@/globalcomponents/types';
+import type {
+  ClassType,
+  PeriodStatus,
+  SubjectType,
+} from '@/globalcomponents/types';
 
 // Sheets structure
 export type Sheet =
@@ -184,5 +188,29 @@ export type SubjectTeacher = {
     study_program_name: string;
     curriculum_id: string;
     curriculum_name: string;
+  };
+};
+
+export type KelasInputData = [
+  string, // 0 - nama kelas
+  string, // 1 - nama wali kelas
+  string, // 2 - username wali kelas
+  string, // 3 - nama periode
+  string, // 4 - nama program studi
+  Grade // 5 - tingkatan
+][];
+
+export type StudentGroup = {
+  id: string;
+  name: string;
+  type: ClassType;
+  period_id: string;
+  period_name: string;
+  study_program_id: string;
+  study_program_name: string;
+  grade: Grade;
+  detail: {
+    homeroom_teacher_id: string;
+    homeroom_teacher_name: string;
   };
 };

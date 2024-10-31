@@ -3,20 +3,17 @@ import UsersAPI from '@/api/users';
 
 import type { GuruInputData, Subject, SubjectTeacher, User } from './types';
 
-function getUserByName(students: User[], name: string) {
-  return students.find((student) => student.name === name);
+function getUserByName(users: User[], name: string) {
+  return users.find((user) => user.name === name);
 }
 
-function getUserByUsername(students: User[], username: string) {
-  return students.find((student) => student.username === username);
+function getUserByUsername(users: User[], username: string) {
+  return users.find((user) => user.username === username);
 }
 
-function getUser(
-  students: User[],
-  student: { name: string; username: string }
-) {
-  if (student.username) return getUserByUsername(students, student.username);
-  return getUserByName(students, student.name);
+function getUser(users: User[], user: { name: string; username: string }) {
+  if (user.username) return getUserByUsername(users, user.username);
+  return getUserByName(users, user.name);
 }
 
 function getSubject(allSubject: Subject[], name: string) {
