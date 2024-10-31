@@ -3,6 +3,7 @@ import type {
   GuruInputData,
   KelasInputData,
   KurikulumDanMataPelajaranInputData,
+  MuridInputData,
   PeriodeDanKurikulumInputData,
   PeriodeInputData,
   ProgramStudiInputData,
@@ -14,6 +15,7 @@ import type {
 import handleGuru from './handleGuru';
 import handleKelas from './handleKelas';
 import handleKurikulumDanMataPelajaran from './handleKurikulumDanMataPelajaran';
+import handleMurid from './handleMurid';
 import handlePeriode from './handlePeriode';
 import handlePeriodeDanKurikulum from './handlePeriodeDanKurikulum';
 import handleProgramStudi from './handleProgramStudi';
@@ -70,6 +72,7 @@ export default function handleUploadAcademicXLSX(file: File) {
       await handlePeriodeDanKurikulum(sheetRawData[5] as PeriodeDanKurikulumInputData);
       await handleGuru(sheetRawData[6] as GuruInputData);
       await handleKelas(sheetRawData[7] as KelasInputData);
+      await handleMurid(sheetRawData[8] as MuridInputData);
 
     } catch (error) {
       console.log(error);

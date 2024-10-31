@@ -214,3 +214,16 @@ export type StudentGroup = {
     homeroom_teacher_name: string;
   };
 };
+
+export type MuridInputData = [
+  string, // 0 - nama kelas
+  string, // 1 - nama siswa
+  string // 2 - username siswa
+][];
+
+export type StudentGroupStudent = {
+  student_group_id: string;
+  student_group_name: string;
+  student_id: string;
+  student_name: string;
+};

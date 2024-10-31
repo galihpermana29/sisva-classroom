@@ -138,5 +138,4 @@ export default async function handleKelas(data: KelasInputData) {
   });
 
   const res = await Promise.all([...promisesCreate, ...promisesUpdate]);
-  console.log(res);
 }
