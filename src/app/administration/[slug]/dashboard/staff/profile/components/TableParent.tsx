@@ -42,7 +42,6 @@ function TableParent({
   filteredData,
   deleteUser,
 }) {
-  console.log('test');
   return (
     <Stack
       component={Paper}

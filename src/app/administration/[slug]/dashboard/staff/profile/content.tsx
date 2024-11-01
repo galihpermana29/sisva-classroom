@@ -1,7 +1,7 @@
 'use client';
 
 import { Stack, Typography } from '@mui/material';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import CreateModal from './components/CreateModal';
 
 import UsersAPI from '@/api/users';
@@ -68,7 +68,6 @@ export default function StaffProfileListContent() {
   }, []);
 
   const [staffData, setStaffData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
   const [search, setSearch] = useState('');
   const [typeFilter, setTypeFilter] = useState('');
   const [permissionFilter, setPermissionFilter] = useState('');
@@ -116,8 +115,8 @@ export default function StaffProfileListContent() {
     getAllUsers();
   }, [getAllUsers]);
 
-  useEffect(() => {
-    let temp = staffData.filter((item) => {
+  const filteredData = useMemo(() => {
+    let filteredData = staffData.filter((item) => {
       return (
         (item.name.toLowerCase().includes(search.toLowerCase()) ||
           item.username.toLowerCase().includes(search.toLowerCase())) &&
@@ -127,7 +126,7 @@ export default function StaffProfileListContent() {
     });
 
     if (sortSettings && sortSettings.sortBy) {
-      temp = temp.sort(function (a, b) {
+      filteredData = filteredData.sort(function (a, b) {
         let x, y;
         if (sortSettings.sortBy === 'name') {
           x = a.name.toLowerCase();
@@ -156,8 +155,8 @@ export default function StaffProfileListContent() {
         }
       });
     }
-    setFilteredData(temp);
-  }, [search, typeFilter, permissionFilter, sortSettings, staffData]);
+    return filteredData;
+  }, [permissionFilter, search, sortSettings, staffData, typeFilter]);
 
   return (
     <Stack sx={{ height: '100%', width: '100%', p: { xs: 0, lg: 4 } }}>
