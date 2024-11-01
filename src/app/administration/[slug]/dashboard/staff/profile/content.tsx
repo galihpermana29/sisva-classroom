@@ -1,33 +1,28 @@
 'use client';
 
-import { Cancel } from '@mui/icons-material';
-import {
-  Box,
-  Button,
-  Divider,
-  MenuItem,
-  Modal,
-  Paper,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
-import { FormAddStaff } from './components/FormAddStaff';
+import CreateModal from './components/CreateModal';
 
 import UsersAPI from '@/api/users';
 import { useFormik } from 'formik';
+import SortModal from './components/SortModal';
 import TableParent from './components/TableParent';
-export default function StaffProfileListContent() {
-  const [initialData, setinitialData] = useState({
-    name: '',
-    username: '',
-    type: 'staff',
-    permissions: [],
-    password: '',
-    password_confirm: '',
-  });
 
+export type SortBy = 'name' | 'username' | '';
+export type SortType = 'ascending' | 'descending' | '';
+export type SortSettings = { sortBy: SortBy; sortType: SortType };
+
+const initialData = {
+  name: '',
+  username: '',
+  type: 'staff',
+  permissions: [],
+  password: '',
+  password_confirm: '',
+};
+
+export default function StaffProfileListContent() {
   const formik = useFormik({
     initialValues: { ...initialData },
 
@@ -35,14 +30,7 @@ export default function StaffProfileListContent() {
       const { name, password, type, username, permissions, password_confirm } =
         values;
 
-      if (password !== password_confirm) {
-        // setSnackbarOpen({
-        //   visible: true,
-        //   message: 'Password is not matched!',
-        //   severity: 'error',
-        // });
-        return;
-      }
+      if (password !== password_confirm) return;
 
       let payload = {
         user: {
@@ -62,15 +50,7 @@ export default function StaffProfileListContent() {
 
       try {
         const res = await UsersAPI.createUser(payload);
-
-        // setSnackbarOpen({
-        //   visible: true,
-        //   message: 'Data is updated successfully',
-        //   severity: 'success',
-        // });
-
         getAllUsers();
-
         formik.setValues(initialData);
       } catch (error) {
         console.log(error, 'error adding staff');
@@ -88,22 +68,14 @@ export default function StaffProfileListContent() {
   }, []);
 
   const [staffData, setStaffData] = useState([]);
-
   const [filteredData, setFilteredData] = useState([]);
   const [search, setSearch] = useState('');
   const [typeFilter, setTypeFilter] = useState('');
   const [permissionFilter, setPermissionFilter] = useState('');
-
-  type SortBy = 'name' | 'username' | '';
-  type SortType = 'ascending' | 'descending' | '';
-  type SortSettings = { sortBy: SortBy; sortType: SortType };
-
   const [sortBy, setSortBy] = useState<SortBy>('');
   const [sortType, setSortType] = useState<SortType>('ascending');
   const [sortSettings, setSortSettings] = useState<SortSettings | null>(null);
-
   const [openSortModal, setOpenSortModal] = useState(false);
-
   const [openCreateModal, setOpenCreateModal] = useState(false);
 
   const getAllUsers = useCallback(async () => {
@@ -189,169 +161,21 @@ export default function StaffProfileListContent() {
 
   return (
     <Stack sx={{ height: '100%', width: '100%', p: { xs: 0, lg: 4 } }}>
-      <Modal open={openCreateModal} onClose={() => setOpenCreateModal(false)}>
-        <Stack
-          component={Paper}
-          elevation={2}
-          sx={{
-            borderRadius: 2,
-            zIndex: 20,
-            margin: 'auto',
-            position: 'fixed',
-            height: 'fit-content',
-            width: '360px',
-            maxWidth: '80%',
-            top: 0,
-            bottom: 0,
-            right: 0,
-            left: 0,
-          }}
-        >
-          <Box
-            sx={{
-              padding: 2,
-            }}
-          >
-            <Typography fontWeight={600} fontSize={16}>
-              Tambah Karyawan
-            </Typography>
-          </Box>
-          <Divider />
-          <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
-            <FormAddStaff formik={formik} />
-          </Box>
-          <Divider />
-          <Stack
-            sx={{
-              flexDirection: 'row',
-              p: 2,
-            }}
-          >
-            <Button
-              variant="outlined"
-              sx={{ flex: 1, mr: 1 }}
-              onClick={() => {
-                setOpenCreateModal(false);
-                formik.setValues(initialData);
-              }}
-            >
-              Batal
-            </Button>
-            <Button
-              type="submit"
-              variant="contained"
-              sx={{ flex: 1 }}
-              onClick={() => {
-                formik.handleSubmit();
-                setOpenCreateModal(false);
-              }}
-            >
-              Simpan
-            </Button>
-          </Stack>
-        </Stack>
-      </Modal>
-      <Modal open={openSortModal} onClose={() => setOpenSortModal(false)}>
-        <Stack
-          component={Paper}
-          elevation={2}
-          sx={{
-            padding: 2,
-            borderRadius: 2,
-            zIndex: 20,
-            margin: 'auto',
-            position: 'fixed',
-            height: 'fit-content',
-            width: '240px',
-            top: 0,
-            bottom: 0,
-            right: 0,
-            left: 0,
-          }}
-        >
-          <Typography fontWeight={600} fontSize={16}>
-            Urutkan
-          </Typography>
-          <TextField
-            select
-            size="small"
-            label="Data"
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as SortBy)}
-            sx={{ flex: 1, mt: 2 }}
-            InputProps={{
-              startAdornment: sortBy && (
-                <Cancel
-                  onClick={() => {
-                    setSortBy('');
-                  }}
-                  sx={{
-                    fontSize: 14,
-                    color: 'base.base50',
-                    cursor: 'pointer',
-                    transform: 'translateX(-4px)',
-                    '&:hover': {
-                      color: 'base.base60',
-                    },
-                  }}
-                />
-              ),
-            }}
-          >
-            {[
-              { title: 'Nama', slug: 'name' },
-              { title: 'Username', slug: 'username' },
-            ].map((option) => (
-              <MenuItem key={option.slug} value={option.slug}>
-                <Typography fontSize={14}>{option.title}</Typography>
-              </MenuItem>
-            ))}
-          </TextField>
-          <TextField
-            select
-            size="small"
-            label="Jenis Urutan"
-            value={sortType}
-            disabled={!sortBy}
-            onChange={(e) => setSortType(e.target.value as SortType)}
-            sx={{ flex: 1, mt: 2, mb: 2 }}
-          >
-            {[
-              { title: 'A-Z', slug: 'ascending' },
-              { title: 'Z-A', slug: 'descending' },
-            ].map((option) => (
-              <MenuItem key={option.slug} value={option.slug}>
-                <Typography fontSize={14}>{option.title}</Typography>
-              </MenuItem>
-            ))}
-          </TextField>
-          <Stack
-            sx={{
-              flexDirection: 'row',
-            }}
-          >
-            <Button
-              variant="outlined"
-              sx={{ flex: 1, mr: 1 }}
-              onClick={() => {
-                setOpenSortModal(false);
-              }}
-            >
-              Batal
-            </Button>
-            <Button
-              variant="contained"
-              sx={{ flex: 1 }}
-              onClick={() => {
-                setOpenSortModal(false);
-                setSortSettings({ sortBy: sortBy, sortType: sortType });
-              }}
-            >
-              Simpan
-            </Button>
-          </Stack>
-        </Stack>
-      </Modal>
+      <CreateModal
+        formik={formik}
+        initialData={initialData}
+        openCreateModal={openCreateModal}
+        setOpenCreateModal={setOpenCreateModal}
+      />
+      <SortModal
+        openSortModal={openSortModal}
+        setOpenSortModal={setOpenSortModal}
+        setSortBy={setSortBy}
+        setSortSettings={setSortSettings}
+        setSortType={setSortType}
+        sortBy={sortBy}
+        sortType={sortType}
+      />
       <Stack
         sx={{
           flexDirection: 'row',
