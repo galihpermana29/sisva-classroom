@@ -1,11 +1,10 @@
-import { SortIcon } from '@/assets/SVGs';
-import { Box, Button, Divider, Paper, Stack } from '@mui/material';
+import { Box, Divider, Paper, Stack } from '@mui/material';
 import DataTable from '../components/Table';
 
 import { memo } from 'react';
 import ButtonBar from './ButtonBar';
 import FilterBar from './FilterBar';
-import Filters from './Filters';
+import MobileFilterAndSortBar from './MobileFilterAndSortBar';
 
 function TableParent({
   search,
@@ -57,7 +56,6 @@ function TableParent({
           setTypeFilter={setTypeFilter}
           typeFilter={typeFilter}
         />
-
         <ButtonBar
           anchorEl={anchorEl}
           getAllUsers={getAllUsers}
@@ -67,47 +65,13 @@ function TableParent({
           setOpenCreateModal={setOpenCreateModal}
         />
       </Stack>
-
-      <Stack
-        sx={{
-          flexDirection: 'row',
-          px: 2,
-          height: 54,
-          mb: 1,
-          display: { xs: 'flex', lg: 'none' },
-        }}
-      >
-        <Filters
-          permissionFilter={permissionFilter}
-          typeFilter={typeFilter}
-          onChangeType={(e) => setTypeFilter(e.target.value)}
-          onClickCancelType={() => {
-            setTypeFilter('');
-          }}
-          onChangePermission={(e) => setPermissionFilter(e.target.value)}
-          onClickCancelPermission={() => {
-            setPermissionFilter('');
-          }}
-        />
-        <Stack sx={{ flexDirection: 'row', py: 1 }}>
-          <Divider orientation="vertical" sx={{ mx: 1 }} />
-          <Button
-            sx={{
-              backgroundColor: 'base.base30',
-              color: 'base.base50',
-              fontSize: 18,
-              '&:hover': {
-                backgroundColor: 'base.base40',
-              },
-            }}
-            onClick={() => {
-              setOpenSortModal(true);
-            }}
-          >
-            <SortIcon />
-          </Button>
-        </Stack>
-      </Stack>
+      <MobileFilterAndSortBar
+        permissionFilter={permissionFilter}
+        setOpenSortModal={setOpenSortModal}
+        setPermissionFilter={setPermissionFilter}
+        setTypeFilter={setTypeFilter}
+        typeFilter={typeFilter}
+      />
       <Divider />
       <Box sx={{ flex: 1, overflowY: 'hidden' }}>
         <DataTable data={filteredData} deleteUser={deleteUser} />
