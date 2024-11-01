@@ -1,6 +1,6 @@
 import { Cancel, Search } from '@mui/icons-material';
 import { Hidden, InputAdornment, Stack, TextField } from '@mui/material';
-import { memo } from 'react';
+import { memo, useTransition } from 'react';
 import Filters from './Filters';
 
 function FilterBar({
