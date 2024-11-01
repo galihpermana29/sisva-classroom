@@ -1,28 +1,20 @@
 import { ExcelIcon, SortIcon } from '@/assets/SVGs';
-import {
-  Add,
-  Cancel,
-  DownloadRounded,
-  Search,
-  UploadFileRounded,
-} from '@mui/icons-material';
+import { Add, DownloadRounded, UploadFileRounded } from '@mui/icons-material';
 import {
   Box,
   Button,
   Divider,
-  Hidden,
-  InputAdornment,
   Menu,
   MenuItem,
   Paper,
   Stack,
-  TextField,
   Typography,
 } from '@mui/material';
 import DataTable from '../components/Table';
 
 import { memo } from 'react';
 import handleXLSXUpload from '../utils/handleXLSXUpload';
+import FilterBar from './FilterBar';
 import Filters from './Filters';
 
 function TableParent({
@@ -67,68 +59,14 @@ function TableParent({
           mt: { xs: 1, lg: 0 },
         }}
       >
-        <Stack
-          sx={{
-            flexDirection: 'row',
-            flex: 1,
-            alignItems: 'center',
-          }}
-        >
-          <TextField
-            // id="outlined-search"
-            placeholder="Cari Karyawan"
-            size="small"
-            type="text"
-            sx={{
-              maxWidth: { xs: '100%', lg: '200px' },
-              flex: 1,
-              width: '100%',
-              height: '100%',
-              borderRight: '1px solid rgb(0,0,0,0.12)',
-              pr: 1,
-            }}
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            InputProps={{
-              startAdornment: search && (
-                <Cancel
-                  onClick={() => {
-                    setSearch('');
-                  }}
-                  sx={{
-                    fontSize: 14,
-                    color: 'base.base50',
-                    cursor: 'pointer',
-                    transform: 'translateX(-4px)',
-                    '&:hover': {
-                      color: 'base.base60',
-                    },
-                  }}
-                />
-              ),
-              endAdornment: (
-                <InputAdornment position="end">
-                  <Search />
-                </InputAdornment>
-              ),
-            }}
-          />
-          <Hidden lgDown>
-            <Filters
-              permissionFilter={permissionFilter}
-              typeFilter={typeFilter}
-              onChangeType={(e) => setTypeFilter(e.target.value)}
-              onClickCancelType={() => {
-                setTypeFilter('');
-              }}
-              onChangePermission={(e) => setPermissionFilter(e.target.value)}
-              onClickCancelPermission={() => {
-                setPermissionFilter('');
-              }}
-            />
-          </Hidden>
-        </Stack>
-
+        <FilterBar
+          permissionFilter={permissionFilter}
+          search={search}
+          setPermissionFilter={setPermissionFilter}
+          setSearch={setSearch}
+          setTypeFilter={setTypeFilter}
+          typeFilter={typeFilter}
+        />
         <Stack
           sx={{
             flexDirection: 'row',
