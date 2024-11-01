@@ -8,7 +8,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, memo, SetStateAction } from 'react';
 import { SortBy, SortSettings, SortType } from '../content';
 
 interface SortModalProps {
@@ -21,7 +21,7 @@ interface SortModalProps {
   sortType: SortType;
 }
 
-export default function SortModal({
+function SortModal({
   openSortModal,
   setOpenSortModal,
   setSortBy,
@@ -134,3 +134,5 @@ export default function SortModal({
     </Modal>
   );
 }
+
+export default memo(SortModal);

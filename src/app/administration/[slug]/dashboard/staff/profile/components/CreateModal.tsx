@@ -7,7 +7,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import type { Dispatch, SetStateAction } from 'react';
+import { memo, type Dispatch, type SetStateAction } from 'react';
 import { FormAddStaff } from './FormAddStaff';
 
 interface CreateModalProps {
@@ -24,7 +24,7 @@ interface CreateModalProps {
   setOpenCreateModal: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function CreateModal({
+function CreateModal({
   formik,
   initialData,
   openCreateModal,
@@ -95,3 +95,5 @@ export default function CreateModal({
     </Modal>
   );
 }
+
+export default memo(CreateModal);

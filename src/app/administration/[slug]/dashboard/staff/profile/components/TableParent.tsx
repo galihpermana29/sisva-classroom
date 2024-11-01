@@ -25,7 +25,7 @@ import { memo } from 'react';
 import handleXLSXUpload from '../utils/handleXLSXUpload';
 import Filters from './Filters';
 
-function UnmemoizedTableParent({
+function TableParent({
   search,
   permissionFilter,
   typeFilter,
@@ -42,6 +42,7 @@ function UnmemoizedTableParent({
   filteredData,
   deleteUser,
 }) {
+  console.log('test');
   return (
     <Stack
       component={Paper}
@@ -270,4 +271,4 @@ function UnmemoizedTableParent({
   );
 }
 
-export default memo(UnmemoizedTableParent);
+export default memo(TableParent);
