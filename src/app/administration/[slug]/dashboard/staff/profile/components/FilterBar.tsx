@@ -1,6 +1,7 @@
 import { Cancel, Search } from '@mui/icons-material';
 import { Hidden, InputAdornment, Stack, TextField } from '@mui/material';
-import { memo, useTransition } from 'react';
+import { memo, useEffect, useState } from 'react';
+import { useDebounce } from 'use-debounce';
 import Filters from './Filters';
 
 function FilterBar({
@@ -11,6 +12,13 @@ function FilterBar({
   setTypeFilter,
   typeFilter,
 }) {
+  const [inputText, setInputText] = useState(search);
+  const [debouncedInputText] = useDebounce(inputText, 200);
+
+  useEffect(() => {
+    setSearch(debouncedInputText);
+  }, [debouncedInputText, setSearch]);
+
   return (
     <Stack
       sx={{
@@ -32,8 +40,8 @@ function FilterBar({
           borderRight: '1px solid rgb(0,0,0,0.12)',
           pr: 1,
         }}
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        value={inputText}
+        onChange={(e) => setInputText(e.target.value)}
         InputProps={{
           startAdornment: search && (
             <Cancel
