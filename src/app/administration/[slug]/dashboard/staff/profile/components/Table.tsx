@@ -3,10 +3,8 @@ import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
 import {
   Avatar,
   Box,
-  Button,
   Chip,
   IconButton,
-  Modal,
   Paper,
   Stack,
   Typography,
@@ -16,7 +14,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { useCallback, useMemo, useState } from 'react';
+import { memo, useState } from 'react';
 import DeleteModal from './DeleteModal';
 
 const columns = [
@@ -253,7 +251,7 @@ function ActionButton({ params }) {
   );
 }
 
-export default function DataTable({
+function DataTable({
   data,
   deleteUser = () => {},
 }: {
@@ -378,3 +376,5 @@ export default function DataTable({
     </div>
   );
 }
+
+export default memo(DataTable);
