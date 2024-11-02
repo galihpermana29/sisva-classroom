@@ -6,16 +6,17 @@ import {
 import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
 import toast from "react-hot-toast";
 import { Form } from "antd";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 export function useSubmission() {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [fileUrl, setFileUrl] = useState(null);
   const params = useParams();
+  const router = useRouter();
 
   const { id: student_id } = getClientSession();
-  const { task_id } = params;
+  const { id: class_id, task_id } = params;
 
   const handleUploadFile = async (file) => {
     if (!file) {
@@ -54,6 +55,7 @@ export function useSubmission() {
     const res = await setSubmissionTask(submissionPayload, task_id);
     if (res.success) {
       setLoading(false);
+      router.push(`/class/${class_id}`);
       toast.success("Success send your submission");
     } else {
       setLoading(false);
