@@ -173,7 +173,9 @@ export default function StaffProfileContent() {
     },
     {
       title: 'Tingkatan',
-      component: <GradeTable formik={formik} data={filteredData} />,
+      component: (
+        <GradeTable formik={formik} data={filteredData} tableData={tableData} />
+      ),
     },
     {
       title: 'Siswa',
