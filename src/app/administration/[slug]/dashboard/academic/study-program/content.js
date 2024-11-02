@@ -51,6 +51,7 @@ export default function StaffProfileContent() {
         try {
           if (!values.id) {
             await AcademicAPI.createProdi(values);
+            formik.setValues(initialValues);
           } else {
             const id = values.id;
             delete values.id;
@@ -543,7 +544,6 @@ export default function StaffProfileContent() {
               sx={{ flex: 1 }}
               onClick={() => {
                 formik.handleSubmit();
-                formik.setValues(initialValues);
                 setOpenCreateStudyProgramModal(false);
               }}
             >
