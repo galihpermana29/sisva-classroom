@@ -1,19 +1,17 @@
 'use client';
 
 import {
-    Box,
-    IconButton,
-    Input,
-    InputAdornment,
-    MenuItem,
-    Stack,
-    TextField,
-    Typography
+  Box,
+  IconButton,
+  Input,
+  InputAdornment,
+  MenuItem,
+  Stack,
+  TextField,
+  Typography,
 } from '@mui/material';
 
-import {
-    formEditPeriodFields
-} from '@/globalcomponents/FormFields';
+import { formEditPeriodFields } from '@/globalcomponents/FormFields';
 import { Cancel, Visibility, VisibilityOff } from '@mui/icons-material';
 import { useState } from 'react';
 
@@ -27,7 +25,7 @@ export const FormEditPeriod = ({ formik, editing, status }) => {
 
   const renderInput = (props) => (
     <Input
-      type='text'
+      type="text"
       inputProps={{
         sx: { minWidth: 140, width: { xs: '100%', lg: 'fit-content' } },
         startAdornment: props.value && (
@@ -49,13 +47,13 @@ export const FormEditPeriod = ({ formik, editing, status }) => {
       }}
     />
   );
-  if (status === 'Tidak Aktif') {
+  if (status === 'Belum Aktif') {
     return (
       <>
         {formEditPeriodFields.map((field) =>
           field.type === 'text' ? (
             <Stack sx={{ my: 1 }} key={field.name}>
-              <Typography variant='body2' fontWeight={600} mb={0.5}>
+              <Typography variant="body2" fontWeight={600} mb={0.5}>
                 {field.label}
               </Typography>
               <TextField
@@ -70,7 +68,7 @@ export const FormEditPeriod = ({ formik, editing, status }) => {
             </Stack>
           ) : field.type === 'password' ? (
             <Stack sx={{ my: 1 }} key={field.name}>
-              <Typography variant='body2' fontWeight={600} mb={0.5}>
+              <Typography variant="body2" fontWeight={600} mb={0.5}>
                 {field.label}
               </Typography>
               <TextField
@@ -84,7 +82,7 @@ export const FormEditPeriod = ({ formik, editing, status }) => {
                 }
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment position='end'>
+                    <InputAdornment position="end">
                       <IconButton
                         onClick={() =>
                           field.name === 'password'
@@ -112,7 +110,7 @@ export const FormEditPeriod = ({ formik, editing, status }) => {
             </Stack>
           ) : field.type === 'select' ? (
             <Stack sx={{ my: 1 }} key={field.name}>
-              <Typography variant='body2' fontWeight={600} mb={0.5}>
+              <Typography variant="body2" fontWeight={600} mb={0.5}>
                 {field.label}
               </Typography>
               <TextField
@@ -135,7 +133,7 @@ export const FormEditPeriod = ({ formik, editing, status }) => {
               <Stack sx={{ flex: 1 }}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <Stack sx={{ mb: 1 }}>
-                    <Typography variant='body2' fontWeight={600} mb={0.5}>
+                    <Typography variant="body2" fontWeight={600} mb={0.5}>
                       Waktu Mulai
                     </Typography>
                     <DatePicker
@@ -150,7 +148,7 @@ export const FormEditPeriod = ({ formik, editing, status }) => {
                   </Stack>
 
                   <Stack>
-                    <Typography variant='body2' fontWeight={600} mb={0.5}>
+                    <Typography variant="body2" fontWeight={600} mb={0.5}>
                       Waktu Selesai
                     </Typography>
 

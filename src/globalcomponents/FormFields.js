@@ -1,15 +1,15 @@
 import {
-    educationLevels,
-    genders,
-    guardians,
-    incomeLevels,
-    lifeStatus,
-    nationalities,
-    permissions,
-    relationships,
-    religions,
-    subject_types,
-    types
+  educationLevels,
+  genders,
+  guardians,
+  incomeLevels,
+  lifeStatus,
+  nationalities,
+  permissions,
+  relationships,
+  religions,
+  subject_types,
+  types,
 } from '@/globalcomponents/Variable';
 
 export const formAddCurriculumFields = [
@@ -68,7 +68,7 @@ export const formEditPeriodFields = [
     md: 6,
     type: 'select',
     data: [
-      { slug: 'inactive', title: 'Tidak Aktif' },
+      { slug: 'inactive', title: 'Belum Aktif' },
       { slug: 'active', title: 'Aktif' },
     ],
   },

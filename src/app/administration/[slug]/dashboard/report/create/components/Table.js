@@ -1,16 +1,16 @@
 import { permissions, types } from '@/globalcomponents/Variable';
 import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
 import {
-    Avatar,
-    Box,
-    Button,
-    Chip,
-    IconButton,
-    Modal,
-    Paper,
-    Stack,
-    Typography,
-    useMediaQuery
+  Avatar,
+  Box,
+  Button,
+  Chip,
+  IconButton,
+  Modal,
+  Paper,
+  Stack,
+  Typography,
+  useMediaQuery,
 } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import Image from 'next/image';
@@ -34,7 +34,7 @@ const columns = [
         <Box sx={{ width: '100%', mx: 2, py: 0.5 }}>
           <Stack
             component={Paper}
-            variant='outlined'
+            variant="outlined"
             sx={{
               justifyContent: 'flex-start',
               borderRadius: 2,
@@ -170,7 +170,7 @@ function ChipList({ params }) {
               fontSize: 12,
             }}
             label={tempPermission}
-            color='primary'
+            color="primary"
           />
         );
       })}
@@ -229,7 +229,7 @@ function ActionButton({ params }) {
             backgroundColor: 'warning.dark',
           },
           width: { xs: 90, lg: 'fit-content' },
-          display: params.value.data.status !== 'Tidak Aktif' ? 'none' : 'flex',
+          display: params.value.data.status !== 'Belum Aktif' ? 'none' : 'flex',
         }}
         onClick={() => {
           params.value.setOpenDeleteModal(true);
@@ -333,9 +333,9 @@ export default function DataTable({ data }) {
               }}
             >
               <Image
-                alt='Web Image'
+                alt="Web Image"
                 fill
-                sizes='100%'
+                sizes="100%"
                 style={{ objectFit: 'cover' }}
                 src={`https://api-staging.sisva.id/file/v1/files/${activeRow.profile_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
               />
@@ -361,7 +361,7 @@ export default function DataTable({ data }) {
             }}
           >
             <Button
-              variant='outlined'
+              variant="outlined"
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenDeleteModal(false);
@@ -370,7 +370,7 @@ export default function DataTable({ data }) {
               Batal
             </Button>
             <Button
-              variant='contained'
+              variant="contained"
               sx={{
                 flex: 1,
                 backgroundColor: 'warning.main',

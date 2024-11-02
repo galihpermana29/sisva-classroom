@@ -1,15 +1,15 @@
 import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
 import {
-    Box,
-    Button,
-    Chip,
-    Divider,
-    IconButton,
-    Modal,
-    Paper,
-    Stack,
-    Typography,
-    useMediaQuery,
+  Box,
+  Button,
+  Chip,
+  Divider,
+  IconButton,
+  Modal,
+  Paper,
+  Stack,
+  Typography,
+  useMediaQuery,
 } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import dayjs from 'dayjs';
@@ -27,7 +27,7 @@ const columns = [
         <Box sx={{ width: '100%', mx: 2, py: 0.5 }}>
           <Stack
             component={Paper}
-            variant='outlined'
+            variant="outlined"
             sx={{
               justifyContent: 'flex-start',
               borderRadius: 2,
@@ -184,7 +184,7 @@ const columns = [
             {params.value === 'active'
               ? 'Aktif'
               : params.value === 'inactive'
-              ? 'Tidak Aktif'
+              ? 'Belum Aktif'
               : 'Selesai'}
           </Typography>
         </Stack>
@@ -222,7 +222,7 @@ function ChipList({ params, compact }) {
               fontSize: 12,
             }}
             label={studyProgram.code}
-            color='primary'
+            color="primary"
           />
         );
       })}
@@ -394,7 +394,7 @@ export default function StudyProgramTable({
             }}
           >
             <Button
-              variant='outlined'
+              variant="outlined"
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenEditModal(false);
@@ -404,7 +404,7 @@ export default function StudyProgramTable({
               Batal
             </Button>
             <Button
-              variant='contained'
+              variant="contained"
               sx={{
                 flex: 1,
                 backgroundColor:
@@ -510,7 +510,7 @@ export default function StudyProgramTable({
             }}
           >
             <Button
-              variant='outlined'
+              variant="outlined"
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenDeleteModal(false);
@@ -519,7 +519,7 @@ export default function StudyProgramTable({
               Batal
             </Button>
             <Button
-              variant='contained'
+              variant="contained"
               sx={{
                 flex: 1,
                 backgroundColor: 'warning.main',
