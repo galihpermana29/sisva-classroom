@@ -67,6 +67,7 @@ export default function StaffProfileContent() {
           delete values.id;
 
           await AcademicAPI.updateProdi(values, id);
+          formik.setValues(initialValues);
         } catch (error) {
           console.log(error);
         }
@@ -480,7 +481,6 @@ export default function StaffProfileContent() {
               onClick={() => {
                 setOpenCreateGradeModal(false);
                 formik.handleSubmit();
-                formik.setValues(initialValues);
               }}
             >
               Simpan
