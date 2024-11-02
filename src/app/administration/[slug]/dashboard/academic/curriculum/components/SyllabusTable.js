@@ -1,16 +1,16 @@
 import { subject_types } from '@/globalcomponents/Variable';
 import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
 import {
-    Box,
-    Button,
-    Chip,
-    Divider,
-    IconButton,
-    Modal,
-    Paper,
-    Stack,
-    Typography,
-    useMediaQuery,
+  Box,
+  Button,
+  Chip,
+  Divider,
+  IconButton,
+  Modal,
+  Paper,
+  Stack,
+  Typography,
+  useMediaQuery,
 } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { useState } from 'react';
@@ -33,7 +33,7 @@ const columns = [
         <Box sx={{ width: '100%', mx: 2, py: 0.5 }}>
           <Stack
             component={Paper}
-            variant='outlined'
+            variant="outlined"
             sx={{
               justifyContent: 'flex-start',
               borderRadius: 2,
@@ -136,11 +136,11 @@ const columns = [
                 >
                   Silabus
                 </Typography>
-                <Button small variant='outlined' sx={{ fontSize: 13 }}>
+                <Button size="small" variant="outlined" sx={{ fontSize: 13 }}>
                   <a
-                    href='/17189757176d1d2d03182252039b56.pdf'
-                    target='_blank'
-                    rel='noopener noreferrer'
+                    href="/17189757176d1d2d03182252039b56.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     Lihat
                   </a>
@@ -172,12 +172,12 @@ const columns = [
     flex: 1,
     renderCell: (params) => {
       return (
-        <Button small variant='outlined' sx={{ fontSize: 13 }}>
+        <Button size="small" variant="outlined" sx={{ fontSize: 13 }}>
           {' '}
           <a
             href={`https://api-staging.sisva.id/file/v1/files/${params.row.syllabus_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
-            target='_blank'
-            rel='noopener noreferrer'
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Lihat
           </a>
@@ -290,7 +290,7 @@ function ChipList({ params }) {
               fontSize: 12,
             }}
             label={studyProgram}
-            color='primary'
+            color="primary"
           />
         );
       })}
@@ -396,7 +396,7 @@ export default function SyllabusTable({
             }}
           >
             <Button
-              variant='outlined'
+              variant="outlined"
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenEditModal(false);
@@ -406,7 +406,7 @@ export default function SyllabusTable({
               Batal
             </Button>
             <Button
-              variant='contained'
+              variant="contained"
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenEditModal(false);
@@ -529,7 +529,7 @@ export default function SyllabusTable({
             }}
           >
             <Button
-              variant='outlined'
+              variant="outlined"
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenDeleteModal(false);
@@ -538,7 +538,7 @@ export default function SyllabusTable({
               Batal
             </Button>
             <Button
-              variant='contained'
+              variant="contained"
               sx={{
                 flex: 1,
                 backgroundColor: 'warning.main',
