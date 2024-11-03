@@ -22,14 +22,6 @@ export function generalDateFormatter(dateString) {
 export function isBefore(date1, date2, format = DEADLINE_FORMAT) {
   const dayjsDate1 = dayjs(date1, format);
   const dayjsDate2 = dayjs(date2, format);
-  console.log({
-    date1,
-    date2,
-    dayjsdayjsDate1: dayjs(dayjsDate1).isValid() ? dayjs(dayjsDate1) : null,
-    dayjsdayjsDate2: dayjs(dayjsDate2).isValid() ? dayjs(dayjsDate2) : null,
-    isdayjsDate1BeforedayjsDate2: dayjs(dayjsDate1).isBefore(dayjs(dayjsDate2)),
-  });
-
   return dayjs(dayjsDate1).isBefore(dayjs(dayjsDate2));
 }
 
