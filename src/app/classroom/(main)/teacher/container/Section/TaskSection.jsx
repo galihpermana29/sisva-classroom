@@ -31,7 +31,7 @@ const TaskSection = () => {
             </div>
           ) : (
             tasks.map((task, index) => (
-              <Link href={`/classroom/teacher/class/${task.class_id}/task/${task.id}`}>
+              <Link key={'task_'+task.id} href={`/classroom/teacher/class/${task.class_id}/task/${task.id}`}>
                 <Cardtask
                   key={task.id || index}
                   deadline={generalDateFormatter(task.deadline)}

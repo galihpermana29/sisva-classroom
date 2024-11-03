@@ -18,3 +18,13 @@ export function generalDateFormatter(dateString) {
 
   return date.format("DD/MM/YYYY h:mm A");
 }
+
+export function generalTimeFormatter(timeString) {
+  const time = dayjs(timeString, "hh:mm A");
+
+  return time.format("hh:mm");
+}
+
+export function isBefore(date1, date2) {
+  return dayjs(date1).isBefore(date2);
+}

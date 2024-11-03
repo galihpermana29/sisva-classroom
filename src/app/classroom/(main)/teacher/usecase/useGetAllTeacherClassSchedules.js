@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { getClassSchedules } from "../repositories/apiService";
 import { getUserDataCookie } from "./getUserDataCookie";
+import {
+  generalTimeFormatter,
+  isBefore,
+} from "@/app/classroom/shared/usecase/helper";
 
 export const useGetAllTeacherClassSchedules = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -20,10 +24,14 @@ export const useGetAllTeacherClassSchedules = () => {
         setIsLoading(false);
         return;
       }
-      
+
       const teachingSchedule = subjects?.filter(
         (schedule) => schedule.teacher_id == teacherId
       );
+
+      teachingSchedule.sort((a, b) => {
+        return isBefore(a.start_time, b.start_time) ? 1 : -1;
+      });
 
       setData(teachingSchedule);
       setIsLoading(false);
