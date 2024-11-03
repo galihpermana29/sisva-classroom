@@ -1,10 +1,11 @@
+import {
+  generalDateFormatter,
+  isBefore,
+  TIME_FORMAT
+} from "@/app/classroom/shared/usecase/helper";
 import { useEffect, useState } from "react";
 import { getClassSchedules } from "../repositories/apiService";
 import { getUserDataCookie } from "./getUserDataCookie";
-import {
-  generalTimeFormatter,
-  isBefore,
-} from "@/app/classroom/shared/usecase/helper";
 
 export const useGetAllTeacherClassSchedules = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -30,7 +31,7 @@ export const useGetAllTeacherClassSchedules = () => {
       );
 
       teachingSchedule.sort((a, b) => {
-        return isBefore(a.start_time, b.start_time) ? 1 : -1;
+        return isBefore(a.start_time, b.start_time, TIME_FORMAT) ? -1 : 1;
       });
 
       setData(teachingSchedule);

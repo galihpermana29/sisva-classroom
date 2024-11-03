@@ -19,12 +19,19 @@ export function generalDateFormatter(dateString) {
   return date.format("DD/MM/YYYY h:mm A");
 }
 
-export function generalTimeFormatter(timeString) {
-  const time = dayjs(timeString, "hh:mm A");
+export function isBefore(date1, date2, format = DEADLINE_FORMAT) {
+  const dayjsDate1 = dayjs(date1, format);
+  const dayjsDate2 = dayjs(date2, format);
+  console.log({
+    date1,
+    date2,
+    dayjsdayjsDate1: dayjs(dayjsDate1).isValid() ? dayjs(dayjsDate1) : null,
+    dayjsdayjsDate2: dayjs(dayjsDate2).isValid() ? dayjs(dayjsDate2) : null,
+    isdayjsDate1BeforedayjsDate2: dayjs(dayjsDate1).isBefore(dayjs(dayjsDate2)),
+  });
 
-  return time.format("hh:mm");
+  return dayjs(dayjsDate1).isBefore(dayjs(dayjsDate2));
 }
 
-export function isBefore(date1, date2) {
-  return dayjs(date1).isBefore(date2);
-}
+export const DEADLINE_FORMAT = "DD/MM/YYYY h:mm A Z";
+export const TIME_FORMAT = "hh:mm A";
