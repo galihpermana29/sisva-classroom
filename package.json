@@ -6,7 +6,8 @@
     "dev": "npx syncfusion-license activate && next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "knip": "knip"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -50,9 +51,12 @@
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.51.15",
+    "@types/node": "^22.8.7",
     "autoprefixer": "^10.4.17",
     "eslint-config-next": "^14.2.0",
+    "knip": "^5.36.2",
     "postcss": "^8.4.33",
-    "tailwindcss": "^3.4.1"
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.6.3"
   }
 }
