@@ -42,12 +42,15 @@ export const metadata = {
   description: 'Sisva | Solusi Digitalisasi dan Modernisasi Sekolah',
 };
 
+import { useSchool } from '../../SchoolContext';
+
 export default function Container(props) {
   const { slug } = useParams();
   const pathname = usePathname();
   let [navigationOpen, setNavigationOpen] = useState(false);
   let [navigationOpenList, setNavigationOpenList] = useState([]);
   let [activePathname, setActivePathname] = useState('');
+  const school = useSchool();
 
   useEffect(() => {
     setActivePathname(pathname);
@@ -157,22 +160,6 @@ export default function Container(props) {
       return title;
     }
 
-    const [currentSchool, setCurrentSchool] = useState(null);
-
-    const getSchoolProfile = async () => {
-      const {
-        data: { data },
-      } = await CmsAPI.getSchoolById(
-        JSON.parse(localStorage.getItem('user')).school_id
-      );
-
-      setCurrentSchool(data);
-    };
-
-    useEffect(() => {
-      getSchoolProfile();
-    }, []);
-
     function UserMenu() {
       const [anchorEl, setAnchorEl] = React.useState(null);
       const open = Boolean(anchorEl);
@@ -243,7 +230,7 @@ export default function Container(props) {
                   fill
                   sizes="100%"
                   style={{ objectFit: 'cover' }}
-                  src={`https://api-staging.sisva.id/file/v1/files/${currentUser?.profile_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+                  src={`https://api-staging.sisva.id/file/v1/files/${currentUser?.profile_image_uri}?school_id=${school.id}`}
                 />
               ) : (
                 currentUser?.name.toUpperCase()[0]
@@ -298,7 +285,7 @@ export default function Container(props) {
                     fill
                     sizes="100%"
                     style={{ objectFit: 'cover' }}
-                    src={`https://api-staging.sisva.id/file/v1/files/${currentUser?.profile_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+                    src={`https://api-staging.sisva.id/file/v1/files/${currentUser?.profile_image_uri}?school_id=${school.id}`}
                   />
                 ) : (
                   currentUser?.name.toUpperCase()[0]
@@ -361,16 +348,16 @@ export default function Container(props) {
             alignItems: 'center',
           }}
         >
-          {currentSchool?.logo_uri ? (
+          {school.logo_url && (
             <Image
               alt="Web Image"
-              src={`https://api-staging.sisva.id/file/v1/files/${currentSchool?.logo_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+              src={school.logo_url}
               height={36}
               width={36}
             />
-          ) : null}
+          )}
           <Typography fontWeight="700" ml={1} fontSize={18}>
-            {currentSchool?.name}
+            {school.name}
           </Typography>
         </Stack>
         <Stack
