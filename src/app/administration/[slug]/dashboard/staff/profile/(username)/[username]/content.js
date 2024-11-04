@@ -1,21 +1,21 @@
 'use client';
 
 import {
-    Avatar,
-    Box,
-    Button,
-    Grid,
-    IconButton,
-    Paper,
-    Stack,
-    Typography
+  Avatar,
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  Paper,
+  Stack,
+  Typography,
 } from '@mui/material';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
 import {
-    ArrowBackIosNewRounded,
-    BorderColorRounded,
+  ArrowBackIosNewRounded,
+  BorderColorRounded,
 } from '@mui/icons-material';
 
 import { useFormik } from 'formik';
@@ -23,6 +23,7 @@ import { useFormik } from 'formik';
 import AuthAPI from '@/api/auth';
 import FilesAPI from '@/api/files';
 import UsersAPI from '@/api/users';
+import { useSchool } from '@/app/administration/[slug]/SchoolContext';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { FormStaffBasic } from './components/FormStaffBasic';
@@ -30,6 +31,7 @@ import { FormStaffBiodata } from './components/FormStaffBiodata';
 import { FormStaffPassword } from './components/FormStaffPassword';
 
 export default function StaffProfileContent({ user_id }) {
+  const school = useSchool();
   const { slug } = useParams();
   const containerRef = useRef(null);
   const [activeTab, setActiveTab] = useState(0);
@@ -232,7 +234,7 @@ export default function StaffProfileContent({ user_id }) {
       </Stack>
       <Stack
         component={Paper}
-        variant='outlined'
+        variant="outlined"
         sx={{
           padding: { xs: '16px', md: '16px 32px' },
           borderRadius: 2,
@@ -244,8 +246,8 @@ export default function StaffProfileContent({ user_id }) {
         <Avatar sx={{ height: 70, width: 70, position: 'relative', mr: 2 }}>
           {initialData.profile_image_uri !== '' ? (
             <Image
-              alt='Image'
-              src={`https://api-staging.sisva.id/file/v1/files/${initialData.profile_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+              alt="Image"
+              src={`https://api-staging.sisva.id/file/v1/files/${initialData.profile_image_uri}?school_id=${school.id}`}
               layout={'fill'}
               objectFit={'cover'}
             />
@@ -265,7 +267,7 @@ export default function StaffProfileContent({ user_id }) {
       <Stack
         component={Paper}
         ref={containerRef}
-        variant='outlined'
+        variant="outlined"
         sx={{
           borderRadius: 2,
           flex: 1,
@@ -307,7 +309,7 @@ export default function StaffProfileContent({ user_id }) {
         </Stack>
         <Stack
           ref={containerRef}
-          variant='outlined'
+          variant="outlined"
           sx={{
             flex: 1,
             overflowY: 'scroll',
@@ -318,8 +320,8 @@ export default function StaffProfileContent({ user_id }) {
         >
           {' '}
           <Button
-            variant='outlined'
-            size='small'
+            variant="outlined"
+            size="small"
             fullWidth={false}
             startIcon={<BorderColorRounded />}
             onClick={() => {
@@ -339,7 +341,7 @@ export default function StaffProfileContent({ user_id }) {
           >
             <Box component={'span'}>Edit</Box>
           </Button>
-          <Stack width='100%'>
+          <Stack width="100%">
             <Grid container>
               <Grid item xs={12}>
                 <Grid
@@ -372,7 +374,7 @@ export default function StaffProfileContent({ user_id }) {
               }}
             >
               <Button
-                variant='outlined'
+                variant="outlined"
                 sx={{ mr: 1, width: 120 }}
                 onClick={() => {
                   setEditing(false);
@@ -383,7 +385,7 @@ export default function StaffProfileContent({ user_id }) {
                 Batal
               </Button>
               <Button
-                variant='contained'
+                variant="contained"
                 sx={{ width: 120 }}
                 onClick={() => {
                   setEditing(false);

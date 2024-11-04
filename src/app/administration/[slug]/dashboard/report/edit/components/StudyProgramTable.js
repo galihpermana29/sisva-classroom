@@ -1,15 +1,16 @@
+import { useSchool } from '@/app/administration/[slug]/SchoolContext';
 import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
 import {
-    Avatar,
-    Box,
-    Button,
-    Divider,
-    IconButton,
-    Modal,
-    Paper,
-    Stack,
-    Typography,
-    useMediaQuery
+  Avatar,
+  Box,
+  Button,
+  Divider,
+  IconButton,
+  Modal,
+  Paper,
+  Stack,
+  Typography,
+  useMediaQuery,
 } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import Image from 'next/image';
@@ -28,7 +29,7 @@ const columns = [
         <Box sx={{ width: '100%', mx: 2, py: 0.5 }}>
           <Stack
             component={Paper}
-            variant='outlined'
+            variant="outlined"
             sx={{
               justifyContent: 'flex-start',
               borderRadius: 2,
@@ -189,6 +190,7 @@ function ActionButton({ params }) {
 }
 
 export default function StudyProgramTable({ data, formik }) {
+  const school = useSchool();
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('lg'));
 
   const [openEditModal, setOpenEditModal] = useState(false);
@@ -268,7 +270,7 @@ export default function StudyProgramTable({ data, formik }) {
             }}
           >
             <Button
-              variant='outlined'
+              variant="outlined"
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenEditModal(false);
@@ -278,7 +280,7 @@ export default function StudyProgramTable({ data, formik }) {
               Batal
             </Button>
             <Button
-              variant='contained'
+              variant="contained"
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenEditModal(false);
@@ -338,11 +340,11 @@ export default function StudyProgramTable({ data, formik }) {
               }}
             >
               <Image
-                alt='Web Image'
+                alt="Web Image"
                 fill
-                sizes='100%'
+                sizes="100%"
                 style={{ objectFit: 'cover' }}
-                src={`https://api-staging.sisva.id/file/v1/files/${activeRow.profile_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+                src={`https://api-staging.sisva.id/file/v1/files/${activeRow.profile_image_uri}?school_id=${school.id}`}
               />
             </Avatar>
             <Stack justifyContent={'center'}>
@@ -366,7 +368,7 @@ export default function StudyProgramTable({ data, formik }) {
             }}
           >
             <Button
-              variant='outlined'
+              variant="outlined"
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenDeleteModal(false);
@@ -375,7 +377,7 @@ export default function StudyProgramTable({ data, formik }) {
               Batal
             </Button>
             <Button
-              variant='contained'
+              variant="contained"
               sx={{
                 flex: 1,
                 backgroundColor: 'warning.main',

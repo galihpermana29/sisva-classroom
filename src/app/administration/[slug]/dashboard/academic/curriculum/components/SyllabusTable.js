@@ -1,3 +1,4 @@
+import { useSchool } from '@/app/administration/[slug]/SchoolContext';
 import { subject_types } from '@/globalcomponents/Variable';
 import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
 import {
@@ -175,7 +176,7 @@ const columns = [
         <Button size="small" variant="outlined" sx={{ fontSize: 13 }}>
           {' '}
           <a
-            href={`https://api-staging.sisva.id/file/v1/files/${params.row.syllabus_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+            href={`https://api-staging.sisva.id/file/v1/files/${params.row.syllabus_uri}?school_id=${school.id}`}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -307,6 +308,7 @@ export default function SyllabusTable({
   handleFileChange,
   deleteSyllabus = () => {},
 }) {
+  const school = useSchool();
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('lg'));
 
   const [openEditModal, setOpenEditModal] = useState(false);

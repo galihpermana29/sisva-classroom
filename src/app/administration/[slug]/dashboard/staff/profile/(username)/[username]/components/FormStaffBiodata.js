@@ -1,13 +1,13 @@
 'use client';
 
 import {
-    Box,
-    Button,
-    Grid,
-    MenuItem,
-    Stack,
-    TextField,
-    Typography,
+  Box,
+  Button,
+  Grid,
+  MenuItem,
+  Stack,
+  TextField,
+  Typography,
 } from '@mui/material';
 import Image from 'next/image';
 
@@ -15,6 +15,7 @@ import { formStaffBiodataFields } from '@/globalcomponents/FormFields';
 import { genders, nationalities, religions } from '@/globalcomponents/Variable';
 import { Cancel } from '@mui/icons-material';
 
+import { useSchool } from '@/app/administration/[slug]/SchoolContext';
 import MediaIcon from '@/assets/Icon-Media.svg';
 
 export const FormStaffBiodata = ({
@@ -22,6 +23,8 @@ export const FormStaffBiodata = ({
   editing,
   handleImageChange = () => ({}),
 }) => {
+  const school = useSchool();
+
   function RenderGender({ value }) {
     let tempType;
     genders.map((item) => {
@@ -117,7 +120,7 @@ export const FormStaffBiodata = ({
                     alt="Image"
                     src={`https://api-staging.sisva.id/file/v1/files/${
                       formik.values[field.name]
-                    }?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+                    }?school_id=${school.id}`}
                     layout="fill"
                     objectFit="cover"
                   />
@@ -210,7 +213,7 @@ export const FormStaffBiodata = ({
                         alt="Image"
                         src={`https://api-staging.sisva.id/file/v1/files/${
                           formik.values[field.name]
-                        }?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+                        }?school_id=${school.id}`}
                         layout="fill"
                         objectFit="cover"
                       />

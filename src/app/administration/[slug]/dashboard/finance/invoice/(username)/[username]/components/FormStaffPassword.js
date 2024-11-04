@@ -1,23 +1,24 @@
 'use client';
 
 import {
-    Avatar,
-    Box,
-    Button,
-    Grid,
-    IconButton,
-    InputAdornment,
-    Modal,
-    Paper,
-    Stack,
-    TextField,
-    Typography
+  Avatar,
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  InputAdornment,
+  Modal,
+  Paper,
+  Stack,
+  TextField,
+  Typography,
 } from '@mui/material';
 import Image from 'next/image';
 
+import { useSchool } from '@/app/administration/[slug]/SchoolContext';
 import {
-    formChangePasswordFields,
-    formResetPasswordFields,
+  formChangePasswordFields,
+  formResetPasswordFields,
 } from '@/globalcomponents/FormFields';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useState } from 'react';
@@ -29,6 +30,7 @@ export const FormStaffPassword = ({
   containerRef,
   initialData,
 }) => {
+  const school = useSchool();
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
@@ -57,7 +59,7 @@ export const FormStaffPassword = ({
                 setEditing(true);
                 setAction('change');
               }}
-              variant='contained'
+              variant="contained"
             >
               Ubah Password
             </Button>
@@ -71,7 +73,7 @@ export const FormStaffPassword = ({
                 backgroundColor: 'warning.main',
                 '&:hover': { backgroundColor: 'warning.dark' },
               }}
-              variant='contained'
+              variant="contained"
             >
               Reset Password
             </Button>
@@ -86,7 +88,7 @@ export const FormStaffPassword = ({
           ? formChangePasswordFields.map((field) =>
               field.type === 'password' ? (
                 <Grid item xs={12} md={field.md} key={field.name}>
-                  <Typography variant='body2' fontWeight={600} mb={0.5}>
+                  <Typography variant="body2" fontWeight={600} mb={0.5}>
                     {field.label}
                   </Typography>
                   <TextField
@@ -100,7 +102,7 @@ export const FormStaffPassword = ({
                     }
                     InputProps={{
                       endAdornment: (
-                        <InputAdornment position='end'>
+                        <InputAdornment position="end">
                           <IconButton
                             onClick={() => {
                               if (field.name === 'old_password') {
@@ -145,7 +147,7 @@ export const FormStaffPassword = ({
           : formResetPasswordFields.map((field) =>
               field.type === 'password' ? (
                 <Grid item xs={12} md={field.md} key={field.name}>
-                  <Typography variant='body2' fontWeight={600} mb={0.5}>
+                  <Typography variant="body2" fontWeight={600} mb={0.5}>
                     {field.label}
                   </Typography>
                   <TextField
@@ -159,7 +161,7 @@ export const FormStaffPassword = ({
                     }
                     InputProps={{
                       endAdornment: (
-                        <InputAdornment position='end'>
+                        <InputAdornment position="end">
                           <IconButton
                             onClick={() => {
                               if (field.name === 'old_password') {
@@ -211,7 +213,7 @@ export const FormStaffPassword = ({
           }}
         >
           <Button
-            variant='outlined'
+            variant="outlined"
             sx={{ mr: 1, width: 120 }}
             onClick={() => {
               setEditing(false);
@@ -225,7 +227,7 @@ export const FormStaffPassword = ({
             Batal
           </Button>
           <Button
-            variant='contained'
+            variant="contained"
             sx={{ display: action === 'change' ? 'flex' : 'none', width: 120 }}
             onClick={() => {
               setEditing(false);
@@ -239,7 +241,7 @@ export const FormStaffPassword = ({
             Simpan
           </Button>
           <Button
-            variant='contained'
+            variant="contained"
             sx={{
               display: action === 'reset' ? 'flex' : 'none',
               width: 120,
@@ -310,11 +312,11 @@ export const FormStaffPassword = ({
                   }}
                 >
                   <Image
-                    alt='Web Image'
+                    alt="Web Image"
                     fill
-                    sizes='100%'
+                    sizes="100%"
                     style={{ objectFit: 'cover' }}
-                    src={`https://api-staging.sisva.id/file/v1/files/${activeUser.profile_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+                    src={`https://api-staging.sisva.id/file/v1/files/${activeUser.profile_image_uri}?school_id=${school.id}`}
                   />
                 </Avatar>
                 <Stack justifyContent={'center'}>
@@ -338,7 +340,7 @@ export const FormStaffPassword = ({
                 }}
               >
                 <Button
-                  variant='outlined'
+                  variant="outlined"
                   sx={{ flex: 1, mr: 1 }}
                   onClick={() => {
                     setOpenResetModal(false);
@@ -347,7 +349,7 @@ export const FormStaffPassword = ({
                   Batal
                 </Button>
                 <Button
-                  variant='contained'
+                  variant="contained"
                   sx={{
                     flex: 1,
                     backgroundColor: 'warning.main',

@@ -1,20 +1,21 @@
 'use client';
 
 import {
-    Box,
-    Button,
-    Chip,
-    FormControl,
-    Grid,
-    MenuItem,
-    OutlinedInput,
-    Select,
-    Stack,
-    TextField,
-    Typography,
+  Box,
+  Button,
+  Chip,
+  FormControl,
+  Grid,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  Stack,
+  TextField,
+  Typography,
 } from '@mui/material';
 import Image from 'next/image';
 
+import { useSchool } from '@/app/administration/[slug]/SchoolContext';
 import { formAddAnnouncement } from '@/globalcomponents/FormFields';
 import { targets } from '@/globalcomponents/Variable';
 
@@ -23,12 +24,14 @@ export const FormAddAnnouncement = ({
   editing,
   handleFileChange = () => {},
 }) => {
+  const school = useSchool();
+
   return (
     <>
       {formAddAnnouncement.map((field) =>
         field.type === 'text' ? (
           <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant='body2' fontWeight={600} mb={0.5}>
+            <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <TextField
@@ -41,7 +44,7 @@ export const FormAddAnnouncement = ({
           </Stack>
         ) : field.type === 'textField' ? (
           <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant='body2' fontWeight={600} mb={0.5}>
+            <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <TextField
@@ -56,7 +59,7 @@ export const FormAddAnnouncement = ({
           </Stack>
         ) : field.type === 'multiple-select' ? (
           <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant='body2' fontWeight={600} mb={0.5}>
+            <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
 
@@ -78,7 +81,7 @@ export const FormAddAnnouncement = ({
                         }
                       });
                       return (
-                        <Chip key={target} label={tempTarget} color='primary' />
+                        <Chip key={target} label={tempTarget} color="primary" />
                       );
                     })}
                   </Box>
@@ -101,7 +104,7 @@ export const FormAddAnnouncement = ({
           </Stack>
         ) : field.type === 'file' ? (
           <Grid xs={12} item key={field.name}>
-            <Typography variant='body2' fontWeight={600} mb={0.5}>
+            <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <Stack
@@ -129,26 +132,26 @@ export const FormAddAnnouncement = ({
                   }}
                 >
                   <Image
-                    alt='Image'
-                    src={`https://api-staging.sisva.id/file/v1/files/${formik.values.image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
-                    layout='fill'
-                    objectFit='contain'
+                    alt="Image"
+                    src={`https://api-staging.sisva.id/file/v1/files/${formik.values.image_uri}?school_id=${school.id}`}
+                    layout="fill"
+                    objectFit="contain"
                   />
                 </Box>
               </Box>
-              <label htmlFor='image-input'>
+              <label htmlFor="image-input">
                 <Button
                   fullWidth
-                  variant='outlined'
-                  size='small'
+                  variant="outlined"
+                  size="small"
                   sx={{ m: '8px 0 4px' }}
                 >
                   {formik.values.logo_uri ? 'Ubah' : 'Upload'}
                   <input
                     name={'image_uri'}
-                    accept='image/*'
-                    id='image-input'
-                    type='file'
+                    accept="image/*"
+                    id="image-input"
+                    type="file"
                     style={{
                       position: 'absolute',
                       opacity: '0',
@@ -162,8 +165,8 @@ export const FormAddAnnouncement = ({
                   formik.setFieldValue('image_uri', '');
                 }}
                 fullWidth
-                variant='outlined'
-                size='small'
+                variant="outlined"
+                size="small"
               >
                 Hapus
               </Button>

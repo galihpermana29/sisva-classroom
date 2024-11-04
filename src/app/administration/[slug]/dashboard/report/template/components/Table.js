@@ -1,3 +1,4 @@
+import { useSchool } from '@/app/administration/[slug]/SchoolContext';
 import { permissions, types } from '@/globalcomponents/Variable';
 import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
 import {
@@ -263,7 +264,7 @@ export default function DataTable({ data }) {
                 fill
                 sizes="100%"
                 style={{ objectFit: 'cover' }}
-                src={`https://api-staging.sisva.id/file/v1/files/${activeRow.profile_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+                src={`https://api-staging.sisva.id/file/v1/files/${activeRow.profile_image_uri}?school_id=${school.id}`}
               />
             </Avatar>
             <Stack justifyContent={'center'}>

@@ -1,18 +1,18 @@
 import { permissions, types } from '@/globalcomponents/Variable';
 import { BorderColorRounded } from '@mui/icons-material';
 import {
-    Avatar,
-    Box,
-    Button,
-    Chip,
-    IconButton,
-    MenuItem,
-    Modal,
-    Paper,
-    Stack,
-    TextField,
-    Typography,
-    useMediaQuery
+  Avatar,
+  Box,
+  Button,
+  Chip,
+  IconButton,
+  MenuItem,
+  Modal,
+  Paper,
+  Stack,
+  TextField,
+  Typography,
+  useMediaQuery,
 } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import Image from 'next/image';
@@ -36,7 +36,7 @@ const columns = [
         <Box sx={{ width: '100%', mx: 2, py: 0.5 }}>
           <Stack
             component={Paper}
-            variant='outlined'
+            variant="outlined"
             sx={{
               justifyContent: 'flex-start',
               borderRadius: 2,
@@ -54,9 +54,9 @@ const columns = [
                   }}
                 >
                   <Image
-                    alt='Web Image'
+                    alt="Web Image"
                     fill
-                    sizes='100%'
+                    sizes="100%"
                     style={{ objectFit: 'cover' }}
                     src={`https://api-staging.sisva.id/file/v1/files/${params.value.data.profile_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
                   />
@@ -99,7 +99,7 @@ const columns = [
                     color: 'white',
                     backgroundColor: 'orange',
                   }}
-                  label='Sakit'
+                  label="Sakit"
                 />
               ) : params.value.data.status === 'absent' ? (
                 <Chip
@@ -109,7 +109,7 @@ const columns = [
                     color: 'white',
                     backgroundColor: 'warning.main',
                   }}
-                  label='Alpa'
+                  label="Alpa"
                 />
               ) : params.value.data.status === 'sick' ? (
                 <Chip
@@ -119,7 +119,7 @@ const columns = [
                     color: 'white',
                     backgroundColor: 'orange',
                   }}
-                  label='Sakit'
+                  label="Sakit"
                 />
               ) : null}
             </Stack>
@@ -148,9 +148,9 @@ const columns = [
       >
         {params.value.profile_image_uri !== '' ? (
           <Image
-            alt='Web Image'
+            alt="Web Image"
             fill
-            sizes='100%'
+            sizes="100%"
             style={{ objectFit: 'cover' }}
             src={`https://api-staging.sisva.id/file/v1/files/${params.value.profile_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
           />
@@ -178,7 +178,7 @@ const columns = [
               color: 'white',
               backgroundColor: 'orange',
             }}
-            label='Sakit'
+            label="Sakit"
           />
         );
       } else if (params.value === 'absent') {
@@ -190,7 +190,7 @@ const columns = [
               color: 'white',
               backgroundColor: 'warning.main',
             }}
-            label='Alpa'
+            label="Alpa"
           />
         );
       } else if (params.value === 'leave') {
@@ -202,7 +202,7 @@ const columns = [
               color: 'white',
               backgroundColor: 'orange',
             }}
-            label='Izin'
+            label="Izin"
           />
         );
       } else return null;
@@ -244,7 +244,7 @@ function ChipList({ params }) {
               fontSize: 12,
             }}
             label={tempPermission}
-            color='primary'
+            color="primary"
           />
         );
       })}
@@ -287,6 +287,7 @@ function ActionButton({ params }) {
 }
 
 export default function DataTable({ data, formik }) {
+  const school = useSchool();
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('lg'));
 
   const [openEditModal, setOpenEditModal] = useState(false);
@@ -384,8 +385,8 @@ export default function DataTable({ data, formik }) {
             >
               {activeRow.profile_image_uri !== '' ? (
                 <Image
-                  alt='Image'
-                  src={`https://api-staging.sisva.id/file/v1/files/${activeRow.profile_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+                  alt="Image"
+                  src={`https://api-staging.sisva.id/file/v1/files/${activeRow.profile_image_uri}?school_id=${school.id}`}
                   layout={'fill'}
                   objectFit={'cover'}
                 />
@@ -430,7 +431,7 @@ export default function DataTable({ data, formik }) {
             }}
           >
             <Button
-              variant='outlined'
+              variant="outlined"
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenEditModal(false);
@@ -440,7 +441,7 @@ export default function DataTable({ data, formik }) {
               Batal
             </Button>
             <Button
-              variant='contained'
+              variant="contained"
               sx={{
                 flex: 1,
                 backgroundColor: 'warning.main',

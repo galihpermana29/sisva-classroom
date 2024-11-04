@@ -23,6 +23,7 @@ import { useFormik } from 'formik';
 import AuthAPI from '@/api/auth';
 import FilesAPI from '@/api/files';
 import UsersAPI from '@/api/users';
+import { useSchool } from '@/app/administration/[slug]/SchoolContext';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { FormStudentBasic } from './components/FormStudentBasic';
@@ -31,6 +32,7 @@ import { FormStudentParents } from './components/FormStudentParents';
 import { FormStudentPassword } from './components/FormStudentPassword';
 
 export default function SchoolProfileContent({ user_id }) {
+  const school = useSchool();
   const { slug } = useParams();
 
   const containerRef = useRef(null);
@@ -255,7 +257,7 @@ export default function SchoolProfileContent({ user_id }) {
           {initialData.profile_image_uri !== '' ? (
             <Image
               alt="Image"
-              src={`https://api-staging.sisva.id/file/v1/files/${initialData.profile_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+              src={`https://api-staging.sisva.id/file/v1/files/${initialData.profile_image_uri}?school_id=${school.id}`}
               layout={'fill'}
               objectFit={'cover'}
             />

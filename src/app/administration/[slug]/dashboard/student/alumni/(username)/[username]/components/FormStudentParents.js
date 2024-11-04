@@ -1,29 +1,32 @@
 'use client';
 
 import {
-    Box,
-    Button,
-    Grid,
-    MenuItem,
-    Stack,
-    TextField,
-    Typography
+  Box,
+  Button,
+  Grid,
+  MenuItem,
+  Stack,
+  TextField,
+  Typography,
 } from '@mui/material';
 import Image from 'next/image';
 
+import { useSchool } from '@/app/administration/[slug]/SchoolContext';
 import { formStudentParentsFields } from '@/globalcomponents/FormFields';
 import {
-    educationLevels,
-    genders,
-    guardians,
-    incomeLevels,
-    lifeStatus,
-    relationships,
-    religions
+  educationLevels,
+  genders,
+  guardians,
+  incomeLevels,
+  lifeStatus,
+  relationships,
+  religions,
 } from '@/globalcomponents/Variable';
 import { Cancel } from '@mui/icons-material';
 
 export const FormStudentParents = ({ formik, editing }) => {
+  const school = useSchool();
+
   function RenderGender({ value }) {
     let tempType;
     genders.map((item) => {
@@ -93,7 +96,7 @@ export const FormStudentParents = ({ formik, editing }) => {
         {formStudentParentsFields.map((field, index) =>
           field.type === 'title' ? (
             <Grid item xs={12} md={field.md} key={index} sx={{ mb: 0 }}>
-              <Typography variant='body2' fontWeight={600} fontSize={16}>
+              <Typography variant="body2" fontWeight={600} fontSize={16}>
                 {field.label}
               </Typography>
             </Grid>
@@ -113,12 +116,12 @@ export const FormStudentParents = ({ formik, editing }) => {
               key={field.name}
             >
               <Grid item xs={12} md={11}>
-                <Typography variant='body2' fontWeight={500} fontSize={14}>
+                <Typography variant="body2" fontWeight={500} fontSize={14}>
                   {field.label}
                 </Typography>
               </Grid>
               <Grid item xs={12} md={11}>
-                <Typography variant='body2' fontWeight={400} fontSize={14}>
+                <Typography variant="body2" fontWeight={400} fontSize={14}>
                   {field.name === 'father_religion' ||
                   field.name === 'mother_religion' ||
                   field.name === 'guardian_religion' ? (
@@ -155,19 +158,19 @@ export const FormStudentParents = ({ formik, editing }) => {
               key={field.name}
             >
               <Grid item xs={12} md={12}>
-                <Typography variant='body2' fontWeight={500} fontSize={14}>
+                <Typography variant="body2" fontWeight={500} fontSize={14}>
                   {field.label}
                 </Typography>
               </Grid>
               <Grid item xs={12} md={12}>
-                <Typography variant='body2' fontWeight={400} fontSize={14}>
+                <Typography variant="body2" fontWeight={400} fontSize={14}>
                   {formik.values[field.name] ? formik.values[field.name] : '-'}
                 </Typography>
               </Grid>
             </Grid>
           ) : field.type === 'photo' ? (
             <Grid xs={12} item key={field.name}>
-              <Typography variant='body2' fontWeight={500} fontSize={14}>
+              <Typography variant="body2" fontWeight={500} fontSize={14}>
                 {field.label}
               </Typography>
               <Box
@@ -181,12 +184,12 @@ export const FormStudentParents = ({ formik, editing }) => {
               >
                 <Box sx={{ height: 96, width: 96, position: 'relative' }}>
                   <Image
-                    alt='Image'
+                    alt="Image"
                     src={`https://api-staging.sisva.id/file/v1/files/${
                       formik.values[field.name]
-                    }?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
-                    layout='fill'
-                    objectFit='cover'
+                    }?school_id=${school.id}`}
+                    layout="fill"
+                    objectFit="cover"
                   />
                 </Box>
               </Box>
@@ -201,7 +204,7 @@ export const FormStudentParents = ({ formik, editing }) => {
         {formStudentParentsFields.map((field, index) =>
           field.type === 'title' ? (
             <Grid item xs={12} md={field.md} key={index}>
-              <Typography variant='body2' fontWeight={600} fontSize={16}>
+              <Typography variant="body2" fontWeight={600} fontSize={16}>
                 {field.label}
               </Typography>
             </Grid>
@@ -214,7 +217,7 @@ export const FormStudentParents = ({ formik, editing }) => {
             ></Grid>
           ) : field.type === 'text' ? (
             <Grid item xs={12} md={field.md} key={field.name}>
-              <Typography variant='body2' fontWeight={600} mb={1}>
+              <Typography variant="body2" fontWeight={600} mb={1}>
                 {field.label}
               </Typography>
               <TextField
@@ -229,7 +232,7 @@ export const FormStudentParents = ({ formik, editing }) => {
             </Grid>
           ) : field.type === 'select' ? (
             <Grid item xs={12} md={field.md} key={field.name}>
-              <Typography variant='body2' fontWeight={600} mb={1}>
+              <Typography variant="body2" fontWeight={600} mb={1}>
                 {field.label}
               </Typography>
 
@@ -268,7 +271,7 @@ export const FormStudentParents = ({ formik, editing }) => {
             </Grid>
           ) : field.type === 'photo' ? (
             <Grid xs={12} item key={field.name}>
-              <Typography variant='body2' fontWeight={500} fontSize={14}>
+              <Typography variant="body2" fontWeight={500} fontSize={14}>
                 {field.label}
               </Typography>
               <Stack
@@ -286,28 +289,28 @@ export const FormStudentParents = ({ formik, editing }) => {
                 >
                   <Box sx={{ height: 96, width: 96, position: 'relative' }}>
                     <Image
-                      alt='Image'
+                      alt="Image"
                       src={`https://api-staging.sisva.id/file/v1/files/${
                         formik.values[field.name]
-                      }?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
-                      layout='fill'
-                      objectFit='cover'
+                      }?school_id=${school.id}`}
+                      layout="fill"
+                      objectFit="cover"
                     />
                   </Box>
                 </Box>
-                <label htmlFor='image-input'>
+                <label htmlFor="image-input">
                   <Button
                     fullWidth
-                    variant='outlined'
-                    size='small'
+                    variant="outlined"
+                    size="small"
                     sx={{ m: '8px 0 4px' }}
                   >
                     Ubah Foto
                     <input
                       name={'logo_uri'}
-                      accept='image/*'
-                      id='image-input'
-                      type='file'
+                      accept="image/*"
+                      id="image-input"
+                      type="file"
                       style={{
                         position: 'absolute',
                         opacity: '0',
@@ -316,7 +319,7 @@ export const FormStudentParents = ({ formik, editing }) => {
                     />
                   </Button>
                 </label>
-                <Button fullWidth variant='outlined' size='small'>
+                <Button fullWidth variant="outlined" size="small">
                   Hapus
                 </Button>
               </Stack>
