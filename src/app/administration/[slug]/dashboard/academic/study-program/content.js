@@ -147,8 +147,8 @@ export default function StaffProfileContent() {
       const payload = {
         detail: {
           json_text: JSON.stringify(values),
+          grade: '',
         },
-        grade: '',
       };
 
       await UsersAPI.updateUserById(payload, id);
