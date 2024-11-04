@@ -606,7 +606,7 @@ export default function Container(props) {
                         `${props.item.slug}/${child.slug}`
                       )
                         ? 'contained'
-                        : ''
+                        : 'text'
                     }
                   >
                     <Typography
@@ -642,7 +642,7 @@ export default function Container(props) {
               padding: '8px 16px',
             }}
             variant={
-              activePathname.endsWith(props.item.slug) ? 'contained' : ''
+              activePathname.endsWith(props.item.slug) ? 'contained' : 'text'
             }
           >
             <Box
