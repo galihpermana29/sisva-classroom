@@ -787,7 +787,6 @@ export default function StaffProfileContent() {
             sx={{
               padding: 2,
             }}
-            Tambah
           >
             <Typography fontWeight={600} fontSize={16}>
               Mata Pelajaran
