@@ -3,31 +3,11 @@
 import { Box, Stack, Typography } from '@mui/material';
 import Image from 'next/image';
 
-import CmsAPI from '@/api/cms';
 import LogoSisva from '@/assets/Sisva-LogoType-Black.png';
-import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useSchool } from '../SchoolContext';
 
 export default function RootLayout({ children }) {
-  const [profileData, setProfileData] = useState();
-
-  const { slug } = useParams();
-
-  const fetchProfile = async (slug) => {
-    try {
-      const {
-        data: { data },
-      } = await CmsAPI.getSchoolByCode(slug);
-
-      setProfileData(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchProfile(slug);
-  }, []);
+  const school = useSchool();
 
   return (
     <Box sx={{ display: 'flex', minHeight: '100vh', maxHeight: '100vh' }}>
@@ -39,14 +19,14 @@ export default function RootLayout({ children }) {
           position: 'relative',
         }}
       >
-        {profileData?.landing_image_uri ? (
+        {school.landing_image_url && (
           <Image
-            alt="Web Image"
-            src={`https://api-staging.sisva.id/file/v1/files/${profileData?.landing_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+            alt="Landing Page Background"
+            src={school.landing_image_url}
             layout={'fill'}
             objectFit={'cover'}
           />
-        ) : null}
+        )}
       </Box>
       <Stack
         sx={{
@@ -59,7 +39,7 @@ export default function RootLayout({ children }) {
       >
         <Stack alignItems="center">
           <Typography fontWeight="700" mt={1} fontSize={24}>
-            {profileData?.name}
+            {school.name}
           </Typography>
           <Stack direction="row" alignItems="center" gap="6px">
             <Typography variant="body2" color="grey">
