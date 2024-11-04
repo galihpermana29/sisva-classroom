@@ -21,11 +21,13 @@ import { useFormik } from 'formik';
 
 import CmsAPI from '@/api/cms';
 import FilesAPI from '@/api/files';
+import { useSchool } from '../../../SchoolContext';
 import { FormSchoolDetails } from './components/FormSchoolDetails';
 import { FormSchoolIdentity } from './components/FormSchoolIdentity';
 import { FormSchoolType } from './components/FormSchoolType';
 
 export default function SchoolProfileContent() {
+  const school = useSchool();
   const containerRef = useRef(null);
 
   const [initialData, setinitialData] = useState({});
@@ -135,7 +137,7 @@ export default function SchoolProfileContent() {
           {logo_uri ? (
             <Image
               alt="Image"
-              src={`https://api-staging.sisva.id/file/v1/files/${logo_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+              src={`https://api-staging.sisva.id/file/v1/files/${logo_uri}?school_id=${school.id}`}
               layout={'fill'}
               objectFit={'contain'}
             />

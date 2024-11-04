@@ -3,6 +3,7 @@
 import { Box, Button, Grid, Stack, TextField, Typography } from '@mui/material';
 import Image from 'next/image';
 
+import { useSchool } from '@/app/administration/[slug]/SchoolContext';
 import { formSchoolDetailsFields } from '@/globalcomponents/FormFields';
 
 export const FormSchoolDetails = ({
@@ -10,6 +11,8 @@ export const FormSchoolDetails = ({
   editing,
   handleImageChange = () => {},
 }) => {
+  const school = useSchool();
+
   if (!editing) {
     return (
       <>
@@ -34,7 +37,7 @@ export const FormSchoolDetails = ({
                       alt="Image"
                       src={`https://api-staging.sisva.id/file/v1/files/${
                         formik.values[field.name]
-                      }?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+                      }?school_id=${school.id}`}
                       layout="fill"
                       objectFit="contain"
                     />
@@ -94,7 +97,7 @@ export const FormSchoolDetails = ({
                         alt="Image"
                         src={`https://api-staging.sisva.id/file/v1/files/${
                           formik.values[field.name]
-                        }?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
+                        }?school_id=${school.id}`}
                         layout="fill"
                         objectFit="contain"
                       />
