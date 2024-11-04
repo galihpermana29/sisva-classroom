@@ -31,8 +31,15 @@ function getStudyProgram(allStudyProgram: ProgramStudi[], name: string) {
   return allStudyProgram.find((studyProgram) => studyProgram.name === name);
 }
 
-function getStudentGroup(allStudentGroup: StudentGroup[], name: string) {
-  return allStudentGroup.find((studentGroup) => studentGroup.name === name);
+function getStudentGroup(
+  allStudentGroup: StudentGroup[],
+  name: string,
+  periodId: string
+) {
+  return allStudentGroup.find(
+    (studentGroup) =>
+      studentGroup.name === name && studentGroup.period_id === periodId
+  );
 }
 
 export default async function handleKelas(data: KelasInputData) {
@@ -51,9 +58,6 @@ export default async function handleKelas(data: KelasInputData) {
   const allStudentGroup: StudentGroup[] = (
     await AcademicAPI.getAllStudentGroup()
   ).data.data;
-  const studentGroupNames = allStudentGroup.map(
-    (studentGroup) => studentGroup.name
-  );
 
   // study programs
   const allStudyProgram: ProgramStudi[] = (await AcademicAPI.getAllProdi()).data
@@ -83,11 +87,20 @@ export default async function handleKelas(data: KelasInputData) {
     });
 
   const createObject = dataObject.filter(
-    (data) => !studentGroupNames.includes(data.nama_kelas)
+    (data) =>
+      !allStudentGroup.some(
+        (studentGroup) =>
+          studentGroup.name === data.nama_kelas &&
+          studentGroup.period_id === getPeriod(allPeriod, data.nama_periode).id
+      )
   );
 
   const updateObject = dataObject.filter((data) =>
-    studentGroupNames.includes(data.nama_kelas)
+    allStudentGroup.some(
+      (studentGroup) =>
+        studentGroup.name === data.nama_kelas &&
+        studentGroup.period_id === getPeriod(allPeriod, data.nama_periode).id
+    )
   );
 
   const promisesCreate = createObject.map((data) => {
@@ -115,12 +128,16 @@ export default async function handleKelas(data: KelasInputData) {
   });
 
   const promisesUpdate = updateObject.map((data) => {
-    const studentGroup = getStudentGroup(allStudentGroup, data.nama_kelas);
     const teacher = getUser(allTeachers, {
       name: data.nama_wali_kelas,
       username: data.username_wali_kelas,
     });
     const period = getPeriod(allPeriod, data.nama_periode);
+    const studentGroup = getStudentGroup(
+      allStudentGroup,
+      data.nama_kelas,
+      period.id
+    );
     const studyProgram = getStudyProgram(
       allStudyProgram,
       data.nama_program_studi
