@@ -1,3 +1,4 @@
+import { useSchool } from '@/app/administration/[slug]/SchoolContext';
 import { permissions, types } from '@/globalcomponents/Variable';
 import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
 import {
@@ -17,158 +18,166 @@ import { useParams } from 'next/navigation';
 import { memo, useState } from 'react';
 import DeleteModal from './DeleteModal';
 
-const columns = [
-  {
-    field: 'card',
-    headerName: '',
-    flex: 1,
-    sortable: false,
-    renderCell: (params) => {
-      let tempType;
-      types.map((item) => {
-        if (item.slug === params.value.data.type) {
-          tempType = item.title;
-        }
-      });
-      return (
-        <Box sx={{ width: '100%', mx: 2, py: 0.5 }}>
-          <Stack
-            component={Paper}
-            variant="outlined"
-            sx={{
-              justifyContent: 'flex-start',
-              borderRadius: 2,
-              p: 2,
-            }}
-          >
-            <Stack direction={'row'} justifyContent={'space-between'} flex={1}>
-              <Stack direction={'row'} alignItems={'center'}>
-                <Avatar
-                  sx={{
-                    width: '40px',
-                    height: '40px',
-                    position: 'relative',
-                    mr: 1,
-                  }}
-                >
-                  {params.value.data.profile_image_uri !== '' ? (
-                    <Image
-                      alt="Web Image"
-                      fill
-                      sizes="100%"
-                      style={{ objectFit: 'cover' }}
-                      src={`https://api-staging.sisva.id/file/v1/files/${params.value.data.profile_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
-                    />
-                  ) : (
-                    params.value.data.name?.toUpperCase().slice(0, 1)
-                  )}
-                </Avatar>
-                <Typography
-                  sx={{
-                    color: 'black',
-                  }}
-                >
-                  {params.value.data.name}
-                </Typography>
+function getColumns(schoolId) {
+  const columns = [
+    {
+      field: 'card',
+      headerName: '',
+      flex: 1,
+      sortable: false,
+      renderCell: (params) => {
+        let tempType;
+        types.map((item) => {
+          if (item.slug === params.value.data.type) {
+            tempType = item.title;
+          }
+        });
+        return (
+          <Box sx={{ width: '100%', mx: 2, py: 0.5 }}>
+            <Stack
+              component={Paper}
+              variant="outlined"
+              sx={{
+                justifyContent: 'flex-start',
+                borderRadius: 2,
+                p: 2,
+              }}
+            >
+              <Stack
+                direction={'row'}
+                justifyContent={'space-between'}
+                flex={1}
+              >
+                <Stack direction={'row'} alignItems={'center'}>
+                  <Avatar
+                    sx={{
+                      width: '40px',
+                      height: '40px',
+                      position: 'relative',
+                      mr: 1,
+                    }}
+                  >
+                    {params.value.data.profile_image_uri !== '' ? (
+                      <Image
+                        alt="Web Image"
+                        fill
+                        sizes="100%"
+                        style={{ objectFit: 'cover' }}
+                        src={`https://api-staging.sisva.id/file/v1/files/${params.value.data.profile_image_uri}?school_id=${schoolId}`}
+                      />
+                    ) : (
+                      params.value.data.name?.toUpperCase().slice(0, 1)
+                    )}
+                  </Avatar>
+                  <Typography
+                    sx={{
+                      color: 'black',
+                    }}
+                  >
+                    {params.value.data.name}
+                  </Typography>
+                </Stack>
+                <ActionButton params={params} />
               </Stack>
-              <ActionButton params={params} />
-            </Stack>
 
-            <Stack sx={{ flexDirection: 'row', mt: 2 }}>
-              <Stack sx={{ flex: 1 }}>
-                <Typography sx={{ color: 'base.base50', fontSize: 12 }}>
-                  Username
-                </Typography>
-                <Typography sx={{ fontSize: 14, lineHeight: '14px' }}>
-                  {params.value.data.username}
-                </Typography>
+              <Stack sx={{ flexDirection: 'row', mt: 2 }}>
+                <Stack sx={{ flex: 1 }}>
+                  <Typography sx={{ color: 'base.base50', fontSize: 12 }}>
+                    Username
+                  </Typography>
+                  <Typography sx={{ fontSize: 14, lineHeight: '14px' }}>
+                    {params.value.data.username}
+                  </Typography>
+                </Stack>
+                <Stack sx={{ flex: 1, textAlign: 'right' }}>
+                  <Typography sx={{ color: 'base.base50', fontSize: 12 }}>
+                    Tipe
+                  </Typography>
+                  <Typography sx={{ fontSize: 14, lineHeight: '14px' }}>
+                    {tempType}
+                  </Typography>
+                </Stack>
               </Stack>
-              <Stack sx={{ flex: 1, textAlign: 'right' }}>
+              <Stack sx={{ mt: 2, flex: 1 }}>
                 <Typography sx={{ color: 'base.base50', fontSize: 12 }}>
-                  Tipe
+                  Akses
                 </Typography>
-                <Typography sx={{ fontSize: 14, lineHeight: '14px' }}>
-                  {tempType}
-                </Typography>
+                <ChipList params={params.value.data.permissions} />
               </Stack>
             </Stack>
-            <Stack sx={{ mt: 2, flex: 1 }}>
-              <Typography sx={{ color: 'base.base50', fontSize: 12 }}>
-                Akses
-              </Typography>
-              <ChipList params={params.value.data.permissions} />
-            </Stack>
-          </Stack>
-        </Box>
-      );
+          </Box>
+        );
+      },
     },
-  },
-  {
-    field: 'profile_image_uri',
-    headerName: '',
-    width: 70,
-    sortable: false,
-    renderCell: (params) => (
-      <Avatar
-        sx={{
-          width: 40,
-          height: 40,
-          my: 1.5,
-          ml: 2,
-          position: 'relative',
-          display: 'flex',
-          // justifyContent: 'flex-end',
-        }}
-      >
-        {params.value[0] !== '' ? (
-          <Image
-            alt="Web Image"
-            fill
-            sizes="100%"
-            style={{ objectFit: 'cover' }}
-            src={`https://api-staging.sisva.id/file/v1/files/${params.value[0]}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
-          />
-        ) : (
-          params.value[1]?.toUpperCase().slice(0, 1)
-        )}
-      </Avatar>
-    ),
-  },
-  { field: 'name', headerName: 'Nama', flex: 1 },
-  { field: 'username', headerName: 'Username', flex: 1 },
-  {
-    field: 'type',
-    headerName: 'Tipe',
-    width: 70,
-    renderCell: (params) => {
-      let tempType;
-      types.map((item) => {
-        if (item.slug === params.value) {
-          tempType = item.title;
-        }
-      });
-      return tempType;
+    {
+      field: 'profile_image_uri',
+      headerName: '',
+      width: 70,
+      sortable: false,
+      renderCell: (params) => (
+        <Avatar
+          sx={{
+            width: 40,
+            height: 40,
+            my: 1.5,
+            ml: 2,
+            position: 'relative',
+            display: 'flex',
+            // justifyContent: 'flex-end',
+          }}
+        >
+          {params.value[0] !== '' ? (
+            <Image
+              alt="Web Image"
+              fill
+              sizes="100%"
+              style={{ objectFit: 'cover' }}
+              src={`https://api-staging.sisva.id/file/v1/files/${params.value[0]}?school_id=${schoolId}`}
+            />
+          ) : (
+            params.value[1]?.toUpperCase().slice(0, 1)
+          )}
+        </Avatar>
+      ),
     },
-  },
-  {
-    field: 'permissions',
-    headerName: 'Akses',
-    sortable: false,
-    flex: 1.5,
-    renderCell: (params) => {
-      return <ChipList params={params.value} />;
+    { field: 'name', headerName: 'Nama', flex: 1 },
+    { field: 'username', headerName: 'Username', flex: 1 },
+    {
+      field: 'type',
+      headerName: 'Tipe',
+      width: 70,
+      renderCell: (params) => {
+        let tempType;
+        types.map((item) => {
+          if (item.slug === params.value) {
+            tempType = item.title;
+          }
+        });
+        return tempType;
+      },
     },
-  },
-  {
-    field: 'action',
-    headerName: 'Aksi',
-    sortable: false,
-    width: 120,
-    renderCell: (params) => {
-      return <ActionButton params={params} />;
+    {
+      field: 'permissions',
+      headerName: 'Akses',
+      sortable: false,
+      flex: 1.5,
+      renderCell: (params) => {
+        return <ChipList params={params.value} />;
+      },
     },
-  },
-];
+    {
+      field: 'action',
+      headerName: 'Aksi',
+      sortable: false,
+      width: 120,
+      renderCell: (params) => {
+        return <ActionButton params={params} />;
+      },
+    },
+  ];
+
+  return columns;
+}
 
 function ChipList({ params }) {
   return (
@@ -258,6 +267,7 @@ function DataTable({
   data: any;
   deleteUser: (userData: any) => void;
 }) {
+  const school = useSchool();
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('lg'));
 
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -346,7 +356,7 @@ function DataTable({
       <DataGrid
         rows={rows}
         getRowHeight={() => 'auto'}
-        columns={columns}
+        columns={getColumns(school.id)}
         initialState={{
           pagination: {
             paginationModel: { page: 0, pageSize: 20 },

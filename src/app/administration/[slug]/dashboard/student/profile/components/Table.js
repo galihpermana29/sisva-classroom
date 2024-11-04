@@ -20,122 +20,130 @@ import { useParams } from 'next/navigation';
 import * as React from 'react';
 import { useState } from 'react';
 
-const columns = [
-  {
-    field: 'card',
-    headerName: '',
-    flex: 1,
-    sortable: false,
-    renderCell: (params) => {
-      let tempType;
-      types.map((item) => {
-        if (item.slug === params.value.data.type) {
-          tempType = item.title;
-        }
-      });
-      return (
-        <Box sx={{ width: '100%', mx: 2, py: 0.5 }}>
-          <Stack
-            component={Paper}
-            variant="outlined"
-            sx={{
-              justifyContent: 'flex-start',
-              borderRadius: 2,
-              p: 2,
-            }}
-          >
-            <Stack direction={'row'} justifyContent={'space-between'} flex={1}>
-              <Stack direction={'row'} alignItems={'center'}>
-                <Avatar
-                  sx={{
-                    width: '40px',
-                    height: '40px',
-                    position: 'relative',
-                    mr: 1,
-                  }}
-                >
-                  <Image
-                    alt="Web Image"
-                    fill
-                    sizes="100%"
-                    style={{ objectFit: 'cover' }}
-                    src={`https://api-staging.sisva.id/file/v1/files/${params.value.data.profile_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
-                  />
-                </Avatar>
-                <Typography
-                  sx={{
-                    color: 'black',
-                  }}
-                >
-                  {params.value.data.name}
-                </Typography>
-              </Stack>
-              <ActionButton params={params} />
-            </Stack>
-
+function getColumns(schoolId) {
+  const columns = [
+    {
+      field: 'card',
+      headerName: '',
+      flex: 1,
+      sortable: false,
+      renderCell: (params) => {
+        let tempType;
+        types.map((item) => {
+          if (item.slug === params.value.data.type) {
+            tempType = item.title;
+          }
+        });
+        return (
+          <Box sx={{ width: '100%', mx: 2, py: 0.5 }}>
             <Stack
+              component={Paper}
+              variant="outlined"
               sx={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                mt: 2,
+                justifyContent: 'flex-start',
+                borderRadius: 2,
+                p: 2,
               }}
             >
-              <Stack sx={{ flex: 1 }}>
-                <Typography sx={{ color: 'base.base50', fontSize: 12 }}>
-                  Username
-                </Typography>
-                <Typography sx={{ fontSize: 14, lineHeight: '14px' }}>
-                  {params.value.data.username}
-                </Typography>
+              <Stack
+                direction={'row'}
+                justifyContent={'space-between'}
+                flex={1}
+              >
+                <Stack direction={'row'} alignItems={'center'}>
+                  <Avatar
+                    sx={{
+                      width: '40px',
+                      height: '40px',
+                      position: 'relative',
+                      mr: 1,
+                    }}
+                  >
+                    <Image
+                      alt="Web Image"
+                      fill
+                      sizes="100%"
+                      style={{ objectFit: 'cover' }}
+                      src={`https://api-staging.sisva.id/file/v1/files/${params.value.data.profile_image_uri}?school_id=${schoolId}`}
+                    />
+                  </Avatar>
+                  <Typography
+                    sx={{
+                      color: 'black',
+                    }}
+                  >
+                    {params.value.data.name}
+                  </Typography>
+                </Stack>
+                <ActionButton params={params} />
+              </Stack>
+
+              <Stack
+                sx={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  mt: 2,
+                }}
+              >
+                <Stack sx={{ flex: 1 }}>
+                  <Typography sx={{ color: 'base.base50', fontSize: 12 }}>
+                    Username
+                  </Typography>
+                  <Typography sx={{ fontSize: 14, lineHeight: '14px' }}>
+                    {params.value.data.username}
+                  </Typography>
+                </Stack>
               </Stack>
             </Stack>
-          </Stack>
-        </Box>
-      );
+          </Box>
+        );
+      },
     },
-  },
-  {
-    field: 'profile_image_uri',
-    headerName: '',
-    width: 70,
-    sortable: false,
-    renderCell: (params) => (
-      <Avatar
-        sx={{
-          width: 40,
-          height: 40,
-          my: 1.5,
-          ml: 2,
-          position: 'relative',
-          display: 'flex',
-        }}
-      >
-        {params.value[0] !== '' ? (
-          <Image
-            alt="Web Image"
-            fill
-            sizes="100%"
-            style={{ objectFit: 'cover' }}
-            src={`https://api-staging.sisva.id/file/v1/files/${params.value[0]}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
-          />
-        ) : (
-          params.value[1].toUpperCase().slice(0, 1)
-        )}
-      </Avatar>
-    ),
-  },
-  { field: 'name', headerName: 'Nama', flex: 1 },
-  { field: 'username', headerName: 'Username', flex: 1 },
-  {
-    field: 'action',
-    headerName: 'Aksi',
-    sortable: false,
-    width: 120,
-    renderCell: (params) => {
-      return <ActionButton params={params} />;
+    {
+      field: 'profile_image_uri',
+      headerName: '',
+      width: 70,
+      sortable: false,
+      renderCell: (params) => (
+        <Avatar
+          sx={{
+            width: 40,
+            height: 40,
+            my: 1.5,
+            ml: 2,
+            position: 'relative',
+            display: 'flex',
+          }}
+        >
+          {params.value[0] !== '' ? (
+            <Image
+              alt="Web Image"
+              fill
+              sizes="100%"
+              style={{ objectFit: 'cover' }}
+              src={`https://api-staging.sisva.id/file/v1/files/${params.value[0]}?school_id=${schoolId}`}
+            />
+          ) : (
+            params.value[1].toUpperCase().slice(0, 1)
+          )}
+        </Avatar>
+      ),
     },
-  },
-];
+    { field: 'name', headerName: 'Nama', flex: 1 },
+    { field: 'username', headerName: 'Username', flex: 1 },
+    {
+      field: 'action',
+      headerName: 'Aksi',
+      sortable: false,
+      width: 120,
+      renderCell: (params) => {
+        return <ActionButton params={params} />;
+      },
+    },
+  ];
+
+  return columns;
+}
 
 function ChipList({ params }) {
   return (
@@ -409,7 +417,7 @@ export default function DataTable({ data, deleteUser = () => {} }) {
       <DataGrid
         rows={rows}
         getRowHeight={() => 'auto'}
-        columns={columns}
+        columns={getColumns(school.id)}
         initialState={{
           pagination: {
             paginationModel: { page: 0, pageSize: 20 },

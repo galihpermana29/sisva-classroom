@@ -19,140 +19,148 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { FormAddAnnouncement } from './FormAddAnnouncement';
 
-const columns = [
-  {
-    field: 'card',
-    headerName: '',
-    flex: 1,
-    sortable: false,
-    renderCell: (params) => {
-      let tempType;
-      types.map((item) => {
-        if (item.slug === params.value.data.type) {
-          tempType = item.title;
-        }
-      });
-      return (
-        <Box sx={{ width: '100%', mx: 2, py: 0.5 }}>
-          <Stack
-            component={Paper}
-            variant="outlined"
-            sx={{
-              justifyContent: 'flex-start',
-              borderRadius: 2,
-              p: 2,
-            }}
-          >
-            <Stack direction={'row'} justifyContent={'space-between'} flex={1}>
-              <Stack direction={'row'} alignItems={'center'}>
-                <Box
-                  sx={{
-                    minWidth: '60px',
-                    height: '60px',
-                    borderRadius: 2,
-                    overflow: 'hidden',
-                    position: 'relative',
-                    mr: 1,
-                  }}
-                >
-                  <Image
-                    alt="Web Image"
-                    fill
-                    sizes="100%"
-                    style={{ objectFit: 'cover' }}
-                    src={`https://api-staging.sisva.id/file/v1/files/${params.value.data.image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
-                  />
-                </Box>
-                <Typography
-                  sx={{
-                    fontWeight: 600,
-                    color: 'black',
-                  }}
-                >
-                  {params.value.data.name}
-                </Typography>
+function getColumns(schoolId) {
+  const columns = [
+    {
+      field: 'card',
+      headerName: '',
+      flex: 1,
+      sortable: false,
+      renderCell: (params) => {
+        let tempType;
+        types.map((item) => {
+          if (item.slug === params.value.data.type) {
+            tempType = item.title;
+          }
+        });
+        return (
+          <Box sx={{ width: '100%', mx: 2, py: 0.5 }}>
+            <Stack
+              component={Paper}
+              variant="outlined"
+              sx={{
+                justifyContent: 'flex-start',
+                borderRadius: 2,
+                p: 2,
+              }}
+            >
+              <Stack
+                direction={'row'}
+                justifyContent={'space-between'}
+                flex={1}
+              >
+                <Stack direction={'row'} alignItems={'center'}>
+                  <Box
+                    sx={{
+                      minWidth: '60px',
+                      height: '60px',
+                      borderRadius: 2,
+                      overflow: 'hidden',
+                      position: 'relative',
+                      mr: 1,
+                    }}
+                  >
+                    <Image
+                      alt="Web Image"
+                      fill
+                      sizes="100%"
+                      style={{ objectFit: 'cover' }}
+                      src={`https://api-staging.sisva.id/file/v1/files/${params.value.data.image_uri}?school_id=${schoolId}`}
+                    />
+                  </Box>
+                  <Typography
+                    sx={{
+                      fontWeight: 600,
+                      color: 'black',
+                    }}
+                  >
+                    {params.value.data.name}
+                  </Typography>
+                </Stack>
               </Stack>
-            </Stack>
 
-            <Typography sx={{ fontSize: 14, lineHeight: '14px', mt: 2 }}>
-              {params.value.data.description}
-            </Typography>
-            <Stack sx={{ flexDirection: 'row', mt: 2 }}>
-              <Stack sx={{ flex: 1 }}>
-                <Typography sx={{ color: 'base.base50', fontSize: 12 }}>
-                  Target
-                </Typography>
-                <Typography sx={{ fontSize: 14, lineHeight: '14px' }}>
-                  {params.value.data.target}
-                </Typography>
+              <Typography sx={{ fontSize: 14, lineHeight: '14px', mt: 2 }}>
+                {params.value.data.description}
+              </Typography>
+              <Stack sx={{ flexDirection: 'row', mt: 2 }}>
+                <Stack sx={{ flex: 1 }}>
+                  <Typography sx={{ color: 'base.base50', fontSize: 12 }}>
+                    Target
+                  </Typography>
+                  <Typography sx={{ fontSize: 14, lineHeight: '14px' }}>
+                    {params.value.data.target}
+                  </Typography>
+                </Stack>
+                <Stack sx={{ flex: 1, textAlign: 'right' }}>
+                  <Typography sx={{ color: 'base.base50', fontSize: 12 }}>
+                    Tanggal Post
+                  </Typography>
+                  <Typography sx={{ fontSize: 14, lineHeight: '14px' }}>
+                    {params.value.data.datePosted}
+                  </Typography>
+                </Stack>
               </Stack>
-              <Stack sx={{ flex: 1, textAlign: 'right' }}>
-                <Typography sx={{ color: 'base.base50', fontSize: 12 }}>
-                  Tanggal Post
-                </Typography>
-                <Typography sx={{ fontSize: 14, lineHeight: '14px' }}>
-                  {params.value.data.datePosted}
-                </Typography>
-              </Stack>
-            </Stack>
 
-            <ActionButton params={params} />
-          </Stack>
+              <ActionButton params={params} />
+            </Stack>
+          </Box>
+        );
+      },
+    },
+    {
+      field: 'image_uri',
+      headerName: '',
+      sortable: false,
+      width: 110,
+      renderCell: (params) => (
+        <Box
+          sx={{
+            width: 70,
+            height: 70,
+            borderRadius: 2,
+            overflow: 'hidden',
+            backgroundColor: 'red',
+            my: 1.5,
+            ml: 2,
+            position: 'relative',
+            display: 'flex',
+            justifyContent: 'flex-end',
+          }}
+        >
+          <Image
+            alt="Web Image"
+            fill
+            sizes="100%"
+            style={{ objectFit: 'cover' }}
+            src={`https://api-staging.sisva.id/file/v1/files/${params.value}?school_id=${schoolId}`}
+          />
         </Box>
-      );
+      ),
     },
-  },
-  {
-    field: 'image_uri',
-    headerName: '',
-    sortable: false,
-    width: 110,
-    renderCell: (params) => (
-      <Box
-        sx={{
-          width: 70,
-          height: 70,
-          borderRadius: 2,
-          overflow: 'hidden',
-          backgroundColor: 'red',
-          my: 1.5,
-          ml: 2,
-          position: 'relative',
-          display: 'flex',
-          justifyContent: 'flex-end',
-        }}
-      >
-        <Image
-          alt="Web Image"
-          fill
-          sizes="100%"
-          style={{ objectFit: 'cover' }}
-          src={`https://api-staging.sisva.id/file/v1/files/${params.value}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
-        />
-      </Box>
-    ),
-  },
-  { field: 'name', headerName: 'Judul', flex: 0.6 },
-  { field: 'description', headerName: 'Deskripsi', flex: 1 },
-  {
-    field: 'target',
-    headerName: 'Target',
-    width: 140,
-    renderCell: (params) => {
-      return <ChipList params={params.row.target} />;
+    { field: 'name', headerName: 'Judul', flex: 0.6 },
+    { field: 'description', headerName: 'Deskripsi', flex: 1 },
+    {
+      field: 'target',
+      headerName: 'Target',
+      width: 140,
+      renderCell: (params) => {
+        return <ChipList params={params.row.target} />;
+      },
     },
-  },
-  { field: 'datePosted', headerName: 'Tanggal Post', flex: 0.5 },
-  {
-    field: 'action',
-    headerName: 'Aksi',
-    sortable: false,
-    width: 120,
-    renderCell: (params) => {
-      return <ActionButton params={params} />;
+    { field: 'datePosted', headerName: 'Tanggal Post', flex: 0.5 },
+    {
+      field: 'action',
+      headerName: 'Aksi',
+      sortable: false,
+      width: 120,
+      renderCell: (params) => {
+        return <ActionButton params={params} />;
+      },
     },
-  },
-];
+  ];
+
+  return columns;
+}
 
 function ChipList({ params }) {
   return (
@@ -526,7 +534,7 @@ export default function DataTable({
       <DataGrid
         rows={rows}
         getRowHeight={() => 'auto'}
-        columns={columns}
+        columns={getColumns(school.id)}
         initialState={{
           pagination: {
             paginationModel: { page: 0, pageSize: 20 },
