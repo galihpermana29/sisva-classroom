@@ -46,7 +46,7 @@ const importReport = {
   anggota: '',
 };
 
-type ImportReport = typeof importReport;
+export type ImportReport = typeof importReport;
 
 // prettier-ignore
 export default function handleUploadAcademicXLSX(file: File, onSuccess: (importReport: ImportReport ) => void, onError: (importReport: ImportReport) => void) {

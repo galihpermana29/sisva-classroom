@@ -132,6 +132,7 @@ export default function StaffProfileContent() {
 
   const [isOpenImportXLSXAlert, setIsOpenImportXLSXAlert] = useState(false);
   const [importXLSXAlertText, setImportXLSXAlertText] = useState('');
+  const [importReport, setImportReport] = useState();
 
   const deleteStudyProgram = async (id) => {
     try {
@@ -430,7 +431,8 @@ export default function StaffProfileContent() {
       <ImportXLSXAlert
         open={isOpenImportXLSXAlert}
         handleClose={() => setIsOpenImportXLSXAlert(false)}
-        text={importXLSXAlertText}
+        importReport={importReport}
+        title={importXLSXAlertText}
       />
       <Modal
         open={openCreateGradeModal}
@@ -966,15 +968,17 @@ export default function StaffProfileContent() {
                         handleUploadAcademicXLSX(
                           e.target.files[0],
                           (importReport) => {
-                            console.log(importReport);
+                            setImportXLSXAlertText('File import berhasil');
+                            setImportReport(importReport);
+                            setIsOpenImportXLSXAlert(true);
                           },
                           (importReport) => {
-                            console.log(importReport);
+                            setImportXLSXAlertText('File import bermasalah');
+                            setImportReport(importReport);
+                            setIsOpenImportXLSXAlert(true);
                           }
                         );
                         handleClose();
-                        setImportXLSXAlertText('File import berhasil');
-                        setIsOpenImportXLSXAlert(true);
                       }}
                     />
                   </Stack>
