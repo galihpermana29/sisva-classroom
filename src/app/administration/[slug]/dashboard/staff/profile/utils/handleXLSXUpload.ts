@@ -117,7 +117,7 @@ export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
       );
       const dataCreate = dataObject.filter((user) => !user.username);
 
-      const promisesCreate = dataCreate.map((data) => {
+      dataCreate.forEach(async (data) => {
         const payload = {
           user: {
             name: data.name,
@@ -131,7 +131,7 @@ export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
           },
           password: data.password,
         };
-        return UsersAPI.createUser(payload);
+        await UsersAPI.createUser(payload);
       });
 
       const promisesUpdate = dataUpdate.map((data) => {
@@ -160,7 +160,6 @@ export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
       });
 
       const res = await Promise.all([
-        ...promisesCreate,
         ...promisesUpdate,
         ...promisesUpdatePassword,
       ]);
