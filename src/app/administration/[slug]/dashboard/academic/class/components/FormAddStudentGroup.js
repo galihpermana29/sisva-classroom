@@ -17,14 +17,15 @@ export const FormAddStudentGroup = ({
   const [grade, setGrade] = useState([]);
 
   const fetchProgramStudy = (id, grade, editing) => {
-    const period = periodList.find((pl) => pl.id == id)?.study_programs;
+    const study_programs = periodList.find((pl) => pl.id == id)?.study_programs;
+    if (!study_programs) return;
 
-    let selected = period.map((pd) =>
+    let selected = study_programs.map((pd) =>
       studyProgramList.find((sp) => sp.id == pd.id)
     );
 
     if (editing) {
-      selected = period.reduce((a, b) => {
+      selected = study_programs.reduce((a, b) => {
         const found = studyProgramList.find(
           (sp) => sp.id == b.id && sp.grades.includes(grade)
         );
@@ -65,7 +66,7 @@ export const FormAddStudentGroup = ({
       {formAddStudentGroup.map((field) =>
         field.type === 'text' ? (
           <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant='body2' fontWeight={600} mb={0.5}>
+            <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <TextField
@@ -78,7 +79,7 @@ export const FormAddStudentGroup = ({
           </Stack>
         ) : field.name === 'homeroom_teacher_id' ? (
           <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant='body2' fontWeight={600} mb={0.5}>
+            <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <TextField
@@ -102,7 +103,7 @@ export const FormAddStudentGroup = ({
           </Stack>
         ) : field.name === 'period_id' ? (
           <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant='body2' fontWeight={600} mb={0.5}>
+            <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <TextField
@@ -124,7 +125,7 @@ export const FormAddStudentGroup = ({
           </Stack>
         ) : field.name === 'study_program_id' ? (
           <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant='body2' fontWeight={600} mb={0.5}>
+            <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <TextField
@@ -153,7 +154,7 @@ export const FormAddStudentGroup = ({
           </Stack>
         ) : field.name === 'grade' ? (
           <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant='body2' fontWeight={600} mb={0.5}>
+            <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <TextField
