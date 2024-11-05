@@ -181,17 +181,16 @@ function ActionButton({ params }) {
           width: { xs: 90, lg: 'fit-content' },
           display: params.value.data.status === 'Selesai' ? 'none' : 'flex',
         }}
-        // onClick={() => {
-        //   params.value.setOpenEditModal(true);
-        //   params.value.setActiveRow(params.value.data);
-        //   params.value.formik.setValues({
-        //     period_name: params.value.data.period_name,
-        //     study_program: params.value.data.study_program,
-        //     start_time: dayjs(params.value.data.start_time),
-        //     end_time: dayjs(params.value.data.end_time),
-        //     status: params.value.data.status,
-        //   });
-        // }}
+        onClick={() => {
+          // params.value.setEditingExtraId(params.value.data.extracurricular_id);
+          // params.value.setOpenEditModal(true);
+          // console.log(params);
+          // params.value.formik.setValues({
+          //   old_extracurricular_id: params.value.data.extracurricular_id,
+          //   title: params.value.data.extracurricular_id,
+          //   student: params.value.data.student_id,
+          // });
+        }}
       >
         <BorderColorRounded
           sx={{ fontSize: { xs: 15, lg: 18 }, color: 'base.base50' }}
@@ -313,7 +312,7 @@ export default function StudentTable({
             }}
           >
             <Typography fontWeight={600} fontSize={16}>
-              Edit Periode
+              Edit Anggota
             </Typography>
           </Box>
           <Divider />
@@ -346,23 +345,13 @@ export default function StudentTable({
               variant="contained"
               sx={{
                 flex: 1,
-                backgroundColor:
-                  formik.values['status'] === 'Belum Aktif'
-                    ? 'primary.main'
-                    : 'warning.main',
-                '&:hover': {
-                  backgroundColor:
-                    formik.values['status'] === 'Aktif' ? 'warning.dark' : '',
-                },
               }}
               onClick={() => {
                 setOpenEditModal(false);
                 formik.setValues({ name: '', code: '' });
               }}
             >
-              {formik.values['status'] === 'Belum Aktif'
-                ? 'Simpan'
-                : 'Akhiri Periode'}
+              Simpan
             </Button>
           </Stack>
         </Stack>

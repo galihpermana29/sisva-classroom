@@ -143,7 +143,10 @@ export default function StaffProfileContent() {
   const [studentList, setStudentList] = useState([]);
   const [extraList, setExtraList] = useState([]);
 
-  const [openCreatePeriodModal, setOpenCreatePeriodModal] = useState(false);
+  const [
+    isOpenCreateExtracurricularMember,
+    setIsOpenCreateExtracurricularMember,
+  ] = useState(false);
   const [openCreateExtracurriculum, setOpenCreateExtracurriculum] =
     useState(false);
 
@@ -397,9 +400,9 @@ export default function StaffProfileContent() {
         </Stack>
       </Modal>
       <Modal
-        open={openCreatePeriodModal}
+        open={isOpenCreateExtracurricularMember}
         onClose={() => {
-          setOpenCreatePeriodModal(false);
+          setIsOpenCreateExtracurricularMember(false);
           formik.setValues(emptyData);
         }}
       >
@@ -449,7 +452,7 @@ export default function StaffProfileContent() {
               variant="outlined"
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
-                setOpenCreatePeriodModal(false);
+                setIsOpenCreateExtracurricularMember(false);
                 formik.setValues(emptyData);
               }}
             >
@@ -459,7 +462,7 @@ export default function StaffProfileContent() {
               variant="contained"
               sx={{ flex: 1 }}
               onClick={() => {
-                setOpenCreatePeriodModal(false);
+                setIsOpenCreateExtracurricularMember(false);
                 formik.handleSubmit();
               }}
             >
@@ -819,7 +822,7 @@ export default function StaffProfileContent() {
                 activeTab === 0
                   ? setOpenCreateExtracurriculum(true)
                   : activeTab === 1
-                  ? setOpenCreatePeriodModal(true)
+                  ? setIsOpenCreateExtracurricularMember(true)
                   : null
               }
             >
