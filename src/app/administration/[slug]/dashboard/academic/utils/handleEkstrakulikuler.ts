@@ -95,5 +95,14 @@ export default async function handleEkstrakulikuler(
   });
 
   const res = await Promise.all([...promisesCreate, ...promisesUpdate]);
-  return `${promisesCreate.length} baris Ekstrakulikuler berhasil ditambahkan, ${promisesUpdate.length} baris Ekstrakulikuler berhasil diperbarui`;
+  const reportText = [];
+  if (promisesCreate.length)
+    reportText.push(
+      `${promisesCreate.length} baris Ekstrakulikuler berhasil ditambahkan`
+    );
+  if (promisesUpdate.length)
+    reportText.push(
+      `${promisesUpdate.length} baris Ekstrakulikuler berhasil diperbarui`
+    );
+  return reportText.join(', ');
 }

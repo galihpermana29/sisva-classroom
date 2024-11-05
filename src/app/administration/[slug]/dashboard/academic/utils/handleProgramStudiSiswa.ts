@@ -80,5 +80,10 @@ export default async function handleProgramStudiSiswa(
   });
 
   const res = await Promise.all(promisesUpdate);
-  return `${promisesUpdate.length} baris Program Studi Siswa berhasil diperbarui`;
+  const reportText = [];
+  if (promisesUpdate.length)
+    reportText.push(
+      `${promisesUpdate.length} baris Program Studi Siswa berhasil diperbarui`
+    );
+  return reportText.join(', ');
 }

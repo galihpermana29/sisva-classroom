@@ -72,5 +72,14 @@ export default async function handleProgramStudi(data: ProgramStudiInputData) {
   });
 
   const res = await Promise.all([...promisesCreate, ...promisesUpdate]);
-  return `${promisesCreate.length} baris Program Studi berhasil ditambahkan, ${promisesUpdate.length} baris Program Studi berhasil diperbarui`;
+  const reportText = [];
+  if (promisesCreate.length)
+    reportText.push(
+      `${promisesCreate.length} baris Program Studi berhasil ditambahkan`
+    );
+  if (promisesUpdate.length)
+    reportText.push(
+      `${promisesUpdate.length} baris Program Studi berhasil diperbarui`
+    );
+  return reportText.join(', ');
 }

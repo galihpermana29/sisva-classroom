@@ -104,5 +104,10 @@ export default async function handleAnggota(data: AnggotaInputData) {
   });
 
   const res = await Promise.all(promisesCreate);
-  return `${promisesCreate.length} baris Anggota berhasil ditambahkan`;
+  const reportText = [];
+  if (promisesCreate.length)
+    reportText.push(
+      `${promisesCreate.length} baris Anggota berhasil ditambahkan`
+    );
+  return reportText.join(', ');
 }

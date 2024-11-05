@@ -78,5 +78,8 @@ export default async function handleGuru(data: GuruInputData) {
   });
 
   const res = await Promise.all(promisesCreate);
-  return `${promisesCreate.length} baris Guru berhasil ditambahkan`;
+  const reportText = [];
+  if (promisesCreate.length)
+    reportText.push(`${promisesCreate.length} baris Guru berhasil ditambahkan`);
+  return reportText.join(', ');
 }

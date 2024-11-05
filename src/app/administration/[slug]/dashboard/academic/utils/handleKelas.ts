@@ -155,5 +155,12 @@ export default async function handleKelas(data: KelasInputData) {
   });
 
   const res = await Promise.all([...promisesCreate, ...promisesUpdate]);
-  return `${promisesCreate.length} baris Kelas berhasil ditambahkan, ${promisesUpdate.length} baris Kelas berhasil diperbarui`;
+  const reportText = [];
+  if (promisesCreate.length)
+    reportText.push(
+      `${promisesCreate.length} baris Kelas berhasil ditambahkan`
+    );
+  if (promisesUpdate.length)
+    reportText.push(`${promisesUpdate.length} baris Kelas berhasil diperbarui`);
+  return reportText.join(', ');
 }

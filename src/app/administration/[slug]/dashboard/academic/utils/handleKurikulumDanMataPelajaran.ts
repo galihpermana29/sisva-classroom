@@ -113,5 +113,14 @@ export default async function handleKurikulumDanMataPelajaran(
     ...promisesCreateSubject,
     ...promisesUpdateSubject,
   ]);
-  return `${promisesCreateSubject.length} baris Kurikulum dan Mata Pelajaran berhasil ditambahkan, ${promisesUpdateSubject.length} baris Kurikulum dan Mata Pelajaran berhasil diperbarui`;
+  const reportText = [];
+  if (promisesCreateSubject.length)
+    reportText.push(
+      `${promisesCreateSubject.length} baris Kurikulum dan Mata Pelajaran berhasil ditambahkan`
+    );
+  if (promisesUpdateSubject.length)
+    reportText.push(
+      `${promisesUpdateSubject.length} baris Kurikulum dan Mata Pelajaran berhasil diperbarui`
+    );
+  return reportText.join(', ');
 }

@@ -18,6 +18,7 @@ export default function ImportXLSXAlert({
   importReport: ImportReport;
   title: string;
 }) {
+  if (!importReport) return;
   return (
     <Dialog
       open={open}
@@ -29,13 +30,15 @@ export default function ImportXLSXAlert({
     >
       <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
       <DialogContent>
-        {Object.values(importReport).map((report, index) => {
-          return (
-            <List key={index}>
-              <ListItem>{report}</ListItem>
-            </List>
-          );
-        })}
+        {Object.values(importReport)
+          .filter((text) => text)
+          .map((report, index) => {
+            return (
+              <List key={index}>
+                <ListItem>{report}</ListItem>
+              </List>
+            );
+          })}
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} autoFocus>
