@@ -49,13 +49,6 @@ export const FormAddStudentGroup = ({
 
   useEffect(() => {
     if (editing) {
-      setTeacher([
-        ...teacher,
-        {
-          id: formik.values.homeroom_teacher_id,
-          name: formik.values.homeroom_teacher,
-        },
-      ]);
       fetchProgramStudy(formik.values.period_id, formik.values.grade, editing);
       fetchGrade(formik.values.study_program_id);
     }
