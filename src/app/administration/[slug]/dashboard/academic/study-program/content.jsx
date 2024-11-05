@@ -31,6 +31,7 @@ import StudyProgramTable from './components/StudyProgramTable';
 import AcademicAPI from '@/api/academic';
 import UsersAPI from '@/api/users';
 import { useFormik } from 'formik';
+import ImportXLSXAlert from '../components/ImportXLSXAlert';
 import handleUploadAcademicXLSX from '../utils/handleUploadAcademicXLSX';
 import { FormAddStudent } from './components/FormAddStudent';
 import StudentTable from './components/StudentTable';
@@ -128,6 +129,9 @@ export default function StaffProfileContent() {
   const [openCreateStudentModal, setOpenCreateStudentModal] = useState(false);
 
   const [activeTab, setActiveTab] = useState(0);
+
+  const [isOpenImportXLSXAlert, setIsOpenImportXLSXAlert] = useState(false);
+  const [importXLSXAlertText, setImportXLSXAlertText] = useState('');
 
   const deleteStudyProgram = async (id) => {
     try {
@@ -423,6 +427,11 @@ export default function StaffProfileContent() {
 
   return (
     <Stack sx={{ height: '100%', width: '100%', p: { xs: 0, lg: 4 } }}>
+      <ImportXLSXAlert
+        open={isOpenImportXLSXAlert}
+        handleClose={() => setIsOpenImportXLSXAlert(false)}
+        text={importXLSXAlertText}
+      />
       <Modal
         open={openCreateGradeModal}
         onClose={() => {
@@ -956,6 +965,8 @@ export default function StaffProfileContent() {
                       onChange={(e) => {
                         handleUploadAcademicXLSX(e.target.files[0]);
                         handleClose();
+                        setImportXLSXAlertText('File import berhasil');
+                        setIsOpenImportXLSXAlert(true);
                       }}
                     />
                   </Stack>
