@@ -277,6 +277,8 @@ export default function StudentTable({
     rows.push(tempObject);
   });
 
+  console.log(rows);
+
   return (
     <div style={{ height: '100%', width: '100%' }}>
       <Modal
