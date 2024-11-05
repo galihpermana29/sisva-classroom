@@ -7,7 +7,6 @@ import { useState } from 'react';
 
 export const FormAddMembers = ({
   formik,
-  editing,
   studentList,
   extraList,
   dataMemExtra,
@@ -37,7 +36,7 @@ export const FormAddMembers = ({
       {mappedForm.map((field) =>
         field.name === 'title' ? (
           <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant='body2' fontWeight={600} mb={0.5}>
+            <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <TextField
@@ -58,7 +57,7 @@ export const FormAddMembers = ({
           </Stack>
         ) : field.name === 'student' ? (
           <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant='body2' fontWeight={600} mb={0.5}>
+            <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <TextField

@@ -1,15 +1,15 @@
 import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
 import {
-    Box,
-    Button,
-    Chip,
-    Divider,
-    IconButton,
-    Modal,
-    Paper,
-    Stack,
-    Typography,
-    useMediaQuery,
+  Box,
+  Button,
+  Chip,
+  Divider,
+  IconButton,
+  Modal,
+  Paper,
+  Stack,
+  Typography,
+  useMediaQuery,
 } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { useState } from 'react';
@@ -26,7 +26,7 @@ const columns = [
         <Box sx={{ width: '100%', mx: 2, py: 0.5 }}>
           <Stack
             component={Paper}
-            variant='outlined'
+            variant="outlined"
             sx={{
               justifyContent: 'flex-start',
               borderRadius: 2,
@@ -170,7 +170,7 @@ function ChipList({ params, compact }) {
               fontSize: 12,
             }}
             label={studyProgram}
-            color='primary'
+            color="primary"
           />
         );
       })}
@@ -255,7 +255,7 @@ export default function ClassTable({
   data,
   formik,
   teacherList,
-  deleteExtra = () => {},
+  deleteExtra = async (id) => {},
 }) {
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('lg'));
 
@@ -338,7 +338,7 @@ export default function ClassTable({
             }}
           >
             <Button
-              variant='outlined'
+              variant="outlined"
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenEditModal(false);
@@ -348,7 +348,7 @@ export default function ClassTable({
               Batal
             </Button>
             <Button
-              variant='contained'
+              variant="contained"
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenEditModal(false);
@@ -416,7 +416,7 @@ export default function ClassTable({
             }}
           >
             <Button
-              variant='outlined'
+              variant="outlined"
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenDeleteModal(false);
@@ -425,7 +425,7 @@ export default function ClassTable({
               Batal
             </Button>
             <Button
-              variant='contained'
+              variant="contained"
               sx={{
                 flex: 1,
                 backgroundColor: 'warning.main',

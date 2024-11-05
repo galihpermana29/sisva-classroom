@@ -2,25 +2,25 @@
 
 import { ExcelIcon, SortIcon } from '@/assets/SVGs';
 import {
-    Add,
-    Cancel,
-    DownloadRounded,
-    Search,
-    UploadFileRounded,
+  Add,
+  Cancel,
+  DownloadRounded,
+  Search,
+  UploadFileRounded,
 } from '@mui/icons-material';
 import {
-    Box,
-    Button,
-    Divider,
-    Hidden,
-    InputAdornment,
-    Menu,
-    MenuItem,
-    Modal,
-    Paper,
-    Stack,
-    TextField,
-    Typography,
+  Box,
+  Button,
+  Divider,
+  Hidden,
+  InputAdornment,
+  Menu,
+  MenuItem,
+  Modal,
+  Paper,
+  Stack,
+  TextField,
+  Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { FormAddMembers } from './components/FormAddMembers';
@@ -33,13 +33,15 @@ import { FormAddExtracurriculer } from './components/FormAddExtracurriculer';
 import StudentTable from './components/StudentTable';
 
 export default function StaffProfileContent() {
-  const [emptyData, setEmptyData] = useState({
+  const emptyData = {
+    id: '',
     title: '',
     teacher: '',
-  });
+    student: '',
+  };
 
   const formik = useFormik({
-    initialValues: { emptyData },
+    initialValues: emptyData,
 
     onSubmit: async (values) => {
       try {
@@ -132,7 +134,7 @@ export default function StaffProfileContent() {
   const [extraFilter, setExtraFilter] = useState('');
   const [sortBy, setSortBy] = useState('');
   const [sortType, setSortType] = useState('ascending');
-  const [sortSettings, setSortSettings] = useState('');
+  const [sortSettings, setSortSettings] = useState<any>('');
   const [openSortModal, setOpenSortModal] = useState(false);
 
   const [dataExtra, setDataExtra] = useState([]);
@@ -167,6 +169,7 @@ export default function StaffProfileContent() {
           extraList={extraList}
           studentList={studentList}
           deleteStudentInExtra={deleteStudentInExtra}
+          dataMemExtra={dataMemExtra}
         />
       ),
     },
@@ -241,35 +244,6 @@ export default function StaffProfileContent() {
     fetchAllTeachersStudents();
   }, []);
 
-  // useEffect(() => {
-  //   let temp = [];
-  //   let id = 1;
-  //   data.map((period) => {
-  //     period.study_program.map((study_program) => {
-  //       ["X", "XI", "XII"].map((grade) => {
-  //         let tempObject = {
-  //           id: id,
-  //           period_name: period.period_name,
-  //           study_program: study_program,
-  //           grade: grade,
-  //           curriculum: period.period_name.endsWith("2025")
-  //             ? "Kurikulum Merdeka"
-  //             : period.period_name.endsWith("2024")
-  //             ? grade !== "XII"
-  //               ? "Kurikulum Merdeka"
-  //               : "Kurikulum 2013"
-  //             : grade === "X"
-  //             ? "Kurikulum Merdeka"
-  //             : "Kurikulum 2013",
-  //         };
-  //         temp.push(tempObject);
-  //         id++;
-  //       });
-  //     });
-  //   });
-  //   setDataExtra(temp);
-  // }, [activeTab]);
-
   useEffect(() => {
     let temp = [];
     activeTab === 0
@@ -286,66 +260,6 @@ export default function StaffProfileContent() {
               .includes(extraFilter.toLowerCase())
           );
         }));
-    // if (sortSettings && sortSettings.sortBy) {
-    //   temp = temp.sort(function (a, b) {
-    //     let x, y;
-    //     if (activeTab === 0) {
-    //       if (sortSettings.sortBy === "period_name") {
-    //         x = a.period_name.toLowerCase();
-    //         y = b.period_name.toLowerCase();
-    //       }
-    //       if (sortSettings.sortBy === "study_program") {
-    //         x = a.study_program.toLowerCase();
-    //         y = b.study_program.toLowerCase();
-    //       }
-    //       if (sortSettings.sortBy === "start_time") {
-    //         x = a.start_time.toLowerCase();
-    //         y = b.start_time.toLowerCase();
-    //       }
-    //       if (sortSettings.sortBy === "status") {
-    //         x = a.status.toLowerCase();
-    //         y = b.status.toLowerCase();
-    //       }
-    //     }
-
-    //     if (activeTab === 1) {
-    //       if (sortSettings.sortBy === "period_name") {
-    //         x = a.period_name.toLowerCase();
-    //         y = b.period_name.toLowerCase();
-    //       }
-    //       if (sortSettings.sortBy === "study_program") {
-    //         x = a.study_program.toLowerCase();
-    //         y = b.study_program.toLowerCase();
-    //       }
-    //       if (sortSettings.sortBy === "grade") {
-    //         x = a.grade.toLowerCase();
-    //         y = b.grade.toLowerCase();
-    //       }
-    //       if (sortSettings.sortBy === "curriculum") {
-    //         x = a.curriculum.toLowerCase();
-    //         y = b.curriculum.toLowerCase();
-    //       }
-    //     }
-
-    //     if (sortSettings.sortType === "ascending") {
-    //       if (x < y) {
-    //         return -1;
-    //       }
-    //       if (x > y) {
-    //         return 1;
-    //       }
-    //       return 0;
-    //     } else if (sortSettings.sortType === "descending") {
-    //       if (x > y) {
-    //         return -1;
-    //       }
-    //       if (x < y) {
-    //         return 1;
-    //       }
-    //       return 0;
-    //     }
-    //   });
-    // }
     setFilteredData(temp);
     formik.setValues(emptyData);
   }, [search, extraFilter, sortSettings, activeTab, dataExtra]);
@@ -831,7 +745,6 @@ export default function StaffProfileContent() {
                 display: { xs: 'none', lg: 'flex' },
                 width: 'fit-content',
                 height: '100%',
-                width: 100,
                 mr: 1,
                 borderColor: 'green',
                 backgroundColor: 'white',

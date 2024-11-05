@@ -4,13 +4,13 @@ import { MenuItem, Stack, TextField, Typography } from '@mui/material';
 
 import { formAddExtracurriculer } from '@/globalcomponents/FormFields';
 
-export const FormAddExtracurriculer = ({ formik, editing, teacherList }) => {
+export const FormAddExtracurriculer = ({ formik, teacherList }) => {
   return (
     <>
       {formAddExtracurriculer.map((field) =>
         field.type === 'text' ? (
           <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant='body2' fontWeight={600} mb={0.5}>
+            <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <TextField
@@ -23,7 +23,7 @@ export const FormAddExtracurriculer = ({ formik, editing, teacherList }) => {
           </Stack>
         ) : field.type === 'select' ? (
           <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant='body2' fontWeight={600} mb={0.5}>
+            <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <TextField

@@ -1,4 +1,5 @@
 import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
+import type { Theme } from '@mui/material';
 import {
   Box,
   Button,
@@ -239,13 +240,16 @@ export default function StudentTable({
   formik,
   extraList,
   studentList,
-  deleteStudentInExtra = () => {},
+  dataMemExtra,
+  deleteStudentInExtra = (extraId, studentId) => {},
 }) {
-  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('lg'));
+  const isMobile = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.down('lg')
+  );
 
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const [activeRow, setActiveRow] = useState({});
+  const [activeRow, setActiveRow] = useState<any>({});
 
   let rows = [];
 
@@ -276,8 +280,6 @@ export default function StudentTable({
     };
     rows.push(tempObject);
   });
-
-  console.log(rows);
 
   return (
     <div style={{ height: '100%', width: '100%' }}>
@@ -316,7 +318,12 @@ export default function StudentTable({
           </Box>
           <Divider />
           <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
-            <FormAddMembers formik={formik} status={activeRow.status} />
+            <FormAddMembers
+              formik={formik}
+              dataMemExtra={dataMemExtra}
+              studentList={studentList}
+              extraList={extraList}
+            />
           </Box>
           <Divider />
           <Stack
