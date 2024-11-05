@@ -1,6 +1,7 @@
 'use client';
 
 import { ExcelIcon, SortIcon } from '@/assets/SVGs';
+import { onlyUnique } from '@/utils/onlyUnique';
 import {
   Add,
   Cancel,
@@ -197,27 +198,24 @@ export default function StaffProfileContent() {
 
     setSubjectList(gradeOpt);
 
-    const subjectOpt = [];
+    const uniqueGrades = mappedData
+      .map((md) => {
+        return md.grade;
+      })
+      .filter(onlyUnique);
 
-    mappedData.forEach((md, idx, arr) => {
-      const filter = arr.filter((ar) => ar.grade == md.grade);
-
-      if (filter.length == 1)
-        subjectOpt.push({
-          grade: md.grade,
-          subjects: [{ subject_id: md.id, subject_name: md.name }],
-        });
-      else if (filter.length > 1) {
-        let subj = [];
-
-        filter.forEach((fl) => {
-          subj.push({ subject_id: fl.id, subject_name: fl.name });
-        });
-
-        subjectOpt.push({ grade: md.grade, subjects: subj });
-
-        mappedData.splice(idx, filter.length - 1);
-      }
+    const subjectOpt = uniqueGrades.map((grade) => {
+      return {
+        grade: grade,
+        subjects: mappedData
+          .filter((md) => md.grade == grade)
+          .map((md) => {
+            return {
+              subject_id: md.id,
+              subject_name: md.name,
+            };
+          }),
+      };
     });
 
     const grades = [...new Set(subjectOpt.map((so) => so.grade))].sort((a, b) =>
