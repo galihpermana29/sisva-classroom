@@ -82,4 +82,5 @@ export default async function handlePeriodeDanKurikulum(
   });
 
   const res = await Promise.all(promisesCreate);
+  return `${promisesCreate.length} baris Periode dan Kurikulum berhasil ditambahkan`;
 }

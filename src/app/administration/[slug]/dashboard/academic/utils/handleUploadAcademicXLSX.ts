@@ -32,8 +32,25 @@ function getSheet(template: XLSX.WorkBook, sheetName: Sheet) {
   return template.Sheets[sheetName];
 }
 
+const importReport = {
+  programStudi: '',
+  programStudiSiswa: '',
+  kurikulumDanMataPelajaran: '',
+  tingkatanDanSilabus: '',
+  periode: '',
+  periodeDanKurikulum: '',
+  guru: '',
+  kelas: '',
+  murid: '',
+  ekstrakulikuler: '',
+  anggota: '',
+};
+
+type ImportReport = typeof importReport;
+
 // prettier-ignore
-export default function handleUploadAcademicXLSX(file: File) {
+export default function handleUploadAcademicXLSX(file: File, onSuccess: (importReport: ImportReport ) => void, onError: (importReport: ImportReport) => void) {
+
   const reader = new FileReader();
   reader.onload = async (e) => {
     const file = e.target.result;
@@ -68,21 +85,24 @@ export default function handleUploadAcademicXLSX(file: File) {
           return data.filter((row) => row[0]);
         });
 
-      await handleProgramStudi(sheetRawData[0] as ProgramStudiInputData);
-      await handleProgramStudiSiswa(sheetRawData[1] as ProgramStudiSiswaInputData);
-      await handleKurikulumDanMataPelajaran(sheetRawData[2] as KurikulumDanMataPelajaranInputData);
-      await handleTingkatanDanSilabus(sheetRawData[3] as TingkatanDanSilabusInputData);
-      await handlePeriode(sheetRawData[4] as PeriodeInputData);
-      await handlePeriodeDanKurikulum(sheetRawData[5] as PeriodeDanKurikulumInputData);
-      await handleGuru(sheetRawData[6] as GuruInputData);
-      await handleKelas(sheetRawData[7] as KelasInputData);
-      await handleMurid(sheetRawData[8] as MuridInputData);
-      await handleEkstrakulikuler(sheetRawData[9] as EkstrakulikulerInputData);
-      await handleAnggota(sheetRawData[10] as AnggotaInputData);
+      importReport.programStudi = await handleProgramStudi(sheetRawData[0] as ProgramStudiInputData);
+      importReport.programStudiSiswa = await handleProgramStudiSiswa(sheetRawData[1] as ProgramStudiSiswaInputData);
+      importReport.kurikulumDanMataPelajaran = await handleKurikulumDanMataPelajaran(sheetRawData[2] as KurikulumDanMataPelajaranInputData);
+      importReport.tingkatanDanSilabus = await handleTingkatanDanSilabus(sheetRawData[3] as TingkatanDanSilabusInputData);
+      importReport.periode = await handlePeriode(sheetRawData[4] as PeriodeInputData);
+      importReport.periodeDanKurikulum = await handlePeriodeDanKurikulum(sheetRawData[5] as PeriodeDanKurikulumInputData);
+      importReport.guru = await handleGuru(sheetRawData[6] as GuruInputData);
+      importReport.kelas = await handleKelas(sheetRawData[7] as KelasInputData);
+      importReport.murid = await handleMurid(sheetRawData[8] as MuridInputData);
+      importReport.ekstrakulikuler = await handleEkstrakulikuler(sheetRawData[9] as EkstrakulikulerInputData);
+      importReport.anggota = await handleAnggota(sheetRawData[10] as AnggotaInputData);
+
+      onSuccess(importReport);
 
     } catch (error) {
       console.log(error);
-      globalThis.alert('Import Bermasalah');
+      
+      onError(importReport);
     }
   };
   reader.readAsArrayBuffer(file);

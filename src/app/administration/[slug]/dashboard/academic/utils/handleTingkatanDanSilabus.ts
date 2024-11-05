@@ -80,4 +80,5 @@ export default async function handleTingkatanDanSilabus(
   });
 
   const res = await Promise.all([...promisesCreate, ...promisesUpdate]);
+  return `${promisesCreate.length} baris Tingkatan dan Silabus berhasil ditambahkan, ${promisesUpdate.length} baris Tingkatan dan Silabus berhasil diperbarui`;
 }

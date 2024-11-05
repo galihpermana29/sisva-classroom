@@ -53,4 +53,5 @@ export default async function handlePeriode(data: PeriodeInputData) {
   });
 
   const res = await Promise.all([...promisesCreate, ...promisesUpdate]);
+  return `${promisesCreate.length} baris Periode berhasil ditambahkan, ${promisesUpdate.length} baris Periode berhasil diperbarui`;
 }

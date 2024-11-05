@@ -72,4 +72,5 @@ export default async function handleProgramStudi(data: ProgramStudiInputData) {
   });
 
   const res = await Promise.all([...promisesCreate, ...promisesUpdate]);
+  return `${promisesCreate.length} baris Program Studi berhasil ditambahkan, ${promisesUpdate.length} baris Program Studi berhasil diperbarui`;
 }

@@ -78,4 +78,5 @@ export default async function handleGuru(data: GuruInputData) {
   });
 
   const res = await Promise.all(promisesCreate);
+  return `${promisesCreate.length} baris Guru berhasil ditambahkan`;
 }

@@ -113,4 +113,5 @@ export default async function handleKurikulumDanMataPelajaran(
     ...promisesCreateSubject,
     ...promisesUpdateSubject,
   ]);
+  return `${promisesCreateSubject.length} baris Kurikulum dan Mata Pelajaran berhasil ditambahkan, ${promisesUpdateSubject.length} baris Kurikulum dan Mata Pelajaran berhasil diperbarui`;
 }

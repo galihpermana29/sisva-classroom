@@ -84,4 +84,5 @@ export default async function handleMurid(data: MuridInputData) {
   });
 
   const res = await Promise.all(promisesCreate);
+  return `${promisesCreate.length} baris Murid berhasil ditambahkan`;
 }

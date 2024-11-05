@@ -963,7 +963,15 @@ export default function StaffProfileContent() {
                         border: '1px solid red',
                       }}
                       onChange={(e) => {
-                        handleUploadAcademicXLSX(e.target.files[0]);
+                        handleUploadAcademicXLSX(
+                          e.target.files[0],
+                          (importReport) => {
+                            console.log(importReport);
+                          },
+                          (importReport) => {
+                            console.log(importReport);
+                          }
+                        );
                         handleClose();
                         setImportXLSXAlertText('File import berhasil');
                         setIsOpenImportXLSXAlert(true);
