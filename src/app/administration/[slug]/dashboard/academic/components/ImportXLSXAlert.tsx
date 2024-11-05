@@ -1,4 +1,4 @@
-import { DialogTitle } from '@mui/material';
+import { DialogTitle, Divider, Stack } from '@mui/material';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -27,8 +27,14 @@ export default function ImportXLSXAlert({
       aria-describedby="alert-dialog-description"
       maxWidth="md"
       fullWidth={true}
+      sx={{
+        '& .MuiDialog-paper': {
+          borderRadius: 2,
+        },
+      }}
     >
       <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
+      <Divider />
       <DialogContent>
         {Object.values(importReport)
           .filter((text) => text)
@@ -40,10 +46,24 @@ export default function ImportXLSXAlert({
             );
           })}
       </DialogContent>
+      <Divider />
       <DialogActions>
-        <Button onClick={handleClose} autoFocus>
-          OK
-        </Button>
+        <Stack
+          sx={{
+            p: 1,
+          }}
+        >
+          <Button
+            onClick={handleClose}
+            autoFocus
+            variant="contained"
+            sx={{
+              px: 5,
+            }}
+          >
+            OK
+          </Button>
+        </Stack>
       </DialogActions>
     </Dialog>
   );
