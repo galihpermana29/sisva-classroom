@@ -69,8 +69,13 @@ function getUser(users: User[], user: { name: string; username: string }) {
   return getUserByName(users, user.name);
 }
 
-export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
+export default function handleXLSXUpload(
+  file: File,
+  onSuccess: (reportText: string[]) => void,
+  onError: (reportText: string[]) => void
+) {
   const reader = new FileReader();
+  const reportText = [];
   reader.onload = async (e) => {
     const file = e.target.result;
     try {
@@ -130,6 +135,7 @@ export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
           !(usernames.includes(user.username) || names.includes(user.name))
       );
 
+      let countCreateUser = 0;
       dataCreate.forEach(async (data) => {
         const payload = {
           user: {
@@ -145,7 +151,10 @@ export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
           password: data.password,
         };
         await UsersAPI.createUser(payload);
+        countCreateUser += 1;
       });
+      if (countCreateUser > 0)
+        reportText.push(`${countCreateUser} baris user berhasil ditambahkan`);
 
       const promisesUpdate = dataUpdate.map((data) => {
         const payload = {
@@ -179,10 +188,19 @@ export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
         ...promisesUpdate,
         ...promisesUpdatePassword,
       ]);
-      afterSuccess();
+
+      if (promisesUpdate.length > 0)
+        reportText.push(
+          `${promisesUpdate.length} baris user berhasil diupdate`
+        );
+      if (promisesUpdatePassword.length > 0)
+        reportText.push(
+          `${promisesUpdatePassword.length} baris password berhasil diupdate`
+        );
+      onSuccess(reportText);
     } catch (error) {
       console.log(error);
-      globalThis.alert('Import Bermasalah');
+      onError(reportText);
     }
   };
   reader.readAsArrayBuffer(file);
