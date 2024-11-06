@@ -1,4 +1,5 @@
-import FormControlSisva from '@/components/FormControlSisva';
+import FormButtonsContainerSisva from '@/components/FormButtonsContainerSisva';
+import FormContainerSisva from '@/components/FormContainerSisva';
 import FormLabelSisva from '@/components/FormLabelSisva';
 import { useExtracurricularMembers } from '@/hooks/useExtracurricularMembers';
 import { useExtracurriculars } from '@/hooks/useExtracurriculars';
@@ -44,28 +45,28 @@ export default function FormEditMember({
   if (isLoading1 || isLoading2 || isLoading3) {
     return (
       <>
-        <FormControlSisva>
+        <FormContainerSisva>
           <FormLabelSisva>Ekstrakurikuler</FormLabelSisva>
           <TextField disabled />
           <FormLabelSisva>Anggota</FormLabelSisva>
           <TextField disabled></TextField>
-        </FormControlSisva>
+        </FormContainerSisva>
         <Divider />
-        <Stack sx={{ flexDirection: 'row', gap: 1, p: 2 }}>
+        <FormButtonsContainerSisva>
           <Button fullWidth variant="outlined">
             Batal
           </Button>
           <Button fullWidth variant="contained">
             Simpan
           </Button>
-        </Stack>
+        </FormButtonsContainerSisva>
       </>
     );
   }
 
   return (
     <>
-      <FormControlSisva>
+      <FormContainerSisva>
         <FormLabelSisva>Ekstrakurikuler</FormLabelSisva>
         <Controller
           name="extracurricularId"
@@ -74,7 +75,11 @@ export default function FormEditMember({
             <TextField select {...field}>
               {extracurriculars.map((extracurricular) => {
                 return (
-                  <MenuItem key={extracurricular.id} value={extracurricular.id}>
+                  <MenuItem
+                    key={extracurricular.id}
+                    value={extracurricular.id}
+                    sx={{ fontSize: 14 }}
+                  >
                     {extracurricular.name}
                   </MenuItem>
                 );
@@ -90,7 +95,11 @@ export default function FormEditMember({
             <TextField select {...field} disabled>
               {students.map((student) => {
                 return (
-                  <MenuItem key={student.id} value={student.id}>
+                  <MenuItem
+                    key={student.id}
+                    value={student.id}
+                    sx={{ fontSize: 14 }}
+                  >
                     {student.name}
                   </MenuItem>
                 );
@@ -98,9 +107,9 @@ export default function FormEditMember({
             </TextField>
           )}
         ></Controller>
-      </FormControlSisva>
+      </FormContainerSisva>
       <Divider />
-      <Stack sx={{ flexDirection: 'row', gap: 1, p: 2 }}>
+      <FormButtonsContainerSisva>
         <Button onClick={onClickCancel} fullWidth variant="outlined">
           Batal
         </Button>
@@ -114,7 +123,7 @@ export default function FormEditMember({
         >
           Simpan
         </Button>
-      </Stack>
+      </FormButtonsContainerSisva>
     </>
   );
 }
