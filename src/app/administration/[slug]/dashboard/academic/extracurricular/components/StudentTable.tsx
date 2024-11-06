@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { useState } from 'react';
-import { FormAddMembers } from './FormAddMembers';
+import FormEditMember from './FormEditMember';
 
 const columns = [
   {
@@ -182,14 +182,7 @@ function ActionButton({ params }) {
           display: params.value.data.status === 'Selesai' ? 'none' : 'flex',
         }}
         onClick={() => {
-          // params.value.setEditingExtraId(params.value.data.extracurricular_id);
-          // params.value.setOpenEditModal(true);
-          // console.log(params);
-          // params.value.formik.setValues({
-          //   old_extracurricular_id: params.value.data.extracurricular_id,
-          //   title: params.value.data.extracurricular_id,
-          //   student: params.value.data.student_id,
-          // });
+          params.value.setOpenEditModal(true);
         }}
       >
         <BorderColorRounded
@@ -317,12 +310,7 @@ export default function StudentTable({
           </Box>
           <Divider />
           <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
-            <FormAddMembers
-              formik={formik}
-              dataMemExtra={dataMemExtra}
-              studentList={studentList}
-              extraList={extraList}
-            />
+            <FormEditMember />
           </Box>
           <Divider />
           <Stack
