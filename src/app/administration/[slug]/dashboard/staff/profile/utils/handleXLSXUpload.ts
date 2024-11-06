@@ -136,7 +136,7 @@ export default function handleXLSXUpload(
       );
 
       let countCreateUser = 0;
-      dataCreate.forEach(async (data) => {
+      for (const data of dataCreate) {
         const payload = {
           user: {
             name: data.name,
@@ -152,7 +152,7 @@ export default function handleXLSXUpload(
         };
         await UsersAPI.createUser(payload);
         countCreateUser += 1;
-      });
+      }
       if (countCreateUser > 0)
         reportText.push(`${countCreateUser} baris user berhasil ditambahkan`);
 
