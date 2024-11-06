@@ -31,7 +31,7 @@ import StudyProgramTable from './components/StudyProgramTable';
 import AcademicAPI from '@/api/academic';
 import UsersAPI from '@/api/users';
 import { useFormik } from 'formik';
-import ImportXLSXAlert from '../components/ImportXLSXAlert';
+import ImportXLSXAlert from '../../components/ImportXLSXAlert';
 import handleUploadAcademicXLSX from '../utils/handleUploadAcademicXLSX';
 import { FormAddStudent } from './components/FormAddStudent';
 import StudentTable from './components/StudentTable';
@@ -132,7 +132,7 @@ export default function StaffProfileContent() {
 
   const [isOpenImportXLSXAlert, setIsOpenImportXLSXAlert] = useState(false);
   const [importXLSXAlertText, setImportXLSXAlertText] = useState('');
-  const [importReport, setImportReport] = useState();
+  const [importReport, setImportReport] = useState([]);
 
   const deleteStudyProgram = async (id) => {
     try {
@@ -969,12 +969,16 @@ export default function StaffProfileContent() {
                           e.target.files[0],
                           (importReport) => {
                             setImportXLSXAlertText('File import berhasil');
-                            setImportReport(importReport);
+                            setImportReport(
+                              Object.values(importReport).filter((text) => text)
+                            );
                             setIsOpenImportXLSXAlert(true);
                           },
                           (importReport) => {
                             setImportXLSXAlertText('File import bermasalah');
-                            setImportReport(importReport);
+                            setImportReport(
+                              Object.values(importReport).filter((text) => text)
+                            );
                             setIsOpenImportXLSXAlert(true);
                           }
                         );

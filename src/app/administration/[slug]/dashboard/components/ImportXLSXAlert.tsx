@@ -5,7 +5,6 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import type { ImportReport } from '../utils/handleUploadAcademicXLSX';
 
 export default function ImportXLSXAlert({
   open,
@@ -15,10 +14,9 @@ export default function ImportXLSXAlert({
 }: {
   open: boolean;
   handleClose: () => void;
-  importReport: ImportReport;
+  importReport: string[];
   title: string;
 }) {
-  if (!importReport) return;
   return (
     <Dialog
       open={open}
@@ -36,15 +34,13 @@ export default function ImportXLSXAlert({
       <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
       <Divider />
       <DialogContent>
-        {Object.values(importReport)
-          .filter((text) => text)
-          .map((report, index) => {
-            return (
-              <List key={index}>
-                <ListItem>{report}</ListItem>
-              </List>
-            );
-          })}
+        {importReport.map((report, index) => {
+          return (
+            <List key={index}>
+              <ListItem>{report}</ListItem>
+            </List>
+          );
+        })}
       </DialogContent>
       <Divider />
       <DialogActions>
