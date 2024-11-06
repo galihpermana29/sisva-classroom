@@ -27,3 +27,17 @@ export type User = {
   permissions: string[]; // ???
   status: string; // active, inactive ???
 };
+
+export type Extracurricular = {
+  id: string;
+  name: string;
+  teacher_id: string;
+  teacher_name: string;
+};
+
+export type ExtracurricularMember = {
+  extracurricular_id: string;
+  extracurricular_name: string;
+  student_id: string;
+  student_name: string;
+};

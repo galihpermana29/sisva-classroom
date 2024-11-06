@@ -1,12 +1,13 @@
 import UsersAPI from '@/api/users';
+import type { User } from '@/globalcomponents/BERespondTypes';
 import { useQuery } from '@tanstack/react-query';
 
 export const useStudents = () => {
-  return useQuery({
+  return useQuery<User[]>({
     queryKey: ['students'],
     queryFn: async () =>
       (await UsersAPI.getAllUsers('student')).data.data.filter(
-        (student) => student.status === 'active'
+        (student: User) => student.status === 'active'
       ),
   });
 };
