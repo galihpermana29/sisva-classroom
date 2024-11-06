@@ -320,42 +320,14 @@ export default function StudentTable({
             </Typography>
           </Box>
           <Divider />
-          <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
+          <Box sx={{ maxHeight: '70vh', overflowY: 'auto' }}>
             <FormEditMember
               selectedExtraCurricularId={selectedExtraCurricularId}
               selectedStudentId={selectedStudentId}
+              onClickCancel={() => setOpenEditModal(false)}
+              onClickSave={() => setOpenEditModal(false)}
             />
           </Box>
-          <Divider />
-          <Stack
-            sx={{
-              flexDirection: 'row',
-              p: 2,
-            }}
-          >
-            <Button
-              variant="outlined"
-              sx={{ flex: 1, mr: 1 }}
-              onClick={() => {
-                setOpenEditModal(false);
-                formik.setValues({ name: '', code: '' });
-              }}
-            >
-              Batal
-            </Button>
-            <Button
-              variant="contained"
-              sx={{
-                flex: 1,
-              }}
-              onClick={() => {
-                setOpenEditModal(false);
-                formik.setValues({ name: '', code: '' });
-              }}
-            >
-              Simpan
-            </Button>
-          </Stack>
         </Stack>
       </Modal>
       <Modal open={openDeleteModal} onClose={() => setOpenDeleteModal(false)}>

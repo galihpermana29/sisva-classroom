@@ -9,6 +9,7 @@ export default function FormContainerSisva({
     <Stack
       sx={{
         py: 1,
+        px: 2,
         gap: 0.5,
       }}
     >
