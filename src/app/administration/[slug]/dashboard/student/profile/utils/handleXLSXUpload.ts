@@ -1,5 +1,6 @@
 import AuthAPI from '@/api/auth';
 import UsersAPI from '@/api/users';
+import type { User } from '@/globalcomponents/BERespondTypes';
 import type { Role } from '@/globalcomponents/types';
 import {
   getEducationLevel,
@@ -123,26 +124,38 @@ function getJsonText(data) {
   });
 }
 
-function getUserId(users, username: string) {
-  return users.find((user) => user.username == username).id;
+function getUserByName(users: User[], name: string) {
+  return users.find((user) => user.name === name);
 }
 
-export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
+function getUserByUsername(users: User[], username: string) {
+  return users.find((user) => user.username === username);
+}
+
+function getUser(users: User[], user: { name: string; username: string }) {
+  if (user.username) return getUserByUsername(users, user.username);
+  return getUserByName(users, user.name);
+}
+
+export default function handleXLSXUpload(
+  file: File,
+  onSuccess: (reportText: string[]) => void,
+  onError: (reportText: string[]) => void
+) {
   const reader = new FileReader();
+  const reportText: string[] = [];
   reader.onload = async (e) => {
     const file = e.target.result;
     try {
-      const {
-        data: { data },
-      } = await UsersAPI.getAllUsers('student');
-
-      const filteredData = data
+      const users: User[] = (await UsersAPI.getAllUsers('student')).data.data;
+      const filteredData = users
         .map((user) => {
           const additionalJson = JSON.parse(user.detail.json_text);
           delete additionalJson.username;
           return { ...user, ...additionalJson };
         })
         .filter((user) => user.status == 'active');
+      const names = filteredData.map((user) => user.name) as string[];
       const usernames = filteredData.map((user) => user.username) as string[];
 
       const template = XLSX.read(file);
@@ -206,11 +219,15 @@ export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
         })
         .filter((data) => data.name);
 
-      const dataUpdate = dataObject.filter((user) =>
-        usernames.includes(user.username)
+      const dataUpdate = dataObject.filter(
+        (user) => usernames.includes(user.username) || names.includes(user.name)
       );
-      const dataCreate = dataObject.filter((user) => !user.username);
+      const dataCreate = dataObject.filter(
+        (user) =>
+          !(usernames.includes(user.username) || names.includes(user.name))
+      );
 
+      let countCreateUser = 0;
       dataCreate.forEach(async (data) => {
         const payload = {
           user: {
@@ -225,7 +242,10 @@ export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
           password: data.password,
         };
         await UsersAPI.createUser(payload);
+        countCreateUser += 1;
       });
+      if (countCreateUser > 0)
+        reportText.push(`${countCreateUser} baris user berhasil ditambahkan`);
 
       const promisesUpdate = dataUpdate.map((data) => {
         const payload = {
@@ -239,13 +259,16 @@ export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
         };
         return UsersAPI.updateUserById(
           payload,
-          getUserId(filteredData, data.username)
+          getUser(filteredData, { name: data.name, username: data.username }).id
         );
       });
 
       const promisesUpdatePassword = dataUpdate.map((data) => {
         const payload = {
-          user_id: getUserId(filteredData, data.username),
+          user_id: getUser(filteredData, {
+            name: data.name,
+            username: data.username,
+          }).id,
           new_password: data.password,
         };
         return AuthAPI.resetUserPass(payload);
@@ -255,10 +278,18 @@ export default function handleXLSXUpload(file: File, afterSuccess: () => void) {
         ...promisesUpdate,
         ...promisesUpdatePassword,
       ]);
-      afterSuccess();
+      if (promisesUpdate.length > 0)
+        reportText.push(
+          `${promisesUpdate.length} baris user berhasil diupdate`
+        );
+      if (promisesUpdatePassword.length > 0)
+        reportText.push(
+          `${promisesUpdatePassword.length} baris password berhasil diupdate`
+        );
+      onSuccess(reportText);
     } catch (error) {
       console.log(error);
-      globalThis.alert('Import Gagal');
+      onError(reportText);
     }
   };
   reader.readAsArrayBuffer(file);

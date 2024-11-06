@@ -75,7 +75,7 @@ export default function handleXLSXUpload(
   onError: (reportText: string[]) => void
 ) {
   const reader = new FileReader();
-  const reportText = [];
+  const reportText: string[] = [];
   reader.onload = async (e) => {
     const file = e.target.result;
     try {

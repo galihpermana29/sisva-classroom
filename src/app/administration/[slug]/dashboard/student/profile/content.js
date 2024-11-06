@@ -2,24 +2,24 @@
 
 import { ExcelIcon, SortIcon } from '@/assets/SVGs';
 import {
-    Add,
-    Cancel,
-    DownloadRounded,
-    Search,
-    UploadFileRounded,
+  Add,
+  Cancel,
+  DownloadRounded,
+  Search,
+  UploadFileRounded,
 } from '@mui/icons-material';
 import {
-    Box,
-    Button,
-    Divider,
-    InputAdornment,
-    Menu,
-    MenuItem,
-    Modal,
-    Paper,
-    Stack,
-    TextField,
-    Typography
+  Box,
+  Button,
+  Divider,
+  InputAdornment,
+  Menu,
+  MenuItem,
+  Modal,
+  Paper,
+  Stack,
+  TextField,
+  Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { FormAddStudent } from './components/FormAddStudent';
@@ -27,6 +27,7 @@ import DataTable from './components/Table';
 
 import UsersAPI from '@/api/users';
 import { useFormik } from 'formik';
+import ImportXLSXAlert from '../../components/ImportXLSXAlert';
 import handleXLSXUpload from './utils/handleXLSXUpload';
 
 export default function SchoolProfileListContent() {
@@ -89,6 +90,10 @@ export default function SchoolProfileListContent() {
   const [openSortModal, setOpenSortModal] = useState(false);
 
   const [openCreateModal, setOpenCreateModal] = useState(false);
+
+  const [isOpenImportXLSXAlert, setIsOpenImportXLSXAlert] = useState(false);
+  const [importXLSXAlertTitle, setImportXLSXAlertTitle] = useState('');
+  const [importAlert, setImportAlert] = useState([]);
 
   const deleteUser = async (userData) => {
     try {
@@ -167,6 +172,12 @@ export default function SchoolProfileListContent() {
 
   return (
     <Stack sx={{ height: '100%', width: '100%', p: { xs: 0, lg: 4 } }}>
+      <ImportXLSXAlert
+        open={isOpenImportXLSXAlert}
+        handleClose={() => setIsOpenImportXLSXAlert(false)}
+        importReport={importAlert}
+        title={importXLSXAlertTitle}
+      />
       <Modal open={openCreateModal} onClose={() => setOpenCreateModal(false)}>
         <Stack
           component={Paper}
@@ -487,7 +498,20 @@ export default function SchoolProfileListContent() {
                         border: '1px solid red',
                       }}
                       onChange={(e) => {
-                        handleXLSXUpload(e.target.files[0], getAllStudent);
+                        handleXLSXUpload(
+                          e.target.files[0],
+                          (importReport) => {
+                            setImportXLSXAlertTitle('File import berhasil');
+                            setImportAlert(importReport);
+                            setIsOpenImportXLSXAlert(true);
+                            getAllStudent();
+                          },
+                          (importReport) => {
+                            setImportXLSXAlertTitle('File import bermasalah');
+                            setImportAlert(importReport);
+                            setIsOpenImportXLSXAlert(true);
+                          }
+                        );
                         handleClose();
                       }}
                     />
