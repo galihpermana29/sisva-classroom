@@ -183,6 +183,10 @@ function ActionButton({ params }) {
         }}
         onClick={() => {
           params.value.setOpenEditModal(true);
+          params.value.setSelectedExtraCurricularId(
+            params.value.data.extracurricular_id
+          );
+          params.value.setSelectedStudentId(params.value.data.student_id);
         }}
       >
         <BorderColorRounded
@@ -242,6 +246,9 @@ export default function StudentTable({
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [activeRow, setActiveRow] = useState<any>({});
+  const [selectedExtraCurricularId, setSelectedExtraCurricularId] =
+    useState<string>('');
+  const [selectedStudentId, setSelectedStudentId] = useState<string>('');
 
   let rows = [];
 
@@ -261,6 +268,8 @@ export default function StudentTable({
         setOpenDeleteModal: setOpenDeleteModal,
         setOpenEditModal: setOpenEditModal,
         formik: formik,
+        setSelectedExtraCurricularId: setSelectedExtraCurricularId,
+        setSelectedStudentId: setSelectedStudentId,
       },
       card: {
         data: data,
@@ -268,6 +277,8 @@ export default function StudentTable({
         setOpenDeleteModal: setOpenDeleteModal,
         setOpenEditModal: setOpenEditModal,
         formik: formik,
+        setSelectedExtraCurricularId: setSelectedExtraCurricularId,
+        setSelectedStudentId: setSelectedStudentId,
       },
     };
     rows.push(tempObject);
@@ -310,7 +321,10 @@ export default function StudentTable({
           </Box>
           <Divider />
           <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
-            <FormEditMember />
+            <FormEditMember
+              selectedExtraCurricularId={selectedExtraCurricularId}
+              selectedStudentId={selectedStudentId}
+            />
           </Box>
           <Divider />
           <Stack
