@@ -68,11 +68,19 @@ export default async function handleGuru(data: GuruInputData) {
   const promisesCreate = createObject.map((data) => {
     const teacher = getUser(allTeachers, data);
     const subject = getSubject(allSubject, data.nama_program_studi);
+    const childs = allSubjectTeacher
+      .filter(
+        (subjectTeacher) =>
+          subjectTeacher.teacher_id === teacher.id &&
+          subjectTeacher.grade === data.grade
+      )
+      .map((subjectTeacher) => subjectTeacher.subject_id);
+    childs.push(subject.id);
     const payload = {
       parent_type: 'teacher',
       parent_id: teacher.id,
       grade: data.grade,
-      childs: [subject.id],
+      childs: childs,
     };
     return AcademicAPI.replaceSubjectTeacher(payload);
   });
