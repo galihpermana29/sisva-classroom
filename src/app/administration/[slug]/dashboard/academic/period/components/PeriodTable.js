@@ -52,7 +52,7 @@ const columns = [
                   Periode
                 </Typography>
                 <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
-                  {params.value.data.period_name}
+                  {params.value.data.name}
                 </Typography>
               </Stack>
               <Stack
@@ -71,7 +71,7 @@ const columns = [
                 >
                   Program Studi
                 </Typography>
-                <ChipList params={params.value.data.study_program} />
+                <ChipList params={params.value.data.study_programs} />
               </Stack>
               <Stack
                 sx={{
