@@ -15,19 +15,21 @@ export function generalDateParser(dateString) {
   return parsedDate;
 }
 
-export function generalDateFormatter(dateString) {
-  const date = dayjs(dateString, "DD/MM/YYYY h:mm A Z");
+export function generalDateFormatter(dateString, pattern = DEADLINE_FORMAT ) {
+  const date = dayjs(dateString, DATE_RESPONSE_FORMAT);
 
-  return date.format("DD/MM/YYYY h:mm A");
+  return date.format(pattern);
 }
 
-export function isBefore(date1, date2, format = DEADLINE_FORMAT) {
+export function isBefore(date1, date2, format = DATE_RESPONSE_FORMAT) {
   const dayjsDate1 = dayjs(date1, format);
   const dayjsDate2 = dayjs(date2, format);
   return dayjs(dayjsDate1).isBefore(dayjs(dayjsDate2));
 }
 
-export const DEADLINE_FORMAT = "DD/MM/YYYY h:mm A Z";
+export const DATE_RESPONSE_FORMAT = "DD/MM/YYYY h:mm A Z";
+export const DEADLINE_FORMAT_24 = "DD/MM/YYYY HH:mm";
+export const DEADLINE_FORMAT = "DD MMMM YYYY hh:mm A";
 export const TIME_FORMAT = "hh:mm";
 export const TIME_FORMAT_24 = "HH:mm";
 
