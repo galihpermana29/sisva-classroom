@@ -5,17 +5,17 @@ import AbsensiIcon from "@/assets/svgs/absensi.svg";
 
 const optionMenus = [
   {
-    href: "/",
+    href: "/classroom/student/class",
     Icon: TugasIcon,
     text: "Tugas",
   },
   {
-    href: "/",
+    href: "/classroom/student/class",
     Icon: BahanAjarIcon,
     text: "Bahan Ajar",
   },
   {
-    href: "/",
+    href: "/classroom/student/class",
     Icon: AbsensiIcon,
     text: "Absensi",
   },
@@ -24,7 +24,7 @@ const optionMenus = [
 const MenuKBMSection = () => {
   return (
     <div className="mt-6">
-      <h2 className="lg:hidden text-base text-base90 font-bold mb-3">Fitur</h2>
+      <h2 className="mb-3 text-base font-bold lg:hidden text-base90">Fitur</h2>
       <div className="flex justify-center gap-10 lg:gap-[54px] ">
         {optionMenus.map((optionMenu, index) => (
           <OptionMenu
