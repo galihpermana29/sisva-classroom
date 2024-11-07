@@ -20,7 +20,7 @@ const ScheduleSection = () => {
           {isLoading ? (
             <div className="grid gap-2">
               {Array.from({ length: 2 }).map((_, index) => (
-                <CardScheduleSkeleton key={index} isEven={index % 2 == 0} />
+                <CardScheduleSkeleton key={index} />
               ))}
             </div>
           ) : !schedules | schedules.length == 0 ? (
@@ -37,9 +37,8 @@ const ScheduleSection = () => {
               <CardSchedule
                 scheduleName={schedule.class_name}
                 teacherName={schedule.teacher_name}
-                time={convertTime12To24(schedule.start_time)}
+                time={schedule.start_time.split(" ")[0]}
                 key={index}
-                isEven={index % 2 == 0}
               />
             ))
           )}
