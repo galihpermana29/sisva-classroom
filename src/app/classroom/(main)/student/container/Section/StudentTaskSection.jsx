@@ -21,6 +21,8 @@ const StudentTaskSection = () => {
             tasks.map((task, index) => (
               <CardTask
                 key={index}
+                classId={task.class_id}
+                taskId={task.task_id}
                 taskName={task.name}
                 teacherName={task.teacher_name}
                 lessonName={task.subject_name}

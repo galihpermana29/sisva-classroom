@@ -2,9 +2,8 @@ import { Divider } from "antd";
 import InfoItem from "../InfoItem/InfoItem";
 import { dateFormatterDayName } from "../../usecase/dateFormatter";
 import SkeletonDetailTaskSection from "../Skeleton/SkeletonDetailTaskSection";
-import Image from "next/image";
 import parse from "html-react-parser";
-import PDFImage from "@/assets/pdf.png";
+import CardFile from "../Card/CardFile";
 
 export default function DetailTaskSectionTop({ task, loading }) {
   if (loading) {
@@ -29,21 +28,11 @@ export default function DetailTaskSectionTop({ task, loading }) {
         />
       </div>
       <Divider type="horizontal" className="bg-base40" />
-      <div className="w-full">
+      <div className="w-full mb-5">
         <h2 className="text-xs font-semibold text-base90">Deskripsi</h2>
         <p className="text-sm text-[#333333]">{parse(task.task_description)}</p>
       </div>
-      <div
-        className="w-full bg-[#F9F9F9] rounded-lg p-4 mt-5 inline-flex gap-2 items-center "
-        style={{
-          border: "solid 1px #d0d5dd",
-        }}
-      >
-        <Image src={PDFImage} alt="type file" width={20} />
-        <span className="text-xs font-medium text-base90">
-          {task.task_file}
-        </span>
-      </div>
+      <CardFile file_name={task.task_file} />
     </div>
   );
 }
