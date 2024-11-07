@@ -5,8 +5,8 @@ import SectionLayout from "@/app/classroom/shared/presentation/Layouts/SectionLa
 import { useGetStudentTask } from "@/app/classroom/(main)/student/usecase/useGetStudentTask";
 import CardTaskSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardTaskSkeleton";
 import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
-import { convertDateTime12To24 } from "@/app/classroom/(main)/student/usecase/convertDateTime12To24";
 import Link from "next/link";
+import { DEADLINE_FORMAT_24, generalDateFormatter } from "@/app/classroom/shared/usecase/helper";
 
 const StudentTaskSection = () => {
   const { tasks, isLoading } = useGetStudentTask();
@@ -29,7 +29,7 @@ const StudentTaskSection = () => {
                 taskName={task.name}
                 teacherName={task.teacher_name}
                 lessonName={task.subject_name}
-                deadline={convertDateTime12To24(task.deadline)}
+                deadline={generalDateFormatter(task.deadline, DEADLINE_FORMAT_24)}
               />
               </Link>
             ))
