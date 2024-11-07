@@ -10,8 +10,8 @@ const StudentSubmissionTaskContainer = () => {
     <div className="max-w-6xl mx-auto">
       <TaskDetail task={task} loading={loading} />
       <SubmissionTask
-        allowOverdueSubmission={!task.allow_overdue_submission}
-        allowSubmission={!task.allow_submission}
+        allowOverdueSubmission={!task.task_allow_overdue_submission}
+        allowSubmission={!task.task_allow_submission}
       />
     </div>
   );

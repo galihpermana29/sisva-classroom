@@ -1,6 +1,14 @@
+import Link from "next/link";
 import { BoxTop } from "../Box/Box";
 
-const Cardtask = ({ taskName, lessonName, teacherName, deadline }) => {
+const Cardtask = ({
+  taskName,
+  lessonName,
+  teacherName,
+  deadline,
+  classId,
+  taskId,
+}) => {
   return (
     <div className="min-w-40 flex-none relative bg-[#F96756] text-white p-3 rounded-xl mr-3 overflow-hidden">
       <BoxTop className="size-[104px] -right-5 -top-1/2" rotate={-67.677} />
