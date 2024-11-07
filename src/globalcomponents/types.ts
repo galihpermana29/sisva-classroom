@@ -26,16 +26,14 @@ export function getPermissions(data: {
   return permissions;
 }
 
-export type Role = 'staff' | 'teacher' | 'management' | 'student';
-export type RoleText = 'Staf' | 'Guru' | 'Manajemen' | 'Siswa';
+export type Role = 'staff' | 'teacher' | 'student';
+export type RoleText = 'Staf' | 'Guru' | 'Siswa';
 export function getRole(text: RoleText): Role {
   switch (text) {
     case 'Staf':
       return 'staff';
     case 'Guru':
       return 'teacher';
-    case 'Manajemen':
-      return 'management';
   }
 }
 

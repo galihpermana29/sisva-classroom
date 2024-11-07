@@ -1,7 +1,6 @@
 export const types = [
   { slug: 'staff', title: 'Staf' },
   { slug: 'teacher', title: 'Guru' },
-  { slug: 'management', title: 'Manajemen' },
 ];
 export const subject_types = [
   { slug: 'mandatory', title: 'Wajib' },
