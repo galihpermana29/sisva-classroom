@@ -1,15 +1,15 @@
 import { BorderColorRounded } from '@mui/icons-material';
 import {
-    Box,
-    Button,
-    Chip,
-    Divider,
-    IconButton,
-    Modal,
-    Paper,
-    Stack,
-    Typography,
-    useMediaQuery,
+  Box,
+  Button,
+  Chip,
+  Divider,
+  IconButton,
+  Modal,
+  Paper,
+  Stack,
+  Typography,
+  useMediaQuery,
 } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { useState } from 'react';
@@ -51,7 +51,7 @@ const columns = [
                   Guru
                 </Typography>
                 <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
-                  {/* {params.value.data.teacher} */}
+                  {params.value.data.name}
                 </Typography>
               </Stack>
               <Stack

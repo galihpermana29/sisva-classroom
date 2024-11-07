@@ -1,15 +1,15 @@
 import { BorderColorRounded } from '@mui/icons-material';
 import {
-    Box,
-    Button,
-    Chip,
-    Divider,
-    IconButton,
-    Modal,
-    Paper,
-    Stack,
-    Typography,
-    useMediaQuery,
+  Box,
+  Button,
+  Chip,
+  Divider,
+  IconButton,
+  Modal,
+  Paper,
+  Stack,
+  Typography,
+  useMediaQuery,
 } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { useState } from 'react';
@@ -26,7 +26,7 @@ const columns = [
         <Box sx={{ width: '100%', mx: 2, py: 0.5 }}>
           <Stack
             component={Paper}
-            variant='outlined'
+            variant="outlined"
             sx={{
               justifyContent: 'flex-start',
               borderRadius: 2,
@@ -72,9 +72,8 @@ const columns = [
                 </Typography>
 
                 <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
-                  {params.value.data.subject}
+                  {params.value.data.name}
                 </Typography>
-                {/* <ChipList params={params.value.data.study_program} /> */}
               </Stack>
               <Stack
                 sx={{
@@ -93,7 +92,7 @@ const columns = [
                   Guru
                 </Typography>
 
-                {/* <ChipList params={params.value.data.teachers} /> */}
+                <ChipList params={params.value.data.teachers} />
               </Stack>
             </Stack>
 
@@ -109,7 +108,7 @@ const columns = [
     flex: 1,
   },
   {
-    field: 'period_name',
+    field: 'subject',
     headerName: 'Mata Pelajaran',
     flex: 1,
   },
@@ -154,7 +153,7 @@ function ChipList({ params, compact }) {
               fontSize: 12,
             }}
             label={teachers.teacher_name}
-            color='primary'
+            color="primary"
           />
         );
       })}
@@ -252,7 +251,6 @@ export default function SubjectTable({
   data.map((data, idx) => {
     let tempObject = {
       id: idx,
-      period_name: data.name,
       study_program: data.study_program_name,
       grade: data.grade,
       subject: data.name,
@@ -327,7 +325,7 @@ export default function SubjectTable({
             }}
           >
             <Button
-              variant='outlined'
+              variant="outlined"
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenEditModal(false);
@@ -337,7 +335,7 @@ export default function SubjectTable({
               Batal
             </Button>
             <Button
-              variant='contained'
+              variant="contained"
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenEditModal(false);
@@ -426,7 +424,7 @@ export default function SubjectTable({
             }}
           >
             <Button
-              variant='outlined'
+              variant="outlined"
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenDeleteModal(false);
@@ -435,7 +433,7 @@ export default function SubjectTable({
               Batal
             </Button>
             <Button
-              variant='contained'
+              variant="contained"
               sx={{
                 flex: 1,
                 backgroundColor: 'warning.main',
