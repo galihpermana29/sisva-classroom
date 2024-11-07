@@ -28,7 +28,7 @@ import DataTable from './components/Table';
 import UsersAPI from '@/api/users';
 import { useFormik } from 'formik';
 import ImportXLSXAlert from '../../components/ImportXLSXAlert';
-import handleXLSXUpload from './utils/handleXLSXUpload';
+import handleXLSXUploadStudent from './utils/handleXLSXUploadStudent';
 
 export default function SchoolProfileListContent() {
   const [initialData, setinitialData] = useState({
@@ -494,7 +494,7 @@ export default function SchoolProfileListContent() {
                         border: '1px solid red',
                       }}
                       onChange={(e) => {
-                        handleXLSXUpload(
+                        handleXLSXUploadStudent(
                           e.target.files[0],
                           (importReport) => {
                             setImportXLSXAlertTitle('File import berhasil');

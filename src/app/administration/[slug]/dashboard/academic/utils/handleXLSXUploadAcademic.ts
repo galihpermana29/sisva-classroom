@@ -49,7 +49,7 @@ const importReport = {
 export type ImportReport = typeof importReport;
 
 // prettier-ignore
-export default function handleUploadAcademicXLSX(file: File, onSuccess: (importReport: ImportReport ) => void, onError: (importReport: ImportReport) => void) {
+export default function handleXLSXUploadAcademic(file: File, onSuccess: (importReport: ImportReport ) => void, onError: (importReport: ImportReport) => void) {
 
   const reader = new FileReader();
   reader.onload = async (e) => {

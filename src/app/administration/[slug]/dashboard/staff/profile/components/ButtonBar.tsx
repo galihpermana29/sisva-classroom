@@ -3,7 +3,7 @@ import { Add, DownloadRounded, UploadFileRounded } from '@mui/icons-material';
 import { Button, Menu, MenuItem, Stack, Typography } from '@mui/material';
 import { memo, useState } from 'react';
 import ImportXLSXAlert from '../../../components/ImportXLSXAlert';
-import handleXLSXUpload from '../utils/handleXLSXUpload';
+import handleXLSXUploadStaff from '../utils/handleXLSXUploadStaff';
 
 function ButtonBar({
   anchorEl,
@@ -94,7 +94,7 @@ function ButtonBar({
                     border: '1px solid red',
                   }}
                   onChange={(e) => {
-                    handleXLSXUpload(
+                    handleXLSXUploadStaff(
                       e.target.files[0],
                       (importReport) => {
                         setImportXLSXAlertTitle('File import berhasil');

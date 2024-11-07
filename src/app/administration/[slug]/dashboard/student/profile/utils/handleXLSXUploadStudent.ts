@@ -136,7 +136,7 @@ function getUser(users: User[], user: { name: string; username: string }) {
   return getUserByName(users, user.name);
 }
 
-export default function handleXLSXUpload(
+export default function handleXLSXUploadStudent(
   file: File,
   onSuccess: (reportText: string[]) => void,
   onError: (reportText: string[]) => void
