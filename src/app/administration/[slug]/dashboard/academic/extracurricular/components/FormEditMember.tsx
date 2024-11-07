@@ -1,7 +1,7 @@
+import AcademicAPI from '@/api/academic';
 import FormButtonsContainerSisva from '@/components/FormButtonsContainerSisva';
 import FormContainerSisva from '@/components/FormContainerSisva';
 import FormLabelSisva from '@/components/FormLabelSisva';
-import { useExtracurricularMembers } from '@/hooks/useExtracurricularMembers';
 import { useExtracurriculars } from '@/hooks/useExtracurriculars';
 import { useStudents } from '@/hooks/useStudents';
 import { Button, Divider, MenuItem, Stack, TextField } from '@mui/material';
@@ -14,35 +14,39 @@ type FormEditMember = {
 };
 
 export default function FormEditMember({
-  selectedExtraCurricularId,
+  selectedExtracurricularId,
   selectedStudentId,
   onClickCancel,
   onClickSave,
 }: {
-  selectedExtraCurricularId: string;
+  selectedExtracurricularId: string;
   selectedStudentId: string;
   onClickCancel: () => void;
   onClickSave: () => void;
 }) {
   const { data: extracurriculars, isLoading: isLoading1 } =
     useExtracurriculars();
-  const { data: extracurricularMembers, isLoading: isLoading2 } =
-    useExtracurricularMembers();
-  const { data: students, isLoading: isLoading3 } = useStudents();
+  const { data: students, isLoading: isLoading2 } = useStudents();
 
   const { handleSubmit, control } = useForm<FormEditMember>({
     defaultValues: {
-      extracurricularId: selectedExtraCurricularId,
+      extracurricularId: selectedExtracurricularId,
       studentId: selectedStudentId,
     },
   });
 
-  const onSubmit: SubmitHandler<FormEditMember> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<FormEditMember> = async (data) => {
+    await AcademicAPI.deleteStudentInExtra(selectedExtracurricularId, {
+      student_id: data.studentId,
+    });
+
+    await AcademicAPI.createStudentInExtra(data.extracurricularId, {
+      student_id: data.studentId,
+    });
   };
 
   // skeleton
-  if (isLoading1 || isLoading2 || isLoading3) {
+  if (isLoading1 || isLoading2) {
     return (
       <>
         <FormContainerSisva>

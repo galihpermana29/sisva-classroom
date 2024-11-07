@@ -246,7 +246,7 @@ export default function StudentTable({
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [activeRow, setActiveRow] = useState<any>({});
-  const [selectedExtraCurricularId, setSelectedExtraCurricularId] =
+  const [selectedExtracurricularId, setSelectedExtracurricularId] =
     useState<string>('');
   const [selectedStudentId, setSelectedStudentId] = useState<string>('');
 
@@ -268,7 +268,7 @@ export default function StudentTable({
         setOpenDeleteModal: setOpenDeleteModal,
         setOpenEditModal: setOpenEditModal,
         formik: formik,
-        setSelectedExtraCurricularId: setSelectedExtraCurricularId,
+        setSelectedExtraCurricularId: setSelectedExtracurricularId,
         setSelectedStudentId: setSelectedStudentId,
       },
       card: {
@@ -277,7 +277,7 @@ export default function StudentTable({
         setOpenDeleteModal: setOpenDeleteModal,
         setOpenEditModal: setOpenEditModal,
         formik: formik,
-        setSelectedExtraCurricularId: setSelectedExtraCurricularId,
+        setSelectedExtraCurricularId: setSelectedExtracurricularId,
         setSelectedStudentId: setSelectedStudentId,
       },
     };
@@ -322,7 +322,7 @@ export default function StudentTable({
           <Divider />
           <Box sx={{ maxHeight: '70vh', overflowY: 'auto' }}>
             <FormEditMember
-              selectedExtraCurricularId={selectedExtraCurricularId}
+              selectedExtracurricularId={selectedExtracurricularId}
               selectedStudentId={selectedStudentId}
               onClickCancel={() => setOpenEditModal(false)}
               onClickSave={() => setOpenEditModal(false)}
