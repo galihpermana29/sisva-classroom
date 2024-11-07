@@ -63,15 +63,25 @@ export default function StaffProfileContent() {
           } else {
             const id = values.id;
 
-            const start_time = dayjs(values.start_time).format('DD/MM/YYYY');
-            const end_time = dayjs(values.end_time).format('DD/MM/YYYY');
+            const start_time = dayjs(values.start_time).format(
+              'DD/MM/YYYY h:mm A Z'
+            );
+            const end_time = dayjs(values.end_time).format(
+              'DD/MM/YYYY h:mm A Z'
+            );
 
             const payload = {
               name: values.period_name,
-              start_time: `${start_time} 5:00 PM +00:00`,
-              end_time: `${end_time} 5:00 PM +00:00`,
+              start_time: start_time,
+              end_time: end_time,
               status: values.status,
             };
+
+            const period = (await AcademicAPI.getPeriodById(id)).data.data;
+            if (period.status === 'active' || period.status === 'finished') {
+              delete payload.start_time;
+              delete payload.end_time;
+            }
 
             await AcademicAPI.updatePeriod(payload, id);
           }

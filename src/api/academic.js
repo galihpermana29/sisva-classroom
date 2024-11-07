@@ -259,6 +259,16 @@ const AcademicAPI = {
     return api.post(`/periods`, payload, { headers });
   },
 
+  getPeriodById(id) {
+    const headers = {
+      'X-Sisva-Source': 'academic.periods.test',
+      'X-Sisva-UserID': USER_ID,
+      'X-Sisva-SchoolID': SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.get(`/periods/${id}`, { headers });
+  },
+
   addCurriculumInPeriod(id, payload) {
     const headers = {
       'X-Sisva-Source': 'academic.periods.test',
