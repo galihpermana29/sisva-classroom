@@ -34,7 +34,6 @@ function TableParent({
   search,
   setActiveTab,
   setExtraFilter,
-  setFilteredData,
   setIsOpenCreateExtracurricularMember,
   setOpenCreateExtracurriculum,
   setOpenSortModal,
@@ -71,7 +70,6 @@ function TableParent({
                 p: { xs: '16px 8px', lg: 2 },
                 minWidth: 140,
                 flex: { xs: 1, lg: 0 },
-                // height: 54,
                 borderBottom: '2px solid',
                 borderBottomLeftRadius: 0,
                 borderBottomRightRadius: 0,
@@ -85,7 +83,6 @@ function TableParent({
                 setSortBy('');
                 setSortSettings('');
                 formik.setValues(emptyData);
-                index === 0 ? setFilteredData(dataExtra) : null;
               }}
             >
               <Typography sx={{ fontWeight: 600, fontSize: 14 }}>

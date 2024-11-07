@@ -1,10 +1,14 @@
 'use client';
 
 import { Stack, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import AcademicAPI from '@/api/academic';
-import UsersAPI from '@/api/users';
+import { useExtracurricularMembers } from '@/hooks/useExtracurricularMembers';
+import { useExtracurriculars } from '@/hooks/useExtracurriculars';
+import { useStudents } from '@/hooks/useStudents';
+import { useTeachers } from '@/hooks/useTeachers';
+import { useQueryClient } from '@tanstack/react-query';
 import { useFormik } from 'formik';
 import ClassTable from './components/ClassTable';
 import CreateExtracurricularMemberModal from './components/CreateExtracurricularMemberModal';
@@ -14,6 +18,7 @@ import StudentTable from './components/StudentTable';
 import TableParent from './components/TableParent';
 
 export default function StaffProfileContent() {
+  const queryClient = useQueryClient();
   const emptyData = {
     id: '',
     title: '',
@@ -34,6 +39,9 @@ export default function StaffProfileContent() {
             };
 
             await AcademicAPI.createExtra(payload);
+            queryClient.invalidateQueries({
+              queryKey: ['extracurriculars'],
+            });
           } else {
             const id = values.id;
 
@@ -43,6 +51,9 @@ export default function StaffProfileContent() {
             };
 
             await AcademicAPI.updateExtra(id, payload);
+            queryClient.invalidateQueries({
+              queryKey: ['extracurriculars'],
+            });
           }
         } else {
           if (!values.id) {
@@ -53,6 +64,9 @@ export default function StaffProfileContent() {
             };
 
             await AcademicAPI.createStudentInExtra(extra_id, payload);
+            queryClient.invalidateQueries({
+              queryKey: ['extracurricular-members'],
+            });
           } else {
             const id = values.id;
 
@@ -62,6 +76,9 @@ export default function StaffProfileContent() {
             };
 
             await AcademicAPI.updateExtra(id, payload);
+            queryClient.invalidateQueries({
+              queryKey: ['extracurriculars'],
+            });
           }
         }
       } catch (error) {
@@ -69,16 +86,15 @@ export default function StaffProfileContent() {
       }
 
       formik.setValues(emptyData);
-      fetchAllMembers();
-      fetchAllExtra();
     },
   });
 
   const deleteExtra = async (id) => {
     try {
       await AcademicAPI.deleteExtra(id);
-
-      fetchAllExtra();
+      queryClient.invalidateQueries({
+        queryKey: ['extracurriculars'],
+      });
     } catch (error) {
       console.log(error);
     }
@@ -93,9 +109,9 @@ export default function StaffProfileContent() {
       };
 
       await AcademicAPI.deleteStudentInExtra(id, payload);
-
-      fetchAllMembers();
-      fetchAllExtra();
+      queryClient.invalidateQueries({
+        queryKey: ['extracurricular-members'],
+      });
     } catch (error) {
       console.log(error);
     }
@@ -110,19 +126,13 @@ export default function StaffProfileContent() {
     setAnchorEl(null);
   };
 
-  let [filteredData, setFilteredData] = useState([]);
   const [search, setSearch] = useState('');
   const [extraFilter, setExtraFilter] = useState('');
   const [sortBy, setSortBy] = useState('');
   const [sortType, setSortType] = useState('ascending');
   const [sortSettings, setSortSettings] = useState<any>('');
   const [openSortModal, setOpenSortModal] = useState(false);
-
-  const [dataExtra, setDataExtra] = useState([]);
-  const [dataMemExtra, setDataMemExtra] = useState([]);
-  const [teacherList, setTeacherList] = useState([]);
-  const [studentList, setStudentList] = useState([]);
-  const [extraList, setExtraList] = useState([]);
+  const [activeTab, setActiveTab] = useState(0);
 
   const [
     isOpenCreateExtracurricularMember,
@@ -131,8 +141,62 @@ export default function StaffProfileContent() {
   const [openCreateExtracurriculum, setOpenCreateExtracurriculum] =
     useState(false);
 
-  const [activeTab, setActiveTab] = useState(0);
-  let tabs = [
+  const { data: extracurriculars, isLoading: isLoading1 } =
+    useExtracurriculars();
+  const { data: extracurricularMembers, isLoading: isLoading2 } =
+    useExtracurricularMembers();
+  const { data: teacherList, isLoading: isLoading3 } = useTeachers();
+  const { data: studentList, isLoading: isLoading4 } = useStudents();
+
+  if (isLoading1 || isLoading2 || isLoading3 || isLoading4) {
+    return <></>;
+  }
+
+  const extraList = extracurriculars.sort(
+    (a, b) => parseInt(a.id) - parseInt(b.id)
+  );
+
+  const dataExtra = extraList.map((ed) => {
+    const studentSum = extracurricularMembers.filter(
+      (sd) => sd.extracurricular_id == ed.id
+    )?.length;
+
+    return {
+      id: ed.id,
+      extracurricular: ed.name,
+      guardian: ed.teacher_name,
+      students: studentSum,
+      guardian_id: ed.teacher_id,
+    };
+  });
+
+  const dataMemExtra = extracurricularMembers.map((md, idx) => {
+    return {
+      id: idx,
+      extracurricular: md.extracurricular_name,
+      extracurricular_id: md.extracurricular_id,
+      class: 'X IPA 1',
+      student: md.student_name,
+      student_id: md.student_id,
+    };
+  });
+
+  let filteredData;
+
+  activeTab === 0
+    ? (filteredData = dataExtra.filter((item) => {
+        return item.extracurricular
+          .toLowerCase()
+          .includes(search.toLowerCase());
+      }))
+    : (filteredData = dataMemExtra.filter((item) => {
+        return (
+          item.student.toLowerCase().includes(search.toLowerCase()) &&
+          item.extracurricular.toLowerCase().includes(extraFilter.toLowerCase())
+        );
+      }));
+
+  const tabs = [
     {
       title: 'Ekstrakurikuler',
       component: (
@@ -150,103 +214,11 @@ export default function StaffProfileContent() {
         <StudentTable
           formik={formik}
           data={filteredData}
-          extraList={extraList}
-          studentList={studentList}
           deleteStudentInExtra={deleteStudentInExtra}
-          dataMemExtra={dataMemExtra}
         />
       ),
     },
   ];
-
-  const fetchAllExtra = async () => {
-    const resExtra = await AcademicAPI.getAllExtra();
-    const resStudent = await AcademicAPI.getAllExtraStudent();
-
-    const extraData = resExtra.data.data.sort((a, b) => a.id - b.id);
-    const studentData = resStudent.data.data;
-
-    setExtraList(extraData);
-
-    const mappedData = extraData.map((ed) => {
-      const studentSum = studentData.filter(
-        (sd) => sd.extracurricular_id == ed.id
-      )?.length;
-
-      return {
-        id: ed.id,
-        extracurricular: ed.name,
-        guardian: ed.teacher_name,
-        students: studentSum,
-        guardian_id: ed.teacher_id,
-      };
-    });
-
-    setDataExtra(mappedData);
-  };
-
-  const fetchAllMembers = async () => {
-    const resMem = await AcademicAPI.getAllExtraStudent();
-
-    const memData = resMem.data.data;
-
-    const mappedData = memData.map((md, idx) => {
-      return {
-        id: idx,
-        extracurricular: md.extracurricular_name,
-        extracurricular_id: md.extracurricular_id,
-        class: 'X IPA 1',
-        student: md.student_name,
-        student_id: md.student_id,
-      };
-    });
-
-    setDataMemExtra(mappedData);
-  };
-
-  const fetchAllTeachersStudents = async () => {
-    const {
-      data: { data },
-    } = await UsersAPI.getAllUsers('teacher,student');
-
-    const activeTeacher = data.filter(
-      (dt) => dt.status == 'active' && dt.type == 'teacher'
-    );
-    const activeStudent = data
-      .filter((dt) => dt.status == 'active' && dt.type == 'student')
-      .map((dt) => {
-        return { id: dt.id, name: dt.name };
-      });
-
-    setTeacherList(activeTeacher);
-    setStudentList(activeStudent);
-  };
-
-  useEffect(() => {
-    fetchAllMembers();
-    fetchAllExtra();
-    fetchAllTeachersStudents();
-  }, []);
-
-  useEffect(() => {
-    let temp = [];
-    activeTab === 0
-      ? (temp = dataExtra.filter((item) => {
-          return item.extracurricular
-            .toLowerCase()
-            .includes(search.toLowerCase());
-        }))
-      : (temp = dataMemExtra.filter((item) => {
-          return (
-            item.student.toLowerCase().includes(search.toLowerCase()) &&
-            item.extracurricular
-              .toLowerCase()
-              .includes(extraFilter.toLowerCase())
-          );
-        }));
-    setFilteredData(temp);
-    formik.setValues(emptyData);
-  }, [search, extraFilter, sortSettings, activeTab, dataExtra]);
 
   return (
     <Stack sx={{ height: '100%', width: '100%', p: { xs: 0, lg: 4 } }}>
@@ -303,7 +275,6 @@ export default function StaffProfileContent() {
         search={search}
         setActiveTab={setActiveTab}
         setExtraFilter={setExtraFilter}
-        setFilteredData={setFilteredData}
         setIsOpenCreateExtracurricularMember={
           setIsOpenCreateExtracurricularMember
         }

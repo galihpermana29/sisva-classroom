@@ -5,6 +5,7 @@ import FormLabelSisva from '@/components/FormLabelSisva';
 import { useExtracurriculars } from '@/hooks/useExtracurriculars';
 import { useStudents } from '@/hooks/useStudents';
 import { Button, Divider, MenuItem, Stack, TextField } from '@mui/material';
+import { useQueryClient } from '@tanstack/react-query';
 import type { SubmitHandler } from 'react-hook-form';
 import { Controller, useForm } from 'react-hook-form';
 
@@ -24,6 +25,7 @@ export default function FormEditMember({
   onClickCancel: () => void;
   onClickSave: () => void;
 }) {
+  const queryClient = useQueryClient();
   const { data: extracurriculars, isLoading: isLoading1 } =
     useExtracurriculars();
   const { data: students, isLoading: isLoading2 } = useStudents();
@@ -42,6 +44,9 @@ export default function FormEditMember({
 
     await AcademicAPI.createStudentInExtra(data.extracurricularId, {
       student_id: data.studentId,
+    });
+    queryClient.invalidateQueries({
+      queryKey: ['extracurricular-members'],
     });
   };
 

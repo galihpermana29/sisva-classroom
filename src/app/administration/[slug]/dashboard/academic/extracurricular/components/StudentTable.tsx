@@ -234,9 +234,6 @@ function ActionButton({ params }) {
 export default function StudentTable({
   data,
   formik,
-  extraList,
-  studentList,
-  dataMemExtra,
   deleteStudentInExtra = (extraId, studentId) => {},
 }) {
   const isMobile = useMediaQuery((theme: Theme) =>
