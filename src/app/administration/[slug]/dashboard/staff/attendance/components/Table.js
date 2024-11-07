@@ -68,7 +68,7 @@ function getColumns(schoolId) {
                         src={`https://api-staging.sisva.id/file/v1/files/${params.value.data.profile_image_uri}?school_id=${schoolId}`}
                       />
                     ) : (
-                      params.value.data.nametoUpperCase().slice(0, 1)
+                      params.value.data.name.toUpperCase().slice(0, 1)
                     )}
                   </Avatar>
                   <Typography
