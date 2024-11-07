@@ -12,6 +12,7 @@ import {
   getAllClasses,
   getAllStudentsInStudentGroups,
   getAllTaskByClassId,
+  getClassSchedules,
 } from "../../repository/student-class-service";
 import { useDebounce } from "use-debounce";
 import { isOverdue } from "../date-helper";
@@ -57,18 +58,19 @@ export const useStudentClass = () => {
       if (!joinedClasses.length) {
         setClasses([]);
       } else {
-        const classesWithTasks = await fetchTasksForClasses(joinedClasses);
-        setInitialClasses(classesWithTasks);
-        setClasses(classesWithTasks);
+        // const classesWithTasks = await fetchTasksForClasses(joinedClasses);
+        const classesWithSchedules =  await fetchClassSchedules(joinedClasses);
+        setInitialClasses(classesWithSchedules);
+        setClasses(classesWithSchedules);
 
         setDropdownFilterData({
           subject: createDropdown(
-            classesWithTasks,
+            classesWithSchedules,
             "subject_name",
             "subject_id"
           ),
           teacherName: createDropdown(
-            classesWithTasks,
+            classesWithSchedules,
             "teacher_name",
             "teacher_id"
           ),
@@ -135,6 +137,32 @@ export const useStudentClass = () => {
     handleClearFilter,
   };
 };
+
+const fetchClassSchedules = async (classes) => {
+  try {
+    const schedulesPromises = classes.map(async (classItem) => {
+      const {
+        data: schedules,
+        success,
+        message,
+      } = await getClassSchedules(classItem.id);
+
+      if (!success) {
+        throw new Error(message);
+      }
+
+      return {
+        ...classItem,
+        schedules,
+      };
+    });
+
+    const classesWithSchedules = await Promise.all(schedulesPromises);
+    return classesWithSchedules;
+  } catch (error) {
+    throw new Error("Error fetching schedules for classes" + error);
+  }
+}
 
 const fetchTasksForClasses = async (classes) => {
   try {
