@@ -48,31 +48,10 @@ const columns = [
                 <Typography
                   sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
                 >
-                  Tingkatan
+                  Ekstrakulikuler
                 </Typography>
                 <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
-                  {params.value.data.grade}
-                </Typography>
-              </Stack>
-              <Stack
-                sx={{
-                  width: '100%',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  borderBottom: '1px solid rgb(0,0,0,0.12)',
-                  px: 1,
-                  py: '10px',
-                  backgroundColor: 'base.base20',
-                }}
-              >
-                <Typography
-                  sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
-                >
-                  Kelas
-                </Typography>
-
-                <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
-                  {params.value.data.class}
+                  {params.value.data.extracurricular}
                 </Typography>
               </Stack>
               <Stack
@@ -89,7 +68,7 @@ const columns = [
                 <Typography
                   sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
                 >
-                  Wali Kelas
+                  Pembina
                 </Typography>
                 <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
                   {params.value.data.guardian}
@@ -109,7 +88,7 @@ const columns = [
                 <Typography
                   sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
                 >
-                  Jumlah Murid
+                  Jumlah Anggota
                 </Typography>
 
                 <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
@@ -517,6 +496,7 @@ export default function ClassTable({
                 guardian: false,
                 students: false,
                 action: false,
+                extracurricular: false,
               }
         }
         rowHeight={80}

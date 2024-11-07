@@ -49,10 +49,10 @@ const columns = [
                 <Typography
                   sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
                 >
-                  Tingkatan
+                  Ekstrakulikuler
                 </Typography>
                 <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
-                  {params.value.data.grade}
+                  {params.value.data.extracurricular}
                 </Typography>
               </Stack>
               <Stack
@@ -507,6 +507,7 @@ export default function StudentTable({
                 class: false,
                 student: false,
                 action: false,
+                extracurricular: false,
               }
         }
         rowHeight={80}
