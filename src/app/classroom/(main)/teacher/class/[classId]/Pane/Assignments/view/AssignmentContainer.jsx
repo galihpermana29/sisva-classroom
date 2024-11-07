@@ -2,10 +2,10 @@ import { useParams } from "next/navigation";
 
 import { SisvaInputSearch } from "@/app/classroom/shared/presentation/Input/SisvaInputField";
 import FormTaskModal from "@/app/classroom/shared/presentation/Modal/FormTaskModal";
-import { useCreateRppModalForm } from "../../../create-rpp/usecase/use-create-rpp-modal-form";
 import { useModal } from "../../../create-rpp/view/container/Provider/ModalProvider";
 import { useClassAssignment } from "../usecase/hooks/use-class-assignment";
 import AssignmentListGroup from "./presentation/AssignmentListGroup";
+import { useTasksAssignment } from "../usecase/hooks/use-tasks-assignment";
 
 const AssignmentContainer = () => {
   const { classId } = useParams();
@@ -17,7 +17,8 @@ const AssignmentContainer = () => {
     handleSubmitForm: generalSubmitHandler,
     handleUploadFile,
     isLoadingForm,
-  } = useCreateRppModalForm();
+    setFileURI,
+  } = useTasksAssignment();
 
   const handleSubmitForm = async (data) => {
     await generalSubmitHandler(data);
@@ -33,7 +34,10 @@ const AssignmentContainer = () => {
         onChange={(e) => handleFilterChange("search", e.target.value)}
       />
 
-      <AssignmentListGroup assignmentGroups={assignmentGroups} isLoading={isLoading} />
+      <AssignmentListGroup
+        assignmentGroups={assignmentGroups}
+        isLoading={isLoading}
+      />
       <FormTaskModal
         open={modalState.isOpen}
         title="Edit Tugas"
@@ -41,6 +45,7 @@ const AssignmentContainer = () => {
         handleFileUpload={handleUploadFile}
         isLoading={isLoadingForm}
         handleClose={handleClose}
+        setFileURI={setFileURI}
       />
     </div>
   );

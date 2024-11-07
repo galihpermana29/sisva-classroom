@@ -28,6 +28,7 @@ const TeachingMaterialListFilter = ({
         options={dropDownData.curriculumDropdown}
         onChange={(e) => generalHandleFilter("curriculum", e)}
         value={queryFilter.curriculum === "" ? null : queryFilter.curriculum}
+        allowClear
       />
       <SisvaSelect
         customSize="md"
@@ -39,6 +40,7 @@ const TeachingMaterialListFilter = ({
         value={
           queryFilter.study_program === "" ? null : queryFilter.study_program
         }
+        allowClear
       />
       <SisvaSelect
         customSize="md"
@@ -47,6 +49,7 @@ const TeachingMaterialListFilter = ({
         options={dropDownData.subjectDropdown}
         onChange={(e) => generalHandleFilter("subject", e)}
         value={queryFilter.subject === "" ? null : queryFilter.subject}
+        allowClear
       />
       <SisvaSelect
         customSize="md"
@@ -56,6 +59,7 @@ const TeachingMaterialListFilter = ({
         onChange={(e) => generalHandleFilter("grade", e)}
         value={queryFilter.grade === "" ? null : queryFilter.grade}
         disabled={dropDownData.gradeDropdown.length === 0}
+        allowClear
       />
       <SisvaSelect
         customSize="md"
@@ -64,6 +68,7 @@ const TeachingMaterialListFilter = ({
         options={dropDownData.teacherDropdwon}
         onChange={(e) => generalHandleFilter("teacher", e)}
         value={queryFilter.teacher === "" ? null : queryFilter.teacher}
+        allowClear
       />
     </div>
   );

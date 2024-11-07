@@ -43,6 +43,7 @@ const CreateRppContainer = ({ initialData, headerText }) => {
     tasks,
     handleDeleteRow,
     handleAddFromExistingTeachingMaterial,
+    setFileURI,
   } = useCreateRppModalForm();
 
   const { handleSubmitCreateRPPForm, isLoading, form, isEditRpp } =
@@ -160,7 +161,6 @@ const CreateRppContainer = ({ initialData, headerText }) => {
             customSize="md"
             htmlType="submit"
             loading={isLoading}
-            disabled={materials.length === 0 || tasks.length === 0}
           >
             Save Changes
           </SisvaButton>
@@ -169,12 +169,11 @@ const CreateRppContainer = ({ initialData, headerText }) => {
               btn_type="primary"
               customSize="md"
               loading={loadingDelete}
-              disabled={isLoading || loadingDelete}
               onClick={() => {
                 setModalState({
                   isOpen: true,
                   type: "delete-rpp",
-                  title: "Delete Rencana Pembelajaran",
+                  title: "Hapus Bahan Ajar dari Rencana Pembelajaran",
                 });
               }}
             >
@@ -204,6 +203,7 @@ const CreateRppContainer = ({ initialData, headerText }) => {
         handleFileUpload={handleUploadFile}
         isLoading={isLoadingForm}
         handleClose={handleClose}
+        setFileURI={setFileURI}
       />
       <CreateTeachingMaterialModal
         open={
@@ -217,6 +217,7 @@ const CreateRppContainer = ({ initialData, headerText }) => {
         isLoading={isLoadingForm}
         handleClose={handleClose}
         initialData={initialData}
+        setFileURI={setFileURI}
       />
       <SelectTeachingMaterialModal
         open={

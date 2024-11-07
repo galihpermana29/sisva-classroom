@@ -15,6 +15,7 @@ const CreateTeachingMaterialModal = ({
   initialData,
   handleFileUpload,
   isLoading,
+  setFileURI,
 }) => {
   const [fileList, setFileList] = useState(null);
   const { modalState } = useModal();
@@ -46,6 +47,11 @@ const CreateTeachingMaterialModal = ({
     setFileList(
       modalState?.data?.attachment_file_uri
         ? [modalState?.data?.attachment_file_uri]
+        : null
+    );
+    setFileURI(
+      modalState?.data?.attachment_file_uri
+        ? modalState?.data?.attachment_file_uri
         : null
     );
   }, [modalState]);
@@ -101,6 +107,7 @@ const CreateTeachingMaterialModal = ({
                 placeholder="Pilih program studi"
                 options={dropDownData.studyProgramDropdown}
                 onChange={handleChangeStudyProgram}
+                disabled={dropDownData.studyProgramDropdown.length === 0}
               />
             </Form.Item>
           </Col>

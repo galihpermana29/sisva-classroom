@@ -10,12 +10,12 @@ const TeacherProfileContainer = ({ initialData }) => {
       subtitle: "Informasi biodata akunmu",
       key: "biodata",
     },
-    {
-      icon: <UserSquare width={20} height={20} />,
-      title: "Akun",
-      subtitle: "Buat perubahan akunmu",
-      key: "akun",
-    },
+    // {
+    //   icon: <UserSquare width={20} height={20} />,
+    //   title: "Akun",
+    //   subtitle: "Buat perubahan akunmu",
+    //   key: "akun",
+    // },
   ];
   return (
     <ProfileContainer initialData={initialData} profileMenus={profileMenus} />

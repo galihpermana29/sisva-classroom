@@ -64,3 +64,17 @@ export async function getTaskById(id) {
     "Success fetch task by id"
   );
 }
+export async function deleteTaskById(id) {
+  const res = await AppFetchApi(`/classroom/v1/tasks/${id}`, {
+    method: "DELETE",
+    headers: {
+      "X-Sisva-Source": "tenant.user.test",
+    },
+  });
+
+  return serverResponseHandler(
+    res,
+    "Error delete task by id",
+    "Success delete task by id"
+  );
+}

@@ -8,7 +8,7 @@ import { getGradeDropdownById } from "../../class/repository/teacher-class-servi
 export const useGetDetailTeachingMaterial = (initialData) => {
   const initialDropdownData = {
     curriculumDropdown: initialData.curriculumDropdown,
-    studyProgramDropdown: initialData.studyProgramDropdown,
+    studyProgramDropdown: [],
     subjectDropdown: [],
     gradeDropdown: [],
   };
@@ -27,6 +27,7 @@ export const useGetDetailTeachingMaterial = (initialData) => {
         response.data.study_program_id
       );
       handleGetGradeDropdown(response.data.study_program_id);
+      handleGetStudyProgramDropdown(response.data.curriculum_id);
       form.setFieldsValue(response.data);
     } else {
       toast.error("Error get teaching material");
@@ -35,8 +36,7 @@ export const useGetDetailTeachingMaterial = (initialData) => {
   };
 
   const handleChangeCurriculum = (e) => {
-    const studyProgramId = form.getFieldValue("study_program_id");
-    handleGetSubjectDropdown(e, studyProgramId);
+    handleGetStudyProgramDropdown(e, "create-new");
     form.setFieldValue("curriculum_id", e);
   };
 
@@ -45,6 +45,45 @@ export const useGetDetailTeachingMaterial = (initialData) => {
     handleGetGradeDropdown(e);
     handleGetSubjectDropdown(curriculumId, e);
     form.setFieldValue("study_program_id", e);
+  };
+
+  const handleGetStudyProgramDropdown = async (curriculumId, type) => {
+    const hasExistingValues = dropDownData.studyProgramDropdown?.length !== 0;
+    if (hasExistingValues) {
+      const fieldsToReset = ["study_program_id", "grade", "subject_id"];
+      fieldsToReset.forEach((field) => form.setFieldValue(field, null));
+    }
+
+    const selectedCurriculum = initialData.curriculumDropdown.find(
+      (curriculum) => curriculum.id === curriculumId
+    );
+
+    const isDataInvalid =
+      !selectedCurriculum || !selectedCurriculum.study_programs;
+    if (isDataInvalid) {
+      setDropdownData((prev) => updateDropdownState(prev, [], type));
+      return;
+    }
+
+    const filteredStudyPrograms = initialData.studyProgramDropdown.filter(
+      (program) =>
+        selectedCurriculum.study_programs.some(
+          (studyProgram) => studyProgram.id === program.id
+        )
+    );
+
+    setDropdownData((prev) =>
+      updateDropdownState(prev, filteredStudyPrograms, type)
+    );
+  };
+
+  const updateDropdownState = (prevState, studyPrograms, type) => {
+    const baseState = type === "create-new" ? initialDropdownData : prevState;
+
+    return {
+      ...baseState,
+      studyProgramDropdown: studyPrograms,
+    };
   };
 
   const handleGetSubjectDropdown = async (curriculumId, studyProgramId) => {

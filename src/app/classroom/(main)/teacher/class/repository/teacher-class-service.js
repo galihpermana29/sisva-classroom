@@ -10,7 +10,7 @@ import { getServerSession } from "@/app/classroom/shared/usecase/session/get-ser
 import {
   getClassById,
   getClassByTeacherId,
-  getClassWithTaskList,
+  getClassWithScheduleList,
 } from "../usecase/data-mapper-service";
 
 export async function getTeacherClassList() {
@@ -37,24 +37,24 @@ export async function getTeacherClassList() {
       teacherId
     );
 
-    // fetch all task list
-    const getTaskList = await getAllTaskList();
+    // fetch all schedule list
+    const getScheduleList = await getListClassSchedule();
 
-    if (getTaskList.success) {
-      // combine class with task list
-      const classWithTask = getClassWithTaskList(
-        getTaskList.data,
+    if (getScheduleList.success) {
+      // combine class with schedule list
+      const classWithSchedule = getClassWithScheduleList(
+        getScheduleList.data,
         destructListByTeacherId
       );
 
       return generateSuccessResponseFromServer(
         "Success fetch class list",
-        classWithTask
+        classWithSchedule
       );
     } else {
       return generateErrorMessageFromServerError(
-        getTaskList.code,
-        "Error fetch task list",
+        getScheduleList.code,
+        "Error fetch schedule list",
         null
       );
     }
@@ -96,6 +96,21 @@ export async function getClassDataById(id) {
       null
     );
   }
+}
+
+export async function getListClassSchedule() {
+  const res = await AppFetchApi("/academic/v1/class-schedules", {
+    method: "GET",
+    headers: {
+      "X-Sisva-Source": "academic.curriculum.test",
+    },
+  });
+
+  return serverResponseHandler(
+    res,
+    "Error fetch schedule list",
+    "Success fetch schedule list"
+  );
 }
 
 export async function getAllTaskList() {

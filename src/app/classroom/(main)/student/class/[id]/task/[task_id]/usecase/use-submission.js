@@ -19,7 +19,7 @@ export function useSubmission() {
 
   const handleUploadFile = async (file) => {
     if (!file) {
-      setFileUrl(null);
+      setFileUrl("");
       return;
     }
     setLoading(true);
