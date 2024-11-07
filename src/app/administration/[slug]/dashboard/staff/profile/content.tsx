@@ -15,7 +15,6 @@ export type SortSettings = { sortBy: SortBy; sortType: SortType };
 
 const initialData = {
   name: '',
-  username: '',
   type: 'staff',
   permissions: [],
   password: '',
@@ -27,8 +26,7 @@ export default function StaffProfileListContent() {
     initialValues: { ...initialData },
 
     onSubmit: async (values) => {
-      const { name, password, type, username, permissions, password_confirm } =
-        values;
+      const { name, password, type, permissions, password_confirm } = values;
 
       if (password !== password_confirm) return;
 
@@ -37,9 +35,7 @@ export default function StaffProfileListContent() {
           name,
           type,
           detail: {
-            json_text: JSON.stringify({
-              username,
-            }),
+            json_text: JSON.stringify({}),
           },
           profile_image_uri: '',
           roles: [type],
@@ -85,8 +81,7 @@ export default function StaffProfileListContent() {
       const newMappedData = data
         .map((user) => {
           const additionalJson = JSON.parse(user.detail.json_text);
-          delete additionalJson.username;
-          return { ...user, ...additionalJson };
+          return { ...additionalJson, ...user };
         })
         .filter((user) => user.status == 'active');
 

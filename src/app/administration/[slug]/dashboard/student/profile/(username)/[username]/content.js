@@ -46,7 +46,6 @@ export default function SchoolProfileContent({ user_id }) {
       let changePassData = {};
 
       let json_text = {
-        username: values.username,
         email: values.email,
         phone: values.phone,
         gender: values.gender,

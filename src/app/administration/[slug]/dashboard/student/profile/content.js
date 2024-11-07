@@ -33,7 +33,6 @@ import handleXLSXUpload from './utils/handleXLSXUpload';
 export default function SchoolProfileListContent() {
   const [initialData, setinitialData] = useState({
     name: '',
-    username: '',
     type: 'student',
     permissions: [],
     password: '',
@@ -43,16 +42,14 @@ export default function SchoolProfileListContent() {
     initialValues: { ...initialData },
 
     onSubmit: async (values) => {
-      const { name, password, type, username, password_confirm } = values;
+      const { name, password, type, password_confirm } = values;
 
       let payload = {
         user: {
           name,
           type,
           detail: {
-            json_text: JSON.stringify({
-              username,
-            }),
+            json_text: JSON.stringify({}),
           },
           profile_image_uri: '',
           roles: [type],
@@ -116,8 +113,7 @@ export default function SchoolProfileListContent() {
       const newMappedData = data
         .map((user) => {
           const additionalJson = JSON.parse(user.detail.json_text);
-          delete additionalJson.username;
-          return { ...user, ...additionalJson };
+          return { ...additionalJson, ...user };
         })
         .filter((user) => user.status === 'active');
 

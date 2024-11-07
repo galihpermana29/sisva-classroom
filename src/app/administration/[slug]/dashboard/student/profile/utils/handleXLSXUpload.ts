@@ -76,7 +76,6 @@ const MAX_ROW = 1000;
 
 function getJsonText(data) {
   return JSON.stringify({
-    username: data.username,
     email: data.email,
     phone: data.phone,
     gender: data.gender,
@@ -151,8 +150,7 @@ export default function handleXLSXUpload(
       const filteredData = users
         .map((user) => {
           const additionalJson = JSON.parse(user.detail.json_text);
-          delete additionalJson.username;
-          return { ...user, ...additionalJson };
+          return { ...additionalJson, ...user };
         })
         .filter((user) => user.status == 'active');
       const names = filteredData.map((user) => user.name) as string[];

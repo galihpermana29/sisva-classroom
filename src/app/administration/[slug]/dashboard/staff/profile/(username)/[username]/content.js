@@ -38,7 +38,6 @@ export default function StaffProfileContent({ user_id }) {
 
   const [initialData, setinitialData] = useState({
     name: '',
-    username: '',
     type: '',
     permissions: [],
     email: '',
@@ -62,7 +61,6 @@ export default function StaffProfileContent({ user_id }) {
       let changePassData = {};
 
       let json_text = {
-        username: values.username,
         email: values.email,
         phone: values.phone,
         gender: values.gender,
@@ -73,7 +71,6 @@ export default function StaffProfileContent({ user_id }) {
         personal_id: values.personal_id,
       };
 
-      delete values.username;
       delete values.email;
       delete values.phone;
       delete values.gender;
