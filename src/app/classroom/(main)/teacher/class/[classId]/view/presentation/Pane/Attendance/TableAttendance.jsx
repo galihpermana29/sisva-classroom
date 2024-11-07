@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import { Avatar, Table, Modal, Divider } from "antd";
+import { Table, Modal, Divider } from "antd";
 import { ConfigProvider } from "antd";
 import { Kumbh_Sans } from "next/font/google";
 import placeholderImage from "@/assets/placeholder.jpg";
@@ -7,7 +7,7 @@ import {
   useAttendance,
   useUpdateAttendance,
 } from "../../../../usecase/use-attendance";
-import { Check, Edit01 } from "@untitled-ui/icons-react";
+import { Check } from "@untitled-ui/icons-react";
 import SisvaButton from "@/app/classroom/shared/presentation/Button/GlobalButton";
 import clsx from "clsx";
 import BadgeAttendance from "../../../container/BadgeAttendance/BadgeAttendance";
@@ -53,10 +53,33 @@ export default function TableAttendances() {
     setSelectedOption(record.status);
   };
 
+  const getCurrentDate = () => {
+    const today = new Date();
+    return (
+      today.getFullYear() * 10000 +
+      (today.getMonth() + 1) * 100 +
+      today.getDate()
+    );
+  };
+
+  const getCurrentDateAttendances = () => {
+    const currentDate = getCurrentDate().toString();
+    return attendanceData.filter(
+      (attendance) => attendance.date === currentDate
+    );
+  };
+
   const showNextPrevModal = () => {
-    setCurrentStudentIndex(0);
-    setSelectedRecord(attendanceData[0]);
-    setNextPrevModalVisible(true);
+    const currentDateAttendances = getCurrentDateAttendances();
+    if (currentDateAttendances.length > 0) {
+      setCurrentStudentIndex(0);
+      const firstStudent = currentDateAttendances[0];
+      setSelectedRecord(firstStudent);
+      setSelectedOption(firstStudent.status);
+      setNextPrevModalVisible(true);
+    } else {
+      console.log("No attendance records for current date");
+    }
   };
 
   const groupedData = useMemo(() => {
@@ -93,10 +116,9 @@ export default function TableAttendances() {
         width: 170,
         render: (text, record) => (
           <div className="inline-flex items-center">
-            <AvatarProfile
-              size={24}
-              url={record.profile_image_uri || placeholderImage.src}
-            />
+            <div className="size-6">
+              <AvatarProfile size={24} url={record.profile_image_uri} />
+            </div>
             <span className="text-sm font-normal text-[#333333]">
               {record.student_name}
             </span>
@@ -153,10 +175,14 @@ export default function TableAttendances() {
   };
 
   const handleNextPrev = (direction) => {
+    const currentDateAttendances = getCurrentDateAttendances();
     const newIndex = currentStudentIndex + direction;
-    if (newIndex >= 0 && newIndex < attendanceData.length) {
+
+    if (newIndex >= 0 && newIndex < currentDateAttendances.length) {
       setCurrentStudentIndex(newIndex);
-      setSelectedRecord(attendanceData[newIndex]);
+      const nextStudent = currentDateAttendances[newIndex];
+      setSelectedRecord(nextStudent);
+      setSelectedOption(nextStudent.status);
     }
   };
 
@@ -223,8 +249,8 @@ export default function TableAttendances() {
               </div>
               <Divider />
               <div className="flex items-center justify-center mt-4">
-                <Avatar
-                  src={selectedRecord.profile_image_uri || placeholderImage.src}
+                <AvatarProfile
+                  src={selectedRecord.profile_image_uri}
                   size={50}
                 />
                 <div className="ml-4 flex flex-col">
@@ -300,7 +326,9 @@ export default function TableAttendances() {
                 key="next"
                 onClick={() => handleNextPrev(1)}
                 btn_size="sm"
-                disabled={currentStudentIndex === attendanceData.length - 1}
+                disabled={
+                  currentStudentIndex === getCurrentDateAttendances().length - 1
+                }
               >
                 Next
               </SisvaButton>,
@@ -317,8 +345,8 @@ export default function TableAttendances() {
               </div>
               <Divider />
               <div className="flex items-center justify-center mt-4">
-                <Avatar
-                  src={selectedRecord.profile_image_uri || placeholderImage.src}
+                <AvatarProfile
+                  src={selectedRecord.profile_image_uri}
                   size={50}
                 />
                 <div className="ml-4 flex flex-col">
@@ -335,7 +363,7 @@ export default function TableAttendances() {
                 {optionAttendance.map((opt) => (
                   <div key={opt.key}>
                     <label
-                      htmlFor={opt.key}
+                      htmlFor={`nextprev-${opt.key}`}
                       className={clsx(
                         "w-[110px] h-[70px] inline-flex justify-center gap-2 items-center p-4 rounded-3xl",
                         selectedOption === opt.key
@@ -359,8 +387,8 @@ export default function TableAttendances() {
                     </label>
                     <input
                       type="radio"
-                      id={opt.key}
-                      name="attendance"
+                      id={`nextprev-${opt.key}`}
+                      name="nextprev-attendance"
                       className="hidden"
                       onChange={() => {
                         setSelectedOption(opt.key);
