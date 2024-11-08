@@ -32,6 +32,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
 import { useFormik } from 'formik';
+import ImportXLSXAlert from '../../components/ImportXLSXAlert';
 import handleXLSXUploadStaffAttendance from './utils/handleXLSXUploadStaffAttendance';
 
 export default function StaffProfileListContent() {
@@ -89,6 +90,10 @@ export default function StaffProfileListContent() {
   const [openSortModal, setOpenSortModal] = useState(false);
 
   const [openCreateModal, setOpenCreateModal] = useState(false);
+
+  const [isOpenXLSXAlert, setIsOpenImportXLSXAlert] = useState(false);
+  const [reportText, setReportText] = useState([]);
+  const [XLSXAlertTitle, setXLSXAlertTitle] = useState('');
 
   const fetchStaffAttendance = async (pickedDate) => {
     try {
@@ -193,6 +198,12 @@ export default function StaffProfileListContent() {
 
   return (
     <Stack sx={{ height: '100%', width: '100%', p: { xs: 0, lg: 4 } }}>
+      <ImportXLSXAlert
+        open={isOpenXLSXAlert}
+        handleClose={() => setIsOpenImportXLSXAlert(false)}
+        title={XLSXAlertTitle}
+        importReport={reportText}
+      />
       <Modal open={openCreateModal} onClose={() => setOpenCreateModal(false)}>
         <Stack
           component={Paper}
@@ -519,10 +530,14 @@ export default function StaffProfileListContent() {
                         handleXLSXUploadStaffAttendance(
                           e.target.files[0],
                           (reportText) => {
-                            console.log(reportText);
+                            setReportText(reportText);
+                            setXLSXAlertTitle('Import File Berhasil');
+                            setIsOpenImportXLSXAlert(true);
                           },
                           (reportText) => {
-                            console.log(reportText);
+                            setReportText(reportText);
+                            setXLSXAlertTitle('Import File Bermasalah');
+                            setIsOpenImportXLSXAlert(true);
                           }
                         );
                         handleClose();
