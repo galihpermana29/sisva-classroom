@@ -1,10 +1,10 @@
 import { BoxTop } from "../Box/Box";
 
-const CardSchedule = ({ time, scheduleName, teacherName, isEven }) => {
+const CardSchedule = ({ time, scheduleName, teacherName, isEven = true }) => {
   return (
     <div>
       <div className="flex items-center gap-2">
-        <p className="text-xs font-medium text-[#29292B]">{time}</p>
+        <p className="text-xs font-medium text-[#29292B] w-8">{time}</p>
         <div
           className={`w-full p-3 rounded-xl border border-secondary50  shadow-card mr-3 relative overflow-hidden ${
             isEven ? "bg-white" : "bg-secondary50"

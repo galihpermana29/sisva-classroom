@@ -1,20 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import { useDebounce } from "use-debounce";
-import { getUserDataCookie } from "../../../../teacher/usecase/getUserDataCookie";
-import { getUserById } from "../../../repository/apiService";
+import { useDebounce } from 'use-debounce';
+import { getUserDataCookie } from '../../../../teacher/usecase/getUserDataCookie';
+import { getUserById } from '../../../repository/apiService';
 import {
-    getAllClasses,
-    getAllStudentsInStudentGroups,
-    getAllTaskByClassId,
-} from "../../repository/student-class-service";
+  getAllClasses,
+  getAllStudentsInStudentGroups,
+  getAllTaskByClassId,
+  getClassSchedules,
+} from '../../repository/student-class-service';
 import {
-    createDropdown,
-    filterJoinedGroups,
-    matchClassesToGroups,
-    searchFilter,
-} from "../data-mapper-service";
-import { isOverdue } from "../date-helper";
+  createDropdown,
+  filterJoinedGroups,
+  matchClassesToGroups,
+  searchFilter,
+} from '../data-mapper-service';
+import { isOverdue } from '../date-helper';
 
 export const useStudentClass = () => {
   const [initialClasses, setInitialClasses] = useState([]);
@@ -24,9 +25,9 @@ export const useStudentClass = () => {
   const { id: userId } = getUserDataCookie();
 
   const initialFilter = {
-    subject: "",
-    teacherName: "",
-    search: "",
+    subject: '',
+    teacherName: '',
+    search: '',
   };
   const [filter, setFilter] = useState(initialFilter);
   const [dropdownFilterData, setDropdownFilterData] = useState({
@@ -48,7 +49,7 @@ export const useStudentClass = () => {
       const { data: allClasses, success: successClasses } = classesResponse;
 
       if (!successStudents || !successClasses) {
-        throw new Error("Failed to fetch data.");
+        throw new Error('Failed to fetch data.');
       }
 
       const joinedGroups = filterJoinedGroups(studentsInGroups, userId);
@@ -57,26 +58,27 @@ export const useStudentClass = () => {
       if (!joinedClasses.length) {
         setClasses([]);
       } else {
-        const classesWithTasks = await fetchTasksForClasses(joinedClasses);
-        setInitialClasses(classesWithTasks);
-        setClasses(classesWithTasks);
+        // const classesWithTasks = await fetchTasksForClasses(joinedClasses);
+        const classesWithSchedules = await fetchClassSchedules(joinedClasses);
+        setInitialClasses(classesWithSchedules);
+        setClasses(classesWithSchedules);
 
         setDropdownFilterData({
           subject: createDropdown(
-            classesWithTasks,
-            "subject_name",
-            "subject_id"
+            classesWithSchedules,
+            'subject_name',
+            'subject_id'
           ),
           teacherName: createDropdown(
-            classesWithTasks,
-            "teacher_name",
-            "teacher_id"
+            classesWithSchedules,
+            'teacher_name',
+            'teacher_id'
           ),
         });
       }
     } catch (error) {
-      setError("An error occurred while fetching classes or tasks.");
-      console.error("Error fetching classes or tasks:", error);
+      setError('An error occurred while fetching classes or tasks.');
+      console.error('Error fetching classes or tasks:', error);
     } finally {
       setIsLoading(false);
     }
@@ -136,6 +138,32 @@ export const useStudentClass = () => {
   };
 };
 
+const fetchClassSchedules = async (classes) => {
+  try {
+    const schedulesPromises = classes.map(async (classItem) => {
+      const {
+        data: schedules,
+        success,
+        message,
+      } = await getClassSchedules(classItem.id);
+
+      if (!success) {
+        throw new Error(message);
+      }
+
+      return {
+        ...classItem,
+        schedules,
+      };
+    });
+
+    const classesWithSchedules = await Promise.all(schedulesPromises);
+    return classesWithSchedules;
+  } catch (error) {
+    throw new Error('Error fetching schedules for classes' + error);
+  }
+};
+
 const fetchTasksForClasses = async (classes) => {
   try {
     const tasksPromises = classes.map(async (classItem) => {
@@ -171,6 +199,6 @@ const fetchTasksForClasses = async (classes) => {
     const classesWithTasks = await Promise.all(tasksPromises);
     return classesWithTasks;
   } catch (error) {
-    throw new Error("Error fetching tasks for classes" + error);
+    throw new Error('Error fetching tasks for classes' + error);
   }
 };

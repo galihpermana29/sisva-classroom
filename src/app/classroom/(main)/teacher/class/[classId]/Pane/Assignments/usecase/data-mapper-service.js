@@ -3,7 +3,7 @@ export function groupTaskByTeachingPlan(tasks, teachingPlans) {
 
   teachingPlans.forEach((plan) => {
     const matchedTasks = tasks.filter((task) =>
-      plan.tasks.some((planTask) => planTask.id === task.id)
+      plan.tasks?.some((planTask) => planTask.id === task.id)
     );
 
     if (matchedTasks.length > 0) {

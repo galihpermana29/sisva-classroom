@@ -29,7 +29,7 @@ const ProfileStudentSection = () => {
         />
         <BoxRight />
         <div className="flex justify-between">
-          <div className="flex flex-col lg:flex-row gap-4">
+          <div className="flex flex-col gap-4 lg:flex-row">
             {isLoading ? (
               <div className="rounded-full bg-text_description/40 animate-pulse size-14" />
             ) : (
@@ -43,7 +43,7 @@ const ProfileStudentSection = () => {
               {isLoading ? (
                 <>
                   <div className="w-40 h-6 rounded-md bg-text_description/40 animate-pulse" />
-                  <div className="w-20 h-4 bg-text_description/40 rounded-md animate-pulse" />
+                  <div className="w-20 h-4 rounded-md bg-text_description/40 animate-pulse" />
                 </>
               ) : (
                 <>
@@ -57,11 +57,12 @@ const ProfileStudentSection = () => {
               )}
             </div>
           </div>
-          <div className="size-10 rounded-full bg-white flex items-center justify-center">
+          
+          {/* <div className="flex items-center justify-center bg-white rounded-full size-10">
             <Badge count={5} overflowCount={9} offset={[-3, 1]} size="small">
               <Bell01 className="text-[rgb(68,68,68)]" size={20} />
             </Badge>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

@@ -68,17 +68,15 @@ export default function TableAttendances() {
   );
 
   return (
-    <ConfigProvider>
-      <Table
-        bordered
-        dataSource={dataSource}
-        columns={columns}
-        rowClassName="editable-row"
-        loading={loading}
-        pagination={false}
-        className={`${kumh_sans.className}`}
-        tableLayout="auto"
-      />
-    </ConfigProvider>
+    <Table
+      bordered
+      dataSource={dataSource}
+      columns={columns}
+      rowClassName="editable-row"
+      loading={loading}
+      pagination={false}
+      className={`${kumh_sans.className}`}
+      tableLayout="auto"
+    />
   );
 }

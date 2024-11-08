@@ -65,6 +65,8 @@ export function useGetStudentTask() {
           const classData = classStudent.find((cls) => cls.id == task.class_id);
           if (classData) {
             return {
+              task_id: task.id,
+              class_id: classData.id,
               subject_name: classData.subject_name,
               teacher_name: classData.teacher_name,
               name: task.name,

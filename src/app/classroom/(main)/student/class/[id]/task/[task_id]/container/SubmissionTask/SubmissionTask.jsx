@@ -47,7 +47,7 @@ const SubmissionTask = ({ allowSubmission, allowOverdueSubmission }) => {
         requiredMark={false}
         onFinish={handleSubmitSubmission}
         className="font-kumbh mt-4"
-        disabled={!allowOverdueSubmission || !allowSubmission}
+        disabled={allowOverdueSubmission || allowSubmission}
       >
         <Form.Item name="file">
           {!submission.value && (
@@ -80,7 +80,7 @@ const SubmissionTask = ({ allowSubmission, allowOverdueSubmission }) => {
                 placeholder="Tulis catatan disini"
                 rows={5}
                 customClassName="font-kumbh p-3"
-                disabled={!allowOverdueSubmission || !allowSubmission}
+                disabled={allowOverdueSubmission || allowSubmission}
               />
             </Form.Item>
           </div>
@@ -92,7 +92,7 @@ const SubmissionTask = ({ allowSubmission, allowOverdueSubmission }) => {
               htmlType="submit"
               className="font-kumbh"
               loading={loadingSubmission}
-              disabled={!allowOverdueSubmission || !allowSubmission}
+              disabled={allowOverdueSubmission || allowSubmission}
             >
               Submit Tugas
             </SisvaButton>

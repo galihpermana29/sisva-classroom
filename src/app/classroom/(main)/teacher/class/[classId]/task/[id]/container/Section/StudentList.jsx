@@ -34,17 +34,17 @@ export default function StudentList() {
       </div>
 
       <div
-        className="p-4"
         style={{
           borderBottom: "solid 1px #D0D5DD",
         }}
       >
-        <SisvaInputSearch
-          placeholder={"Cari Siswa"}
-          loading={loading}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          customClassName="w-full"
-        />
+        <div className="py-4">
+          <SisvaInputSearch
+            placeholder={"Cari Siswa"}
+            loading={loading}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
       </div>
 
       <div className="flex flex-col max-h-[200px] lg:max-h-[500px] overflow-y-auto">
