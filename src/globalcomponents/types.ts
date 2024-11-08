@@ -244,3 +244,30 @@ export function getClassType(text: ClassTypeText): ClassType {
       return 'moving';
   }
 }
+
+export type Attendance = 'present' | 'sick' | 'leave' | 'absent';
+export type AttendanceText = 'Hadir' | 'Sakit' | 'Izin' | 'Alpha';
+export type AttendanceTextAbbr = 'H' | 'S' | 'I' | 'A';
+export function getAttendance(
+  text: AttendanceText | AttendanceTextAbbr
+): Attendance {
+  switch (text) {
+    case 'H':
+      return 'present';
+    case 'S':
+      return 'sick';
+    case 'I':
+      return 'leave';
+    case 'A':
+      return 'absent';
+    // ----
+    case 'Hadir':
+      return 'present';
+    case 'Sakit':
+      return 'sick';
+    case 'Izin':
+      return 'leave';
+    case 'Alpha':
+      return 'absent';
+  }
+}
