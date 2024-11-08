@@ -53,8 +53,8 @@ export default async function handleProgramStudiSiswa(
 
   const updateObject = dataObject.filter(
     (data) =>
-      (studentNames.includes(data.name) ||
-        studentUsernames.includes(data.username)) &&
+      studentNames.includes(data.name) &&
+      (!data.username || studentUsernames.includes(data.username)) &&
       programStudiNames.includes(data.nama_program_studi)
   );
 

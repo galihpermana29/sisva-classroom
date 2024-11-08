@@ -53,8 +53,9 @@ export default async function handleEkstrakulikuler(
     })
     .filter(
       (data) =>
-        teacherNames.includes(data.nama_pembina) ||
-        teacherUsernames.includes(data.username_pembina)
+        teacherNames.includes(data.nama_pembina) &&
+        (!data.username_pembina ||
+          teacherUsernames.includes(data.username_pembina))
     );
 
   const createObject = dataObject.filter(

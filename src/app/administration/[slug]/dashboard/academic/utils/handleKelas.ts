@@ -79,7 +79,8 @@ export default async function handleKelas(data: KelasInputData) {
     })
     .filter((data) => {
       return (
-        (teacherNames.includes(data.nama_wali_kelas) ||
+        teacherNames.includes(data.nama_wali_kelas) &&
+        (!data.username_wali_kelas ||
           teacherUsernames.includes(data.username_wali_kelas)) &&
         periodNames.includes(data.nama_periode) &&
         studyProgramNames.includes(data.nama_program_studi)

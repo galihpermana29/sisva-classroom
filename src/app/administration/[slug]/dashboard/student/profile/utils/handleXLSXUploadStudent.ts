@@ -159,70 +159,72 @@ export default function handleXLSXUploadStudent(
       const template = XLSX.read(file);
       const sheet = template.Sheets[template.SheetNames[0]];
       const rawData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-      const rawDataWithoutHeader = rawData.slice(3, MAX_ROW);
-      const dataObject = rawDataWithoutHeader
-        .map((row) => {
-          const role: Role = 'student';
-          return {
-            name: row[0],
-            username: row[1],
-            type: role,
-            password: row[2],
-            email: row[3],
-            phone: row[4],
-            gender: getGender(row[5]),
-            nationality: getNationality(row[6]),
-            personal_id: row[7],
-            education_id: row[8],
-            religion: getReligion(row[9]),
-            address: row[10],
-            profile_image_uri: row[11],
-            guardian_type: getGuardian(row[12]),
-            //
-            father_name: row[13],
-            father_email: row[14],
-            father_phone: row[15],
-            father_occupation: row[16],
-            father_education: getEducationLevel(row[17]),
-            father_income: getIncomeLevel(row[18]),
-            father_birth_year: row[19],
-            father_life_status: getLifeStatus(row[20]),
-            father_religion: getReligion(row[21]),
-            father_address: row[22],
-            //
-            mother_name: row[23],
-            mother_email: row[24],
-            mother_phone: row[25],
-            mother_occupation: row[26],
-            mother_education: getEducationLevel(row[27]),
-            mother_income: getIncomeLevel(row[28]),
-            mother_birth_year: row[29],
-            mother_life_status: getLifeStatus(row[30]),
-            mother_religion: getReligion(row[31]),
-            mother_address: row[32],
-            //
-            guardian_name: row[33],
-            guardian_gender: getGender(row[34]),
-            guardian_relationship: getRelationship(row[35]),
-            guardian_email: row[36],
-            guardian_phone: row[37],
-            guardian_occupation: row[38],
-            guardian_education: getEducationLevel(row[39]),
-            guardian_income: getIncomeLevel(row[40]),
-            guardian_birth_year: row[41],
-            guardian_life_status: getLifeStatus(row[42]),
-            guardian_religion: getReligion(row[43]),
-            guardian_address: row[44],
-          };
-        })
-        .filter((data) => data.name);
+      const rawDataWithoutHeader = rawData
+        .slice(3, MAX_ROW)
+        .filter((row: any[]) => row[0] && row.length !== 0);
+
+      const dataObject = rawDataWithoutHeader.map((row) => {
+        const role: Role = 'student';
+        return {
+          name: row[0],
+          username: row[1],
+          type: role,
+          password: row[2],
+          email: row[3],
+          phone: row[4],
+          gender: getGender(row[5]),
+          nationality: getNationality(row[6]),
+          personal_id: row[7],
+          education_id: row[8],
+          religion: getReligion(row[9]),
+          address: row[10],
+          profile_image_uri: row[11],
+          guardian_type: getGuardian(row[12]),
+          //
+          father_name: row[13],
+          father_email: row[14],
+          father_phone: row[15],
+          father_occupation: row[16],
+          father_education: getEducationLevel(row[17]),
+          father_income: getIncomeLevel(row[18]),
+          father_birth_year: row[19],
+          father_life_status: getLifeStatus(row[20]),
+          father_religion: getReligion(row[21]),
+          father_address: row[22],
+          //
+          mother_name: row[23],
+          mother_email: row[24],
+          mother_phone: row[25],
+          mother_occupation: row[26],
+          mother_education: getEducationLevel(row[27]),
+          mother_income: getIncomeLevel(row[28]),
+          mother_birth_year: row[29],
+          mother_life_status: getLifeStatus(row[30]),
+          mother_religion: getReligion(row[31]),
+          mother_address: row[32],
+          //
+          guardian_name: row[33],
+          guardian_gender: getGender(row[34]),
+          guardian_relationship: getRelationship(row[35]),
+          guardian_email: row[36],
+          guardian_phone: row[37],
+          guardian_occupation: row[38],
+          guardian_education: getEducationLevel(row[39]),
+          guardian_income: getIncomeLevel(row[40]),
+          guardian_birth_year: row[41],
+          guardian_life_status: getLifeStatus(row[42]),
+          guardian_religion: getReligion(row[43]),
+          guardian_address: row[44],
+        };
+      });
 
       const dataUpdate = dataObject.filter(
-        (user) => usernames.includes(user.username) || names.includes(user.name)
+        (data) =>
+          names.includes(data.name) &&
+          (!data.username || usernames.includes(data.username))
       );
       const dataCreate = dataObject.filter(
-        (user) =>
-          !(usernames.includes(user.username) || names.includes(user.name))
+        (user) => !names.includes(user.name)
       );
 
       let countCreateUser = 0;

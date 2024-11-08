@@ -5,7 +5,6 @@ import type {
   AnggotaInputData,
   Ekstrakulikuler,
   EkstrakulikulerStudent,
-  StudentGroup,
   User,
 } from './types';
 
@@ -20,10 +19,6 @@ function getUserByUsername(users: User[], username: string) {
 function getUser(users: User[], user: { name: string; username: string }) {
   if (user.username) return getUserByUsername(users, user.username);
   return getUserByName(users, user.name);
-}
-
-function getStudentGroup(allStudentGroup: StudentGroup[], name: string) {
-  return allStudentGroup.find((studentGroup) => studentGroup.name === name);
 }
 
 function getEkstrakulikuler(
@@ -64,7 +59,8 @@ export default async function handleAnggota(data: AnggotaInputData) {
     })
     .filter((data) => {
       return (
-        (studentNames.includes(data.nama_anggota) ||
+        studentNames.includes(data.nama_anggota) &&
+        (!data.username_anggota ||
           studentUsernames.includes(data.username_anggota)) &&
         ekstracurricularNames.includes(data.nama_ekstrakulikuler)
       );

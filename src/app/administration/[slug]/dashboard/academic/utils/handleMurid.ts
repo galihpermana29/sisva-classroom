@@ -52,13 +52,13 @@ export default async function handleMurid(data: MuridInputData) {
         username_siswa: row[2],
       };
     })
-    .filter((data) => {
-      return (
-        (studentNames.includes(data.nama_siswa) ||
+    .filter(
+      (data) =>
+        studentNames.includes(data.nama_siswa) &&
+        (!data.username_siswa ||
           studentUsernames.includes(data.username_siswa)) &&
         studentGroupNames.includes(data.nama_kelas)
-      );
-    });
+    );
 
   const createObject = dataObject.filter(
     (data) =>

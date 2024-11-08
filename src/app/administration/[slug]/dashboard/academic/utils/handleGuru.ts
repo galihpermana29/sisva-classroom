@@ -48,8 +48,8 @@ export default async function handleGuru(data: GuruInputData) {
     })
     .filter((data) => {
       return (
-        (teacherNames.includes(data.name) ||
-          teacherUsernames.includes(data.username)) &&
+        teacherNames.includes(data.name) &&
+        (!data.username || teacherUsernames.includes(data.username)) &&
         subjectNames.includes(data.nama_program_studi)
       );
     });
