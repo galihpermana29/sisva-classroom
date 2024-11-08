@@ -2,6 +2,8 @@ import { Spin, Upload } from "antd";
 import { File05, SearchMd, Trash01 } from "@untitled-ui/icons-react";
 import SisvaButton from "../Button/GlobalButton";
 import toast from "react-hot-toast";
+import DowndloadableFileLabel from "../DowndloadableFileLabel";
+import { useState } from "react";
 
 const SisvaInputFile = ({
   text = "Upload file here",
@@ -12,7 +14,8 @@ const SisvaInputFile = ({
   setFileList,
   isLoading,
 }) => {
-  const beforeUpload = (file) => {
+  const [generatedFileURI, setGeneratedFileURI] = useState(null);
+  const beforeUpload = async (file) => {
     const isAcceptedType = [
       "image/jpeg",
       "image/png",
@@ -33,7 +36,10 @@ const SisvaInputFile = ({
     setFileList([file]);
 
     if (onFileSelect) {
-      onFileSelect(file);
+      const fileId = await onFileSelect(file);
+      if (fileId) {
+        setGeneratedFileURI(fileId);
+      } else setGeneratedFileURI("");
     }
 
     return false;
@@ -99,9 +105,13 @@ const SisvaInputFile = ({
             >
               <div className="flex items-center gap-2">
                 <File05 width={20} height={20} />
-                <span className="text-sm text-[#475467]">
-                  {getFileName(fileList[0])}
-                </span>
+                <DowndloadableFileLabel
+                  url={generatedFileURI ? generatedFileURI : fileList[0]}
+                >
+                  <span className="text-sm text-[#475467] font-semibold hover:text-primary transition-all">
+                    {getFileName(fileList[0])}
+                  </span>
+                </DowndloadableFileLabel>
               </div>
               <div
                 className="flex items-center gap-2 text-primary cursor-pointer"

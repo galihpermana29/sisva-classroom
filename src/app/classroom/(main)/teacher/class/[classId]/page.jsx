@@ -9,7 +9,11 @@ async function getClassDetailPageData(classId) {
   ]);
 
   return {
-    teachingPlanData: teachingPlanData.success ? teachingPlanData.data : null,
+    teachingPlanData: teachingPlanData.success
+      ? teachingPlanData.data.filter((plan) => {
+          return plan.class_id === parseInt(classId);
+        })
+      : null,
     teachingMaterialData: teachingMaterialData.success
       ? teachingMaterialData.data
       : null,

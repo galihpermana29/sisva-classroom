@@ -5,7 +5,7 @@ import { getTaskById } from "../../repository/create-rpp-service";
 import dayjs from "dayjs";
 import { useModal } from "../../view/container/Provider/ModalProvider";
 
-export const useGetDetailTask = () => {
+export const useGetDetailTask = (setFileURI) => {
   const [form] = useForm();
   const [fileList, setFileList] = useState(null);
   const [isLoadingGetDetail, setIsLoadingGetDetail] = useState(false);
@@ -21,14 +21,24 @@ export const useGetDetailTask = () => {
         deadline: dayjs(response.data.deadline, "DD/MM/YYYY h:mm A Z"),
       });
     } else {
-      toast.error("Error get teaching material");
+      toast.error("Error get detail task");
     }
     setIsLoadingGetDetail(false);
   };
 
   useEffect(() => {
     const getDetail = async () => {
-      await handleGetDetailTask(modalState?.data?.id);
+      if (
+        modalState?.data?.isTemporaryEditTaskState ||
+        modalState?.data?.isTemporaryTaskState
+      ) {
+        form.setFieldsValue({
+          ...modalState?.data,
+          deadline: dayjs(modalState?.data.deadline, "DD/MM/YYYY h:mm A Z"),
+        });
+      } else {
+        await handleGetDetailTask(modalState?.data?.id);
+      }
     };
     if (modalState?.type === "edit-task") {
       getDetail();
@@ -37,6 +47,11 @@ export const useGetDetailTask = () => {
       modalState?.data?.attachment_file_uri
         ? [modalState?.data?.attachment_file_uri]
         : null
+    );
+    setFileURI(
+      modalState?.data?.attachment_file_uri
+        ? modalState?.data?.attachment_file_uri
+        : ""
     );
   }, [modalState]);
 

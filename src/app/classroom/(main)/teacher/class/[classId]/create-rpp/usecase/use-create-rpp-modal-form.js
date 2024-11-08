@@ -15,6 +15,7 @@ import {
 import toast from "react-hot-toast";
 import {
   deleteRpp,
+  deleteTaskById,
   postCreateTask,
   putUpdateTask,
 } from "../repository/create-rpp-service";
@@ -75,48 +76,92 @@ export const useCreateRppModalForm = () => {
     handleClose();
   };
 
-  const handleCreateTask = async (value) => {
-    const response = await postCreateTask(value);
-    if (response.success) {
-      toast.success("Success create task");
-      dispatch(
-        addTask({
-          ...value,
-          id: response.data,
-        })
-      );
-    } else {
-      toast.error("Error create task");
-    }
+  // const handleCreateTask = async (value) => {
+  //   const response = await postCreateTask(value);
+  //   if (response.success) {
+  //     toast.success("Success create task");
+  //     dispatch(
+  //       addTask({
+  //         ...value,
+  //         id: response.data,
+  //       })
+  //     );
+  //   } else {
+  //     toast.error("Error create task");
+  //   }
+  // };
+  const handleCreateTask = (value) => {
+    toast.success("Success create task");
+    console.log(value);
+
+    dispatch(
+      addTask({
+        ...value,
+        id: window.crypto.randomUUID(),
+        isTemporaryTaskState: true,
+      })
+    );
   };
 
-  const handleEditTask = async (value) => {
+  const handleEditTask = (value) => {
     const taskId = modalState?.data?.id;
-    const response = await putUpdateTask(taskId, value);
-    if (response.success) {
-      toast.success("Success update task");
-      dispatch(
-        editTask({
-          id: taskId,
-          ...value,
-        })
-      );
-    } else {
-      toast.error("Error update task");
-    }
+    toast.success("Success update task");
+
+    dispatch(
+      editTask({
+        id: taskId,
+        ...value,
+        isTemporaryTaskState: modalState?.data?.isTemporaryTaskState
+          ? true
+          : false,
+        isTemporaryEditTaskState: modalState?.data?.isTemporaryTaskState
+          ? false
+          : true,
+      })
+    );
   };
+
+  // const handleEditTask = async (value) => {
+  //   const taskId = modalState?.data?.id;
+  //   const response = await putUpdateTask(taskId, value);
+  //   if (response.success) {
+  //     toast.success("Success update task");
+  //     dispatch(
+  //       editTask({
+  //         id: taskId,
+  //         ...value,
+  //       })
+  //     );
+  //   } else {
+  //     toast.error("Error update task");
+  //   }
+  // };
 
   const handleDeleteTask = async () => {
     setIsLoadingForm(true);
     const taskId = modalState?.data?.id;
-    dispatch(deleteTask(taskId));
+    if (
+      modalState?.data?.isTemporaryTaskState ||
+      modalState?.data?.isTemporaryEditTaskState
+    ) {
+      dispatch(deleteTask(taskId));
+      handleClose();
+    } else {
+      const response = await deleteTaskById(taskId);
+      if (response.success) {
+        toast.success("Success delete task");
+        dispatch(deleteTask(taskId));
+        handleClose();
+      } else {
+        toast.error("Error delete task");
+      }
+    }
     setIsLoadingForm(false);
-    handleClose();
   };
 
   const handleUploadFile = async (file) => {
     if (!file) {
-      setFileURI(null);
+      setFileURI("");
       return;
     }
     setIsLoadingForm(true);
@@ -133,6 +178,9 @@ export const useCreateRppModalForm = () => {
       toast.error("Error upload file");
     }
     setIsLoadingForm(false);
+    if (response.success) {
+      return response.data;
+    }
   };
 
   const handleSubmitForm = async (value) => {
@@ -160,9 +208,9 @@ export const useCreateRppModalForm = () => {
     } else if (modalState?.type === "edit-teaching-material") {
       await handleEditTeachingMaterial(teachingMaterialPayload);
     } else if (modalState?.type === "create-task") {
-      await handleCreateTask(taskPayload);
+      handleCreateTask(taskPayload);
     } else if (modalState?.type === "edit-task") {
-      await handleEditTask(taskPayload);
+      handleEditTask(taskPayload);
     }
 
     handleClose();
@@ -193,5 +241,6 @@ export const useCreateRppModalForm = () => {
     materials,
     tasks,
     handleAddFromExistingTeachingMaterial,
+    setFileURI,
   };
 };

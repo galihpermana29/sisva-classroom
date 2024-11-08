@@ -1,13 +1,21 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDebounce } from "use-debounce";
-import { getTeachingMaterialList } from "../repository/teaching-material-service";
+import {
+  getSubjectById,
+  getTeachingMaterialList,
+} from "../repository/teaching-material-service";
 import {
   searchFilter,
   restructureTeachingMaterialList,
 } from "../model/data-mapper";
-import { getGradeDropdownById } from "../../class/repository/teacher-class-service";
+import {
+  getGradeDropdownById,
+  getStudentGroupList,
+} from "../../class/repository/teacher-class-service";
 import { createDropdown } from "../../class/usecase/data-mapper-service";
 import { generateRandomString } from "./custom-function";
+import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
 
 export const useTeachingMaterial = (initialData) => {
   const [teachingMaterialData, setTeachingMaterialData] = useState(
@@ -39,6 +47,46 @@ export const useTeachingMaterial = (initialData) => {
   );
 
   const [debouncedQueryFilter] = useDebounce(queryFilter, 200);
+
+  const classData = useSelector((state) => state.classData.detailClass);
+
+  const handleGetPreFieldTeachingMaterial = async () => {
+    setIsLoading(true);
+
+    try {
+      const subjectDetail = await getSubjectById(classData.subject_id);
+      if (!subjectDetail.success) {
+        toast.error("Error getting subject details");
+        setIsLoading(false);
+        return;
+      }
+
+      const studentGroups = await getStudentGroupList("", "", "");
+      if (!studentGroups.success) {
+        toast.error("Error getting student group list");
+        setIsLoading(false);
+        return;
+      }
+
+      const filterStudentGroupById = studentGroups.data.find(
+        (item) => item.id === classData.student_group_id
+      );
+
+      handleGetGradeDropdown(filterStudentGroupById.study_program_id);
+
+      setQueryFilter((prev) => ({
+        ...prev,
+        curriculum: subjectDetail.data.curriculum_id,
+        study_program: filterStudentGroupById.study_program_id,
+        subject: subjectDetail.data.id,
+        grade: filterStudentGroupById.grade,
+      }));
+    } catch (error) {
+      toast.error(`Error: ${error.message}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const fetchTeachingMaterialList = async () => {
     setIsLoading(true);
@@ -177,5 +225,6 @@ export const useTeachingMaterial = (initialData) => {
     queryFilter,
     setQueryFilter,
     handleResetFilter,
+    handleGetPreFieldTeachingMaterial,
   };
 };

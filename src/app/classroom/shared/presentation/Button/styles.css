@@ -1,6 +1,6 @@
-.ant-btn.ant-btn-text.app-btn {
+.ant-btn.app-btn {
   @apply h-auto w-auto inline-flex items-center;
-  &.app-btn-primary {
+  /* &.app-btn-primary {
     @apply bg-primary text-[#F9FAFB] border-primary;
   }
   &.app-btn-primary:hover {
@@ -28,7 +28,7 @@
   }
   &.app-btn-secondary-gray:disabled {
     @apply bg-button_disabled border-button_disabled text-button_text_disabled;
-  }
+  } */
 
   &.app-btn-full-rounded {
     @apply rounded-full;

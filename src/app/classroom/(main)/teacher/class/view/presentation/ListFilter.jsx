@@ -27,6 +27,7 @@ const ListFilter = ({
         options={dropDownData.periodData}
         onChange={dropdownHandler.handlePeriodFilter}
         value={queryFilter.period === "" ? null : queryFilter.period}
+        allowClear
       />
       <SisvaSelect
         customSize="md"
@@ -38,6 +39,7 @@ const ListFilter = ({
         value={
           queryFilter.study_program === "" ? null : queryFilter.study_program
         }
+        allowClear
       />
       <SisvaSelect
         customSize="md"
@@ -47,6 +49,7 @@ const ListFilter = ({
         onChange={(e) => generalHandleFilter("grade", e)}
         disabled={dropDownData.gradeDropdown.length === 0}
         value={queryFilter.grade === "" ? null : queryFilter.grade}
+        allowClear
       />
       <SisvaSelect
         customSize="md"
@@ -55,6 +58,7 @@ const ListFilter = ({
         options={dropDownData.classroomDropdown}
         onChange={(e) => generalHandleFilter("classroom", e)}
         value={queryFilter.classroom === "" ? null : queryFilter.classroom}
+        allowClear
       />
     </>
   );

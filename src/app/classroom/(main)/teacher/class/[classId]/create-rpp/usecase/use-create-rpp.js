@@ -1,13 +1,18 @@
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { postCreateRpp } from "../repository/create-rpp-service";
+import {
+  postCreateRpp,
+  postCreateTask,
+  putUpdateTask,
+} from "../repository/create-rpp-service";
 import toast from "react-hot-toast";
 import { useForm } from "antd/es/form/Form";
 import { setMaterials } from "@/app/classroom/shared/redux/teachingMaterialSlice";
 import { setTasks } from "@/app/classroom/shared/redux/taskSlice";
 import { filterTableListById } from "../../edit-rpp/[id]/model/edit-rpp-data-mapper";
 import { patchUpdateRpp } from "../../edit-rpp/[id]/repository/edit-rpp-service";
+import dayjs from "dayjs";
 
 export const useCreateRpp = (initialData) => {
   const [form] = useForm();
@@ -40,39 +45,91 @@ export const useCreateRpp = (initialData) => {
 
       dispatch(setMaterials(filteredMaterials));
       dispatch(setTasks(filteredTasks));
+    } else {
+      dispatch(setMaterials([]));
+      dispatch(setTasks([]));
     }
   }, []);
 
   const handleSubmitCreateRPPForm = async (value) => {
-    const payload = {
-      class_id: parseInt(classId),
-      title: value.title,
-      markdown: value.markdown,
-      teaching_materials: materials.map((item) => ({
-        id: item.id,
-      })),
-      tasks: tasks.map((item) => ({
-        id: item.id,
-      })),
-      teaching_goal: value.teaching_goal,
-      teaching_activity: value.teaching_activity,
-      teaching_scoring: value.teaching_scoring,
-    };
-
     setIsLoading(true);
+    try {
+      const taskIds = [];
 
-    const response = isEditRpp
-      ? await patchUpdateRpp(id, payload)
-      : await postCreateRpp(payload);
+      for (const task of tasks) {
+        let response;
 
-    if (response.success) {
-      router.push(`/classroom/teacher/class/${classId}`);
-      toast.success(`Success ${isEditRpp ? "edit" : "create"} teaching plan`);
-      console.log(response.data);
-    } else {
-      toast.error(`Error ${isEditRpp ? "edit" : "create"} teaching plan`);
+        if (task.isTemporaryTaskState) {
+          const payload = {
+            class_id: task.class_id,
+            name: task.name,
+            description: task.description,
+            deadline: dayjs(task.deadline).format("DD/MM/YYYY h:mm A Z"),
+            allow_submission: task.allow_submission,
+            allow_overdue_submission: task.allow_overdue_submission,
+            attachment_file_uri: task.attachment_file_uri,
+          };
+          response = await postCreateTask(payload);
+
+          if (!response.success) {
+            toast.error(`Failed to create task: ${task.name}`);
+            setIsLoading(false);
+            return;
+          }
+          taskIds.push(response.data);
+        } else if (task.isTemporaryEditTaskState) {
+          const payload = {
+            class_id: task.class_id,
+            name: task.name,
+            description: task.description,
+            deadline: dayjs(task.deadline).format("DD/MM/YYYY h:mm A Z"),
+            allow_submission: task.allow_submission,
+            allow_overdue_submission: task.allow_overdue_submission,
+            attachment_file_uri: task.attachment_file_uri,
+          };
+          response = await putUpdateTask(task.id, payload);
+
+          if (!response.success) {
+            toast.error(`Failed to update task: ${task.name}`);
+            setIsLoading(false);
+            return;
+          }
+          taskIds.push(response.data);
+        } else {
+          taskIds.push(task.id);
+        }
+      }
+
+      const payload = {
+        class_id: parseInt(classId),
+        title: value.title,
+        markdown: value.markdown,
+        teaching_materials: materials.map((item) => ({
+          id: item.id,
+        })),
+        tasks: taskIds.map((id) => ({
+          id: id,
+        })),
+        teaching_goal: value.teaching_goal,
+        teaching_activity: value.teaching_activity,
+        teaching_scoring: value.teaching_scoring,
+      };
+
+      const response = isEditRpp
+        ? await patchUpdateRpp(id, payload)
+        : await postCreateRpp(payload);
+
+      if (response.success) {
+        toast.success(`Success ${isEditRpp ? "edit" : "create"} teaching plan`);
+        window.location.href = `/classroom/teacher/class/${classId}`;
+      } else {
+        toast.error(`Error ${isEditRpp ? "edit" : "create"} teaching plan`);
+      }
+    } catch (error) {
+      toast.error(`Error processing tasks: ${error.message}`);
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   return {
