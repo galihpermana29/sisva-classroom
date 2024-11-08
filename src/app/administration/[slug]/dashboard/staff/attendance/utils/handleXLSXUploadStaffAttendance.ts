@@ -5,6 +5,7 @@ import type { MonthText } from '@/globalcomponents/types';
 import { getAttendance, getMonthNumber } from '@/globalcomponents/types';
 import dayjs from 'dayjs';
 import * as XLSX from 'xlsx';
+import { setProgress } from './staffAttendanceSlice';
 /*
 # Array structure
 
@@ -60,11 +61,21 @@ function getUser(users: User[], user: { name: string; username: string }) {
   return getUserByName(users, user.name);
 }
 
-export default function handleXLSXUploadStaffAttendance(
-  file: File,
-  onSuccess: (reportText: string[]) => void,
-  onError: (reportText: string[]) => void
-) {
+export default function handleXLSXUploadStaffAttendance({
+  file,
+  onSuccess,
+  onError,
+  toggleProgressAlert,
+  setProgress,
+  setProgressLog,
+}: {
+  file: File;
+  onSuccess: (reportText: string[]) => void;
+  onError: (reportText: string[]) => void;
+  toggleProgressAlert: (isOpen: boolean) => void;
+  setProgress: (progress: string) => void;
+  setProgressLog: (progressLog: string) => void;
+}) {
   const reader = new FileReader();
   const reportText: string[] = [];
   reader.onload = async (e) => {
@@ -104,6 +115,9 @@ export default function handleXLSXUploadStaffAttendance(
         );
       });
 
+      const sheetCount = sheetNames.length;
+      let sheetProgress = 1;
+      toggleProgressAlert(true);
       for (const sheetName of sheetNames) {
         const [monthText, year] = sheetName.trim().split(' ') as [
           MonthText,
@@ -139,7 +153,11 @@ export default function handleXLSXUploadStaffAttendance(
           );
 
         let count = 0;
+        const rowCount = dataObject.length;
         for (const data of dataObject) {
+          setProgress(
+            `${sheetName} (${sheetProgress}/${sheetCount}): ${count}/${rowCount}`
+          );
           const maxDay = dayjs(`${year} ${month}`).daysInMonth();
           for (let i = 0; i < maxDay; i++) {
             const dateCode = dayjs(`${year} ${month} ${i + 1}`).format(
@@ -150,6 +168,7 @@ export default function handleXLSXUploadStaffAttendance(
               name: data.name,
               username: data.username,
             });
+            setProgressLog(`${user.name}: ${i + 1}/${maxDay} - ${status}`);
             await AttendanceApi.createStaffAttendance(user.id, {
               date_id: Number(dateCode),
               status: status,
@@ -158,12 +177,15 @@ export default function handleXLSXUploadStaffAttendance(
           count += 1;
         }
         reportText.push(`${sheetName}: ${count} baris berhasil diperbarui`);
+        sheetProgress += 1;
       }
 
       onSuccess(reportText);
+      toggleProgressAlert(false);
     } catch (error) {
       console.log(error);
       onError(reportText);
+      toggleProgressAlert(false);
     }
   };
   reader.readAsArrayBuffer(file);

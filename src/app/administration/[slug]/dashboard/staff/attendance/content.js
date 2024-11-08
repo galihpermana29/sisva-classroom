@@ -27,15 +27,23 @@ import DataTable from './components/Table';
 
 import AttendanceApi from '@/api/attendance';
 import UsersAPI from '@/api/users';
+import { useAdministrationDispatch } from '@/app/administration/hooks';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
 import { useFormik } from 'formik';
 import ImportXLSXAlert from '../../components/ImportXLSXAlert';
+import StaffAttendanceProgressAlert from './components/StaffAttendanceProgressAlert';
 import handleXLSXUploadStaffAttendance from './utils/handleXLSXUploadStaffAttendance';
+import {
+  setProgress,
+  setProgressLog,
+  toggleProgressAlert,
+} from './utils/staffAttendanceSlice';
 
 export default function StaffProfileListContent() {
+  const dispatch = useAdministrationDispatch();
   const [initialData, setinitialData] = useState({
     id: '',
     status: 'present',
@@ -198,6 +206,7 @@ export default function StaffProfileListContent() {
 
   return (
     <Stack sx={{ height: '100%', width: '100%', p: { xs: 0, lg: 4 } }}>
+      <StaffAttendanceProgressAlert />
       <ImportXLSXAlert
         open={isOpenXLSXAlert}
         handleClose={() => setIsOpenImportXLSXAlert(false)}
@@ -527,19 +536,28 @@ export default function StaffProfileListContent() {
                         border: '1px solid red',
                       }}
                       onChange={(e) => {
-                        handleXLSXUploadStaffAttendance(
-                          e.target.files[0],
-                          (reportText) => {
+                        handleXLSXUploadStaffAttendance({
+                          file: e.target.files[0],
+                          onSuccess: (reportText) => {
                             setReportText(reportText);
                             setXLSXAlertTitle('Import File Berhasil');
                             setIsOpenImportXLSXAlert(true);
                           },
-                          (reportText) => {
+                          onError: (reportText) => {
                             setReportText(reportText);
                             setXLSXAlertTitle('Import File Bermasalah');
                             setIsOpenImportXLSXAlert(true);
-                          }
-                        );
+                          },
+                          toggleProgressAlert: (isOpen) => {
+                            dispatch(toggleProgressAlert(isOpen));
+                          },
+                          setProgress: (progress) => {
+                            dispatch(setProgress(progress));
+                          },
+                          setProgressLog: (progressLog) => {
+                            dispatch(setProgressLog(progressLog));
+                          },
+                        });
                         handleClose();
                       }}
                     />
