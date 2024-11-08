@@ -16,6 +16,7 @@ export default async function MainLayout({ children }) {
           Button: {
             colorBorder: theme,
             colorText: theme,
+            borderColorDisabled: "#D0D5DD",
           },
         },
       }}

@@ -6,6 +6,7 @@ import { Skeleton } from "antd";
 import { useNavbar } from "../../usecase/hooks/use-navbar";
 import { Kumbh_Sans } from "next/font/google";
 import BrandLogo from "../BrandLogo";
+import { useTokenColor } from "../../usecase/use-token-color";
 
 const kumbh = Kumbh_Sans({
   subsets: ["latin"],
@@ -13,14 +14,16 @@ const kumbh = Kumbh_Sans({
 
 const NavItem = ({ icon: Icon, label, path, isActive }) => {
   const router = useRouter();
+  const { tokenColor } = useTokenColor();
   return (
     <div
       onClick={() => router.push(path)}
-      className={`cursor-pointer transition-all flex flex-col items-center gap-1 ${
-        isActive ? "text-primary" : "text-[#5D5D5D]"
-      }`}
+      className={`cursor-pointer transition-all flex flex-col items-center gap-1`}
+      style={{
+        color: isActive ? tokenColor : "#5D5D5D",
+      }}
     >
-      <Icon fill={isActive ? "#f96756" : "#5D5D5D"} width={22} height={22} />
+      <Icon fill={isActive ? tokenColor : "#5D5D5D"} width={22} height={22} />
       <span className="text-sm font-semibold">{label}</span>
     </div>
   );

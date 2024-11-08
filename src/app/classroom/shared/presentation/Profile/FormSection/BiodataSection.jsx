@@ -8,6 +8,7 @@ import { useProfileForm } from "../../../usecase/hooks/profile/use-profile-form"
 import { SisvaSelect } from "../../Input/SelectField";
 import SisvaButton from "../../Button/GlobalButton";
 import { Edit05 } from "@untitled-ui/icons-react";
+import { useTokenColor } from "../../../usecase/use-token-color";
 
 const BiodataSection = ({
   form,
@@ -23,6 +24,7 @@ const BiodataSection = ({
 }) => {
   const { jenisKelaminDropdown, kewarganegaraanDropdown, agamaDropdown } =
     useProfileForm();
+  const { tokenColor } = useTokenColor();
   return (
     <Form
       form={form}
@@ -53,7 +55,12 @@ const BiodataSection = ({
                 beforeUpload={handleFileUpload}
                 showUploadList={false}
               >
-                <span className="font-semibold text-primary text-sm cursor-pointer">
+                <span
+                  className="font-semibold text-sm cursor-pointer"
+                  style={{
+                    color: tokenColor,
+                  }}
+                >
                   Ubah Foto Profil
                 </span>
               </Upload>

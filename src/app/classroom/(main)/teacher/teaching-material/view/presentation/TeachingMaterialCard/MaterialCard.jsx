@@ -12,6 +12,7 @@ import { useModal } from "../../../../class/[classId]/create-rpp/view/container/
 import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
 import { generateRandomColor } from "../../../usecase/custom-function";
 import { usePathname } from "next/navigation";
+import { useTokenColor } from "@/app/classroom/shared/usecase/use-token-color";
 
 const MaterialCard = ({ item }) => {
   const { setModalState } = useModal();
@@ -21,6 +22,7 @@ const MaterialCard = ({ item }) => {
   const isTeachingMaterialTabs = pathname.startsWith(
     "/classroom/teacher/class"
   );
+  const { tokenColor } = useTokenColor();
 
   const items = [
     item.attachment_file_uri && {
@@ -56,7 +58,12 @@ const MaterialCard = ({ item }) => {
           },
           {
             label: (
-              <div className="flex items-center gap-2 text-primary">
+              <div
+                className="flex items-center gap-2"
+                style={{
+                  color: tokenColor,
+                }}
+              >
                 <Trash01 width={20} height={20} /> Delete
               </div>
             ),
@@ -99,7 +106,12 @@ const MaterialCard = ({ item }) => {
         </Dropdown>
       )}
       <div className=" flex flex-col gap-3">
-        <div className="rounded-full bg-primary px-2 py-1 w-fit">
+        <div
+          className="rounded-full px-2 py-1 w-fit"
+          style={{
+            backgroundColor: tokenColor,
+          }}
+        >
           <span className="text-white text-sm font-semibold">
             {item.subject_name}
           </span>
@@ -127,9 +139,15 @@ const MaterialCard = ({ item }) => {
             <span className="text-sm text-[#969696]">{item.grade}</span>
           </div>
         </div>
-        <Divider className="bg-[#FCB3AA] my-2 h-[2px] rounded-full" />
+        <Divider
+          className="my-2 h-[2px] rounded-full"
+          style={{ backgroundColor: `${tokenColor}70` }}
+        />
         <div className="flex items-center gap-2">
-          <div className="w-5 h-5 rounded-full bg-[#FCB3AA]" />
+          <div
+            className="w-5 h-5 rounded-full"
+            style={{ backgroundColor: `${tokenColor}70` }}
+          />
           <span className="text-sm text-[#555555]">{item.curriculum_name}</span>
         </div>
       </div>

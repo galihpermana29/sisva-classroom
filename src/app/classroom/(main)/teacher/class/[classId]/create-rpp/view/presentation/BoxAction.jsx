@@ -16,7 +16,7 @@ const BoxAction = ({
   return (
     <div
       onClick={onClick}
-      className="cursor-pointer flex justify-center items-center w-full h-32 rounded-lg border-dashed border border-[#D0D5DD] hover:border-primary_hover"
+      className="cursor-pointer flex justify-center items-center w-full h-32 rounded-lg border-dashed border border-[#D0D5DD] hover:border-[#85868a]"
     >
       <div className="flex flex-col gap-2 items-center">
         <div className="flex items-center gap-2">

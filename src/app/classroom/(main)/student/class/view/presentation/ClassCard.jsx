@@ -10,6 +10,7 @@ import {
   getDayName,
 } from "@/app/classroom/shared/usecase/helper";
 import AvatarProfile from "@/app/classroom/shared/presentation/Profile/AvatarProfile";
+import { useTokenColor } from "@/app/classroom/shared/usecase/use-token-color";
 
 const ClassCard = ({
   subject,
@@ -21,13 +22,17 @@ const ClassCard = ({
   timeStamp,
   isEmptySchedules,
 }) => {
+  const { tokenColor } = useTokenColor();
   return (
     <SisvaCard className="flex flex-col gap-7">
       <div className="flex gap-2">
         <AvatarProfile url={teacherPhoto} size={48} />
         <div>
-          <div className="rounded-full bg-[#FEECE9] px-2 py-[2px] w-fit h-fit">
-            <span className="text-sm font-semibold break-all text-primary line-clamp-1">
+          <div className="rounded-full bg-[#ffffff] px-2 py-[2px] w-fit h-fit">
+            <span
+              className="text-sm font-semibold break-all line-clamp-1"
+              style={{ color: tokenColor }}
+            >
               {subject} - {group}
             </span>
           </div>
@@ -38,7 +43,10 @@ const ClassCard = ({
       <hr className="border border-[#FDD9D4] border-dashed" />
 
       <div className="relative p-4 pl-4 bg-white rounded-xl">
-        <div className="absolute left-0 w-1 h-12 transform -translate-y-1/2 rounded-r-full top-1/2 bg-primary"></div>
+        <div
+          className="absolute left-0 w-1 h-12 transform -translate-y-1/2 rounded-r-full top-1/2"
+          style={{ backgroundColor: tokenColor }}
+        ></div>
         {isEmptySchedules ? (
           <div className="flex items-center gap-3">
             <Image src={NoTask} alt="no-task" width={50} height={50} />

@@ -14,6 +14,7 @@ import { useCreateRppModalForm } from "../../usecase/use-create-rpp-modal-form";
 import { useParams, useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { useDeleteRpp } from "../../../usecase/use-delete-rpp";
+import { useTokenColor } from "@/app/classroom/shared/usecase/use-token-color";
 
 const FormTaskModal = dynamic(() =>
   import("@/app/classroom/shared/presentation/Modal/FormTaskModal")
@@ -51,6 +52,7 @@ const CreateRppContainer = ({ initialData, headerText }) => {
   const { id } = useParams();
   const { handleDeleteRpp, loadingDelete } = useDeleteRpp(id);
   const classData = useSelector((state) => state.classData.detailClass);
+  const { tokenColor } = useTokenColor();
 
   return (
     <div className="flex flex-col gap-4 font-kumbh">
@@ -65,7 +67,12 @@ const CreateRppContainer = ({ initialData, headerText }) => {
             className="w-fit"
           />
         ) : (
-          <div className="rounded-lg bg-[#FAE1E1] text-[#001C2B] p-2 text-sm font-bold w-fit">
+          <div
+            className="rounded-lg text-[#001C2B] p-2 text-sm font-bold w-fit"
+            style={{
+              backgroundColor: `${tokenColor}20`,
+            }}
+          >
             {classData?.student_group_name}
           </div>
         )}

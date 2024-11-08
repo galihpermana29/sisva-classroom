@@ -7,6 +7,7 @@ import FormFields from "@/app/classroom/shared/presentation/Profile/FormFields";
 import { useProfile } from "../../usecase/hooks/profile/use-profile";
 import { useSignOut } from "../../usecase/hooks/profile/use-signout";
 import dynamic from "next/dynamic";
+import { useTokenColor } from "../../usecase/use-token-color";
 
 const DeleteConfirmation = dynamic(() =>
   import("@/app/classroom/shared/presentation/Modal/DeleteConfirmation")
@@ -14,6 +15,7 @@ const DeleteConfirmation = dynamic(() =>
 
 const ProfileContainer = ({ initialData, profileMenus }) => {
   const [logoutModal, setLogoutModal] = useState(false);
+  const { tokenColor } = useTokenColor();
   const {
     handleClickTab,
     step,
@@ -54,7 +56,12 @@ const ProfileContainer = ({ initialData, profileMenus }) => {
                 key={idx}
               />
             ))}
-            <div className="w-full h-[0.5px] bg-primary my-2 rounded-full" />
+            <div
+              className="w-full h-[0.5px] my-2 rounded-full"
+              style={{
+                backgroundColor: tokenColor,
+              }}
+            />
             <MenuItem
               icon={<LogOut04 width={20} height={20} />}
               title="Log Out"
