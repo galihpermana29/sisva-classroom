@@ -5,15 +5,31 @@ import Image from "next/image";
 import NoTask from "@/assets/classroom/images/NoTask.png";
 import {
   generalTimeFormatter,
-  getDayNameFromNumber,
+  getDayName,
 } from "@/app/classroom/shared/usecase/helper";
-const ClassCard = ({ onClick, subject, group, schedule, isEmptySchedule }) => {
+import AvatarProfile from "@/app/classroom/shared/presentation/Profile/AvatarProfile";
+const ClassCard = ({
+  onClick,
+  subject,
+  group,
+  schedule,
+  isEmptySchedule,
+  teacherPhoto,
+  teacherName,
+}) => {
   return (
     <SisvaCard className="flex flex-col gap-7 min-h-52" onClick={onClick}>
-      <div className="rounded-lg bg-[#FEECE9] px-2 py-1 w-fit max-w-full">
-        <span className="text-primary text-sm font-semibold truncate block">
-          {subject} - {group}
-        </span>
+      <div className="flex gap-2">
+        <AvatarProfile url={teacherPhoto} size={48} />
+        <div>
+          <div className="rounded-full bg-[#FEECE9] px-2 py-[2px] w-fit h-fit">
+            <span className="text-sm font-semibold break-all text-primary line-clamp-1">
+              {subject} - {group}
+            </span>
+          </div>
+
+          <p className="mt-1 text-sm text-white">{teacherName}</p>
+        </div>
       </div>
       <hr className="border border-[#FDD9D4] border-dashed" />
 
@@ -32,14 +48,22 @@ const ClassCard = ({ onClick, subject, group, schedule, isEmptySchedule }) => {
             </div>
           </div>
         ) : (
-          <div className="flex flex-col gap-2">
-            <span className="text-[#1D2939] font-[500] text-sm">Jadwal</span>
-            {schedule
-              .sort((a, b) => a.day - b.day)
-              .map((item, idx) => {
-                return <>cek</>;
-              })}
-          </div>
+          <>
+            <h3 className="text-sm font-semibold font-kumbh">Jadwal</h3>
+            <div className="flex flex-col gap-1 mt-1">
+              {schedule.map((schedule, index) => (
+                <div key={index} className="flex items-center gap-1">
+                  <span className="leading-tight text-sm text-[#555]">
+                    {getDayName(schedule.day)},
+                  </span>
+                  <span className="leading-tight text-sm text-[#555]">
+                    {generalTimeFormatter(schedule.start_time)} -{" "}
+                    {generalTimeFormatter(schedule.end_time)}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </>
         )}
       </div>
     </SisvaCard>

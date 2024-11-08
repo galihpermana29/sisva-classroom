@@ -12,6 +12,12 @@ export default async function MainLayout({ children }) {
     <ConfigProvider
       theme={{
         token: { fontFamily: kumbh.style.fontFamily, colorPrimary: theme },
+        components: {
+          Button: {
+            colorBorder: theme,
+            colorText: theme,
+          },
+        },
       }}
     >
       <SisvaNavbar />

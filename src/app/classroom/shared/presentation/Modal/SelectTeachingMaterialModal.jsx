@@ -1,11 +1,12 @@
 import { Modal } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SisvaInputSearch } from "../Input/SisvaInputField";
 import { SisvaSelect } from "../Input/SelectField";
 import TeachingMaterialTable from "../../../(main)/teacher/class/[classId]/create-rpp/view/presentation/Table/TeachingMaterialTable";
 import SisvaButton from "../Button/GlobalButton";
 import { FilterFunnel01 } from "@untitled-ui/icons-react";
 import { useTeachingMaterial } from "@/app/classroom/(main)/teacher/teaching-material/usecase/use-teaching-material";
+import { useModal } from "@/app/classroom/(main)/teacher/class/[classId]/create-rpp/view/container/Provider/ModalProvider";
 
 const SelectTeachingMaterialModal = ({
   open,
@@ -17,6 +18,8 @@ const SelectTeachingMaterialModal = ({
   const [isMobileFilterVisible, setIsMobileFilterVisible] = useState(false);
   const [isMoreFiltersVisible, setIsMoreFiltersVisible] = useState(false);
 
+  const { modalState } = useModal();
+
   const {
     dropDownData,
     handleStudyProgramFilter,
@@ -25,6 +28,7 @@ const SelectTeachingMaterialModal = ({
     queryFilter,
     rawStructureMaterialData,
     isLoading,
+    handleGetPreFieldTeachingMaterial,
   } = useTeachingMaterial(initialData);
 
   const [selectedState, setSelectedState] = useState([]);
@@ -54,6 +58,15 @@ const SelectTeachingMaterialModal = ({
     setSelectedState([]);
     setSelectedRowKeys([]);
   };
+
+  useEffect(() => {
+    const getPrefield = async () => {
+      await handleGetPreFieldTeachingMaterial();
+    };
+    if (modalState?.type === "select-teaching-material") {
+      getPrefield();
+    }
+  }, [modalState]);
 
   const MainFilters = () => (
     <>

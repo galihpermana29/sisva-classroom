@@ -98,7 +98,7 @@ const LoginForm = () => {
       </Form>
       {step === 2 && (
         <div
-          className="flex items-center gap-2 text-primary font-semibold w-fit cursor-pointer"
+          className="flex items-center gap-2 text-[#1677ff] font-semibold w-fit cursor-pointer"
           onClick={() => setStep(1)}
         >
           <ArrowLeft width={20} height={20} />

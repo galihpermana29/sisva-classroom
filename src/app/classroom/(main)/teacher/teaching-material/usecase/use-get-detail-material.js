@@ -1,9 +1,18 @@
 import toast from "react-hot-toast";
-import { getTeachingMaterialById } from "../repository/teaching-material-service";
+import {
+  getAllSubjectName,
+  getSubjectById,
+  getTeachingMaterialById,
+} from "../repository/teaching-material-service";
 import { useMemo, useState } from "react";
 import { useForm } from "antd/es/form/Form";
 import { createDropdown } from "../../class/usecase/data-mapper-service";
-import { getGradeDropdownById } from "../../class/repository/teacher-class-service";
+import {
+  getGradeDropdownById,
+  getStudentGroupList,
+} from "../../class/repository/teacher-class-service";
+import { useParams } from "next/navigation";
+import { useSelector } from "react-redux";
 
 export const useGetDetailTeachingMaterial = (initialData) => {
   const initialDropdownData = {
@@ -16,6 +25,51 @@ export const useGetDetailTeachingMaterial = (initialData) => {
   const [form] = useForm();
   const [isLoadingGetDetail, setIsLoadingGetDetail] = useState(false);
   const [dropDownData, setDropdownData] = useState(initialDropdownData);
+
+  const classData = useSelector((state) => state.classData.detailClass);
+
+  const handleGetPreFieldTeachingMaterial = async () => {
+    setIsLoadingGetDetail(true);
+
+    try {
+      const subjectDetail = await getSubjectById(classData.subject_id);
+      if (!subjectDetail.success) {
+        toast.error("Error getting subject details");
+        setIsLoadingGetDetail(false);
+        return;
+      }
+
+      const studentGroups = await getStudentGroupList("", "", "");
+      if (!studentGroups.success) {
+        toast.error("Error getting student group list");
+        setIsLoadingGetDetail(false);
+        return;
+      }
+
+      const filterStudentGroupById = studentGroups.data.find(
+        (item) => item.id === classData.student_group_id
+      );
+
+      handleGetSubjectDropdown(
+        subjectDetail.data.curriculum_id,
+        filterStudentGroupById.study_program_id
+      );
+      handleGetStudyProgramDropdown(subjectDetail.data.curriculum_id);
+      handleGetGradeDropdown(filterStudentGroupById.study_program_id);
+
+      const prefieldData = {
+        curriculum_id: subjectDetail.data.curriculum_id,
+        study_program_id: filterStudentGroupById.study_program_id,
+        grade: filterStudentGroupById.grade,
+        subject_id: subjectDetail.data.id,
+      };
+      form.setFieldsValue(prefieldData);
+    } catch (error) {
+      toast.error(`Error: ${error.message}`);
+    } finally {
+      setIsLoadingGetDetail(false);
+    }
+  };
 
   const handleGetDetailTeachingMaterial = async (id) => {
     setIsLoadingGetDetail(true);
@@ -152,5 +206,6 @@ export const useGetDetailTeachingMaterial = (initialData) => {
     handleChangeStudyProgram,
     initialDropdownData,
     setDropdownData,
+    handleGetPreFieldTeachingMaterial,
   };
 };

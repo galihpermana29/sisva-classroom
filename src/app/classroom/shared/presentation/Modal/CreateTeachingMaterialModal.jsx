@@ -16,6 +16,7 @@ const CreateTeachingMaterialModal = ({
   handleFileUpload,
   isLoading,
   setFileURI,
+  isRpp,
 }) => {
   const [fileList, setFileList] = useState(null);
   const { modalState } = useModal();
@@ -28,6 +29,7 @@ const CreateTeachingMaterialModal = ({
     handleChangeStudyProgram,
     initialDropdownData,
     setDropdownData,
+    handleGetPreFieldTeachingMaterial,
   } = useGetDetailTeachingMaterial(initialData);
 
   const handleCloseModal = () => {
@@ -39,10 +41,15 @@ const CreateTeachingMaterialModal = ({
     const getDetail = async () => {
       await handleGetDetailTeachingMaterial(modalState?.data?.id);
     };
+    const getPrefield = async () => {
+      await handleGetPreFieldTeachingMaterial();
+    };
     if (modalState?.type === "edit-teaching-material") {
       getDetail();
-    } else if (modalState?.type === "create-teaching-material") {
+    } else if (modalState?.type === "create-teaching-material" && !isRpp) {
       setDropdownData(initialDropdownData);
+    } else if (modalState?.type === "create-teaching-material" && isRpp) {
+      getPrefield();
     }
     setFileList(
       modalState?.data?.attachment_file_uri

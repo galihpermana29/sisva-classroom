@@ -218,6 +218,7 @@ const CreateRppContainer = ({ initialData, headerText }) => {
         handleClose={handleClose}
         initialData={initialData}
         setFileURI={setFileURI}
+        isRpp={true}
       />
       <SelectTeachingMaterialModal
         open={
