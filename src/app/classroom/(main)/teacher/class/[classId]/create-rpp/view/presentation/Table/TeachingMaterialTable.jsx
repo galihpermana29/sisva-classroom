@@ -28,7 +28,7 @@ const TeachingMaterialTable = ({
             <span className="text-[#1D2939]">{data}</span>
           ) : (
             <DowndloadableFileLabel url={record.attachment_file_uri}>
-              <span className="text-[#1D2939] transition-all hover:text-primary font-semibold">
+              <span className="text-[#1D2939] transition-all hover:text-[#7c7c7c] font-semibold">
                 {data}
               </span>
             </DowndloadableFileLabel>

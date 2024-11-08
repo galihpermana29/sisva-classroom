@@ -4,6 +4,7 @@ import SisvaButton from "../Button/GlobalButton";
 import toast from "react-hot-toast";
 import DowndloadableFileLabel from "../DowndloadableFileLabel";
 import { useState } from "react";
+import { useTokenColor } from "../../usecase/use-token-color";
 
 const SisvaInputFile = ({
   text = "Upload file here",
@@ -15,6 +16,7 @@ const SisvaInputFile = ({
   isLoading,
 }) => {
   const [generatedFileURI, setGeneratedFileURI] = useState(null);
+  const { tokenColor } = useTokenColor();
   const beforeUpload = async (file) => {
     const isAcceptedType = [
       "image/jpeg",
@@ -108,13 +110,16 @@ const SisvaInputFile = ({
                 <DowndloadableFileLabel
                   url={generatedFileURI ? generatedFileURI : fileList[0]}
                 >
-                  <span className="text-sm text-[#475467] font-semibold hover:text-primary transition-all">
+                  <span className="text-sm text-[#475467] font-semibold hover:text-[#7c7c7c] transition-all">
                     {getFileName(fileList[0])}
                   </span>
                 </DowndloadableFileLabel>
               </div>
               <div
-                className="flex items-center gap-2 text-primary cursor-pointer"
+                className="flex items-center gap-2 cursor-pointer"
+                style={{
+                  color: tokenColor,
+                }}
                 onClick={onRemove}
               >
                 <Trash01 width={20} height={20} />
