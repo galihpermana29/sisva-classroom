@@ -269,5 +269,50 @@ export function getAttendance(
       return 'leave';
     case 'Alpha':
       return 'absent';
+    // ----
+    default:
+      return 'present';
+  }
+}
+
+export type MonthText =
+  | 'Januari'
+  | 'Februari'
+  | 'Maret'
+  | 'April'
+  | 'Mei'
+  | 'Juni'
+  | 'Juli'
+  | 'Agustus'
+  | 'September'
+  | 'Oktober'
+  | 'November'
+  | 'Desember';
+export function getMonthNumber(text: MonthText): string {
+  switch (text) {
+    case 'Januari':
+      return '01';
+    case 'Februari':
+      return '02';
+    case 'Maret':
+      return '03';
+    case 'April':
+      return '04';
+    case 'Mei':
+      return '05';
+    case 'Juni':
+      return '06';
+    case 'Juli':
+      return '07';
+    case 'Agustus':
+      return '08';
+    case 'September':
+      return '09';
+    case 'Oktober':
+      return '10';
+    case 'November':
+      return '11';
+    case 'Desember':
+      return '12';
   }
 }
