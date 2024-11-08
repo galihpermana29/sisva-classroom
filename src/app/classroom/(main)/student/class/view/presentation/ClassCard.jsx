@@ -40,7 +40,7 @@ const ClassCard = ({
           <p className="mt-1 text-sm text-white">{teacherName}</p>
         </div>
       </div>
-      <hr className="border border-[#FDD9D4] border-dashed" />
+      <hr className="border border-[#ffffff] border-dashed" />
 
       <div className="relative p-4 pl-4 bg-white rounded-xl">
         <div

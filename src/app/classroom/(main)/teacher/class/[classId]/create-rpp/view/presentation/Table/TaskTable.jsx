@@ -37,7 +37,7 @@ const TaskTable = ({ dataSource }) => {
             <span className="italic">No attachment</span>
           ) : (
             <DowndloadableFileLabel url={data}>
-              <div className="flex items-center gap-2 transition-all hover:text-primary">
+              <div className="flex items-center gap-2 transition-all hover:text-[#7c7c7c]">
                 <Image src={pdfIcon} width={20} height={20} alt="pdf-icon" />
                 <span>{data}</span>
               </div>
