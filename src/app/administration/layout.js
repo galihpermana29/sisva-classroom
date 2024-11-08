@@ -4,7 +4,9 @@ import CmsAPI from '@/api/cms';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { Provider } from 'react-redux';
 import '../globals.css';
+import { store } from './store';
 import { themeConfig } from './theme';
 
 export default function RootLayout({ children }) {
@@ -30,5 +32,9 @@ export default function RootLayout({ children }) {
     if (slug) fetchTheme();
   }, [slug]);
 
-  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+  return (
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+    </Provider>
+  );
 }
