@@ -78,8 +78,33 @@ export default function handleXLSXUploadStaffAttendance(
       const usernames = activeUsers.map((user) => user.username) as string[];
 
       const template = XLSX.read(file);
-      // todo: fix filter sheet names
-      for (const sheetName of template.SheetNames) {
+      const sheetNames = template.SheetNames.filter((sheetName) => {
+        const [monthText, year] = sheetName.trim().split(' ') as [
+          MonthText,
+          string
+        ];
+        const months: MonthText[] = [
+          'Januari',
+          'Februari',
+          'Maret',
+          'April',
+          'Mei',
+          'Juni',
+          'Juli',
+          'Agustus',
+          'September',
+          'Oktober',
+          'November',
+          'Desember',
+        ];
+        return (
+          months.includes(monthText) &&
+          Number(year) >= 2000 &&
+          Number(year) <= 2999
+        );
+      });
+
+      for (const sheetName of sheetNames) {
         const [monthText, year] = sheetName.trim().split(' ') as [
           MonthText,
           string
