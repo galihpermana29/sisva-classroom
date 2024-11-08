@@ -152,13 +152,13 @@ export default function handleXLSXUploadStudentAttendance({
 
         let count = 0;
         const rowCount = dataObject.length;
+        const maxDay = dayjs(`${year}-${month}-01`).daysInMonth();
         for (const data of dataObject) {
           setProgress(
             `${sheetName} (${sheetProgress}/${sheetCount}): ${count}/${rowCount}`
           );
-          const maxDay = dayjs(`${year} ${month}`).daysInMonth();
           for (let i = 0; i < maxDay; i++) {
-            const dateCode = dayjs(`${year} ${month} ${i + 1}`).format(
+            const dateCode = dayjs(`${year}-${month}-${i + 1}`).format(
               'YYYYMMDD'
             );
             const status = data.attendance[i];
