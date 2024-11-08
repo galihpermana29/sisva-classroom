@@ -2,24 +2,24 @@
 
 import { ExcelIcon, SortIcon } from '@/assets/SVGs';
 import {
-    Cancel,
-    DownloadRounded,
-    Search,
-    UploadFileRounded,
+  Cancel,
+  DownloadRounded,
+  Search,
+  UploadFileRounded,
 } from '@mui/icons-material';
 import {
-    Box,
-    Button,
-    Divider,
-    Hidden,
-    InputAdornment,
-    Menu,
-    MenuItem,
-    Modal,
-    Paper,
-    Stack,
-    TextField,
-    Typography,
+  Box,
+  Button,
+  Divider,
+  Hidden,
+  InputAdornment,
+  Menu,
+  MenuItem,
+  Modal,
+  Paper,
+  Stack,
+  TextField,
+  Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { FormAddStaff } from './components/FormAddStaff';
@@ -33,6 +33,8 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
 import { useFormik } from 'formik';
+import ImportXLSXAlert from '../../components/ImportXLSXAlert';
+import handleXLSXUploadStudentAttendance from './utils/handleXLSXUploadStudentAttendance';
 
 export default function StaffProfileListContent() {
   const [initialData, setinitialData] = useState({
@@ -87,6 +89,10 @@ export default function StaffProfileListContent() {
   const [sortSettings, setSortSettings] = useState('');
   const [openSortModal, setOpenSortModal] = useState(false);
   const [classOptions, setClassOptions] = useState([]);
+
+  const [isOpenXLSXAlert, setIsOpenImportXLSXAlert] = useState(false);
+  const [reportText, setReportText] = useState([]);
+  const [XLSXAlertTitle, setXLSXAlertTitle] = useState('');
 
   const [openCreateModal, setOpenCreateModal] = useState(false);
 
@@ -291,6 +297,12 @@ export default function StaffProfileListContent() {
 
   return (
     <Stack sx={{ height: '100%', width: '100%', p: { xs: 0, lg: 4 } }}>
+      <ImportXLSXAlert
+        open={isOpenXLSXAlert}
+        handleClose={() => setIsOpenImportXLSXAlert(false)}
+        title={XLSXAlertTitle}
+        importReport={reportText}
+      />
       <Modal open={openCreateModal} onClose={() => setOpenCreateModal(false)}>
         <Stack
           component={Paper}
@@ -590,20 +602,20 @@ export default function StaffProfileListContent() {
                 horizontal: 'center',
               }}
             >
-              <MenuItem onClick={handleClose} sx={{ padding: 1, width: 98 }}>
+              <MenuItem sx={{ padding: 1, width: 98 }}>
                 <Stack flexDirection={'row'} alignItems={'center'}>
                   <DownloadRounded sx={{ fontSize: 18, mr: 1 }} />
                   <Typography sx={{ fontSize: 14 }}>Export</Typography>
                 </Stack>
               </MenuItem>
-              <MenuItem onClick={handleClose} sx={{ padding: 1 }}>
+              <MenuItem sx={{ padding: 1 }}>
                 <label htmlFor="import-csv">
                   <Stack flexDirection={'row'} alignItems={'center'}>
                     <UploadFileRounded sx={{ fontSize: 18, mr: 1 }} />
                     <Typography sx={{ fontSize: 14 }}>Import</Typography>
                     <input
                       name={'import_csv'}
-                      accept="csv"
+                      accept=".xlsx"
                       id="import-csv"
                       type="file"
                       style={{
@@ -611,7 +623,22 @@ export default function StaffProfileListContent() {
                         opacity: '0',
                         border: '1px solid red',
                       }}
-                      // onChange={handleImageChange}
+                      onChange={(e) => {
+                        handleXLSXUploadStudentAttendance(
+                          e.target.files[0],
+                          (reportText) => {
+                            setReportText(reportText);
+                            setXLSXAlertTitle('Import File Berhasil');
+                            setIsOpenImportXLSXAlert(true);
+                          },
+                          (reportText) => {
+                            setReportText(reportText);
+                            setXLSXAlertTitle('Import File Bermasalah');
+                            setIsOpenImportXLSXAlert(true);
+                          }
+                        );
+                        handleClose();
+                      }}
                     />
                   </Stack>
                 </label>
