@@ -16,7 +16,7 @@ export const useDeleteRpp = (id) => {
     if (response.success) {
       toast.success("Success delete rpp");
       handleClose();
-      router.push(`/classroom/teacher/class/${classId}`);
+      window.location.href = `/classroom/teacher/class/${classId}`;
     } else {
       toast.error("Error delete rpp");
     }

@@ -70,7 +70,7 @@ const CreateRppContainer = ({ initialData, headerText }) => {
           <div
             className="rounded-lg text-[#001C2B] p-2 text-sm font-bold w-fit"
             style={{
-              backgroundColor: `${tokenColor}20`,
+              backgroundColor: `${tokenColor}30`,
             }}
           >
             {classData?.student_group_name}

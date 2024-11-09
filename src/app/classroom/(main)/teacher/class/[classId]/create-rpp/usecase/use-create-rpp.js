@@ -12,7 +12,6 @@ import { setMaterials } from "@/app/classroom/shared/redux/teachingMaterialSlice
 import { setTasks } from "@/app/classroom/shared/redux/taskSlice";
 import { filterTableListById } from "../../edit-rpp/[id]/model/edit-rpp-data-mapper";
 import { patchUpdateRpp } from "../../edit-rpp/[id]/repository/edit-rpp-service";
-import dayjs from "dayjs";
 
 export const useCreateRpp = (initialData) => {
   const [form] = useForm();
@@ -64,7 +63,7 @@ export const useCreateRpp = (initialData) => {
             class_id: task.class_id,
             name: task.name,
             description: task.description,
-            deadline: dayjs(task.deadline).format("DD/MM/YYYY h:mm A Z"),
+            deadline: task.deadline,
             allow_submission: task.allow_submission,
             allow_overdue_submission: task.allow_overdue_submission,
             attachment_file_uri: task.attachment_file_uri,
@@ -72,7 +71,7 @@ export const useCreateRpp = (initialData) => {
           response = await postCreateTask(payload);
 
           if (!response.success) {
-            toast.error(`Failed to create task: ${task.name}`);
+            toast.error(`${response.message}: ${task.name}`);
             setIsLoading(false);
             return;
           }
@@ -82,7 +81,7 @@ export const useCreateRpp = (initialData) => {
             class_id: task.class_id,
             name: task.name,
             description: task.description,
-            deadline: dayjs(task.deadline).format("DD/MM/YYYY h:mm A Z"),
+            deadline: task.deadline,
             allow_submission: task.allow_submission,
             allow_overdue_submission: task.allow_overdue_submission,
             attachment_file_uri: task.attachment_file_uri,
@@ -90,7 +89,7 @@ export const useCreateRpp = (initialData) => {
           response = await putUpdateTask(task.id, payload);
 
           if (!response.success) {
-            toast.error(`Failed to update task: ${task.name}`);
+            toast.error(`${response.message}: ${task.name}`);
             setIsLoading(false);
             return;
           }
@@ -123,10 +122,14 @@ export const useCreateRpp = (initialData) => {
         toast.success(`Success ${isEditRpp ? "edit" : "create"} teaching plan`);
         window.location.href = `/classroom/teacher/class/${classId}`;
       } else {
-        toast.error(`Error ${isEditRpp ? "edit" : "create"} teaching plan`);
+        toast.error(
+          `Error ${isEditRpp ? "edit" : "create"} teaching plan, ${
+            response.message
+          }`
+        );
       }
     } catch (error) {
-      toast.error(`Error processing tasks: ${error.message}`);
+      toast.error(`Error processing create rpp: ${error.message}`);
     } finally {
       setIsLoading(false);
     }
