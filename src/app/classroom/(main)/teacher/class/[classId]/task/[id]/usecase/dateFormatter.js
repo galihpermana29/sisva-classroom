@@ -1,12 +1,16 @@
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 
 dayjs.extend(utc);
+dayjs.extend(timezone);
 dayjs.extend(customParseFormat);
 
+dayjs.tz.setDefault("Asia/Jakarta");
+
 export function dateFormatterDayName(dateString) {
-  const date = dayjs.utc(dateString, "DD/MM/YYYY h:mm A Z");
+  const date = dayjs.utc(dateString, "DD/MM/YYYY h:mm A Z").tz("Asia/Jakarta");
 
   const daysInIndonesian = [
     "Minggu",
@@ -27,6 +31,8 @@ export function dateFormatterDayName(dateString) {
 }
 
 export function dateFormatterHours(dateString) {
+  const date = dayjs.utc(dateString, "DD/MM/YYYY h:mm A Z").tz("Asia/Jakarta");
+
   const months = [
     "Januari",
     "Februari",
@@ -42,24 +48,10 @@ export function dateFormatterHours(dateString) {
     "Desember",
   ];
 
-  const [datePart, timePart] = dateString.split(" ");
-  const [day, month, year] = datePart.split("/");
-  const [time, meridiem] = timePart.split(" ");
-  const [hours, minutes] = time.split(":");
-
-  let hour24 = parseInt(hours);
-  if (meridiem === "PM" && hour24 !== 12) {
-    hour24 += 12;
-  } else if (meridiem === "AM" && hour24 === 12) {
-    hour24 = 0;
-  }
-
-  const date = new Date(year, month - 1, day, hour24, parseInt(minutes));
-
-  const formattedDay = date.getDate();
-  const formattedMonth = months[date.getMonth()];
-  const formattedHours = date.getHours().toString().padStart(2, "0");
-  const formattedMinutes = date.getMinutes().toString().padStart(2, "0");
+  const formattedDay = date.date();
+  const formattedMonth = months[date.month()];
+  const formattedHours = date.hour().toString().padStart(2, "0");
+  const formattedMinutes = date.minute().toString().padStart(2, "0");
 
   return `${formattedDay} ${formattedMonth}, ${formattedHours}.${formattedMinutes}`;
 }

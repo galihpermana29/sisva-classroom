@@ -1,25 +1,23 @@
 "use client";
 
-import { Badge } from "antd";
-import PlaceholderProfile from "@/assets/placeholder.jpg";
 import {
   BoxLeft,
   BoxRight,
   BoxTop,
 } from "@/app/classroom/shared/presentation/Box/Box";
-import { Bell01 } from "@untitled-ui/icons-react/build/cjs";
 import { useGetStudentProfile } from "@/app/classroom/(main)/student/usecase/useGetStudentProfile";
 import AvatarProfile from "@/app/classroom/shared/presentation/Profile/AvatarProfile";
+import { useTokenColor } from "@/app/classroom/shared/usecase/use-token-color";
 
 const ProfileStudentSection = () => {
+  const { tokenColor } = useTokenColor();
   const { student, isLoading } = useGetStudentProfile();
   return (
     <div className="-mx-3 -mt-7 lg:mx-0 lg:mt-0">
       <div
         className="w-full relative  px-6 py-16 lg:py-10 lg:rounded-xl rounded-b-3xl lg:h-fit h-[202px] "
         style={{
-          background:
-            "linear-gradient(103deg, #FA8D80 -31.55%, #F96756 53.14%)",
+          backgroundColor: tokenColor,
         }}
       >
         <BoxLeft />
@@ -33,10 +31,7 @@ const ProfileStudentSection = () => {
             {isLoading ? (
               <div className="rounded-full bg-text_description/40 animate-pulse size-14" />
             ) : (
-              <AvatarProfile
-                src={student.student_image || PlaceholderProfile.src}
-                size={56}
-              />
+              <AvatarProfile src={student.student_image} size={56} />
             )}
 
             <div className="flex flex-col gap-1 text-white">
@@ -57,12 +52,6 @@ const ProfileStudentSection = () => {
               )}
             </div>
           </div>
-          
-          {/* <div className="flex items-center justify-center bg-white rounded-full size-10">
-            <Badge count={5} overflowCount={9} offset={[-3, 1]} size="small">
-              <Bell01 className="text-[rgb(68,68,68)]" size={20} />
-            </Badge>
-          </div> */}
         </div>
       </div>
     </div>

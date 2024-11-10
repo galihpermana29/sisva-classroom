@@ -1,16 +1,15 @@
-import Link from "next/link";
+import { useTokenColor } from "../../usecase/use-token-color";
 import { BoxTop } from "../Box/Box";
 
-const Cardtask = ({
-  taskName,
-  lessonName,
-  teacherName,
-  deadline,
-  classId,
-  taskId,
-}) => {
+const Cardtask = ({ taskName, lessonName, teacherName, deadline }) => {
+  const { tokenColor } = useTokenColor();
   return (
-    <div className="min-w-40 flex-none relative bg-[#F96756] text-white p-3 rounded-xl mr-3 overflow-hidden">
+    <div
+      className="min-w-40 flex-none relative text-white p-3 rounded-xl mr-3 overflow-hidden"
+      style={{
+        backgroundColor: tokenColor,
+      }}
+    >
       <BoxTop className="size-[104px] -right-5 -top-1/2" rotate={-67.677} />
       <div className="flex flex-col gap-1">
         <div>

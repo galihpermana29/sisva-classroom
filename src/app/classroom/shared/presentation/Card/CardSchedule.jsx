@@ -1,16 +1,17 @@
+import { useTokenColor } from "../../usecase/use-token-color";
 import { BoxTop } from "../Box/Box";
 
-const CardSchedule = ({ time, scheduleName, teacherName, isEven = true }) => {
+const CardSchedule = ({ time, scheduleName, teacherName }) => {
+  const { tokenColor } = useTokenColor();
   return (
     <div>
       <div className="flex items-center gap-2">
         <p className="text-xs font-medium text-[#29292B] w-8">{time}</p>
         <div
-          className={`w-full p-3 rounded-xl border border-secondary50  shadow-card mr-3 relative overflow-hidden ${
-            isEven ? "bg-white" : "bg-secondary50"
-          }`}
+          className="w-full p-3 rounded-xl border border-secondary50  shadow-card mr-3 relative overflow-hidden"
           style={{
-            border: "1px solid var(--Secondary-50, #F96756)",
+            border: `1px solid ${tokenColor}`,
+            backgroundColor: tokenColor,
           }}
         >
           <BoxTop
@@ -18,21 +19,14 @@ const CardSchedule = ({ time, scheduleName, teacherName, isEven = true }) => {
             rotate={-67.677}
           />
           <div
-            className={`w-1 h-10 absolute rounded-r-md left-0 top-1/2 -translate-y-1/2 ${
-              isEven ? "bg-secondary50" : "bg-secondary70"
-            }`}
+            className="w-1 h-10 absolute rounded-r-md left-0 top-1/2 -translate-y-1/2"
+            style={{
+              backgroundColor: tokenColor,
+            }}
           ></div>
           <div className="flex flex-col gap-0.5">
-            <h3
-              className={`text-base font-medium ${
-                isEven ? " text-base90" : "text-white"
-              }`}
-            >
-              {scheduleName}
-            </h3>
-            <p className={`text-xs  ${isEven ? " text-base90" : "text-white"}`}>
-              {teacherName}
-            </p>
+            <h3 className="text-base font-medium text-white">{scheduleName}</h3>
+            <p className="text-xs  text-white">{teacherName}</p>
           </div>
         </div>
       </div>

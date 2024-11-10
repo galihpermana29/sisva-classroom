@@ -14,6 +14,7 @@ import BadgeAttendance from "../../../container/BadgeAttendance/BadgeAttendance"
 import { useClass } from "../../../../usecase/use-class";
 import AvatarProfile from "@/app/classroom/shared/presentation/Profile/AvatarProfile";
 import { formatDateDay } from "../../../../usecase/dateFormatter";
+import { useTokenColor } from "@/app/classroom/shared/usecase/use-token-color";
 
 const kumbh = Kumbh_Sans({ subsets: ["latin"] });
 
@@ -34,6 +35,7 @@ export default function TableAttendances() {
   const { classData } = useClass();
   const [attendanceData, setAttendanceData] = useState([]);
   const { loading: loadingUpdate, updateAttendance } = useUpdateAttendance();
+  const { tokenColor } = useTokenColor();
 
   useEffect(() => {
     if (attendances.length > 0) {
@@ -271,9 +273,17 @@ export default function TableAttendances() {
                       className={clsx(
                         "w-[110px] h-[70px] inline-flex justify-center gap-2 items-center p-4 rounded-3xl",
                         selectedOption === opt.key
-                          ? "bg-secondary50 border-secondary50 text-white"
+                          ? "text-white"
                           : "bg-white border-2 border-solid border-base60 text-base60"
                       )}
+                      style={
+                        selectedOption === opt.key
+                          ? {
+                              backgroundColor: tokenColor,
+                              borderColor: tokenColor,
+                            }
+                          : {}
+                      }
                     >
                       {selectedOption === opt.key && (
                         <div className="inline-flex items-center justify-center size-6 rounded-full bg-white">
@@ -363,13 +373,21 @@ export default function TableAttendances() {
                 {optionAttendance.map((opt) => (
                   <div key={opt.key}>
                     <label
-                      htmlFor={`nextprev-${opt.key}`}
+                      htmlFor={opt.key}
                       className={clsx(
                         "w-[110px] h-[70px] inline-flex justify-center gap-2 items-center p-4 rounded-3xl",
                         selectedOption === opt.key
-                          ? "bg-secondary50 border-secondary50 text-white"
+                          ? "text-white"
                           : "bg-white border-2 border-solid border-base60 text-base60"
                       )}
+                      style={
+                        selectedOption === opt.key
+                          ? {
+                              backgroundColor: tokenColor,
+                              borderColor: tokenColor,
+                            }
+                          : {}
+                      }
                     >
                       {selectedOption === opt.key && (
                         <div className="inline-flex items-center justify-center size-6 rounded-full bg-white">
