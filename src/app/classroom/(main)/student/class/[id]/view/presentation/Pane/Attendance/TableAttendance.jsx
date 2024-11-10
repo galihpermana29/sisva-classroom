@@ -1,7 +1,5 @@
 import { useMemo } from "react";
 import { Avatar, Table } from "antd";
-import { ConfigProvider } from "antd";
-import placeholderImage from "@/assets/placeholder.jpg";
 import { formatDateDay } from "../../../../usecase/dateFormatter";
 import { useAttendance } from "../../../../usecase/use-attendance";
 import BadgeAttendance from "../../../container/BadgeAttendance/BadgeAttendance";

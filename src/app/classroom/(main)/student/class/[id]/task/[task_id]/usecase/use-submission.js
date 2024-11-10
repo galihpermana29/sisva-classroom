@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   setSubmissionTask,
   uploadFile,
@@ -18,9 +18,17 @@ export function useSubmission() {
   const { id: student_id } = getClientSession();
   const { id: class_id, task_id } = params;
 
+  useEffect(() => {
+    const storedFileUrl = localStorage.getItem("submissionFileUrl");
+    if (storedFileUrl) {
+      setFileUrl(storedFileUrl);
+    }
+  }, []);
+
   const handleUploadFile = async (file) => {
     if (!file) {
       setFileUrl("");
+      localStorage.removeItem("submissionFileUrl");
       return;
     }
     setLoading(true);
@@ -33,6 +41,7 @@ export function useSubmission() {
     if (response.success) {
       toast.success("Success upload file");
       setFileUrl(response.data);
+      localStorage.setItem("submissionFileUrl", response.data);
     } else {
       toast.error("Error upload file");
     }
@@ -42,7 +51,7 @@ export function useSubmission() {
   const handleSubmitSubmission = async (value) => {
     setLoading(true);
     if (!fileUrl) {
-      toast.error("Failed send submission file submission is empty");
+      toast.error("Failed send submission, file submission is empty");
       setLoading(false);
       return;
     }
@@ -55,7 +64,8 @@ export function useSubmission() {
     const res = await setSubmissionTask(submissionPayload, task_id);
     if (res.success) {
       setLoading(false);
-      router.push(`/class/${class_id}`);
+      localStorage.removeItem("submissionFileUrl");
+      router.push(`/classroom/student/class/${class_id}`);
       toast.success("Success send your submission");
     } else {
       setLoading(false);

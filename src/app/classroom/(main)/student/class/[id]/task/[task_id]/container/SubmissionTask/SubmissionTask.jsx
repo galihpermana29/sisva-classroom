@@ -1,11 +1,9 @@
-"use client";
-
+import { useState } from "react";
 import SisvaButton from "@/app/classroom/shared/presentation/Button/GlobalButton";
 import { SisvaTextArea } from "@/app/classroom/shared/presentation/Input/SisvaInputField";
 import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
 import { Form } from "antd";
 import { useSubmission } from "../../usecase/use-submission";
-import { useState } from "react";
 import { useGetSubmission } from "../../usecase/use-get-submission";
 import SkeletonSubmissionTask from "../Skeleton/SkeletonSubmissionTask";
 import CardFile from "../Card/CardFile";
@@ -21,7 +19,8 @@ const SubmissionTask = ({ allowSubmission, allowOverdueSubmission }) => {
     handleUploadFile,
     handleSubmitSubmission,
     form,
-  } = useSubmission();
+    fileUrl,
+  } = useSubmission(submission.attachment_file_uri);
 
   if (loading) {
     return <SkeletonSubmissionTask />;
@@ -57,9 +56,9 @@ const SubmissionTask = ({ allowSubmission, allowOverdueSubmission }) => {
               setFileList={setFileList}
             />
           )}
-          {submission.attachment_file_uri && (
+          {(fileUrl || submission.attachment_file_uri) && (
             <div className="mt-3">
-              <CardFile file_name={submission.attachment_file_uri} />
+              <CardFile file_name={fileUrl || submission.attachment_file_uri} />
             </div>
           )}
         </Form.Item>
