@@ -1,6 +1,5 @@
 import { Divider } from "antd";
 import { BoxTop } from "@/app/classroom/shared/presentation/Box/Box";
-import { generalDateFormatter } from "../../usecase/helper";
 import AvatarProfile from "../Profile/AvatarProfile";
 
 const CardClass = ({
@@ -33,9 +32,7 @@ const CardClass = ({
         <div className="w-1 h-10 absolute rounded-r-md left-0 top-1/2 -translate-y-1/2 bg-secondary50"></div>
         <div className="flex flex-col gap-0.5">
           <h4 className="text-base text-base90 font-medium">{taskName}</h4>
-          <p className="text-base90 text-xs ">
-            {generalDateFormatter(deadline)}
-          </p>
+          <p className="text-base90 text-xs ">{deadline}</p>
         </div>
       </div>
     </div>
