@@ -6,10 +6,10 @@ const TopicBanner = ({ title }) => {
   return (
     <div
       className="relative w-full px-4 py-3 rounded-lg"
-      style={{ backgroundColor: `${tokenColor}20` }}
+      style={{ backgroundColor: `${tokenColor}30` }}
     >
       <div
-        className="absolute left-0 top-1/2 transform -translate-y-1/2 w-[2px] h-5 rounded-r-full"
+        className="absolute left-0 top-1/2 transform -translate-y-1/2 w-[3px] h-5 rounded-r-full"
         style={{
           backgroundColor: tokenColor,
         }}
