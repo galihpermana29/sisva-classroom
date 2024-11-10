@@ -7,14 +7,13 @@ import CardTaskSkeleton from "@/app/classroom/shared/presentation/Skeletons/Card
 import { DEADLINE_FORMAT_24, generalDateFormatter } from "@/app/classroom/shared/usecase/helper";
 import Link from "next/link";
 import { useGetAllTeacherTasks } from "../../usecase/useGetAllTeacherTasks";
-import styles from "./TaskSection.module.css";
 
 const TaskSection = () => {
   const { data: tasks, isLoading } = useGetAllTeacherTasks();
 
   return (
     <SectionLayout title="Tugasku">
-      <div className={`md:h-[225px] overflow-y-auto ${styles.scrollableDiv}`}>
+      <div className={`md:h-[225px] overflow-y-auto`}>
         <div className="flex flex-row md:flex-col md:gap-3">
           {isLoading ? (
             <div className="flex gap-2 md:flex-col">
