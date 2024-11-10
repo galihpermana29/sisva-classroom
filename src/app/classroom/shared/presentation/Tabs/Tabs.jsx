@@ -10,9 +10,6 @@ const Tabs = ({
   return (
     <ConfigProvider
       theme={{
-        token: {
-          colorPrimary: "#F96756",
-        },
         components: {
           Tabs: {
             colorText: "#98A2B3",

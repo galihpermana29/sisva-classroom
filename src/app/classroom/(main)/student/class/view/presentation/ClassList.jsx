@@ -36,9 +36,13 @@ const StudentClassList = ({ classes = [], isLoading = false }) => {
             teacherPhoto={classItem.teacher_photo}
             teacherName={classItem.teacher_name}
             group={classItem.student_group_name}
-            taskName={classItem?.tasks[0]?.name || "No Task"}
-            timeStamp={classItem?.tasks[0]?.deadline}
-            isEmptyTask={classItem.tasks.length === 0}
+            schedules={classItem.schedules}
+            isEmptySchedules={
+              classItem.schedules.length === 0 || !classItem.schedules
+            }
+            // taskName={classItem?.tasks[0]?.name || "No Task"}
+            // timeStamp={classItem?.tasks[0]?.deadline}
+            // isEmptyTask={classItem.tasks.length === 0}
           />
         </Link>
       ))}

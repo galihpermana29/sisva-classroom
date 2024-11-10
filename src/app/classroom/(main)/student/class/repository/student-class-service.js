@@ -68,3 +68,18 @@ export async function getUserById(id) {
     "Success to get user data"
   );
 }
+
+export async function getClassSchedules() {
+  const res = await AppFetchApi("/academic/v1/class-schedules", {
+    method: "GET",
+    headers: {
+      "X-Sisva-Source": "academic.curriculum.test",
+    },
+  });
+
+  return serverResponseHandler(
+    res,
+    "Error get class schedules",
+    "Success get class schedules"
+  );
+}

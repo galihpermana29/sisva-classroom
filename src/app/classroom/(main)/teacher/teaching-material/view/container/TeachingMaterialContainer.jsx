@@ -33,6 +33,7 @@ const TeachingMaterialContainer = ({ initialData }) => {
     handleDeleteTeachingMaterial,
     handleUploadFile,
     isLoadingForm,
+    setFileURI,
   } = useTeachingMaterialForm(setQueryFilter);
 
   return (
@@ -81,6 +82,7 @@ const TeachingMaterialContainer = ({ initialData }) => {
         isLoading={isLoadingForm}
         handleClose={handleClose}
         initialData={initialData}
+        setFileURI={setFileURI}
       />
       <DeleteConfirmation
         open={

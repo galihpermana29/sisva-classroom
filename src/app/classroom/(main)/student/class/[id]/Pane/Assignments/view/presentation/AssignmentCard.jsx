@@ -1,10 +1,12 @@
 import React from "react";
 import SisvaButton from "@/app/classroom/shared/presentation/Button/GlobalButton";
 import { useParams, useRouter } from "next/navigation";
+import { generalDateFormatter } from "@/app/classroom/shared/usecase/helper";
 
 const AssignmentCard = ({ assignment, assignmentName, desc, deadline }) => {
   const router = useRouter();
   const { id } = useParams();
+  const isSubmitted = assignment.attachment_file_uri ? true : false;
 
   return (
     <div className="p-4 rounded-md shadow-card">
@@ -12,7 +14,7 @@ const AssignmentCard = ({ assignment, assignmentName, desc, deadline }) => {
 
       <div className="pl-4">
         <CardSection title="Deadline">
-          <p>{deadline.replace("+00:00", "")}</p>
+          <p>{generalDateFormatter(deadline)}</p>
         </CardSection>
 
         <CardSection title="Deskripsi">
@@ -20,6 +22,14 @@ const AssignmentCard = ({ assignment, assignmentName, desc, deadline }) => {
             className="h-10 border line-clamp-2"
             dangerouslySetInnerHTML={{ __html: desc }}
           ></div>
+        </CardSection>
+
+        <CardSection title="Status Pengumpulan">
+          <p className={`font-bold ${isSubmitted ? "text-green-500" : "text-red-500"}`}>
+            {isSubmitted
+              ? "Sudah Dikumpulkan"
+              : "Belum Mengumpulkan"}
+          </p>
         </CardSection>
       </div>
 

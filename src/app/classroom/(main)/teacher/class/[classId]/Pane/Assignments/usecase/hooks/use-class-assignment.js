@@ -34,8 +34,6 @@ export const useClassAssignment = (classId) => {
     });
   }
 
-  console.log("assignmentGroups", assignmentGroups);
-
   return {
     assignmentGroups,
     isLoading,
@@ -52,9 +50,6 @@ async function getTaskWithGrouping(classId) {
       getAllTasks(classId),
       getAllTeachingPlan(),
     ]);
-
-    console.log("taskRes", taskRes);
-    console.log("teachingPlanRes", teachingPlanRes);
 
     const tasks = taskRes?.data || [];
     const teachingPlans = teachingPlanRes?.data || [];

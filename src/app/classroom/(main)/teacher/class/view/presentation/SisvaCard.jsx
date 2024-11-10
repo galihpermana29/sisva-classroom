@@ -1,15 +1,21 @@
+import { useTokenColor } from "@/app/classroom/shared/usecase/use-token-color";
 import clsx from "clsx";
 import React from "react";
 
 const SisvaCard = ({ children, className, onClick }) => {
+  const { tokenColor } = useTokenColor();
+
   return (
     <div
       className={clsx(
-        "cursor-pointer rounded-xl bg-primary relative p-3 sm:p-4 md:p-5",
+        "cursor-pointer rounded-xl relative p-3 sm:p-4 md:p-5",
         "transition-all duration-300 ease-in-out hover:shadow-lg",
         className
       )}
       onClick={onClick}
+      style={{
+        backgroundColor: tokenColor,
+      }}
     >
       <div
         className="absolute -top-4 -right-4 sm:-top-5 sm:-right-5 md:-top-6 md:-right-6 

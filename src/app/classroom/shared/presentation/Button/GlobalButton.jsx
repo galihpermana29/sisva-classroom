@@ -26,7 +26,7 @@ const SisvaButton = ({
 
   return (
     <Button
-      type="text"
+      type={btn_type === "primary" ? "primary" : "default"}
       rootClassName={buttonClassName}
       loading={loading}
       disabled={disabled}

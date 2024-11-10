@@ -14,7 +14,7 @@ const DeleteConfirmation = ({
       title={title}
       open={open}
       onCancel={handleClose}
-      width={400}
+      width={430}
       footer={
         <div className="flex items-center gap-2 justify-end">
           <SisvaButton

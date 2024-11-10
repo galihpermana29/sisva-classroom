@@ -1,11 +1,12 @@
 import { Modal } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SisvaInputSearch } from "../Input/SisvaInputField";
 import { SisvaSelect } from "../Input/SelectField";
 import TeachingMaterialTable from "../../../(main)/teacher/class/[classId]/create-rpp/view/presentation/Table/TeachingMaterialTable";
 import SisvaButton from "../Button/GlobalButton";
 import { FilterFunnel01 } from "@untitled-ui/icons-react";
 import { useTeachingMaterial } from "@/app/classroom/(main)/teacher/teaching-material/usecase/use-teaching-material";
+import { useModal } from "@/app/classroom/(main)/teacher/class/[classId]/create-rpp/view/container/Provider/ModalProvider";
 
 const SelectTeachingMaterialModal = ({
   open,
@@ -17,6 +18,8 @@ const SelectTeachingMaterialModal = ({
   const [isMobileFilterVisible, setIsMobileFilterVisible] = useState(false);
   const [isMoreFiltersVisible, setIsMoreFiltersVisible] = useState(false);
 
+  const { modalState } = useModal();
+
   const {
     dropDownData,
     handleStudyProgramFilter,
@@ -25,6 +28,7 @@ const SelectTeachingMaterialModal = ({
     queryFilter,
     rawStructureMaterialData,
     isLoading,
+    handleGetPreFieldTeachingMaterial,
   } = useTeachingMaterial(initialData);
 
   const [selectedState, setSelectedState] = useState([]);
@@ -55,6 +59,15 @@ const SelectTeachingMaterialModal = ({
     setSelectedRowKeys([]);
   };
 
+  useEffect(() => {
+    const getPrefield = async () => {
+      await handleGetPreFieldTeachingMaterial();
+    };
+    if (modalState?.type === "select-teaching-material") {
+      getPrefield();
+    }
+  }, [modalState]);
+
   const MainFilters = () => (
     <>
       <SisvaSelect
@@ -64,6 +77,7 @@ const SelectTeachingMaterialModal = ({
         options={dropDownData.curriculumDropdown}
         onChange={(e) => generalHandleFilter("curriculum", e)}
         value={queryFilter.curriculum === "" ? null : queryFilter.curriculum}
+        allowClear
       />
       <SisvaSelect
         customSize="md"
@@ -75,6 +89,7 @@ const SelectTeachingMaterialModal = ({
         value={
           queryFilter.study_program === "" ? null : queryFilter.study_program
         }
+        allowClear
       />
     </>
   );
@@ -88,6 +103,7 @@ const SelectTeachingMaterialModal = ({
         options={dropDownData.subjectDropdown}
         onChange={(e) => generalHandleFilter("subject", e)}
         value={queryFilter.subject === "" ? null : queryFilter.subject}
+        allowClear
       />
       <SisvaSelect
         customSize="md"
@@ -97,6 +113,7 @@ const SelectTeachingMaterialModal = ({
         onChange={(e) => generalHandleFilter("grade", e)}
         value={queryFilter.grade === "" ? null : queryFilter.grade}
         disabled={dropDownData.gradeDropdown.length === 0}
+        allowClear
       />
       <SisvaSelect
         customSize="md"
@@ -105,6 +122,7 @@ const SelectTeachingMaterialModal = ({
         options={dropDownData.teacherDropdwon}
         onChange={(e) => generalHandleFilter("teacher", e)}
         value={queryFilter.teacher === "" ? null : queryFilter.teacher}
+        allowClear
       />
     </div>
   );
