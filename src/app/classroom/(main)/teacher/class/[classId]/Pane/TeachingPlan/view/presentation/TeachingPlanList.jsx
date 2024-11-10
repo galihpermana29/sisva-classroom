@@ -3,7 +3,7 @@ import Image from "next/image";
 
 import PopOverActions from "./PopOverActions";
 import TeachingPlanSection from "./TeachingPlanSection";
-import TeachingPlanTitle from "./TeachingPlanTitle";
+import TeachingPlanTitle from "@/app/classroom/shared/presentation/TitleBar/TeachingPlanTitle";
 
 import MaterialIcon from "@/assets/images/teaching-plan/material.svg";
 import TaskIcon from "@/assets/images/teaching-plan/task.png";

@@ -8,15 +8,19 @@ import { useGetAllAnnouncements } from "../../usecase/useGetAllAnnouncements";
 import AnnouncementImage from "@/assets/images/announcement.png";
 import CardAnnouncementSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardAnnouncementSkeleton";
 import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
+import { useTokenColor } from "@/app/classroom/shared/usecase/use-token-color";
 
 const AnnouncementSection = () => {
   const { data: announcements, isLoading } = useGetAllAnnouncements();
+  const { tokenColor } = useTokenColor();
 
   return (
     <SectionLayout
       title={"Pengumuman"}
       suffixContent={
-        <Link href="" className="text-xs text-secondary50">
+        <Link href="" className="text-xs"
+          style={{ color: tokenColor }}
+        >
           Lihat lebih
         </Link>
       }
