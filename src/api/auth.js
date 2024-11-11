@@ -1,4 +1,4 @@
-import api, { getBearerToken, getSchoolId, getUserId } from '.';
+import api, { getBearerToken, getSchoolId, getUserId } from ".";
 
 const BEARER_TOKEN = getBearerToken();
 const USER_ID = getUserId();
@@ -7,7 +7,7 @@ const SCHOOL_ID = getSchoolId();
 const AuthAPI = {
   login(payload) {
     const headers = {
-      'X-Sisva-Source': 'test',
+      "X-Sisva-Source": "test",
     };
 
     return api.post(`/user/login`, payload, { headers });
@@ -15,9 +15,9 @@ const AuthAPI = {
 
   changeUserPass(payload) {
     const headers = {
-      'X-Sisva-Source': 'test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
 
@@ -26,9 +26,9 @@ const AuthAPI = {
 
   resetUserPass(payload) {
     const headers = {
-      'X-Sisva-Source': 'test',
-      'X-Sisva-UserID': USER_ID,
-      'X-Sisva-SchoolID': SCHOOL_ID,
+      "X-Sisva-Source": "test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN}`,
     };
 
