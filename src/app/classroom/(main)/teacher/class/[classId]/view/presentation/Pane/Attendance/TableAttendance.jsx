@@ -373,7 +373,7 @@ export default function TableAttendances() {
                 {optionAttendance.map((opt) => (
                   <div key={opt.key}>
                     <label
-                      htmlFor={opt.key}
+                      htmlFor={`nextprev-${opt.key}`}
                       className={clsx(
                         "w-[110px] h-[70px] inline-flex justify-center gap-2 items-center p-4 rounded-3xl",
                         selectedOption === opt.key
