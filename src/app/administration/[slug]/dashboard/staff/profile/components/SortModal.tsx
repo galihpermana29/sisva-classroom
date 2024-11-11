@@ -1,3 +1,8 @@
+import {
+  useAdministrationDispatch,
+  useAdministrationSelector,
+} from "@/app/administration/hooks";
+import type { SortDirection } from "@/globalcomponents/types";
 import { Cancel } from "@mui/icons-material";
 import {
   Button,
@@ -8,28 +13,24 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Dispatch, memo, SetStateAction } from "react";
-import { SortBy, SortSettings, SortType } from "../content";
+import { memo, useState } from "react";
+import type { SortField } from "../utils/staffProfileSlice";
+import {
+  selectSortDirection,
+  selectSortField,
+  setSortDirection,
+  setSortField,
+} from "../utils/staffProfileSlice";
 
-interface SortModalProps {
-  openSortModal: boolean;
-  setOpenSortModal: Dispatch<SetStateAction<boolean>>;
-  setSortBy: Dispatch<SetStateAction<SortBy>>;
-  setSortSettings: Dispatch<SetStateAction<SortSettings | null>>;
-  setSortType: Dispatch<SetStateAction<SortType>>;
-  sortBy: SortBy;
-  sortType: SortType;
-}
+function SortModal({ openSortModal, setOpenSortModal }) {
+  const sortField = useAdministrationSelector(selectSortField);
+  const sortDirection = useAdministrationSelector(selectSortDirection);
+  const dispatch = useAdministrationDispatch();
 
-function SortModal({
-  openSortModal,
-  setOpenSortModal,
-  setSortBy,
-  setSortSettings,
-  setSortType,
-  sortBy,
-  sortType,
-}: SortModalProps) {
+  const [sortFieldInput, setSortFieldInput] = useState<SortField>(sortField);
+  const [sortDirectionInput, setSortDirectionInput] =
+    useState<SortDirection>(sortDirection);
+
   return (
     <Modal open={openSortModal} onClose={() => setOpenSortModal(false)}>
       <Stack
@@ -56,14 +57,14 @@ function SortModal({
           select
           size="small"
           label="Data"
-          value={sortBy}
-          onChange={(e) => setSortBy(e.target.value as SortBy)}
+          value={sortFieldInput}
+          onChange={(e) => setSortFieldInput(e.target.value as SortField)}
           sx={{ flex: 1, mt: 2 }}
           InputProps={{
-            startAdornment: sortBy && (
+            startAdornment: sortFieldInput && (
               <Cancel
                 onClick={() => {
-                  setSortBy("");
+                  setSortFieldInput("");
                 }}
                 sx={{
                   fontSize: 14,
@@ -91,9 +92,10 @@ function SortModal({
           select
           size="small"
           label="Jenis Urutan"
-          value={sortType}
-          disabled={!sortBy}
-          onChange={(e) => setSortType(e.target.value as SortType)}
+          value={sortDirectionInput}
+          onChange={(e) =>
+            setSortDirectionInput(e.target.value as SortDirection)
+          }
           sx={{ flex: 1, mt: 2, mb: 2 }}
         >
           {[
@@ -123,8 +125,13 @@ function SortModal({
             variant="contained"
             sx={{ flex: 1 }}
             onClick={() => {
+              dispatch(setSortField(sortFieldInput));
+              dispatch(
+                setSortDirection(
+                  sortDirectionInput ? sortDirectionInput : "ascending"
+                )
+              );
               setOpenSortModal(false);
-              setSortSettings({ sortBy: sortBy, sortType: sortType });
             }}
           >
             Simpan

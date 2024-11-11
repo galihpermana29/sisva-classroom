@@ -8,14 +8,7 @@ import { memo } from "react";
 import { selectSearchText, setSearchText } from "../utils/staffProfileSlice";
 import Filters from "./Filters";
 
-function FilterBar({
-  permissionFilter,
-  search,
-  setPermissionFilter,
-  setSearch,
-  setTypeFilter,
-  typeFilter,
-}) {
+function FilterBar() {
   const searchText = useAdministrationSelector(selectSearchText);
   const dispatch = useAdministrationDispatch();
 
@@ -28,7 +21,6 @@ function FilterBar({
       }}
     >
       <TextField
-        // id="outlined-search"
         placeholder="Cari Karyawan"
         size="small"
         type="text"
@@ -65,18 +57,7 @@ function FilterBar({
         }}
       />
       <Hidden lgDown>
-        <Filters
-          permissionFilter={permissionFilter}
-          typeFilter={typeFilter}
-          onChangeType={(e) => setTypeFilter(e.target.value)}
-          onClickCancelType={() => {
-            setTypeFilter("");
-          }}
-          onChangePermission={(e) => setPermissionFilter(e.target.value)}
-          onClickCancelPermission={() => {
-            setPermissionFilter("");
-          }}
-        />
+        <Filters />
       </Hidden>
     </Stack>
   );

@@ -7,20 +7,12 @@ import FilterBar from "./FilterBar";
 import MobileFilterAndSortBar from "./MobileFilterAndSortBar";
 
 function TableParent({
-  search,
-  permissionFilter,
-  typeFilter,
-  setTypeFilter,
-  setPermissionFilter,
-  setSearch,
   handleClick,
   anchorEl,
   open,
   handleClose,
-  getAllUsers,
   setOpenCreateModal,
   setOpenSortModal,
-  filteredData,
   deleteUser,
 }) {
   return (
@@ -48,33 +40,19 @@ function TableParent({
           mt: { xs: 1, lg: 0 },
         }}
       >
-        <FilterBar
-          permissionFilter={permissionFilter}
-          search={search}
-          setPermissionFilter={setPermissionFilter}
-          setSearch={setSearch}
-          setTypeFilter={setTypeFilter}
-          typeFilter={typeFilter}
-        />
+        <FilterBar />
         <ButtonBar
           anchorEl={anchorEl}
-          getAllUsers={getAllUsers}
           handleClick={handleClick}
           handleClose={handleClose}
           open={open}
           setOpenCreateModal={setOpenCreateModal}
         />
       </Stack>
-      <MobileFilterAndSortBar
-        permissionFilter={permissionFilter}
-        setOpenSortModal={setOpenSortModal}
-        setPermissionFilter={setPermissionFilter}
-        setTypeFilter={setTypeFilter}
-        typeFilter={typeFilter}
-      />
+      <MobileFilterAndSortBar setOpenSortModal={setOpenSortModal} />
       <Divider />
       <Box sx={{ flex: 1, overflowY: "hidden" }}>
-        <DataTable filteredData={filteredData} deleteUser={deleteUser} />
+        <DataTable deleteUser={deleteUser} />
       </Box>
     </Stack>
   );

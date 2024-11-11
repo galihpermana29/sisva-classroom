@@ -3,13 +3,7 @@ import { Button, Divider, Stack } from "@mui/material";
 import { memo } from "react";
 import Filters from "./Filters";
 
-function MobileFilterAndSortBar({
-  permissionFilter,
-  setOpenSortModal,
-  setPermissionFilter,
-  setTypeFilter,
-  typeFilter,
-}) {
+function MobileFilterAndSortBar({ setOpenSortModal }) {
   return (
     <Stack
       sx={{
@@ -20,18 +14,7 @@ function MobileFilterAndSortBar({
         display: { xs: "flex", lg: "none" },
       }}
     >
-      <Filters
-        permissionFilter={permissionFilter}
-        typeFilter={typeFilter}
-        onChangeType={(e) => setTypeFilter(e.target.value)}
-        onClickCancelType={() => {
-          setTypeFilter("");
-        }}
-        onChangePermission={(e) => setPermissionFilter(e.target.value)}
-        onClickCancelPermission={() => {
-          setPermissionFilter("");
-        }}
-      />
+      <Filters />
       <Stack sx={{ flexDirection: "row", py: 1 }}>
         <Divider orientation="vertical" sx={{ mx: 1 }} />
         <Button

@@ -7,7 +7,6 @@ import handleXLSXUploadStaff from "../utils/handleXLSXUploadStaff";
 
 function ButtonBar({
   anchorEl,
-  getAllUsers,
   handleClick,
   handleClose,
   open,
@@ -100,7 +99,6 @@ function ButtonBar({
                         setImportXLSXAlertTitle("File import berhasil");
                         setImportAlert(importReport);
                         setIsOpenImportXLSXAlert(true);
-                        getAllUsers();
                       },
                       (importReport) => {
                         setImportXLSXAlertTitle("File import bermasalah");

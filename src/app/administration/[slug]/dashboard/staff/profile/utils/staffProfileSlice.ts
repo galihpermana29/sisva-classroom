@@ -3,7 +3,7 @@ import type { Permission, Role, SortDirection } from "@/globalcomponents/types";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 
-type SortField = "name" | "username" | "";
+export type SortField = "name" | "username" | "";
 
 interface StaffProfileState {
   searchText: string;

@@ -13,14 +13,7 @@ import {
   setRoleFilter,
 } from "../utils/staffProfileSlice";
 
-export default function Filters({
-  permissionFilter,
-  typeFilter,
-  onChangeType,
-  onClickCancelType,
-  onChangePermission,
-  onClickCancelPermission,
-}) {
+export default function Filters() {
   const roleFilter = useAdministrationSelector(selectRoleFilter);
   const permissionFilter2 = useAdministrationSelector(selectPermissionFilter);
   const dispatch = useAdministrationDispatch();
