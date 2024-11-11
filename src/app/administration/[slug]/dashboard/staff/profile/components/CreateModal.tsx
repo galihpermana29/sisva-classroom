@@ -14,7 +14,6 @@ interface CreateModalProps {
   formik: any;
   initialData: {
     name: string;
-    username: string;
     type: string;
     permissions: any[];
     password: string;
