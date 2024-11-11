@@ -27,5 +27,3 @@ export const JadwalKeseluruhanSwitch = () => {
     </Stack>
   );
 };
-
-export default JadwalKeseluruhanSwitch;
