@@ -3,6 +3,7 @@
 import { SortIcon } from "@/assets/SVGs";
 import { useQueryParam } from "@/hooks/useQueryParam";
 import { Close } from "@mui/icons-material";
+import SyncIcon from "@mui/icons-material/Sync";
 import {
   Button,
   Checkbox,
@@ -25,7 +26,6 @@ import {
 import FilterReset from "../filters/FilterReset";
 import { KATEGORI_FIELD_NAME, KategoriSelect } from "../filters/KategoriSelect";
 import { STATUS_FIELD_NAME, StatusSelect } from "../filters/StatusSelect";
-import ResetIcon from "../icons/ResetIcon";
 
 const statusFilters = [
   {
@@ -131,7 +131,7 @@ export const TagihanFilters = () => {
       {showMobileReset && (
         <Button
           sx={{ display: { xs: "flex", lg: "none", fontWeight: 600 } }}
-          startIcon={<ResetIcon color={theme.palette.primary.main} />}
+          startIcon={<SyncIcon />}
           onClick={handleResetFilters}
         >
           Reset

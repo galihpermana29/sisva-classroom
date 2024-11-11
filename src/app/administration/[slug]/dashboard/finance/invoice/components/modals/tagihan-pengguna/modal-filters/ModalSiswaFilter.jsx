@@ -1,8 +1,8 @@
 import { useGetAllPeriods } from "@/hooks/useGetAllPeriods";
 import { useGetAllStudentGroups } from "@/hooks/useGetAllStudentGroups";
 import { useGetAllStudyPrograms } from "@/hooks/useGetAllStudyPrograms";
+import SyncIcon from "@mui/icons-material/Sync";
 import { Button, Stack, Typography, useTheme } from "@mui/material";
-import ResetIcon from "../../../icons/ResetIcon";
 import { ModalSelect } from "./ModalSelect";
 
 export const ModalSiswaFilter = ({ filters, setFilters }) => {
@@ -97,7 +97,7 @@ export const ModalSiswaFilter = ({ filters, setFilters }) => {
         />
         <Button
           className="min-w-max px-3"
-          startIcon={<ResetIcon color={theme.palette.primary.main} />}
+          startIcon={<SyncIcon />}
           onClick={onReset}
         >
           <Typography
