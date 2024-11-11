@@ -1,7 +1,7 @@
+import { useDebouncedState } from "@mantine/hooks";
 import { Cancel, Search } from "@mui/icons-material";
 import { Hidden, InputAdornment, Stack, TextField } from "@mui/material";
-import { memo, useEffect, useState } from "react";
-import { useDebounce } from "use-debounce";
+import { memo, useEffect } from "react";
 import Filters from "./Filters";
 
 function FilterBar({
@@ -12,12 +12,11 @@ function FilterBar({
   setTypeFilter,
   typeFilter,
 }) {
-  const [inputText, setInputText] = useState(search);
-  const [debouncedInputText] = useDebounce(inputText, 200);
+  const [inputText, setInputText] = useDebouncedState(search, 200);
 
   useEffect(() => {
-    setSearch(debouncedInputText);
-  }, [debouncedInputText, setSearch]);
+    setSearch(inputText);
+  }, [inputText, setSearch]);
 
   return (
     <Stack

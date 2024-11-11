@@ -1,6 +1,6 @@
+import { useDebouncedValue } from "@mantine/hooks";
 import { useParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useDebounce } from "use-debounce";
 import {
   restructTeachingMaterialListRpp,
   searchFilter,
@@ -20,7 +20,7 @@ export const useRppTeachingMaterial = (initialData, type) => {
   const [isLoading, setIsLoading] = useState(false);
   const [queryFilter, setQueryFilter] = useState(INITIAL_QUERY_FILTER);
   const { classId, id } = useParams();
-  const [debouncedQueryFilter] = useDebounce(queryFilter, 200);
+  const [debouncedQueryFilter] = useDebouncedValue(queryFilter, 200);
 
   const hasActiveFilters = useMemo(
     () => Object.values(queryFilter).some((value) => value !== ""),

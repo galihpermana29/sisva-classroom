@@ -1,7 +1,7 @@
+import { useDebouncedValue } from "@mantine/hooks";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
-import { useDebounce } from "use-debounce";
 import {
   getGradeDropdownById,
   getStudentGroupList,
@@ -46,7 +46,7 @@ export const useTeachingMaterial = (initialData) => {
     [queryFilter]
   );
 
-  const [debouncedQueryFilter] = useDebounce(queryFilter, 200);
+  const [debouncedQueryFilter] = useDebouncedValue(queryFilter, 200);
 
   const classData = useSelector((state) => state.classData.detailClass);
 

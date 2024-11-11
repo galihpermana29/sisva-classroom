@@ -1,13 +1,13 @@
+import { useDebouncedValue } from "@mantine/hooks";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useDebounce } from "use-debounce";
 import {
-    getGradeDropdownById,
-    getStudentGroupList,
+  getGradeDropdownById,
+  getStudentGroupList,
 } from "../../repository/teacher-class-service";
 import {
-    createDropdown,
-    getUniqueClasses,
-    searchFilter,
+  createDropdown,
+  getUniqueClasses,
+  searchFilter,
 } from "../data-mapper-service";
 
 const createInitialState = (initialData) => ({
@@ -32,7 +32,7 @@ export const useTeacherClass = (initialData) => {
     createInitialState(initialData)
   );
   const [queryFilter, setQueryFilter] = useState(INITIAL_QUERY_FILTER);
-  const [debouncedQueryFilter] = useDebounce(queryFilter, 200);
+  const [debouncedQueryFilter] = useDebouncedValue(queryFilter, 200);
 
   const hasActiveFilters = useMemo(
     () => Object.values(queryFilter).some((value) => value !== ""),

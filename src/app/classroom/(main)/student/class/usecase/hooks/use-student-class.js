@@ -1,21 +1,22 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import { useDebounce } from 'use-debounce';
-import { getUserDataCookie } from '../../../../teacher/usecase/getUserDataCookie';
-import { getUserById } from '../../../repository/apiService';
+import { useDebouncedValue } from "@mantine/hooks";
+
+import { getUserDataCookie } from "../../../../teacher/usecase/getUserDataCookie";
+import { getUserById } from "../../../repository/apiService";
 import {
   getAllClasses,
   getAllStudentsInStudentGroups,
   getAllTaskByClassId,
   getClassSchedules,
-} from '../../repository/student-class-service';
+} from "../../repository/student-class-service";
 import {
   createDropdown,
   filterJoinedGroups,
   matchClassesToGroups,
   searchFilter,
-} from '../data-mapper-service';
-import { isOverdue } from '../date-helper';
+} from "../data-mapper-service";
+import { isOverdue } from "../date-helper";
 
 export const useStudentClass = () => {
   const [initialClasses, setInitialClasses] = useState([]);
@@ -25,16 +26,16 @@ export const useStudentClass = () => {
   const { id: userId } = getUserDataCookie();
 
   const initialFilter = {
-    subject: '',
-    teacherName: '',
-    search: '',
+    subject: "",
+    teacherName: "",
+    search: "",
   };
   const [filter, setFilter] = useState(initialFilter);
   const [dropdownFilterData, setDropdownFilterData] = useState({
     subject: [],
     teacherName: [],
   });
-  const [debouncedFilter] = useDebounce(filter, 500);
+  const [debouncedFilter] = useDebouncedValue(filter, 500);
 
   async function fetchClasses() {
     try {
@@ -49,7 +50,7 @@ export const useStudentClass = () => {
       const { data: allClasses, success: successClasses } = classesResponse;
 
       if (!successStudents || !successClasses) {
-        throw new Error('Failed to fetch data.');
+        throw new Error("Failed to fetch data.");
       }
 
       const joinedGroups = filterJoinedGroups(studentsInGroups, userId);
@@ -66,19 +67,19 @@ export const useStudentClass = () => {
         setDropdownFilterData({
           subject: createDropdown(
             classesWithSchedules,
-            'subject_name',
-            'subject_id'
+            "subject_name",
+            "subject_id"
           ),
           teacherName: createDropdown(
             classesWithSchedules,
-            'teacher_name',
-            'teacher_id'
+            "teacher_name",
+            "teacher_id"
           ),
         });
       }
     } catch (error) {
-      setError('An error occurred while fetching classes or tasks.');
-      console.error('Error fetching classes or tasks:', error);
+      setError("An error occurred while fetching classes or tasks.");
+      console.error("Error fetching classes or tasks:", error);
     } finally {
       setIsLoading(false);
     }
@@ -160,7 +161,7 @@ const fetchClassSchedules = async (classes) => {
     const classesWithSchedules = await Promise.all(schedulesPromises);
     return classesWithSchedules;
   } catch (error) {
-    throw new Error('Error fetching schedules for classes' + error);
+    throw new Error("Error fetching schedules for classes" + error);
   }
 };
 
@@ -199,6 +200,6 @@ const fetchTasksForClasses = async (classes) => {
     const classesWithTasks = await Promise.all(tasksPromises);
     return classesWithTasks;
   } catch (error) {
-    throw new Error('Error fetching tasks for classes' + error);
+    throw new Error("Error fetching tasks for classes" + error);
   }
 };

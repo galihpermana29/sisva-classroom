@@ -1,9 +1,9 @@
+import { useDebouncedValue } from "@mantine/hooks";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { useDebounce } from "use-debounce";
 import {
-    getAllTasks,
-    getAllTeachingPlan,
+  getAllTasks,
+  getAllTeachingPlan,
 } from "../../repository/student-assignment-service";
 import { groupTaskByTeachingPlan, searchFilter } from "../data-mapper";
 
@@ -11,7 +11,7 @@ export const useClassAssignment = (classId) => {
   const [filter, setFilter] = useState({
     search: "",
   });
-  const [debouncedFilter] = useDebounce(filter, 500);
+  const [debouncedFilter] = useDebouncedValue(filter, 500);
 
   const {
     data: assignmentGroups = [],
