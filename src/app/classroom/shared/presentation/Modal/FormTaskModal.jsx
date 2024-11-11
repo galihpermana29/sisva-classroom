@@ -13,9 +13,10 @@ const FormTaskModal = ({
   title = "Tambah Tugas",
   handleFileUpload,
   isLoading,
+  setFileURI,
 }) => {
   const { form, isLoadingGetDetail, fileList, setFileList } =
-    useGetDetailTask();
+    useGetDetailTask(setFileURI);
 
   const handleCloseModal = () => {
     form.resetFields();

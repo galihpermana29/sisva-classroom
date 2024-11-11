@@ -3,6 +3,7 @@ import pdfIcon from "@/assets/classroom/teacher/PDFIcon.png";
 import { Download01, Edit01, Trash01 } from "@untitled-ui/icons-react";
 import Image from "next/image";
 
+import DowndloadableFileLabel from "@/app/classroom/shared/presentation/DowndloadableFileLabel";
 import React from "react";
 import { useModal } from "../../container/Provider/ModalProvider";
 import CustomRppTable from "./CustomRppTable";
@@ -21,10 +22,18 @@ const TeachingMaterialTable = ({
       title: "Nama Bahan Ajar",
       dataIndex: "description",
       key: "description",
-      render: (data) => (
+      render: (data, record) => (
         <div className="flex items-center gap-2">
           <Image src={pdfIcon} width={20} height={20} alt="pdf-icon" />
-          <span className="text-[#1D2939]">{data}</span>
+          {!record.attachment_file_uri ? (
+            <span className="text-[#1D2939]">{data}</span>
+          ) : (
+            <DowndloadableFileLabel url={record.attachment_file_uri}>
+              <span className="text-[#1D2939] transition-all hover:text-[#7c7c7c] font-semibold">
+                {data}
+              </span>
+            </DowndloadableFileLabel>
+          )}
         </div>
       ),
     },

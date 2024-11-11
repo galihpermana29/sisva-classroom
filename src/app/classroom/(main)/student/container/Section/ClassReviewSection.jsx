@@ -6,6 +6,10 @@ import CardClass from "@/app/classroom/shared/presentation/Card/CardClass";
 import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
 import SectionLayout from "@/app/classroom/shared/presentation/Layouts/SectionLayout";
 import CardClassSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardClassSkeleton";
+import {
+  DEADLINE_FORMAT_24,
+  generalDateFormatter,
+} from "@/app/classroom/shared/usecase/helper";
 
 const ClassReviewSection = () => {
   const { classReviews, isLoading } = useGetClassReviews();
@@ -26,7 +30,10 @@ const ClassReviewSection = () => {
                 studentClass={classReview.class_name}
                 teacherName={classReview.teacher_name}
                 taskName={classReview.name}
-                deadline={convertDateTime12To24(classReview.deadline)}
+                deadline={generalDateFormatter(
+                  classReview.deadline,
+                  DEADLINE_FORMAT_24
+                )}
                 image={classReview.profile_uri}
               />
             ))

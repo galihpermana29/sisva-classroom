@@ -1,6 +1,12 @@
-import { getClientSession } from '@/app/classroom/shared/usecase/session/get-client-session';
-import { Form } from 'antd';
-import { useParams, useRouter } from 'next/navigation';
+import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
+import { Form } from "antd";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import {
+  setSubmissionTask,
+  uploadFile,
+} from "../repository/task-submission-repository";
 
 export function useSubmission() {
   const [form] = Form.useForm();
@@ -12,23 +18,32 @@ export function useSubmission() {
   const { id: student_id } = getClientSession();
   const { id: class_id, task_id } = params;
 
+  useEffect(() => {
+    const storedFileUrl = localStorage.getItem("submissionFileUrl");
+    if (storedFileUrl) {
+      setFileUrl(storedFileUrl);
+    }
+  }, []);
+
   const handleUploadFile = async (file) => {
     if (!file) {
-      setFileUrl(null);
+      setFileUrl("");
+      localStorage.removeItem("submissionFileUrl");
       return;
     }
     setLoading(true);
 
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append("file", file);
 
     const response = await uploadFile(formData);
 
     if (response.success) {
-      toast.success('Success upload file');
+      toast.success("Success upload file");
       setFileUrl(response.data);
+      localStorage.setItem("submissionFileUrl", response.data);
     } else {
-      toast.error('Error upload file');
+      toast.error("Error upload file");
     }
     setLoading(false);
   };
@@ -36,7 +51,7 @@ export function useSubmission() {
   const handleSubmitSubmission = async (value) => {
     setLoading(true);
     if (!fileUrl) {
-      toast.error('Failed send submission file submission is empty');
+      toast.error("Failed send submission, file submission is empty");
       setLoading(false);
       return;
     }
@@ -49,11 +64,12 @@ export function useSubmission() {
     const res = await setSubmissionTask(submissionPayload, task_id);
     if (res.success) {
       setLoading(false);
-      router.push(`/class/${class_id}`);
-      toast.success('Success send your submission');
+      localStorage.removeItem("submissionFileUrl");
+      router.push(`/classroom/student/class/${class_id}`);
+      toast.success("Success send your submission");
     } else {
       setLoading(false);
-      toast.error('Failed send your submission');
+      toast.error("Failed send your submission");
     }
   };
 

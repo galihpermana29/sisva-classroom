@@ -85,6 +85,20 @@ export async function getAllSubjectName() {
   );
 }
 
+export async function getSubjectById(id) {
+  const res = await AppFetchApi(`/academic/v1/subjects/${id}`, {
+    method: "GET",
+    headers: {
+      "X-Sisva-Source": "academic.curriculum.test",
+    },
+  });
+  return serverResponseHandler(
+    res,
+    "Error fetch subject",
+    "Success fetch subject"
+  );
+}
+
 export async function getAllTeacher() {
   const res = await AppFetchApi("/user/v1/users?types=teacher", {
     method: "GET",

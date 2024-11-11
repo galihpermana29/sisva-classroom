@@ -23,7 +23,7 @@ const SignInContainer = () => {
             <Image src={BrandLogo} alt="SISVA Classroom" />
           </div>
           <div className="flex flex-col gap-3">
-            <span className="text-2xl font-semibold text-primary">
+            <span className="text-2xl font-semibold text-[#1677ff]">
               Masukan data akunmu
             </span>
             <LoginForm />

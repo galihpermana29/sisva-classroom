@@ -1,3 +1,4 @@
+import DowndloadableFileLabel from "@/app/classroom/shared/presentation/DowndloadableFileLabel";
 import pdfIcon from "@/assets/classroom/teacher/PDFIcon.png";
 import { Edit01, Trash01 } from "@untitled-ui/icons-react";
 import DOMPurify from "dompurify";
@@ -31,10 +32,18 @@ const TaskTable = ({ dataSource }) => {
       dataIndex: "attachment_file_uri",
       key: "attachment_file_uri",
       render: (data) => (
-        <div className="flex items-center gap-2">
-          <Image src={pdfIcon} width={20} height={20} alt="pdf-icon" />
-          <span className="text-[#1D2939]">{data}</span>
-        </div>
+        <>
+          {!data ? (
+            <span className="italic">No attachment</span>
+          ) : (
+            <DowndloadableFileLabel url={data}>
+              <div className="flex items-center gap-2 transition-all hover:text-[#7c7c7c]">
+                <Image src={pdfIcon} width={20} height={20} alt="pdf-icon" />
+                <span>{data}</span>
+              </div>
+            </DowndloadableFileLabel>
+          )}
+        </>
       ),
     },
     {

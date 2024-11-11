@@ -3,6 +3,7 @@ import { Avatar } from "antd";
 import React from "react";
 import { BoxLeft, BoxRight, BoxTop } from "../Box/Box";
 import AvatarProfile from "../Profile/AvatarProfile";
+import { useTokenColor } from "../../usecase/use-token-color";
 
 const CardProfile = ({
   name,
@@ -11,8 +12,14 @@ const CardProfile = ({
   identityNumber,
   profilePic,
 }) => {
+  const { tokenColor } = useTokenColor();
   return (
-    <div className="text-white relative flex flex-col gap-3 p-5 bg-gradient-to-br from-primary_hover to-primary rounded-b-3xl md:rounded-xl">
+    <div
+      className="text-white relative flex flex-col gap-3 p-5 rounded-b-3xl md:rounded-xl"
+      style={{
+        background: `linear-gradient(to bottom right, ${tokenColor}, ${tokenColor})`,
+      }}
+    >
       <BoxLeft />
       <BoxTop
         className="size-[103px] lg:size-[204px] left-1/2 -translate-x-1/3 -top-1/4 lg:-top-full"

@@ -26,9 +26,8 @@ export const useGetDetailClass = (id) => {
       dispatch(setIsFetching(false));
       setIsLoading(false);
     };
-    if (!classData) {
-      handleGetDetail();
-    }
+
+    handleGetDetail();
   }, []);
 
   return { isLoading };

@@ -7,6 +7,7 @@ import TaskTable from "../presentation/Table/TaskTable";
 import TeachingMaterialTable from "../presentation/Table/TeachingMaterialTable";
 
 import SisvaRichText from "@/app/classroom/shared/presentation/Input/RichText";
+import { useTokenColor } from "@/app/classroom/shared/usecase/use-token-color";
 import dynamic from "next/dynamic";
 import { useParams, useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
@@ -43,6 +44,7 @@ const CreateRppContainer = ({ initialData, headerText }) => {
     tasks,
     handleDeleteRow,
     handleAddFromExistingTeachingMaterial,
+    setFileURI,
   } = useCreateRppModalForm();
 
   const { handleSubmitCreateRPPForm, isLoading, form, isEditRpp } =
@@ -50,6 +52,7 @@ const CreateRppContainer = ({ initialData, headerText }) => {
   const { id } = useParams();
   const { handleDeleteRpp, loadingDelete } = useDeleteRpp(id);
   const classData = useSelector((state) => state.classData.detailClass);
+  const { tokenColor } = useTokenColor();
 
   return (
     <div className="flex flex-col gap-4 font-kumbh">
@@ -64,7 +67,12 @@ const CreateRppContainer = ({ initialData, headerText }) => {
             className="w-fit"
           />
         ) : (
-          <div className="rounded-lg bg-[#FAE1E1] text-[#001C2B] p-2 text-sm font-bold w-fit">
+          <div
+            className="rounded-lg text-[#001C2B] p-2 text-sm font-bold w-fit"
+            style={{
+              backgroundColor: `${tokenColor}30`,
+            }}
+          >
             {classData?.student_group_name}
           </div>
         )}
@@ -160,7 +168,6 @@ const CreateRppContainer = ({ initialData, headerText }) => {
             customSize="md"
             htmlType="submit"
             loading={isLoading}
-            disabled={materials.length === 0 || tasks.length === 0}
           >
             Save Changes
           </SisvaButton>
@@ -169,12 +176,11 @@ const CreateRppContainer = ({ initialData, headerText }) => {
               btn_type="primary"
               customSize="md"
               loading={loadingDelete}
-              disabled={isLoading || loadingDelete}
               onClick={() => {
                 setModalState({
                   isOpen: true,
                   type: "delete-rpp",
-                  title: "Delete Rencana Pembelajaran",
+                  title: "Hapus Bahan Ajar dari Rencana Pembelajaran",
                 });
               }}
             >
@@ -204,6 +210,7 @@ const CreateRppContainer = ({ initialData, headerText }) => {
         handleFileUpload={handleUploadFile}
         isLoading={isLoadingForm}
         handleClose={handleClose}
+        setFileURI={setFileURI}
       />
       <CreateTeachingMaterialModal
         open={
@@ -217,6 +224,8 @@ const CreateRppContainer = ({ initialData, headerText }) => {
         isLoading={isLoadingForm}
         handleClose={handleClose}
         initialData={initialData}
+        setFileURI={setFileURI}
+        isRpp={true}
       />
       <SelectTeachingMaterialModal
         open={

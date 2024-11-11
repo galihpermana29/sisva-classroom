@@ -52,7 +52,8 @@ export const useTeachingMaterialForm = (setQueryFilter) => {
 
   const handleUploadFile = async (file) => {
     if (!file) {
-      setFileURI(null);
+      setFileURI("");
+
       return;
     }
     setIsLoadingForm(true);
@@ -69,6 +70,10 @@ export const useTeachingMaterialForm = (setQueryFilter) => {
       toast.error("Error upload file");
     }
     setIsLoadingForm(false);
+
+    if (response.success) {
+      return response.data;
+    }
   };
 
   const handleSubmitForm = (value) => {
@@ -101,5 +106,6 @@ export const useTeachingMaterialForm = (setQueryFilter) => {
     handleUploadFile,
     handleSubmitForm,
     fileURI,
+    setFileURI,
   };
 };

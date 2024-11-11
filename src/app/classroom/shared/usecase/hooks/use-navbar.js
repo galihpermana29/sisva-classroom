@@ -1,52 +1,60 @@
 import { Home05, User01, Users01 } from "@untitled-ui/icons-react";
 import { usePathname } from "next/navigation";
 import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 const PATHS = {
   TEACHING_MATERIAL: `/classroom/teacher/teaching-material`,
   CLASS: `/classroom/teacher/class`,
   STUDENT_CLASS: `/classroom/student/class`,
 };
+
 export const useNavbar = (userType) => {
+  const [navbarState, setNavbarState] = useState({
+    text: "",
+    description: "",
+  });
+
   const pathname = usePathname();
   const classData = useSelector((state) => state.classData.detailClass);
   const isFetching = useSelector((state) => state.classData.isFetching);
 
-  const navbarText = () => {
-    // normal navbar text
-    if (!classData && !isFetching) {
-      if (pathname.startsWith(PATHS.TEACHING_MATERIAL)) {
-        return "Daftar Bahan Ajar";
-      }
+  useEffect(() => {
+    let newText = "";
+    if (pathname.startsWith(PATHS.TEACHING_MATERIAL)) {
+      newText = "Daftar Bahan Ajar";
+    } else if (
+      classData &&
+      (pathname.startsWith(PATHS.CLASS) ||
+        pathname.startsWith(PATHS.STUDENT_CLASS)) &&
+      pathname !== "/classroom/teacher/class"
+    ) {
+      newText = `${classData.subject_name} - ${classData.student_group_name}`;
     }
 
-    // dynamic navbar text
-    if (classData) {
-      if (
-        pathname.startsWith(PATHS.CLASS) ||
-        (pathname.startsWith(PATHS.STUDENT_CLASS) &&
-          pathname !== "/classroom/teacher/class")
-      ) {
-        return `${classData?.subject_name} - ${classData?.student_group_name}`;
-      }
+    let newDescription = "";
+    if (
+      classData &&
+      !isFetching &&
+      (pathname.startsWith(PATHS.CLASS) ||
+        pathname.startsWith(PATHS.STUDENT_CLASS)) &&
+      pathname !== "/classroom/teacher/class"
+    ) {
+      newDescription = classData.teacher_name;
     }
 
-    return null;
-  };
+    setNavbarState({
+      text: newText,
+      description: newDescription,
+    });
+  }, [classData, pathname, isFetching]);
 
-  const navbarDescription = () => {
-    if (!classData && !isFetching) return "";
-    if (classData) {
-      if (
-        pathname.startsWith(PATHS.CLASS) ||
-        (pathname.startsWith(PATHS.STUDENT_CLASS) &&
-          pathname !== "/classroom/teacher/class")
-      ) {
-        return classData?.teacher_name;
-      }
-    }
+  const navbarLogo = () => {
+    const schoolDataJson =
+      typeof window !== "undefined" && localStorage.getItem("schoolData");
+    const schoolData = JSON.parse(schoolDataJson);
 
-    return null;
+    return schoolData?.logo_uri;
   };
 
   const navItems = [
@@ -77,8 +85,9 @@ export const useNavbar = (userType) => {
 
   return {
     navItems,
-    navbarText,
-    navbarDescription,
+    navbarText: navbarState.text,
+    navbarDescription: navbarState.description,
     isFetching,
+    navbarLogo,
   };
 };

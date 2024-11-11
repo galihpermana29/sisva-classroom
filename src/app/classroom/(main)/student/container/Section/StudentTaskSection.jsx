@@ -1,21 +1,21 @@
-'use client';
+"use client";
 
-import { useGetStudentTask } from '@/app/classroom/(main)/student/usecase/useGetStudentTask';
-import CardTask from '@/app/classroom/shared/presentation/Card/CardTask';
-import EmptyState from '@/app/classroom/shared/presentation/EmptyState/EmptyState';
-import SectionLayout from '@/app/classroom/shared/presentation/Layouts/SectionLayout';
-import CardTaskSkeleton from '@/app/classroom/shared/presentation/Skeletons/CardTaskSkeleton';
+import { useGetStudentTask } from "@/app/classroom/(main)/student/usecase/useGetStudentTask";
+import CardTask from "@/app/classroom/shared/presentation/Card/CardTask";
+import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
+import SectionLayout from "@/app/classroom/shared/presentation/Layouts/SectionLayout";
+import CardTaskSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardTaskSkeleton";
 import {
   DEADLINE_FORMAT_24,
   generalDateFormatter,
-} from '@/app/classroom/shared/usecase/helper';
-import Link from 'next/link';
+} from "@/app/classroom/shared/usecase/helper";
+import Link from "next/link";
 
 const StudentTaskSection = () => {
   const { tasks, isLoading } = useGetStudentTask();
 
   return (
-    <SectionLayout title={'Tugas yang Akan Datang'}>
+    <SectionLayout title={"Tugas yang Akan Datang"}>
       <div className="lg:h-full lg:max-h-[228px] p-1 overflow-auto">
         <div className="flex flex-row gap-3 lg:flex-col">
           {isLoading ? (
@@ -25,7 +25,7 @@ const StudentTaskSection = () => {
           ) : tasks.length > 0 ? (
             tasks.map((task, index) => (
               <Link
-                href={`/classroom/teacher/class/${task.class_id}/task/${task.id}`}
+                href={`/classroom/teacher/class/${task.class_id}/task/${task.task_id}`}
                 key={index}
               >
                 <CardTask

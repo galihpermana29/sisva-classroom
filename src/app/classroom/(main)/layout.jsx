@@ -1,9 +1,10 @@
-import { ConfigProvider } from 'antd';
-import { Kumbh_Sans } from 'next/font/google';
-import { useTheme } from '../shared/usecase/use-theme';
+import { ConfigProvider } from "antd";
+import { Kumbh_Sans } from "next/font/google";
+import SisvaNavbar from "../shared/presentation/Navbar/Navbar";
+import { useTheme } from "../shared/usecase/use-theme";
 
 const kumbh = Kumbh_Sans({
-  subsets: ['latin'],
+  subsets: ["latin"],
 });
 export default async function MainLayout({ children }) {
   const theme = await useTheme();
@@ -11,6 +12,13 @@ export default async function MainLayout({ children }) {
     <ConfigProvider
       theme={{
         token: { fontFamily: kumbh.style.fontFamily, colorPrimary: theme },
+        components: {
+          Button: {
+            colorBorder: theme,
+            colorText: theme,
+            borderColorDisabled: "#D0D5DD",
+          },
+        },
       }}
     >
       <SisvaNavbar />

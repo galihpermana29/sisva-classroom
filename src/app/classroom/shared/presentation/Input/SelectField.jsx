@@ -41,7 +41,7 @@ export function SisvaSelect({
       allowClear={allowClear}
       showSearch={showSearch}
       filterOption={filterOption}
-      suffixIcon={<ChevronDown width={20} height={20} />}
+      suffixIcon={<ChevronDown width={15} height={15} />}
       className={clsx(
         customClass,
         shadow ? "shadow-[0_1px_2px_0px_rgb(16,24,40,0.05)]" : "",

@@ -10,130 +10,162 @@ import {
     searchFilter,
 } from "../data-mapper-service";
 
+const createInitialState = (initialData) => ({
+  periodData: initialData.periodData,
+  studyProgramDropdown: [],
+  gradeDropdown: [],
+  classroomDropdown: getUniqueClasses(initialData.teacherClass),
+});
+
+const INITIAL_QUERY_FILTER = {
+  period: "",
+  grade: "",
+  study_program: "",
+  search: "",
+  classroom: "",
+};
+
 export const useTeacherClass = (initialData) => {
   const [teacherClassData, setTeacherClassData] = useState(initialData);
-
   const [isLoading, setIsLoading] = useState(false);
-
-  const [dropDownData, setDropdownData] = useState({
-    periodData: initialData.periodData,
-    studyProgramDropdown: [],
-    gradeDropdown: [],
-    classroomDropdown: getUniqueClasses(initialData.teacherClass),
-  });
-
-  const initialQueryFilter = {
-    period: "",
-    grade: "",
-    study_program: "",
-    search: "",
-    classroom: "",
-  };
-  const [queryFilter, setQueryFilter] = useState(initialQueryFilter);
+  const [dropDownData, setDropdownData] = useState(
+    createInitialState(initialData)
+  );
+  const [queryFilter, setQueryFilter] = useState(INITIAL_QUERY_FILTER);
+  const [debouncedQueryFilter] = useDebounce(queryFilter, 200);
 
   const hasActiveFilters = useMemo(
     () => Object.values(queryFilter).some((value) => value !== ""),
     [queryFilter]
   );
 
-  const [debouncedQueryFilter] = useDebounce(queryFilter, 200);
+  const handleFilterChange = useCallback((filterName, value) => {
+    const fieldValue = value !== undefined ? value : "";
+    setQueryFilter((prev) => ({
+      ...prev,
+      [filterName]: fieldValue,
+    }));
+  }, []);
 
-  const fetchStudentGroupList = async () => {
+  const updateDropdownData = useCallback((updates) => {
+    setDropdownData((prev) => ({
+      ...prev,
+      ...updates,
+    }));
+  }, []);
+
+  const fetchStudentGroupList = useCallback(async () => {
     setIsLoading(true);
-    const response = await getStudentGroupList(
-      queryFilter.period,
-      queryFilter.grade,
-      queryFilter.study_program
-    );
-    if (response.success) {
-      let filteredClassList = initialData.teacherClass.filter((classItem) =>
-        response.data.some(
-          (studentGroup) => studentGroup.id === classItem.student_group_id
-        )
-      );
+    try {
+      const { period, grade, study_program, classroom, search } = queryFilter;
+      const response = await getStudentGroupList(period, grade, study_program);
 
-      if (queryFilter.classroom) {
-        filteredClassList = filteredClassList.filter(
-          (classItem) => classItem.student_group_name === queryFilter.classroom
+      if (response.success) {
+        let filteredClasses = initialData.teacherClass.filter((classItem) =>
+          response.data.some((group) => group.id === classItem.student_group_id)
+        );
+
+        if (classroom) {
+          filteredClasses = filteredClasses.filter(
+            (classItem) => classItem.student_group_name === classroom
+          );
+        }
+
+        if (search) {
+          filteredClasses = searchFilter(filteredClasses, search.toLowerCase());
+        }
+
+        setTeacherClassData((prev) => ({
+          ...prev,
+          teacherClass: filteredClasses,
+        }));
+      }
+    } catch (error) {
+      console.error("Error fetching student group list:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [queryFilter, initialData.teacherClass]);
+
+  const handleResetFilter = useCallback(() => {
+    setQueryFilter(INITIAL_QUERY_FILTER);
+    updateDropdownData({
+      gradeDropdown: [],
+      studyProgramDropdown: [],
+    });
+  }, [updateDropdownData]);
+
+  const handlePeriodFilter = useCallback(
+    (value) => {
+      const periodId = value !== undefined ? value : "";
+
+      if (dropDownData.studyProgramDropdown?.length !== 0) {
+        ["study_program", "grade"].forEach((filter) =>
+          handleFilterChange(filter, "")
         );
       }
 
-      if (queryFilter.search) {
-        const searchTerm = queryFilter.search.toLowerCase();
-        filteredClassList = searchFilter(filteredClassList, searchTerm);
+      const selectedPeriod = teacherClassData.periodData.find(
+        (period) => period.id === periodId
+      );
+
+      if (!selectedPeriod?.study_programs) {
+        updateDropdownData({ studyProgramDropdown: [] });
+        handleFilterChange("period", periodId);
+        return;
       }
 
-      setIsLoading(false);
-      setTeacherClassData((prev) => ({
-        ...prev,
-        teacherClass: filteredClassList,
-      }));
-    }
-  };
+      const filteredStudyPrograms = initialData.studyProgramList.filter(
+        (program) =>
+          selectedPeriod.study_programs.some(
+            (studyProgram) => studyProgram.id === program.id
+          )
+      );
+
+      updateDropdownData({ studyProgramDropdown: filteredStudyPrograms });
+      handleFilterChange("period", periodId);
+    },
+    [
+      teacherClassData.periodData,
+      initialData.studyProgramList,
+      dropDownData.studyProgramDropdown,
+      handleFilterChange,
+      updateDropdownData,
+    ]
+  );
+
+  const handleStudyProgramFilter = useCallback(
+    async (value) => {
+      const studyProgramId = value !== undefined ? value : "";
+
+      if (dropDownData.gradeDropdown?.length !== 0) {
+        handleFilterChange("grade", "");
+      }
+
+      if (studyProgramId) {
+        try {
+          const response = await getGradeDropdownById(studyProgramId);
+          if (response.success) {
+            updateDropdownData({ gradeDropdown: response.data?.grades || [] });
+          }
+        } catch (error) {
+          console.error("Error fetching grade dropdown:", error);
+          updateDropdownData({ gradeDropdown: [] });
+        }
+      } else {
+        updateDropdownData({ gradeDropdown: [] });
+      }
+
+      handleFilterChange("study_program", studyProgramId);
+    },
+    [dropDownData.gradeDropdown, handleFilterChange, updateDropdownData]
+  );
 
   useEffect(() => {
     if (hasActiveFilters) {
       fetchStudentGroupList();
     }
-  }, [debouncedQueryFilter]);
-
-  const handleResetFilter = () => {
-    setQueryFilter(initialQueryFilter);
-    setDropdownData((prev) => ({
-      ...prev,
-      gradeDropdown: [],
-      studyProgramDropdown: [],
-    }));
-  };
-
-  const handlePeriodFilter = (e) => {
-    if (
-      dropDownData.studyProgramDropdown &&
-      dropDownData.studyProgramDropdown.length !== 0
-    ) {
-      handleFilterChange("study_program", "");
-      handleFilterChange("grade", "");
-    }
-
-    const filteredPeriodList = teacherClassData.periodData.find(
-      (period) => period.id === e
-    );
-
-    const filteredStudyProgramList = initialData.studyProgramList.filter(
-      (program) =>
-        filteredPeriodList?.study_programs.some(
-          (idObj) => idObj.id === program.id
-        )
-    );
-    setDropdownData((prev) => ({
-      ...prev,
-      studyProgramDropdown: filteredStudyProgramList,
-    }));
-
-    handleFilterChange("period", e);
-  };
-
-  const handleStudyProgramFilter = async (e) => {
-    if (dropDownData.gradeDropdown && dropDownData.gradeDropdown.length !== 0) {
-      handleFilterChange("grade", "");
-    }
-    const studyProgram = await getGradeDropdownById(e);
-    if (studyProgram.success) {
-      setDropdownData((prev) => ({
-        ...prev,
-        gradeDropdown: studyProgram.data?.grades,
-      }));
-    }
-
-    handleFilterChange("study_program", e);
-  };
-
-  const handleFilterChange = useCallback((filterName, value) => {
-    setQueryFilter((prevFilter) => ({
-      ...prevFilter,
-      [filterName]: value,
-    }));
-  }, []);
+  }, [debouncedQueryFilter, hasActiveFilters, fetchStudentGroupList]);
 
   const mappedDropdownData = useMemo(
     () => ({
@@ -173,7 +205,6 @@ export const useTeacherClass = (initialData) => {
     isLoading,
     classData,
     dropDownData: mappedDropdownData,
-
     dropdownHandler: dropDownMappedHandler,
     generalHandleFilter: handleFilterChange,
     queryFilter,

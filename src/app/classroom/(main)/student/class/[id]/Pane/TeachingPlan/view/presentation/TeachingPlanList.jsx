@@ -2,13 +2,13 @@ import Image from "next/image";
 import { Fragment } from "react";
 
 import TeachingPlanSection from "./TeachingPlanSection";
-import TeachingPlanTitle from "./TeachingPlanTitle";
 
 import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
 import MaterialIcon from "@/assets/images/teaching-plan/material.svg";
 import TaskIcon from "@/assets/images/teaching-plan/task.png";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import TeachingPlanTitle from "@/app/classroom/shared/presentation/TitleBar/TeachingPlanTitle";
 
 
 const TeachingPlanList = ({

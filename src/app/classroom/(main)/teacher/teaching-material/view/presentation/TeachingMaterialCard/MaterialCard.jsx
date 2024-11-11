@@ -12,11 +12,18 @@ import Image from "next/image";
 import React, { useMemo } from "react";
 import { useModal } from "../../../../class/[classId]/create-rpp/view/container/Provider/ModalProvider";
 import { generateRandomColor } from "../../../usecase/custom-function";
+import { usePathname } from "next/navigation";
+import { useTokenColor } from "@/app/classroom/shared/usecase/use-token-color";
 
 const MaterialCard = ({ item }) => {
   const { setModalState } = useModal();
   const userData = getClientSession();
   const schoolId = userData?.school_id;
+  const pathname = usePathname();
+  const isTeachingMaterialTabs = pathname.startsWith(
+    "/classroom/teacher/class"
+  );
+  const { tokenColor } = useTokenColor();
 
   const items = [
     item.attachment_file_uri && {
@@ -52,7 +59,12 @@ const MaterialCard = ({ item }) => {
           },
           {
             label: (
-              <div className="flex items-center gap-2 text-primary">
+              <div
+                className="flex items-center gap-2"
+                style={{
+                  color: tokenColor,
+                }}
+              >
                 <Trash01 width={20} height={20} /> Delete
               </div>
             ),
@@ -86,13 +98,21 @@ const MaterialCard = ({ item }) => {
       }
       className="relative rounded-xl shadow-sm bg-white text-[#1D2939]"
     >
-      <Dropdown menu={{ items }} trigger={["click"]}>
-        <div className="cursor-pointer absolute top-2 right-2 flex items-center justify-center w-7 h-7 rounded-full bg-white">
-          <DotsVertical width={20} height={20} className="text-[#5E5E5E]" />
-        </div>
-      </Dropdown>
+      {/* Show dropdown if not in teaching materials tab OR if in teaching materials tab and has attachment */}
+      {(!isTeachingMaterialTabs || item.attachment_file_uri) && (
+        <Dropdown menu={{ items }} trigger={["click"]}>
+          <div className="cursor-pointer absolute top-2 right-2 flex items-center justify-center w-7 h-7 rounded-full bg-white">
+            <DotsVertical width={20} height={20} className="text-[#5E5E5E]" />
+          </div>
+        </Dropdown>
+      )}
       <div className=" flex flex-col gap-3">
-        <div className="rounded-full bg-primary px-2 py-1 w-fit">
+        <div
+          className="rounded-full px-2 py-1 w-fit"
+          style={{
+            backgroundColor: tokenColor,
+          }}
+        >
           <span className="text-white text-sm font-semibold">
             {item.subject_name}
           </span>
@@ -120,9 +140,15 @@ const MaterialCard = ({ item }) => {
             <span className="text-sm text-[#969696]">{item.grade}</span>
           </div>
         </div>
-        <Divider className="bg-[#FCB3AA] my-2 h-[2px] rounded-full" />
+        <Divider
+          className="my-2 h-[2px] rounded-full"
+          style={{ backgroundColor: `${tokenColor}70` }}
+        />
         <div className="flex items-center gap-2">
-          <div className="w-5 h-5 rounded-full bg-[#FCB3AA]" />
+          <div
+            className="w-5 h-5 rounded-full"
+            style={{ backgroundColor: `${tokenColor}70` }}
+          />
           <span className="text-sm text-[#555555]">{item.curriculum_name}</span>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import { Avatar } from "antd";
 import SkeletonAvatar from "antd/es/skeleton/Avatar";
 
+import { UserCircle } from "@untitled-ui/icons-react";
 import React, { useEffect, useState } from "react";
 import { getClientSession } from "../../usecase/session/get-client-session";
 
@@ -12,10 +13,13 @@ const AvatarProfile = ({ url, size = 60 }) => {
     setSchoolId(userData?.school_id);
   }, [url]);
 
+  if (!schoolId) {
+    return <SkeletonAvatar size={size} active />;
+  }
   return (
     <>
-      {!schoolId ? (
-        <SkeletonAvatar size={size} active />
+      {!url ? (
+        <Avatar size={size} icon={<UserCircle />} />
       ) : (
         <Avatar
           size={size}

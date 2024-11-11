@@ -1,26 +1,28 @@
-import SisvaButton from '@/app/classroom/shared/presentation/Button/GlobalButton';
-import AvatarProfile from '@/app/classroom/shared/presentation/Profile/AvatarProfile';
-import { default as placeholderImage } from '@/assets/placeholder.jpg';
-import { Check } from '@untitled-ui/icons-react';
-import { ConfigProvider, Divider, Modal, Table } from 'antd';
-import clsx from 'clsx';
-import { Kumbh_Sans } from 'next/font/google';
-import { useEffect, useMemo, useState } from 'react';
-import { formatDateDay } from '../../../../usecase/dateFormatter';
+import SisvaButton from "@/app/classroom/shared/presentation/Button/GlobalButton";
+import AvatarProfile from "@/app/classroom/shared/presentation/Profile/AvatarProfile";
+import { default as placeholderImage } from "@/assets/placeholder.jpg";
+import { Check } from "@untitled-ui/icons-react";
+import { ConfigProvider, Divider, Modal, Table } from "antd";
+import clsx from "clsx";
+import { Kumbh_Sans } from "next/font/google";
+import { useEffect, useMemo, useState } from "react";
+import { formatDateDay } from "../../../../usecase/dateFormatter";
 import {
   useAttendance,
   useUpdateAttendance,
-} from '../../../../usecase/use-attendance';
-import { useClass } from '../../../../usecase/use-class';
-import BadgeAttendance from '../../../container/BadgeAttendance/BadgeAttendance';
+} from "../../../../usecase/use-attendance";
+import { useClass } from "../../../../usecase/use-class";
+import BadgeAttendance from "../../../container/BadgeAttendance/BadgeAttendance";
 
-const kumbh = Kumbh_Sans({ subsets: ['latin'] });
+import { useTokenColor } from "@/app/classroom/shared/usecase/use-token-color";
+
+const kumbh = Kumbh_Sans({ subsets: ["latin"] });
 
 const optionAttendance = [
-  { key: 'present', text: 'Hadir' },
-  { key: 'sick', text: 'Sakit' },
-  { key: 'leave', text: 'Izin' },
-  { key: 'absent', text: 'Alpha' },
+  { key: "present", text: "Hadir" },
+  { key: "sick", text: "Sakit" },
+  { key: "leave", text: "Izin" },
+  { key: "absent", text: "Alpha" },
 ];
 
 export default function TableAttendances() {
@@ -28,11 +30,12 @@ export default function TableAttendances() {
   const [nextPrevModalVisible, setNextPrevModalVisible] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
   const [currentStudentIndex, setCurrentStudentIndex] = useState(0);
-  const [selectedOption, setSelectedOption] = useState('');
+  const [selectedOption, setSelectedOption] = useState("");
   const { attendances, loading } = useAttendance();
   const { classData } = useClass();
   const [attendanceData, setAttendanceData] = useState([]);
   const { loading: loadingUpdate, updateAttendance } = useUpdateAttendance();
+  const { tokenColor } = useTokenColor();
 
   useEffect(() => {
     if (attendances.length > 0) {
@@ -43,7 +46,7 @@ export default function TableAttendances() {
   const handleModalClose = () => {
     setModalVisible(false);
     setSelectedRecord(null);
-    setSelectedOption('');
+    setSelectedOption("");
   };
 
   const showModal = (record) => {
@@ -77,7 +80,7 @@ export default function TableAttendances() {
       setSelectedOption(firstStudent.status);
       setNextPrevModalVisible(true);
     } else {
-      console.log('No attendance records for current date');
+      console.log("No attendance records for current date");
     }
   };
 
@@ -107,11 +110,11 @@ export default function TableAttendances() {
   const columns = useMemo(() => {
     const baseColumns = [
       {
-        title: 'Siswa',
-        dataIndex: 'student_name',
-        key: 'student_name',
-        align: 'center',
-        fixed: 'left',
+        title: "Siswa",
+        dataIndex: "student_name",
+        key: "student_name",
+        align: "center",
+        fixed: "left",
         width: 170,
         render: (text, record) => (
           <div className="inline-flex items-center">
@@ -137,9 +140,9 @@ export default function TableAttendances() {
           </div>
         </div>
       ),
-      dataIndex: ['attendance', date],
+      dataIndex: ["attendance", date],
       key: date,
-      align: 'center',
+      align: "center",
       render: (status, record) => (
         <div
           className="w-fit mx-auto cursor-pointer"
@@ -169,7 +172,7 @@ export default function TableAttendances() {
         )
       );
     } catch (error) {
-      console.error('Failed to update attendance:', error);
+      console.error("Failed to update attendance:", error);
     }
   };
 
@@ -202,7 +205,7 @@ export default function TableAttendances() {
           loading={loading}
           pagination={false}
           tableLayout="auto"
-          scroll={{ x: 'max-content' }}
+          scroll={{ x: "max-content" }}
         />
 
         {selectedRecord && (
@@ -268,11 +271,19 @@ export default function TableAttendances() {
                     <label
                       htmlFor={opt.key}
                       className={clsx(
-                        'w-[110px] h-[70px] inline-flex justify-center gap-2 items-center p-4 rounded-3xl',
+                        "w-[110px] h-[70px] inline-flex justify-center gap-2 items-center p-4 rounded-3xl",
                         selectedOption === opt.key
-                          ? 'bg-secondary50 border-secondary50 text-white'
-                          : 'bg-white border-2 border-solid border-base60 text-base60'
+                          ? "text-white"
+                          : "bg-white border-2 border-solid border-base60 text-base60"
                       )}
+                      style={
+                        selectedOption === opt.key
+                          ? {
+                              backgroundColor: tokenColor,
+                              borderColor: tokenColor,
+                            }
+                          : {}
+                      }
                     >
                       {selectedOption === opt.key && (
                         <div className="inline-flex items-center justify-center size-6 rounded-full bg-white">
@@ -280,9 +291,9 @@ export default function TableAttendances() {
                         </div>
                       )}
                       <span
-                        className={clsx('font-semibold', {
-                          'text-white': selectedOption === opt.key,
-                          'text-base60': selectedOption !== opt.key,
+                        className={clsx("font-semibold", {
+                          "text-white": selectedOption === opt.key,
+                          "text-base60": selectedOption !== opt.key,
                         })}
                       >
                         {opt.text}
@@ -362,13 +373,21 @@ export default function TableAttendances() {
                 {optionAttendance.map((opt) => (
                   <div key={opt.key}>
                     <label
-                      htmlFor={`nextprev-${opt.key}`}
+                      htmlFor={opt.key}
                       className={clsx(
-                        'w-[110px] h-[70px] inline-flex justify-center gap-2 items-center p-4 rounded-3xl',
+                        "w-[110px] h-[70px] inline-flex justify-center gap-2 items-center p-4 rounded-3xl",
                         selectedOption === opt.key
-                          ? 'bg-secondary50 border-secondary50 text-white'
-                          : 'bg-white border-2 border-solid border-base60 text-base60'
+                          ? "text-white"
+                          : "bg-white border-2 border-solid border-base60 text-base60"
                       )}
+                      style={
+                        selectedOption === opt.key
+                          ? {
+                              backgroundColor: tokenColor,
+                              borderColor: tokenColor,
+                            }
+                          : {}
+                      }
                     >
                       {selectedOption === opt.key && (
                         <div className="inline-flex items-center justify-center size-6 rounded-full bg-white">
@@ -376,9 +395,9 @@ export default function TableAttendances() {
                         </div>
                       )}
                       <span
-                        className={clsx('font-semibold', {
-                          'text-white': selectedOption === opt.key,
-                          'text-base60': selectedOption !== opt.key,
+                        className={clsx("font-semibold", {
+                          "text-white": selectedOption === opt.key,
+                          "text-base60": selectedOption !== opt.key,
                         })}
                       >
                         {opt.text}

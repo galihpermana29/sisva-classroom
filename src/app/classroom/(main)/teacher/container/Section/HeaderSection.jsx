@@ -4,21 +4,28 @@ import { Bell01 } from "@untitled-ui/icons-react";
 import { Badge } from "antd";
 
 import {
-    BoxLeft,
-    BoxRight,
-    BoxTop,
+  BoxLeft,
+  BoxRight,
+  BoxTop,
 } from "@/app/classroom/shared/presentation/Box/Box";
 
 import AvatarProfile from "@/app/classroom/shared/presentation/Profile/AvatarProfile";
+import { useTokenColor } from "@/app/classroom/shared/usecase/use-token-color";
 import { useGetAllSubjectsTeached } from "../../usecase/useGetAllSubjectsTeached";
 import { useGetUserProfile } from "../../usecase/useGetUserProfile";
 
 const HeaderSection = () => {
   const { data: subjects, isLoading } = useGetAllSubjectsTeached();
   const { data: profile, isLoading: isLoadingProfile } = useGetUserProfile();
+  const { tokenColor } = useTokenColor();
 
   return (
-    <div className="relative flex items-center justify-between px-4 py-6 pt-16 -mx-3 -my-7 md:m-0 md:pt-6 bg-gradient-to-br from-primary_hover to-primary rounded-b-3xl md:rounded-xl">
+    <div
+      className="relative flex items-center justify-between px-4 py-6 pt-16 -mx-3 -my-7 md:m-0 md:pt-6 rounded-b-3xl md:rounded-xl"
+      style={{
+        backgroundColor: tokenColor,
+      }}
+    >
       <BoxLeft />
       <BoxTop
         className="size-[103px] lg:size-[204px] left-1/2 -translate-x-1/3 -top-1/4 lg:-top-full"

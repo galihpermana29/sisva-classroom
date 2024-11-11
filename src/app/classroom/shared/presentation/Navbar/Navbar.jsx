@@ -2,11 +2,7 @@
 import BrandLogo from "@/assets/classroom/images/BrandLogo.svg";
 import { Skeleton } from "antd";
 import { Kumbh_Sans } from "next/font/google";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import React from "react";
-import { useNavbar } from "../../usecase/hooks/use-navbar";
-import { getClientSession } from "../../usecase/session/get-client-session";
+import { useTokenColor } from "../../usecase/use-token-color";
 
 const kumbh = Kumbh_Sans({
   subsets: ["latin"],
@@ -14,14 +10,16 @@ const kumbh = Kumbh_Sans({
 
 const NavItem = ({ icon: Icon, label, path, isActive }) => {
   const router = useRouter();
+  const { tokenColor } = useTokenColor();
   return (
     <div
       onClick={() => router.push(path)}
-      className={`cursor-pointer transition-all flex flex-col items-center gap-1 ${
-        isActive ? "text-primary" : "text-[#5D5D5D]"
-      }`}
+      className={`cursor-pointer transition-all flex flex-col items-center gap-1`}
+      style={{
+        color: isActive ? tokenColor : "#5D5D5D",
+      }}
     >
-      <Icon fill={isActive ? "#f96756" : "#5D5D5D"} width={22} height={22} />
+      <Icon fill={isActive ? tokenColor : "#5D5D5D"} width={22} height={22} />
       <span className="text-sm font-semibold">{label}</span>
     </div>
   );
@@ -31,11 +29,8 @@ const SisvaNavbar = () => {
   const userData = getClientSession();
   const userType = userData?.type;
 
-  const { navItems, navbarText, isFetching, navbarDescription } =
+  const { navItems, navbarText, isFetching, navbarDescription, navbarLogo } =
     useNavbar(userType);
-
-  const renderNavbarText = navbarText();
-  const renderNavbarDescription = navbarDescription();
 
   return (
     <>
@@ -47,17 +42,14 @@ const SisvaNavbar = () => {
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Image src={BrandLogo} alt="brand-logo" />
+            <BrandLogo url={navbarLogo()} />
             {isFetching ? (
               <Skeleton.Button active size="large" shape="square" block />
             ) : (
               <div className="flex flex-col gap-2 text-[#444444]">
-                {renderNavbarText && (
-                  <span className="font-medium">{renderNavbarText}</span>
-                )}
-                {renderNavbarDescription && (
-                  <span className="text-sm">{renderNavbarDescription}</span>
-                )}
+                <span className="font-medium">{navbarText}</span>
+
+                <span className="text-sm">{navbarDescription}</span>
               </div>
             )}
           </div>

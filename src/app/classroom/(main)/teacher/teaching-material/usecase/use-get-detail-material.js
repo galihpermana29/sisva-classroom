@@ -1,14 +1,23 @@
 import { useForm } from "antd/es/form/Form";
+import { useParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import toast from "react-hot-toast";
-import { getGradeDropdownById } from "../../class/repository/teacher-class-service";
+import { useSelector } from "react-redux";
+import {
+  getGradeDropdownById,
+  getStudentGroupList,
+} from "../../class/repository/teacher-class-service";
 import { createDropdown } from "../../class/usecase/data-mapper-service";
-import { getTeachingMaterialById } from "../repository/teaching-material-service";
+import {
+  getAllSubjectName,
+  getSubjectById,
+  getTeachingMaterialById,
+} from "../repository/teaching-material-service";
 
 export const useGetDetailTeachingMaterial = (initialData) => {
   const initialDropdownData = {
     curriculumDropdown: initialData.curriculumDropdown,
-    studyProgramDropdown: initialData.studyProgramDropdown,
+    studyProgramDropdown: [],
     subjectDropdown: [],
     gradeDropdown: [],
   };
@@ -16,6 +25,51 @@ export const useGetDetailTeachingMaterial = (initialData) => {
   const [form] = useForm();
   const [isLoadingGetDetail, setIsLoadingGetDetail] = useState(false);
   const [dropDownData, setDropdownData] = useState(initialDropdownData);
+
+  const classData = useSelector((state) => state.classData.detailClass);
+
+  const handleGetPreFieldTeachingMaterial = async () => {
+    setIsLoadingGetDetail(true);
+
+    try {
+      const subjectDetail = await getSubjectById(classData.subject_id);
+      if (!subjectDetail.success) {
+        toast.error("Error getting subject details");
+        setIsLoadingGetDetail(false);
+        return;
+      }
+
+      const studentGroups = await getStudentGroupList("", "", "");
+      if (!studentGroups.success) {
+        toast.error("Error getting student group list");
+        setIsLoadingGetDetail(false);
+        return;
+      }
+
+      const filterStudentGroupById = studentGroups.data.find(
+        (item) => item.id === classData.student_group_id
+      );
+
+      handleGetSubjectDropdown(
+        subjectDetail.data.curriculum_id,
+        filterStudentGroupById.study_program_id
+      );
+      handleGetStudyProgramDropdown(subjectDetail.data.curriculum_id);
+      handleGetGradeDropdown(filterStudentGroupById.study_program_id);
+
+      const prefieldData = {
+        curriculum_id: subjectDetail.data.curriculum_id,
+        study_program_id: filterStudentGroupById.study_program_id,
+        grade: filterStudentGroupById.grade,
+        subject_id: subjectDetail.data.id,
+      };
+      form.setFieldsValue(prefieldData);
+    } catch (error) {
+      toast.error(`Error: ${error.message}`);
+    } finally {
+      setIsLoadingGetDetail(false);
+    }
+  };
 
   const handleGetDetailTeachingMaterial = async (id) => {
     setIsLoadingGetDetail(true);
@@ -27,6 +81,7 @@ export const useGetDetailTeachingMaterial = (initialData) => {
         response.data.study_program_id
       );
       handleGetGradeDropdown(response.data.study_program_id);
+      handleGetStudyProgramDropdown(response.data.curriculum_id);
       form.setFieldsValue(response.data);
     } else {
       toast.error("Error get teaching material");
@@ -35,8 +90,7 @@ export const useGetDetailTeachingMaterial = (initialData) => {
   };
 
   const handleChangeCurriculum = (e) => {
-    const studyProgramId = form.getFieldValue("study_program_id");
-    handleGetSubjectDropdown(e, studyProgramId);
+    handleGetStudyProgramDropdown(e, "create-new");
     form.setFieldValue("curriculum_id", e);
   };
 
@@ -45,6 +99,45 @@ export const useGetDetailTeachingMaterial = (initialData) => {
     handleGetGradeDropdown(e);
     handleGetSubjectDropdown(curriculumId, e);
     form.setFieldValue("study_program_id", e);
+  };
+
+  const handleGetStudyProgramDropdown = async (curriculumId, type) => {
+    const hasExistingValues = dropDownData.studyProgramDropdown?.length !== 0;
+    if (hasExistingValues) {
+      const fieldsToReset = ["study_program_id", "grade", "subject_id"];
+      fieldsToReset.forEach((field) => form.setFieldValue(field, null));
+    }
+
+    const selectedCurriculum = initialData.curriculumDropdown.find(
+      (curriculum) => curriculum.id === curriculumId
+    );
+
+    const isDataInvalid =
+      !selectedCurriculum || !selectedCurriculum.study_programs;
+    if (isDataInvalid) {
+      setDropdownData((prev) => updateDropdownState(prev, [], type));
+      return;
+    }
+
+    const filteredStudyPrograms = initialData.studyProgramDropdown.filter(
+      (program) =>
+        selectedCurriculum.study_programs.some(
+          (studyProgram) => studyProgram.id === program.id
+        )
+    );
+
+    setDropdownData((prev) =>
+      updateDropdownState(prev, filteredStudyPrograms, type)
+    );
+  };
+
+  const updateDropdownState = (prevState, studyPrograms, type) => {
+    const baseState = type === "create-new" ? initialDropdownData : prevState;
+
+    return {
+      ...baseState,
+      studyProgramDropdown: studyPrograms,
+    };
   };
 
   const handleGetSubjectDropdown = async (curriculumId, studyProgramId) => {
@@ -113,5 +206,6 @@ export const useGetDetailTeachingMaterial = (initialData) => {
     handleChangeStudyProgram,
     initialDropdownData,
     setDropdownData,
+    handleGetPreFieldTeachingMaterial,
   };
 };

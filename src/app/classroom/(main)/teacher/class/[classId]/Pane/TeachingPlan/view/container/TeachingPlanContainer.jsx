@@ -1,4 +1,5 @@
 import SisvaButton from "@/app/classroom/shared/presentation/Button/GlobalButton";
+import TeachingPlanTitle from "@/app/classroom/shared/presentation/TitleBar/TeachingPlanTitle";
 import { Plus } from "@untitled-ui/icons-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -6,7 +7,6 @@ import EmptyState from "../../../../view/presentation/EmptyState/EmptyState";
 import { useTeachingPlan } from "../../usecase/use-teaching-plan";
 import TeachingPlanList from "../presentation/TeachingPlanList";
 import TeachingPlanListSkeleton from "../presentation/TeachingPlanListSkeleton";
-import TeachingPlanTitle from "../presentation/TeachingPlanTitle";
 
 const TeachingPlanContainer = () => {
   const { classId } = useParams();

@@ -1,13 +1,19 @@
+import ClassCard from "@/app/classroom/(main)/student/class/view/presentation/ClassCard";
 import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
 import CardGridSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardGridSkeleton";
+import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
 import Link from "next/link";
-import React from "react";
-import ClassCard from "./ClassCard";
 
 const ClassListGroup = ({ classData, isLoading }) => {
   if (isLoading) {
     return <CardGridSkeleton />;
   }
+
+  const getProfilePhoto = () => {
+    const userData = getClientSession();
+
+    return userData?.profile_image_uri;
+  };
 
   return (
     <div className="p-5 bg-white rounded-lg shadow-md">
@@ -20,11 +26,12 @@ const ClassListGroup = ({ classData, isLoading }) => {
               passHref
             >
               <ClassCard
-                group={classItem.student_group_name}
                 subject={classItem.subject_name}
-                taskName={classItem.nearest_task?.name}
-                timeStamp={classItem.nearest_task?.deadline}
-                isEmptyTask={!classItem.nearest_task}
+                teacherPhoto={getProfilePhoto()}
+                teacherName={classItem.teacher_name}
+                group={classItem.student_group_name}
+                schedules={classItem.schedule}
+                isEmptySchedules={classItem.schedule.length === 0}
               />
             </Link>
           ))}
