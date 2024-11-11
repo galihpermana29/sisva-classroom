@@ -39,12 +39,7 @@ export const TableBodyTagihanPengguna = ({ columnCount }) => {
     return <TableEmptyState columnCount={columnCount} />;
   }
 
-  return data.map((row) => (
-    <TableRowTagihanPengguna
-      key={row.id}
-      {...row}
-    />
-  ));
+  return data.map((row) => <TableRowTagihanPengguna key={row.id} {...row} />);
 };
 
 const TableRowTagihanPengguna = ({ id, user_id, bill_id }) => {
@@ -55,10 +50,7 @@ const TableRowTagihanPengguna = ({ id, user_id, bill_id }) => {
   if (!cariFilterPass || !tanggalFilterPass || !kategoriFilterPass) return null;
 
   return (
-    <TableRow
-      hover
-      key={id}
-    >
+    <TableRow hover key={id}>
       <IdTagihanCell billId={bill_id} />
       <TanggalTagihanCell billId={bill_id} />
       <NamaCell userId={user_id} />
@@ -66,11 +58,7 @@ const TableRowTagihanPengguna = ({ id, user_id, bill_id }) => {
       <TotalHargaCell billId={bill_id} />
       <JumlahTerbayarCell userId={user_id} />
       <TableCell>
-        <DeleteTagihanPenggunaModal
-          id={id}
-          billId={bill_id}
-          userId={user_id}
-        />
+        <DeleteTagihanPenggunaModal id={id} billId={bill_id} userId={user_id} />
       </TableCell>
     </TableRow>
   );

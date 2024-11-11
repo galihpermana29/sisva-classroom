@@ -28,18 +28,12 @@ export const ProdiSelect = ({ data, disabled }) => {
       value={value}
       onChange={(event) => handleChange(event.target.value)}
     >
-      <MenuItem
-        disabled
-        value=""
-      >
+      <MenuItem disabled value="">
         Program Studi
       </MenuItem>
       {data
         ? data.map(({ id, code }) => (
-            <MenuItem
-              key={`${id}${code}`}
-              value={id}
-            >
+            <MenuItem key={`${id}${code}`} value={id}>
               {code}
             </MenuItem>
           ))

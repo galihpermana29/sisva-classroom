@@ -1,6 +1,6 @@
-import AcademicAPI from '@/api/academic';
-import dayjs from 'dayjs';
-import type { Period, PeriodeInputData } from './types';
+import AcademicAPI from "@/api/academic";
+import dayjs from "dayjs";
+import type { Period, PeriodeInputData } from "./types";
 
 function getPeriod(allPeriod: Period[], name: string) {
   return allPeriod.find((period) => period.name === name);
@@ -16,8 +16,8 @@ export default async function handlePeriode(data: PeriodeInputData) {
     const end_date = new Date(Date.UTC(0, 0, row[2] - 1));
     return {
       name: row[0],
-      start_date: dayjs(start_date).format('DD/MM/YYYY h:mm A Z'),
-      end_date: dayjs(end_date).format('DD/MM/YYYY h:mm A Z'),
+      start_date: dayjs(start_date).format("DD/MM/YYYY h:mm A Z"),
+      end_date: dayjs(end_date).format("DD/MM/YYYY h:mm A Z"),
     };
   });
 
@@ -45,7 +45,7 @@ export default async function handlePeriode(data: PeriodeInputData) {
       end_time: data.end_date,
       status: period.status,
     };
-    if (period.status === 'active' || period.status === 'finished') {
+    if (period.status === "active" || period.status === "finished") {
       delete payload.start_time;
       delete payload.end_time;
     }
@@ -62,5 +62,5 @@ export default async function handlePeriode(data: PeriodeInputData) {
     reportText.push(
       `${promisesUpdate.length} baris Periode berhasil diperbarui`
     );
-  return reportText.join(', ');
+  return reportText.join(", ");
 }

@@ -1,7 +1,4 @@
-import {
-    ClearRounded,
-    DragIndicatorRounded
-} from "@mui/icons-material";
+import { ClearRounded, DragIndicatorRounded } from "@mui/icons-material";
 import { Box, Button, Typography } from "@mui/material";
 import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";

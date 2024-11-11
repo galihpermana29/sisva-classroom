@@ -1,4 +1,4 @@
-import { BorderColorRounded } from '@mui/icons-material';
+import { BorderColorRounded } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -10,39 +10,39 @@ import {
   Stack,
   Typography,
   useMediaQuery,
-} from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
-import { useState } from 'react';
-import { FormAddTeacher } from './FormAddTeacher';
+} from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
+import { useState } from "react";
+import { FormAddTeacher } from "./FormAddTeacher";
 
 const columns = [
   {
-    field: 'card',
-    headerName: '',
+    field: "card",
+    headerName: "",
     flex: 1,
     sortable: false,
     renderCell: (params) => {
       return (
-        <Box sx={{ width: '100%', mx: 2, py: 0.5 }}>
+        <Box sx={{ width: "100%", mx: 2, py: 0.5 }}>
           <Stack
             component={Paper}
             variant="outlined"
             sx={{
-              justifyContent: 'flex-start',
+              justifyContent: "flex-start",
               borderRadius: 2,
               p: 2,
             }}
           >
-            <Stack sx={{ width: '100%' }}>
+            <Stack sx={{ width: "100%" }}>
               <Stack
                 sx={{
-                  width: '100%',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  borderBottom: '1px solid rgb(0,0,0,0.12)',
+                  width: "100%",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  borderBottom: "1px solid rgb(0,0,0,0.12)",
                   px: 1,
-                  py: '10px',
-                  backgroundColor: 'base.base10',
+                  py: "10px",
+                  backgroundColor: "base.base10",
                 }}
               >
                 <Typography
@@ -50,19 +50,19 @@ const columns = [
                 >
                   Tingkatan
                 </Typography>
-                <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
+                <Typography sx={{ fontSize: 14, textAlign: "right" }}>
                   {params.value.data.grade}
                 </Typography>
               </Stack>
               <Stack
                 sx={{
-                  width: '100%',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  borderBottom: '1px solid rgb(0,0,0,0.12)',
+                  width: "100%",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  borderBottom: "1px solid rgb(0,0,0,0.12)",
                   px: 1,
-                  py: '10px',
-                  backgroundColor: 'base.base20',
+                  py: "10px",
+                  backgroundColor: "base.base20",
                 }}
               >
                 <Typography
@@ -71,19 +71,19 @@ const columns = [
                   Mata Pelajaran
                 </Typography>
 
-                <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
+                <Typography sx={{ fontSize: 14, textAlign: "right" }}>
                   {params.value.data.name}
                 </Typography>
               </Stack>
               <Stack
                 sx={{
-                  width: '100%',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  borderBottom: '1px solid rgb(0,0,0,0.12)',
+                  width: "100%",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  borderBottom: "1px solid rgb(0,0,0,0.12)",
                   px: 1,
-                  py: '10px',
-                  backgroundColor: 'base.base10',
+                  py: "10px",
+                  backgroundColor: "base.base10",
                 }}
               >
                 <Typography
@@ -103,28 +103,28 @@ const columns = [
     },
   },
   {
-    field: 'grade',
-    headerName: 'Tingkatan',
+    field: "grade",
+    headerName: "Tingkatan",
     flex: 1,
   },
   {
-    field: 'subject',
-    headerName: 'Mata Pelajaran',
+    field: "subject",
+    headerName: "Mata Pelajaran",
     flex: 1,
   },
   {
-    field: 'teachers',
-    headerName: 'Guru',
+    field: "teachers",
+    headerName: "Guru",
     flex: 1.5,
     sortable: false,
     renderCell: (params) => {
-      if (!params.value.length) return '-';
+      if (!params.value.length) return "-";
       else return <ChipList params={params.value} />;
     },
   },
   {
-    field: 'action',
-    headerName: 'Aksi',
+    field: "action",
+    headerName: "Aksi",
     sortable: false,
     width: 120,
     renderCell: (params) => {
@@ -137,11 +137,11 @@ function ChipList({ params, compact }) {
   return (
     <Stack
       sx={{
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        overflow: 'hidden',
-        justifyContent: compact ? 'flex-end' : 'flex-start',
-        m: { xs: 0, lg: compact ? 0 : '8px 0' },
+        flexDirection: "row",
+        flexWrap: "wrap",
+        overflow: "hidden",
+        justifyContent: compact ? "flex-end" : "flex-start",
+        m: { xs: 0, lg: compact ? 0 : "8px 0" },
       }}
     >
       {params.map((teachers, index) => {
@@ -149,7 +149,7 @@ function ChipList({ params, compact }) {
           <Chip
             key={index}
             sx={{
-              m: { xs: '2px 0px 2px 4px', lg: '2px' },
+              m: { xs: "2px 0px 2px 4px", lg: "2px" },
               fontSize: 12,
             }}
             label={teachers.teacher_name}
@@ -165,22 +165,22 @@ function ActionButton({ params }) {
   return (
     <Stack
       sx={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        alignSelf: 'flex-end',
+        flexDirection: "row",
+        alignItems: "center",
+        alignSelf: "flex-end",
         mt: { xs: 2, lg: 0 },
       }}
     >
       <IconButton
         sx={{
           borderRadius: 2,
-          backgroundColor: 'base.base30',
-          '&:hover': {
-            backgroundColor: 'base.base40',
+          backgroundColor: "base.base30",
+          "&:hover": {
+            backgroundColor: "base.base40",
           },
-          height: 'fit-content',
-          width: { xs: 90, lg: 'fit-content' },
-          display: params.value.data.status === 'Selesai' ? 'none' : 'flex',
+          height: "fit-content",
+          width: { xs: 90, lg: "fit-content" },
+          display: params.value.data.status === "Selesai" ? "none" : "flex",
         }}
         onClick={() => {
           params.value.setOpenEditModal(true);
@@ -193,10 +193,10 @@ function ActionButton({ params }) {
         }}
       >
         <BorderColorRounded
-          sx={{ fontSize: { xs: 15, lg: 18 }, color: 'base.base50' }}
+          sx={{ fontSize: { xs: 15, lg: 18 }, color: "base.base50" }}
         />
         <Typography
-          sx={{ fontSize: 14, ml: 1, display: { xs: 'flex', lg: 'none' } }}
+          sx={{ fontSize: 14, ml: 1, display: { xs: "flex", lg: "none" } }}
         >
           Edit
         </Typography>
@@ -240,7 +240,7 @@ export default function SubjectTable({
   subjectList,
   teacherList,
 }) {
-  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('lg'));
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down("lg"));
 
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -273,12 +273,12 @@ export default function SubjectTable({
   });
 
   return (
-    <div style={{ height: '100%', width: '100%' }}>
+    <div style={{ height: "100%", width: "100%" }}>
       <Modal
         open={openEditModal}
         onClose={() => {
           setOpenEditModal(false);
-          formik.setValues({ subject: '', grade: '', teachers: '' });
+          formik.setValues({ subject: "", grade: "", teachers: "" });
         }}
       >
         <Stack
@@ -287,11 +287,11 @@ export default function SubjectTable({
           sx={{
             borderRadius: 2,
             zIndex: 20,
-            margin: 'auto',
-            position: 'fixed',
-            height: 'fit-content',
-            width: '360px',
-            maxWidth: '80%',
+            margin: "auto",
+            position: "fixed",
+            height: "fit-content",
+            width: "360px",
+            maxWidth: "80%",
             top: 0,
             bottom: 0,
             right: 0,
@@ -308,7 +308,7 @@ export default function SubjectTable({
             </Typography>
           </Box>
           <Divider />
-          <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
+          <Box sx={{ maxHeight: "70vh", overflowY: "auto", px: 2 }}>
             <FormAddTeacher
               formik={formik}
               subjectList={subjectList}
@@ -320,7 +320,7 @@ export default function SubjectTable({
           <Divider />
           <Stack
             sx={{
-              flexDirection: 'row',
+              flexDirection: "row",
               p: 2,
             }}
           >
@@ -329,7 +329,7 @@ export default function SubjectTable({
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenEditModal(false);
-                formik.setValues({ subject: '', grade: '', teachers: '' });
+                formik.setValues({ subject: "", grade: "", teachers: "" });
               }}
             >
               Batal
@@ -354,11 +354,11 @@ export default function SubjectTable({
           sx={{
             borderRadius: 2,
             zIndex: 20,
-            margin: 'auto',
-            position: 'fixed',
-            height: 'fit-content',
-            width: '360px',
-            maxWidth: '80%',
+            margin: "auto",
+            position: "fixed",
+            height: "fit-content",
+            width: "360px",
+            maxWidth: "80%",
             top: 0,
             bottom: 0,
             right: 0,
@@ -376,42 +376,42 @@ export default function SubjectTable({
             Anda akan menghapus Mata Pelajaran berikut:
           </Typography>
           <Stack
-            sx={{ width: '100%', my: 1, overflow: 'hidden', borderRadius: 2 }}
+            sx={{ width: "100%", my: 1, overflow: "hidden", borderRadius: 2 }}
           >
             <Stack
               sx={{
-                width: '100%',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                borderBottom: '1px solid rgb(0,0,0,0.12)',
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                borderBottom: "1px solid rgb(0,0,0,0.12)",
                 px: 1,
-                py: '10px',
-                backgroundColor: 'base.base10',
+                py: "10px",
+                backgroundColor: "base.base10",
               }}
             >
               <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
                 Mata Pelajaran
               </Typography>
-              <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
+              <Typography sx={{ fontSize: 14, textAlign: "right" }}>
                 {activeRow.name}
               </Typography>
             </Stack>
             <Stack
               sx={{
-                width: '100%',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                borderBottom: '1px solid rgb(0,0,0,0.12)',
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                borderBottom: "1px solid rgb(0,0,0,0.12)",
                 px: 1,
-                py: '10px',
-                backgroundColor: 'base.base20',
+                py: "10px",
+                backgroundColor: "base.base20",
               }}
             >
               <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
                 Program Studi
               </Typography>
 
-              <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
+              <Typography sx={{ fontSize: 14, textAlign: "right" }}>
                 {activeRow.study_program}
               </Typography>
               {/* <ChipList params={activeRow.study_program} compact/> */}
@@ -420,7 +420,7 @@ export default function SubjectTable({
 
           <Stack
             sx={{
-              flexDirection: 'row',
+              flexDirection: "row",
             }}
           >
             <Button
@@ -436,9 +436,9 @@ export default function SubjectTable({
               variant="contained"
               sx={{
                 flex: 1,
-                backgroundColor: 'warning.main',
-                '&:hover': {
-                  backgroundColor: 'warning.dark',
+                backgroundColor: "warning.main",
+                "&:hover": {
+                  backgroundColor: "warning.dark",
                 },
               }}
               onClick={() => {
@@ -500,7 +500,7 @@ export default function SubjectTable({
       )}
       <DataGrid
         rows={rows}
-        getRowHeight={() => 'auto'}
+        getRowHeight={() => "auto"}
         columns={columns}
         initialState={{
           pagination: {
@@ -509,7 +509,7 @@ export default function SubjectTable({
         }}
         pageSizeOptions={[20, 50, 100]}
         getRowClassName={(params) =>
-          params.indexRelativeToCurrentPage % 2 === 0 ? 'Mui-even' : 'Mui-odd'
+          params.indexRelativeToCurrentPage % 2 === 0 ? "Mui-even" : "Mui-odd"
         }
         disableRowSelectionOnClick
         disableColumnMenu

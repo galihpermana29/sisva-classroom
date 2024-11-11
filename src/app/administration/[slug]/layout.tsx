@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import CmsAPI from '@/api/cms';
-import { Spinner } from '@/assets/svgs/Spinner';
-import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'next/navigation';
-import SchoolIdProvider from './SchoolContext';
+import CmsAPI from "@/api/cms";
+import { Spinner } from "@/assets/svgs/Spinner";
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
+import SchoolIdProvider from "./SchoolContext";
 
 export default function Layout({ children }) {
   const { slug } = useParams();
   const { data: schoolData, isLoading } = useQuery({
-    queryKey: ['school-id'],
+    queryKey: ["school-id"],
     queryFn: async () => (await CmsAPI.getSchoolByCode(slug)).data.data,
   });
 

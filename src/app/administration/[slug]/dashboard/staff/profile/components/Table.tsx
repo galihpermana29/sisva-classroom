@@ -1,7 +1,7 @@
-import { useSchool } from '@/app/administration/[slug]/SchoolContext';
-import { permissions, types } from '@/globalcomponents/Variable';
-import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
-import type { Theme } from '@mui/material';
+import { useSchool } from "@/app/administration/[slug]/SchoolContext";
+import { permissions, types } from "@/globalcomponents/Variable";
+import { BorderColorRounded, DeleteForeverRounded } from "@mui/icons-material";
+import type { Theme } from "@mui/material";
 import {
   Avatar,
   Box,
@@ -11,19 +11,19 @@ import {
   Stack,
   Typography,
   useMediaQuery,
-} from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useParams } from 'next/navigation';
-import { memo, useState } from 'react';
-import DeleteModal from './DeleteModal';
+} from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
+import Image from "next/image";
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import { memo, useState } from "react";
+import DeleteModal from "./DeleteModal";
 
 function getColumns(schoolId) {
   const columns = [
     {
-      field: 'card',
-      headerName: '',
+      field: "card",
+      headerName: "",
       flex: 1,
       sortable: false,
       renderCell: (params) => {
@@ -34,36 +34,36 @@ function getColumns(schoolId) {
           }
         });
         return (
-          <Box sx={{ width: '100%', mx: 2, py: 0.5 }}>
+          <Box sx={{ width: "100%", mx: 2, py: 0.5 }}>
             <Stack
               component={Paper}
               variant="outlined"
               sx={{
-                justifyContent: 'flex-start',
+                justifyContent: "flex-start",
                 borderRadius: 2,
                 p: 2,
               }}
             >
               <Stack
-                direction={'row'}
-                justifyContent={'space-between'}
+                direction={"row"}
+                justifyContent={"space-between"}
                 flex={1}
               >
-                <Stack direction={'row'} alignItems={'center'}>
+                <Stack direction={"row"} alignItems={"center"}>
                   <Avatar
                     sx={{
-                      width: '40px',
-                      height: '40px',
-                      position: 'relative',
+                      width: "40px",
+                      height: "40px",
+                      position: "relative",
                       mr: 1,
                     }}
                   >
-                    {params.value.data.profile_image_uri !== '' ? (
+                    {params.value.data.profile_image_uri !== "" ? (
                       <Image
                         alt="Web Image"
                         fill
                         sizes="100%"
-                        style={{ objectFit: 'cover' }}
+                        style={{ objectFit: "cover" }}
                         src={`https://api-staging.sisva.id/file/v1/files/${params.value.data.profile_image_uri}?school_id=${schoolId}`}
                       />
                     ) : (
@@ -72,7 +72,7 @@ function getColumns(schoolId) {
                   </Avatar>
                   <Typography
                     sx={{
-                      color: 'black',
+                      color: "black",
                     }}
                   >
                     {params.value.data.name}
@@ -81,26 +81,26 @@ function getColumns(schoolId) {
                 <ActionButton params={params} />
               </Stack>
 
-              <Stack sx={{ flexDirection: 'row', mt: 2 }}>
+              <Stack sx={{ flexDirection: "row", mt: 2 }}>
                 <Stack sx={{ flex: 1 }}>
-                  <Typography sx={{ color: 'base.base50', fontSize: 12 }}>
+                  <Typography sx={{ color: "base.base50", fontSize: 12 }}>
                     Username
                   </Typography>
-                  <Typography sx={{ fontSize: 14, lineHeight: '14px' }}>
+                  <Typography sx={{ fontSize: 14, lineHeight: "14px" }}>
                     {params.value.data.username}
                   </Typography>
                 </Stack>
-                <Stack sx={{ flex: 1, textAlign: 'right' }}>
-                  <Typography sx={{ color: 'base.base50', fontSize: 12 }}>
+                <Stack sx={{ flex: 1, textAlign: "right" }}>
+                  <Typography sx={{ color: "base.base50", fontSize: 12 }}>
                     Tipe
                   </Typography>
-                  <Typography sx={{ fontSize: 14, lineHeight: '14px' }}>
+                  <Typography sx={{ fontSize: 14, lineHeight: "14px" }}>
                     {tempType}
                   </Typography>
                 </Stack>
               </Stack>
               <Stack sx={{ mt: 2, flex: 1 }}>
-                <Typography sx={{ color: 'base.base50', fontSize: 12 }}>
+                <Typography sx={{ color: "base.base50", fontSize: 12 }}>
                   Akses
                 </Typography>
                 <ChipList params={params.value.data.permissions} />
@@ -111,8 +111,8 @@ function getColumns(schoolId) {
       },
     },
     {
-      field: 'profile_image_uri',
-      headerName: '',
+      field: "profile_image_uri",
+      headerName: "",
       width: 70,
       sortable: false,
       renderCell: (params) => (
@@ -122,17 +122,17 @@ function getColumns(schoolId) {
             height: 40,
             my: 1.5,
             ml: 2,
-            position: 'relative',
-            display: 'flex',
+            position: "relative",
+            display: "flex",
             // justifyContent: 'flex-end',
           }}
         >
-          {params.value[0] !== '' ? (
+          {params.value[0] !== "" ? (
             <Image
               alt="Web Image"
               fill
               sizes="100%"
-              style={{ objectFit: 'cover' }}
+              style={{ objectFit: "cover" }}
               src={`https://api-staging.sisva.id/file/v1/files/${params.value[0]}?school_id=${schoolId}`}
             />
           ) : (
@@ -141,11 +141,11 @@ function getColumns(schoolId) {
         </Avatar>
       ),
     },
-    { field: 'name', headerName: 'Nama', flex: 1 },
-    { field: 'username', headerName: 'Username', flex: 1 },
+    { field: "name", headerName: "Nama", flex: 1 },
+    { field: "username", headerName: "Username", flex: 1 },
     {
-      field: 'type',
-      headerName: 'Tipe',
+      field: "type",
+      headerName: "Tipe",
       width: 70,
       renderCell: (params) => {
         let tempType;
@@ -158,8 +158,8 @@ function getColumns(schoolId) {
       },
     },
     {
-      field: 'permissions',
-      headerName: 'Akses',
+      field: "permissions",
+      headerName: "Akses",
       sortable: false,
       flex: 1.5,
       renderCell: (params) => {
@@ -167,8 +167,8 @@ function getColumns(schoolId) {
       },
     },
     {
-      field: 'action',
-      headerName: 'Aksi',
+      field: "action",
+      headerName: "Aksi",
       sortable: false,
       width: 120,
       renderCell: (params) => {
@@ -184,10 +184,10 @@ function ChipList({ params }) {
   return (
     <Stack
       sx={{
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        overflow: 'hidden',
-        m: '8px 0',
+        flexDirection: "row",
+        flexWrap: "wrap",
+        overflow: "hidden",
+        m: "8px 0",
       }}
     >
       {params.map((permission, index) => {
@@ -201,7 +201,7 @@ function ChipList({ params }) {
           <Chip
             key={index}
             sx={{
-              m: { xs: '2px 4px 2px 0', lg: '2px' },
+              m: { xs: "2px 4px 2px 0", lg: "2px" },
               fontSize: 12,
             }}
             label={tempPermission}
@@ -219,8 +219,8 @@ function ActionButton({ params }) {
   return (
     <Stack
       sx={{
-        flexDirection: 'row',
-        alignItems: 'center',
+        flexDirection: "row",
+        alignItems: "center",
       }}
     >
       <IconButton
@@ -228,24 +228,24 @@ function ActionButton({ params }) {
         href={`/administration/${slug}/dashboard/staff/profile/${params.value.data.id}`}
         sx={{
           borderRadius: 2,
-          backgroundColor: 'base.base30',
-          '&:hover': {
-            backgroundColor: 'base.base40',
+          backgroundColor: "base.base30",
+          "&:hover": {
+            backgroundColor: "base.base40",
           },
-          height: 'fit-content',
+          height: "fit-content",
         }}
       >
         <BorderColorRounded
-          sx={{ fontSize: { xs: 15, lg: 18 }, color: 'base.base50' }}
+          sx={{ fontSize: { xs: 15, lg: 18 }, color: "base.base50" }}
         />
       </IconButton>
       <IconButton
         sx={{
           borderRadius: 2,
           ml: 1,
-          backgroundColor: 'warning.main',
-          '&:hover': {
-            backgroundColor: 'warning.dark',
+          backgroundColor: "warning.main",
+          "&:hover": {
+            backgroundColor: "warning.dark",
           },
         }}
         onClick={() => {
@@ -254,7 +254,7 @@ function ActionButton({ params }) {
         }}
       >
         <DeleteForeverRounded
-          sx={{ color: 'white', fontSize: { xs: 16, lg: 18 } }}
+          sx={{ color: "white", fontSize: { xs: 16, lg: 18 } }}
         />
       </IconButton>
     </Stack>
@@ -270,7 +270,7 @@ function DataTable({
 }) {
   const school = useSchool();
   const isMobile = useMediaQuery((theme: Theme) =>
-    theme.breakpoints.down('lg')
+    theme.breakpoints.down("lg")
   );
 
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -301,7 +301,7 @@ function DataTable({
   });
 
   return (
-    <div style={{ height: '100%', width: '100%' }}>
+    <div style={{ height: "100%", width: "100%" }}>
       <DeleteModal
         activeRow={activeRow}
         deleteUser={deleteUser}
@@ -358,7 +358,7 @@ function DataTable({
       )}
       <DataGrid
         rows={rows}
-        getRowHeight={() => 'auto'}
+        getRowHeight={() => "auto"}
         columns={getColumns(school.id)}
         initialState={{
           pagination: {
@@ -367,7 +367,7 @@ function DataTable({
         }}
         pageSizeOptions={[10, 20, 50]}
         getRowClassName={(params) =>
-          params.indexRelativeToCurrentPage % 2 === 0 ? 'Mui-even' : 'Mui-odd'
+          params.indexRelativeToCurrentPage % 2 === 0 ? "Mui-even" : "Mui-odd"
         }
         disableRowSelectionOnClick
         disableColumnMenu

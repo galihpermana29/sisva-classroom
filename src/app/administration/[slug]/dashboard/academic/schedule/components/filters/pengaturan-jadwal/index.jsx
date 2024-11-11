@@ -14,14 +14,8 @@ export const PengaturanJadwalFilters = () => {
   return (
     <>
       <PeriodeSelect data={availablePeriods} />
-      <ProdiSelect
-        data={availableStudyPrograms}
-        disabled={!showProdi}
-      />
-      <TingkatSelect
-        data={availableGrades}
-        disabled={!showGrade}
-      />
+      <ProdiSelect data={availableStudyPrograms} disabled={!showProdi} />
+      <TingkatSelect data={availableGrades} disabled={!showGrade} />
     </>
   );
 };

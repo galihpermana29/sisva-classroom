@@ -1,5 +1,5 @@
-import AcademicAPI from '@/api/academic';
-import type { Subject, Syllabus, TingkatanDanSilabusInputData } from './types';
+import AcademicAPI from "@/api/academic";
+import type { Subject, Syllabus, TingkatanDanSilabusInputData } from "./types";
 
 function getSubject(allSubject: Subject[], name: string) {
   return allSubject.find((subject) => subject.name === name);
@@ -89,5 +89,5 @@ export default async function handleTingkatanDanSilabus(
     reportText.push(
       `${promisesUpdate.length} baris Tingkatan dan Silabus berhasil diperbarui`
     );
-  return reportText.join(', ');
+  return reportText.join(", ");
 }

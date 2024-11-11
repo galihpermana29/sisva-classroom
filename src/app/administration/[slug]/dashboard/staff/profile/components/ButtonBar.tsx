@@ -1,9 +1,9 @@
-import { ExcelIcon } from '@/assets/SVGs';
-import { Add, DownloadRounded, UploadFileRounded } from '@mui/icons-material';
-import { Button, Menu, MenuItem, Stack, Typography } from '@mui/material';
-import { memo, useState } from 'react';
-import ImportXLSXAlert from '../../../components/ImportXLSXAlert';
-import handleXLSXUploadStaff from '../utils/handleXLSXUploadStaff';
+import { ExcelIcon } from "@/assets/SVGs";
+import { Add, DownloadRounded, UploadFileRounded } from "@mui/icons-material";
+import { Button, Menu, MenuItem, Stack, Typography } from "@mui/material";
+import { memo, useState } from "react";
+import ImportXLSXAlert from "../../../components/ImportXLSXAlert";
+import handleXLSXUploadStaff from "../utils/handleXLSXUploadStaff";
 
 function ButtonBar({
   anchorEl,
@@ -14,7 +14,7 @@ function ButtonBar({
   setOpenCreateModal,
 }) {
   const [isOpenImportXLSXAlert, setIsOpenImportXLSXAlert] = useState(false);
-  const [importXLSXAlertTitle, setImportXLSXAlertTitle] = useState('');
+  const [importXLSXAlertTitle, setImportXLSXAlertTitle] = useState("");
   const [importAlert, setImportAlert] = useState<string[]>([]);
 
   return (
@@ -27,8 +27,8 @@ function ButtonBar({
       />
       <Stack
         sx={{
-          flexDirection: 'row',
-          borderLeft: { xs: 'none', lg: '1px solid rgb(0,0,0,0.12)' },
+          flexDirection: "row",
+          borderLeft: { xs: "none", lg: "1px solid rgb(0,0,0,0.12)" },
           pl: 1,
         }}
       >
@@ -37,24 +37,24 @@ function ButtonBar({
           color="primary"
           startIcon={<ExcelIcon />}
           sx={{
-            display: { xs: 'none', lg: 'flex' },
-            width: 'fit-content',
-            height: '100%',
+            display: { xs: "none", lg: "flex" },
+            width: "fit-content",
+            height: "100%",
             mr: 1,
-            borderColor: 'green',
-            backgroundColor: 'white',
-            '&:hover': {
-              borderColor: 'green',
-              backgroundColor: 'base:base20',
+            borderColor: "green",
+            backgroundColor: "white",
+            "&:hover": {
+              borderColor: "green",
+              backgroundColor: "base:base20",
             },
           }}
           id="profile-button"
-          aria-controls={open ? 'profile-menu' : undefined}
+          aria-controls={open ? "profile-menu" : undefined}
           aria-haspopup="true"
-          aria-expanded={open ? 'true' : undefined}
+          aria-expanded={open ? "true" : undefined}
           onClick={handleClick}
         >
-          <Typography sx={{ color: 'green', fontSize: 14 }}>Excel</Typography>
+          <Typography sx={{ color: "green", fontSize: 14 }}>Excel</Typography>
         </Button>
         <Menu
           elevation={2}
@@ -64,46 +64,46 @@ function ButtonBar({
           open={open}
           onClose={handleClose}
           anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
+            vertical: "bottom",
+            horizontal: "center",
           }}
           transformOrigin={{
-            vertical: 'top',
-            horizontal: 'center',
+            vertical: "top",
+            horizontal: "center",
           }}
         >
           <MenuItem onClick={handleClose} sx={{ padding: 1, width: 98 }}>
-            <Stack flexDirection={'row'} alignItems={'center'}>
+            <Stack flexDirection={"row"} alignItems={"center"}>
               <DownloadRounded sx={{ fontSize: 18, mr: 1 }} />
               <Typography sx={{ fontSize: 14 }}>Export</Typography>
             </Stack>
           </MenuItem>
           <MenuItem sx={{ padding: 1 }}>
             <label htmlFor="import-xlsx">
-              <Stack flexDirection={'row'} alignItems={'center'}>
+              <Stack flexDirection={"row"} alignItems={"center"}>
                 <UploadFileRounded sx={{ fontSize: 18, mr: 1 }} />
                 <Typography sx={{ fontSize: 14 }}>Import</Typography>
                 <input
-                  name={'import_xlsx'}
+                  name={"import_xlsx"}
                   accept=".xlsx"
                   id="import-xlsx"
                   type="file"
                   style={{
-                    position: 'absolute',
-                    opacity: '0',
-                    border: '1px solid red',
+                    position: "absolute",
+                    opacity: "0",
+                    border: "1px solid red",
                   }}
                   onChange={(e) => {
                     handleXLSXUploadStaff(
                       e.target.files[0],
                       (importReport) => {
-                        setImportXLSXAlertTitle('File import berhasil');
+                        setImportXLSXAlertTitle("File import berhasil");
                         setImportAlert(importReport);
                         setIsOpenImportXLSXAlert(true);
                         getAllUsers();
                       },
                       (importReport) => {
-                        setImportXLSXAlertTitle('File import bermasalah');
+                        setImportXLSXAlertTitle("File import bermasalah");
                         setImportAlert(importReport);
                         setIsOpenImportXLSXAlert(true);
                       }
@@ -121,7 +121,7 @@ function ButtonBar({
           startIcon={<Add />}
           sx={{
             width: 100,
-            height: '100%',
+            height: "100%",
           }}
           onClick={() => setOpenCreateModal(true)}
         >

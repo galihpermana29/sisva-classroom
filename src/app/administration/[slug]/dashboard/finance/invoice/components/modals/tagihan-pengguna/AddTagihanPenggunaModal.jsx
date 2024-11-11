@@ -107,14 +107,8 @@ const ModalContent = ({ handleClose }) => {
           setBundledUsers={setBundledInvoiceUsers}
         />
       )}
-      <Stack
-        width="100%"
-        gap={1}
-      >
-        <Typography
-          fontSize="1em"
-          fontWeight={600}
-        >
+      <Stack width="100%" gap={1}>
+        <Typography fontSize="1em" fontWeight={600}>
           Daftar Pengguna Terpilih
         </Typography>
         <CustomTable
@@ -147,12 +141,7 @@ const ModalContent = ({ handleClose }) => {
         >
           Batal
         </Button>
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          onClick={onSubmit}
-        >
+        <Button type="submit" fullWidth variant="contained" onClick={onSubmit}>
           Buat
         </Button>
       </Stack>

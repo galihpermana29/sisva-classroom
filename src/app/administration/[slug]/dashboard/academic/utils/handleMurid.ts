@@ -1,12 +1,12 @@
-import AcademicAPI from '@/api/academic';
-import UsersAPI from '@/api/users';
+import AcademicAPI from "@/api/academic";
+import UsersAPI from "@/api/users";
 
 import type {
   MuridInputData,
   StudentGroup,
   StudentGroupStudent,
   User,
-} from './types';
+} from "./types";
 
 function getUserByName(users: User[], name: string) {
   return users.find((user) => user.name === name);
@@ -27,7 +27,7 @@ function getStudentGroup(allStudentGroup: StudentGroup[], name: string) {
 
 export default async function handleMurid(data: MuridInputData) {
   // students
-  const allStudent: User[] = (await UsersAPI.getAllUsers('student')).data.data;
+  const allStudent: User[] = (await UsersAPI.getAllUsers("student")).data.data;
   const studentNames = allStudent.map((student) => student.name);
   const studentUsernames = allStudent.map((student) => student.username);
 
@@ -89,5 +89,5 @@ export default async function handleMurid(data: MuridInputData) {
     reportText.push(
       `${promisesCreate.length} baris Murid berhasil ditambahkan`
     );
-  return reportText.join(', ');
+  return reportText.join(", ");
 }

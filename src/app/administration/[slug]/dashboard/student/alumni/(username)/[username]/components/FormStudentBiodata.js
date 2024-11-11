@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Box,
@@ -8,13 +8,13 @@ import {
   Stack,
   TextField,
   Typography,
-} from '@mui/material';
-import Image from 'next/image';
+} from "@mui/material";
+import Image from "next/image";
 
-import { useSchool } from '@/app/administration/[slug]/SchoolContext';
-import { formStudentBiodataFields } from '@/globalcomponents/FormFields';
-import { genders, nationalities, religions } from '@/globalcomponents/Variable';
-import { Cancel } from '@mui/icons-material';
+import { useSchool } from "@/app/administration/[slug]/SchoolContext";
+import { formStudentBiodataFields } from "@/globalcomponents/FormFields";
+import { genders, nationalities, religions } from "@/globalcomponents/Variable";
+import { Cancel } from "@mui/icons-material";
 
 export const FormStudentBiodata = ({ formik, editing }) => {
   function RenderGender({ value }) {
@@ -48,9 +48,9 @@ export const FormStudentBiodata = ({ formik, editing }) => {
     return (
       <>
         {formStudentBiodataFields.map((field) =>
-          field.type === 'text' ? (
+          field.type === "text" ? (
             <Grid
-              sx={{ marginBottom: '8px' }}
+              sx={{ marginBottom: "8px" }}
               item
               xs={12}
               md={field.md}
@@ -63,13 +63,13 @@ export const FormStudentBiodata = ({ formik, editing }) => {
               </Grid>
               <Grid item xs={12} md={12}>
                 <Typography variant="body2" fontWeight={400} fontSize={14}>
-                  {formik.values[field.name] ? formik.values[field.name] : ''}
+                  {formik.values[field.name] ? formik.values[field.name] : ""}
                 </Typography>
               </Grid>
             </Grid>
-          ) : field.type === 'select' ? (
+          ) : field.type === "select" ? (
             <Grid
-              sx={{ marginBottom: '8px' }}
+              sx={{ marginBottom: "8px" }}
               item
               xs={12}
               md={field.md}
@@ -82,18 +82,18 @@ export const FormStudentBiodata = ({ formik, editing }) => {
               </Grid>
               <Grid item xs={12} md={12}>
                 <Typography variant="body2" fontWeight={400} fontSize={14}>
-                  {field.name === 'gender' ? (
+                  {field.name === "gender" ? (
                     <RenderGender value={formik.values[field.name]} />
-                  ) : field.name === 'nationality' ? (
+                  ) : field.name === "nationality" ? (
                     <RenderNationality value={formik.values[field.name]} />
-                  ) : field.name === 'religion' ? (
+                  ) : field.name === "religion" ? (
                     <RenderReligion value={formik.values[field.name]} />
                   ) : null}
-                  {formik.values[field.name] ? '' : '-'}
+                  {formik.values[field.name] ? "" : "-"}
                 </Typography>
               </Grid>
             </Grid>
-          ) : field.type === 'photo' ? (
+          ) : field.type === "photo" ? (
             <Grid xs={12} item key={field.name}>
               <Typography variant="body2" fontWeight={500} fontSize={14}>
                 {field.label}
@@ -102,12 +102,12 @@ export const FormStudentBiodata = ({ formik, editing }) => {
                 sx={{
                   mt: 1,
                   p: 1,
-                  width: 'fit-content',
-                  backgroundColor: 'base.base20',
+                  width: "fit-content",
+                  backgroundColor: "base.base20",
                   borderRadius: 2,
                 }}
               >
-                <Box sx={{ height: 96, width: 96, position: 'relative' }}>
+                <Box sx={{ height: 96, width: 96, position: "relative" }}>
                   <Image
                     alt="Image"
                     src={`https://api-staging.sisva.id/file/v1/files/${
@@ -127,7 +127,7 @@ export const FormStudentBiodata = ({ formik, editing }) => {
     return (
       <>
         {formStudentBiodataFields.map((field) =>
-          field.type === 'text' ? (
+          field.type === "text" ? (
             <Grid item xs={12} md={field.md} key={field.name}>
               <Typography variant="body2" fontWeight={600} mb={1}>
                 {field.label}
@@ -142,7 +142,7 @@ export const FormStudentBiodata = ({ formik, editing }) => {
                 }
               />
             </Grid>
-          ) : field.type === 'select' ? (
+          ) : field.type === "select" ? (
             <Grid item xs={12} md={field.md} key={field.name}>
               <Typography variant="body2" fontWeight={600} mb={1}>
                 {field.label}
@@ -159,15 +159,15 @@ export const FormStudentBiodata = ({ formik, editing }) => {
                   startAdornment: formik.values[field.name] && (
                     <Cancel
                       onClick={() => {
-                        setTypeFilter('');
+                        setTypeFilter("");
                       }}
                       sx={{
                         fontSize: 14,
-                        color: 'base.base50',
-                        cursor: 'pointer',
-                        transform: 'translateX(-4px)',
-                        '&:hover': {
-                          color: 'base.base60',
+                        color: "base.base50",
+                        cursor: "pointer",
+                        transform: "translateX(-4px)",
+                        "&:hover": {
+                          color: "base.base60",
                         },
                       }}
                     />
@@ -181,7 +181,7 @@ export const FormStudentBiodata = ({ formik, editing }) => {
                 ))}
               </TextField>
             </Grid>
-          ) : field.type === 'photo' ? (
+          ) : field.type === "photo" ? (
             <Grid xs={12} item key={field.name}>
               <Typography variant="body2" fontWeight={500} fontSize={14}>
                 {field.label}
@@ -194,12 +194,12 @@ export const FormStudentBiodata = ({ formik, editing }) => {
                 <Box
                   sx={{
                     p: 1,
-                    width: 'fit-content',
-                    backgroundColor: 'base.base20',
+                    width: "fit-content",
+                    backgroundColor: "base.base20",
                     borderRadius: 2,
                   }}
                 >
-                  <Box sx={{ height: 96, width: 96, position: 'relative' }}>
+                  <Box sx={{ height: 96, width: 96, position: "relative" }}>
                     <Image
                       alt="Image"
                       src={`https://api-staging.sisva.id/file/v1/files/${
@@ -215,18 +215,18 @@ export const FormStudentBiodata = ({ formik, editing }) => {
                     fullWidth
                     variant="outlined"
                     size="small"
-                    sx={{ m: '8px 0 4px' }}
+                    sx={{ m: "8px 0 4px" }}
                   >
                     Ubah Foto
                     <input
-                      name={'logo_uri'}
+                      name={"logo_uri"}
                       accept="image/*"
                       id="image-input"
                       type="file"
                       style={{
-                        position: 'absolute',
-                        opacity: '0',
-                        border: '1px solid red',
+                        position: "absolute",
+                        opacity: "0",
+                        border: "1px solid red",
                       }}
                     />
                   </Button>

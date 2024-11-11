@@ -19,18 +19,9 @@ export const JadwalKelasFilters = () => {
   return (
     <>
       <PeriodeSelect data={availablePeriods} />
-      <ProdiSelect
-        data={availableStudyPrograms}
-        disabled={!showProdi}
-      />
-      <TingkatSelect
-        data={availableGrades}
-        disabled={!showGrade}
-      />
-      <KelasSelect
-        data={availableClasses}
-        disabled={!showKelas}
-      />
+      <ProdiSelect data={availableStudyPrograms} disabled={!showProdi} />
+      <TingkatSelect data={availableGrades} disabled={!showGrade} />
+      <KelasSelect data={availableClasses} disabled={!showKelas} />
     </>
   );
 };

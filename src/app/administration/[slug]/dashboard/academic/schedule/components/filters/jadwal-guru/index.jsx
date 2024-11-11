@@ -14,14 +14,8 @@ export const JadwalGuruFilters = () => {
   return (
     <>
       <PeriodeSelect data={availablePeriods} />
-      <ProdiSelect
-        data={availableStudyPrograms}
-        disabled={!showProdi}
-      />
-      <GuruSelect
-        data={availableTeachers}
-        disabled={!showGuru}
-      />
+      <ProdiSelect data={availableStudyPrograms} disabled={!showProdi} />
+      <GuruSelect data={availableTeachers} disabled={!showGuru} />
     </>
   );
 };

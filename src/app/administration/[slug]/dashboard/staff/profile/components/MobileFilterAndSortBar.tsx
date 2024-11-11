@@ -1,7 +1,7 @@
-import { SortIcon } from '@/assets/SVGs';
-import { Button, Divider, Stack } from '@mui/material';
-import { memo } from 'react';
-import Filters from './Filters';
+import { SortIcon } from "@/assets/SVGs";
+import { Button, Divider, Stack } from "@mui/material";
+import { memo } from "react";
+import Filters from "./Filters";
 
 function MobileFilterAndSortBar({
   permissionFilter,
@@ -13,11 +13,11 @@ function MobileFilterAndSortBar({
   return (
     <Stack
       sx={{
-        flexDirection: 'row',
+        flexDirection: "row",
         px: 2,
         height: 54,
         mb: 1,
-        display: { xs: 'flex', lg: 'none' },
+        display: { xs: "flex", lg: "none" },
       }}
     >
       <Filters
@@ -25,22 +25,22 @@ function MobileFilterAndSortBar({
         typeFilter={typeFilter}
         onChangeType={(e) => setTypeFilter(e.target.value)}
         onClickCancelType={() => {
-          setTypeFilter('');
+          setTypeFilter("");
         }}
         onChangePermission={(e) => setPermissionFilter(e.target.value)}
         onClickCancelPermission={() => {
-          setPermissionFilter('');
+          setPermissionFilter("");
         }}
       />
-      <Stack sx={{ flexDirection: 'row', py: 1 }}>
+      <Stack sx={{ flexDirection: "row", py: 1 }}>
         <Divider orientation="vertical" sx={{ mx: 1 }} />
         <Button
           sx={{
-            backgroundColor: 'base.base30',
-            color: 'base.base50',
+            backgroundColor: "base.base30",
+            color: "base.base50",
             fontSize: 18,
-            '&:hover': {
-              backgroundColor: 'base.base40',
+            "&:hover": {
+              backgroundColor: "base.base40",
             },
           }}
           onClick={() => {

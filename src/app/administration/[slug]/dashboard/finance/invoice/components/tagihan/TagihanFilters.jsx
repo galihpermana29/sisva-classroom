@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { SortIcon } from '@/assets/SVGs';
-import { useQueryParam } from '@/hooks/useQueryParam';
-import { Close } from '@mui/icons-material';
+import { SortIcon } from "@/assets/SVGs";
+import { useQueryParam } from "@/hooks/useQueryParam";
+import { Close } from "@mui/icons-material";
 import {
   Button,
   Checkbox,
@@ -12,29 +12,29 @@ import {
   Stack,
   Typography,
   useTheme,
-} from '@mui/material';
-import { useFormik } from 'formik';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
-import { tagihanSorts } from '../../constants';
-import { useGetTagihan } from '../../hooks/useGetTagihan';
+} from "@mui/material";
+import { useFormik } from "formik";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
+import { tagihanSorts } from "../../constants";
+import { useGetTagihan } from "../../hooks/useGetTagihan";
 import {
   DateRangeSelect,
   TANGGAL_FIELD_NAME,
-} from '../filters/DateRangeSelect';
-import FilterReset from '../filters/FilterReset';
-import { KATEGORI_FIELD_NAME, KategoriSelect } from '../filters/KategoriSelect';
-import { STATUS_FIELD_NAME, StatusSelect } from '../filters/StatusSelect';
-import ResetIcon from '../icons/ResetIcon';
+} from "../filters/DateRangeSelect";
+import FilterReset from "../filters/FilterReset";
+import { KATEGORI_FIELD_NAME, KategoriSelect } from "../filters/KategoriSelect";
+import { STATUS_FIELD_NAME, StatusSelect } from "../filters/StatusSelect";
+import ResetIcon from "../icons/ResetIcon";
 
 const statusFilters = [
   {
-    label: 'Draft',
-    value: 'draft',
+    label: "Draft",
+    value: "draft",
   },
   {
-    label: 'Published',
-    value: 'published',
+    label: "Published",
+    value: "published",
   },
 ];
 
@@ -56,8 +56,8 @@ export const TagihanFilters = () => {
   const tanggal = searchParams.get(TANGGAL_FIELD_NAME);
   const kategori = searchParams.get(KATEGORI_FIELD_NAME);
   const status = searchParams.get(STATUS_FIELD_NAME);
-  const sort = searchParams.get('sort');
-  const tab = searchParams.get('tab') ?? 0;
+  const sort = searchParams.get("sort");
+  const tab = searchParams.get("tab") ?? 0;
 
   const showMobileReset =
     Boolean(tanggal) || Boolean(kategori) || Boolean(status);
@@ -79,7 +79,7 @@ export const TagihanFilters = () => {
         <IconButton
           sx={{
             borderRadius: 2,
-            display: { xs: 'block', lg: 'none' },
+            display: { xs: "block", lg: "none" },
           }}
           onClick={openDrawer}
         >
@@ -87,12 +87,12 @@ export const TagihanFilters = () => {
         </IconButton>
         <Drawer
           anchor="bottom"
-          sx={{ borderRadius: '20px 20px 0 0 !important' }}
+          sx={{ borderRadius: "20px 20px 0 0 !important" }}
           open={showDrawer}
           onClose={closeDrawer}
           PaperProps={{
             sx: {
-              borderRadius: '12px 12px 0 0',
+              borderRadius: "12px 12px 0 0",
             },
           }}
         >
@@ -100,14 +100,14 @@ export const TagihanFilters = () => {
         </Drawer>
         <Divider
           orientation="vertical"
-          sx={{ height: 36.5, display: { xs: 'block', lg: 'none' } }}
+          sx={{ height: 36.5, display: { xs: "block", lg: "none" } }}
         />
         <Stack
-          flexDirection={'row'}
-          alignItems={'center'}
+          flexDirection={"row"}
+          alignItems={"center"}
           gap={1}
-          overflow={'auto'}
-          sx={{ display: { xs: 'flex', lg: 'none' } }}
+          overflow={"auto"}
+          sx={{ display: { xs: "flex", lg: "none" } }}
         >
           <div className="shrink-0 flex gap-2">
             <DateRangeSelect />
@@ -117,7 +117,7 @@ export const TagihanFilters = () => {
         </Stack>
 
         <Stack
-          display={{ xs: 'none', lg: 'flex' }}
+          display={{ xs: "none", lg: "flex" }}
           flexDirection="row"
           alignItems="center"
           gap={1}
@@ -130,7 +130,7 @@ export const TagihanFilters = () => {
       </Stack>
       {showMobileReset && (
         <Button
-          sx={{ display: { xs: 'flex', lg: 'none', fontWeight: 600 } }}
+          sx={{ display: { xs: "flex", lg: "none", fontWeight: 600 } }}
           startIcon={<ResetIcon color={theme.palette.primary.main} />}
           onClick={handleResetFilters}
         >
@@ -144,7 +144,7 @@ export const TagihanFilters = () => {
 const DrawerContent = ({ closeDrawer, sortQuery }) => {
   const { updateQueryParam } = useQueryParam();
 
-  const sortedArr = sortQuery?.split(',') ?? [];
+  const sortedArr = sortQuery?.split(",") ?? [];
 
   const initialValues = {
     id: false,
@@ -171,37 +171,37 @@ const DrawerContent = ({ closeDrawer, sortQuery }) => {
           sortedColumns.push(key);
         }
       }
-      updateQueryParam('sort', sortedColumns.join(','));
+      updateQueryParam("sort", sortedColumns.join(","));
       closeDrawer();
     },
   });
 
   return (
-    <Stack padding={'16px'}>
+    <Stack padding={"16px"}>
       <Stack
-        flexDirection={'row'}
-        alignItems={'center'}
-        justifyContent={'space-between'}
+        flexDirection={"row"}
+        alignItems={"center"}
+        justifyContent={"space-between"}
       >
-        <Typography fontWeight={600} fontSize={'18px'}>
+        <Typography fontWeight={600} fontSize={"18px"}>
           Urutkan
         </Typography>
         <IconButton
-          sx={{ borderRadius: 2, display: { xs: 'block', lg: 'none' } }}
+          sx={{ borderRadius: 2, display: { xs: "block", lg: "none" } }}
           onClick={closeDrawer}
         >
           <Close color="action" />
         </IconButton>
       </Stack>
-      <Divider sx={{ marginY: '16px' }} />
+      <Divider sx={{ marginY: "16px" }} />
       <form onSubmit={formik.handleSubmit}>
-        <Stack gap={'16px'}>
+        <Stack gap={"16px"}>
           {tagihanSorts.map(({ label, value }, i) => (
-            <Stack gap={'16px'} key={i}>
+            <Stack gap={"16px"} key={i}>
               <Stack
-                flexDirection={'row'}
-                justifyContent={'space-between'}
-                alignItems={'center'}
+                flexDirection={"row"}
+                justifyContent={"space-between"}
+                alignItems={"center"}
               >
                 <Typography>{label}</Typography>
                 <Checkbox
@@ -219,7 +219,7 @@ const DrawerContent = ({ closeDrawer, sortQuery }) => {
             </Stack>
           ))}
         </Stack>
-        <Stack flexDirection={'row'} gap={'12px'} marginTop={'32px'}>
+        <Stack flexDirection={"row"} gap={"12px"} marginTop={"32px"}>
           <Button onClick={closeDrawer} variant="outlined" fullWidth>
             Batal
           </Button>

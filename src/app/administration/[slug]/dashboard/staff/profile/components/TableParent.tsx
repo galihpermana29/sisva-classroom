@@ -1,10 +1,10 @@
-import { Box, Divider, Paper, Stack } from '@mui/material';
-import DataTable from '../components/Table';
+import { Box, Divider, Paper, Stack } from "@mui/material";
+import DataTable from "../components/Table";
 
-import { memo } from 'react';
-import ButtonBar from './ButtonBar';
-import FilterBar from './FilterBar';
-import MobileFilterAndSortBar from './MobileFilterAndSortBar';
+import { memo } from "react";
+import ButtonBar from "./ButtonBar";
+import FilterBar from "./FilterBar";
+import MobileFilterAndSortBar from "./MobileFilterAndSortBar";
 
 function TableParent({
   search,
@@ -29,19 +29,19 @@ function TableParent({
       variant="outlined"
       sx={{
         borderRadius: { xs: 0, lg: 2 },
-        overflowY: 'auto',
+        overflowY: "auto",
         flex: 1,
-        maxHeight: '100%',
-        position: 'relative',
+        maxHeight: "100%",
+        position: "relative",
       }}
     >
       <Stack
         sx={{
-          flexDirection: 'row',
-          height: { xs: 'fit-content', lg: 70 },
-          width: '100%',
-          alignItems: 'center',
-          justifyContent: 'space-between',
+          flexDirection: "row",
+          height: { xs: "fit-content", lg: 70 },
+          width: "100%",
+          alignItems: "center",
+          justifyContent: "space-between",
           px: 2,
           pt: 1,
           pb: { lg: 1, xs: 0 },
@@ -73,7 +73,7 @@ function TableParent({
         typeFilter={typeFilter}
       />
       <Divider />
-      <Box sx={{ flex: 1, overflowY: 'hidden' }}>
+      <Box sx={{ flex: 1, overflowY: "hidden" }}>
         <DataTable data={filteredData} deleteUser={deleteUser} />
       </Box>
     </Stack>

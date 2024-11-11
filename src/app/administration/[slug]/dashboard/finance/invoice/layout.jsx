@@ -13,10 +13,7 @@ export default function InvoiceLayout({ children }) {
       display={{ xs: "flex", lg: "contents" }}
       gap={0}
     >
-      <Stack
-        padding={{ xs: 0, lg: "2rem" }}
-        gap={3}
-      >
+      <Stack padding={{ xs: 0, lg: "2rem" }} gap={3}>
         <Stack
           gap={4}
           display={{ xs: "none", lg: "flex" }}

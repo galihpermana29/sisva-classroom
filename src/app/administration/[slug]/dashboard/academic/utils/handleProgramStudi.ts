@@ -1,10 +1,10 @@
-import AcademicAPI from '@/api/academic';
+import AcademicAPI from "@/api/academic";
 import type {
   Grade,
   ProgramStudi,
   ProgramStudiInputData,
   ProgramStudiStatus,
-} from './types';
+} from "./types";
 
 function getGrade(checkmark: boolean, grade: Grade): Grade | null {
   if (checkmark) return grade;
@@ -25,18 +25,18 @@ export default async function handleProgramStudi(data: ProgramStudiInputData) {
       name: row[0],
       code: row[1],
       grade: [
-        getGrade(row[2], 'I'),
-        getGrade(row[3], 'II'),
-        getGrade(row[4], 'III'),
-        getGrade(row[5], 'IV'),
-        getGrade(row[6], 'V'),
-        getGrade(row[7], 'VI'),
-        getGrade(row[8], 'VII'),
-        getGrade(row[9], 'VIII'),
-        getGrade(row[10], 'IX'),
-        getGrade(row[11], 'X'),
-        getGrade(row[12], 'XI'),
-        getGrade(row[13], 'XII'),
+        getGrade(row[2], "I"),
+        getGrade(row[3], "II"),
+        getGrade(row[4], "III"),
+        getGrade(row[5], "IV"),
+        getGrade(row[6], "V"),
+        getGrade(row[7], "VI"),
+        getGrade(row[8], "VII"),
+        getGrade(row[9], "VIII"),
+        getGrade(row[10], "IX"),
+        getGrade(row[11], "X"),
+        getGrade(row[12], "XI"),
+        getGrade(row[13], "XII"),
       ].filter((grade) => grade),
     };
   });
@@ -49,7 +49,7 @@ export default async function handleProgramStudi(data: ProgramStudiInputData) {
   );
 
   const promisesCreate = dataCreate.map((data) => {
-    const status: ProgramStudiStatus = 'active';
+    const status: ProgramStudiStatus = "active";
     const payload = {
       name: data.name,
       code: data.code,
@@ -81,5 +81,5 @@ export default async function handleProgramStudi(data: ProgramStudiInputData) {
     reportText.push(
       `${promisesUpdate.length} baris Program Studi berhasil diperbarui`
     );
-  return reportText.join(', ');
+  return reportText.join(", ");
 }

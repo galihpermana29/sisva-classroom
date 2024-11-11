@@ -6,9 +6,9 @@ import {
   Paper,
   Stack,
   Typography,
-} from '@mui/material';
-import { memo } from 'react';
-import { FormAddMembers } from './FormAddMembers';
+} from "@mui/material";
+import { memo } from "react";
+import { FormAddMembers } from "./FormAddMembers";
 
 function CreateExtracurricularMemberModal({
   dataMemExtra,
@@ -33,11 +33,11 @@ function CreateExtracurricularMemberModal({
         sx={{
           borderRadius: 2,
           zIndex: 20,
-          margin: 'auto',
-          position: 'fixed',
-          height: 'fit-content',
-          width: '360px',
-          maxWidth: '80%',
+          margin: "auto",
+          position: "fixed",
+          height: "fit-content",
+          width: "360px",
+          maxWidth: "80%",
           top: 0,
           bottom: 0,
           right: 0,
@@ -54,7 +54,7 @@ function CreateExtracurricularMemberModal({
           </Typography>
         </Box>
         <Divider />
-        <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
+        <Box sx={{ maxHeight: "70vh", overflowY: "auto", px: 2 }}>
           <FormAddMembers
             formik={formik}
             dataMemExtra={dataMemExtra}
@@ -65,7 +65,7 @@ function CreateExtracurricularMemberModal({
         <Divider />
         <Stack
           sx={{
-            flexDirection: 'row',
+            flexDirection: "row",
             p: 2,
           }}
         >

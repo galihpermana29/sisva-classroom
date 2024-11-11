@@ -1,10 +1,10 @@
-import { useAdministrationSelector } from '@/app/administration/hooks';
-import ProgressAlert from '../../../components/ProgressAlert';
+import { useAdministrationSelector } from "@/app/administration/hooks";
+import ProgressAlert from "../../../components/ProgressAlert";
 import {
   selectIsOpenProgressAlert,
   selectProgress,
   selectProgressLog,
-} from '../utils/studentAttendanceSlice';
+} from "../utils/studentAttendanceSlice";
 
 export default function StudentAttendanceProgressAlert() {
   const progress = useAdministrationSelector(selectProgress);

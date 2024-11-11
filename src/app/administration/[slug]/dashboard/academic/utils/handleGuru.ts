@@ -1,7 +1,7 @@
-import AcademicAPI from '@/api/academic';
-import UsersAPI from '@/api/users';
+import AcademicAPI from "@/api/academic";
+import UsersAPI from "@/api/users";
 
-import type { GuruInputData, Subject, SubjectTeacher, User } from './types';
+import type { GuruInputData, Subject, SubjectTeacher, User } from "./types";
 
 function getUserByName(users: User[], name: string) {
   return users.find((user) => user.name === name);
@@ -23,8 +23,8 @@ function getSubject(allSubject: Subject[], name: string) {
 export default async function handleGuru(data: GuruInputData) {
   // teachers
   const allTeachers: User[] = (
-    await UsersAPI.getAllUsers('teacher')
-  ).data.data.filter((teacher: User) => teacher.status === 'active');
+    await UsersAPI.getAllUsers("teacher")
+  ).data.data.filter((teacher: User) => teacher.status === "active");
   const teacherNames = allTeachers.map((teacher) => teacher.name);
   const teacherUsernames = allTeachers.map((teacher) => teacher.username);
 
@@ -77,7 +77,7 @@ export default async function handleGuru(data: GuruInputData) {
       .map((subjectTeacher) => subjectTeacher.subject_id);
     childs.push(subject.id);
     const payload = {
-      parent_type: 'teacher',
+      parent_type: "teacher",
       parent_id: teacher.id,
       grade: data.grade,
       childs: childs,
@@ -89,5 +89,5 @@ export default async function handleGuru(data: GuruInputData) {
   const reportText = [];
   if (promisesCreate.length)
     reportText.push(`${promisesCreate.length} baris Guru berhasil ditambahkan`);
-  return reportText.join(', ');
+  return reportText.join(", ");
 }

@@ -1,4 +1,4 @@
-import AcademicAPI from '@/api/academic';
+import AcademicAPI from "@/api/academic";
 
 import type {
   Curriculum,
@@ -6,7 +6,7 @@ import type {
   PeriodCurriculum,
   PeriodeDanKurikulumInputData,
   ProgramStudi,
-} from './types';
+} from "./types";
 
 function getCurriculum(allCurriculum: Curriculum[], name: string) {
   return allCurriculum.find((curriculum) => curriculum.name === name);
@@ -87,5 +87,5 @@ export default async function handlePeriodeDanKurikulum(
     reportText.push(
       `${promisesCreate.length} baris Periode dan Kurikulum berhasil ditambahkan`
     );
-  return reportText.join(', ');
+  return reportText.join(", ");
 }

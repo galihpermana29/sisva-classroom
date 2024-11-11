@@ -1,6 +1,9 @@
 import * as yup from "yup";
 
-import { formSchoolDetailsFields, formSchoolTypeFields } from "@/globalcomponents/FormFields";
+import {
+  formSchoolDetailsFields,
+  formSchoolTypeFields,
+} from "@/globalcomponents/FormFields";
 const validation = {};
 
 for (const field of formSchoolDetailsFields) {

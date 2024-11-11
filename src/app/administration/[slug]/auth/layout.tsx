@@ -1,40 +1,40 @@
-'use client';
+"use client";
 
-import { Box, Stack, Typography } from '@mui/material';
-import Image from 'next/image';
+import { Box, Stack, Typography } from "@mui/material";
+import Image from "next/image";
 
-import LogoSisva from '@/assets/Sisva-LogoType-Black.png';
-import { useSchool } from '../SchoolContext';
+import LogoSisva from "@/assets/Sisva-LogoType-Black.png";
+import { useSchool } from "../SchoolContext";
 
 export default function RootLayout({ children }) {
   const school = useSchool();
 
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh', maxHeight: '100vh' }}>
+    <Box sx={{ display: "flex", minHeight: "100vh", maxHeight: "100vh" }}>
       <Box
         sx={{
-          backgroundColor: 'primary.main',
+          backgroundColor: "primary.main",
           flex: 1,
-          height: '100vh',
-          position: 'relative',
+          height: "100vh",
+          position: "relative",
         }}
       >
         {school.landing_image_url && (
           <Image
             alt="Landing Page Background"
             src={school.landing_image_url}
-            layout={'fill'}
-            objectFit={'cover'}
+            layout={"fill"}
+            objectFit={"cover"}
           />
         )}
       </Box>
       <Stack
         sx={{
-          maxWidth: { xs: '100%', md: 600 },
-          width: '100%',
-          padding: { xs: '24px', md: '48px' },
-          justifyContent: 'center',
-          alignItems: 'center',
+          maxWidth: { xs: "100%", md: 600 },
+          width: "100%",
+          padding: { xs: "24px", md: "48px" },
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
         <Stack alignItems="center">

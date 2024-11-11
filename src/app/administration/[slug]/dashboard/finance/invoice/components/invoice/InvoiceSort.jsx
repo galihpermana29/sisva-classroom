@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { SortIcon } from '@/assets/SVGs';
-import { useQueryParam } from '@/hooks/useQueryParam';
-import { Close, KeyboardArrowDown } from '@mui/icons-material';
+import { SortIcon } from "@/assets/SVGs";
+import { useQueryParam } from "@/hooks/useQueryParam";
+import { Close, KeyboardArrowDown } from "@mui/icons-material";
 import {
   Button,
   Checkbox,
@@ -12,11 +12,11 @@ import {
   Stack,
   Typography,
   useTheme,
-} from '@mui/material';
-import { useFormik } from 'formik';
-import { useState } from 'react';
-import { invoiceSorts } from '../../constants';
-import { useSortKey } from '../../hooks/useSortKey';
+} from "@mui/material";
+import { useFormik } from "formik";
+import { useState } from "react";
+import { invoiceSorts } from "../../constants";
+import { useSortKey } from "../../hooks/useSortKey";
 
 export const InvoiceSort = () => {
   const theme = useTheme();
@@ -31,19 +31,19 @@ export const InvoiceSort = () => {
         onClick={openDrawer}
         sx={{
           borderRadius: 2,
-          display: { sm: 'flex', md: 'none' },
+          display: { sm: "flex", md: "none" },
         }}
       >
         <SortIcon sx={{ color: theme.palette.primary.main }} />
       </IconButton>
       <Drawer
         anchor="bottom"
-        sx={{ borderRadius: '20px 20px 0 0 !important' }}
+        sx={{ borderRadius: "20px 20px 0 0 !important" }}
         open={showDrawer}
         onClose={closeDrawer}
         PaperProps={{
           sx: {
-            borderRadius: '12px 12px 0 0',
+            borderRadius: "12px 12px 0 0",
           },
         }}
       >
@@ -55,17 +55,17 @@ export const InvoiceSort = () => {
         className="justify-between"
         startIcon={<SortIcon sx={{ color: theme.palette.primary.main }} />}
         endIcon={
-          <KeyboardArrowDown sx={{ display: { xs: 'none', md: 'block' } }} />
+          <KeyboardArrowDown sx={{ display: { xs: "none", md: "block" } }} />
         }
         onClick={openDrawer}
         sx={{
-          display: { sm: 'none', md: 'flex', lg: 'none' },
-          maxWidth: { sm: 'fit-content', md: '100%' },
+          display: { sm: "none", md: "flex", lg: "none" },
+          maxWidth: { sm: "fit-content", md: "100%" },
         }}
       >
         <Typography
           marginRight="auto"
-          sx={{ display: { xs: 'none', md: 'block' } }}
+          sx={{ display: { xs: "none", md: "block" } }}
         >
           Urutkan
         </Typography>
@@ -104,37 +104,37 @@ const DrawerContent = ({ closeDrawer }) => {
           sortedColumns.push(key);
         }
       }
-      updateQueryParam('sort', sortedColumns.join(','));
+      updateQueryParam("sort", sortedColumns.join(","));
       closeDrawer();
     },
   });
 
   return (
-    <Stack padding={'16px'}>
+    <Stack padding={"16px"}>
       <Stack
-        flexDirection={'row'}
-        alignItems={'center'}
-        justifyContent={'space-between'}
+        flexDirection={"row"}
+        alignItems={"center"}
+        justifyContent={"space-between"}
       >
-        <Typography fontWeight={600} fontSize={'18px'}>
+        <Typography fontWeight={600} fontSize={"18px"}>
           Urutkan
         </Typography>
         <IconButton
-          sx={{ borderRadius: 2, display: { xs: 'block', lg: 'none' } }}
+          sx={{ borderRadius: 2, display: { xs: "block", lg: "none" } }}
           onClick={closeDrawer}
         >
           <Close color="action" />
         </IconButton>
       </Stack>
-      <Divider sx={{ marginY: '16px' }} />
+      <Divider sx={{ marginY: "16px" }} />
       <form onSubmit={formik.handleSubmit}>
-        <Stack gap={'16px'}>
+        <Stack gap={"16px"}>
           {invoiceSorts.map(({ label, value }, i) => (
-            <Stack gap={'16px'} key={i}>
+            <Stack gap={"16px"} key={i}>
               <Stack
-                flexDirection={'row'}
-                justifyContent={'space-between'}
-                alignItems={'center'}
+                flexDirection={"row"}
+                justifyContent={"space-between"}
+                alignItems={"center"}
               >
                 <Typography>{label}</Typography>
                 <Checkbox
@@ -152,7 +152,7 @@ const DrawerContent = ({ closeDrawer }) => {
             </Stack>
           ))}
         </Stack>
-        <Stack flexDirection={'row'} gap={'12px'} marginTop={'32px'}>
+        <Stack flexDirection={"row"} gap={"12px"} marginTop={"32px"}>
           <Button onClick={closeDrawer} variant="outlined" fullWidth>
             Batal
           </Button>

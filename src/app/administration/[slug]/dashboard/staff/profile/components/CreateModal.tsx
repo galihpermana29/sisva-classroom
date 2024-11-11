@@ -6,9 +6,9 @@ import {
   Paper,
   Stack,
   Typography,
-} from '@mui/material';
-import { memo, type Dispatch, type SetStateAction } from 'react';
-import { FormAddStaff } from './FormAddStaff';
+} from "@mui/material";
+import { memo, type Dispatch, type SetStateAction } from "react";
+import { FormAddStaff } from "./FormAddStaff";
 
 interface CreateModalProps {
   formik: any;
@@ -38,11 +38,11 @@ function CreateModal({
         sx={{
           borderRadius: 2,
           zIndex: 20,
-          margin: 'auto',
-          position: 'fixed',
-          height: 'fit-content',
-          width: '360px',
-          maxWidth: '80%',
+          margin: "auto",
+          position: "fixed",
+          height: "fit-content",
+          width: "360px",
+          maxWidth: "80%",
           top: 0,
           bottom: 0,
           right: 0,
@@ -59,13 +59,13 @@ function CreateModal({
           </Typography>
         </Box>
         <Divider />
-        <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
+        <Box sx={{ maxHeight: "70vh", overflowY: "auto", px: 2 }}>
           <FormAddStaff formik={formik} />
         </Box>
         <Divider />
         <Stack
           sx={{
-            flexDirection: 'row',
+            flexDirection: "row",
             p: 2,
           }}
         >

@@ -83,10 +83,7 @@ const TableRowInvoice = ({ id, user_bill_id, amount, status }) => {
       <NilaiInvoiceCell amount={amount} />
       <InvoiceStatusCell status={status} />
       <TableCell>
-        <InvoiceRowActions
-          id={id}
-          status={status}
-        />
+        <InvoiceRowActions id={id} status={status} />
       </TableCell>
     </TableRow>
   );

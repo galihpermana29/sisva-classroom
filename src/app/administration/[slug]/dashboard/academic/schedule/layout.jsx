@@ -2,10 +2,7 @@ import { Stack, Typography } from "@mui/material";
 
 const DashboardAcademicLayout = ({ children }) => {
   return (
-    <Stack
-      gap={3}
-      padding={{ xs: "0rem", lg: "2rem" }}
-    >
+    <Stack gap={3} padding={{ xs: "0rem", lg: "2rem" }}>
       <LayoutTitle />
       {children}
     </Stack>

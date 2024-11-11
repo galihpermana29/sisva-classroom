@@ -44,10 +44,7 @@ export const DaftarPenggunaSiswaTableBody = ({
         <div className="flex flex-col">
           <Typography variant="body2">{student.student_name}</Typography>
           {student.student_group_name && (
-            <Typography
-              variant="caption"
-              color="gray"
-            >
+            <Typography variant="caption" color="gray">
               {student.student_group_name}
             </Typography>
           )}

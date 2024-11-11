@@ -1,6 +1,6 @@
-import { RootState } from '@/app/administration/store';
-import type { PayloadAction } from '@reduxjs/toolkit';
-import { createSlice } from '@reduxjs/toolkit';
+import { RootState } from "@/app/administration/store";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 interface StudentAttendance {
   progress: string;
   progressLog: string;
@@ -8,13 +8,13 @@ interface StudentAttendance {
 }
 
 const initialState: StudentAttendance = {
-  progress: '0%',
-  progressLog: '',
+  progress: "0%",
+  progressLog: "",
   isOpenProgressAlert: false,
 };
 
 export const studentAttendanceSlice = createSlice({
-  name: 'student/attendance',
+  name: "student/attendance",
   initialState,
   reducers: {
     setProgress: (state, action: PayloadAction<string>) => {

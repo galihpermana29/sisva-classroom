@@ -6,9 +6,9 @@ import {
   Paper,
   Stack,
   Typography,
-} from '@mui/material';
-import { memo } from 'react';
-import { FormAddExtracurriculer } from './FormAddExtracurriculer';
+} from "@mui/material";
+import { memo } from "react";
+import { FormAddExtracurriculer } from "./FormAddExtracurriculer";
 
 function CreateExtracurricularModal({
   emptyData,
@@ -31,11 +31,11 @@ function CreateExtracurricularModal({
         sx={{
           borderRadius: 2,
           zIndex: 20,
-          margin: 'auto',
-          position: 'fixed',
-          height: 'fit-content',
-          width: '360px',
-          maxWidth: '80%',
+          margin: "auto",
+          position: "fixed",
+          height: "fit-content",
+          width: "360px",
+          maxWidth: "80%",
           top: 0,
           bottom: 0,
           right: 0,
@@ -52,13 +52,13 @@ function CreateExtracurricularModal({
           </Typography>
         </Box>
         <Divider />
-        <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
+        <Box sx={{ maxHeight: "70vh", overflowY: "auto", px: 2 }}>
           <FormAddExtracurriculer formik={formik} teacherList={teacherList} />
         </Box>
         <Divider />
         <Stack
           sx={{
-            flexDirection: 'row',
+            flexDirection: "row",
             p: 2,
           }}
         >

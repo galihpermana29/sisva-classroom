@@ -2,35 +2,35 @@ import type {
   ClassType,
   PeriodStatus,
   SubjectType,
-} from '@/globalcomponents/types';
+} from "@/globalcomponents/types";
 
 // Sheets structure
 export type Sheet =
-  | 'Program Studi'
-  | 'Program Studi Siswa'
-  | 'Kurikulum dan Mata Pelajaran'
-  | 'Tingkatan dan Silabus'
-  | 'Periode'
-  | 'Periode dan Kurikulum'
-  | 'Guru'
-  | 'Kelas'
-  | 'Murid'
-  | 'Ekstrakulikuler'
-  | 'Anggota';
+  | "Program Studi"
+  | "Program Studi Siswa"
+  | "Kurikulum dan Mata Pelajaran"
+  | "Tingkatan dan Silabus"
+  | "Periode"
+  | "Periode dan Kurikulum"
+  | "Guru"
+  | "Kelas"
+  | "Murid"
+  | "Ekstrakulikuler"
+  | "Anggota";
 
 export type Grade =
-  | 'I'
-  | 'II'
-  | 'III'
-  | 'IV'
-  | 'V'
-  | 'VI'
-  | 'VII'
-  | 'VIII'
-  | 'IX'
-  | 'X'
-  | 'XI'
-  | 'XII';
+  | "I"
+  | "II"
+  | "III"
+  | "IV"
+  | "V"
+  | "VI"
+  | "VII"
+  | "VIII"
+  | "IX"
+  | "X"
+  | "XI"
+  | "XII";
 
 export type ProgramStudiInputData = [
   string, // 0 - name
@@ -46,10 +46,10 @@ export type ProgramStudiInputData = [
   boolean, // 10 - tingkatan IX
   boolean, // 11 - tingkatan X
   boolean, // 12 - tingkatan XI
-  boolean // 13 - tingkatan XII
+  boolean, // 13 - tingkatan XII
 ][];
 
-export type ProgramStudiStatus = 'active' | 'inactive';
+export type ProgramStudiStatus = "active" | "inactive";
 
 export type ProgramStudi = {
   id: string;
@@ -63,7 +63,7 @@ export type ProgramStudiSiswaInputData = [
   string, // 0 - name
   string, // 1 - username (opsional)
   string, // 2 - Nama Program Studi
-  Grade // 3 - Tingkatan
+  Grade, // 3 - Tingkatan
 ][];
 
 export type User = {
@@ -86,7 +86,7 @@ export type KurikulumDanMataPelajaranInputData = [
   string, // 0 - nama kurikulum
   string, // 1 - nama program studi
   string, // 2 - nama mata pelajaran
-  SubjectType // 3 - type mata pelajaran
+  SubjectType, // 3 - type mata pelajaran
 ][];
 
 export type Curriculum = {
@@ -115,7 +115,7 @@ export type Subject = {
 export type TingkatanDanSilabusInputData = [
   string, // 0 - nama mata pelajaran
   Grade, // 1 - tingkatan
-  string // 2 - uri silabus
+  string, // 2 - uri silabus
 ][];
 
 export type Syllabus = {
@@ -133,7 +133,7 @@ export type Syllabus = {
 export type PeriodeInputData = [
   string, // 0 - nama periode
   number, // 1 - tanggal mulai, Excel serial date format
-  number // 2 - tanggal selesai, Excel serial date format
+  number, // 2 - tanggal selesai, Excel serial date format
 ][];
 
 export type Period = {
@@ -154,7 +154,7 @@ export type PeriodeDanKurikulumInputData = [
   string, // 0 - nama periode
   string, // 1 - nama kurikulum
   string, // 2 - nama program studi
-  Grade // 3 - tingkatan
+  Grade, // 3 - tingkatan
 ][];
 
 export type PeriodCurriculum = {
@@ -171,7 +171,7 @@ export type GuruInputData = [
   string, // 0 - nama guru
   string, // 1 - username (opsional)
   string, // 2 - nama program studi
-  Grade // 3 - tingkatan
+  Grade, // 3 - tingkatan
 ][];
 
 export type SubjectTeacher = {
@@ -197,7 +197,7 @@ export type KelasInputData = [
   string, // 2 - username wali kelas
   string, // 3 - nama periode
   string, // 4 - nama program studi
-  Grade // 5 - tingkatan
+  Grade, // 5 - tingkatan
 ][];
 
 export type StudentGroup = {
@@ -218,7 +218,7 @@ export type StudentGroup = {
 export type MuridInputData = [
   string, // 0 - nama kelas
   string, // 1 - nama siswa
-  string // 2 - username siswa
+  string, // 2 - username siswa
 ][];
 
 export type StudentGroupStudent = {
@@ -231,7 +231,7 @@ export type StudentGroupStudent = {
 export type EkstrakulikulerInputData = [
   string, // 0 - nama ekstrakulikuler
   string, // 1 - nama pembina
-  string // 2 - username pembina
+  string, // 2 - username pembina
 ][];
 
 export type Ekstrakulikuler = {
@@ -244,7 +244,7 @@ export type Ekstrakulikuler = {
 export type AnggotaInputData = [
   string, // 0 - nama ekstrakulikuler
   string, // 1 - nama anggota
-  string // 2 - username anggota
+  string, // 2 - username anggota
 ][];
 
 export type EkstrakulikulerStudent = {

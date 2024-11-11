@@ -1,22 +1,22 @@
-import { Cancel } from '@mui/icons-material';
-import { MenuItem, Stack, TextField, Typography } from '@mui/material';
-import { memo } from 'react';
+import { Cancel } from "@mui/icons-material";
+import { MenuItem, Stack, TextField, Typography } from "@mui/material";
+import { memo } from "react";
 
 function Filters({ activeTab, dataExtra, extraFilter, setExtraFilter }) {
   return (
     <Stack
       sx={{
-        flexDirection: 'row',
+        flexDirection: "row",
         flex: 1,
-        overflowX: 'auto',
+        overflowX: "auto",
         height: 54,
         px: { xs: 0, lg: 1 },
-        display: activeTab === 0 ? 'none' : 'flex',
+        display: activeTab === 0 ? "none" : "flex",
       }}
     >
       <Stack
         sx={{
-          flexDirection: 'row',
+          flexDirection: "row",
           flex: 1,
           py: 1,
         }}
@@ -29,22 +29,22 @@ function Filters({ activeTab, dataExtra, extraFilter, setExtraFilter }) {
           onChange={(e) => setExtraFilter(e.target.value)}
           sx={{
             flex: { xs: 1, lg: 0 },
-            minWidth: 'fit-content',
+            minWidth: "fit-content",
           }}
           InputProps={{
-            sx: { minWidth: 140, width: { xs: '100%', lg: 'fit-content' } },
+            sx: { minWidth: 140, width: { xs: "100%", lg: "fit-content" } },
             startAdornment: extraFilter && (
               <Cancel
                 onClick={() => {
-                  setExtraFilter('');
+                  setExtraFilter("");
                 }}
                 sx={{
                   fontSize: 14,
-                  color: 'base.base50',
-                  cursor: 'pointer',
-                  transform: 'translateX(-4px)',
-                  '&:hover': {
-                    color: 'base.base60',
+                  color: "base.base50",
+                  cursor: "pointer",
+                  transform: "translateX(-4px)",
+                  "&:hover": {
+                    color: "base.base60",
                   },
                 }}
               />

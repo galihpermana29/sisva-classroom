@@ -19,10 +19,7 @@ export const TanggalTagihanCell = ({ billId }) => {
         <Typography variant="body2">
           {isError ? "-" : date.format("DD MMM YYYY")}
         </Typography>
-        <Typography
-          variant="caption"
-          color="gray"
-        >
+        <Typography variant="caption" color="gray">
           {isError ? null : `${date.format("HH:mm")} ${timezone}`}
         </Typography>
       </div>

@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { MenuItem, Stack, TextField, Typography } from '@mui/material';
+import { MenuItem, Stack, TextField, Typography } from "@mui/material";
 
-import { formAddStudent } from '@/globalcomponents/FormFields';
-import { useEffect, useState } from 'react';
+import { formAddStudent } from "@/globalcomponents/FormFields";
+import { useEffect, useState } from "react";
 
 export const FormAddStudent = ({ formik, editing, tableData, studentList }) => {
   const [gradeData, setGradeData] = useState();
 
   const updatedSubjectFields = formAddStudent.map((field) => {
-    if (field.name == 'student') {
+    if (field.name == "student") {
       field.data = editing
         ? [
             {
@@ -23,7 +23,7 @@ export const FormAddStudent = ({ formik, editing, tableData, studentList }) => {
           });
     }
 
-    if (field.name == 'study_program') {
+    if (field.name == "study_program") {
       field.data = tableData.map((td) => {
         return { slug: td.id, title: td.name };
       });
@@ -36,7 +36,7 @@ export const FormAddStudent = ({ formik, editing, tableData, studentList }) => {
     const grade = tableData.find((td) => td.id == val)?.grades;
     const name = tableData.find((td) => td.id == val)?.name;
 
-    formik.setFieldValue('study_program_name', name);
+    formik.setFieldValue("study_program_name", name);
 
     setGradeData(grade);
   };
@@ -44,7 +44,7 @@ export const FormAddStudent = ({ formik, editing, tableData, studentList }) => {
   const fetchDetail = async (val) => {
     const detail = studentList.find((td) => td.id == val)?.detail;
 
-    formik.setFieldValue('detail', detail);
+    formik.setFieldValue("detail", detail);
   };
 
   useEffect(() => {
@@ -54,8 +54,8 @@ export const FormAddStudent = ({ formik, editing, tableData, studentList }) => {
   return (
     <>
       {updatedSubjectFields?.map((field) =>
-        field.type === 'select' ? (
-          field.name === 'student' ? (
+        field.type === "select" ? (
+          field.name === "student" ? (
             <Stack sx={{ my: 1 }} key={field.name}>
               <Typography variant="body2" fontWeight={600} mb={0.5}>
                 {field.label}
@@ -75,7 +75,7 @@ export const FormAddStudent = ({ formik, editing, tableData, studentList }) => {
                         <Typography fontSize={14}>{option.name}</Typography>
                       </MenuItem>
                     ))
-                  : ['Siswa Tidak Tersedia'].map((option, idx) => (
+                  : ["Siswa Tidak Tersedia"].map((option, idx) => (
                       <MenuItem
                         selected={idx == 0}
                         disabled
@@ -87,7 +87,7 @@ export const FormAddStudent = ({ formik, editing, tableData, studentList }) => {
                     ))}
               </TextField>
             </Stack>
-          ) : field.name === 'study_program' ? (
+          ) : field.name === "study_program" ? (
             <Stack sx={{ my: 1 }} key={field.name}>
               <Typography variant="body2" fontWeight={600} mb={0.5}>
                 {field.label}
@@ -127,7 +127,7 @@ export const FormAddStudent = ({ formik, editing, tableData, studentList }) => {
                         <Typography fontSize={14}>{option}</Typography>
                       </MenuItem>
                     ))
-                  : ['Tingkatan Tidak Tersedia'].map((option, idx) => (
+                  : ["Tingkatan Tidak Tersedia"].map((option, idx) => (
                       <MenuItem
                         selected={idx == 0}
                         disabled

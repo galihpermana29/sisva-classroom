@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Box,
@@ -8,30 +8,30 @@ import {
   Paper,
   Stack,
   Typography,
-} from '@mui/material';
-import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+} from "@mui/material";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 
-import formThreeIcon from '@/assets/Icon-Document.svg';
-import formTwoIcon from '@/assets/Icon-Media.svg';
-import formOneIcon from '@/assets/Icon-Paragraph.svg';
-import { BorderColorRounded } from '@mui/icons-material';
+import formThreeIcon from "@/assets/Icon-Document.svg";
+import formTwoIcon from "@/assets/Icon-Media.svg";
+import formOneIcon from "@/assets/Icon-Paragraph.svg";
+import { BorderColorRounded } from "@mui/icons-material";
 
-import { useFormik } from 'formik';
+import { useFormik } from "formik";
 
-import CmsAPI from '@/api/cms';
-import FilesAPI from '@/api/files';
-import { useSchool } from '../../../SchoolContext';
-import { FormSchoolDetails } from './components/FormSchoolDetails';
-import { FormSchoolIdentity } from './components/FormSchoolIdentity';
-import { FormSchoolType } from './components/FormSchoolType';
+import CmsAPI from "@/api/cms";
+import FilesAPI from "@/api/files";
+import { useSchool } from "../../../SchoolContext";
+import { FormSchoolDetails } from "./components/FormSchoolDetails";
+import { FormSchoolIdentity } from "./components/FormSchoolIdentity";
+import { FormSchoolType } from "./components/FormSchoolType";
 
 export default function SchoolProfileContent() {
   const school = useSchool();
   const containerRef = useRef(null);
 
   const [initialData, setinitialData] = useState({});
-  const { name = '', abbreviation = '', logo_uri = '' } = initialData ?? {};
+  const { name = "", abbreviation = "", logo_uri = "" } = initialData ?? {};
 
   const [editing, setEditing] = useState(false);
 
@@ -62,7 +62,7 @@ export default function SchoolProfileContent() {
 
         window.location.reload();
       } catch (error) {
-        console.log('Submitted', error);
+        console.log("Submitted", error);
       }
     },
   });
@@ -74,7 +74,7 @@ export default function SchoolProfileContent() {
     const file = e.target.files[0];
     const formData = new FormData();
 
-    formData.append('file', file);
+    formData.append("file", file);
 
     try {
       const {
@@ -83,7 +83,7 @@ export default function SchoolProfileContent() {
 
       formik.setFieldValue(name, data);
     } catch (error) {
-      console.error('File upload failed:', error);
+      console.error("File upload failed:", error);
     }
   };
 
@@ -92,7 +92,7 @@ export default function SchoolProfileContent() {
       const {
         data: { data },
       } = await CmsAPI.getSchoolById(
-        JSON.parse(localStorage.getItem('user')).school_id
+        JSON.parse(localStorage.getItem("user")).school_id
       );
 
       const addtionalJson = JSON.parse(data.additional_json_text);
@@ -101,7 +101,7 @@ export default function SchoolProfileContent() {
       formik.setValues({ ...data, ...addtionalJson });
       setinitialData({ ...data, ...addtionalJson });
     } catch (error) {
-      console.log(error, 'error fetch school profile');
+      console.log(error, "error fetch school profile");
     }
   };
   useEffect(() => {
@@ -109,13 +109,13 @@ export default function SchoolProfileContent() {
   }, []);
 
   return (
-    <Stack sx={{ height: '100%', width: '100%', p: { xs: 2, lg: 4 } }}>
+    <Stack sx={{ height: "100%", width: "100%", p: { xs: 2, lg: 4 } }}>
       <Stack
         sx={{
-          flexDirection: 'row',
-          display: { xs: 'none', lg: 'flex' },
+          flexDirection: "row",
+          display: { xs: "none", lg: "flex" },
           mb: 2,
-          alignItems: 'center',
+          alignItems: "center",
         }}
       >
         <Typography sx={{ fontSize: 20, fontWeight: 600 }}>
@@ -126,20 +126,20 @@ export default function SchoolProfileContent() {
         component={Paper}
         variant="outlined"
         sx={{
-          padding: { xs: '16px', md: '16px 32px' },
+          padding: { xs: "16px", md: "16px 32px" },
           borderRadius: 2,
-          flexDirection: 'row',
-          alignItems: 'center',
+          flexDirection: "row",
+          alignItems: "center",
           mb: 2,
         }}
       >
-        <Box sx={{ height: 70, width: 70, position: 'relative', mr: 2 }}>
+        <Box sx={{ height: 70, width: 70, position: "relative", mr: 2 }}>
           {logo_uri ? (
             <Image
               alt="Image"
               src={`https://api-staging.sisva.id/file/v1/files/${logo_uri}?school_id=${school.id}`}
-              layout={'fill'}
-              objectFit={'contain'}
+              layout={"fill"}
+              objectFit={"contain"}
             />
           ) : null}
         </Box>
@@ -156,14 +156,14 @@ export default function SchoolProfileContent() {
         variant="outlined"
         sx={{
           borderRadius: 2,
-          overflowY: 'scroll',
+          overflowY: "scroll",
           flex: 1,
-          maxHeight: '100%',
-          position: 'relative',
+          maxHeight: "100%",
+          position: "relative",
           pb: 2,
         }}
       >
-        {' '}
+        {" "}
         <Button
           variant="outlined"
           size="small"
@@ -174,27 +174,27 @@ export default function SchoolProfileContent() {
             containerRef.current.scrollTo({ top: 0 });
           }}
           sx={{
-            display: !editing ? 'flex' : 'none',
-            padding: '8px 14px',
-            position: 'absolute',
-            width: 'fit-content',
-            justifySelf: 'flex-end',
+            display: !editing ? "flex" : "none",
+            padding: "8px 14px",
+            position: "absolute",
+            width: "fit-content",
+            justifySelf: "flex-end",
             right: 16,
             mt: 2,
-            backgroundColor: 'white',
+            backgroundColor: "white",
           }}
         >
-          <Box component={'span'}>Edit</Box>
+          <Box component={"span"}>Edit</Box>
         </Button>
-        <Stack id="school_form" direction={'row'} width="100%">
+        <Stack id="school_form" direction={"row"} width="100%">
           <Stack width="100%">
             <Grid container>
               <Grid item xs={12}>
                 <Grid
                   container
-                  justifyContent={'space-between'}
+                  justifyContent={"space-between"}
                   sx={{
-                    padding: '16px',
+                    padding: "16px",
                     mt: 1,
                   }}
                 >
@@ -203,9 +203,9 @@ export default function SchoolProfileContent() {
                       <Grid
                         item
                         sx={{
-                          marginRight: '20px',
-                          marginTop: '5px',
-                          mb: '8px',
+                          marginRight: "20px",
+                          marginTop: "5px",
+                          mb: "8px",
                         }}
                       >
                         <Image
@@ -234,9 +234,9 @@ export default function SchoolProfileContent() {
               <Grid item xs={12}>
                 <Grid
                   container
-                  justifyContent={'space-between'}
+                  justifyContent={"space-between"}
                   sx={{
-                    padding: '16px',
+                    padding: "16px",
                     mt: 1,
                   }}
                 >
@@ -245,9 +245,9 @@ export default function SchoolProfileContent() {
                       <Grid
                         item
                         sx={{
-                          marginRight: '20px',
-                          marginTop: '5px',
-                          mb: '8px',
+                          marginRight: "20px",
+                          marginTop: "5px",
+                          mb: "8px",
                         }}
                       >
                         <Image
@@ -272,9 +272,9 @@ export default function SchoolProfileContent() {
               <Grid item xs={12}>
                 <Grid
                   container
-                  justifyContent={'space-between'}
+                  justifyContent={"space-between"}
                   sx={{
-                    padding: '16px',
+                    padding: "16px",
                     mt: 1,
                   }}
                 >
@@ -283,9 +283,9 @@ export default function SchoolProfileContent() {
                       <Grid
                         item
                         sx={{
-                          marginRight: '20px',
-                          marginTop: '5px',
-                          mb: '8px',
+                          marginRight: "20px",
+                          marginTop: "5px",
+                          mb: "8px",
                         }}
                       >
                         <Image
@@ -313,10 +313,10 @@ export default function SchoolProfileContent() {
         </Stack>
         <Stack
           sx={{
-            display: editing ? 'flex' : 'none',
-            flexDirection: 'row',
-            justifyContent: 'flex-end',
-            p: { sm: '0 16px', md: '0 32px' },
+            display: editing ? "flex" : "none",
+            flexDirection: "row",
+            justifyContent: "flex-end",
+            p: { sm: "0 16px", md: "0 32px" },
             mb: 2,
           }}
         >

@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { FieldLabel } from '@/components/FieldLabel';
-import { FileUpload } from '@/components/FileUpload';
-import { getImageUrl } from '@/utils/getImageUrl';
-import { Button, MenuItem, Select, Stack, TextField } from '@mui/material';
-import Image from 'next/image';
+import { FieldLabel } from "@/components/FieldLabel";
+import { FileUpload } from "@/components/FileUpload";
+import { getImageUrl } from "@/utils/getImageUrl";
+import { Button, MenuItem, Select, Stack, TextField } from "@mui/material";
+import Image from "next/image";
 
 export const EditInvoiceForm = ({ formik, handleClose }) => {
   return (
@@ -14,13 +14,13 @@ export const EditInvoiceForm = ({ formik, handleClose }) => {
           id="status"
           name="status"
           value={
-            formik.values && formik.values['status']
-              ? formik.values['status']
-              : ''
+            formik.values && formik.values["status"]
+              ? formik.values["status"]
+              : ""
           }
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={formik.touched['status'] && Boolean(formik.errors['status'])}
+          error={formik.touched["status"] && Boolean(formik.errors["status"])}
         />
       </FieldLabel>
       <FieldLabel name="Deskripsi">
@@ -28,11 +28,11 @@ export const EditInvoiceForm = ({ formik, handleClose }) => {
           id="note"
           name="note"
           value={
-            formik.values && formik.values['note'] ? formik.values['note'] : ''
+            formik.values && formik.values["note"] ? formik.values["note"] : ""
           }
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={formik.touched['note'] && Boolean(formik.errors['note'])}
+          error={formik.touched["note"] && Boolean(formik.errors["note"])}
           size="small"
           multiline
         />
@@ -42,27 +42,27 @@ export const EditInvoiceForm = ({ formik, handleClose }) => {
           id="payment_proof_uri"
           name="payment_proof_uri"
           value={
-            formik.values && formik.values['payment_proof_uri']
-              ? formik.values['payment_proof_uri']
+            formik.values && formik.values["payment_proof_uri"]
+              ? formik.values["payment_proof_uri"]
               : null
           }
           error={
-            formik.touched['payment_proof_uri'] &&
-            Boolean(formik.errors['payment_proof_uri'])
+            formik.touched["payment_proof_uri"] &&
+            Boolean(formik.errors["payment_proof_uri"])
           }
           accept="image/*"
           afterUpload={(data) => {
             const imageUrl = getImageUrl(data?.data?.data);
-            formik.setFieldValue('payment_proof_uri', imageUrl);
+            formik.setFieldValue("payment_proof_uri", imageUrl);
           }}
         />
-        {formik.values['payment_proof_uri'] ? (
+        {formik.values["payment_proof_uri"] ? (
           <div className="relative flex justify-center max-h-96 overflow-y-auto rounded-lg">
             <Image
               height={384}
               width={600}
-              src={formik.values['payment_proof_uri']}
-              style={{ height: 'max-content', width: '100%' }}
+              src={formik.values["payment_proof_uri"]}
+              style={{ height: "max-content", width: "100%" }}
               alt=""
             />
           </div>
@@ -73,15 +73,15 @@ export const EditInvoiceForm = ({ formik, handleClose }) => {
           id="payment_proof_note"
           name="payment_proof_note"
           value={
-            formik.values && formik.values['payment_proof_note']
-              ? formik.values['payment_proof_note']
-              : ''
+            formik.values && formik.values["payment_proof_note"]
+              ? formik.values["payment_proof_note"]
+              : ""
           }
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={
-            formik.touched['payment_proof_note'] &&
-            Boolean(formik.errors['payment_proof_note'])
+            formik.touched["payment_proof_note"] &&
+            Boolean(formik.errors["payment_proof_note"])
           }
           size="small"
           multiline

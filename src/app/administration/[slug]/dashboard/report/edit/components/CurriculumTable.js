@@ -1,15 +1,15 @@
 import { BorderColorRounded, DeleteForeverRounded } from "@mui/icons-material";
 import {
-    Box,
-    Button,
-    Chip,
-    Divider,
-    IconButton,
-    Modal,
-    Paper,
-    Stack,
-    Typography,
-    useMediaQuery
+  Box,
+  Button,
+  Chip,
+  Divider,
+  IconButton,
+  Modal,
+  Paper,
+  Stack,
+  Typography,
+  useMediaQuery,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import * as React from "react";
@@ -108,11 +108,7 @@ const columns = [
     sortable: false,
     flex: 1,
     renderCell: (params) => {
-      return params.value.length > 0 ? (
-        <ChipList params={params.value} />
-      ) : (
-        "-"
-      );
+      return params.value.length > 0 ? <ChipList params={params.value} /> : "-";
     },
   },
   // { field: "subjects", headerName: "Jumlah Mata Pelajaran", flex: 1 },
@@ -205,7 +201,7 @@ function ChipList({ params }) {
         flexDirection: "row",
         flexWrap: "wrap",
         overflow: "hidden",
-        m: {xs:0, lg:"8px 0"},
+        m: { xs: 0, lg: "8px 0" },
       }}
     >
       {params.map((studyProgram, index) => {
@@ -376,7 +372,7 @@ export default function CurriculumTable({ data, formik }) {
                 {activeRow.name}
               </Typography>
             </Stack>
-            </Stack>
+          </Stack>
 
           <Stack
             sx={{

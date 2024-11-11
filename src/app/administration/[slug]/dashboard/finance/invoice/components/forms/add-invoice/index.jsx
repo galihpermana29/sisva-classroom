@@ -2,18 +2,9 @@ import { Button, Stack, TextField, Typography } from "@mui/material";
 
 export const AddInvoiceForm = ({ formik, handleClose }) => {
   return (
-    <form
-      className="flex flex-col gap-6"
-      onSubmit={formik.handleSubmit}
-    >
-      <Stack
-        width="100%"
-        gap={1}
-      >
-        <Typography
-          fontWeight={600}
-          variant="body2"
-        >
+    <form className="flex flex-col gap-6" onSubmit={formik.handleSubmit}>
+      <Stack width="100%" gap={1}>
+        <Typography fontWeight={600} variant="body2">
           Nilai Invoice
         </Typography>
         <TextField
@@ -37,14 +28,8 @@ export const AddInvoiceForm = ({ formik, handleClose }) => {
           InputProps={{ startAdornment: <span>Rp&nbsp;</span> }}
         />
       </Stack>
-      <Stack
-        width="100%"
-        gap={1}
-      >
-        <Typography
-          fontWeight={600}
-          variant="body2"
-        >
+      <Stack width="100%" gap={1}>
+        <Typography fontWeight={600} variant="body2">
           Catatan
         </Typography>
         <TextField
@@ -61,10 +46,7 @@ export const AddInvoiceForm = ({ formik, handleClose }) => {
         />
       </Stack>
 
-      <Stack
-        flexDirection="row"
-        gap={2}
-      >
+      <Stack flexDirection="row" gap={2}>
         <Button
           type="button"
           fullWidth
@@ -73,11 +55,7 @@ export const AddInvoiceForm = ({ formik, handleClose }) => {
         >
           Batal
         </Button>
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-        >
+        <Button type="submit" fullWidth variant="contained">
           Buat
         </Button>
       </Stack>

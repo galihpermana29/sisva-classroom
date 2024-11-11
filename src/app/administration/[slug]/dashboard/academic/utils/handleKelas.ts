@@ -1,14 +1,14 @@
-import AcademicAPI from '@/api/academic';
-import UsersAPI from '@/api/users';
+import AcademicAPI from "@/api/academic";
+import UsersAPI from "@/api/users";
 
-import type { ClassType } from '@/globalcomponents/types';
+import type { ClassType } from "@/globalcomponents/types";
 import type {
   KelasInputData,
   Period,
   ProgramStudi,
   StudentGroup,
   User,
-} from './types';
+} from "./types";
 
 function getUserByName(users: User[], name: string) {
   return users.find((user) => user.name === name);
@@ -45,8 +45,8 @@ function getStudentGroup(
 export default async function handleKelas(data: KelasInputData) {
   // teachers
   const allTeachers: User[] = (
-    await UsersAPI.getAllUsers('teacher')
-  ).data.data.filter((teacher: User) => teacher.status === 'active');
+    await UsersAPI.getAllUsers("teacher")
+  ).data.data.filter((teacher: User) => teacher.status === "active");
   const teacherNames = allTeachers.map((teacher) => teacher.name);
   const teacherUsernames = allTeachers.map((teacher) => teacher.username);
 
@@ -114,7 +114,7 @@ export default async function handleKelas(data: KelasInputData) {
       allStudyProgram,
       data.nama_program_studi
     );
-    const classType: ClassType = 'homeroom';
+    const classType: ClassType = "homeroom";
     const payload = {
       name: data.nama_kelas,
       type: classType,
@@ -163,5 +163,5 @@ export default async function handleKelas(data: KelasInputData) {
     );
   if (promisesUpdate.length)
     reportText.push(`${promisesUpdate.length} baris Kelas berhasil diperbarui`);
-  return reportText.join(', ');
+  return reportText.join(", ");
 }

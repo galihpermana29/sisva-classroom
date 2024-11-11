@@ -3,11 +3,11 @@ import { useGetUserById } from "@/hooks/useGetUserById";
 import { formatToRupiah } from "@/utils/formatToRupiah";
 import { Delete } from "@mui/icons-material";
 import {
-    Checkbox,
-    IconButton,
-    TableCell,
-    TableRow,
-    Typography,
+  Checkbox,
+  IconButton,
+  TableCell,
+  TableRow,
+  Typography,
 } from "@mui/material";
 import { useGetBillById } from "../../../../hooks/useGetBillById";
 import { toggleUniqueIds } from "../utils/toggleUniqueIds";
@@ -24,14 +24,8 @@ export const DaftarPenggunaTerpilihTableBody = ({
     return <TableEmptyState columnCount={columnCount} />;
 
   return selectedUsers.map((id, index) => (
-    <TableRow
-      key={id}
-      hover
-    >
-      <TableCell
-        sx={{ minWidth: 0, width: "1em" }}
-        className="text-center"
-      >
+    <TableRow key={id} hover>
+      <TableCell sx={{ minWidth: 0, width: "1em" }} className="text-center">
         {index + 1}.
       </TableCell>
       <NameCell userId={id} />
@@ -63,10 +57,7 @@ const NameCell = ({ userId }) => {
     <TableCell>
       <div className="flex flex-col">
         <Typography variant="body2">{data?.name}</Typography>
-        <Typography
-          variant="caption"
-          color="gray"
-        >
+        <Typography variant="caption" color="gray">
           {userTypeMap[data?.type]}
         </Typography>
       </div>

@@ -22,10 +22,7 @@ export const JadwalKelasSchedule = () => {
     >
       {!shouldRender && <FilterIncompleteState />}
       {shouldRender && (
-        <WeekGeneralSchedule
-          data={data}
-          cellTemplate={getTemplate}
-        />
+        <WeekGeneralSchedule data={data} cellTemplate={getTemplate} />
       )}
     </Stack>
   );

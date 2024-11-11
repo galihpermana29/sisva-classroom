@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { MenuItem, Stack, TextField, Typography } from '@mui/material';
+import { MenuItem, Stack, TextField, Typography } from "@mui/material";
 
-import { formAddStudentInExtracurriculer } from '@/globalcomponents/FormFields';
-import { useState } from 'react';
+import { formAddStudentInExtracurriculer } from "@/globalcomponents/FormFields";
+import { useState } from "react";
 
 export const FormAddMembers = ({
   formik,
@@ -14,9 +14,9 @@ export const FormAddMembers = ({
   const [studentData, setStudentData] = useState([]);
 
   const mappedForm = formAddStudentInExtracurriculer.map((fs) => {
-    if (fs.name == 'title') fs.data = extraList;
+    if (fs.name == "title") fs.data = extraList;
 
-    if (fs.name == 'student') fs.data = studentList;
+    if (fs.name == "student") fs.data = studentList;
 
     return fs;
   });
@@ -34,7 +34,7 @@ export const FormAddMembers = ({
   return (
     <>
       {mappedForm.map((field) =>
-        field.name === 'title' ? (
+        field.name === "title" ? (
           <Stack sx={{ my: 1 }} key={field.name}>
             <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
@@ -55,7 +55,7 @@ export const FormAddMembers = ({
               ))}
             </TextField>
           </Stack>
-        ) : field.name === 'student' ? (
+        ) : field.name === "student" ? (
           <Stack sx={{ my: 1 }} key={field.name}>
             <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}

@@ -71,10 +71,7 @@ export const DaftarPenggunaSection = ({
         width="100%"
         gap={1}
       >
-        <Typography
-          fontSize="1em"
-          fontWeight={600}
-        >
+        <Typography fontSize="1em" fontWeight={600}>
           Daftar Pengguna
         </Typography>
         <Stack
@@ -91,10 +88,7 @@ export const DaftarPenggunaSection = ({
             onChange={onSearch}
           />
           {targetIsSiswa && (
-            <ModalSiswaFilter
-              filters={userFilter}
-              setFilters={setUserFilter}
-            />
+            <ModalSiswaFilter filters={userFilter} setFilters={setUserFilter} />
           )}
         </Stack>
       </Stack>
@@ -125,11 +119,7 @@ const DaftarPenggunaTable = ({
 
   return (
     <>
-      <CustomTable
-        minWidth={240}
-        columns={columns}
-        body={tableBody}
-      />
+      <CustomTable minWidth={240} columns={columns} body={tableBody} />
       <ModalPagination
         page={currentPage}
         totalPage={totalPage}

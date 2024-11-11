@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import CmsAPI from '@/api/cms';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { Provider } from 'react-redux';
-import '../globals.css';
-import { store } from './store';
-import { themeConfig } from './theme';
+import CmsAPI from "@/api/cms";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Provider } from "react-redux";
+import "../globals.css";
+import { store } from "./store";
+import { themeConfig } from "./theme";
 
 export default function RootLayout({ children }) {
   const { slug } = useParams();

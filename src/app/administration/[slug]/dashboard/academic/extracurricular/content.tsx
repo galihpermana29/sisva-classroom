@@ -1,29 +1,29 @@
-'use client';
+"use client";
 
-import { Stack, Typography } from '@mui/material';
-import { useState } from 'react';
+import { Stack, Typography } from "@mui/material";
+import { useState } from "react";
 
-import AcademicAPI from '@/api/academic';
-import { useExtracurricularMembers } from '@/hooks/useExtracurricularMembers';
-import { useExtracurriculars } from '@/hooks/useExtracurriculars';
-import { useStudents } from '@/hooks/useStudents';
-import { useTeachers } from '@/hooks/useTeachers';
-import { useQueryClient } from '@tanstack/react-query';
-import { useFormik } from 'formik';
-import ClassTable from './components/ClassTable';
-import CreateExtracurricularMemberModal from './components/CreateExtracurricularMemberModal';
-import CreateExtracurricularModal from './components/CreateExtracurricularModal';
-import SortModal from './components/SortModal';
-import StudentTable from './components/StudentTable';
-import TableParent from './components/TableParent';
+import AcademicAPI from "@/api/academic";
+import { useExtracurricularMembers } from "@/hooks/useExtracurricularMembers";
+import { useExtracurriculars } from "@/hooks/useExtracurriculars";
+import { useStudents } from "@/hooks/useStudents";
+import { useTeachers } from "@/hooks/useTeachers";
+import { useQueryClient } from "@tanstack/react-query";
+import { useFormik } from "formik";
+import ClassTable from "./components/ClassTable";
+import CreateExtracurricularMemberModal from "./components/CreateExtracurricularMemberModal";
+import CreateExtracurricularModal from "./components/CreateExtracurricularModal";
+import SortModal from "./components/SortModal";
+import StudentTable from "./components/StudentTable";
+import TableParent from "./components/TableParent";
 
 export default function StaffProfileContent() {
   const queryClient = useQueryClient();
   const emptyData = {
-    id: '',
-    title: '',
-    teacher: '',
-    student: '',
+    id: "",
+    title: "",
+    teacher: "",
+    student: "",
   };
 
   const formik = useFormik({
@@ -40,7 +40,7 @@ export default function StaffProfileContent() {
 
             await AcademicAPI.createExtra(payload);
             queryClient.invalidateQueries({
-              queryKey: ['extracurriculars'],
+              queryKey: ["extracurriculars"],
             });
           } else {
             const id = values.id;
@@ -52,7 +52,7 @@ export default function StaffProfileContent() {
 
             await AcademicAPI.updateExtra(id, payload);
             queryClient.invalidateQueries({
-              queryKey: ['extracurriculars'],
+              queryKey: ["extracurriculars"],
             });
           }
         } else {
@@ -65,7 +65,7 @@ export default function StaffProfileContent() {
 
             await AcademicAPI.createStudentInExtra(extra_id, payload);
             queryClient.invalidateQueries({
-              queryKey: ['extracurricular-members'],
+              queryKey: ["extracurricular-members"],
             });
           } else {
             const id = values.id;
@@ -77,7 +77,7 @@ export default function StaffProfileContent() {
 
             await AcademicAPI.updateExtra(id, payload);
             queryClient.invalidateQueries({
-              queryKey: ['extracurriculars'],
+              queryKey: ["extracurriculars"],
             });
           }
         }
@@ -93,7 +93,7 @@ export default function StaffProfileContent() {
     try {
       await AcademicAPI.deleteExtra(id);
       queryClient.invalidateQueries({
-        queryKey: ['extracurriculars'],
+        queryKey: ["extracurriculars"],
       });
     } catch (error) {
       console.log(error);
@@ -110,7 +110,7 @@ export default function StaffProfileContent() {
 
       await AcademicAPI.deleteStudentInExtra(id, payload);
       queryClient.invalidateQueries({
-        queryKey: ['extracurricular-members'],
+        queryKey: ["extracurricular-members"],
       });
     } catch (error) {
       console.log(error);
@@ -126,11 +126,11 @@ export default function StaffProfileContent() {
     setAnchorEl(null);
   };
 
-  const [search, setSearch] = useState('');
-  const [extraFilter, setExtraFilter] = useState('');
-  const [sortBy, setSortBy] = useState('');
-  const [sortType, setSortType] = useState('ascending');
-  const [sortSettings, setSortSettings] = useState<any>('');
+  const [search, setSearch] = useState("");
+  const [extraFilter, setExtraFilter] = useState("");
+  const [sortBy, setSortBy] = useState("");
+  const [sortType, setSortType] = useState("ascending");
+  const [sortSettings, setSortSettings] = useState<any>("");
   const [openSortModal, setOpenSortModal] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
 
@@ -175,7 +175,7 @@ export default function StaffProfileContent() {
       id: idx,
       extracurricular: md.extracurricular_name,
       extracurricular_id: md.extracurricular_id,
-      class: 'X IPA 1',
+      class: "X IPA 1",
       student: md.student_name,
       student_id: md.student_id,
     };
@@ -198,7 +198,7 @@ export default function StaffProfileContent() {
 
   const tabs = [
     {
-      title: 'Ekstrakurikuler',
+      title: "Ekstrakurikuler",
       component: (
         <ClassTable
           formik={formik}
@@ -209,7 +209,7 @@ export default function StaffProfileContent() {
       ),
     },
     {
-      title: 'Anggota',
+      title: "Anggota",
       component: (
         <StudentTable
           formik={formik}
@@ -221,7 +221,7 @@ export default function StaffProfileContent() {
   ];
 
   return (
-    <Stack sx={{ height: '100%', width: '100%', p: { xs: 0, lg: 4 } }}>
+    <Stack sx={{ height: "100%", width: "100%", p: { xs: 0, lg: 4 } }}>
       <CreateExtracurricularModal
         emptyData={emptyData}
         formik={formik}
@@ -253,10 +253,10 @@ export default function StaffProfileContent() {
       />
       <Stack
         sx={{
-          flexDirection: 'row',
-          display: { xs: 'none', lg: 'flex' },
+          flexDirection: "row",
+          display: { xs: "none", lg: "flex" },
           mb: 2,
-          alignItems: 'center',
+          alignItems: "center",
         }}
       >
         <Typography sx={{ fontSize: 20, fontWeight: 600 }}>

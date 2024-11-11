@@ -5,7 +5,13 @@ import { DragAndDropCard } from "./DragAndDropCard.js";
 const style = {
   width: 400,
 };
-export const DragAndDropContainer = ({ data, formik, cards, setCards,DeleteGrade }) => {
+export const DragAndDropContainer = ({
+  data,
+  formik,
+  cards,
+  setCards,
+  DeleteGrade,
+}) => {
   {
     // let temp = [];
     // data.map((grade, index) => {

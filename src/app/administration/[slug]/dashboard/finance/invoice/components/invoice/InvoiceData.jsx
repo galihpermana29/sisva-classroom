@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useGetUserById } from '@/hooks/useGetUserById';
-import { formatToRupiah } from '@/utils/formatToRupiah';
-import { useMounted } from '@mantine/hooks';
+import { useGetUserById } from "@/hooks/useGetUserById";
+import { formatToRupiah } from "@/utils/formatToRupiah";
+import { useMounted } from "@mantine/hooks";
 import {
   Box,
   Divider,
@@ -10,15 +10,15 @@ import {
   Stack,
   Typography,
   useTheme,
-} from '@mui/material';
-import { useFilterStatus } from '../../hooks/useFilterStatus';
-import { useGetAllInvoices } from '../../hooks/useGetAllInvoices';
-import { useGetAllUserBill } from '../../hooks/useGetAllUserBill';
-import { useGetBillById } from '../../hooks/useGetBillById';
-import { usePagination } from '../../hooks/usePagination';
-import { LoadingDataCard } from '../LoadingDataCard';
-import { InvoiceRowActions } from './InvoiceRowActions';
-import { InvoiceStatusBadge } from './InvoiceStatusBadge';
+} from "@mui/material";
+import { useFilterStatus } from "../../hooks/useFilterStatus";
+import { useGetAllInvoices } from "../../hooks/useGetAllInvoices";
+import { useGetAllUserBill } from "../../hooks/useGetAllUserBill";
+import { useGetBillById } from "../../hooks/useGetBillById";
+import { usePagination } from "../../hooks/usePagination";
+import { LoadingDataCard } from "../LoadingDataCard";
+import { InvoiceRowActions } from "./InvoiceRowActions";
+import { InvoiceStatusBadge } from "./InvoiceStatusBadge";
 
 export const InvoiceData = () => {
   const theme = useTheme();
@@ -157,7 +157,7 @@ const DataCard = ({ id, user_bill_id, amount, status }) => {
 };
 
 const userTypeMap = {
-  student: 'Siswa',
-  staff: 'Staf',
-  teacher: 'Guru',
+  student: "Siswa",
+  staff: "Staf",
+  teacher: "Guru",
 };

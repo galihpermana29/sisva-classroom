@@ -1,23 +1,23 @@
-'use client';
+"use client";
 
 import {
-    Box,
-    IconButton,
-    Input,
-    InputAdornment,
-    MenuItem,
-    Stack,
-    TextField,
-    Typography,
-} from '@mui/material';
+  Box,
+  IconButton,
+  Input,
+  InputAdornment,
+  MenuItem,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 
-import { formEditPeriodFields } from '@/globalcomponents/FormFields';
-import { Cancel, Visibility, VisibilityOff } from '@mui/icons-material';
-import { useState } from 'react';
+import { formEditPeriodFields } from "@/globalcomponents/FormFields";
+import { Cancel, Visibility, VisibilityOff } from "@mui/icons-material";
+import { useState } from "react";
 
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 export const FormEditPeriod = ({ formik, editing, status }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -25,21 +25,21 @@ export const FormEditPeriod = ({ formik, editing, status }) => {
 
   const renderInput = (props) => (
     <Input
-      type='text'
+      type="text"
       inputProps={{
-        sx: { minWidth: 140, width: { xs: '100%', lg: 'fit-content' } },
+        sx: { minWidth: 140, width: { xs: "100%", lg: "fit-content" } },
         startAdornment: props.value && (
           <Cancel
             onClick={() => {
-              setStudyProgramFilter('');
+              setStudyProgramFilter("");
             }}
             sx={{
               fontSize: 14,
-              color: 'base.base50',
-              cursor: 'pointer',
-              transform: 'translateX(-4px)',
-              '&:hover': {
-                color: 'base.base60',
+              color: "base.base50",
+              cursor: "pointer",
+              transform: "translateX(-4px)",
+              "&:hover": {
+                color: "base.base60",
               },
             }}
           />
@@ -47,13 +47,13 @@ export const FormEditPeriod = ({ formik, editing, status }) => {
       }}
     />
   );
-  if (status === 'inactive') {
+  if (status === "inactive") {
     return (
       <>
         {formEditPeriodFields.map((field) =>
-          field.type === 'text' ? (
+          field.type === "text" ? (
             <Stack sx={{ my: 1 }} key={field.name}>
-              <Typography variant='body2' fontWeight={600} mb={0.5}>
+              <Typography variant="body2" fontWeight={600} mb={0.5}>
                 {field.label}
               </Typography>
               <TextField
@@ -66,13 +66,13 @@ export const FormEditPeriod = ({ formik, editing, status }) => {
                 }
               />
             </Stack>
-          ) : field.type === 'password' ? (
+          ) : field.type === "password" ? (
             <Stack sx={{ my: 1 }} key={field.name}>
-              <Typography variant='body2' fontWeight={600} mb={0.5}>
+              <Typography variant="body2" fontWeight={600} mb={0.5}>
                 {field.label}
               </Typography>
               <TextField
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? "text" : "password"}
                 name={field.name}
                 placeholder={field.placeholder}
                 fullWidth
@@ -82,21 +82,21 @@ export const FormEditPeriod = ({ formik, editing, status }) => {
                 }
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment position='end'>
+                    <InputAdornment position="end">
                       <IconButton
                         onClick={() =>
-                          field.name === 'password'
+                          field.name === "password"
                             ? setShowPassword(!showPassword)
                             : setShowPasswordConfirm(!showPasswordConfirm)
                         }
                       >
-                        {field.name === 'password' &&
+                        {field.name === "password" &&
                           (showPassword ? (
                             <VisibilityOff sx={{ fontSize: 16 }} />
                           ) : (
                             <Visibility sx={{ fontSize: 16 }} />
                           ))}
-                        {field.name === 'password_confirm' &&
+                        {field.name === "password_confirm" &&
                           (showPasswordConfirm ? (
                             <VisibilityOff sx={{ fontSize: 16 }} />
                           ) : (
@@ -108,9 +108,9 @@ export const FormEditPeriod = ({ formik, editing, status }) => {
                 }}
               />
             </Stack>
-          ) : field.type === 'select' ? (
+          ) : field.type === "select" ? (
             <Stack sx={{ my: 1 }} key={field.name}>
-              <Typography variant='body2' fontWeight={600} mb={0.5}>
+              <Typography variant="body2" fontWeight={600} mb={0.5}>
                 {field.label}
               </Typography>
               <TextField
@@ -128,37 +128,37 @@ export const FormEditPeriod = ({ formik, editing, status }) => {
                 ))}
               </TextField>
             </Stack>
-          ) : field.type === 'month-range' ? (
-            <Stack flexDirection={'row'} key={field.name}>
+          ) : field.type === "month-range" ? (
+            <Stack flexDirection={"row"} key={field.name}>
               <Stack sx={{ flex: 1 }}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <Stack sx={{ mb: 1 }}>
-                    <Typography variant='body2' fontWeight={600} mb={0.5}>
+                    <Typography variant="body2" fontWeight={600} mb={0.5}>
                       Waktu Mulai
                     </Typography>
                     <DatePicker
-                      placeholder={'Waktu Mulai'}
-                      views={['month', 'year']}
+                      placeholder={"Waktu Mulai"}
+                      views={["month", "year"]}
                       renderInput={renderInput}
-                      value={formik.values['start_time']}
+                      value={formik.values["start_time"]}
                       onChange={(value) => {
-                        formik.setFieldValue('start_time', value);
+                        formik.setFieldValue("start_time", value);
                       }}
                     />
                   </Stack>
 
                   <Stack>
-                    <Typography variant='body2' fontWeight={600} mb={0.5}>
+                    <Typography variant="body2" fontWeight={600} mb={0.5}>
                       Waktu Selesai
                     </Typography>
 
                     <DatePicker
-                      placeholder={'Waktu Selesai'}
-                      views={['month', 'year']}
+                      placeholder={"Waktu Selesai"}
+                      views={["month", "year"]}
                       renderInput={renderInput}
-                      value={formik.values['end_time']}
+                      value={formik.values["end_time"]}
                       onChange={(value) =>
-                        formik.setFieldValue('end_time', value)
+                        formik.setFieldValue("end_time", value)
                       }
                     />
                   </Stack>
@@ -170,7 +170,7 @@ export const FormEditPeriod = ({ formik, editing, status }) => {
       </>
     );
   }
-  if (status === 'active') {
+  if (status === "active") {
     return (
       <>
         <Typography sx={{ mt: 1, fontSize: 14 }}>
@@ -178,11 +178,11 @@ export const FormEditPeriod = ({ formik, editing, status }) => {
         </Typography>
         <Stack
           sx={{
-            backgroundColor: 'base.base20',
+            backgroundColor: "base.base20",
             p: 1,
             borderRadius: 2,
-            flexDirection: 'row',
-            alignItems: 'center',
+            flexDirection: "row",
+            alignItems: "center",
             mt: 1,
             mb: 2,
           }}
@@ -203,23 +203,23 @@ export const FormEditPeriod = ({ formik, editing, status }) => {
               src={activeRow.profile_image_uri}
             />
           </Avatar> */}
-          <Stack alignItems={'center'} direction={'row'}>
+          <Stack alignItems={"center"} direction={"row"}>
             <Box
               sx={{
                 height: 8,
                 width: 8,
                 borderRadius: 10,
                 mr: 0.5,
-                backgroundColor: 'green',
+                backgroundColor: "green",
               }}
             />
             <Typography
               sx={{
-                color: 'black',
+                color: "black",
                 fontWeight: 600,
               }}
             >
-              {formik.values['period_name']}
+              {formik.values["period_name"]}
             </Typography>
             {/* <Typography sx={{ fontSize: 14, lineHeight: "16px" }}>
               {formik.values["study_program"]}

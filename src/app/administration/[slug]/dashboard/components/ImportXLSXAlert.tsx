@@ -1,10 +1,10 @@
-import { DialogTitle, Divider, Stack } from '@mui/material';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
+import { DialogTitle, Divider, Stack } from "@mui/material";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
 
 export default function ImportXLSXAlert({
   open,
@@ -26,7 +26,7 @@ export default function ImportXLSXAlert({
       maxWidth="md"
       fullWidth={true}
       sx={{
-        '& .MuiDialog-paper': {
+        "& .MuiDialog-paper": {
           borderRadius: 2,
         },
       }}

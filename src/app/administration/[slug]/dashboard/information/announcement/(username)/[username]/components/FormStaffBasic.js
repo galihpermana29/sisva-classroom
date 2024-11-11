@@ -1,16 +1,16 @@
 "use client";
 
 import {
-    Box,
-    Chip,
-    FormControl,
-    Grid,
-    MenuItem,
-    OutlinedInput,
-    Select,
-    Stack,
-    TextField,
-    Typography
+  Box,
+  Chip,
+  FormControl,
+  Grid,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  Stack,
+  TextField,
+  Typography,
 } from "@mui/material";
 
 import { formStaffBasicFields } from "@/globalcomponents/FormFields";
@@ -33,7 +33,7 @@ export const FormStaffBasic = ({ formik, editing }) => {
           flexDirection: "row",
           flexWrap: "wrap",
           overflow: "hidden",
-          mt:.5
+          mt: 0.5,
         }}
       >
         {params.map((permission, index) => {
@@ -48,7 +48,7 @@ export const FormStaffBasic = ({ formik, editing }) => {
               key={index}
               sx={{
                 mr: "4px",
-                mb:"4px",
+                mb: "4px",
                 fontSize: 12,
               }}
               label={tempPermission}

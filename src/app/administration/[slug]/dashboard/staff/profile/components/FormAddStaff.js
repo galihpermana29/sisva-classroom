@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Box,
@@ -12,12 +12,12 @@ import {
   Stack,
   TextField,
   Typography,
-} from '@mui/material';
+} from "@mui/material";
 
-import { formAddStaffFields } from '@/globalcomponents/FormFields';
-import { permissions } from '@/globalcomponents/Variable';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { useState } from 'react';
+import { formAddStaffFields } from "@/globalcomponents/FormFields";
+import { permissions } from "@/globalcomponents/Variable";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useState } from "react";
 
 export const FormAddStaff = ({ formik }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -25,7 +25,7 @@ export const FormAddStaff = ({ formik }) => {
   return (
     <>
       {formAddStaffFields.map((field) =>
-        field.type === 'text' ? (
+        field.type === "text" ? (
           <Stack sx={{ my: 1 }} key={field.name}>
             <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
@@ -38,13 +38,13 @@ export const FormAddStaff = ({ formik }) => {
               onChange={(e) => formik.setFieldValue(field.name, e.target.value)}
             />
           </Stack>
-        ) : field.type === 'password' ? (
+        ) : field.type === "password" ? (
           <Stack sx={{ my: 1 }} key={field.name}>
             <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <TextField
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               name={field.name}
               placeholder={field.placeholder}
               fullWidth
@@ -55,18 +55,18 @@ export const FormAddStaff = ({ formik }) => {
                   <InputAdornment position="end">
                     <IconButton
                       onClick={() =>
-                        field.name === 'password'
+                        field.name === "password"
                           ? setShowPassword(!showPassword)
                           : setShowPasswordConfirm(!showPasswordConfirm)
                       }
                     >
-                      {field.name === 'password' &&
+                      {field.name === "password" &&
                         (showPassword ? (
                           <VisibilityOff sx={{ fontSize: 16 }} />
                         ) : (
                           <Visibility sx={{ fontSize: 16 }} />
                         ))}
-                      {field.name === 'password_confirm' &&
+                      {field.name === "password_confirm" &&
                         (showPasswordConfirm ? (
                           <VisibilityOff sx={{ fontSize: 16 }} />
                         ) : (
@@ -78,7 +78,7 @@ export const FormAddStaff = ({ formik }) => {
               }}
             />
           </Stack>
-        ) : field.type === 'select' ? (
+        ) : field.type === "select" ? (
           <Stack sx={{ my: 1 }} key={field.name}>
             <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
@@ -96,13 +96,13 @@ export const FormAddStaff = ({ formik }) => {
               ))}
             </TextField>
           </Stack>
-        ) : field.type === 'multiple-select' ? (
+        ) : field.type === "multiple-select" ? (
           <Stack sx={{ my: 1 }} key={field.name}>
             <Typography variant="body2" fontWeight={600}>
               {field.label}
             </Typography>
 
-            <FormControl sx={{ width: '100%' }}>
+            <FormControl sx={{ width: "100%" }}>
               {/* <InputLabel id="demo-multiple-chip-label">Chip</InputLabel> */}
               <Select
                 multiple
@@ -112,7 +112,7 @@ export const FormAddStaff = ({ formik }) => {
                 }
                 input={<OutlinedInput sx={{ p: 0 }} />}
                 renderValue={(selected) => (
-                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
                     {selected.map((permission) => {
                       let tempPermission;
                       permissions.map((item) => {
@@ -131,10 +131,10 @@ export const FormAddStaff = ({ formik }) => {
                   </Box>
                 )}
                 MenuProps={{
-                  anchorOrigin: { vertical: 'top', horizontal: 'center' },
+                  anchorOrigin: { vertical: "top", horizontal: "center" },
                   transformOrigin: {
-                    vertical: 'bottom',
-                    horizontal: 'center',
+                    vertical: "bottom",
+                    horizontal: "center",
                   },
                 }}
               >

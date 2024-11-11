@@ -3,12 +3,12 @@
 import { ModalBody } from "@/components/CustomModal";
 import { Delete } from "@mui/icons-material";
 import {
-    Button,
-    IconButton,
-    Modal,
-    Stack,
-    Tooltip,
-    Typography,
+  Button,
+  IconButton,
+  Modal,
+  Stack,
+  Tooltip,
+  Typography,
 } from "@mui/material";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";

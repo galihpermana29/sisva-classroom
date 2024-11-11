@@ -1,4 +1,4 @@
-import { Cancel } from '@mui/icons-material';
+import { Cancel } from "@mui/icons-material";
 import {
   Button,
   MenuItem,
@@ -7,9 +7,9 @@ import {
   Stack,
   TextField,
   Typography,
-} from '@mui/material';
-import { Dispatch, memo, SetStateAction } from 'react';
-import { SortBy, SortSettings, SortType } from '../content';
+} from "@mui/material";
+import { Dispatch, memo, SetStateAction } from "react";
+import { SortBy, SortSettings, SortType } from "../content";
 
 interface SortModalProps {
   openSortModal: boolean;
@@ -39,10 +39,10 @@ function SortModal({
           padding: 2,
           borderRadius: 2,
           zIndex: 20,
-          margin: 'auto',
-          position: 'fixed',
-          height: 'fit-content',
-          width: '240px',
+          margin: "auto",
+          position: "fixed",
+          height: "fit-content",
+          width: "240px",
           top: 0,
           bottom: 0,
           right: 0,
@@ -63,15 +63,15 @@ function SortModal({
             startAdornment: sortBy && (
               <Cancel
                 onClick={() => {
-                  setSortBy('');
+                  setSortBy("");
                 }}
                 sx={{
                   fontSize: 14,
-                  color: 'base.base50',
-                  cursor: 'pointer',
-                  transform: 'translateX(-4px)',
-                  '&:hover': {
-                    color: 'base.base60',
+                  color: "base.base50",
+                  cursor: "pointer",
+                  transform: "translateX(-4px)",
+                  "&:hover": {
+                    color: "base.base60",
                   },
                 }}
               />
@@ -79,8 +79,8 @@ function SortModal({
           }}
         >
           {[
-            { title: 'Nama', slug: 'name' },
-            { title: 'Username', slug: 'username' },
+            { title: "Nama", slug: "name" },
+            { title: "Username", slug: "username" },
           ].map((option) => (
             <MenuItem key={option.slug} value={option.slug}>
               <Typography fontSize={14}>{option.title}</Typography>
@@ -97,8 +97,8 @@ function SortModal({
           sx={{ flex: 1, mt: 2, mb: 2 }}
         >
           {[
-            { title: 'A-Z', slug: 'ascending' },
-            { title: 'Z-A', slug: 'descending' },
+            { title: "A-Z", slug: "ascending" },
+            { title: "Z-A", slug: "descending" },
           ].map((option) => (
             <MenuItem key={option.slug} value={option.slug}>
               <Typography fontSize={14}>{option.title}</Typography>
@@ -107,7 +107,7 @@ function SortModal({
         </TextField>
         <Stack
           sx={{
-            flexDirection: 'row',
+            flexDirection: "row",
           }}
         >
           <Button

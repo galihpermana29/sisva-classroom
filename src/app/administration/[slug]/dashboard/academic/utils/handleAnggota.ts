@@ -1,12 +1,12 @@
-import AcademicAPI from '@/api/academic';
-import UsersAPI from '@/api/users';
+import AcademicAPI from "@/api/academic";
+import UsersAPI from "@/api/users";
 
 import type {
   AnggotaInputData,
   Ekstrakulikuler,
   EkstrakulikulerStudent,
   User,
-} from './types';
+} from "./types";
 
 function getUserByName(users: User[], name: string) {
   return users.find((user) => user.name === name);
@@ -32,7 +32,7 @@ function getEkstrakulikuler(
 
 export default async function handleAnggota(data: AnggotaInputData) {
   // students
-  const allStudent: User[] = (await UsersAPI.getAllUsers('student')).data.data;
+  const allStudent: User[] = (await UsersAPI.getAllUsers("student")).data.data;
   const studentNames = allStudent.map((student) => student.name);
   const studentUsernames = allStudent.map((student) => student.username);
 
@@ -105,5 +105,5 @@ export default async function handleAnggota(data: AnggotaInputData) {
     reportText.push(
       `${promisesCreate.length} baris Anggota berhasil ditambahkan`
     );
-  return reportText.join(', ');
+  return reportText.join(", ");
 }

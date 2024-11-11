@@ -28,18 +28,12 @@ export const PeriodeSelect = ({ data, disabled }) => {
       value={value}
       onChange={(event) => handleChange(event.target.value)}
     >
-      <MenuItem
-        disabled
-        value=""
-      >
+      <MenuItem disabled value="">
         Periode
       </MenuItem>
       {data
         ? data.map(({ id, name }) => (
-            <MenuItem
-              key={`${id}${name}`}
-              value={id}
-            >
+            <MenuItem key={`${id}${name}`} value={id}>
               {name}
             </MenuItem>
           ))

@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { Button, MenuItem, Stack, TextField, Typography } from '@mui/material';
-import Image from 'next/image';
+import { Button, MenuItem, Stack, TextField, Typography } from "@mui/material";
+import Image from "next/image";
 
-import PDFIcon from '@/assets/icon-PDF.svg';
-import { formAddSyllabusFields } from '@/globalcomponents/FormFields';
-import { useEffect, useState } from 'react';
+import PDFIcon from "@/assets/icon-PDF.svg";
+import { formAddSyllabusFields } from "@/globalcomponents/FormFields";
+import { useEffect, useState } from "react";
 
 export const FormAddSyllabus = ({
   formik,
@@ -21,7 +21,7 @@ export const FormAddSyllabus = ({
   const [gradeData, setGradeData] = useState();
 
   const updatedSubjectFields = formAddSyllabusFields.map((field) => {
-    if (field.name == 'curriculum_name') {
+    if (field.name == "curriculum_name") {
       field.data = tableData.map((td) => {
         return { slug: td.id, title: td.name };
       });
@@ -74,7 +74,7 @@ export const FormAddSyllabus = ({
   return (
     <>
       {updatedSubjectFields?.map((field) =>
-        field.type === 'text' ? (
+        field.type === "text" ? (
           <Stack sx={{ my: 1 }} key={field.name}>
             <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
@@ -87,8 +87,8 @@ export const FormAddSyllabus = ({
               onChange={(e) => formik.setFieldValue(field.name, e.target.value)}
             />
           </Stack>
-        ) : field.type === 'select' ? (
-          field.name === 'curriculum_name' ? (
+        ) : field.type === "select" ? (
+          field.name === "curriculum_name" ? (
             <Stack sx={{ my: 1 }} key={field.name}>
               <Typography variant="body2" fontWeight={600} mb={0.5}>
                 {field.label}
@@ -109,7 +109,7 @@ export const FormAddSyllabus = ({
                 ))}
               </TextField>
             </Stack>
-          ) : field.name === 'study_program' ? (
+          ) : field.name === "study_program" ? (
             <Stack sx={{ my: 1 }} key={field.name}>
               <Typography variant="body2" fontWeight={600} mb={0.5}>
                 {field.label}
@@ -129,7 +129,7 @@ export const FormAddSyllabus = ({
                         <Typography fontSize={14}>{option.title}</Typography>
                       </MenuItem>
                     ))
-                  : ['Program Studi Tidak Tersedia'].map((option, idx) => (
+                  : ["Program Studi Tidak Tersedia"].map((option, idx) => (
                       <MenuItem
                         selected={idx == 0}
                         disabled
@@ -141,7 +141,7 @@ export const FormAddSyllabus = ({
                     ))}
               </TextField>
             </Stack>
-          ) : field.name === 'subject' ? (
+          ) : field.name === "subject" ? (
             <Stack sx={{ my: 1 }} key={field.name}>
               <Typography variant="body2" fontWeight={600} mb={0.5}>
                 {field.label}
@@ -160,7 +160,7 @@ export const FormAddSyllabus = ({
                         <Typography fontSize={14}>{option.title}</Typography>
                       </MenuItem>
                     ))
-                  : ['Mata Pelajaran Tidak Tersedia'].map((option, idx) => (
+                  : ["Mata Pelajaran Tidak Tersedia"].map((option, idx) => (
                       <MenuItem
                         selected={idx == 0}
                         disabled
@@ -191,7 +191,7 @@ export const FormAddSyllabus = ({
                         <Typography fontSize={14}>{option}</Typography>
                       </MenuItem>
                     ))
-                  : ['Tingkatan Tidak Tersedia'].map((option, idx) => (
+                  : ["Tingkatan Tidak Tersedia"].map((option, idx) => (
                       <MenuItem
                         selected={idx == 0}
                         disabled
@@ -204,27 +204,27 @@ export const FormAddSyllabus = ({
               </TextField>
             </Stack>
           )
-        ) : field.type === 'file' ? (
-          <Stack sx={{ overflowX: 'hidden' }}>
+        ) : field.type === "file" ? (
+          <Stack sx={{ overflowX: "hidden" }}>
             <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <Stack
               sx={{
-                backgroundColor: 'base.base20',
+                backgroundColor: "base.base20",
                 p: 1.5,
                 borderRadius: 2,
                 mb: 0.5,
-                flexDirection: 'row',
-                alignItems: 'center',
-                display: 'flex',
+                flexDirection: "row",
+                alignItems: "center",
+                display: "flex",
               }}
             >
               <Image src={PDFIcon} height={18} alt="" />
               <Typography sx={{ fontSize: 13, ml: 1 }}>
                 {formik.values.syllabus_uri
                   ? formik.values.syllabus_uri
-                  : 'Masukan PDF Silabus'}
+                  : "Masukan PDF Silabus"}
               </Typography>
             </Stack>
 
@@ -232,20 +232,20 @@ export const FormAddSyllabus = ({
               <Button
                 fullWidth
                 variant="outlined"
-                flexDirection={'row'}
-                alignItems={'center'}
+                flexDirection={"row"}
+                alignItems={"center"}
                 sx={{ mb: 0.5 }}
               >
-                {formik.values.syllabus_uri ? 'Ubah' : 'Upload'}
+                {formik.values.syllabus_uri ? "Ubah" : "Upload"}
                 <input
-                  name={'syllabus_uri'}
+                  name={"syllabus_uri"}
                   accept="pdf"
                   id="syllabus_uri"
                   type="file"
                   style={{
-                    position: 'absolute',
-                    opacity: '0',
-                    border: '1px solid red',
+                    position: "absolute",
+                    opacity: "0",
+                    border: "1px solid red",
                   }}
                   onChange={handleFileChange}
                 />
@@ -254,11 +254,11 @@ export const FormAddSyllabus = ({
             <Button
               fullWidth
               variant="outlined"
-              flexDirection={'row'}
-              alignItems={'center'}
+              flexDirection={"row"}
+              alignItems={"center"}
               sx={{
                 mb: 1,
-                display: formik.values.syllabus_uri ? 'flex' : 'none',
+                display: formik.values.syllabus_uri ? "flex" : "none",
               }}
             >
               Hapus

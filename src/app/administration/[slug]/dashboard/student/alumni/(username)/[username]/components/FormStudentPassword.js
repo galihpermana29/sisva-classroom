@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Avatar,
@@ -12,16 +12,16 @@ import {
   Stack,
   TextField,
   Typography,
-} from '@mui/material';
-import Image from 'next/image';
+} from "@mui/material";
+import Image from "next/image";
 
-import { useSchool } from '@/app/administration/[slug]/SchoolContext';
+import { useSchool } from "@/app/administration/[slug]/SchoolContext";
 import {
   formChangePasswordFields,
   formResetPasswordFields,
-} from '@/globalcomponents/FormFields';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { useState } from 'react';
+} from "@/globalcomponents/FormFields";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useState } from "react";
 
 export const FormStudentPassword = ({
   formik,
@@ -34,18 +34,18 @@ export const FormStudentPassword = ({
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
-  const [action, setAction] = useState('');
+  const [action, setAction] = useState("");
   const [activeUser, setActiveUser] = useState({});
 
-  const [openResetModal, setOpenResetModal] = useState('');
+  const [openResetModal, setOpenResetModal] = useState("");
 
   function renderType(name) {
-    if (name === 'old_password') {
-      return showOldPassword ? 'text' : 'password';
-    } else if (name === 'new_password') {
-      return showNewPassword ? 'text' : 'password';
-    } else if (name === 'new_password_confirm') {
-      return showConfirmNewPassword ? 'text' : 'password';
+    if (name === "old_password") {
+      return showOldPassword ? "text" : "password";
+    } else if (name === "new_password") {
+      return showNewPassword ? "text" : "password";
+    } else if (name === "new_password_confirm") {
+      return showConfirmNewPassword ? "text" : "password";
     }
   }
 
@@ -53,11 +53,11 @@ export const FormStudentPassword = ({
     return (
       <>
         <Grid item xs={12} md={12}>
-          <Stack direction={'row'}>
+          <Stack direction={"row"}>
             <Button
               onClick={() => {
                 setEditing(true);
-                setAction('change');
+                setAction("change");
               }}
               variant="contained"
             >
@@ -66,12 +66,12 @@ export const FormStudentPassword = ({
             <Button
               onClick={() => {
                 setEditing(true);
-                setAction('reset');
+                setAction("reset");
               }}
               sx={{
                 ml: 1,
-                backgroundColor: 'warning.main',
-                '&:hover': { backgroundColor: 'warning.dark' },
+                backgroundColor: "warning.main",
+                "&:hover": { backgroundColor: "warning.dark" },
               }}
               variant="contained"
             >
@@ -84,9 +84,9 @@ export const FormStudentPassword = ({
   } else
     return (
       <>
-        {action === 'change'
+        {action === "change"
           ? formChangePasswordFields.map((field) =>
-              field.type === 'password' ? (
+              field.type === "password" ? (
                 <Grid item xs={12} md={field.md} key={field.name}>
                   <Typography variant="body2" fontWeight={600} mb={0.5}>
                     {field.label}
@@ -105,12 +105,12 @@ export const FormStudentPassword = ({
                         <InputAdornment position="end">
                           <IconButton
                             onClick={() => {
-                              if (field.name === 'old_password') {
+                              if (field.name === "old_password") {
                                 setShowOldPassword(!showOldPassword);
-                              } else if (field.name === 'new_password') {
+                              } else if (field.name === "new_password") {
                                 setShowNewPassword(!showNewPassword);
                               } else if (
-                                field.name === 'new_password_confirm'
+                                field.name === "new_password_confirm"
                               ) {
                                 setShowConfirmNewPassword(
                                   !showConfirmNewPassword
@@ -118,19 +118,19 @@ export const FormStudentPassword = ({
                               }
                             }}
                           >
-                            {field.name === 'old_password' &&
+                            {field.name === "old_password" &&
                               (showOldPassword ? (
                                 <VisibilityOff sx={{ fontSize: 16 }} />
                               ) : (
                                 <Visibility sx={{ fontSize: 16 }} />
                               ))}
-                            {field.name === 'new_password' &&
+                            {field.name === "new_password" &&
                               (showNewPassword ? (
                                 <VisibilityOff sx={{ fontSize: 16 }} />
                               ) : (
                                 <Visibility sx={{ fontSize: 16 }} />
                               ))}
-                            {field.name === 'new_password_confirm' &&
+                            {field.name === "new_password_confirm" &&
                               (showConfirmNewPassword ? (
                                 <VisibilityOff sx={{ fontSize: 16 }} />
                               ) : (
@@ -145,7 +145,7 @@ export const FormStudentPassword = ({
               ) : null
             )
           : formResetPasswordFields.map((field) =>
-              field.type === 'password' ? (
+              field.type === "password" ? (
                 <Grid item xs={12} md={field.md} key={field.name}>
                   <Typography variant="body2" fontWeight={600} mb={0.5}>
                     {field.label}
@@ -164,12 +164,12 @@ export const FormStudentPassword = ({
                         <InputAdornment position="end">
                           <IconButton
                             onClick={() => {
-                              if (field.name === 'old_password') {
+                              if (field.name === "old_password") {
                                 setShowOldPassword(!showOldPassword);
-                              } else if (field.name === 'new_password') {
+                              } else if (field.name === "new_password") {
                                 setShowNewPassword(!showNewPassword);
                               } else if (
-                                field.name === 'new_password_confirm'
+                                field.name === "new_password_confirm"
                               ) {
                                 setShowConfirmNewPassword(
                                   !showConfirmNewPassword
@@ -177,19 +177,19 @@ export const FormStudentPassword = ({
                               }
                             }}
                           >
-                            {field.name === 'old_password' &&
+                            {field.name === "old_password" &&
                               (showOldPassword ? (
                                 <VisibilityOff sx={{ fontSize: 16 }} />
                               ) : (
                                 <Visibility sx={{ fontSize: 16 }} />
                               ))}
-                            {field.name === 'new_password' &&
+                            {field.name === "new_password" &&
                               (showNewPassword ? (
                                 <VisibilityOff sx={{ fontSize: 16 }} />
                               ) : (
                                 <Visibility sx={{ fontSize: 16 }} />
                               ))}
-                            {field.name === 'new_password_confirm' &&
+                            {field.name === "new_password_confirm" &&
                               (showConfirmNewPassword ? (
                                 <VisibilityOff sx={{ fontSize: 16 }} />
                               ) : (
@@ -206,9 +206,9 @@ export const FormStudentPassword = ({
         <Stack
           sx={{
             // display: editing && activeTab !== 2 ? "flex" : "none",
-            flexDirection: 'row',
-            justifyContent: 'flex-end',
-            width: '100%',
+            flexDirection: "row",
+            justifyContent: "flex-end",
+            width: "100%",
             mt: 2,
           }}
         >
@@ -228,7 +228,7 @@ export const FormStudentPassword = ({
           </Button>
           <Button
             variant="contained"
-            sx={{ display: action === 'change' ? 'flex' : 'none', width: 120 }}
+            sx={{ display: action === "change" ? "flex" : "none", width: 120 }}
             onClick={() => {
               setEditing(false);
               formik.setValues(initialData);
@@ -243,16 +243,16 @@ export const FormStudentPassword = ({
           <Button
             variant="contained"
             sx={{
-              display: action === 'reset' ? 'flex' : 'none',
+              display: action === "reset" ? "flex" : "none",
               width: 120,
-              backgroundColor: 'warning.main',
-              '&:hover': { backgroundColor: 'warning.dark' },
+              backgroundColor: "warning.main",
+              "&:hover": { backgroundColor: "warning.dark" },
             }}
             onClick={() => {
               setActiveUser({
-                profile_image_uri: formik.values['profile_image_uri'],
-                name: formik.values['name'],
-                username: formik.values['username'],
+                profile_image_uri: formik.values["profile_image_uri"],
+                name: formik.values["name"],
+                username: formik.values["username"],
               });
               setOpenResetModal(true);
               formik.setValues(initialData);
@@ -271,11 +271,11 @@ export const FormStudentPassword = ({
               sx={{
                 borderRadius: 2,
                 zIndex: 20,
-                margin: 'auto',
-                position: 'fixed',
-                height: 'fit-content',
-                width: '360px',
-                maxWidth: '80%',
+                margin: "auto",
+                position: "fixed",
+                height: "fit-content",
+                width: "360px",
+                maxWidth: "80%",
                 top: 0,
                 bottom: 0,
                 right: 0,
@@ -294,20 +294,20 @@ export const FormStudentPassword = ({
               </Typography>
               <Stack
                 sx={{
-                  backgroundColor: 'base.base20',
+                  backgroundColor: "base.base20",
                   p: 1,
                   borderRadius: 2,
-                  flexDirection: 'row',
-                  alignItems: 'center',
+                  flexDirection: "row",
+                  alignItems: "center",
                   mt: 1,
                   mb: 2,
                 }}
               >
                 <Avatar
                   sx={{
-                    width: '40px',
-                    height: '40px',
-                    position: 'relative',
+                    width: "40px",
+                    height: "40px",
+                    position: "relative",
                     mr: 1,
                   }}
                 >
@@ -315,20 +315,20 @@ export const FormStudentPassword = ({
                     alt="Web Image"
                     fill
                     sizes="100%"
-                    style={{ objectFit: 'cover' }}
+                    style={{ objectFit: "cover" }}
                     src={`https://api-staging.sisva.id/file/v1/files/${activeUser.profile_image_uri}?school_id=${school.id}`}
                   />
                 </Avatar>
-                <Stack justifyContent={'center'}>
+                <Stack justifyContent={"center"}>
                   <Typography
                     sx={{
-                      color: 'black',
+                      color: "black",
                       fontWeight: 600,
                     }}
                   >
                     {activeUser.name}
                   </Typography>
-                  <Typography sx={{ fontSize: 14, lineHeight: '16px' }}>
+                  <Typography sx={{ fontSize: 14, lineHeight: "16px" }}>
                     {activeUser.username}
                   </Typography>
                 </Stack>
@@ -336,7 +336,7 @@ export const FormStudentPassword = ({
 
               <Stack
                 sx={{
-                  flexDirection: 'row',
+                  flexDirection: "row",
                 }}
               >
                 <Button
@@ -352,9 +352,9 @@ export const FormStudentPassword = ({
                   variant="contained"
                   sx={{
                     flex: 1,
-                    backgroundColor: 'warning.main',
-                    '&:hover': {
-                      backgroundColor: 'warning.dark',
+                    backgroundColor: "warning.main",
+                    "&:hover": {
+                      backgroundColor: "warning.dark",
                     },
                   }}
                   onClick={() => {

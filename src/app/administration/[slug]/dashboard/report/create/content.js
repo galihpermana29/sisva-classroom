@@ -1,23 +1,19 @@
 "use client";
 
 import { SortIcon } from "@/assets/SVGs";
+import { Add, Cancel, Search } from "@mui/icons-material";
 import {
-    Add,
-    Cancel,
-    Search
-} from "@mui/icons-material";
-import {
-    Box,
-    Button,
-    Divider,
-    Hidden,
-    InputAdornment,
-    MenuItem,
-    Modal,
-    Paper,
-    Stack,
-    TextField,
-    Typography
+  Box,
+  Button,
+  Divider,
+  Hidden,
+  InputAdornment,
+  MenuItem,
+  Modal,
+  Paper,
+  Stack,
+  TextField,
+  Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { FormAddStaff } from "./components/FormAddStaff";
@@ -256,7 +252,7 @@ export default function StaffProfileListContent() {
             </MenuItem>
           ))}
         </TextField>
-       
+
         <TextField
           select
           size="small"

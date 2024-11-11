@@ -72,29 +72,13 @@ const ModalContent = ({ handleClose }) => {
   });
 
   return (
-    <Stack
-      width="100%"
-      gap={3}
-    >
-      <Stack
-        width="100%"
-        flexDirection="row"
-        gap={1}
-      >
-        <ModalTagihanFilter
-          value={filters}
-          setValue={setFilters}
-        />
-        <ModalTagihanPenggunaFilter
-          value={filters}
-          setValue={setFilters}
-        />
+    <Stack width="100%" gap={3}>
+      <Stack width="100%" flexDirection="row" gap={1}>
+        <ModalTagihanFilter value={filters} setValue={setFilters} />
+        <ModalTagihanPenggunaFilter value={filters} setValue={setFilters} />
       </Stack>
       {filterError ? (
-        <Alert
-          variant="filled"
-          severity="error"
-        >
+        <Alert variant="filled" severity="error">
           {filterError}
         </Alert>
       ) : null}
@@ -102,10 +86,7 @@ const ModalContent = ({ handleClose }) => {
         billId={filters.tagihan}
         userBillId={filters.tagihanPengguna}
       />
-      <AddInvoiceForm
-        formik={formik}
-        handleClose={handleClose}
-      />
+      <AddInvoiceForm formik={formik} handleClose={handleClose} />
     </Stack>
   );
 };

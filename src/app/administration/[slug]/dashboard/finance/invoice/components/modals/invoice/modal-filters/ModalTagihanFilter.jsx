@@ -15,14 +15,8 @@ export const ModalTagihanFilter = ({ value, setValue }) => {
     setValue({ tagihan: e.target.value, tagihanPengguna: "" });
 
   return (
-    <Stack
-      width="100%"
-      gap={1}
-    >
-      <Typography
-        fontWeight={600}
-        variant="body2"
-      >
+    <Stack width="100%" gap={1}>
+      <Typography fontWeight={600} variant="body2">
         Pilih Tagihan
       </Typography>
       <Select
@@ -32,17 +26,11 @@ export const ModalTagihanFilter = ({ value, setValue }) => {
         onChange={handleChange}
         displayEmpty
       >
-        <MenuItem
-          disabled
-          value=""
-        >
+        <MenuItem disabled value="">
           Tagihan
         </MenuItem>
         {billsData.map(({ label, value }) => (
-          <MenuItem
-            key={`${label}${value}`}
-            value={value}
-          >
+          <MenuItem key={`${label}${value}`} value={value}>
             {label}
           </MenuItem>
         ))}

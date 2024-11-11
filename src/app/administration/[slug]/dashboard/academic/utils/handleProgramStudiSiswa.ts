@@ -1,7 +1,7 @@
-import AcademicAPI from '@/api/academic';
-import UsersAPI from '@/api/users';
+import AcademicAPI from "@/api/academic";
+import UsersAPI from "@/api/users";
 
-import type { ProgramStudi, ProgramStudiSiswaInputData, User } from './types';
+import type { ProgramStudi, ProgramStudiSiswaInputData, User } from "./types";
 
 function getUserByName(students: User[], name: string) {
   return students.find((student) => student.name === name);
@@ -27,9 +27,9 @@ export default async function handleProgramStudiSiswa(
   data: ProgramStudiSiswaInputData
 ) {
   // active students
-  const students: User[] = (await UsersAPI.getAllUsers('student')).data.data;
+  const students: User[] = (await UsersAPI.getAllUsers("student")).data.data;
   const activeStundents = students.filter(
-    (stundent) => stundent.status === 'active'
+    (stundent) => stundent.status === "active"
   );
   const studentNames = activeStundents.map((student) => student.name);
   const studentUsernames = activeStundents.map((student) => student.username);
@@ -85,5 +85,5 @@ export default async function handleProgramStudiSiswa(
     reportText.push(
       `${promisesUpdate.length} baris Program Studi Siswa berhasil diperbarui`
     );
-  return reportText.join(', ');
+  return reportText.join(", ");
 }

@@ -1,6 +1,6 @@
-import { RootState } from '@/app/administration/store';
-import type { PayloadAction } from '@reduxjs/toolkit';
-import { createSlice } from '@reduxjs/toolkit';
+import { RootState } from "@/app/administration/store";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 interface StaffAttendance {
   progress: string;
   progressLog: string;
@@ -8,13 +8,13 @@ interface StaffAttendance {
 }
 
 const initialState: StaffAttendance = {
-  progress: '0%',
-  progressLog: '',
+  progress: "0%",
+  progressLog: "",
   isOpenProgressAlert: false,
 };
 
 export const staffAttendanceSlice = createSlice({
-  name: 'staff/attendance',
+  name: "staff/attendance",
   initialState,
   reducers: {
     setProgress: (state, action: PayloadAction<string>) => {

@@ -21,10 +21,7 @@ export const NamaCell = ({ userId }) => {
       ) : (
         <div className="flex flex-col">
           <Typography variant="body2">{userData.name}</Typography>
-          <Typography
-            variant="caption"
-            color="gray"
-          >
+          <Typography variant="caption" color="gray">
             {userTypeMap[userData.type]}
           </Typography>
         </div>

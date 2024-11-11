@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { Box, Button, Grid, Stack, TextField, Typography } from '@mui/material';
-import Image from 'next/image';
+import { Box, Button, Grid, Stack, TextField, Typography } from "@mui/material";
+import Image from "next/image";
 
-import { useSchool } from '@/app/administration/[slug]/SchoolContext';
-import { formSchoolDetailsFields } from '@/globalcomponents/FormFields';
+import { useSchool } from "@/app/administration/[slug]/SchoolContext";
+import { formSchoolDetailsFields } from "@/globalcomponents/FormFields";
 
 export const FormSchoolDetails = ({
   formik,
@@ -26,12 +26,12 @@ export const FormSchoolDetails = ({
                 sx={{
                   mt: 1,
                   p: 1,
-                  width: 'fit-content',
-                  backgroundColor: 'base.base20',
+                  width: "fit-content",
+                  backgroundColor: "base.base20",
                   borderRadius: 2,
                 }}
               >
-                <Box sx={{ height: 96, width: 96, position: 'relative' }}>
+                <Box sx={{ height: 96, width: 96, position: "relative" }}>
                   {formik.values[field.name] ? (
                     <Image
                       alt="Image"
@@ -47,7 +47,7 @@ export const FormSchoolDetails = ({
             </Grid>
           ) : (
             <Grid
-              sx={{ marginBottom: '8px' }}
+              sx={{ marginBottom: "8px" }}
               item
               xs={12}
               md={field.md}
@@ -60,7 +60,7 @@ export const FormSchoolDetails = ({
               </Grid>
               <Grid item xs={12} md={12}>
                 <Typography variant="body2" fontWeight={400} fontSize={14}>
-                  {formik.values[field.name] ? formik.values[field.name] : ''}
+                  {formik.values[field.name] ? formik.values[field.name] : ""}
                 </Typography>
               </Grid>
             </Grid>
@@ -86,12 +86,12 @@ export const FormSchoolDetails = ({
                 <Box
                   sx={{
                     p: 1,
-                    width: 'fit-content',
-                    backgroundColor: 'base.base20',
+                    width: "fit-content",
+                    backgroundColor: "base.base20",
                     borderRadius: 2,
                   }}
                 >
-                  <Box sx={{ height: 96, width: 96, position: 'relative' }}>
+                  <Box sx={{ height: 96, width: 96, position: "relative" }}>
                     {formik.values[field.name] ? (
                       <Image
                         alt="Image"
@@ -109,18 +109,18 @@ export const FormSchoolDetails = ({
                     fullWidth
                     variant="outlined"
                     size="small"
-                    sx={{ m: '8px 0 4px' }}
+                    sx={{ m: "8px 0 4px" }}
                   >
                     Ubah Foto
                     <input
-                      name={'logo_uri'}
+                      name={"logo_uri"}
                       accept="image/*"
                       id="image-input"
                       type="file"
                       style={{
-                        position: 'absolute',
-                        opacity: '0',
-                        border: '1px solid red',
+                        position: "absolute",
+                        opacity: "0",
+                        border: "1px solid red",
                       }}
                       onChange={handleImageChange}
                     />
@@ -133,7 +133,7 @@ export const FormSchoolDetails = ({
             </Grid>
           ) : (
             <Grid item xs={12} md={field.md} key={field.name}>
-              <Typography variant="body2" fontWeight={600} sx={{ mb: '8px' }}>
+              <Typography variant="body2" fontWeight={600} sx={{ mb: "8px" }}>
                 {field.label}
               </Typography>
               <TextField

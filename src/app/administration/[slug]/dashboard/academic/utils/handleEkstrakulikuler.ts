@@ -1,7 +1,7 @@
-import AcademicAPI from '@/api/academic';
-import UsersAPI from '@/api/users';
+import AcademicAPI from "@/api/academic";
+import UsersAPI from "@/api/users";
 
-import type { Ekstrakulikuler, EkstrakulikulerInputData, User } from './types';
+import type { Ekstrakulikuler, EkstrakulikulerInputData, User } from "./types";
 
 function getUserByName(users: User[], name: string) {
   return users.find((user) => user.name === name);
@@ -30,8 +30,8 @@ export default async function handleEkstrakulikuler(
 ) {
   // teachers
   const allTeachers: User[] = (
-    await UsersAPI.getAllUsers('teacher')
-  ).data.data.filter((teacher: User) => teacher.status === 'active');
+    await UsersAPI.getAllUsers("teacher")
+  ).data.data.filter((teacher: User) => teacher.status === "active");
   const teacherNames = allTeachers.map((teacher) => teacher.name);
   const teacherUsernames = allTeachers.map((teacher) => teacher.username);
 
@@ -105,5 +105,5 @@ export default async function handleEkstrakulikuler(
     reportText.push(
       `${promisesUpdate.length} baris Ekstrakulikuler berhasil diperbarui`
     );
-  return reportText.join(', ');
+  return reportText.join(", ");
 }

@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useGetUserById } from '@/hooks/useGetUserById';
-import { formatToRupiah } from '@/utils/formatToRupiah';
-import { getUserTimezone } from '@/utils/getUserTimezone';
+import { useGetUserById } from "@/hooks/useGetUserById";
+import { formatToRupiah } from "@/utils/formatToRupiah";
+import { getUserTimezone } from "@/utils/getUserTimezone";
 
-import { useMounted } from '@mantine/hooks';
+import { useMounted } from "@mantine/hooks";
 import {
   Box,
   Divider,
@@ -12,18 +12,18 @@ import {
   Stack,
   Typography,
   useTheme,
-} from '@mui/material';
-import dayjs from 'dayjs';
+} from "@mui/material";
+import dayjs from "dayjs";
 
-import { useCheckCariFilter } from '../../hooks/useCheckCariFilter';
-import { useCheckKategoriFilter } from '../../hooks/useCheckKategoriFilter';
-import { useCheckTanggalFilter } from '../../hooks/useCheckTanggalFilter';
-import { useGetAllUserBill } from '../../hooks/useGetAllUserBill';
-import { useGetBillById } from '../../hooks/useGetBillById';
-import { usePagination } from '../../hooks/usePagination';
+import { useCheckCariFilter } from "../../hooks/useCheckCariFilter";
+import { useCheckKategoriFilter } from "../../hooks/useCheckKategoriFilter";
+import { useCheckTanggalFilter } from "../../hooks/useCheckTanggalFilter";
+import { useGetAllUserBill } from "../../hooks/useGetAllUserBill";
+import { useGetBillById } from "../../hooks/useGetBillById";
+import { usePagination } from "../../hooks/usePagination";
 
-import { LoadingDataCard } from '../LoadingDataCard';
-import { DeleteTagihanPenggunaModal } from '../modals/tagihan-pengguna/DeleteTagihanPenggunaModal';
+import { LoadingDataCard } from "../LoadingDataCard";
+import { DeleteTagihanPenggunaModal } from "../modals/tagihan-pengguna/DeleteTagihanPenggunaModal";
 
 export const TagihanPenggunaData = () => {
   const theme = useTheme();
@@ -84,7 +84,7 @@ const DataCard = ({ id, bill_id, user_id }) => {
   // TODO: add empty state here
   if (!cariFilterPass || !tanggalFilterPass || !kategoriFilterPass) return null;
 
-  const date = dayjs(billData.deadline, 'DD/MM/YYYY h:mm A Z');
+  const date = dayjs(billData.deadline, "DD/MM/YYYY h:mm A Z");
   const timezone = getUserTimezone();
 
   return (
@@ -106,8 +106,8 @@ const DataCard = ({ id, bill_id, user_id }) => {
             #{billData.custom_id}
           </Typography>
           <Typography fontWeight={300} color="gray" variant="body2">
-            {`${date.format('DD MMM YYYY')} ${date.format(
-              'HH:mm'
+            {`${date.format("DD MMM YYYY")} ${date.format(
+              "HH:mm"
             )} ${timezone}`}
           </Typography>
         </Stack>

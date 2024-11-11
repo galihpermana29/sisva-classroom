@@ -1,6 +1,6 @@
-import { useSchool } from '@/app/administration/[slug]/SchoolContext';
-import { permissions, types } from '@/globalcomponents/Variable';
-import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
+import { useSchool } from "@/app/administration/[slug]/SchoolContext";
+import { permissions, types } from "@/globalcomponents/Variable";
+import { BorderColorRounded, DeleteForeverRounded } from "@mui/icons-material";
 import {
   Avatar,
   Box,
@@ -12,16 +12,16 @@ import {
   Stack,
   Typography,
   useMediaQuery,
-} from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
-import Image from 'next/image';
-import * as React from 'react';
-import { useState } from 'react';
+} from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
+import Image from "next/image";
+import * as React from "react";
+import { useState } from "react";
 
 const columns = [
   {
-    field: 'card',
-    headerName: '',
+    field: "card",
+    headerName: "",
     flex: 1,
     sortable: false,
     renderCell: (params) => {
@@ -32,26 +32,26 @@ const columns = [
         }
       });
       return (
-        <Box sx={{ width: '100%', mx: 2, py: 0.5 }}>
+        <Box sx={{ width: "100%", mx: 2, py: 0.5 }}>
           <Stack
             component={Paper}
             variant="outlined"
             sx={{
-              justifyContent: 'flex-start',
+              justifyContent: "flex-start",
               borderRadius: 2,
               p: 2,
             }}
           >
-            <Stack sx={{ width: '100%' }}>
+            <Stack sx={{ width: "100%" }}>
               <Stack
                 sx={{
-                  width: '100%',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  borderBottom: '1px solid rgb(0,0,0,0.12)',
+                  width: "100%",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  borderBottom: "1px solid rgb(0,0,0,0.12)",
                   px: 1,
-                  py: '10px',
-                  backgroundColor: 'base.base10',
+                  py: "10px",
+                  backgroundColor: "base.base10",
                 }}
               >
                 <Typography
@@ -59,19 +59,19 @@ const columns = [
                 >
                   Nama
                 </Typography>
-                <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
+                <Typography sx={{ fontSize: 14, textAlign: "right" }}>
                   {params.value.data.report}
                 </Typography>
               </Stack>
               <Stack
                 sx={{
-                  width: '100%',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  borderBottom: '1px solid rgb(0,0,0,0.12)',
+                  width: "100%",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  borderBottom: "1px solid rgb(0,0,0,0.12)",
                   px: 1,
-                  py: '10px',
-                  backgroundColor: 'base.base20',
+                  py: "10px",
+                  backgroundColor: "base.base20",
                 }}
               >
                 <Typography
@@ -79,19 +79,19 @@ const columns = [
                 >
                   Template
                 </Typography>
-                <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
+                <Typography sx={{ fontSize: 14, textAlign: "right" }}>
                   {params.value.data.template}
                 </Typography>
               </Stack>
               <Stack
                 sx={{
-                  width: '100%',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  borderBottom: '1px solid rgb(0,0,0,0.12)',
+                  width: "100%",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  borderBottom: "1px solid rgb(0,0,0,0.12)",
                   px: 1,
-                  py: '10px',
-                  backgroundColor: 'base.base10',
+                  py: "10px",
+                  backgroundColor: "base.base10",
                 }}
               >
                 <Typography
@@ -99,19 +99,19 @@ const columns = [
                 >
                   Periode
                 </Typography>
-                <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
+                <Typography sx={{ fontSize: 14, textAlign: "right" }}>
                   {params.value.data.period}
                 </Typography>
               </Stack>
               <Stack
                 sx={{
-                  width: '100%',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  borderBottom: '1px solid rgb(0,0,0,0.12)',
+                  width: "100%",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  borderBottom: "1px solid rgb(0,0,0,0.12)",
                   px: 1,
-                  py: '10px',
-                  backgroundColor: 'base.base20',
+                  py: "10px",
+                  backgroundColor: "base.base20",
                 }}
               >
                 <Typography
@@ -119,7 +119,7 @@ const columns = [
                 >
                   Program Studi
                 </Typography>
-                <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
+                <Typography sx={{ fontSize: 14, textAlign: "right" }}>
                   {params.value.data.studyProgram}
                 </Typography>
               </Stack>
@@ -130,14 +130,14 @@ const columns = [
       );
     },
   },
-  { field: 'report', headerName: 'Nama', flex: 1 },
-  { field: 'template', headerName: 'Template', flex: 1 },
-  { field: 'period', headerName: 'Periode', flex: 1 },
-  { field: 'studyProgram', headerName: 'Program Studi', flex: 1 },
+  { field: "report", headerName: "Nama", flex: 1 },
+  { field: "template", headerName: "Template", flex: 1 },
+  { field: "period", headerName: "Periode", flex: 1 },
+  { field: "studyProgram", headerName: "Program Studi", flex: 1 },
   // { field: "username", headerName: "Username", flex: 1 },
   {
-    field: 'action',
-    headerName: 'Aksi',
+    field: "action",
+    headerName: "Aksi",
     sortable: false,
     width: 120,
     renderCell: (params) => {
@@ -150,10 +150,10 @@ function ChipList({ params }) {
   return (
     <Stack
       sx={{
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        overflow: 'hidden',
-        m: '8px 0',
+        flexDirection: "row",
+        flexWrap: "wrap",
+        overflow: "hidden",
+        m: "8px 0",
       }}
     >
       {params.map((permission, index) => {
@@ -167,7 +167,7 @@ function ChipList({ params }) {
           <Chip
             key={index}
             sx={{
-              m: { xs: '2px 4px 2px 0', lg: '2px' },
+              m: { xs: "2px 4px 2px 0", lg: "2px" },
               fontSize: 12,
             }}
             label={tempPermission}
@@ -183,22 +183,22 @@ function ActionButton({ params }) {
   return (
     <Stack
       sx={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        alignSelf: 'flex-end',
+        flexDirection: "row",
+        alignItems: "center",
+        alignSelf: "flex-end",
         mt: { xs: 2, lg: 0 },
       }}
     >
       <IconButton
         sx={{
           borderRadius: 2,
-          backgroundColor: 'base.base30',
-          '&:hover': {
-            backgroundColor: 'base.base40',
+          backgroundColor: "base.base30",
+          "&:hover": {
+            backgroundColor: "base.base40",
           },
-          height: 'fit-content',
-          width: { xs: 90, lg: 'fit-content' },
-          display: params.value.data.status === 'Selesai' ? 'none' : 'flex',
+          height: "fit-content",
+          width: { xs: 90, lg: "fit-content" },
+          display: params.value.data.status === "Selesai" ? "none" : "flex",
         }}
         onClick={() => {
           params.value.setOpenEditModal(true);
@@ -213,10 +213,10 @@ function ActionButton({ params }) {
         }}
       >
         <BorderColorRounded
-          sx={{ fontSize: { xs: 15, lg: 18 }, color: 'base.base50' }}
+          sx={{ fontSize: { xs: 15, lg: 18 }, color: "base.base50" }}
         />
         <Typography
-          sx={{ fontSize: 14, ml: 1, display: { xs: 'flex', lg: 'none' } }}
+          sx={{ fontSize: 14, ml: 1, display: { xs: "flex", lg: "none" } }}
         >
           Edit
         </Typography>
@@ -225,12 +225,12 @@ function ActionButton({ params }) {
         sx={{
           borderRadius: 2,
           ml: 1,
-          backgroundColor: 'warning.main',
-          '&:hover': {
-            backgroundColor: 'warning.dark',
+          backgroundColor: "warning.main",
+          "&:hover": {
+            backgroundColor: "warning.dark",
           },
-          width: { xs: 90, lg: 'fit-content' },
-          display: params.value.data.status !== 'Belum Aktif' ? 'none' : 'flex',
+          width: { xs: 90, lg: "fit-content" },
+          display: params.value.data.status !== "Belum Aktif" ? "none" : "flex",
         }}
         onClick={() => {
           params.value.setOpenDeleteModal(true);
@@ -238,14 +238,14 @@ function ActionButton({ params }) {
         }}
       >
         <DeleteForeverRounded
-          sx={{ color: 'white', fontSize: { xs: 16, lg: 18 } }}
+          sx={{ color: "white", fontSize: { xs: 16, lg: 18 } }}
         />
         <Typography
           sx={{
             fontSize: 14,
             ml: 1,
-            display: { xs: 'flex', lg: 'none' },
-            color: 'white',
+            display: { xs: "flex", lg: "none" },
+            color: "white",
           }}
         >
           Delete
@@ -257,7 +257,7 @@ function ActionButton({ params }) {
 
 export default function DataTable({ data }) {
   const school = useSchool();
-  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('lg'));
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down("lg"));
 
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [activeRow, setActiveRow] = useState({});
@@ -286,7 +286,7 @@ export default function DataTable({ data }) {
   });
 
   return (
-    <div style={{ height: '100%', width: '100%' }}>
+    <div style={{ height: "100%", width: "100%" }}>
       <Modal open={openDeleteModal} onClose={() => setOpenDeleteModal(false)}>
         <Stack
           component={Paper}
@@ -294,11 +294,11 @@ export default function DataTable({ data }) {
           sx={{
             borderRadius: 2,
             zIndex: 20,
-            margin: 'auto',
-            position: 'fixed',
-            height: 'fit-content',
-            width: '360px',
-            maxWidth: '80%',
+            margin: "auto",
+            position: "fixed",
+            height: "fit-content",
+            width: "360px",
+            maxWidth: "80%",
             top: 0,
             bottom: 0,
             right: 0,
@@ -317,20 +317,20 @@ export default function DataTable({ data }) {
           </Typography>
           <Stack
             sx={{
-              backgroundColor: 'base.base20',
+              backgroundColor: "base.base20",
               p: 1,
               borderRadius: 2,
-              flexDirection: 'row',
-              alignItems: 'center',
+              flexDirection: "row",
+              alignItems: "center",
               mt: 1,
               mb: 2,
             }}
           >
             <Avatar
               sx={{
-                width: '40px',
-                height: '40px',
-                position: 'relative',
+                width: "40px",
+                height: "40px",
+                position: "relative",
                 mr: 1,
               }}
             >
@@ -338,20 +338,20 @@ export default function DataTable({ data }) {
                 alt="Web Image"
                 fill
                 sizes="100%"
-                style={{ objectFit: 'cover' }}
+                style={{ objectFit: "cover" }}
                 src={`https://api-staging.sisva.id/file/v1/files/${activeRow.profile_image_uri}?school_id=${school.id}`}
               />
             </Avatar>
-            <Stack justifyContent={'center'}>
+            <Stack justifyContent={"center"}>
               <Typography
                 sx={{
-                  color: 'black',
+                  color: "black",
                   fontWeight: 600,
                 }}
               >
                 {activeRow.name}
               </Typography>
-              <Typography sx={{ fontSize: 14, lineHeight: '16px' }}>
+              <Typography sx={{ fontSize: 14, lineHeight: "16px" }}>
                 {activeRow.username}
               </Typography>
             </Stack>
@@ -359,7 +359,7 @@ export default function DataTable({ data }) {
 
           <Stack
             sx={{
-              flexDirection: 'row',
+              flexDirection: "row",
             }}
           >
             <Button
@@ -375,9 +375,9 @@ export default function DataTable({ data }) {
               variant="contained"
               sx={{
                 flex: 1,
-                backgroundColor: 'warning.main',
-                '&:hover': {
-                  backgroundColor: 'warning.dark',
+                backgroundColor: "warning.main",
+                "&:hover": {
+                  backgroundColor: "warning.dark",
                 },
               }}
               onClick={() => {
@@ -442,7 +442,7 @@ export default function DataTable({ data }) {
       )}
       <DataGrid
         rows={rows}
-        getRowHeight={() => 'auto'}
+        getRowHeight={() => "auto"}
         columns={columns}
         initialState={{
           pagination: {
@@ -451,7 +451,7 @@ export default function DataTable({ data }) {
         }}
         pageSizeOptions={[10, 20, 50]}
         getRowClassName={(params) =>
-          params.indexRelativeToCurrentPage % 2 === 0 ? 'Mui-even' : 'Mui-odd'
+          params.indexRelativeToCurrentPage % 2 === 0 ? "Mui-even" : "Mui-odd"
         }
         disableRowSelectionOnClick
         disableColumnMenu

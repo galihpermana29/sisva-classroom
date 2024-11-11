@@ -4,9 +4,9 @@ import { font } from "@/app/layout";
 import { Typography } from "@mui/material";
 import { Internationalization } from "@syncfusion/ej2-base";
 import {
-    Inject,
-    ScheduleComponent,
-    Week,
+  Inject,
+  ScheduleComponent,
+  Week,
 } from "@syncfusion/ej2-react-schedule";
 import dayjs from "dayjs";
 
@@ -82,11 +82,7 @@ const formatDateHeaderToBahasa = (day) => {
 
 const getDateHeaderText = (props, instance) => {
   return (
-    <Typography
-      className="text-center"
-      variant="body2"
-      fontWeight={600}
-    >
+    <Typography className="text-center" variant="body2" fontWeight={600}>
       {/* this change the date header to only day, and then translates it to bahasa */}
       {formatDateHeaderToBahasa(
         instance.formatDate(props.date, { format: "EEEE" })

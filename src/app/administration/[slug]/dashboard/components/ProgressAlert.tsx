@@ -1,8 +1,8 @@
-import { DialogTitle, Divider, Stack } from '@mui/material';
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
+import { DialogTitle, Divider, Stack } from "@mui/material";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
 
 export default function ProgressAlert({
   open,
@@ -19,7 +19,7 @@ export default function ProgressAlert({
       maxWidth="md"
       fullWidth={true}
       sx={{
-        '& .MuiDialog-paper': {
+        "& .MuiDialog-paper": {
           borderRadius: 2,
         },
       }}

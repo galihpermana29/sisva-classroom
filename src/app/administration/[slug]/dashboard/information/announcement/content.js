@@ -1,34 +1,34 @@
-'use client';
+"use client";
 
-import { SortIcon } from '@/assets/SVGs';
-import { Add, Cancel, Search } from '@mui/icons-material';
+import { SortIcon } from "@/assets/SVGs";
+import { Add, Cancel, Search } from "@mui/icons-material";
 import {
-    Box,
-    Button,
-    Divider,
-    Hidden,
-    InputAdornment,
-    MenuItem,
-    Modal,
-    Paper,
-    Stack,
-    TextField,
-    Typography,
-} from '@mui/material';
-import { useEffect, useState } from 'react';
-import { FormAddAnnouncement } from './components/FormAddAnnouncement';
-import DataTable from './components/Table';
+  Box,
+  Button,
+  Divider,
+  Hidden,
+  InputAdornment,
+  MenuItem,
+  Modal,
+  Paper,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { useEffect, useState } from "react";
+import { FormAddAnnouncement } from "./components/FormAddAnnouncement";
+import DataTable from "./components/Table";
 
-import AcademicAPI from '@/api/academic';
-import FilesAPI from '@/api/files';
-import { useFormik } from 'formik';
+import AcademicAPI from "@/api/academic";
+import FilesAPI from "@/api/files";
+import { useFormik } from "formik";
 
 export default function AnnouncementsList() {
   const [initialData, setinitialData] = useState({
-    title: '',
-    text: '',
+    title: "",
+    text: "",
     target_user_types: [],
-    image_uri: '',
+    image_uri: "",
   });
   const formik = useFormik({
     initialValues: { ...initialData },
@@ -70,7 +70,7 @@ export default function AnnouncementsList() {
           name: dt.title,
           description: dt.text,
           target: dt.target_user_types,
-          datePosted: dt.create_time.split(' ').splice(0, 2).join(' '),
+          datePosted: dt.create_time.split(" ").splice(0, 2).join(" "),
           image_uri: dt.image_uri,
         };
       });
@@ -100,7 +100,7 @@ export default function AnnouncementsList() {
 
     const formData = new FormData();
 
-    formData.append('file', file);
+    formData.append("file", file);
 
     try {
       const {
@@ -109,7 +109,7 @@ export default function AnnouncementsList() {
 
       formik.setFieldValue(name, data);
     } catch (error) {
-      console.log('File upload failed:', error);
+      console.log("File upload failed:", error);
     }
   };
 
@@ -120,12 +120,12 @@ export default function AnnouncementsList() {
   const [anchorEl, setAnchorEl] = useState(null);
 
   let [filteredData, setFilteredData] = useState([]);
-  const [search, setSearch] = useState('');
-  const [typeFilter, setTypeFilter] = useState('');
-  const [permissionFilter, setPermissionFilter] = useState('');
-  const [sortBy, setSortBy] = useState('');
-  const [sortType, setSortType] = useState('ascending');
-  const [sortSettings, setSortSettings] = useState('');
+  const [search, setSearch] = useState("");
+  const [typeFilter, setTypeFilter] = useState("");
+  const [permissionFilter, setPermissionFilter] = useState("");
+  const [sortBy, setSortBy] = useState("");
+  const [sortType, setSortType] = useState("ascending");
+  const [sortSettings, setSortSettings] = useState("");
   const [openSortModal, setOpenSortModal] = useState(false);
 
   const [openCreateModal, setOpenCreateModal] = useState(false);
@@ -134,21 +134,21 @@ export default function AnnouncementsList() {
     let temp = infoData.filter((item) => {
       return (
         item.name.toLowerCase().includes(search.toLowerCase()) &&
-        item.target.join('').toLowerCase().includes(typeFilter.toLowerCase())
+        item.target.join("").toLowerCase().includes(typeFilter.toLowerCase())
       );
     });
     if (sortSettings && sortSettings.sortBy) {
       temp = temp.sort(function (a, b) {
         let x, y;
-        if (sortSettings.sortBy === 'name') {
+        if (sortSettings.sortBy === "name") {
           x = a.name.toLowerCase();
           y = b.name.toLowerCase();
-        } else if (sortSettings.sortBy === 'username') {
+        } else if (sortSettings.sortBy === "username") {
           x = a.name.toLowerCase();
           y = b.name.toLowerCase();
         }
 
-        if (sortSettings.sortType === 'ascending') {
+        if (sortSettings.sortType === "ascending") {
           if (x < y) {
             return -1;
           }
@@ -156,7 +156,7 @@ export default function AnnouncementsList() {
             return 1;
           }
           return 0;
-        } else if (sortSettings.sortType === 'descending') {
+        } else if (sortSettings.sortType === "descending") {
           if (x > y) {
             return -1;
           }
@@ -174,34 +174,34 @@ export default function AnnouncementsList() {
     return (
       <Stack
         sx={{
-          flexDirection: 'row',
+          flexDirection: "row",
           flex: 1,
-          overflowX: 'auto',
+          overflowX: "auto",
           py: 1,
           px: { xs: 0, lg: 1 },
         }}
       >
         <TextField
           select
-          size='small'
-          label='Target'
+          size="small"
+          label="Target"
           value={typeFilter}
           onChange={(e) => setTypeFilter(e.target.value)}
-          sx={{ flex: { xs: 1, lg: 0 }, minWidth: 100, width: 'fit-content' }}
+          sx={{ flex: { xs: 1, lg: 0 }, minWidth: 100, width: "fit-content" }}
           InputProps={{
-            sx: { minWidth: 100, width: { xs: '100%', lg: 'fit-content' } },
+            sx: { minWidth: 100, width: { xs: "100%", lg: "fit-content" } },
             startAdornment: typeFilter && (
               <Cancel
                 onClick={() => {
-                  setTypeFilter('');
+                  setTypeFilter("");
                 }}
                 sx={{
                   fontSize: 14,
-                  color: 'base.base50',
-                  cursor: 'pointer',
-                  transform: 'translateX(-4px)',
-                  '&:hover': {
-                    color: 'base.base60',
+                  color: "base.base50",
+                  cursor: "pointer",
+                  transform: "translateX(-4px)",
+                  "&:hover": {
+                    color: "base.base60",
                   },
                 }}
               />
@@ -209,8 +209,8 @@ export default function AnnouncementsList() {
           }}
         >
           {[
-            { slug: 'student', title: 'Siswa' },
-            { slug: 'staff', title: 'Staf' },
+            { slug: "student", title: "Siswa" },
+            { slug: "staff", title: "Staf" },
           ].map((option) => (
             <MenuItem key={option.slug} value={option.slug}>
               <Typography fontSize={14}>{option.title}</Typography>
@@ -222,7 +222,7 @@ export default function AnnouncementsList() {
   }
 
   return (
-    <Stack sx={{ height: '100%', width: '100%', p: { xs: 0, lg: 4 } }}>
+    <Stack sx={{ height: "100%", width: "100%", p: { xs: 0, lg: 4 } }}>
       <Modal
         open={openCreateModal}
         onClose={() => {
@@ -235,11 +235,11 @@ export default function AnnouncementsList() {
           sx={{
             borderRadius: 2,
             zIndex: 20,
-            margin: 'auto',
-            position: 'fixed',
-            height: 'fit-content',
-            width: '360px',
-            maxWidth: '80%',
+            margin: "auto",
+            position: "fixed",
+            height: "fit-content",
+            width: "360px",
+            maxWidth: "80%",
             top: 0,
             bottom: 0,
             right: 0,
@@ -256,7 +256,7 @@ export default function AnnouncementsList() {
             </Typography>
           </Box>
           <Divider />
-          <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
+          <Box sx={{ maxHeight: "70vh", overflowY: "auto", px: 2 }}>
             <FormAddAnnouncement
               formik={formik}
               handleFileChange={handleFileChange}
@@ -265,12 +265,12 @@ export default function AnnouncementsList() {
           <Divider />
           <Stack
             sx={{
-              flexDirection: 'row',
+              flexDirection: "row",
               p: 2,
             }}
           >
             <Button
-              variant='outlined'
+              variant="outlined"
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenCreateModal(false);
@@ -280,7 +280,7 @@ export default function AnnouncementsList() {
               Batal
             </Button>
             <Button
-              variant='contained'
+              variant="contained"
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenCreateModal(false);
@@ -300,10 +300,10 @@ export default function AnnouncementsList() {
             padding: 2,
             borderRadius: 2,
             zIndex: 20,
-            margin: 'auto',
-            position: 'fixed',
-            height: 'fit-content',
-            width: '240px',
+            margin: "auto",
+            position: "fixed",
+            height: "fit-content",
+            width: "240px",
             top: 0,
             bottom: 0,
             right: 0,
@@ -315,8 +315,8 @@ export default function AnnouncementsList() {
           </Typography>
           <TextField
             select
-            size='small'
-            label='Data'
+            size="small"
+            label="Data"
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
             sx={{ flex: 1, mt: 2 }}
@@ -324,15 +324,15 @@ export default function AnnouncementsList() {
               startAdornment: sortBy && (
                 <Cancel
                   onClick={() => {
-                    setSortBy('');
+                    setSortBy("");
                   }}
                   sx={{
                     fontSize: 14,
-                    color: 'base.base50',
-                    cursor: 'pointer',
-                    transform: 'translateX(-4px)',
-                    '&:hover': {
-                      color: 'base.base60',
+                    color: "base.base50",
+                    cursor: "pointer",
+                    transform: "translateX(-4px)",
+                    "&:hover": {
+                      color: "base.base60",
                     },
                   }}
                 />
@@ -340,8 +340,8 @@ export default function AnnouncementsList() {
             }}
           >
             {[
-              { title: 'Nama', slug: 'name' },
-              { title: 'Username', slug: 'username' },
+              { title: "Nama", slug: "name" },
+              { title: "Username", slug: "username" },
             ].map((option) => (
               <MenuItem key={option.slug} value={option.slug}>
                 <Typography fontSize={14}>{option.title}</Typography>
@@ -350,16 +350,16 @@ export default function AnnouncementsList() {
           </TextField>
           <TextField
             select
-            size='small'
-            label='Jenis Urutan'
+            size="small"
+            label="Jenis Urutan"
             value={sortType}
             disabled={!sortBy}
             onChange={(e) => setSortType(e.target.value)}
             sx={{ flex: 1, mt: 2, mb: 2 }}
           >
             {[
-              { title: 'A-Z', slug: 'ascending' },
-              { title: 'Z-A', slug: 'descending' },
+              { title: "A-Z", slug: "ascending" },
+              { title: "Z-A", slug: "descending" },
             ].map((option) => (
               <MenuItem key={option.slug} value={option.slug}>
                 <Typography fontSize={14}>{option.title}</Typography>
@@ -368,11 +368,11 @@ export default function AnnouncementsList() {
           </TextField>
           <Stack
             sx={{
-              flexDirection: 'row',
+              flexDirection: "row",
             }}
           >
             <Button
-              variant='outlined'
+              variant="outlined"
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenSortModal(false);
@@ -383,7 +383,7 @@ export default function AnnouncementsList() {
               Batal
             </Button>
             <Button
-              variant='contained'
+              variant="contained"
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenSortModal(false);
@@ -397,10 +397,10 @@ export default function AnnouncementsList() {
       </Modal>
       <Stack
         sx={{
-          flexDirection: 'row',
-          display: { xs: 'none', lg: 'flex' },
+          flexDirection: "row",
+          display: { xs: "none", lg: "flex" },
           mb: 2,
-          alignItems: 'center',
+          alignItems: "center",
         }}
       >
         <Typography sx={{ fontSize: 20, fontWeight: 600 }}>
@@ -409,22 +409,22 @@ export default function AnnouncementsList() {
       </Stack>
       <Stack
         component={Paper}
-        variant='outlined'
+        variant="outlined"
         sx={{
           borderRadius: { xs: 0, lg: 2 },
-          overflowY: 'auto',
+          overflowY: "auto",
           flex: 1,
-          maxHeight: '100%',
-          position: 'relative',
+          maxHeight: "100%",
+          position: "relative",
         }}
       >
         <Stack
           sx={{
-            flexDirection: 'row',
-            height: { xs: 'fit-content', lg: 70 },
-            width: '100%',
-            alignItems: 'center',
-            justifyContent: 'space-between',
+            flexDirection: "row",
+            height: { xs: "fit-content", lg: 70 },
+            width: "100%",
+            alignItems: "center",
+            justifyContent: "space-between",
             px: 2,
             pt: 1,
             pb: { lg: 1, xs: 0 },
@@ -433,22 +433,22 @@ export default function AnnouncementsList() {
         >
           <Stack
             sx={{
-              flexDirection: 'row',
+              flexDirection: "row",
               flex: 1,
-              alignItems: 'center',
+              alignItems: "center",
             }}
           >
             <TextField
               // id="outlined-search"
-              placeholder='Cari Pengumuman'
-              size='small'
-              type='text'
+              placeholder="Cari Pengumuman"
+              size="small"
+              type="text"
               sx={{
-                maxWidth: { xs: '100%', lg: '200px' },
+                maxWidth: { xs: "100%", lg: "200px" },
                 flex: 1,
-                width: '100%',
-                height: '100%',
-                borderRight: '1px solid rgb(0,0,0,0.12)',
+                width: "100%",
+                height: "100%",
+                borderRight: "1px solid rgb(0,0,0,0.12)",
                 pr: 1,
               }}
               value={search}
@@ -457,21 +457,21 @@ export default function AnnouncementsList() {
                 startAdornment: search && (
                   <Cancel
                     onClick={() => {
-                      setSearch('');
+                      setSearch("");
                     }}
                     sx={{
                       fontSize: 14,
-                      color: 'base.base50',
-                      cursor: 'pointer',
-                      transform: 'translateX(-4px)',
-                      '&:hover': {
-                        color: 'base.base60',
+                      color: "base.base50",
+                      cursor: "pointer",
+                      transform: "translateX(-4px)",
+                      "&:hover": {
+                        color: "base.base60",
                       },
                     }}
                   />
                 ),
                 endAdornment: (
-                  <InputAdornment position='end'>
+                  <InputAdornment position="end">
                     <Search />
                   </InputAdornment>
                 ),
@@ -484,8 +484,8 @@ export default function AnnouncementsList() {
 
           <Stack
             sx={{
-              flexDirection: 'row',
-              borderLeft: { xs: 'none', lg: '1px solid rgb(0,0,0,0.12)' },
+              flexDirection: "row",
+              borderLeft: { xs: "none", lg: "1px solid rgb(0,0,0,0.12)" },
               pl: 1,
             }}
           >
@@ -561,12 +561,12 @@ export default function AnnouncementsList() {
             </Menu> */}
 
             <Button
-              variant='contained'
-              color='primary'
+              variant="contained"
+              color="primary"
               startIcon={<Add />}
               sx={{
                 width: 100,
-                height: '100%',
+                height: "100%",
               }}
               onClick={() => setOpenCreateModal(true)}
             >
@@ -577,23 +577,23 @@ export default function AnnouncementsList() {
 
         <Stack
           sx={{
-            flexDirection: 'row',
+            flexDirection: "row",
             px: 2,
             height: 54,
             mb: 1,
-            display: { xs: 'flex', lg: 'none' },
+            display: { xs: "flex", lg: "none" },
           }}
         >
           <Filters />
-          <Stack sx={{ flexDirection: 'row', py: 1 }}>
-            <Divider orientation='vertical' sx={{ mx: 1 }} />
+          <Stack sx={{ flexDirection: "row", py: 1 }}>
+            <Divider orientation="vertical" sx={{ mx: 1 }} />
             <Button
               sx={{
-                backgroundColor: 'base.base30',
-                color: 'base.base50',
+                backgroundColor: "base.base30",
+                color: "base.base50",
                 fontSize: 18,
-                '&:hover': {
-                  backgroundColor: 'base.base40',
+                "&:hover": {
+                  backgroundColor: "base.base40",
                 },
               }}
               onClick={() => {
@@ -605,7 +605,7 @@ export default function AnnouncementsList() {
           </Stack>
         </Stack>
         <Divider />
-        <Box sx={{ flex: 1, overflowY: 'hidden' }}>
+        <Box sx={{ flex: 1, overflowY: "hidden" }}>
           <DataTable
             formik={formik}
             data={filteredData}

@@ -1,4 +1,4 @@
-import { useSchool } from '@/app/administration/[slug]/SchoolContext';
+import { useSchool } from "@/app/administration/[slug]/SchoolContext";
 import {
   Avatar,
   Box,
@@ -7,9 +7,9 @@ import {
   Paper,
   Stack,
   Typography,
-} from '@mui/material';
-import Image from 'next/image';
-import { Dispatch, memo, SetStateAction } from 'react';
+} from "@mui/material";
+import Image from "next/image";
+import { Dispatch, memo, SetStateAction } from "react";
 
 interface DeleteModalProps {
   activeRow: any;
@@ -34,11 +34,11 @@ function DeleteModal({
         sx={{
           borderRadius: 2,
           zIndex: 20,
-          margin: 'auto',
-          position: 'fixed',
-          height: 'fit-content',
-          width: '360px',
-          maxWidth: '80%',
+          margin: "auto",
+          position: "fixed",
+          height: "fit-content",
+          width: "360px",
+          maxWidth: "80%",
           top: 0,
           bottom: 0,
           right: 0,
@@ -57,45 +57,45 @@ function DeleteModal({
         </Typography>
         <Stack
           sx={{
-            backgroundColor: 'base.base20',
+            backgroundColor: "base.base20",
             p: 1,
             borderRadius: 2,
-            flexDirection: 'row',
-            alignItems: 'center',
+            flexDirection: "row",
+            alignItems: "center",
             mt: 1,
             mb: 2,
           }}
         >
           <Avatar
             sx={{
-              width: '40px',
-              height: '40px',
-              position: 'relative',
+              width: "40px",
+              height: "40px",
+              position: "relative",
               mr: 1,
             }}
           >
-            {activeRow.profile_image_uri !== '' ? (
+            {activeRow.profile_image_uri !== "" ? (
               <Image
                 alt="Web Image"
                 fill
                 sizes="100%"
-                style={{ objectFit: 'cover' }}
+                style={{ objectFit: "cover" }}
                 src={`https://api-staging.sisva.id/file/v1/files/${activeRow.profile_image_uri}?school_id=${school.id}`}
               />
             ) : (
               activeRow.name?.toUpperCase().slice(0, 1)
             )}
           </Avatar>
-          <Stack justifyContent={'center'}>
+          <Stack justifyContent={"center"}>
             <Typography
               sx={{
-                color: 'black',
+                color: "black",
                 fontWeight: 600,
               }}
             >
               {activeRow.name}
             </Typography>
-            <Typography sx={{ fontSize: 14, lineHeight: '16px' }}>
+            <Typography sx={{ fontSize: 14, lineHeight: "16px" }}>
               {activeRow.username}
             </Typography>
           </Stack>
@@ -103,7 +103,7 @@ function DeleteModal({
 
         <Stack
           sx={{
-            flexDirection: 'row',
+            flexDirection: "row",
           }}
         >
           <Button
@@ -119,9 +119,9 @@ function DeleteModal({
             variant="contained"
             sx={{
               flex: 1,
-              backgroundColor: 'warning.main',
-              '&:hover': {
-                backgroundColor: 'warning.dark',
+              backgroundColor: "warning.main",
+              "&:hover": {
+                backgroundColor: "warning.dark",
               },
             }}
             onClick={() => {

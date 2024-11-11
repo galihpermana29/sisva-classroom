@@ -1,24 +1,24 @@
-'use client';
+"use client";
 
-import { Stack, Typography } from '@mui/material';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import CreateModal from './components/CreateModal';
+import { Stack, Typography } from "@mui/material";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import CreateModal from "./components/CreateModal";
 
-import UsersAPI from '@/api/users';
-import { useFormik } from 'formik';
-import SortModal from './components/SortModal';
-import TableParent from './components/TableParent';
+import UsersAPI from "@/api/users";
+import { useFormik } from "formik";
+import SortModal from "./components/SortModal";
+import TableParent from "./components/TableParent";
 
-export type SortBy = 'name' | 'username' | '';
-export type SortType = 'ascending' | 'descending' | '';
+export type SortBy = "name" | "username" | "";
+export type SortType = "ascending" | "descending" | "";
 export type SortSettings = { sortBy: SortBy; sortType: SortType };
 
 const initialData = {
-  name: '',
-  type: 'staff',
+  name: "",
+  type: "staff",
   permissions: [],
-  password: '',
-  password_confirm: '',
+  password: "",
+  password_confirm: "",
 };
 
 export default function StaffProfileListContent() {
@@ -37,7 +37,7 @@ export default function StaffProfileListContent() {
           detail: {
             json_text: JSON.stringify({}),
           },
-          profile_image_uri: '',
+          profile_image_uri: "",
           roles: [type],
           permissions,
         },
@@ -49,7 +49,7 @@ export default function StaffProfileListContent() {
         getAllUsers();
         formik.setValues(initialData);
       } catch (error) {
-        console.log(error, 'error adding staff');
+        console.log(error, "error adding staff");
       }
     },
   });
@@ -64,11 +64,11 @@ export default function StaffProfileListContent() {
   }, []);
 
   const [staffData, setStaffData] = useState([]);
-  const [search, setSearch] = useState('');
-  const [typeFilter, setTypeFilter] = useState('');
-  const [permissionFilter, setPermissionFilter] = useState('');
-  const [sortBy, setSortBy] = useState<SortBy>('');
-  const [sortType, setSortType] = useState<SortType>('ascending');
+  const [search, setSearch] = useState("");
+  const [typeFilter, setTypeFilter] = useState("");
+  const [permissionFilter, setPermissionFilter] = useState("");
+  const [sortBy, setSortBy] = useState<SortBy>("");
+  const [sortType, setSortType] = useState<SortType>("ascending");
   const [sortSettings, setSortSettings] = useState<SortSettings | null>(null);
   const [openSortModal, setOpenSortModal] = useState(false);
   const [openCreateModal, setOpenCreateModal] = useState(false);
@@ -77,13 +77,13 @@ export default function StaffProfileListContent() {
     try {
       const {
         data: { data },
-      } = await UsersAPI.getAllUsers('staff,teacher');
+      } = await UsersAPI.getAllUsers("staff,teacher");
       const newMappedData = data
         .map((user) => {
           const additionalJson = JSON.parse(user.detail.json_text);
           return { ...additionalJson, ...user };
         })
-        .filter((user) => user.status == 'active');
+        .filter((user) => user.status == "active");
 
       setStaffData(newMappedData);
     } catch (error) {
@@ -94,13 +94,13 @@ export default function StaffProfileListContent() {
   const deleteUser = useCallback(
     async (userData) => {
       try {
-        userData.status = 'deleted';
+        userData.status = "deleted";
 
         await UsersAPI.updateUserById(userData, userData.id);
 
         getAllUsers();
       } catch (error) {
-        console.log(error, 'error delete staff');
+        console.log(error, "error delete staff");
       }
     },
     [getAllUsers]
@@ -123,15 +123,15 @@ export default function StaffProfileListContent() {
     if (sortSettings && sortSettings.sortBy) {
       filteredData = filteredData.sort(function (a, b) {
         let x, y;
-        if (sortSettings.sortBy === 'name') {
+        if (sortSettings.sortBy === "name") {
           x = a.name.toLowerCase();
           y = b.name.toLowerCase();
-        } else if (sortSettings.sortBy === 'username') {
+        } else if (sortSettings.sortBy === "username") {
           x = a.name.toLowerCase();
           y = b.name.toLowerCase();
         }
 
-        if (sortSettings.sortType === 'ascending') {
+        if (sortSettings.sortType === "ascending") {
           if (x < y) {
             return -1;
           }
@@ -139,7 +139,7 @@ export default function StaffProfileListContent() {
             return 1;
           }
           return 0;
-        } else if (sortSettings.sortType === 'descending') {
+        } else if (sortSettings.sortType === "descending") {
           if (x > y) {
             return -1;
           }
@@ -154,7 +154,7 @@ export default function StaffProfileListContent() {
   }, [permissionFilter, search, sortSettings, staffData, typeFilter]);
 
   return (
-    <Stack sx={{ height: '100%', width: '100%', p: { xs: 0, lg: 4 } }}>
+    <Stack sx={{ height: "100%", width: "100%", p: { xs: 0, lg: 4 } }}>
       <CreateModal
         formik={formik}
         initialData={initialData}
@@ -172,10 +172,10 @@ export default function StaffProfileListContent() {
       />
       <Stack
         sx={{
-          flexDirection: 'row',
-          display: { xs: 'none', lg: 'flex' },
+          flexDirection: "row",
+          display: { xs: "none", lg: "flex" },
           mb: 2,
-          alignItems: 'center',
+          alignItems: "center",
         }}
       >
         <Typography sx={{ fontSize: 20, fontWeight: 600 }}>

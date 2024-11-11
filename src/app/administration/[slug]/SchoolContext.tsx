@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext } from "react";
 
 type School = {
   abbreviation: string;
@@ -10,8 +10,8 @@ type School = {
   id: string;
   identifier_type: string;
   identifier_value: string;
-  landing_image_uri: string | null | undefined | '';
-  logo_uri: string | null | undefined | '';
+  landing_image_uri: string | null | undefined | "";
+  logo_uri: string | null | undefined | "";
   name: string;
   theme_json_text: string;
   landing_image_url: string | null;
@@ -37,7 +37,7 @@ export default function SchoolIdProvider({
 export function useSchool() {
   const schoolData = useContext(SchoolContext);
   if (!schoolData) {
-    throw new Error('useSchoolId must be used within a SchoolIdProvider');
+    throw new Error("useSchoolId must be used within a SchoolIdProvider");
   }
   return schoolData;
 }

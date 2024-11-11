@@ -1,13 +1,13 @@
-import AcademicAPI from '@/api/academic';
-import type { SubjectTypeText } from '@/globalcomponents/types';
-import { getSubjectType } from '@/globalcomponents/types';
-import { onlyUnique } from '@/utils/onlyUnique';
+import AcademicAPI from "@/api/academic";
+import type { SubjectTypeText } from "@/globalcomponents/types";
+import { getSubjectType } from "@/globalcomponents/types";
+import { onlyUnique } from "@/utils/onlyUnique";
 import type {
   Curriculum,
   KurikulumDanMataPelajaranInputData,
   ProgramStudi,
   Subject,
-} from './types';
+} from "./types";
 
 function getCurriculum(allCurriculum: Curriculum[], name: string) {
   return allCurriculum.find((curriculum) => curriculum.name === name);
@@ -122,5 +122,5 @@ export default async function handleKurikulumDanMataPelajaran(
     reportText.push(
       `${promisesUpdateSubject.length} baris Kurikulum dan Mata Pelajaran berhasil diperbarui`
     );
-  return reportText.join(', ');
+  return reportText.join(", ");
 }

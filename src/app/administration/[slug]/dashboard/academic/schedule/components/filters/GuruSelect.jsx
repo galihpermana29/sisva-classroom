@@ -28,18 +28,12 @@ export const GuruSelect = ({ data, disabled }) => {
       value={value}
       onChange={(event) => handleChange(event.target.value)}
     >
-      <MenuItem
-        disabled
-        value=""
-      >
+      <MenuItem disabled value="">
         Guru
       </MenuItem>
       {data
         ? data.map(({ teacher_id, teacher_name }) => (
-            <MenuItem
-              key={`${teacher_id}${teacher_name}`}
-              value={teacher_id}
-            >
+            <MenuItem key={`${teacher_id}${teacher_name}`} value={teacher_id}>
               {teacher_name}
             </MenuItem>
           ))

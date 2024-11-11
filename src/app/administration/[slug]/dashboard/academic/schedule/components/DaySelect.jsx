@@ -12,10 +12,7 @@ export const DaySelect = ({
 }) => {
   return (
     <Stack spacing={1}>
-      <Typography
-        fontWeight={600}
-        variant="body2"
-      >
+      <Typography fontWeight={600} variant="body2">
         {label}
       </Typography>
       <Select
@@ -28,17 +25,11 @@ export const DaySelect = ({
         error={formik.touched[name] && Boolean(formik.errors[name])}
         displayEmpty
       >
-        <MenuItem
-          disabled
-          value={""}
-        >
+        <MenuItem disabled value={""}>
           {placeholder}
         </MenuItem>
         {days.map(({ label, value }) => (
-          <MenuItem
-            key={`${label}${value}`}
-            value={value}
-          >
+          <MenuItem key={`${label}${value}`} value={value}>
             {label}
           </MenuItem>
         ))}

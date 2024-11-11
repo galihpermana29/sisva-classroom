@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 import {
   Box,
@@ -8,12 +8,12 @@ import {
   Paper,
   Stack,
   Typography,
-} from '@mui/material';
+} from "@mui/material";
 
-import checklist from '@/assets/Checklist.png';
+import checklist from "@/assets/Checklist.png";
 
-import { useSchool } from '@/app/administration/[slug]/SchoolContext';
-import Image from 'next/image';
+import { useSchool } from "@/app/administration/[slug]/SchoolContext";
+import Image from "next/image";
 
 export const FormSchoolIdentity = ({
   formik,
@@ -25,18 +25,18 @@ export const FormSchoolIdentity = ({
 
   function ModalTema() {
     let [activeColor, setActiveColor] = useState(
-      formik.values['theme_json_text']
+      formik.values["theme_json_text"]
     );
     const ColorTheme = [
-      '#C84935',
-      '#FC830C',
-      '#FBE700',
-      '#8F19E3',
-      '#008CD5',
-      '#5BB8D4',
-      '#459589',
-      '#927161',
-      '#677B8A',
+      "#C84935",
+      "#FC830C",
+      "#FBE700",
+      "#8F19E3",
+      "#008CD5",
+      "#5BB8D4",
+      "#459589",
+      "#927161",
+      "#677B8A",
     ];
     return (
       <Modal open={openModal} onClose={() => setOpenModal(false)}>
@@ -47,10 +47,10 @@ export const FormSchoolIdentity = ({
             padding: 2,
             borderRadius: 2,
             zIndex: 20,
-            margin: 'auto',
-            position: 'fixed',
-            height: 'fit-content',
-            width: 'fit-content',
+            margin: "auto",
+            position: "fixed",
+            height: "fit-content",
+            width: "fit-content",
             top: 0,
             bottom: 0,
             right: 0,
@@ -65,36 +65,36 @@ export const FormSchoolIdentity = ({
             container
             xs={12}
             item
-            justifyContent={'center'}
+            justifyContent={"center"}
           >
             <Grid item xs={12} sx={{}}>
               <Grid
                 container
                 columnGap={1}
                 rowGap={1}
-                justifyContent={'center'}
-                sx={{ maxWidth: '100%', width: 300, paddingY: '10px' }}
+                justifyContent={"center"}
+                sx={{ maxWidth: "100%", width: 300, paddingY: "10px" }}
               >
                 {ColorTheme.map((color) => (
                   <Grid
                     item
                     key={color}
                     sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
+                      display: "flex",
+                      justifyContent: "center",
                     }}
                   >
                     <Box
                       onClick={() => setActiveColor(color)}
-                      display={'flex'}
-                      alignItems={'center'}
-                      borderRadius={'8px'}
-                      justifyContent={'center'}
+                      display={"flex"}
+                      alignItems={"center"}
+                      borderRadius={"8px"}
+                      justifyContent={"center"}
                       sx={{
-                        width: '56px',
-                        height: '56px',
+                        width: "56px",
+                        height: "56px",
                         backgroundColor: color,
-                        cursor: 'pointer',
+                        cursor: "pointer",
                       }}
                     >
                       {activeColor === color && (
@@ -108,7 +108,7 @@ export const FormSchoolIdentity = ({
           </Grid>
           <Stack
             sx={{
-              flexDirection: 'row',
+              flexDirection: "row",
             }}
           >
             <Button
@@ -123,7 +123,7 @@ export const FormSchoolIdentity = ({
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenModal(false);
-                formik.setFieldValue('theme_json_text', activeColor);
+                formik.setFieldValue("theme_json_text", activeColor);
               }}
             >
               Simpan
@@ -147,8 +147,8 @@ export const FormSchoolIdentity = ({
             sx={{
               mt: 1,
               p: 1,
-              width: 'fit-content',
-              backgroundColor: 'base.base20',
+              width: "fit-content",
+              backgroundColor: "base.base20",
               borderRadius: 2,
             }}
           >
@@ -156,15 +156,15 @@ export const FormSchoolIdentity = ({
               sx={{
                 height: 96,
                 width: 96,
-                position: 'relative',
+                position: "relative",
                 borderRadius: 2,
-                overflow: 'hidden',
+                overflow: "hidden",
               }}
             >
-              {formik.values['landing_image_uri'] ? (
+              {formik.values["landing_image_uri"] ? (
                 <Image
                   alt="Image"
-                  src={`https://api-staging.sisva.id/file/v1/files/${formik.values['landing_image_uri']}?school_id=${school.id}`}
+                  src={`https://api-staging.sisva.id/file/v1/files/${formik.values["landing_image_uri"]}?school_id=${school.id}`}
                   layout="fill"
                   objectFit="cover"
                 />
@@ -181,8 +181,8 @@ export const FormSchoolIdentity = ({
               p: 1,
               mt: 0.5,
               borderRadius: 2,
-              backgroundColor: 'base.base20',
-              width: 'fit-content',
+              backgroundColor: "base.base20",
+              width: "fit-content",
             }}
           >
             <Box
@@ -190,8 +190,8 @@ export const FormSchoolIdentity = ({
                 height: 24,
                 width: 64,
                 borderRadius: 1,
-                backgroundColor: formik.values['theme_json_text'],
-                paddingBottom: '15px',
+                backgroundColor: formik.values["theme_json_text"],
+                paddingBottom: "15px",
               }}
             ></Box>
           </Box>
@@ -215,8 +215,8 @@ export const FormSchoolIdentity = ({
             <Box
               sx={{
                 p: 1,
-                width: 'fit-content',
-                backgroundColor: 'base.base20',
+                width: "fit-content",
+                backgroundColor: "base.base20",
                 borderRadius: 2,
               }}
             >
@@ -224,14 +224,14 @@ export const FormSchoolIdentity = ({
                 sx={{
                   height: 96,
                   width: 96,
-                  position: 'relative',
+                  position: "relative",
                   borderRadius: 2,
-                  overflow: 'hidden',
+                  overflow: "hidden",
                 }}
               >
                 <Image
                   alt="Image"
-                  src={`https://api-staging.sisva.id/file/v1/files/${formik.values['landing_image_uri']}?school_id=${school.id}`}
+                  src={`https://api-staging.sisva.id/file/v1/files/${formik.values["landing_image_uri"]}?school_id=${school.id}`}
                   layout="fill"
                   objectFit="cover"
                 />
@@ -242,18 +242,18 @@ export const FormSchoolIdentity = ({
                 fullWidth
                 variant="outlined"
                 size="small"
-                sx={{ m: '8px 0 4px' }}
+                sx={{ m: "8px 0 4px" }}
               >
                 Ubah Foto
                 <input
-                  name={'landing_image_uri'}
+                  name={"landing_image_uri"}
                   accept="image/*"
                   id="image-input"
                   type="file"
                   style={{
-                    position: 'absolute',
-                    opacity: '0',
-                    border: '1px solid red',
+                    position: "absolute",
+                    opacity: "0",
+                    border: "1px solid red",
                   }}
                   onChange={handleImageChange}
                 />
@@ -275,8 +275,8 @@ export const FormSchoolIdentity = ({
                 mt: 0.5,
                 borderRadius: 2,
                 mb: 0.5,
-                backgroundColor: 'base.base20',
-                width: 'fit-content',
+                backgroundColor: "base.base20",
+                width: "fit-content",
               }}
             >
               <Box
@@ -284,8 +284,8 @@ export const FormSchoolIdentity = ({
                   height: 24,
                   width: 96,
                   borderRadius: 1,
-                  backgroundColor: formik.values['theme_json_text'],
-                  paddingBottom: '15px',
+                  backgroundColor: formik.values["theme_json_text"],
+                  paddingBottom: "15px",
                 }}
               ></Box>
             </Box>

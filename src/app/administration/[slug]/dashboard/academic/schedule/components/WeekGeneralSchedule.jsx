@@ -3,9 +3,9 @@
 import { Typography } from "@mui/material";
 import { Internationalization } from "@syncfusion/ej2-base";
 import {
-    Inject,
-    ScheduleComponent,
-    WorkWeek,
+  Inject,
+  ScheduleComponent,
+  WorkWeek,
 } from "@syncfusion/ej2-react-schedule";
 
 const WeekGeneralSchedule = ({ data }) => {
@@ -14,7 +14,7 @@ const WeekGeneralSchedule = ({ data }) => {
     return (
       <Typography className="text-center" variant="body2" fontWeight={600}>
         {formatDateHeaderToBahasa(
-          instance.formatDate(props.date, { format: "EEEE" }),
+          instance.formatDate(props.date, { format: "EEEE" })
         )}
       </Typography>
     );

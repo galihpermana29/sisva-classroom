@@ -6,10 +6,7 @@ import { JadwalKelasSchedule } from "../JadwalKelasSchedule";
 
 export const JadwalKelas = () => {
   return (
-    <Stack
-      paddingTop={3}
-      spacing={3}
-    >
+    <Stack paddingTop={3} spacing={3}>
       <Suspense>
         <JadwalKelasFilterAlert />
       </Suspense>

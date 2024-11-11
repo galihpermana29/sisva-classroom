@@ -30,17 +30,11 @@ export const StatusSelect = ({ data, disabled }) => {
       size="small"
       displayEmpty
     >
-      <MenuItem
-        disabled
-        value=""
-      >
+      <MenuItem disabled value="">
         Status
       </MenuItem>
       {selectData.map(({ value, label }) => (
-        <MenuItem
-          key={`${value}${label}`}
-          value={value}
-        >
+        <MenuItem key={`${value}${label}`} value={value}>
           {label}
         </MenuItem>
       ))}

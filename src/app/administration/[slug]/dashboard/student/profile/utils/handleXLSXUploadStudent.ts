@@ -1,7 +1,7 @@
-import AuthAPI from '@/api/auth';
-import UsersAPI from '@/api/users';
-import type { User } from '@/globalcomponents/BERespondTypes';
-import type { Role } from '@/globalcomponents/types';
+import AuthAPI from "@/api/auth";
+import UsersAPI from "@/api/users";
+import type { User } from "@/globalcomponents/BERespondTypes";
+import type { Role } from "@/globalcomponents/types";
 import {
   getEducationLevel,
   getGender,
@@ -11,8 +11,8 @@ import {
   getNationality,
   getRelationship,
   getReligion,
-} from '@/globalcomponents/types';
-import * as XLSX from 'xlsx';
+} from "@/globalcomponents/types";
+import * as XLSX from "xlsx";
 
 /*
 # Array structure
@@ -146,13 +146,13 @@ export default function handleXLSXUploadStudent(
   reader.onload = async (e) => {
     const file = e.target.result;
     try {
-      const users: User[] = (await UsersAPI.getAllUsers('student')).data.data;
+      const users: User[] = (await UsersAPI.getAllUsers("student")).data.data;
       const filteredData = users
         .map((user) => {
           const additionalJson = JSON.parse(user.detail.json_text);
           return { ...additionalJson, ...user };
         })
-        .filter((user) => user.status == 'active');
+        .filter((user) => user.status == "active");
       const names = filteredData.map((user) => user.name) as string[];
       const usernames = filteredData.map((user) => user.username) as string[];
 
@@ -164,7 +164,7 @@ export default function handleXLSXUploadStudent(
         .filter((row: any[]) => row[0] && row.length !== 0);
 
       const dataObject = rawDataWithoutHeader.map((row) => {
-        const role: Role = 'student';
+        const role: Role = "student";
         return {
           name: row[0],
           username: row[1],

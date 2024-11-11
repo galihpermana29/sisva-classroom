@@ -1,21 +1,18 @@
 "use client";
 
 import { SortIcon } from "@/assets/SVGs";
+import { Cancel, Search } from "@mui/icons-material";
 import {
-    Cancel,
-    Search
-} from "@mui/icons-material";
-import {
-    Box,
-    Button,
-    Divider,
-    InputAdornment,
-    MenuItem,
-    Modal,
-    Paper,
-    Stack,
-    TextField,
-    Typography
+  Box,
+  Button,
+  Divider,
+  InputAdornment,
+  MenuItem,
+  Modal,
+  Paper,
+  Stack,
+  TextField,
+  Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { FormAddStaff } from "./components/FormAddStaff";
@@ -359,9 +356,7 @@ export default function StaffProfileListContent() {
               ),
             }}
           >
-            {[
-              { title: "Nama", slug: "name" }
-            ].map((option) => (
+            {[{ title: "Nama", slug: "name" }].map((option) => (
               <MenuItem key={option.slug} value={option.slug}>
                 <Typography fontSize={14}>{option.title}</Typography>
               </MenuItem>
@@ -604,14 +599,14 @@ export default function StaffProfileListContent() {
           }}
         >
           {/* <Filters /> */}
-          <Stack sx={{ flexDirection: "row", py: 1, flex:1 }}>
+          <Stack sx={{ flexDirection: "row", py: 1, flex: 1 }}>
             {/* <Divider orientation="vertical" sx={{ mx: 1 }} /> */}
             <Button
               sx={{
                 backgroundColor: "base.base30",
                 color: "base.base50",
                 fontSize: 18,
-                flex:1,
+                flex: 1,
                 "&:hover": {
                   backgroundColor: "base.base40",
                 },

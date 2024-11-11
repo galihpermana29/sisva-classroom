@@ -1,10 +1,6 @@
 "use client";
 
-import {
-    Grid,
-    TextField,
-    Typography
-} from "@mui/material";
+import { Grid, TextField, Typography } from "@mui/material";
 
 import { formStudentBasicFields } from "@/globalcomponents/FormFields";
 

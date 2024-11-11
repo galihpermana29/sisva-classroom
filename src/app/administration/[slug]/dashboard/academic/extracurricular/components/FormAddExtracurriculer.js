@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { MenuItem, Stack, TextField, Typography } from '@mui/material';
+import { MenuItem, Stack, TextField, Typography } from "@mui/material";
 
-import { formAddExtracurriculer } from '@/globalcomponents/FormFields';
+import { formAddExtracurriculer } from "@/globalcomponents/FormFields";
 
 export const FormAddExtracurriculer = ({ formik, teacherList }) => {
   return (
     <>
       {formAddExtracurriculer.map((field) =>
-        field.type === 'text' ? (
+        field.type === "text" ? (
           <Stack sx={{ my: 1 }} key={field.name}>
             <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
@@ -21,7 +21,7 @@ export const FormAddExtracurriculer = ({ formik, teacherList }) => {
               onChange={(e) => formik.setFieldValue(field.name, e.target.value)}
             />
           </Stack>
-        ) : field.type === 'select' ? (
+        ) : field.type === "select" ? (
           <Stack sx={{ my: 1 }} key={field.name}>
             <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}

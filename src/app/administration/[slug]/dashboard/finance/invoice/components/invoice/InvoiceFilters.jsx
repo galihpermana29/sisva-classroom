@@ -8,15 +8,8 @@ import { InvoiceSort } from "./InvoiceSort";
 /** @description Component for handling invoice tab's filters */
 export const InvoiceFilters = () => {
   return (
-    <Stack
-      className="no-scrollbar"
-      sx={{ overflow: "hidden" }}
-    >
-      <Stack
-        flexDirection="row"
-        alignItems="center"
-        gap={1}
-      >
+    <Stack className="no-scrollbar" sx={{ overflow: "hidden" }}>
+      <Stack flexDirection="row" alignItems="center" gap={1}>
         <InvoiceSort />
         <Divider
           orientation="vertical"

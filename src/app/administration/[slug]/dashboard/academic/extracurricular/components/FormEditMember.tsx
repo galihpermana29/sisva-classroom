@@ -1,13 +1,13 @@
-import AcademicAPI from '@/api/academic';
-import FormButtonsContainerSisva from '@/components/FormButtonsContainerSisva';
-import FormContainerSisva from '@/components/FormContainerSisva';
-import FormLabelSisva from '@/components/FormLabelSisva';
-import { useExtracurriculars } from '@/hooks/useExtracurriculars';
-import { useStudents } from '@/hooks/useStudents';
-import { Button, Divider, MenuItem, Stack, TextField } from '@mui/material';
-import { useQueryClient } from '@tanstack/react-query';
-import type { SubmitHandler } from 'react-hook-form';
-import { Controller, useForm } from 'react-hook-form';
+import AcademicAPI from "@/api/academic";
+import FormButtonsContainerSisva from "@/components/FormButtonsContainerSisva";
+import FormContainerSisva from "@/components/FormContainerSisva";
+import FormLabelSisva from "@/components/FormLabelSisva";
+import { useExtracurriculars } from "@/hooks/useExtracurriculars";
+import { useStudents } from "@/hooks/useStudents";
+import { Button, Divider, MenuItem, Stack, TextField } from "@mui/material";
+import { useQueryClient } from "@tanstack/react-query";
+import type { SubmitHandler } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 
 type FormEditMember = {
   extracurricularId: string;
@@ -46,7 +46,7 @@ export default function FormEditMember({
       student_id: data.studentId,
     });
     queryClient.invalidateQueries({
-      queryKey: ['extracurricular-members'],
+      queryKey: ["extracurricular-members"],
     });
   };
 

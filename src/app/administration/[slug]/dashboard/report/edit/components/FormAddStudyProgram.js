@@ -1,12 +1,12 @@
 "use client";
 
 import {
-    IconButton,
-    InputAdornment,
-    MenuItem,
-    Stack,
-    TextField,
-    Typography
+  IconButton,
+  InputAdornment,
+  MenuItem,
+  Stack,
+  TextField,
+  Typography,
 } from "@mui/material";
 
 import { formAddStudyProgramFields } from "@/globalcomponents/FormFields";
@@ -90,7 +90,7 @@ export const FormAddStudyProgram = ({ formik, editing }) => {
               ))}
             </TextField>
           </Stack>
-        )  : null
+        ) : null
       )}
     </>
   );

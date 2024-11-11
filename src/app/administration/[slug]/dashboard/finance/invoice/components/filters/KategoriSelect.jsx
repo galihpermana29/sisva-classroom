@@ -31,18 +31,12 @@ export const KategoriSelect = ({ data, disabled }) => {
       size="small"
       displayEmpty
     >
-      <MenuItem
-        disabled
-        value=""
-      >
+      <MenuItem disabled value="">
         Kategori
       </MenuItem>
       {data
         ? data.map(({ value, label }) => (
-            <MenuItem
-              key={`${value}${label}`}
-              value={value}
-            >
+            <MenuItem key={`${value}${label}`} value={value}>
               {label}
             </MenuItem>
           ))

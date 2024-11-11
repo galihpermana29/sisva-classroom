@@ -3,17 +3,17 @@
 import { Typography } from "@mui/material";
 import { Internationalization } from "@syncfusion/ej2-base";
 import {
-    Agenda,
-    Inject,
-    Month,
-    ResourceDirective,
-    ResourcesDirective,
-    ScheduleComponent,
-    TimelineMonth,
-    TimelineViews,
-    ViewDirective,
-    ViewsDirective,
-    Week,
+  Agenda,
+  Inject,
+  Month,
+  ResourceDirective,
+  ResourcesDirective,
+  ScheduleComponent,
+  TimelineMonth,
+  TimelineViews,
+  ViewDirective,
+  ViewsDirective,
+  Week,
 } from "@syncfusion/ej2-react-schedule";
 import dayjs from "dayjs";
 import { useMemo } from "react";

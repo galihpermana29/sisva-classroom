@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { MenuItem, Stack, TextField, Typography } from '@mui/material';
+import { MenuItem, Stack, TextField, Typography } from "@mui/material";
 
-import { formInsertStudentGroup } from '@/globalcomponents/FormFields';
-import { useEffect, useState } from 'react';
+import { formInsertStudentGroup } from "@/globalcomponents/FormFields";
+import { useEffect, useState } from "react";
 
 export const FormAddStudent = ({ formik, editing, studentList, groupList }) => {
   const [students, setStudents] = useState([]);
@@ -36,9 +36,9 @@ export const FormAddStudent = ({ formik, editing, studentList, groupList }) => {
   return (
     <>
       {formInsertStudentGroup.map((field) =>
-        field.name === 'class' ? (
+        field.name === "class" ? (
           <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant='body2' fontWeight={600} mb={0.5}>
+            <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <TextField
@@ -59,7 +59,7 @@ export const FormAddStudent = ({ formik, editing, studentList, groupList }) => {
           </Stack>
         ) : (
           <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant='body2' fontWeight={600} mb={0.5}>
+            <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <TextField

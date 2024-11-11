@@ -1,17 +1,17 @@
 "use client";
 
 import {
-    Box,
-    Chip,
-    FormControl,
-    IconButton,
-    InputAdornment,
-    MenuItem,
-    OutlinedInput,
-    Select,
-    Stack,
-    TextField,
-    Typography
+  Box,
+  Chip,
+  FormControl,
+  IconButton,
+  InputAdornment,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  Stack,
+  TextField,
+  Typography,
 } from "@mui/material";
 
 import { formAddStaffFields } from "@/globalcomponents/FormFields";
@@ -87,7 +87,7 @@ export const FormAddStaff = ({ formik, editing }) => {
               select
               value={formik.values[field.name]}
               onChange={(e) => formik.setFieldValue(field.name, e.target.value)}
-              sx={{ flex: { xs: 1, lg: 0 }}}
+              sx={{ flex: { xs: 1, lg: 0 } }}
             >
               {field.data.map((option) => (
                 <MenuItem key={option.slug} value={option.slug}>

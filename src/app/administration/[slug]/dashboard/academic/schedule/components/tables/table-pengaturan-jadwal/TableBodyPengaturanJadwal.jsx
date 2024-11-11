@@ -24,10 +24,7 @@ export const TableBodyPengaturanJadwal = ({ columnCount }) => {
 
   return rows && rows.length > 0 ? (
     rows.map((row) => (
-      <TableRow
-        hover
-        key={row.id}
-      >
+      <TableRow hover key={row.id}>
         <TableCell>{formatDayToLabel(row.day)}</TableCell>
         <TableCell>
           {`${timeStringToDayjs(row.start_time).format(
@@ -39,11 +36,7 @@ export const TableBodyPengaturanJadwal = ({ columnCount }) => {
         )} ${userTimezone}`}</TableCell>
         <TableCell>{toTitleCase(statusMap[row.status])}</TableCell>
         <TableCell>
-          <Stack
-            flexDirection="row"
-            maxWidth="fit-content"
-            gap={1}
-          >
+          <Stack flexDirection="row" maxWidth="fit-content" gap={1}>
             <EditJamSekolahModal data={row} />
             <DeleteJamSekolahModal data={row} />
           </Stack>

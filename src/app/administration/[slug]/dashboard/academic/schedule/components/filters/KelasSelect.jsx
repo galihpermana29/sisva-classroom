@@ -28,18 +28,12 @@ export const KelasSelect = ({ data, disabled }) => {
       value={value}
       onChange={(event) => handleChange(event.target.value)}
     >
-      <MenuItem
-        disabled
-        value=""
-      >
+      <MenuItem disabled value="">
         Kelas
       </MenuItem>
       {data
         ? data.map(({ class_id, class_name }) => (
-            <MenuItem
-              key={`${class_id}${class_name}`}
-              value={class_id}
-            >
+            <MenuItem key={`${class_id}${class_name}`} value={class_id}>
               {class_name}
             </MenuItem>
           ))

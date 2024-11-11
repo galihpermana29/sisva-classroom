@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Checkbox,
@@ -9,10 +9,10 @@ import {
   Stack,
   TextField,
   Typography,
-} from '@mui/material';
+} from "@mui/material";
 
-import { formAddTeacher } from '@/globalcomponents/FormFields';
-import { useEffect, useState } from 'react';
+import { formAddTeacher } from "@/globalcomponents/FormFields";
+import { useEffect, useState } from "react";
 
 export const FormAddSubjectTeacher = ({
   formik,
@@ -22,16 +22,16 @@ export const FormAddSubjectTeacher = ({
   dataTeacher,
 }) => {
   const [subjectData, setSubjectData] = useState([]);
-  const [searchTerms, setSearchTerms] = useState('');
-  const [selectedSubject, setSelectedSubject] = useState('');
+  const [searchTerms, setSearchTerms] = useState("");
+  const [selectedSubject, setSelectedSubject] = useState("");
   const [clicked, setClicked] = useState(false);
 
   const updatedFields = formAddTeacher.map((field) => {
-    if (field.name == 'teacher') {
+    if (field.name == "teacher") {
       field.data = teacherList;
     }
 
-    if (field.name == 'grade') {
+    if (field.name == "grade") {
       field.data = gradeList;
     }
 
@@ -76,13 +76,13 @@ export const FormAddSubjectTeacher = ({
   );
 
   useEffect(() => {
-    formik.setFieldValue('subjects', selectedSubject);
+    formik.setFieldValue("subjects", selectedSubject);
   }, [selectedSubject]);
 
   return (
     <>
       {updatedFields.map((field) =>
-        field.type === 'text' ? (
+        field.type === "text" ? (
           <Stack sx={{ my: 1 }} key={field.name}>
             <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
@@ -95,8 +95,8 @@ export const FormAddSubjectTeacher = ({
               onChange={(e) => formik.setFieldValue(field.name, e.target.value)}
             />
           </Stack>
-        ) : field.type === 'select' ? (
-          field.name === 'teacher' ? (
+        ) : field.type === "select" ? (
+          field.name === "teacher" ? (
             <Stack
               sx={{ my: 1 }}
               key={field.name}
@@ -113,7 +113,7 @@ export const FormAddSubjectTeacher = ({
                 disabled={editing ? true : false}
                 onChange={(e) => {
                   formik.setFieldValue(field.name, e.target.value);
-                  formik.setFieldValue('grade', '');
+                  formik.setFieldValue("grade", "");
                 }}
                 sx={{ flex: { xs: 1, lg: 0 } }}
                 onClick={() => {
@@ -127,7 +127,7 @@ export const FormAddSubjectTeacher = ({
                 ))}
               </TextField>
             </Stack>
-          ) : field.name === 'grade' ? (
+          ) : field.name === "grade" ? (
             <Stack
               sx={{ my: 1 }}
               key={field.name}
@@ -176,7 +176,7 @@ export const FormAddSubjectTeacher = ({
               {field.label}
             </Typography>
             <Stack
-              sx={{ my: 1, flexDirection: 'row', gap: 1, overflowY: 'auto' }}
+              sx={{ my: 1, flexDirection: "row", gap: 1, overflowY: "auto" }}
             >
               {previewSubject.map((option, i) => (
                 <Chip
@@ -201,8 +201,8 @@ export const FormAddSubjectTeacher = ({
                     ? {
                         gap: 1,
                         my: 1,
-                        height: '15vh',
-                        overflowY: 'auto',
+                        height: "15vh",
+                        overflowY: "auto",
                       }
                     : { my: 1, mx: 1 }
                 }
@@ -218,7 +218,7 @@ export const FormAddSubjectTeacher = ({
                       }
                       value={option.subject_id}
                       sx={{
-                        justifyContent: 'space-between',
+                        justifyContent: "space-between",
                       }}
                     >
                       <FormControlLabel

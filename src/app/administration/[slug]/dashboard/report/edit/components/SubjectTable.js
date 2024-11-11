@@ -1,16 +1,16 @@
 import { subject_types } from "@/globalcomponents/Variable";
 import { BorderColorRounded, DeleteForeverRounded } from "@mui/icons-material";
 import {
-    Box,
-    Button,
-    Chip,
-    Divider,
-    IconButton,
-    Modal,
-    Paper,
-    Stack,
-    Typography,
-    useMediaQuery
+  Box,
+  Button,
+  Chip,
+  Divider,
+  IconButton,
+  Modal,
+  Paper,
+  Stack,
+  Typography,
+  useMediaQuery,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import * as React from "react";
@@ -427,7 +427,7 @@ export default function SubjectTable({ data, formik }) {
                 Tipe
               </Typography>
               <Typography sx={{ fontSize: 14, textAlign: "right" }}>
-                {activeRow.subject_type==="mandatory"?"Wajib":"Pilihan"}
+                {activeRow.subject_type === "mandatory" ? "Wajib" : "Pilihan"}
               </Typography>
             </Stack>
             <Stack

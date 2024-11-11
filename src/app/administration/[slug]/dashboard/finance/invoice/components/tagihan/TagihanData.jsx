@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { formatToRupiah } from '@/utils/formatToRupiah';
-import { useTheme } from '@emotion/react';
-import { useMounted } from '@mantine/hooks';
-import { Box, Divider, Paper, Stack, Typography } from '@mui/material';
-import dayjs from 'dayjs';
-import { useGetTagihan } from '../../hooks/useGetTagihan';
-import { usePagination } from '../../hooks/usePagination';
-import JumlahPembayaranTagihan from '../tables/tagihan/JumlahPembayaranTagihan';
-import { TagihanRowActions } from './TagihanRowActions';
-import { TagihanStatusBadge } from './TagihanStatusBadge';
+import { formatToRupiah } from "@/utils/formatToRupiah";
+import { useTheme } from "@emotion/react";
+import { useMounted } from "@mantine/hooks";
+import { Box, Divider, Paper, Stack, Typography } from "@mui/material";
+import dayjs from "dayjs";
+import { useGetTagihan } from "../../hooks/useGetTagihan";
+import { usePagination } from "../../hooks/usePagination";
+import JumlahPembayaranTagihan from "../tables/tagihan/JumlahPembayaranTagihan";
+import { TagihanRowActions } from "./TagihanRowActions";
+import { TagihanStatusBadge } from "./TagihanStatusBadge";
 
 export const TagihanData = () => {
   const theme = useTheme();
@@ -46,8 +46,8 @@ export const TagihanData = () => {
 };
 
 function formatDate(dateString) {
-  const date = dayjs(dateString, 'DD/MM/YYYY h:mm A Z');
-  return date.format('DD MMM YYYY');
+  const date = dayjs(dateString, "DD/MM/YYYY h:mm A Z");
+  return date.format("DD MMM YYYY");
 }
 
 const DataCard = ({ data }) => {
@@ -63,7 +63,7 @@ const DataCard = ({ data }) => {
         flexDirection="row"
         justifyContent="space-between"
         alignItems="center"
-        width={'100%'}
+        width={"100%"}
         gap={2}
       >
         <Stack flexDirection="column" gap={0}>
@@ -94,9 +94,9 @@ const DataCard = ({ data }) => {
           <Typography variant="body2">{data.payment}</Typography>
         </Stack>
         <Stack
-          flexDirection={'row'}
-          justifyContent={'space-between'}
-          alignItems={'end'}
+          flexDirection={"row"}
+          justifyContent={"space-between"}
+          alignItems={"end"}
         >
           <Stack flexDirection="column" gap={0}>
             <Typography variant="caption" color="gray">

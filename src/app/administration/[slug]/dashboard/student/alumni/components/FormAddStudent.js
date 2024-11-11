@@ -1,11 +1,11 @@
 "use client";
 
 import {
-    IconButton,
-    InputAdornment,
-    Stack,
-    TextField,
-    Typography
+  IconButton,
+  InputAdornment,
+  Stack,
+  TextField,
+  Typography,
 } from "@mui/material";
 
 import { formAddStudentFields } from "@/globalcomponents/FormFields";
@@ -43,8 +43,8 @@ export const FormAddStudent = ({ formik, editing }) => {
                     ? "text"
                     : "password"
                   : showPasswordConfirm
-                  ? "text"
-                  : "password"
+                    ? "text"
+                    : "password"
               }
               name={field.name}
               placeholder={field.placeholder}

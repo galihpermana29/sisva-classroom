@@ -18,14 +18,8 @@ export const ModalTagihanPenggunaFilter = ({ value, setValue }) => {
     setValue({ ...value, tagihanPengguna: e.target.value });
 
   return (
-    <Stack
-      width="100%"
-      gap={1}
-    >
-      <Typography
-        fontWeight={600}
-        variant="body2"
-      >
+    <Stack width="100%" gap={1}>
+      <Typography fontWeight={600} variant="body2">
         Pilih Tagihan Pengguna
       </Typography>
       <Select
@@ -35,17 +29,11 @@ export const ModalTagihanPenggunaFilter = ({ value, setValue }) => {
         onChange={handleChange}
         displayEmpty
       >
-        <MenuItem
-          disabled
-          value=""
-        >
+        <MenuItem disabled value="">
           Pengguna
         </MenuItem>
         {selectData.map(({ label, value }) => (
-          <MenuItem
-            key={`${label}${value}`}
-            value={value}
-          >
+          <MenuItem key={`${label}${value}`} value={value}>
             {label}
           </MenuItem>
         ))}

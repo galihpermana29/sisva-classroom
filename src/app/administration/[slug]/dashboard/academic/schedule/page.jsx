@@ -34,10 +34,7 @@ const DashboardAcademic = ({ searchParams }) => {
         }}
       >
         <Suspense>
-          <TabsSelector
-            tabs={tabs}
-            activeTab={activeTab}
-          />
+          <TabsSelector tabs={tabs} activeTab={activeTab} />
         </Suspense>
 
         <Divider sx={{ display: { xs: "none", lg: "block" } }} />

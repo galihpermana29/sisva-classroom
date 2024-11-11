@@ -8,7 +8,7 @@ const ActionButtons = dynamic(
   () => import("./ActionButtons").then(({ ActionButtons }) => ActionButtons),
   {
     ssr: false,
-  },
+  }
 );
 
 export const PengaturanJadwalTable = () => {

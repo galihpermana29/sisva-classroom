@@ -1,17 +1,17 @@
 "use client";
 
 import {
-    Box,
-    Chip,
-    FormControl,
-    IconButton,
-    InputAdornment,
-    MenuItem,
-    OutlinedInput,
-    Select,
-    Stack,
-    TextField,
-    Typography
+  Box,
+  Chip,
+  FormControl,
+  IconButton,
+  InputAdornment,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  Stack,
+  TextField,
+  Typography,
 } from "@mui/material";
 
 import { formAddSubjectFields } from "@/globalcomponents/FormFields";

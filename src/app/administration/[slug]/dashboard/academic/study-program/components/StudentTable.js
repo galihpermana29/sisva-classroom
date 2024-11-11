@@ -1,5 +1,5 @@
-import { useSchool } from '@/app/administration/[slug]/SchoolContext';
-import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
+import { useSchool } from "@/app/administration/[slug]/SchoolContext";
+import { BorderColorRounded, DeleteForeverRounded } from "@mui/icons-material";
 import {
   Avatar,
   Box,
@@ -11,42 +11,42 @@ import {
   Stack,
   Typography,
   useMediaQuery,
-} from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
-import Image from 'next/image';
-import { useState } from 'react';
-import { FormAddStudent } from './FormAddStudent';
+} from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
+import Image from "next/image";
+import { useState } from "react";
+import { FormAddStudent } from "./FormAddStudent";
 
 const columns = [
   {
-    field: 'card',
-    headerName: '',
+    field: "card",
+    headerName: "",
     flex: 1,
     sortable: false,
     renderCell: (params) => {
       return (
-        <Box sx={{ width: '100%', mx: 2, py: 0.5 }}>
+        <Box sx={{ width: "100%", mx: 2, py: 0.5 }}>
           <Stack
             component={Paper}
             variant="outlined"
             sx={{
-              justifyContent: 'flex-start',
+              justifyContent: "flex-start",
               borderRadius: 2,
               p: 2,
             }}
           >
-            <Stack sx={{ width: '100%' }}>
+            <Stack sx={{ width: "100%" }}>
               <Stack
-                direction={'row'}
-                justifyContent={'space-between'}
+                direction={"row"}
+                justifyContent={"space-between"}
                 flex={1}
               >
-                <Stack direction={'row'} alignItems={'center'}>
+                <Stack direction={"row"} alignItems={"center"}>
                   <Avatar
                     sx={{
-                      width: '40px',
-                      height: '40px',
-                      position: 'relative',
+                      width: "40px",
+                      height: "40px",
+                      position: "relative",
                       mr: 1,
                     }}
                   >
@@ -54,13 +54,13 @@ const columns = [
                       alt="Web Image"
                       fill
                       sizes="100%"
-                      style={{ objectFit: 'cover' }}
+                      style={{ objectFit: "cover" }}
                       src={`https://api-staging.sisva.id/file/v1/files/${params.value.data.profile_image_uri}?school_id=${school.id}`}
                     />
                   </Avatar>
                   <Typography
                     sx={{
-                      color: 'black',
+                      color: "black",
                     }}
                   >
                     {params.value.data.name}
@@ -70,13 +70,13 @@ const columns = [
 
               <Stack
                 sx={{
-                  width: '100%',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  borderBottom: '1px solid rgb(0,0,0,0.12)',
+                  width: "100%",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  borderBottom: "1px solid rgb(0,0,0,0.12)",
                   px: 1,
-                  py: '10px',
-                  backgroundColor: 'base.base10',
+                  py: "10px",
+                  backgroundColor: "base.base10",
                 }}
               >
                 <Typography
@@ -84,23 +84,23 @@ const columns = [
                 >
                   Program Studi
                 </Typography>
-                <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
+                <Typography sx={{ fontSize: 14, textAlign: "right" }}>
                   {params.value.data.grades?.length}
                 </Typography>
               </Stack>
 
               <Stack
                 sx={{
-                  width: '100%',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  borderBottom: '1px solid rgb(0,0,0,0.12)',
+                  width: "100%",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  borderBottom: "1px solid rgb(0,0,0,0.12)",
                   px: 1,
-                  py: '10px',
-                  backgroundColor: 'base.base10',
+                  py: "10px",
+                  backgroundColor: "base.base10",
                 }}
               >
-                <Typography sx={{ color: 'base.base50', fontSize: 12 }}>
+                <Typography sx={{ color: "base.base50", fontSize: 12 }}>
                   Tingkatan
                 </Typography>
               </Stack>
@@ -112,8 +112,8 @@ const columns = [
     },
   },
   {
-    field: 'profile_image_uri',
-    headerName: '',
+    field: "profile_image_uri",
+    headerName: "",
     width: 70,
     sortable: false,
     renderCell: (params) => (
@@ -123,16 +123,16 @@ const columns = [
           height: 40,
           my: 1.5,
           ml: 2,
-          position: 'relative',
-          display: 'flex',
+          position: "relative",
+          display: "flex",
         }}
       >
-        {params.value[0] !== '' ? (
+        {params.value[0] !== "" ? (
           <Image
             alt="Web Image"
             fill
             sizes="100%"
-            style={{ objectFit: 'cover' }}
+            style={{ objectFit: "cover" }}
             src={`https://api-staging.sisva.id/file/v1/files/${params.value[0]}?school_id=${school.id}`}
           />
         ) : (
@@ -141,12 +141,12 @@ const columns = [
       </Avatar>
     ),
   },
-  { field: 'name', headerName: 'Nama', flex: 1 },
-  { field: 'study_program', headerName: 'Program Studi', flex: 1 },
-  { field: 'grade', headerName: 'Tingkatan', flex: 1 },
+  { field: "name", headerName: "Nama", flex: 1 },
+  { field: "study_program", headerName: "Program Studi", flex: 1 },
+  { field: "grade", headerName: "Tingkatan", flex: 1 },
   {
-    field: 'action',
-    headerName: 'Aksi',
+    field: "action",
+    headerName: "Aksi",
     sortable: false,
     width: 120,
     renderCell: (params) => {
@@ -159,20 +159,20 @@ function ActionButton({ params }) {
   return (
     <Stack
       sx={{
-        flexDirection: 'row',
-        alignItems: 'center',
+        flexDirection: "row",
+        alignItems: "center",
         mt: { xs: 2, lg: 0 },
       }}
     >
       <IconButton
         sx={{
           borderRadius: 2,
-          backgroundColor: 'base.base30',
-          '&:hover': {
-            backgroundColor: 'base.base40',
+          backgroundColor: "base.base30",
+          "&:hover": {
+            backgroundColor: "base.base40",
           },
-          height: 'fit-content',
-          width: { xs: 90, lg: 'fit-content' },
+          height: "fit-content",
+          width: { xs: 90, lg: "fit-content" },
         }}
         onClick={() => {
           params.value.setOpenEditModal(true);
@@ -188,10 +188,10 @@ function ActionButton({ params }) {
         }}
       >
         <BorderColorRounded
-          sx={{ fontSize: { xs: 15, lg: 18 }, color: 'base.base50' }}
+          sx={{ fontSize: { xs: 15, lg: 18 }, color: "base.base50" }}
         />
         <Typography
-          sx={{ fontSize: 14, ml: 1, display: { xs: 'flex', lg: 'none' } }}
+          sx={{ fontSize: 14, ml: 1, display: { xs: "flex", lg: "none" } }}
         >
           Edit
         </Typography>
@@ -200,11 +200,11 @@ function ActionButton({ params }) {
         sx={{
           borderRadius: 2,
           ml: 1,
-          backgroundColor: 'warning.main',
-          '&:hover': {
-            backgroundColor: 'warning.dark',
+          backgroundColor: "warning.main",
+          "&:hover": {
+            backgroundColor: "warning.dark",
           },
-          width: { xs: 90, lg: 'fit-content' },
+          width: { xs: 90, lg: "fit-content" },
         }}
         onClick={() => {
           params.value.setOpenDeleteModal(true);
@@ -212,14 +212,14 @@ function ActionButton({ params }) {
         }}
       >
         <DeleteForeverRounded
-          sx={{ color: 'white', fontSize: { xs: 16, lg: 18 } }}
+          sx={{ color: "white", fontSize: { xs: 16, lg: 18 } }}
         />
         <Typography
           sx={{
             fontSize: 14,
             ml: 1,
-            display: { xs: 'flex', lg: 'none' },
-            color: 'white',
+            display: { xs: "flex", lg: "none" },
+            color: "white",
           }}
         >
           Delete
@@ -237,7 +237,7 @@ export default function StudentTable({
   deleteStudent = () => {},
 }) {
   const school = useSchool();
-  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('lg'));
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down("lg"));
 
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
@@ -273,7 +273,7 @@ export default function StudentTable({
   });
 
   return (
-    <div style={{ height: '100%', width: '100%' }}>
+    <div style={{ height: "100%", width: "100%" }}>
       <Modal
         open={openEditModal}
         onClose={() => {
@@ -287,11 +287,11 @@ export default function StudentTable({
           sx={{
             borderRadius: 2,
             zIndex: 20,
-            margin: 'auto',
-            position: 'fixed',
-            height: 'fit-content',
-            width: '360px',
-            maxWidth: '80%',
+            margin: "auto",
+            position: "fixed",
+            height: "fit-content",
+            width: "360px",
+            maxWidth: "80%",
             top: 0,
             bottom: 0,
             right: 0,
@@ -308,7 +308,7 @@ export default function StudentTable({
             </Typography>
           </Box>
           <Divider />
-          <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
+          <Box sx={{ maxHeight: "70vh", overflowY: "auto", px: 2 }}>
             <FormAddStudent
               formik={formik}
               tableData={tableData}
@@ -319,7 +319,7 @@ export default function StudentTable({
           <Divider />
           <Stack
             sx={{
-              flexDirection: 'row',
+              flexDirection: "row",
               p: 2,
             }}
           >
@@ -338,7 +338,7 @@ export default function StudentTable({
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenEditModal(false);
-                formik.setFieldValue('id', activeRow.id);
+                formik.setFieldValue("id", activeRow.id);
                 formik.handleSubmit();
               }}
             >
@@ -354,11 +354,11 @@ export default function StudentTable({
           sx={{
             borderRadius: 2,
             zIndex: 20,
-            margin: 'auto',
-            position: 'fixed',
-            height: 'fit-content',
-            width: '360px',
-            maxWidth: '80%',
+            margin: "auto",
+            position: "fixed",
+            height: "fit-content",
+            width: "360px",
+            maxWidth: "80%",
             top: 0,
             bottom: 0,
             right: 0,
@@ -376,59 +376,59 @@ export default function StudentTable({
             Anda akan menghapus program studi berikut:
           </Typography>
           <Stack
-            sx={{ width: '100%', my: 1, overflow: 'hidden', borderRadius: 2 }}
+            sx={{ width: "100%", my: 1, overflow: "hidden", borderRadius: 2 }}
           >
             <Stack
               sx={{
-                width: '100%',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                borderBottom: '1px solid rgb(0,0,0,0.12)',
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                borderBottom: "1px solid rgb(0,0,0,0.12)",
                 px: 1,
-                py: '10px',
-                backgroundColor: 'base.base10',
+                py: "10px",
+                backgroundColor: "base.base10",
               }}
             >
               <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
                 Program Studi
               </Typography>
-              <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
+              <Typography sx={{ fontSize: 14, textAlign: "right" }}>
                 {activeRow.name}
               </Typography>
             </Stack>
             <Stack
               sx={{
-                width: '100%',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                borderBottom: '1px solid rgb(0,0,0,0.12)',
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                borderBottom: "1px solid rgb(0,0,0,0.12)",
                 px: 1,
-                py: '10px',
-                backgroundColor: 'base.base20',
+                py: "10px",
+                backgroundColor: "base.base20",
               }}
             >
               <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
                 Program Study
               </Typography>
-              <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
+              <Typography sx={{ fontSize: 14, textAlign: "right" }}>
                 {activeRow.study_program}
               </Typography>
             </Stack>
             <Stack
               sx={{
-                width: '100%',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                borderBottom: '1px solid rgb(0,0,0,0.12)',
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                borderBottom: "1px solid rgb(0,0,0,0.12)",
                 px: 1,
-                py: '10px',
-                backgroundColor: 'base.base20',
+                py: "10px",
+                backgroundColor: "base.base20",
               }}
             >
               <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
                 Tingkatan
               </Typography>
-              <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
+              <Typography sx={{ fontSize: 14, textAlign: "right" }}>
                 {activeRow.grade}
               </Typography>
             </Stack>
@@ -436,7 +436,7 @@ export default function StudentTable({
 
           <Stack
             sx={{
-              flexDirection: 'row',
+              flexDirection: "row",
             }}
           >
             <Button
@@ -452,9 +452,9 @@ export default function StudentTable({
               variant="contained"
               sx={{
                 flex: 1,
-                backgroundColor: 'warning.main',
-                '&:hover': {
-                  backgroundColor: 'warning.dark',
+                backgroundColor: "warning.main",
+                "&:hover": {
+                  backgroundColor: "warning.dark",
                 },
               }}
               onClick={() => {
@@ -517,7 +517,7 @@ export default function StudentTable({
       )}
       <DataGrid
         rows={rows}
-        getRowHeight={() => 'auto'}
+        getRowHeight={() => "auto"}
         columns={columns}
         initialState={{
           pagination: {
@@ -526,7 +526,7 @@ export default function StudentTable({
         }}
         pageSizeOptions={[10, 20, 50]}
         getRowClassName={(params) =>
-          params.indexRelativeToCurrentPage % 2 === 0 ? 'Mui-even' : 'Mui-odd'
+          params.indexRelativeToCurrentPage % 2 === 0 ? "Mui-even" : "Mui-odd"
         }
         disableRowSelectionOnClick
         disableColumnMenu

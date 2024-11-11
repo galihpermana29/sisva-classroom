@@ -1,25 +1,23 @@
-'use client';
+"use client";
 
 import {
-    Box,
-    Chip,
-    FormControl,
-    IconButton,
-    InputAdornment,
-    MenuItem,
-    OutlinedInput,
-    Select,
-    Stack,
-    TextField,
-    Typography
-} from '@mui/material';
+  Box,
+  Chip,
+  FormControl,
+  IconButton,
+  InputAdornment,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 
-import {
-    formAddCurriculumFields
-} from '@/globalcomponents/FormFields';
-import { permissions } from '@/globalcomponents/Variable';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { useEffect, useState } from 'react';
+import { formAddCurriculumFields } from "@/globalcomponents/FormFields";
+import { permissions } from "@/globalcomponents/Variable";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useEffect, useState } from "react";
 
 export const FormAddCurriculum = ({
   formik,
@@ -35,13 +33,13 @@ export const FormAddCurriculum = ({
   const [currId, setCurrId] = useState();
 
   const updatedSubjectFields = formAddCurriculumFields.map((field) => {
-    if (field.name == 'period_name') {
+    if (field.name == "period_name") {
       field.data = optPeriod?.map((td) => {
         return { slug: td.id, title: td.name };
       });
     }
 
-    if (field.name == 'curriculum_name') {
+    if (field.name == "curriculum_name") {
       field.data = dataAllCurr?.map((sp) => {
         return { slug: sp.id, title: sp.name };
       });
@@ -106,9 +104,9 @@ export const FormAddCurriculum = ({
   return (
     <>
       {updatedSubjectFields.map((field) =>
-        field.type === 'text' ? (
+        field.type === "text" ? (
           <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant='body2' fontWeight={600} mb={0.5}>
+            <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <TextField
@@ -119,13 +117,13 @@ export const FormAddCurriculum = ({
               onChange={(e) => formik.setFieldValue(field.name, e.target.value)}
             />
           </Stack>
-        ) : field.type === 'password' ? (
+        ) : field.type === "password" ? (
           <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant='body2' fontWeight={600} mb={0.5}>
+            <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
             </Typography>
             <TextField
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               name={field.name}
               placeholder={field.placeholder}
               fullWidth
@@ -133,21 +131,21 @@ export const FormAddCurriculum = ({
               onChange={(e) => formik.setFieldValue(field.name, e.target.value)}
               InputProps={{
                 endAdornment: (
-                  <InputAdornment position='end'>
+                  <InputAdornment position="end">
                     <IconButton
                       onClick={() =>
-                        field.name === 'password'
+                        field.name === "password"
                           ? setShowPassword(!showPassword)
                           : setShowPasswordConfirm(!showPasswordConfirm)
                       }
                     >
-                      {field.name === 'password' &&
+                      {field.name === "password" &&
                         (showPassword ? (
                           <VisibilityOff sx={{ fontSize: 16 }} />
                         ) : (
                           <Visibility sx={{ fontSize: 16 }} />
                         ))}
-                      {field.name === 'password_confirm' &&
+                      {field.name === "password_confirm" &&
                         (showPasswordConfirm ? (
                           <VisibilityOff sx={{ fontSize: 16 }} />
                         ) : (
@@ -159,10 +157,10 @@ export const FormAddCurriculum = ({
               }}
             />
           </Stack>
-        ) : field.type === 'select' ? (
-          field.name === 'period_name' ? (
+        ) : field.type === "select" ? (
+          field.name === "period_name" ? (
             <Stack sx={{ my: 1 }} key={field.name}>
-              <Typography variant='body2' fontWeight={600} mb={0.5}>
+              <Typography variant="body2" fontWeight={600} mb={0.5}>
                 {field.label}
               </Typography>
               <TextField
@@ -180,9 +178,9 @@ export const FormAddCurriculum = ({
                 ))}
               </TextField>
             </Stack>
-          ) : field.name === 'curriculum_name' ? (
+          ) : field.name === "curriculum_name" ? (
             <Stack sx={{ my: 1 }} key={field.name}>
-              <Typography variant='body2' fontWeight={600} mb={0.5}>
+              <Typography variant="body2" fontWeight={600} mb={0.5}>
                 {field.label}
               </Typography>
               <TextField
@@ -201,9 +199,9 @@ export const FormAddCurriculum = ({
                 ))}
               </TextField>
             </Stack>
-          ) : field.name === 'study_program' ? (
+          ) : field.name === "study_program" ? (
             <Stack sx={{ my: 1 }} key={field.name}>
-              <Typography variant='body2' fontWeight={600} mb={0.5}>
+              <Typography variant="body2" fontWeight={600} mb={0.5}>
                 {field.label}
               </Typography>
               <TextField
@@ -221,7 +219,7 @@ export const FormAddCurriculum = ({
                         <Typography fontSize={14}>{option.title}</Typography>
                       </MenuItem>
                     ))
-                  : ['Program Studi Tidak Tersedia'].map((option, idx) => (
+                  : ["Program Studi Tidak Tersedia"].map((option, idx) => (
                       <MenuItem
                         selected={idx == 0}
                         disabled
@@ -235,7 +233,7 @@ export const FormAddCurriculum = ({
             </Stack>
           ) : (
             <Stack sx={{ my: 1 }} key={field.name}>
-              <Typography variant='body2' fontWeight={600} mb={0.5}>
+              <Typography variant="body2" fontWeight={600} mb={0.5}>
                 {field.label}
               </Typography>
               <TextField
@@ -252,7 +250,7 @@ export const FormAddCurriculum = ({
                         <Typography fontSize={14}>{option}</Typography>
                       </MenuItem>
                     ))
-                  : ['Tingkatan Tidak Tersedia'].map((option, idx) => (
+                  : ["Tingkatan Tidak Tersedia"].map((option, idx) => (
                       <MenuItem
                         selected={idx == 0}
                         disabled
@@ -265,13 +263,13 @@ export const FormAddCurriculum = ({
               </TextField>
             </Stack>
           )
-        ) : field.type === 'multiple-select' ? (
+        ) : field.type === "multiple-select" ? (
           <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant='body2' fontWeight={600}>
+            <Typography variant="body2" fontWeight={600}>
               {field.label}
             </Typography>
 
-            <FormControl sx={{ width: '100%' }}>
+            <FormControl sx={{ width: "100%" }}>
               {/* <InputLabel id="demo-multiple-chip-label">Chip</InputLabel> */}
               <Select
                 multiple
@@ -281,7 +279,7 @@ export const FormAddCurriculum = ({
                 }
                 input={<OutlinedInput sx={{ p: 0 }} />}
                 renderValue={(selected) => (
-                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
                     {selected.map((permission) => {
                       let tempPermission;
                       permissions.map((item) => {
@@ -293,17 +291,17 @@ export const FormAddCurriculum = ({
                         <Chip
                           key={permission}
                           label={tempPermission}
-                          color='primary'
+                          color="primary"
                         />
                       );
                     })}
                   </Box>
                 )}
                 MenuProps={{
-                  anchorOrigin: { vertical: 'top', horizontal: 'center' },
+                  anchorOrigin: { vertical: "top", horizontal: "center" },
                   transformOrigin: {
-                    vertical: 'bottom',
-                    horizontal: 'center',
+                    vertical: "bottom",
+                    horizontal: "center",
                   },
                 }}
               >

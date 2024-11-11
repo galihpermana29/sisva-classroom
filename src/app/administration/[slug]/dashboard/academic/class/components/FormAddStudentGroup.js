@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { MenuItem, Stack, TextField, Typography } from '@mui/material';
+import { MenuItem, Stack, TextField, Typography } from "@mui/material";
 
-import { formAddStudentGroup } from '@/globalcomponents/FormFields';
-import { useEffect, useState } from 'react';
+import { formAddStudentGroup } from "@/globalcomponents/FormFields";
+import { useEffect, useState } from "react";
 
 export const FormAddStudentGroup = ({
   formik,
@@ -57,7 +57,7 @@ export const FormAddStudentGroup = ({
   return (
     <>
       {formAddStudentGroup.map((field) =>
-        field.type === 'text' ? (
+        field.type === "text" ? (
           <Stack sx={{ my: 1 }} key={field.name}>
             <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
@@ -70,7 +70,7 @@ export const FormAddStudentGroup = ({
               onChange={(e) => formik.setFieldValue(field.name, e.target.value)}
             />
           </Stack>
-        ) : field.name === 'homeroom_teacher_id' ? (
+        ) : field.name === "homeroom_teacher_id" ? (
           <Stack sx={{ my: 1 }} key={field.name}>
             <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
@@ -94,7 +94,7 @@ export const FormAddStudentGroup = ({
               )}
             </TextField>
           </Stack>
-        ) : field.name === 'period_id' ? (
+        ) : field.name === "period_id" ? (
           <Stack sx={{ my: 1 }} key={field.name}>
             <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
@@ -116,7 +116,7 @@ export const FormAddStudentGroup = ({
               ))}
             </TextField>
           </Stack>
-        ) : field.name === 'study_program_id' ? (
+        ) : field.name === "study_program_id" ? (
           <Stack sx={{ my: 1 }} key={field.name}>
             <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}
@@ -145,7 +145,7 @@ export const FormAddStudentGroup = ({
               )}
             </TextField>
           </Stack>
-        ) : field.name === 'grade' ? (
+        ) : field.name === "grade" ? (
           <Stack sx={{ my: 1 }} key={field.name}>
             <Typography variant="body2" fontWeight={600} mb={0.5}>
               {field.label}

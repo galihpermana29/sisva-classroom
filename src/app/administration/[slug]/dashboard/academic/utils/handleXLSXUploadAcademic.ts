@@ -1,4 +1,4 @@
-import * as XLSX from 'xlsx';
+import * as XLSX from "xlsx";
 import type {
   AnggotaInputData,
   EkstrakulikulerInputData,
@@ -12,19 +12,19 @@ import type {
   ProgramStudiSiswaInputData,
   Sheet,
   TingkatanDanSilabusInputData,
-} from './types';
+} from "./types";
 
-import handleAnggota from './handleAnggota';
-import handleEkstrakulikuler from './handleEkstrakulikuler';
-import handleGuru from './handleGuru';
-import handleKelas from './handleKelas';
-import handleKurikulumDanMataPelajaran from './handleKurikulumDanMataPelajaran';
-import handleMurid from './handleMurid';
-import handlePeriode from './handlePeriode';
-import handlePeriodeDanKurikulum from './handlePeriodeDanKurikulum';
-import handleProgramStudi from './handleProgramStudi';
-import handleProgramStudiSiswa from './handleProgramStudiSiswa';
-import handleTingkatanDanSilabus from './handleTingkatanDanSilabus';
+import handleAnggota from "./handleAnggota";
+import handleEkstrakulikuler from "./handleEkstrakulikuler";
+import handleGuru from "./handleGuru";
+import handleKelas from "./handleKelas";
+import handleKurikulumDanMataPelajaran from "./handleKurikulumDanMataPelajaran";
+import handleMurid from "./handleMurid";
+import handlePeriode from "./handlePeriode";
+import handlePeriodeDanKurikulum from "./handlePeriodeDanKurikulum";
+import handleProgramStudi from "./handleProgramStudi";
+import handleProgramStudiSiswa from "./handleProgramStudiSiswa";
+import handleTingkatanDanSilabus from "./handleTingkatanDanSilabus";
 
 const MAX_ROW = 1000;
 
@@ -33,17 +33,17 @@ function getSheet(template: XLSX.WorkBook, sheetName: Sheet) {
 }
 
 const importReport = {
-  programStudi: '',
-  programStudiSiswa: '',
-  kurikulumDanMataPelajaran: '',
-  tingkatanDanSilabus: '',
-  periode: '',
-  periodeDanKurikulum: '',
-  guru: '',
-  kelas: '',
-  murid: '',
-  ekstrakulikuler: '',
-  anggota: '',
+  programStudi: "",
+  programStudiSiswa: "",
+  kurikulumDanMataPelajaran: "",
+  tingkatanDanSilabus: "",
+  periode: "",
+  periodeDanKurikulum: "",
+  guru: "",
+  kelas: "",
+  murid: "",
+  ekstrakulikuler: "",
+  anggota: "",
 };
 
 export type ImportReport = typeof importReport;

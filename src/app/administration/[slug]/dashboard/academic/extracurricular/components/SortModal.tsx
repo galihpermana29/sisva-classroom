@@ -1,4 +1,4 @@
-import { Cancel } from '@mui/icons-material';
+import { Cancel } from "@mui/icons-material";
 import {
   Button,
   MenuItem,
@@ -7,8 +7,8 @@ import {
   Stack,
   TextField,
   Typography,
-} from '@mui/material';
-import { memo } from 'react';
+} from "@mui/material";
+import { memo } from "react";
 
 function SortModal({
   activeTab,
@@ -30,10 +30,10 @@ function SortModal({
           padding: 2,
           borderRadius: 2,
           zIndex: 20,
-          margin: 'auto',
-          position: 'fixed',
-          height: 'fit-content',
-          width: '240px',
+          margin: "auto",
+          position: "fixed",
+          height: "fit-content",
+          width: "240px",
           top: 0,
           bottom: 0,
           right: 0,
@@ -54,15 +54,15 @@ function SortModal({
             startAdornment: sortBy && (
               <Cancel
                 onClick={() => {
-                  setSortBy('');
+                  setSortBy("");
                 }}
                 sx={{
                   fontSize: 14,
-                  color: 'base.base50',
-                  cursor: 'pointer',
-                  transform: 'translateX(-4px)',
-                  '&:hover': {
-                    color: 'base.base60',
+                  color: "base.base50",
+                  cursor: "pointer",
+                  transform: "translateX(-4px)",
+                  "&:hover": {
+                    color: "base.base60",
                   },
                 }}
               />
@@ -71,15 +71,15 @@ function SortModal({
         >
           {(activeTab === 1
             ? [
-                { title: 'Periode', slug: 'period_name' },
-                { title: 'Program Studi', slug: 'study_program' },
-                { title: 'Tingkatan', slug: 'grade' },
-                { title: 'Kurikulum', slug: 'curriculum' },
+                { title: "Periode", slug: "period_name" },
+                { title: "Program Studi", slug: "study_program" },
+                { title: "Tingkatan", slug: "grade" },
+                { title: "Kurikulum", slug: "curriculum" },
               ]
             : [
-                { title: 'Periode', slug: 'period_name' },
-                { title: 'Rentang Waktu', slug: 'start_time' },
-                { title: 'Status', slug: 'status' },
+                { title: "Periode", slug: "period_name" },
+                { title: "Rentang Waktu", slug: "start_time" },
+                { title: "Status", slug: "status" },
               ]
           ).map((option) => (
             <MenuItem key={option.slug} value={option.slug}>
@@ -97,8 +97,8 @@ function SortModal({
           sx={{ flex: 1, mt: 2, mb: 2 }}
         >
           {[
-            { title: 'A-Z', slug: 'ascending' },
-            { title: 'Z-A', slug: 'descending' },
+            { title: "A-Z", slug: "ascending" },
+            { title: "Z-A", slug: "descending" },
           ].map((option) => (
             <MenuItem key={option.slug} value={option.slug}>
               <Typography fontSize={14}>{option.title}</Typography>
@@ -107,7 +107,7 @@ function SortModal({
         </TextField>
         <Stack
           sx={{
-            flexDirection: 'row',
+            flexDirection: "row",
           }}
         >
           <Button

@@ -28,18 +28,12 @@ export const TingkatSelect = ({ data, disabled }) => {
       value={value}
       onChange={(event) => handleChange(event.target.value)}
     >
-      <MenuItem
-        disabled
-        value=""
-      >
+      <MenuItem disabled value="">
         Tingkatan
       </MenuItem>
       {data
         ? data.map((grade) => (
-            <MenuItem
-              key={`${grade}grades`}
-              value={grade}
-            >
+            <MenuItem key={`${grade}grades`} value={grade}>
               {grade}
             </MenuItem>
           ))

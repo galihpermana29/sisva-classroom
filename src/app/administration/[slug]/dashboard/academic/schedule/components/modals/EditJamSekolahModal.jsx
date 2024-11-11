@@ -15,11 +15,7 @@ export const EditJamSekolahModal = ({ data }) => {
   return (
     <>
       <Tooltip title="Ubah jadwal">
-        <IconButton
-          onClick={handleOpen}
-          aria-label="edit"
-          size="small"
-        >
+        <IconButton onClick={handleOpen} aria-label="edit" size="small">
           <ModeEdit />
         </IconButton>
       </Tooltip>

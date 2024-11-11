@@ -1,10 +1,10 @@
-import AttendanceApi from '@/api/attendance';
-import UsersAPI from '@/api/users';
-import type { User } from '@/globalcomponents/BERespondTypes';
-import type { MonthText } from '@/globalcomponents/types';
-import { getAttendance, getMonthNumber } from '@/globalcomponents/types';
-import dayjs from 'dayjs';
-import * as XLSX from 'xlsx';
+import AttendanceApi from "@/api/attendance";
+import UsersAPI from "@/api/users";
+import type { User } from "@/globalcomponents/BERespondTypes";
+import type { MonthText } from "@/globalcomponents/types";
+import { getAttendance, getMonthNumber } from "@/globalcomponents/types";
+import dayjs from "dayjs";
+import * as XLSX from "xlsx";
 /*
 # Array structure
 
@@ -80,31 +80,31 @@ export default function handleXLSXUploadStudentAttendance({
   reader.onload = async (e) => {
     const file = e.target.result;
     try {
-      const users: User[] = (await UsersAPI.getAllUsers('student')).data.data;
+      const users: User[] = (await UsersAPI.getAllUsers("student")).data.data;
 
-      const activeUsers = users.filter((user) => user.status == 'active');
+      const activeUsers = users.filter((user) => user.status == "active");
       const names = activeUsers.map((user) => user.name) as string[];
       const usernames = activeUsers.map((user) => user.username) as string[];
 
       const template = XLSX.read(file);
       const sheetNames = template.SheetNames.filter((sheetName) => {
-        const [monthText, year] = sheetName.trim().split(' ') as [
+        const [monthText, year] = sheetName.trim().split(" ") as [
           MonthText,
-          string
+          string,
         ];
         const months: MonthText[] = [
-          'Januari',
-          'Februari',
-          'Maret',
-          'April',
-          'Mei',
-          'Juni',
-          'Juli',
-          'Agustus',
-          'September',
-          'Oktober',
-          'November',
-          'Desember',
+          "Januari",
+          "Februari",
+          "Maret",
+          "April",
+          "Mei",
+          "Juni",
+          "Juli",
+          "Agustus",
+          "September",
+          "Oktober",
+          "November",
+          "Desember",
         ];
         return (
           months.includes(monthText) &&
@@ -117,9 +117,9 @@ export default function handleXLSXUploadStudentAttendance({
       let sheetProgress = 1;
       toggleProgressAlert(true);
       for (const sheetName of sheetNames) {
-        const [monthText, year] = sheetName.trim().split(' ') as [
+        const [monthText, year] = sheetName.trim().split(" ") as [
           MonthText,
-          string
+          string,
         ];
         const month = getMonthNumber(monthText);
 
@@ -127,7 +127,7 @@ export default function handleXLSXUploadStudentAttendance({
         const rawData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
         const rawDataWithoutHeader = rawData
           .slice(3)
-          .filter((row) => row[0] !== '');
+          .filter((row) => row[0] !== "");
 
         const dataObject = rawDataWithoutHeader
           .map((row) => {
@@ -159,7 +159,7 @@ export default function handleXLSXUploadStudentAttendance({
           );
           for (let i = 0; i < maxDay; i++) {
             const dateCode = dayjs(`${year}-${month}-${i + 1}`).format(
-              'YYYYMMDD'
+              "YYYYMMDD"
             );
             const status = data.attendance[i];
             const user = getUser(activeUsers, {
