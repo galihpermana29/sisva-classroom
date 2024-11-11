@@ -1,5 +1,5 @@
 import { RootState } from "@/app/administration/store";
-import type { Permission, SortDirection } from "@/globalcomponents/types";
+import type { Permission, Role, SortDirection } from "@/globalcomponents/types";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 
@@ -10,6 +10,7 @@ interface StaffProfileState {
   sortField: SortField;
   sortDirection: SortDirection;
   permissionFilter: Permission | "";
+  roleFilter: Role | "";
 }
 
 const initialState: StaffProfileState = {
@@ -17,6 +18,7 @@ const initialState: StaffProfileState = {
   sortField: "",
   sortDirection: "",
   permissionFilter: "",
+  roleFilter: "",
 };
 
 export const staffProfileSlice = createSlice({
@@ -32,14 +34,22 @@ export const staffProfileSlice = createSlice({
     setSortDirection: (state, action: PayloadAction<SortDirection>) => {
       state.sortDirection = action.payload;
     },
-    setPermissionFilter: (state, action: PayloadAction<Permission>) => {
+    setPermissionFilter: (state, action: PayloadAction<Permission | "">) => {
       state.permissionFilter = action.payload;
+    },
+    setRoleFilter: (state, action: PayloadAction<Role | "">) => {
+      state.roleFilter = action.payload;
     },
   },
 });
 
-export const { setSearchText, setSortField, setSortDirection } =
-  staffProfileSlice.actions;
+export const {
+  setSearchText,
+  setSortField,
+  setSortDirection,
+  setPermissionFilter,
+  setRoleFilter,
+} = staffProfileSlice.actions;
 
 export const selectSearchText = (state: RootState) =>
   state.staffProfile.searchText;
@@ -47,5 +57,9 @@ export const selectSortField = (state: RootState) =>
   state.staffProfile.sortField;
 export const selectSortDirection = (state: RootState) =>
   state.staffProfile.sortDirection;
+export const selectPermissionFilter = (state: RootState) =>
+  state.staffProfile.permissionFilter;
+export const selectRoleFilter = (state: RootState) =>
+  state.staffProfile.roleFilter;
 
 export const staffProfileReducer = staffProfileSlice.reducer;

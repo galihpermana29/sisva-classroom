@@ -74,7 +74,7 @@ function TableParent({
       />
       <Divider />
       <Box sx={{ flex: 1, overflowY: "hidden" }}>
-        <DataTable data={filteredData} deleteUser={deleteUser} />
+        <DataTable filteredData={filteredData} deleteUser={deleteUser} />
       </Box>
     </Stack>
   );

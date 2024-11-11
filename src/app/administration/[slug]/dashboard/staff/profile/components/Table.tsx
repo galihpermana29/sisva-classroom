@@ -1,5 +1,7 @@
 import { useSchool } from "@/app/administration/[slug]/SchoolContext";
+import { useAdministrationSelector } from "@/app/administration/hooks";
 import { permissions, types } from "@/globalcomponents/Variable";
+import { useStaffTeachers } from "@/hooks/useStaffTeacher";
 import { BorderColorRounded, DeleteForeverRounded } from "@mui/icons-material";
 import type { Theme } from "@mui/material";
 import {
@@ -16,7 +18,14 @@ import { DataGrid } from "@mui/x-data-grid";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { memo, useState } from "react";
+import { memo, useMemo, useState } from "react";
+import {
+  selectPermissionFilter,
+  selectRoleFilter,
+  selectSearchText,
+  selectSortDirection,
+  selectSortField,
+} from "../utils/staffProfileSlice";
 import DeleteModal from "./DeleteModal";
 
 function getColumns(schoolId) {
@@ -262,12 +271,67 @@ function ActionButton({ params }) {
 }
 
 function DataTable({
-  data,
   deleteUser = () => {},
 }: {
-  data: any;
   deleteUser: (userData: any) => void;
 }) {
+  const { data, isLoading } = useStaffTeachers();
+  const permissionFilter = useAdministrationSelector(selectPermissionFilter);
+  const searchText = useAdministrationSelector(selectSearchText);
+  const sortField = useAdministrationSelector(selectSortField);
+  const sortDirection = useAdministrationSelector(selectSortDirection);
+  const roleFilter = useAdministrationSelector(selectRoleFilter);
+
+  const filteredData = useMemo(() => {
+    if (isLoading) return;
+    let filteredData = data.filter((item) => {
+      return (
+        (item.name.toLowerCase().includes(searchText.toLowerCase()) ||
+          item.username.toLowerCase().includes(searchText.toLowerCase())) &&
+        item.type.toLowerCase().includes(roleFilter.toLowerCase()) &&
+        (!permissionFilter || item.permissions.includes(permissionFilter))
+      );
+    });
+
+    filteredData = filteredData.sort((a, b) => {
+      let x, y;
+      if (sortField === "name") {
+        x = a.name.toLowerCase();
+        y = b.name.toLowerCase();
+      } else if (sortField === "username") {
+        x = a.name.toLowerCase();
+        y = b.name.toLowerCase();
+      }
+
+      if (sortDirection === "ascending") {
+        if (x < y) {
+          return -1;
+        }
+        if (x > y) {
+          return 1;
+        }
+        return 0;
+      } else if (sortDirection === "descending") {
+        if (x > y) {
+          return -1;
+        }
+        if (x < y) {
+          return 1;
+        }
+        return 0;
+      }
+    });
+    return filteredData;
+  }, [
+    data,
+    isLoading,
+    permissionFilter,
+    roleFilter,
+    searchText,
+    sortDirection,
+    sortField,
+  ]);
+
   const school = useSchool();
   const isMobile = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down("lg")
@@ -276,9 +340,11 @@ function DataTable({
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [activeRow, setActiveRow] = useState({});
 
+  if (isLoading) return;
+
   let rows = [];
 
-  data.map((data) => {
+  filteredData.map((data) => {
     let tempObject = {
       id: data.id,
       name: data.name,

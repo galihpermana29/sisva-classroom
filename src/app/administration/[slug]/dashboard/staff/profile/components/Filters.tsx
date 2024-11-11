@@ -1,6 +1,17 @@
+import {
+  useAdministrationDispatch,
+  useAdministrationSelector,
+} from "@/app/administration/hooks";
+import type { Permission, Role } from "@/globalcomponents/types";
 import { permissions, types } from "@/globalcomponents/Variable";
 import { Cancel } from "@mui/icons-material";
 import { MenuItem, Stack, TextField, Typography } from "@mui/material";
+import {
+  selectPermissionFilter,
+  selectRoleFilter,
+  setPermissionFilter,
+  setRoleFilter,
+} from "../utils/staffProfileSlice";
 
 export default function Filters({
   permissionFilter,
@@ -10,6 +21,10 @@ export default function Filters({
   onChangePermission,
   onClickCancelPermission,
 }) {
+  const roleFilter = useAdministrationSelector(selectRoleFilter);
+  const permissionFilter2 = useAdministrationSelector(selectPermissionFilter);
+  const dispatch = useAdministrationDispatch();
+
   return (
     <Stack
       sx={{
@@ -24,14 +39,14 @@ export default function Filters({
         select
         size="small"
         label="Tipe"
-        value={typeFilter}
-        onChange={onChangeType}
+        value={roleFilter}
+        onChange={(e) => dispatch(setRoleFilter(e.target.value as Role))}
         sx={{ flex: { xs: 1, lg: 0 }, minWidth: 100, width: "fit-content" }}
         InputProps={{
           sx: { minWidth: 100, width: { xs: "100%", lg: "fit-content" } },
-          startAdornment: typeFilter && (
+          startAdornment: roleFilter && (
             <Cancel
-              onClick={onClickCancelType}
+              onClick={() => dispatch(setRoleFilter(""))}
               sx={{
                 fontSize: 14,
                 color: "base.base50",
@@ -55,8 +70,10 @@ export default function Filters({
         select
         size="small"
         label="Akses"
-        value={permissionFilter}
-        onChange={onChangePermission}
+        value={permissionFilter2}
+        onChange={(e) =>
+          dispatch(setPermissionFilter(e.target.value as Permission))
+        }
         sx={{
           flex: { xs: 1, lg: 0 },
           ml: 1,
@@ -65,9 +82,9 @@ export default function Filters({
         }}
         InputProps={{
           sx: { minWidth: 100, width: { xs: "100%", lg: "fit-content" } },
-          startAdornment: permissionFilter && (
+          startAdornment: permissionFilter2 && (
             <Cancel
-              onClick={onClickCancelPermission}
+              onClick={() => dispatch(setPermissionFilter(""))}
               sx={{
                 fontSize: 14,
                 color: "base.base50",

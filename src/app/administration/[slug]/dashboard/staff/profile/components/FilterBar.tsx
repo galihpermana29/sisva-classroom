@@ -1,6 +1,11 @@
+import {
+  useAdministrationDispatch,
+  useAdministrationSelector,
+} from "@/app/administration/hooks";
 import { Cancel, Search } from "@mui/icons-material";
 import { Hidden, InputAdornment, Stack, TextField } from "@mui/material";
 import { memo } from "react";
+import { selectSearchText, setSearchText } from "../utils/staffProfileSlice";
 import Filters from "./Filters";
 
 function FilterBar({
@@ -11,6 +16,9 @@ function FilterBar({
   setTypeFilter,
   typeFilter,
 }) {
+  const searchText = useAdministrationSelector(selectSearchText);
+  const dispatch = useAdministrationDispatch();
+
   return (
     <Stack
       sx={{
@@ -32,14 +40,12 @@ function FilterBar({
           borderRight: "1px solid rgb(0,0,0,0.12)",
           pr: 1,
         }}
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        value={searchText}
+        onChange={(e) => dispatch(setSearchText(e.target.value))}
         InputProps={{
-          startAdornment: search && (
+          startAdornment: searchText && (
             <Cancel
-              onClick={() => {
-                setSearch("");
-              }}
+              onClick={() => dispatch(setSearchText(""))}
               sx={{
                 fontSize: 14,
                 color: "base.base50",
