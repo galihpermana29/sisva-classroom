@@ -7,8 +7,10 @@ import { getClientSession } from "@/app/classroom/shared/usecase/session/get-cli
 import toast from "react-hot-toast";
 import { Form } from "antd";
 import { useParams, useRouter } from "next/navigation";
+import { useClassAssignment } from "../../../Pane/Assignments/usecase/hooks/use-class-assignment";
 
 export function useSubmission() {
+  const { refetch } = useClassAssignment();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [fileUrl, setFileUrl] = useState(null);
@@ -65,8 +67,9 @@ export function useSubmission() {
     if (res.success) {
       setLoading(false);
       localStorage.removeItem("submissionFileUrl");
-      router.push(`/classroom/student/class/${class_id}`);
+      router.push(`/classroom/student/class/${class_id}?tab=tugas`);
       toast.success("Success send your submission");
+      refetch();
     } else {
       setLoading(false);
       toast.error("Failed send your submission");
