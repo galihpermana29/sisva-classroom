@@ -9,19 +9,31 @@ export const useQueryParam = () => {
   const searchParams = useSearchParams();
 
   // Get a new searchParams string by merging the current
-  // searchParams with a provided key/value pair
+  // searchParams with a provided key/value pair(s)
   const createQueryString = useCallback(
-    (name, value) => {
+    (nameOrUpdates, value) => {
       const params = new URLSearchParams(searchParams.toString());
-      value ? params.set(name, value) : params.delete(name);
+
+      // Handle multiple updates passed as an object
+      if (typeof nameOrUpdates === "object" && nameOrUpdates !== null) {
+        Object.entries(nameOrUpdates).forEach(([name, value]) => {
+          value ? params.set(name, value) : params.delete(name);
+        });
+      }
+      // Handle single update passed as name and value
+      else if (typeof nameOrUpdates === "string") {
+        value ? params.set(nameOrUpdates, value) : params.delete(nameOrUpdates);
+      }
 
       return params.toString();
     },
     [searchParams]
   );
 
-  const updateQueryParam = (name, value) =>
-    router.push(pathname + "?" + createQueryString(name, value));
+  const updateQueryParam = (nameOrUpdates, value) => {
+    const queryString = createQueryString(nameOrUpdates, value);
+    return router.push(queryString ? `${pathname}?${queryString}` : pathname);
+  };
 
   return { updateQueryParam, createQueryString };
 };
