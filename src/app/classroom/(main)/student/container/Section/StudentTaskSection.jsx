@@ -25,7 +25,7 @@ const StudentTaskSection = () => {
           ) : tasks.length > 0 ? (
             tasks.map((task, index) => (
               <Link
-                href={`/classroom/teacher/class/${task.class_id}/task/${task.task_id}`}
+                href={`/classroom/student/class/${task.class_id}/task/${task.task_id}`}
                 key={index}
               >
                 <CardTask
