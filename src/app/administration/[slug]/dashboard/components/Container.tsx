@@ -37,6 +37,8 @@ import {
 } from "@mui/icons-material";
 import Head from "next/head";
 
+import { useCurrentUser } from "@/hooks/useCurrentUser";
+
 export const metadata = {
   title: "Beranda | Sisva",
   description: "Sisva | Solusi Digitalisasi dan Modernisasi Sekolah",
@@ -161,6 +163,7 @@ export default function Container(props) {
     }
 
     function UserMenu() {
+      const { data: currentUser, isLoading } = useCurrentUser();
       const [anchorEl, setAnchorEl] = React.useState(null);
       const open = Boolean(anchorEl);
       const handleClick = (event) => {
@@ -170,29 +173,7 @@ export default function Container(props) {
         setAnchorEl(null);
       };
 
-      const [currentUser, setCurrentUser] = useState(null);
-
-      const getCurrentUser = async () => {
-        if (typeof window !== "undefined") {
-          const logData = JSON.parse(localStorage.getItem("user"));
-
-          if (logData) {
-            const {
-              data: { data: res },
-            } = await UsersAPI.getUserById(
-              logData.user_id,
-              logData.school_id,
-              logData.token
-            );
-
-            setCurrentUser(res);
-          }
-        }
-      };
-
-      useEffect(() => {
-        getCurrentUser();
-      }, []);
+      if (isLoading) return <></>;
 
       return (
         <Box>

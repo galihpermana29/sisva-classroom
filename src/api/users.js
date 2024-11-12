@@ -31,11 +31,11 @@ const UsersAPI = {
     return api.get(`/users?types=${params}`, { headers });
   },
 
-  getUserById(id, userId, schoolId, bearer) {
+  getUserById(id) {
     const headers = {
       "X-Sisva-Source": "test",
-      "X-Sisva-UserID": USER_ID ? USER_ID : userId,
-      "X-Sisva-SchoolID": SCHOOL_ID ? SCHOOL_ID : schoolId,
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
       Authorization: `Bearer ${BEARER_TOKEN ? BEARER_TOKEN : bearer}`,
     };
     return api.get(`/users/${id}`, { headers });
