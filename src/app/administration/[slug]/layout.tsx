@@ -9,7 +9,7 @@ import SchoolIdProvider from "./SchoolContext";
 export default function Layout({ children }) {
   const { slug } = useParams();
   const { data: schoolData, isLoading } = useQuery({
-    queryKey: ["school-id"],
+    queryKey: ["school-id", slug],
     queryFn: async () => (await CmsAPI.getSchoolByCode(slug)).data.data,
   });
 

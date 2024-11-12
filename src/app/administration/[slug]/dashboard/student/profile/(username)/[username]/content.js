@@ -202,11 +202,6 @@ export default function SchoolProfileContent({ user_id }) {
         data: { data },
       } = await UsersAPI.getUserById(userId);
 
-      if (updateCurrentUser) {
-        localStorage.setItem("current_user", JSON.stringify(data));
-        return;
-      }
-
       const additionalJson = JSON.parse(data.detail.json_text);
 
       setinitialData({ ...data, ...additionalJson });

@@ -186,7 +186,6 @@ export default function Container(props) {
             );
 
             setCurrentUser(res);
-            localStorage.setItem("current_user", JSON.stringify(res));
           }
         }
       };
