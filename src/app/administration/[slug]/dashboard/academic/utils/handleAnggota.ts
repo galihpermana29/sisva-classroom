@@ -32,7 +32,9 @@ function getEkstrakulikuler(
 
 export default async function handleAnggota(data: AnggotaInputData) {
   // students
-  const allStudent: User[] = (await UsersAPI.getAllUsers("student")).data.data;
+  const allStudent: User[] = (
+    await UsersAPI.getAllUsers("student")
+  ).data.data.filter((student: User) => student.status === "active");
   const studentNames = allStudent.map((student) => student.name);
   const studentUsernames = allStudent.map((student) => student.username);
 
