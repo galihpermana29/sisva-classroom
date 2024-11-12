@@ -20,7 +20,7 @@ const StudentScheduleSection = () => {
           ) : schedules.length > 0 ? (
             schedules.map((schedule, index) => (
               <CardSchedule
-                scheduleName={schedule.subject_name}
+                scheduleName={schedule.class_name}
                 teacherName={schedule.teacher_name}
                 time={convertTime12To24(schedule.start_time)}
                 key={index}

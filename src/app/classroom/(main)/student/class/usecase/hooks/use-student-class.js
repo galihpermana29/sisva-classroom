@@ -1,21 +1,18 @@
 import { useEffect, useState } from "react";
 
+import { useDebounce } from "use-debounce";
 import { getUserDataCookie } from "../../../../teacher/usecase/getUserDataCookie";
-import { getUserById } from "../../../repository/apiService";
+import {
+  getAllClasses,
+  getAllStudentsInStudentGroups,
+  getClassSchedules
+} from "../../repository/student-class-service";
 import {
   createDropdown,
   filterJoinedGroups,
   matchClassesToGroups,
   searchFilter,
 } from "../data-mapper-service";
-import {
-  getAllClasses,
-  getAllStudentsInStudentGroups,
-  getAllTaskByClassId,
-  getClassSchedules,
-} from "../../repository/student-class-service";
-import { useDebounce } from "use-debounce";
-import { isOverdue } from "../date-helper";
 
 export const useStudentClass = () => {
   const [initialClasses, setInitialClasses] = useState([]);
@@ -142,10 +139,11 @@ const fetchClassSchedules = async (classes) => {
   try {
     const schedulesPromises = classes.map(async (classItem) => {
       const {
-        data: schedules,
+        data,
         success,
         message,
-      } = await getClassSchedules(classItem.id);
+      } = await getClassSchedules();
+      const schedules = data.filter((schedule) => schedule.class_id == classItem.id);
 
       if (!success) {
         throw new Error(message);
@@ -164,41 +162,41 @@ const fetchClassSchedules = async (classes) => {
   }
 }
 
-const fetchTasksForClasses = async (classes) => {
-  try {
-    const tasksPromises = classes.map(async (classItem) => {
-      const {
-        data: tasks,
-        success,
-        message,
-      } = await getAllTaskByClassId(classItem.id);
-      const {
-        data: teacherProfile,
-        success: teacherSuccess,
-        message: teacherMessage,
-      } = await getUserById(classItem.teacher_id);
+// const fetchTasksForClasses = async (classes) => {
+//   try {
+//     const tasksPromises = classes.map(async (classItem) => {
+//       const {
+//         data: tasks,
+//         success,
+//         message,
+//       } = await getAllTaskByClassId(classItem.id);
+//       const {
+//         data: teacherProfile,
+//         success: teacherSuccess,
+//         message: teacherMessage,
+//       } = await getUserById(classItem.teacher_id);
 
-      if (!success) {
-        throw new Error(message);
-      }
+//       if (!success) {
+//         throw new Error(message);
+//       }
 
-      if (!teacherSuccess) {
-        throw new Error(teacherMessage);
-      }
+//       if (!teacherSuccess) {
+//         throw new Error(teacherMessage);
+//       }
 
-      const filteredTasks =
-        tasks.filter((task) => !isOverdue(task.deadline)) ?? [];
+//       const filteredTasks =
+//         tasks.filter((task) => !isOverdue(task.deadline)) ?? [];
 
-      return {
-        ...classItem,
-        tasks: filteredTasks,
-        teacher_photo: teacherProfile.profile_image_uri,
-      };
-    });
+//       return {
+//         ...classItem,
+//         tasks: filteredTasks,
+//         teacher_photo: teacherProfile.profile_image_uri,
+//       };
+//     });
 
-    const classesWithTasks = await Promise.all(tasksPromises);
-    return classesWithTasks;
-  } catch (error) {
-    throw new Error("Error fetching tasks for classes" + error);
-  }
-};
+//     const classesWithTasks = await Promise.all(tasksPromises);
+//     return classesWithTasks;
+//   } catch (error) {
+//     throw new Error("Error fetching tasks for classes" + error);
+//   }
+// };
