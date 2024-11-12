@@ -21,7 +21,7 @@ const JadwalKeseluruhanSchedule = dynamic(
 
 function JadwalKeseluruhan() {
   return (
-    <Stack paddingY={3} spacing={3}>
+    <Stack paddingY={3} spacing={3} className="default-scrollbar">
       <Suspense>
         <JadwalKeseluruhanFilterAlert />
       </Suspense>
@@ -37,7 +37,7 @@ function JadwalKeseluruhan() {
         </Suspense>
       </Stack>
       <TableContainer>
-        <Box minWidth={764}>
+        <Box>
           <JadwalKeseluruhanSchedule />
         </Box>
       </TableContainer>
