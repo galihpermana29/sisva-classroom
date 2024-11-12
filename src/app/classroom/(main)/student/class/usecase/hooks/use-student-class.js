@@ -1,21 +1,18 @@
 import { useEffect, useState } from "react";
 
+import { useDebounce } from "use-debounce";
 import { getUserDataCookie } from "../../../../teacher/usecase/getUserDataCookie";
-import { getUserById } from "../../../repository/apiService";
+import {
+  getAllClasses,
+  getAllStudentsInStudentGroups,
+  getClassSchedules
+} from "../../repository/student-class-service";
 import {
   createDropdown,
   filterJoinedGroups,
   matchClassesToGroups,
   searchFilter,
 } from "../data-mapper-service";
-import {
-  getAllClasses,
-  getAllStudentsInStudentGroups,
-  getAllTaskByClassId,
-  getClassSchedules,
-} from "../../repository/student-class-service";
-import { useDebounce } from "use-debounce";
-import { isOverdue } from "../date-helper";
 
 export const useStudentClass = () => {
   const [initialClasses, setInitialClasses] = useState([]);
@@ -146,8 +143,6 @@ const fetchClassSchedules = async (classes) => {
         success,
         message,
       } = await getClassSchedules();
-      console.log(classItem)
-console.log(data)
       const schedules = data.filter((schedule) => schedule.class_id == classItem.id);
 
       if (!success) {
