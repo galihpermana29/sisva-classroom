@@ -1,5 +1,6 @@
 import UsersAPI from "@/api/users";
 import type { User } from "@/globalcomponents/BERespondTypes";
+import type { QueryClient } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 
 export const useStaffTeachers = () => {
@@ -10,4 +11,8 @@ export const useStaffTeachers = () => {
         (student: User) => student.status === "active"
       ),
   });
+};
+
+export const invalidateStaffTeachers = (queryClient: QueryClient) => {
+  return queryClient.invalidateQueries({ queryKey: ["staff,teachers"] });
 };

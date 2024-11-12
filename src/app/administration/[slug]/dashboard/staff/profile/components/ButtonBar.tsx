@@ -1,6 +1,8 @@
 import { ExcelIcon } from "@/assets/SVGs";
+import { invalidateStaffTeachers } from "@/hooks/useStaffTeacher";
 import { Add, DownloadRounded, UploadFileRounded } from "@mui/icons-material";
 import { Button, Menu, MenuItem, Stack, Typography } from "@mui/material";
+import { useQueryClient } from "@tanstack/react-query";
 import { memo, useState } from "react";
 import ImportXLSXAlert from "../../../components/ImportXLSXAlert";
 import handleXLSXUploadStaff from "../utils/handleXLSXUploadStaff";
@@ -12,6 +14,7 @@ function ButtonBar({
   open,
   setOpenCreateModal,
 }) {
+  const queryClient = useQueryClient();
   const [isOpenImportXLSXAlert, setIsOpenImportXLSXAlert] = useState(false);
   const [importXLSXAlertTitle, setImportXLSXAlertTitle] = useState("");
   const [importAlert, setImportAlert] = useState<string[]>([]);
@@ -99,11 +102,13 @@ function ButtonBar({
                         setImportXLSXAlertTitle("File import berhasil");
                         setImportAlert(importReport);
                         setIsOpenImportXLSXAlert(true);
+                        invalidateStaffTeachers(queryClient);
                       },
                       (importReport) => {
                         setImportXLSXAlertTitle("File import bermasalah");
                         setImportAlert(importReport);
                         setIsOpenImportXLSXAlert(true);
+                        invalidateStaffTeachers(queryClient);
                       }
                     );
                     handleClose();

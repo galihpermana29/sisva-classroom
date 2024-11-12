@@ -5,6 +5,8 @@ import { useCallback, useState } from "react";
 import CreateModal from "./components/CreateModal";
 
 import UsersAPI from "@/api/users";
+import { invalidateStaffTeachers } from "@/hooks/useStaffTeacher";
+import { useQueryClient } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import SortModal from "./components/SortModal";
 import TableParent from "./components/TableParent";
@@ -17,8 +19,9 @@ const initialData = {
   password_confirm: "",
 };
 
-// todo: invalidate staffteacher
 export default function StaffProfileListContent() {
+  const queryClient = useQueryClient();
+
   const formik = useFormik({
     initialValues: { ...initialData },
 
@@ -44,6 +47,7 @@ export default function StaffProfileListContent() {
       try {
         const res = await UsersAPI.createUser(payload);
         formik.setValues(initialData);
+        invalidateStaffTeachers(queryClient);
       } catch (error) {
         console.log(error, "error adding staff");
       }
@@ -62,14 +66,18 @@ export default function StaffProfileListContent() {
   const [openSortModal, setOpenSortModal] = useState(false);
   const [openCreateModal, setOpenCreateModal] = useState(false);
 
-  const deleteUser = useCallback(async (userData) => {
-    try {
-      userData.status = "deleted";
-      await UsersAPI.updateUserById(userData, userData.id);
-    } catch (error) {
-      console.log(error, "error delete staff");
-    }
-  }, []);
+  const deleteUser = useCallback(
+    async (userData) => {
+      try {
+        userData.status = "deleted";
+        await UsersAPI.updateUserById(userData, userData.id);
+        invalidateStaffTeachers(queryClient);
+      } catch (error) {
+        console.log(error, "error delete staff");
+      }
+    },
+    [queryClient]
+  );
 
   return (
     <Stack sx={{ height: "100%", width: "100%", p: { xs: 0, lg: 4 } }}>
