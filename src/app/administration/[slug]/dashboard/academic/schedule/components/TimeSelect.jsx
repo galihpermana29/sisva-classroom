@@ -18,19 +18,19 @@ export const TimeSelect = ({
         disabled={disabled}
         id={name}
         name={name}
-        slotProps={{
-          textField: { size: "small" },
-        }}
-        value={
-          formik.values && formik.values[name]
-            ? timeStringToDayjs(formik.values[name])
-            : null
-        }
-        onChange={(value) =>
-          formik.setFieldValue(name, dayjsToTimeString(value))
-        }
-        onBlur={formik.handleBlur}
-        error={formik.touched[name] && Boolean(formik.errors[name])}
+        // slotProps={{
+        //   textField: { size: "small" },
+        // }}
+        // value={
+        //   formik.values && formik.values[name]
+        //     ? timeStringToDayjs(formik.values[name])
+        //     : null
+        // }
+        // onChange={(value) =>
+        //   formik.setFieldValue(name, dayjsToTimeString(value))
+        // }
+        // onBlur={formik.handleBlur}
+        // error={formik.touched[name] && Boolean(formik.errors[name])}
       />
       {withError && formik.touched[name] && Boolean(formik.errors[name]) ? (
         <Alert severity="error">{formik.errors[name]}</Alert>

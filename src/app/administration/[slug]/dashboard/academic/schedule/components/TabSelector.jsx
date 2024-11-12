@@ -10,7 +10,6 @@ export const TAB_FIELD_NAME = "tab";
 export const TabsSelector = ({ tabs, activeTab }) => {
   const { updateQueryParam } = useQueryParam();
   const changeTab = (value) => {
-    console.log(value);
     // if tab is Jadwal Keseluruhan
     if (value === 1) {
       updateQueryParam({

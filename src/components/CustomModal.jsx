@@ -1,4 +1,4 @@
-import { Close } from '@mui/icons-material';
+import { Close } from "@mui/icons-material";
 import {
   Box,
   Divider,
@@ -6,11 +6,11 @@ import {
   Paper,
   Stack,
   Typography,
-} from '@mui/material';
-import { forwardRef } from 'react';
+} from "@mui/material";
+import { forwardRef } from "react";
 
 export const ModalBody = forwardRef(function ModalBody(
-  { title, handleClose, maxWidth, content },
+  { title, handleClose, maxWidth, content, ...props },
   ref
 ) {
   return (
@@ -20,14 +20,14 @@ export const ModalBody = forwardRef(function ModalBody(
       maxWidth={maxWidth ?? 480}
       component={Paper}
       padding={3}
-      tabIndex={-1}
       sx={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
         borderRadius: 3,
       }}
+      {...props}
     >
       <Stack spacing={2}>
         <ModalTitle title={title} handleClose={handleClose} />
@@ -45,7 +45,7 @@ const ModalTitle = ({ title, handleClose }) => {
     <Stack
       flexDirection="row"
       justifyContent="space-between"
-      alignSelf={title ? 'auto' : 'end'}
+      alignSelf={title ? "auto" : "end"}
     >
       {title ? (
         <Typography fontSize="1em" fontWeight={600}>
