@@ -3,11 +3,25 @@
 import { useQueryParam } from "@/hooks/useQueryParam";
 import { Button, Stack, Typography } from "@mui/material";
 
+import { PRODI_FIELD_NAME } from "./filters/ProdiSelect";
+import { TINGKAT_FIELD_NAME } from "./filters/TingkatSelect";
 export const TAB_FIELD_NAME = "tab";
 
 export const TabsSelector = ({ tabs, activeTab }) => {
   const { updateQueryParam } = useQueryParam();
-  const changeTab = (value) => updateQueryParam(TAB_FIELD_NAME, value);
+  const changeTab = (value) => {
+    console.log(value);
+    // if tab is Jadwal Keseluruhan
+    if (value === 1) {
+      updateQueryParam({
+        [TAB_FIELD_NAME]: value,
+        [TINGKAT_FIELD_NAME]: "",
+        [PRODI_FIELD_NAME]: "",
+      });
+    } else {
+      updateQueryParam(TAB_FIELD_NAME, value);
+    }
+  };
 
   return (
     <Stack
