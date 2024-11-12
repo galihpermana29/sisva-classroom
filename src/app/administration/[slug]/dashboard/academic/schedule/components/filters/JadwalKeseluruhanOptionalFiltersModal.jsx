@@ -1,8 +1,8 @@
 import { ModalBody } from "@/components/CustomModal";
+import FilterListIcon from "@mui/icons-material/FilterList";
 import { Button, Modal } from "@mui/material";
 import { useState } from "react";
 import JadwalKeseluruhanOptionalFilterForm from "../forms/jadwal-keseluruhan-optional-filters";
-import FilterIcon from "../icons/FilterIcon";
 
 function JadwalKeseluruhanOptionalFiltersModal({
   tingkatanData,
@@ -20,7 +20,7 @@ function JadwalKeseluruhanOptionalFiltersModal({
         onClick={handleOpen}
         disableElevation
         variant="outlined"
-        endIcon={<FilterIcon />}
+        endIcon={<FilterListIcon />}
       >
         Lainnya
       </Button>
