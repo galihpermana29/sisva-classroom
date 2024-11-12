@@ -61,9 +61,7 @@ export function useGetStudentSchedule() {
         setIsLoading(false);
         return;
       }
-      console.log("classStudent", classStudent);
 
-      console.log("schedule", schedules);
       const filteredSchedule = classStudent.flatMap((cls, i) => {
         const schedule = schedules.filter((sch) => sch.class_id === cls.id);
         return schedule.length > 0 ? schedule[i] : [];
