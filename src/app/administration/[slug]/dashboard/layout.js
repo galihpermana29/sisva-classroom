@@ -1,12 +1,14 @@
+"use client";
+
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { Box } from "@mui/material";
 import Container from "./components/Container";
 
-export const metadata = {
-  title: "Beranda | Sisva",
-  description: "Sisva | Solusi Digitalisasi dan Modernisasi Sekolah",
-};
-
 export default function RootLayout({ children }) {
+  const { data: currentUser, isLoading } = useCurrentUser();
+
+  if (isLoading) return <></>;
+
   return (
     <Box
       sx={{

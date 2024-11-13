@@ -1,12 +1,9 @@
 "use client";
 
 import {
-  Avatar,
   Box,
   Button,
   Divider,
-  Menu,
-  MenuItem,
   Modal,
   Paper,
   Stack,
@@ -15,364 +12,39 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-import CmsAPI from "@/api/cms";
-import UsersAPI from "@/api/users";
 import SchoolLogoBlue from "@/assets/School-Logo-Blue.png";
 import {
   AcademicIcon,
   FinanceIcon,
   InformationIcon,
-  MenuIcon,
   ReportIcon,
   SchoolIcon,
   StaffIcon,
   StudentIcon,
 } from "@/assets/SVGs";
-import {
-  ArrowBackIosNewRounded,
-  LogoutRounded,
-  SettingsOutlined,
-} from "@mui/icons-material";
-import Head from "next/head";
-
-import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { ArrowBackIosNewRounded } from "@mui/icons-material";
+import Header from "./Header";
 
 export const metadata = {
   title: "Beranda | Sisva",
   description: "Sisva | Solusi Digitalisasi dan Modernisasi Sekolah",
 };
 
-import { useSchool } from "../../SchoolContext";
-
 export default function Container(props) {
   const { slug } = useParams();
   const pathname = usePathname();
   let [navigationOpen, setNavigationOpen] = useState(false);
-  let [navigationOpenList, setNavigationOpenList] = useState([]);
   let [activePathname, setActivePathname] = useState("");
-  const school = useSchool();
 
   useEffect(() => {
     setActivePathname(pathname);
   }, [pathname]);
 
-  function Header() {
-    function renderTitle() {
-      let nav =
-        activePathname.split("/").slice(-1)[0] !== "dashboard"
-          ? activePathname.split("/").slice(-2, -1) +
-            "/" +
-            activePathname.split("/").slice(-1)
-          : activePathname.split("/").slice(-1)[0];
-
-      let title;
-
-      let titleList = [
-        {
-          title: "Beranda",
-          slug: "dashboard",
-        },
-        {
-          title: "Profil Sekolah",
-          slug: "school/profile",
-        },
-        {
-          title: "Daftar Karyawan",
-          slug: "staff/profile",
-        },
-        {
-          title: "Kehadiran Karyawan",
-          slug: "staff/attendance",
-        },
-        {
-          title: "Program Studi",
-          slug: "academic/study-program",
-        },
-        {
-          title: "Kurikulum",
-          slug: "academic/curriculum",
-        },
-        {
-          title: "Periode",
-          slug: "academic/period",
-        },
-        {
-          title: "Guru",
-          slug: "academic/teacher",
-        },
-        {
-          title: "Kelas",
-          slug: "academic/class",
-        },
-        {
-          title: "Jadwal Pelajaran",
-          slug: "academic/schedule",
-        },
-        {
-          title: "Ekstrakurikuler",
-          slug: "academic/extracurricular",
-        },
-        {
-          title: "Daftar Siswa",
-          slug: "student/profile",
-        },
-        {
-          title: "Kehadiran Siswa",
-          slug: "student/attendance",
-        },
-        {
-          title: "Alumni",
-          slug: "student/alumni",
-        },
-
-        {
-          title: "Template Rapot",
-          slug: "report/template",
-        },
-        {
-          title: "Buat Rapot",
-          slug: "report/create",
-        },
-        {
-          title: "Edit Rapot",
-          slug: "report/edit",
-        },
-        {
-          title: "Lihat Rapot",
-          slug: "report/view",
-        },
-        {
-          title: "Pengumuman",
-          slug: "information/announcement",
-        },
-        {
-          title: "Invoice",
-          slug: "finance/invoice",
-        },
-      ];
-
-      titleList.map((item) => {
-        if (item.slug === nav) {
-          title = item.title;
-          // setActiveTitle(item.title);
-        }
-      });
-      return title;
-    }
-
-    function UserMenu() {
-      const { data: currentUser, isLoading } = useCurrentUser();
-      const [anchorEl, setAnchorEl] = React.useState(null);
-      const open = Boolean(anchorEl);
-      const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-      };
-      const handleClose = () => {
-        setAnchorEl(null);
-      };
-
-      if (isLoading) return <></>;
-
-      return (
-        <Box>
-          <Head>
-            <title>{`${pathname} | Sisva`}</title>
-            <meta name="description" content="Sisva" />
-          </Head>
-          <Stack
-            component={Button}
-            id="profile-button"
-            aria-controls={open ? "profile-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            onClick={handleClick}
-            sx={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "flex-start",
-              height: 50,
-            }}
-          >
-            <Avatar
-              sx={{
-                width: "36px",
-                height: "36px",
-                position: "relative",
-                mr: 1,
-                ml: 1,
-              }}
-            >
-              {currentUser?.profile_image_uri ? (
-                <Image
-                  alt="Web Image"
-                  fill
-                  sizes="100%"
-                  style={{ objectFit: "cover" }}
-                  src={`https://api-staging.sisva.id/file/v1/files/${currentUser?.profile_image_uri}?school_id=${school.id}`}
-                />
-              ) : (
-                currentUser?.name.toUpperCase()[0]
-              )}
-            </Avatar>
-            <Typography
-              sx={{
-                display: { xs: "none", lg: "block" },
-                color: "black",
-                fontWeight: 600,
-                mr: 1,
-              }}
-            >
-              {currentUser?.name}
-            </Typography>
-          </Stack>
-          <Menu
-            id="profile-menu"
-            aria-labelledby="profile-button"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "center",
-            }}
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "center",
-            }}
-          >
-            <Stack
-              sx={{
-                maxWidth: 280,
-                flexDirection: "row",
-                alignItems: "center",
-                p: "0 8px 8px",
-              }}
-            >
-              <Avatar
-                sx={{
-                  width: "36px",
-                  height: "36px",
-                  position: "relative",
-                  mr: 1,
-                  ml: 1,
-                }}
-              >
-                {currentUser?.profile_image_uri ? (
-                  <Image
-                    alt="Web Image"
-                    fill
-                    sizes="100%"
-                    style={{ objectFit: "cover" }}
-                    src={`https://api-staging.sisva.id/file/v1/files/${currentUser?.profile_image_uri}?school_id=${school.id}`}
-                  />
-                ) : (
-                  currentUser?.name.toUpperCase()[0]
-                )}
-              </Avatar>
-              <Typography color="black" fontWeight={600} mr={1}>
-                {currentUser?.name}
-              </Typography>
-            </Stack>
-            <Divider />
-            <MenuItem
-              component={Link}
-              href={`/administration/${slug}/dashboard/staff/profile/${currentUser?.id}`}
-              sx={{ maxWidth: 280 }}
-            >
-              <Stack flexDirection={"row"}>
-                <SettingsOutlined />{" "}
-                <Typography sx={{ ml: 1 }}>Profil Saya</Typography>
-              </Stack>
-            </MenuItem>
-            <MenuItem
-              onClick={() => {
-                localStorage.clear();
-              }}
-              component={Link}
-              href={`/administration/${slug}/auth/login`}
-              sx={{ maxWidth: 280 }}
-            >
-              <Stack flexDirection={"row"}>
-                <LogoutRounded /> <Typography sx={{ ml: 1 }}>Keluar</Typography>
-              </Stack>
-            </MenuItem>
-          </Menu>
-        </Box>
-      );
-    }
-
-    return (
-      <Stack
-        component={Paper}
-        elevation={1}
-        sx={{
-          height: 70,
-          padding: { xs: 1, md: "0 32px" },
-          flexDirection: "row",
-          justifyContent: "space-between",
-          width: "100%",
-          alignItems: "center",
-          position: "fixed",
-          zIndex: 10,
-        }}
-      >
-        <Stack
-          component={Link}
-          href={`/administration/${slug}/dashboard`}
-          sx={{
-            display: { xs: "none", lg: "flex" },
-            flexDirection: "row",
-            height: "100%",
-            alignItems: "center",
-          }}
-        >
-          {school.logo_url && (
-            <Image
-              alt="Web Image"
-              src={school.logo_url}
-              height={36}
-              width={36}
-            />
-          )}
-          <Typography fontWeight="700" ml={1} fontSize={18}>
-            {school.name}
-          </Typography>
-        </Stack>
-        <Stack
-          sx={{
-            display: { xs: "flex", lg: "none" },
-            flexDirection: "row",
-            height: "100%",
-            alignItems: "center",
-          }}
-        >
-          <Box
-            component={Button}
-            sx={{ fontSize: 24, height: 50 }}
-            onClick={() => setNavigationOpen(true)}
-          >
-            <MenuIcon />
-          </Box>
-          <Typography fontWeight="700" ml={1} fontSize={{ xs: 16, md: 18 }}>
-            {renderTitle()}
-          </Typography>
-        </Stack>
-        <UserMenu />
-      </Stack>
-    );
-  }
-
   function Navigation() {
     function NavigationContent() {
       let navigationData = [
-        // {
-        //   title: "Beranda",
-        //   slug: "dashboard",
-        //   icon: <DashboardIcon />,
-        //   children: [],
-        // },
         {
           title: "Sekolah",
           slug: "school",
@@ -466,14 +138,6 @@ export default function Container(props) {
               title: "Buat Rapot",
               slug: "create",
             },
-            // {
-            //   title: "Edit Rapot",
-            //   slug: "edit",
-            // },
-            // {
-            //   title: "Lihat Rapot",
-            //   slug: "view",
-            // },
           ],
         },
         {
@@ -757,7 +421,11 @@ export default function Container(props) {
   }
   return (
     <Box sx={{ height: "100vh", width: "100%" }}>
-      <Header />
+      <Header
+        activePathname={activePathname}
+        slug={slug}
+        setNavigationOpen={setNavigationOpen}
+      />
       <Navigation />
       <Box
         sx={{
