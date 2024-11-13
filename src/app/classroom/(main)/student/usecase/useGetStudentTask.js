@@ -5,6 +5,7 @@ import {
   getStudentGroups,
 } from "../repository/apiService";
 import { getCookie } from "cookies-next";
+import { isBefore } from "@/app/classroom/shared/usecase/helper";
 
 export function useGetStudentTask() {
   const [tasks, setTasks] = useState([]);
@@ -81,6 +82,11 @@ export function useGetStudentTask() {
           const [year, time] = yearAndTime.split(" ");
           const deadline = `${month}/${day}/${year} ${time}`;
           return new Date(deadline) > new Date();
+        });
+
+
+        filteredTask.sort((a, b) => {
+          return isBefore(a.deadline, b.deadline) ? -1 : 1;
         });
 
       setTasks(filteredTask);

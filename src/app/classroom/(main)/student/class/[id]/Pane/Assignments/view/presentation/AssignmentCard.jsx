@@ -6,7 +6,7 @@ import { generalDateFormatter } from "@/app/classroom/shared/usecase/helper";
 const AssignmentCard = ({ assignment, assignmentName, desc, deadline }) => {
   const router = useRouter();
   const { id } = useParams();
-  const isSubmitted = assignment.submission.attachment_file_uri ? true : false;
+  const isSubmitted = assignment.submission?.attachment_file_uri ? true : false;
 
   return (
     <div className="p-4 rounded-md shadow-card">
