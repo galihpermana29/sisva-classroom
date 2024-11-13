@@ -9,7 +9,6 @@ const SCHOOL_ID = getSchoolId();
 const api = axios.create({
   baseURL: "https://api-staging.sisva.id/academic/v1",
 });
-console.log("t");
 const AcademicAPI = {
   /**
    * @param {Object} payload
