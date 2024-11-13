@@ -3,6 +3,7 @@
 import { useQueryParam } from "@/hooks/useQueryParam";
 import { Button, Stack, Typography } from "@mui/material";
 
+import { KELAS_FIELD_NAME } from "./filters/KelasSelect";
 import { PRODI_FIELD_NAME } from "./filters/ProdiSelect";
 import { TINGKAT_FIELD_NAME } from "./filters/TingkatSelect";
 export const TAB_FIELD_NAME = "tab";
@@ -16,6 +17,7 @@ export const TabsSelector = ({ tabs, activeTab }) => {
         [TAB_FIELD_NAME]: value,
         [TINGKAT_FIELD_NAME]: "",
         [PRODI_FIELD_NAME]: "",
+        [KELAS_FIELD_NAME]: "",
       });
     } else {
       updateQueryParam(TAB_FIELD_NAME, value);
