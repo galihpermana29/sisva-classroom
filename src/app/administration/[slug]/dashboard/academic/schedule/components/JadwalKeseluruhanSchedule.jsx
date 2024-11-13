@@ -52,9 +52,12 @@ export const JadwalKeseluruhanSchedule = () => {
     ></iframe>
   );
 
+  const isDataEmpty = data.length === 0;
   const isStudentGroupDataEmpty = studentGroupData?.length === 0;
   const isPeriodeInvalid = parseInt(periode) === -1;
   const isProdiInvalid = parseInt(prodi) === -1;
+
+  if (isDataEmpty) return emptyState;
 
   if (isJadwalKeseluruhan === "true") {
     if (isStudentGroupDataEmpty || isPeriodeInvalid || isProdiInvalid)
