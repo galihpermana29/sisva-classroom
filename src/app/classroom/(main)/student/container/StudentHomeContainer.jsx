@@ -7,16 +7,16 @@ import ProfileStudentSection from "./Section/ProfileStudentSection";
 
 const StudentHomeContainer = () => {
   return (
-    <div className="max-w-6xl mx-auto pb-10">
+    <div className="max-w-6xl pb-10 mx-auto">
       <ProfileStudentSection />
       <div className="flex flex-col gap-6">
         <MenuKBMSection />
-        <div className=" flex flex-col lg:flex-row gap-5">
+        <div className="flex flex-col gap-5  lg:flex-row">
           <StudentTaskSection />
           <StudentScheduleSection />
         </div>
         <AnnouncementSection />
-        <ClassReviewSection />
+        {/* <ClassReviewSection /> */}
       </div>
     </div>
   );
