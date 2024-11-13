@@ -1,6 +1,5 @@
 "use client";
 
-import { font } from "@/app/layout";
 import { Typography } from "@mui/material";
 import { Internationalization } from "@syncfusion/ej2-base";
 import {
@@ -98,7 +97,7 @@ const onRenderCell = (args) => {
   ) {
     let target = args.element;
     // setting jam column name on the top left
-    target.innerHTML = `<div class="font-semibold text-sm text-center ${font.className}">Jam</div>`;
+    target.innerHTML = `<div class="font-semibold text-sm text-center font-kumbh">Jam</div>`;
   }
 };
 
