@@ -2,8 +2,10 @@ import UsersAPI from "@/api/users";
 import type { User } from "@/globalcomponents/BERespondTypes";
 import { useLocalStorage } from "@mantine/hooks";
 import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
-export const useCurrentUser = () => {
+export const useCurrentUser = (school_code?: string) => {
+  const router = useRouter();
   const [userSession] = useLocalStorage<{
     school_id: string;
     token: string;
@@ -18,7 +20,16 @@ export const useCurrentUser = () => {
 
   return useQuery<User>({
     queryKey: ["curent-user", userId, token],
-    queryFn: async () => (await UsersAPI.getUserById(userId)).data.data,
+    queryFn: async () => {
+      try {
+        return (await UsersAPI.getUserById(userId)).data.data;
+      } catch (error) {
+        if (error.response.status === 401) {
+          router.push(`/administration/${school_code}/auth/login`);
+        }
+        return null;
+      }
+    },
     enabled: !!userId,
   });
 };

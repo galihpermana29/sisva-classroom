@@ -2,12 +2,14 @@
 
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { Box } from "@mui/material";
+import { useParams } from "next/navigation";
 import Container from "./components/Container";
 
 export default function RootLayout({ children }) {
-  const { data: currentUser, isLoading } = useCurrentUser();
+  const { slug } = useParams();
+  const { data: currentUser, isLoading } = useCurrentUser(slug);
 
-  if (isLoading) return <></>;
+  if (isLoading || !currentUser) return <></>;
 
   return (
     <Box
