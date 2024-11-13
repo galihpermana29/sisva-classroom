@@ -14,9 +14,10 @@ export const useCurrentUser = () => {
     defaultValue: null,
   });
   const userId = userSession?.user_id;
+  const token = userSession?.token;
 
   return useQuery<User>({
-    queryKey: ["curent-user", userId],
+    queryKey: ["curent-user", userId, token],
     queryFn: async () => (await UsersAPI.getUserById(userId)).data.data,
     enabled: !!userId,
   });
