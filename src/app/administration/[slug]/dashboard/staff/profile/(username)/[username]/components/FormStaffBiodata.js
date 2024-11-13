@@ -16,7 +16,6 @@ import { genders, nationalities, religions } from "@/globalcomponents/Variable";
 import { Cancel } from "@mui/icons-material";
 
 import { useSchool } from "@/app/administration/[slug]/SchoolContext";
-import MediaIcon from "@/assets/Icon-Media.svg";
 
 export const FormStaffBiodata = ({
   formik,
@@ -225,14 +224,7 @@ export const FormStaffBiodata = ({
                         width: 96,
                         flex: 1,
                       }}
-                    >
-                      <Image
-                        alt="Image"
-                        src={MediaIcon}
-                        // layout='fill'
-                        // objectFit='cover'
-                      />
-                    </Box>
+                    ></Box>
                   )}
                 </Box>
                 <label htmlFor="image-input">

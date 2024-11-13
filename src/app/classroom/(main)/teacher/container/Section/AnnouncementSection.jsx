@@ -17,11 +17,13 @@ const AnnouncementSection = () => {
   return (
     <SectionLayout
       title={"Pengumuman"}
-      suffixContent={
-        <Link href="" className="text-xs" style={{ color: tokenColor }}>
-          Lihat lebih
-        </Link>
-      }
+      // suffixContent={
+      //   <Link href="" className="text-xs"
+      //     style={{ color: tokenColor }}
+      //   >
+      //     Lihat lebih
+      //   </Link>
+      // }
     >
       <div className="lg:h-[250px] overflow-scroll lg:pr-3 py-1">
         <div className="flex flex-row gap-3 lg:flex-col ">

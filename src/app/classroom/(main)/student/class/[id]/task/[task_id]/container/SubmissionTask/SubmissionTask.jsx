@@ -93,7 +93,7 @@ const SubmissionTask = ({ allowSubmission, allowOverdueSubmission }) => {
               loading={loadingSubmission}
               disabled={allowOverdueSubmission || allowSubmission}
             >
-              Submit Tugas
+              {submission.attachment_file_uri ? "Edit Tugas" : "Submit Tugas"}
             </SisvaButton>
           </div>
         )}

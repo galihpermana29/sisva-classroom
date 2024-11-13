@@ -6,7 +6,7 @@ import React from 'react';
 const AssignmentCard = ({ assignment, assignmentName, desc, deadline }) => {
   const router = useRouter();
   const { id } = useParams();
-  const isSubmitted = assignment.attachment_file_uri ? true : false;
+  const isSubmitted = assignment.submission.attachment_file_uri ? true : false;
 
   return (
     <div className="p-4 rounded-md shadow-card">

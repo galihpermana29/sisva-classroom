@@ -26,11 +26,10 @@ export function useGetStudentSchedule() {
         setIsLoading(false);
         return;
       }
-
-      const foundStudent = studentGroups.find(
+      
+      const joinedStudentGroups = studentGroups.filter(
         (student) => student.student_id === user.id
       );
-      const studentGroupId = foundStudent.student_group_id;
 
       const {
         data: classes,
@@ -44,9 +43,13 @@ export function useGetStudentSchedule() {
         return;
       }
 
-      const classStudent = classes.filter(
-        (studentClass) => studentClass.student_group_id == studentGroupId
+
+      const classStudent = classes.filter((cls) =>
+        joinedStudentGroups.some(
+          (group) => group.student_group_id === cls.student_group_id
+        )
       );
+
       const {
         data: schedules,
         success: scheduleResSuccess,
