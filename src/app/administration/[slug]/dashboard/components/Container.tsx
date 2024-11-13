@@ -746,7 +746,7 @@ export default function Container(props) {
             pt: "70px",
 
             maxHeight: "100%",
-            overflowY: "scroll",
+            overflowY: "auto",
             zIndex: { xs: 100, lg: 1 },
           }}
         >
