@@ -13,7 +13,6 @@ export const useCurrentUser = (school_code?: string) => {
     username: string;
   }>({
     key: "user",
-    defaultValue: null,
   });
   const userId = userSession?.user_id;
   const token = userSession?.token;

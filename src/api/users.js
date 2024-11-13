@@ -36,7 +36,7 @@ const UsersAPI = {
       "X-Sisva-Source": "test",
       "X-Sisva-UserID": USER_ID,
       "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN ? BEARER_TOKEN : bearer}`,
+      Authorization: `Bearer ${getBearerToken()}`,
     };
     return api.get(`/users/${id}`, { headers });
   },
