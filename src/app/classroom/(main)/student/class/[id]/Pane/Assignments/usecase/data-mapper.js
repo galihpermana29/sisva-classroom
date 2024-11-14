@@ -18,7 +18,7 @@ export async function groupTaskByTeachingPlan(tasks, teachingPlans) {
         );
         return {
           ...task,
-          submission: studentSubmission || null
+          submission: studentSubmission || null,
         };
       })
     );

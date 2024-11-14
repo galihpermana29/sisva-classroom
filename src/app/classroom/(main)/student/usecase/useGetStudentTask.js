@@ -1,9 +1,10 @@
+import { isBefore } from "@/app/classroom/shared/usecase/helper";
 import { getCookie } from "cookies-next";
 import { useEffect, useState } from "react";
 import {
-    getAllClasses,
-    getAllTasks,
-    getStudentGroups,
+  getAllClasses,
+  getAllTasks,
+  getStudentGroups,
 } from "../repository/apiService";
 
 export function useGetStudentTask() {
@@ -82,6 +83,10 @@ export function useGetStudentTask() {
           const deadline = `${month}/${day}/${year} ${time}`;
           return new Date(deadline) > new Date();
         });
+
+      filteredTask.sort((a, b) => {
+        return isBefore(a.deadline, b.deadline) ? -1 : 1;
+      });
 
       setTasks(filteredTask);
       setIsLoading(false);
