@@ -3,9 +3,11 @@
 import { useQueryParam } from "@/hooks/useQueryParam";
 import { Button, Stack, Typography } from "@mui/material";
 
+import { JADWAL_KESELURUHAN_FIELD_NAME } from "./filters/JadwalKeseluruhanSwitch";
 import { KELAS_FIELD_NAME } from "./filters/KelasSelect";
 import { PRODI_FIELD_NAME } from "./filters/ProdiSelect";
 import { TINGKAT_FIELD_NAME } from "./filters/TingkatSelect";
+
 export const TAB_FIELD_NAME = "tab";
 
 export const TabsSelector = ({ tabs, activeTab }) => {
@@ -18,6 +20,7 @@ export const TabsSelector = ({ tabs, activeTab }) => {
         [TINGKAT_FIELD_NAME]: "",
         [PRODI_FIELD_NAME]: "",
         [KELAS_FIELD_NAME]: "",
+        [JADWAL_KESELURUHAN_FIELD_NAME]: "true",
       });
     } else {
       updateQueryParam(TAB_FIELD_NAME, value);
