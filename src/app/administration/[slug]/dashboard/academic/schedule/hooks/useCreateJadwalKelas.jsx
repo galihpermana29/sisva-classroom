@@ -1,6 +1,7 @@
 "use client";
 
 import AcademicAPI from "@/api/academic";
+import { useTeachers } from "@/hooks/useTeachers";
 import { formatDayToLabel } from "@/utils/formatDay";
 import { useEffect, useState } from "react";
 
@@ -14,6 +15,7 @@ function useCreateJadwalKelas(formik) {
   const [schoolScheduleData, setSchoolScheduleData] = useState([]);
   const [studentGroupData, setStudentGroupData] = useState([]);
   const [subjectData, setSubjectData] = useState([]);
+  const { data: teachersData } = useTeachers();
 
   //* data for period select filter
   const periodeSelectData = periodeData?.map(({ id, name }) => ({
@@ -85,17 +87,24 @@ function useCreateJadwalKelas(formik) {
       value: `${id}:${day}`,
     }));
 
+  //* data for subject select filter
   const subjectSelectData = subjectData
     ?.filter(
       ({ study_program_id }) =>
-        studentGroupData.find(
-          ({ id }) => id === formik.values["student_group_id"]
-        )?.study_program_id === study_program_id
+        studentGroupData.find(({ id }) => id === student_group_id)
+          ?.study_program_id === study_program_id
     )
     .map(({ id, name }) => ({
       label: name,
       value: id,
     }));
+
+  //* data for teacher select filter
+  const teacherSelectData =
+    teachersData?.map(({ id, name }) => ({
+      label: name,
+      value: id,
+    })) || [];
 
   const getAllPeriode = async () => {
     const { data } = await AcademicAPI.getAllPeriod();
@@ -202,6 +211,7 @@ function useCreateJadwalKelas(formik) {
     kelasSelectData,
     hariSelectData,
     subjectSelectData,
+    teacherSelectData,
   };
 }
 

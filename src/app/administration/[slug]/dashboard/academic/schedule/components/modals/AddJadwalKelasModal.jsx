@@ -24,6 +24,7 @@ function AddJadwalKelasModal() {
           start_time: null,
           end_time: null,
           subject_id: "",
+          teacher_id: "",
         }
       : undefined;
 

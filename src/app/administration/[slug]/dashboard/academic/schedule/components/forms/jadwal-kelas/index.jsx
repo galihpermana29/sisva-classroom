@@ -17,6 +17,7 @@ import { PeriodSelect } from "../../form-items/PeriodSelect";
 import { StudentGroupSelect } from "../../form-items/StudentGroupSelect";
 import { StudyProgramSelect } from "../../form-items/StudyProgramSelect";
 import { SubjectSelect } from "../../form-items/SubjectSelect";
+import { TeacherSelect } from "../../form-items/TeacherSelect";
 import { TimeSelect } from "../../form-items/TimeSelect";
 import ErrorJadwalKelasModal from "../../modals/ErrorJadwalKelasModal";
 import { jadwalKelasSchema } from "./jadwalKelasSchema";
@@ -73,10 +74,13 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
       start_time: null,
       end_time: null,
       subject_id: "",
+      teacher_id: "",
     },
     enableReinitialize: true,
     validationSchema: jadwalKelasSchema,
     onSubmit: async ({ start_time, end_time, class_id, day, grade }) => {
+      console.log("submit");
+      return;
       const [school_schedule_id, day_num] = day.split(":");
 
       let errorDetected = false;
@@ -215,6 +219,7 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
     kelasSelectData,
     hariSelectData,
     subjectSelectData,
+    teacherSelectData,
   } = useCreateJadwalKelas(formik);
 
   return (
@@ -269,6 +274,14 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
               data={subjectSelectData}
               disabled={!edit && formik.values.student_group_id === ""}
             />
+            <TeacherSelect
+              label={"Guru"}
+              placeholder={"Pilih guru"}
+              formik={formik}
+              name={"teacher_id"}
+              data={teacherSelectData}
+              disabled={!edit && formik.values.subject_id === ""}
+            />
             {/* // ! no longer used */}
             {/* <ClassSelect
               label={"Kelas Mapel"}
@@ -284,7 +297,7 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
               formik={formik}
               name="day"
               data={hariSelectData}
-              disabled={!edit && formik.values.class_id === ""}
+              disabled={!edit && formik.values.teacher_id === ""}
             />
             <Stack
               width="100%"
