@@ -23,6 +23,7 @@ function AddJadwalKelasModal() {
           day: parseInt(hari) ?? "",
           start_time: null,
           end_time: null,
+          subject_id: "",
         }
       : undefined;
 

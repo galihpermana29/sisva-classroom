@@ -13,6 +13,7 @@ function useCreateJadwalKelas(formik) {
   const [prodiData, setProdiData] = useState([]);
   const [schoolScheduleData, setSchoolScheduleData] = useState([]);
   const [studentGroupData, setStudentGroupData] = useState([]);
+  const [subjectData, setSubjectData] = useState([]);
 
   //* data for period select filter
   const periodeSelectData = periodeData?.map(({ id, name }) => ({
@@ -84,6 +85,18 @@ function useCreateJadwalKelas(formik) {
       value: `${id}:${day}`,
     }));
 
+  const subjectSelectData = subjectData
+    ?.filter(
+      ({ study_program_id }) =>
+        studentGroupData.find(
+          ({ id }) => id === formik.values["student_group_id"]
+        )?.study_program_id === study_program_id
+    )
+    .map(({ id, name }) => ({
+      label: name,
+      value: id,
+    }));
+
   const getAllPeriode = async () => {
     const { data } = await AcademicAPI.getAllPeriod();
     setPeriodeData(data.data);
@@ -112,6 +125,11 @@ function useCreateJadwalKelas(formik) {
     setStudentGroupData(data.data);
   };
 
+  const getAllSubjects = async () => {
+    const { data } = await AcademicAPI.getAllSubject();
+    setSubjectData(data.data);
+  };
+
   const handleReset = () => formik.resetForm();
 
   //* handle initial period data fetching
@@ -121,6 +139,7 @@ function useCreateJadwalKelas(formik) {
         getAllPeriode(),
         getAllClasses(),
         getAllStudentGroups(),
+        getAllSubjects(),
       ]);
     };
 
@@ -182,6 +201,7 @@ function useCreateJadwalKelas(formik) {
     tingkatanSelectData,
     kelasSelectData,
     hariSelectData,
+    subjectSelectData,
   };
 }
 

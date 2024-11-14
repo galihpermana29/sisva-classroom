@@ -16,6 +16,7 @@ import { LevelSelect } from "../../form-items/LevelSelect";
 import { PeriodSelect } from "../../form-items/PeriodSelect";
 import { StudentGroupSelect } from "../../form-items/StudentGroupSelect";
 import { StudyProgramSelect } from "../../form-items/StudyProgramSelect";
+import { SubjectSelect } from "../../form-items/SubjectSelect";
 import { TimeSelect } from "../../form-items/TimeSelect";
 import ErrorJadwalKelasModal from "../../modals/ErrorJadwalKelasModal";
 import { jadwalKelasSchema } from "./jadwalKelasSchema";
@@ -71,6 +72,7 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
       day: "",
       start_time: null,
       end_time: null,
+      subject_id: "",
     },
     enableReinitialize: true,
     validationSchema: jadwalKelasSchema,
@@ -212,6 +214,7 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
     studentGroupSelectData,
     kelasSelectData,
     hariSelectData,
+    subjectSelectData,
   } = useCreateJadwalKelas(formik);
 
   return (
@@ -258,14 +261,23 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
               data={studentGroupSelectData}
               disabled={!edit && formik.values.grade === ""}
             />
-            <ClassSelect
+            <SubjectSelect
+              label={"Mata Pelajaran"}
+              placeholder={"Pilih mata pelajaran"}
+              formik={formik}
+              name={"subject_id"}
+              data={subjectSelectData}
+              disabled={!edit && formik.values.student_group_id === ""}
+            />
+            {/* // ! no longer used */}
+            {/* <ClassSelect
               label={"Kelas Mapel"}
               placeholder={"Pilih kelas mapel"}
               formik={formik}
               name={"class_id"}
               data={kelasSelectData}
               disabled={!edit && formik.values.student_group_id === ""}
-            />
+            /> */}
             <DaySelectDynamic
               label="Hari"
               placeholder="Pilih hari"
