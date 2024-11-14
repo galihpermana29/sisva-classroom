@@ -1,13 +1,20 @@
 "use client";
 
 import AcademicAPI from "@/api/academic";
-import { useTeachers } from "@/hooks/useTeachers";
+import { useSubjectTeachers } from "@/hooks/useSubjectTeachers";
 import { formatDayToLabel } from "@/utils/formatDay";
+import { getUniqueObjectsBy } from "@/utils/getUniqueObjectBy";
 import { useEffect, useState } from "react";
 
 function useCreateJadwalKelas(formik) {
-  const { period_id, study_program_id, grade, student_group_id, class_id } =
-    formik.values;
+  const {
+    period_id,
+    study_program_id,
+    grade,
+    student_group_id,
+    class_id,
+    subject_id,
+  } = formik.values;
 
   const [kelasData, setKelasData] = useState([]);
   const [periodeData, setPeriodeData] = useState([]);
@@ -15,7 +22,7 @@ function useCreateJadwalKelas(formik) {
   const [schoolScheduleData, setSchoolScheduleData] = useState([]);
   const [studentGroupData, setStudentGroupData] = useState([]);
   const [subjectData, setSubjectData] = useState([]);
-  const { data: teachersData } = useTeachers();
+  const { data: subjectTeachersData } = useSubjectTeachers();
 
   //* data for period select filter
   const periodeSelectData = periodeData?.map(({ id, name }) => ({
@@ -99,13 +106,16 @@ function useCreateJadwalKelas(formik) {
       value: id,
     }));
 
-  // TODO use end point [Academic][HTTP] Get All Subject Teacher instead
   //* data for teacher select filter
-  const teacherSelectData =
-    teachersData?.map(({ id, name }) => ({
-      label: name,
-      value: id,
-    })) || [];
+  const teacherSelectData = getUniqueObjectsBy(
+    subjectTeachersData
+      ?.filter((data) => data.subject_id === subject_id)
+      .map(({ teacher_id, teacher_name }) => ({
+        label: teacher_name,
+        value: teacher_id,
+      })) || [],
+    "value"
+  );
 
   const getAllPeriode = async () => {
     const { data } = await AcademicAPI.getAllPeriod();

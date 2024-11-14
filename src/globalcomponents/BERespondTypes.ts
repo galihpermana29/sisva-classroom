@@ -1,16 +1,16 @@
 type Grade =
-  | 'I'
-  | 'II'
-  | 'III'
-  | 'IV'
-  | 'V'
-  | 'VI'
-  | 'VII'
-  | 'VIII'
-  | 'IX'
-  | 'X'
-  | 'XI'
-  | 'XII';
+  | "I"
+  | "II"
+  | "III"
+  | "IV"
+  | "V"
+  | "VI"
+  | "VII"
+  | "VIII"
+  | "IX"
+  | "X"
+  | "XI"
+  | "XII";
 
 export type User = {
   id: string;
@@ -40,4 +40,21 @@ export type ExtracurricularMember = {
   extracurricular_name: string;
   student_id: string;
   student_name: string;
+};
+
+export type SubjectTeacher = {
+  teacher_id: string;
+  teacher_name: string;
+  subject_id: string;
+  subject_name: string;
+  grade: Grade;
+  subject_detail: {
+    id: string;
+    name: string;
+    type: string; // ? mandatory etc ???
+    study_program_id: string;
+    study_program_name: string;
+    curriculum_id: string;
+    curriculum_name: string;
+  };
 };
