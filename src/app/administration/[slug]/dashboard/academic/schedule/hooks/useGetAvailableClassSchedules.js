@@ -36,9 +36,12 @@ export const useGetAvailableClassSchedules = () => {
 };
 
 const filterLearningSchedule = (schedules, studentGroupFilter, classes) => {
-  const matchingClass = classes?.find(
-    (kelas) => kelas.student_group_id === parseInt(studentGroupFilter)
+  const matchingClassIds = classes
+    ?.filter((kelas) => kelas.student_group_id === parseInt(studentGroupFilter))
+    .map((kelas) => kelas.id);
+
+  if (!schedules || !matchingClassIds) return [];
+  return schedules.filter((schedule) =>
+    matchingClassIds.includes(schedule.class_id)
   );
-  if (!schedules || !matchingClass) return [];
-  return schedules.filter((schedule) => schedule.class_id === matchingClass.id);
 };
