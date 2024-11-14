@@ -10,7 +10,6 @@ import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import useCreateJadwalKelas from "../../../hooks/useCreateJadwalKelas";
 import { PERIODE_FIELD_NAME } from "../../filters/PeriodeSelect";
-import { ClassSelect } from "../../form-items/ClassSelect";
 import { DaySelectDynamic } from "../../form-items/DaySelectDynamic";
 import { LevelSelect } from "../../form-items/LevelSelect";
 import { PeriodSelect } from "../../form-items/PeriodSelect";
@@ -78,9 +77,16 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
     },
     enableReinitialize: true,
     validationSchema: jadwalKelasSchema,
-    onSubmit: async ({ start_time, end_time, class_id, day, grade }) => {
-      console.log("submit");
-      return;
+    onSubmit: async ({
+      start_time,
+      end_time,
+      grade,
+      day,
+      class_id,
+      teacher_id,
+      subject_id,
+      student_group_id,
+    }) => {
       const [school_schedule_id, day_num] = day.split(":");
 
       let errorDetected = false;
@@ -97,26 +103,13 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
       const parsedStartTime = parseTime(formatTime(formattedStartTime));
       const parsedEndTime = parseTime(formatTime(formattedEndTime));
 
-      const newPayload = {
-        class_id,
-        school_schedule_id: parseInt(school_schedule_id),
-        start_time: formatTime(formattedStartTime),
-        end_time: formatTime(formattedEndTime),
-      };
-
       try {
         const [nonLearningScheduleData, classScheduleData, classData] =
           await Promise.all([
             AcademicAPI.getAllNonLearningSchedules({ period_id: periode }),
             AcademicAPI.getAllClassSchedules({ period_id: periode }),
-            AcademicAPI.getAllClasses({
-              periode,
-            }),
+            AcademicAPI.getAllClasses(),
           ]);
-
-        const teacher_id = classData?.data?.data.find(
-          (item) => item.id === 3
-        )?.teacher_id;
 
         if (nonLearningScheduleData && classScheduleData && classData) {
           nonLearningScheduleData?.data?.data?.forEach(
@@ -193,6 +186,31 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
             return;
           }
 
+          //* get class id if it exists, otherwise create new class
+          const newClassId =
+            classData?.data?.data.find(
+              (data) =>
+                data.student_group_id === student_group_id &&
+                data.subject_id === subject_id &&
+                data.teacher_id === teacher_id
+            )?.id ??
+            (
+              await AcademicAPI.createClass({
+                name: `${subject_id} - ${teacher_id} - ${student_group_id}`,
+                subject_id,
+                teacher_id,
+                student_group_id,
+              })
+            ).data.data;
+
+          const newPayload = {
+            //* if form value has class_id (when editing), use it, otherwise use newClassId
+            class_id: class_id ? class_id : newClassId,
+            school_schedule_id: parseInt(school_schedule_id),
+            start_time: formatTime(formattedStartTime),
+            end_time: formatTime(formattedEndTime),
+          };
+
           if (edit) {
             await AcademicAPI.updateClassSchedule(
               formik.initialValues?.id,
@@ -216,7 +234,6 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
     prodiSelectData,
     tingkatanSelectData,
     studentGroupSelectData,
-    kelasSelectData,
     hariSelectData,
     subjectSelectData,
     teacherSelectData,
@@ -282,15 +299,6 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
               data={teacherSelectData}
               disabled={!edit && formik.values.subject_id === ""}
             />
-            {/* // ! no longer used */}
-            {/* <ClassSelect
-              label={"Kelas Mapel"}
-              placeholder={"Pilih kelas mapel"}
-              formik={formik}
-              name={"class_id"}
-              data={kelasSelectData}
-              disabled={!edit && formik.values.student_group_id === ""}
-            /> */}
             <DaySelectDynamic
               label="Hari"
               placeholder="Pilih hari"

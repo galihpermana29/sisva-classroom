@@ -342,6 +342,16 @@ const AcademicAPI = {
     return api.get(`/classes`, { headers });
   },
 
+  createClass(payload) {
+    const headers = {
+      "X-Sisva-Source": "academic.classes.test",
+      "X-Sisva-UserID": USER_ID,
+      "X-Sisva-SchoolID": SCHOOL_ID,
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
+    return api.post(`/classes`, payload, { headers });
+  },
+
   getAllStudentGroup() {
     const headers = {
       "X-Sisva-Source": "academic.studentgroups.test",
