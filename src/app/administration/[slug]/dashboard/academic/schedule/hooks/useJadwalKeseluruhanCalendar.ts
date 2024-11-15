@@ -76,9 +76,9 @@ function useJadwalKeseluruhanCalendar() {
     }
   );
 
-  const nonLearningScheduleData = studentGroup.flatMap(({ group_id, id }) => {
+  const nonLearningScheduleData = studentGroup.flatMap(({ grade, id }) => {
     const res = nonLearningSchedule
-      .filter((nl_data) => group_id === nl_data.group_id)
+      .filter((nl_data) => grade === nl_data.grade)
       .map((nl_data) => ({
         ...nl_data,
         sg_id: id,
