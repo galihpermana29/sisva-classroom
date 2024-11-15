@@ -12,8 +12,7 @@ import {
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useState } from "react";
-import { FormAddStudent } from "./FormAddStudent";
-import FormAddStudent2 from "./FormAddStudent2";
+import FormStudentInStudentGroup from "./FormStudentInStudentGroup";
 
 const columns = [
   {
@@ -283,7 +282,7 @@ export default function StudentTable({
             </Typography>
           </Box>
           <Divider />
-          <FormAddStudent2
+          <FormStudentInStudentGroup
             studentId={activeRow.student_id}
             studentGroupId={activeRow.id}
             onClickCancel={() => {

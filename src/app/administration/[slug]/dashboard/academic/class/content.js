@@ -23,15 +23,14 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { FormAddStudent } from "./components/FormAddStudent";
 
 import AcademicAPI from "@/api/academic";
 import UsersAPI from "@/api/users";
 import { useFormik } from "formik";
 import ClassElectiveTable from "./components/ClassElectiveTable";
 import ClassTable from "./components/ClassTable";
-import FormAddStudent2 from "./components/FormAddStudent2";
 import { FormAddStudentGroup } from "./components/FormAddStudentGroup";
+import FormStudentInStudentGroup from "./components/FormStudentInStudentGroup";
 import StudentTable from "./components/StudentTable";
 
 export default function StaffProfileContent() {
@@ -727,7 +726,7 @@ export default function StaffProfileContent() {
             </Typography>
           </Box>
           <Divider />
-          <FormAddStudent2
+          <FormStudentInStudentGroup
             onClickCancel={() => {
               setOpenInsertStudentModal(false);
             }}

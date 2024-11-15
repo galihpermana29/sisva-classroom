@@ -22,7 +22,7 @@ type FormStudentInStudentGroup = {
   studentId: string;
 };
 
-export default function FormAddStudent2({
+export default function FormStudentInStudentGroup({
   studentId,
   studentGroupId,
   onClickCancel,
