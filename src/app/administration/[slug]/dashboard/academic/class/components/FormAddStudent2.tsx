@@ -4,6 +4,7 @@ import FormLabelSisva from "@/components/FormLabelSisva";
 import {
   useAddStudentToStudentGroup,
   useStudentGroups,
+  useStudentInStudentGroups,
 } from "@/hooks/useStudentGroups";
 import { useStudents } from "@/hooks/useStudents";
 import { Button, Divider, MenuItem, TextField } from "@mui/material";
@@ -26,15 +27,24 @@ export default function FormAddStudent2({
   const queryClient = useQueryClient();
   const { data: students } = useStudents();
   const { data: studentGroups } = useStudentGroups();
+  const { data: studentInStudentGroups } = useStudentInStudentGroups();
   const { mutate: addStudentToStudentGroup } =
     useAddStudentToStudentGroup(queryClient);
 
-  const { handleSubmit, control } = useForm<FormEditMember>({
+  const { handleSubmit, control, watch } = useForm<FormEditMember>({
     defaultValues: {
       studentGroupId: "",
       studentId: "",
     },
   });
+
+  const selectedStudentGroupId = watch("studentGroupId");
+  const filteredStudents = students.filter(
+    (student) =>
+      !studentInStudentGroups
+        .map((studentInStudentGroup) => studentInStudentGroup.student_id)
+        .includes(student.id)
+  );
 
   const onSubmit: SubmitHandler<FormEditMember> = async (data) => {
     addStudentToStudentGroup({
@@ -70,9 +80,10 @@ export default function FormAddStudent2({
         <Controller
           name="studentId"
           control={control}
+          disabled={!selectedStudentGroupId}
           render={({ field }) => (
             <TextField select {...field}>
-              {students.map((student) => {
+              {filteredStudents.map((student) => {
                 return (
                   <MenuItem
                     key={student.id}

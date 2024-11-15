@@ -1,5 +1,8 @@
 import AcademicAPI from "@/api/academic";
-import type { StudentGroup } from "@/globalcomponents/BERespondTypes";
+import type {
+  StudentGroup,
+  StudentInStudentGroup,
+} from "@/globalcomponents/BERespondTypes";
 import type { QueryClient } from "@tanstack/react-query";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
@@ -22,10 +25,18 @@ export const useAddStudentToStudentGroup = (queryClient: QueryClient) => {
       });
     },
     onSuccess: () => {
-      // TODO invalidate studentInStudentGroups
-      // queryClient.invalidateQueries({
-      //   queryKey: [""],
-      // });
+      queryClient.invalidateQueries({
+        queryKey: ["student-in-student-groups"],
+      });
     },
+  });
+};
+
+export const useStudentInStudentGroups = () => {
+  return useQuery<StudentInStudentGroup[]>({
+    queryKey: ["student-in-student-groups"],
+    queryFn: async () =>
+      (await AcademicAPI.getStudentsInStudentGroup()).data.data,
+    placeholderData: [],
   });
 };

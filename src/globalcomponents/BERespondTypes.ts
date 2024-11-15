@@ -73,3 +73,10 @@ export type StudentGroup = {
     homeroom_teacher_name: string;
   };
 };
+
+export type StudentInStudentGroup = {
+  student_id: string;
+  student_name: string;
+  student_group_id: string;
+  student_group_name: string;
+};
