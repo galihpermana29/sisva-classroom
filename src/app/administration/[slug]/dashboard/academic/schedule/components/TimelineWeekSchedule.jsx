@@ -3,17 +3,13 @@
 import { Typography } from "@mui/material";
 import { Internationalization } from "@syncfusion/ej2-base";
 import {
-  Agenda,
   Inject,
-  Month,
   ResourceDirective,
   ResourcesDirective,
   ScheduleComponent,
-  TimelineMonth,
   TimelineViews,
   ViewDirective,
   ViewsDirective,
-  Week,
 } from "@syncfusion/ej2-react-schedule";
 import dayjs from "dayjs";
 import { useMemo } from "react";
@@ -46,7 +42,6 @@ const getDateHeaderText = (props) => {
 
 const onEventRendered = (props) => {
   const target = props.element;
-
   target.style.color = "#1D2939";
   target.style.paddingTop = "2px";
   target.style.backgroundColor =
@@ -129,7 +124,7 @@ function TimelineWeekSchedule({
           idField="grade"
         />
       </ResourcesDirective>
-      <Inject services={[Week, Month, TimelineViews, TimelineMonth, Agenda]} />
+      <Inject services={[TimelineViews]} />
     </ScheduleComponent>
   );
 }
