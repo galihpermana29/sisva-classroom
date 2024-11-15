@@ -5,7 +5,7 @@ import { useCallback, useState } from "react";
 import CreateModal from "./components/CreateModal";
 
 import UsersAPI from "@/api/users";
-import { invalidateStaffTeachers } from "@/hooks/useStaffTeacher";
+import { invalidateStaffTeachers } from "@/hooks/useStaffTeachers";
 import { useQueryClient } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import SortModal from "./components/SortModal";

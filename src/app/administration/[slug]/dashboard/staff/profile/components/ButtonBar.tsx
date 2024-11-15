@@ -1,5 +1,5 @@
 import { ExcelIcon } from "@/assets/SVGs";
-import { invalidateStaffTeachers } from "@/hooks/useStaffTeacher";
+import { invalidateStaffTeachers } from "@/hooks/useStaffTeachers";
 import { Add, DownloadRounded, UploadFileRounded } from "@mui/icons-material";
 import { Button, Menu, MenuItem, Stack, Typography } from "@mui/material";
 import { useQueryClient } from "@tanstack/react-query";
