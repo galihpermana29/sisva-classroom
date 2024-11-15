@@ -17,15 +17,15 @@ export type User = {
   username: string;
   nik: string;
   name: string;
-  type: string; // student, teacher, staff ???
+  type: string; //? student, teacher, staff ???
   detail: {
     json_text: string;
-    grade: Grade; // actually could be any string
+    grade: Grade; //* actually could be any string
   };
   profile_image_uri: string;
-  roles: string[]; // ???
-  permissions: string[]; // ???
-  status: string; // active, inactive ???
+  roles: string[]; //? ???
+  permissions: string[]; //? ???
+  status: string; //? active, inactive ???
 };
 
 export type Extracurricular = {
@@ -51,10 +51,25 @@ export type SubjectTeacher = {
   subject_detail: {
     id: string;
     name: string;
-    type: string; // ? mandatory etc ???
+    type: string; //? mandatory etc ???
     study_program_id: string;
     study_program_name: string;
     curriculum_id: string;
     curriculum_name: string;
+  };
+};
+
+export type StudentGroup = {
+  id: string;
+  name: string;
+  type: string; //? homeroom, elective ???
+  period_id: string;
+  period_name: string;
+  study_program_id: string;
+  study_program_name: string;
+  grade: Grade;
+  detail: {
+    homeroom_teacher_id: string;
+    homeroom_teacher_name: string;
   };
 };

@@ -30,8 +30,10 @@ import UsersAPI from "@/api/users";
 import { useFormik } from "formik";
 import ClassElectiveTable from "./components/ClassElectiveTable";
 import ClassTable from "./components/ClassTable";
+import FormAddStudent2 from "./components/FormAddStudent2";
 import { FormAddStudentGroup } from "./components/FormAddStudentGroup";
 import StudentTable from "./components/StudentTable";
+
 export default function StaffProfileContent() {
   const [emptyData, setEmptyData] = useState({});
 
@@ -335,21 +337,21 @@ export default function StaffProfileContent() {
           );
         }))
       : activeTab === 1
-        ? (temp = studentGroupData.filter((item) => {
-            return (
-              item.class.toLowerCase().includes(search.toLowerCase()) &&
-              item.type === "elective"
-            );
-          }))
-        : (temp = studentData.filter((item) => {
-            return (
-              item.student.toLowerCase().includes(search.toLowerCase()) &&
-              (gradeFilter == ""
-                ? item
-                : item.grade.toLowerCase() == gradeFilter.toLowerCase()) &&
-              item.class.toLowerCase().includes(classFilter.toLowerCase())
-            );
-          }));
+      ? (temp = studentGroupData.filter((item) => {
+          return (
+            item.class.toLowerCase().includes(search.toLowerCase()) &&
+            item.type === "elective"
+          );
+        }))
+      : (temp = studentData.filter((item) => {
+          return (
+            item.student.toLowerCase().includes(search.toLowerCase()) &&
+            (gradeFilter == ""
+              ? item
+              : item.grade.toLowerCase() == gradeFilter.toLowerCase()) &&
+            item.class.toLowerCase().includes(classFilter.toLowerCase())
+          );
+        }));
     // if (sortSettings && sortSettings.sortBy) {
     //   temp = temp.sort(function (a, b) {
     //     let x, y;
@@ -725,41 +727,14 @@ export default function StaffProfileContent() {
             </Typography>
           </Box>
           <Divider />
-          <Box sx={{ maxHeight: "70vh", overflowY: "auto", px: 2 }}>
-            <FormAddStudent
-              formik={formik}
-              studentList={studentList}
-              groupList={groupList}
-            />
-          </Box>
-          <Divider />
-          <Stack
-            sx={{
-              flexDirection: "row",
-              p: 2,
+          <FormAddStudent2
+            onClickCancel={() => {
+              setOpenInsertStudentModal(false);
             }}
-          >
-            <Button
-              variant="outlined"
-              sx={{ flex: 1, mr: 1 }}
-              onClick={() => {
-                setOpenInsertStudentModal(false);
-                formik.setValues(emptyData);
-              }}
-            >
-              Batal
-            </Button>
-            <Button
-              variant="contained"
-              sx={{ flex: 1 }}
-              onClick={() => {
-                setOpenInsertStudentModal(false);
-                formik.handleSubmit();
-              }}
-            >
-              Simpan
-            </Button>
-          </Stack>
+            onClickSave={() => {
+              setOpenInsertStudentModal(false);
+            }}
+          />
         </Stack>
       </Modal>
       <Modal open={openSortModal} onClose={() => setOpenSortModal(false)}>
@@ -1112,8 +1087,8 @@ export default function StaffProfileContent() {
                 activeTab === 0
                   ? setOpenCreateStudentGroupModal(true)
                   : activeTab === 1
-                    ? setOpenCreateClassModal(true)
-                    : setOpenInsertStudentModal(true)
+                  ? setOpenCreateClassModal(true)
+                  : setOpenInsertStudentModal(true)
               }
             >
               <Typography sx={{ fontSize: 14 }}>Tambah</Typography>
