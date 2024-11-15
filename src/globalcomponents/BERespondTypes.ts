@@ -80,3 +80,17 @@ export type StudentInStudentGroup = {
   student_group_id: string;
   student_group_name: string;
 };
+
+export type PeriodStatus = "active" | "inactive" | "finished" | "cancelled";
+
+export type Period = {
+  id: string;
+  name: string;
+  start_time: string;
+  end_time: string;
+  status: PeriodStatus;
+  study_programs: {
+    id: string;
+    code: string;
+  };
+};
