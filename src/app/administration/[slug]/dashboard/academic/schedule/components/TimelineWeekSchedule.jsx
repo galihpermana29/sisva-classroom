@@ -18,10 +18,19 @@ import {
 import dayjs from "dayjs";
 import { useMemo } from "react";
 
-const groupData = [
-  { GroupText: "Kelas X", Id: 1, GroupColor: "#FFDBCB" },
-  { GroupText: "Kelas XI", Id: 2, GroupColor: "#FFDBCB" },
-  { GroupText: "Kelas XII", Id: 3, GroupColor: "#FFDBCB" },
+const gradeDataSource = [
+  { gradeText: "Kelas I", grade: "I" },
+  { gradeText: "Kelas II", grade: "II" },
+  { gradeText: "Kelas III", grade: "III" },
+  { gradeText: "Kelas IV", grade: "IV" },
+  { gradeText: "Kelas V", grade: "V" },
+  { gradeText: "Kelas VI", grade: "VI" },
+  { gradeText: "Kelas VII", grade: "VII" },
+  { gradeText: "Kelas VIII", grade: "VIII" },
+  { gradeText: "Kelas IX", grade: "IX" },
+  { gradeText: "Kelas X", grade: "X" },
+  { gradeText: "Kelas XI", grade: "XI" },
+  { gradeText: "Kelas XII", grade: "XII" },
 ];
 
 const instance = new Internationalization();
@@ -87,7 +96,7 @@ function TimelineWeekSchedule({
         },
         template: eventTemplate,
       }}
-      group={{ byGroupID: true, resources: ["Group", "StudentGroup"] }}
+      group={{ byGroupID: true, resources: ["Grade", "StudentGroup"] }}
       cellClick={(args) => {
         args.cancel = true;
       }}
@@ -105,23 +114,19 @@ function TimelineWeekSchedule({
           field="sg_id"
           title="StudentGroup"
           name="StudentGroup"
-          groupIDField="group_id"
-          allowMultiple={false}
+          groupIDField="grade"
           dataSource={classData}
           textField="name"
           idField="id"
           colorField="group_color"
         />
-
         <ResourceDirective
-          field="group_id"
-          title="Group"
-          name="Group"
-          allowMultiple={false}
-          dataSource={groupData}
-          textField="GroupText"
-          idField="Id"
-          colorField="GroupColor"
+          field="grade"
+          title="Grade"
+          name="Grade"
+          dataSource={gradeDataSource}
+          textField="gradeText"
+          idField="grade"
         />
       </ResourcesDirective>
       <Inject services={[Week, Month, TimelineViews, TimelineMonth, Agenda]} />
