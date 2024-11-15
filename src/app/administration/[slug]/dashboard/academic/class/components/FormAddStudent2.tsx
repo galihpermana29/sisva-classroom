@@ -6,6 +6,7 @@ import {
   useAddStudentToStudentGroup,
   useStudentGroups,
   useStudentInStudentGroups,
+  useUpdateStudentInStudentGroup,
 } from "@/hooks/useStudentGroups";
 import { useStudents } from "@/hooks/useStudents";
 import { useStudyPrograms } from "@/hooks/useStudyPrograms";
@@ -14,7 +15,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import type { SubmitHandler } from "react-hook-form";
 import { Controller, useForm } from "react-hook-form";
 
-type FormEditMember = {
+type FormStudentInStudentGroup = {
   periodId: string;
   studyProgramId: string;
   studentGroupId: string;
@@ -22,9 +23,13 @@ type FormEditMember = {
 };
 
 export default function FormAddStudent2({
+  studentId,
+  studentGroupId,
   onClickCancel,
   onClickSave,
 }: {
+  studentId?: string;
+  studentGroupId?: string;
   onClickCancel: () => void;
   onClickSave: () => void;
 }) {
@@ -36,13 +41,15 @@ export default function FormAddStudent2({
   const { data: studentInStudentGroups } = useStudentInStudentGroups();
   const { mutate: addStudentToStudentGroup } =
     useAddStudentToStudentGroup(queryClient);
+  const { mutate: updateStudentInStudentGroup } =
+    useUpdateStudentInStudentGroup(queryClient);
 
-  const { handleSubmit, control, watch } = useForm<FormEditMember>({
+  const { handleSubmit, control, watch } = useForm<FormStudentInStudentGroup>({
     defaultValues: {
       periodId: "",
       studyProgramId: "",
-      studentGroupId: "",
-      studentId: "",
+      studentGroupId: studentGroupId || "",
+      studentId: studentId || "",
     },
   });
 
@@ -59,18 +66,27 @@ export default function FormAddStudent2({
     });
 
   const selectedStudentGroupId = watch("studentGroupId");
-  const filteredStudents = students.filter(
-    (student) =>
-      !studentInStudentGroups
-        .map((studentInStudentGroup) => studentInStudentGroup.student_id)
-        .includes(student.id)
-  );
+  const filteredStudents = students.filter((student) => {
+    if (studentId) return student.id === studentId;
+    return !studentInStudentGroups
+      .map((studentInStudentGroup) => studentInStudentGroup.student_id)
+      .includes(student.id);
+  });
 
-  const onSubmit: SubmitHandler<FormEditMember> = async (data) => {
-    addStudentToStudentGroup({
-      studentGroupId: data.studentGroupId,
-      studentId: data.studentId,
-    });
+  const onSubmit: SubmitHandler<FormStudentInStudentGroup> = async (data) => {
+    if (studentId) {
+      updateStudentInStudentGroup({
+        oldStudentGroupId: studentGroupId,
+        newStudentGroupId: data.studentGroupId,
+        oldStudentId: studentId,
+        studentId: data.studentId,
+      });
+    } else {
+      addStudentToStudentGroup({
+        studentGroupId: data.studentGroupId,
+        studentId: data.studentId,
+      });
+    }
   };
 
   return (
@@ -142,7 +158,13 @@ export default function FormAddStudent2({
           control={control}
           disabled={!selectedStudentGroupId}
           render={({ field }) => (
-            <TextField select {...field}>
+            <TextField
+              select
+              inputProps={{
+                readOnly: !!studentId,
+              }}
+              {...field}
+            >
               {filteredStudents.map((student) => {
                 return (
                   <MenuItem

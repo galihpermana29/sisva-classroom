@@ -16,12 +16,15 @@ export const useStudentGroups = () => {
 
 export const useAddStudentToStudentGroup = (queryClient: QueryClient) => {
   return useMutation({
-    mutationFn: async (payload: {
+    mutationFn: async ({
+      studentGroupId,
+      studentId,
+    }: {
       studentGroupId: string;
       studentId: string;
     }) => {
-      await AcademicAPI.insertStudentToStudentGroup(payload.studentGroupId, {
-        student_id: payload.studentId,
+      await AcademicAPI.insertStudentToStudentGroup(studentGroupId, {
+        student_id: studentId,
       });
     },
     onSuccess: () => {
@@ -29,6 +32,7 @@ export const useAddStudentToStudentGroup = (queryClient: QueryClient) => {
         queryKey: ["student-in-student-groups"],
       });
     },
+    onError: (error) => console.log(error),
   });
 };
 
@@ -38,5 +42,34 @@ export const useStudentInStudentGroups = () => {
     queryFn: async () =>
       (await AcademicAPI.getStudentsInStudentGroup()).data.data,
     placeholderData: [],
+  });
+};
+
+export const useUpdateStudentInStudentGroup = (queryClient: QueryClient) => {
+  return useMutation({
+    mutationFn: async ({
+      oldStudentGroupId,
+      newStudentGroupId,
+      oldStudentId,
+      studentId,
+    }: {
+      oldStudentGroupId: string;
+      newStudentGroupId: string;
+      oldStudentId: string;
+      studentId: string;
+    }) => {
+      await AcademicAPI.removeStudentFromGroup(oldStudentGroupId, {
+        student_id: oldStudentId,
+      });
+      await AcademicAPI.insertStudentToStudentGroup(newStudentGroupId, {
+        student_id: studentId,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["student-in-student-groups"],
+      });
+    },
+    onError: (error) => console.log(error),
   });
 };

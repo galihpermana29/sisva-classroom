@@ -13,6 +13,7 @@ import {
 import { DataGrid } from "@mui/x-data-grid";
 import { useState } from "react";
 import { FormAddStudent } from "./FormAddStudent";
+import FormAddStudent2 from "./FormAddStudent2";
 
 const columns = [
   {
@@ -282,47 +283,16 @@ export default function StudentTable({
             </Typography>
           </Box>
           <Divider />
-          <Box sx={{ maxHeight: "70vh", overflowY: "auto", px: 2 }}>
-            <FormAddStudent
-              formik={formik}
-              groupList={groupList}
-              teacherList={teacherList}
-              studentList={studentList}
-              editing={true}
-            />
-          </Box>
-          <Divider />
-          <Stack
-            sx={{
-              flexDirection: "row",
-              p: 2,
+          <FormAddStudent2
+            studentId={activeRow.student_id}
+            studentGroupId={activeRow.id}
+            onClickCancel={() => {
+              setOpenEditModal(false);
             }}
-          >
-            <Button
-              variant="outlined"
-              sx={{ flex: 1, mr: 1 }}
-              onClick={() => {
-                setOpenEditModal(false);
-                formik.setValues({ name: "", code: "" });
-              }}
-            >
-              Batal
-            </Button>
-            <Button
-              variant="contained"
-              sx={{ flex: 1 }}
-              onClick={() => {
-                setOpenEditModal(false);
-                editStudent(
-                  activeRow.id,
-                  formik.values.class,
-                  activeRow.student_id
-                );
-              }}
-            >
-              Simpan
-            </Button>
-          </Stack>
+            onClickSave={() => {
+              setOpenEditModal(false);
+            }}
+          />
         </Stack>
       </Modal>
       <Modal open={openDeleteModal} onClose={() => setOpenDeleteModal(false)}>
