@@ -6,7 +6,7 @@ import {
   useStudentGroups,
 } from "@/hooks/useStudentGroups";
 import { useStudents } from "@/hooks/useStudents";
-import { Button, Divider, MenuItem, Stack, TextField } from "@mui/material";
+import { Button, Divider, MenuItem, TextField } from "@mui/material";
 import { useQueryClient } from "@tanstack/react-query";
 import type { SubmitHandler } from "react-hook-form";
 import { Controller, useForm } from "react-hook-form";
@@ -24,8 +24,8 @@ export default function FormAddStudent2({
   onClickSave: () => void;
 }) {
   const queryClient = useQueryClient();
-  const { data: students, isLoading: isLoading2 } = useStudents();
-  const { data: studentGroups, isLoading: isLoading3 } = useStudentGroups();
+  const { data: students } = useStudents();
+  const { data: studentGroups } = useStudentGroups();
   const { mutate: addStudentToStudentGroup } =
     useAddStudentToStudentGroup(queryClient);
 
@@ -42,11 +42,6 @@ export default function FormAddStudent2({
       studentId: data.studentId,
     });
   };
-
-  // skeletons
-  if (isLoading2 || isLoading3) {
-    return <></>;
-  }
 
   return (
     <>

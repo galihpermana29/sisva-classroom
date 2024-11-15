@@ -7,6 +7,7 @@ export const useStudentGroups = () => {
   return useQuery<StudentGroup[]>({
     queryKey: ["students-groups"],
     queryFn: async () => (await AcademicAPI.getAllStudentGroup()).data.data,
+    placeholderData: [],
   });
 };
 
