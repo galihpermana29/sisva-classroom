@@ -8,6 +8,7 @@ import {
   useStudentInStudentGroups,
 } from "@/hooks/useStudentGroups";
 import { useStudents } from "@/hooks/useStudents";
+import { useStudyPrograms } from "@/hooks/useStudyPrograms";
 import { Button, Divider, MenuItem, TextField } from "@mui/material";
 import { useQueryClient } from "@tanstack/react-query";
 import type { SubmitHandler } from "react-hook-form";
@@ -15,6 +16,7 @@ import { Controller, useForm } from "react-hook-form";
 
 type FormEditMember = {
   periodId: string;
+  studyProgramId: string;
   studentGroupId: string;
   studentId: string;
 };
@@ -29,6 +31,7 @@ export default function FormAddStudent2({
   const queryClient = useQueryClient();
   const { data: periods } = usePeriods();
   const { data: students } = useStudents();
+  const { data: studyPrograms } = useStudyPrograms();
   const { data: studentGroups } = useStudentGroups();
   const { data: studentInStudentGroups } = useStudentInStudentGroups();
   const { mutate: addStudentToStudentGroup } =
@@ -37,16 +40,23 @@ export default function FormAddStudent2({
   const { handleSubmit, control, watch } = useForm<FormEditMember>({
     defaultValues: {
       periodId: "",
+      studyProgramId: "",
       studentGroupId: "",
       studentId: "",
     },
   });
 
   const selectedPeriodId = watch("periodId");
-  const filteredStudentGroups = studentGroups.filter((studentGroup) => {
-    if (!selectedPeriodId) return true;
-    return studentGroup.period_id === selectedPeriodId;
-  });
+  const selectedStudyProgramId = watch("studyProgramId");
+  const filteredStudentGroups = studentGroups
+    .filter((studentGroup) => {
+      if (!selectedPeriodId) return true;
+      return studentGroup.period_id === selectedPeriodId;
+    })
+    .filter((studentGroup) => {
+      if (!selectedStudyProgramId) return true;
+      return studentGroup.study_program_id === selectedStudyProgramId;
+    });
 
   const selectedStudentGroupId = watch("studentGroupId");
   const filteredStudents = students.filter(
@@ -80,6 +90,26 @@ export default function FormAddStudent2({
                     sx={{ fontSize: 14 }}
                   >
                     {period.name}
+                  </MenuItem>
+                );
+              })}
+            </TextField>
+          )}
+        ></Controller>
+        <FormLabelSisva>Program Studi (opsional)</FormLabelSisva>
+        <Controller
+          name="studyProgramId"
+          control={control}
+          render={({ field }) => (
+            <TextField select {...field}>
+              {studyPrograms.map((studyProgram) => {
+                return (
+                  <MenuItem
+                    key={studyProgram.id}
+                    value={studyProgram.id}
+                    sx={{ fontSize: 14 }}
+                  >
+                    {studyProgram.code}
                   </MenuItem>
                 );
               })}

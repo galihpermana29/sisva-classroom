@@ -1,4 +1,5 @@
 type Grade =
+  //* actually could be any string
   | "I"
   | "II"
   | "III"
@@ -20,7 +21,7 @@ export type User = {
   type: string; //? student, teacher, staff ???
   detail: {
     json_text: string;
-    grade: Grade; //* actually could be any string
+    grade: Grade;
   };
   profile_image_uri: string;
   roles: string[]; //? ???
@@ -93,4 +94,14 @@ export type Period = {
     id: string;
     code: string;
   };
+};
+
+export type StudyProgramStatus = "active" | "inactive";
+
+export type StudyProgram = {
+  id: string;
+  name: string;
+  code: string;
+  status: StudyProgramStatus;
+  grades: Grade[];
 };
