@@ -56,14 +56,17 @@ export default function FormAddStudent2({
   const selectedPeriodId = watch("periodId");
   const selectedStudyProgramId = watch("studyProgramId");
   const filteredStudentGroups = studentGroups
+    // filter by period
     .filter((studentGroup) => {
       if (!selectedPeriodId) return true;
       return studentGroup.period_id === selectedPeriodId;
     })
+    // filter by study program
     .filter((studentGroup) => {
       if (!selectedStudyProgramId) return true;
       return studentGroup.study_program_id === selectedStudyProgramId;
     })
+    // filter by selected student grade on edit mode
     .filter((studentGroup) => {
       if (!studentId) return true;
       return (
@@ -74,12 +77,14 @@ export default function FormAddStudent2({
 
   const selectedStudentGroupId = watch("studentGroupId");
   const filteredStudents = students
+    // filter student who is not in any student group
     .filter((student) => {
       if (studentId) return student.id === studentId;
       return !studentInStudentGroups
         .map((studentInStudentGroup) => studentInStudentGroup.student_id)
         .includes(student.id);
     })
+    // filter by selected student group grade
     .filter((student) => {
       if (!selectedStudentGroupId) return true;
       return (
@@ -90,6 +95,7 @@ export default function FormAddStudent2({
     });
 
   const onSubmit: SubmitHandler<FormStudentInStudentGroup> = async (data) => {
+    // edit mode
     if (studentId) {
       updateStudentInStudentGroup({
         oldStudentGroupId: studentGroupId,
@@ -97,6 +103,7 @@ export default function FormAddStudent2({
         oldStudentId: studentId,
         studentId: data.studentId,
       });
+      // add mode
     } else {
       addStudentToStudentGroup({
         studentGroupId: data.studentGroupId,
