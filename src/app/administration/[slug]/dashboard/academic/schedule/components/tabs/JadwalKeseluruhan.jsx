@@ -36,11 +36,7 @@ function JadwalKeseluruhan() {
           <JadwalKeseluruhanFilters />
         </Suspense>
       </Stack>
-      <TableContainer>
-        <Box>
-          <JadwalKeseluruhanSchedule />
-        </Box>
-      </TableContainer>
+      <JadwalKeseluruhanSchedule />
     </Stack>
   );
 }
