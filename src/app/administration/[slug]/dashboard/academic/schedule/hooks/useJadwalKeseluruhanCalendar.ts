@@ -15,20 +15,6 @@ import { TINGKAT_FIELD_NAME } from "../components/filters/TingkatSelect";
 
 dayjs.extend(isoWeek);
 
-const getGroupId = (grade) => {
-  let group_id = -1;
-
-  if (grade === "X") {
-    group_id = 1;
-  } else if (grade === "XI") {
-    group_id = 2;
-  } else if (grade === "XII") {
-    group_id = 3;
-  }
-
-  return group_id;
-};
-
 const parseTime = (time) => {
   const [hourMinute, period, offsetString] = time.split(" ");
   let [hour, minute] = hourMinute.split(":").map(Number);
@@ -55,11 +41,8 @@ const parseTime = (time) => {
 
 const addDateToTime = (day, time) => {
   const date = dayjs().isoWeekday(day);
-
   const { hour, minute } = parseTime(time);
-
   const result = date.set("hour", hour).set("minute", minute).set("second", 0);
-
   return result;
 };
 
@@ -212,7 +195,6 @@ function useJadwalKeseluruhanCalendar() {
           start_time: startTimeWithDate.toDate(),
           end_time: endTimeWithDate.toDate(),
           type: "learning",
-          group_id: getGroupId(data.grade),
           sg_id,
         };
       });
@@ -233,7 +215,6 @@ function useJadwalKeseluruhanCalendar() {
         ...data,
         start_time: startTimeWithDate.toDate(),
         end_time: endTimeWithDate.toDate(),
-        group_id: getGroupId(data.grade),
         type: "non-learning",
       };
     });
@@ -244,15 +225,7 @@ function useJadwalKeseluruhanCalendar() {
   const getAllStudentGroup = async () => {
     const { data } = await AcademicAPI.getAllStudentGroup();
 
-    setStudentGroup(
-      data.data.map((value) => {
-        return {
-          ...value,
-          group_id: getGroupId(value?.grade),
-          group_color: "#ACDEE7",
-        };
-      })
-    );
+    setStudentGroup(data.data);
   };
 
   useEffect(() => {
