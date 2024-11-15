@@ -63,15 +63,31 @@ export default function FormAddStudent2({
     .filter((studentGroup) => {
       if (!selectedStudyProgramId) return true;
       return studentGroup.study_program_id === selectedStudyProgramId;
+    })
+    .filter((studentGroup) => {
+      if (!studentId) return true;
+      return (
+        students.find((student) => student.id === studentId)?.detail.grade ===
+        studentGroup.grade
+      );
     });
 
   const selectedStudentGroupId = watch("studentGroupId");
-  const filteredStudents = students.filter((student) => {
-    if (studentId) return student.id === studentId;
-    return !studentInStudentGroups
-      .map((studentInStudentGroup) => studentInStudentGroup.student_id)
-      .includes(student.id);
-  });
+  const filteredStudents = students
+    .filter((student) => {
+      if (studentId) return student.id === studentId;
+      return !studentInStudentGroups
+        .map((studentInStudentGroup) => studentInStudentGroup.student_id)
+        .includes(student.id);
+    })
+    .filter((student) => {
+      if (!selectedStudentGroupId) return true;
+      return (
+        studentGroups.find(
+          (studentGroup) => studentGroup.id === selectedStudentGroupId
+        )?.grade === student.detail.grade
+      );
+    });
 
   const onSubmit: SubmitHandler<FormStudentInStudentGroup> = async (data) => {
     if (studentId) {
