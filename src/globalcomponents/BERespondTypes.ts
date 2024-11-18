@@ -134,3 +134,14 @@ export type NonLearningSchedules = {
   start_time: string;
   end_time: string;
 };
+
+export type Class = {
+  id: string;
+  name: string;
+  student_group_id: number;
+  student_group_name: string;
+  subject_id: string;
+  subject_name: string;
+  teacher_id: string;
+  teacher_name: string;
+};

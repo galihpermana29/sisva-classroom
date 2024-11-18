@@ -1,6 +1,7 @@
 "use client";
 
 import AcademicAPI from "@/api/academic";
+import { useClasses } from "@/hooks/useClasses";
 import { useClassSchedules } from "@/hooks/useClassSchedules";
 import { useNonLearningSchedules } from "@/hooks/useNonLearningSchedules";
 import { useQueryParam } from "@/hooks/useQueryParam";
@@ -70,6 +71,35 @@ function useJadwalKeseluruhanCalendar() {
 
   const { data: classSchedules } = useClassSchedules(periode);
   const { data: nonLearningSchedules } = useNonLearningSchedules(periode);
+  const { data: classes } = useClasses();
+
+  const formattedClassSchedules = classSchedules
+    .map((data) => {
+      const startTimeWithDate = addDateToTime(data.day, data.start_time);
+      const endTimeWithDate = addDateToTime(data.day, data.end_time);
+
+      let sg_id = classes.find(
+        (item) => item.id === data.class_id
+      )?.student_group_id;
+
+      return {
+        ...data,
+        start_time: startTimeWithDate.toDate(),
+        end_time: endTimeWithDate.toDate(),
+        type: "learning",
+        sg_id,
+      };
+    })
+    .filter(({ grade, sg_id, day }) => {
+      const gradeMatch = tingkat ? tingkat === grade : true;
+      const classMatch = sg_id
+        ? kelas
+          ? parseInt(kelas) === sg_id
+          : true
+        : false;
+      const dayMatch = hari ? parseInt(hari) === day : true;
+      return gradeMatch && classMatch && dayMatch;
+    });
 
   const learningScheduleData = learningSchedule.filter(
     ({ grade, sg_id, day }) => {
