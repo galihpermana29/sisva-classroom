@@ -52,20 +52,20 @@ const addDateToTime = (day, time) => {
 function useJadwalKeseluruhanCalendar() {
   const searchParams = useSearchParams();
 
-  const periode = searchParams.get(PERIODE_FIELD_NAME);
-  const prodi = searchParams.get(PRODI_FIELD_NAME);
+  const periodeId = searchParams.get(PERIODE_FIELD_NAME);
+  const prodiId = searchParams.get(PRODI_FIELD_NAME);
   const tingkat = searchParams.get(TINGKAT_FIELD_NAME);
-  const kelas = searchParams.get(KELAS_FIELD_NAME);
+  const kelasId = searchParams.get(KELAS_FIELD_NAME);
   const hari = searchParams.get(HARI_FIELD_NAME);
   const isJadwalKeseluruhan =
-    searchParams.get(JADWAL_KESELURUHAN_FIELD_NAME) ?? "true";
+    searchParams.get(JADWAL_KESELURUHAN_FIELD_NAME) ?? "false";
 
   const [isLoading, setIsLoading] = useState(false);
-  const { data: classSchedules } = useClassSchedules(periode);
-  const { data: nonLearningSchedules } = useNonLearningSchedules(periode);
+  const { data: classSchedules } = useClassSchedules(periodeId);
+  const { data: nonLearningSchedules } = useNonLearningSchedules(periodeId);
   const { data: classes } = useClasses();
   const { data: studentGroups } = useStudentGroups();
-  const { data: schoolSchedules } = useSchoolSchedules(periode);
+  const { data: schoolSchedules } = useSchoolSchedules(periodeId);
 
   // Todo remove name key
   const formattedClassSchedules = classSchedules
@@ -87,8 +87,8 @@ function useJadwalKeseluruhanCalendar() {
     .filter(({ grade, sg_id, day }) => {
       const gradeMatch = tingkat ? tingkat === grade : true;
       const classMatch = sg_id
-        ? kelas
-          ? parseInt(kelas) === sg_id
+        ? kelasId
+          ? parseInt(kelasId) === sg_id
           : true
         : false;
       const dayMatch = hari ? parseInt(hari) === day : true;
@@ -124,7 +124,7 @@ function useJadwalKeseluruhanCalendar() {
           if (isJadwalKeseluruhan === "false") return true;
 
           return (
-            study_program_id === parseInt(prodi) &&
+            study_program_id === parseInt(prodiId) &&
             (Boolean(tingkat) ? grade === tingkat : true) &&
             (Boolean(hari) ? day === parseInt(hari) : true)
           );
@@ -158,12 +158,16 @@ function useJadwalKeseluruhanCalendar() {
   ).format("H:mm");
 
   const studentGroupData = studentGroups.filter((sg) => {
-    if (!periode) return false;
+    if (!periodeId) return false;
 
-    const periodeMatch = periode ? sg.period_id === parseInt(periode) : true;
-    const prodiMatch = prodi ? sg.study_program_id === parseInt(prodi) : true;
+    const periodeMatch = periodeId
+      ? sg.period_id === parseInt(periodeId)
+      : true;
+    const prodiMatch = prodiId
+      ? sg.study_program_id === parseInt(prodiId)
+      : true;
     const tingkatMatch = tingkat ? sg.grade === tingkat : true;
-    const kelasMatch = kelas ? sg.id === parseInt(kelas) : true;
+    const kelasMatch = kelasId ? sg.id === parseInt(kelasId) : true;
 
     return periodeMatch && prodiMatch && tingkatMatch && kelasMatch;
   });
@@ -179,29 +183,29 @@ function useJadwalKeseluruhanCalendar() {
         return (
           (grade ? grade === tingkat : true) &&
           (day ? day === parseInt(hari) : true) &&
-          (class_id ? class_id === parseInt(kelas) : true)
+          (class_id ? class_id === parseInt(kelasId) : true)
         );
       }
     });
   }, [searchParams]);
 
   useEffect(() => {
-    if (!periode) {
+    if (!periodeId) {
       data = [];
     }
 
-    if (!prodi) {
+    if (!prodiId) {
       data = [...formattedNonLearningSchedules];
     }
-  }, [periode, prodi]);
+  }, [periodeId, prodiId]);
 
   return {
     isLoading,
     setIsLoading,
     studentGroupData,
     data,
-    periode,
-    prodi,
+    periodeId,
+    prodiId,
     isJadwalKeseluruhan,
     workDays,
     scheduleStartTime,

@@ -12,8 +12,8 @@ export const JadwalKeseluruhanSchedule = () => {
     data,
     studentGroupData,
     isLoading,
-    periode,
-    prodi,
+    periodeId,
+    prodiId,
     isJadwalKeseluruhan,
     workDays,
     scheduleStartTime,
@@ -54,8 +54,8 @@ export const JadwalKeseluruhanSchedule = () => {
 
   const isDataEmpty = data.length === 0;
   const isStudentGroupDataEmpty = studentGroupData?.length === 0;
-  const isPeriodeInvalid = parseInt(periode) === -1;
-  const isProdiInvalid = parseInt(prodi) === -1;
+  const isPeriodeInvalid = !periodeId;
+  const isProdiInvalid = !prodiId;
 
   if (isDataEmpty) return emptyState;
 
