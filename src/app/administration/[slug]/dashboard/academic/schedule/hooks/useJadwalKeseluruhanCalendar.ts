@@ -64,8 +64,6 @@ function useJadwalKeseluruhanCalendar() {
     searchParams.get(JADWAL_KESELURUHAN_FIELD_NAME) ?? "true";
 
   const [isLoading, setIsLoading] = useState(false);
-  const [classData, setClassData] = useState([]);
-  const [studentGroup, setStudentGroup] = useState([]);
   const [schoolSchedule, setSchoolSchedule] = useState([]);
 
   const { data: classSchedules } = useClassSchedules(periode);
@@ -163,7 +161,7 @@ function useJadwalKeseluruhanCalendar() {
     "h:mm A Z"
   ).format("H:mm");
 
-  let studentGroupData = studentGroup.filter((sg) => {
+  const studentGroupData = studentGroups.filter((sg) => {
     if (!periode) return false;
 
     const periodeMatch = periode ? sg.period_id === parseInt(periode) : true;
@@ -191,33 +189,12 @@ function useJadwalKeseluruhanCalendar() {
     });
   }, [searchParams]);
 
-  const getAllClasses = async () => {
-    const { data } = await AcademicAPI.getAllClasses();
-    setClassData(data.data);
-  };
-
   const getAllSchoolSchedule = async () => {
     const { data } = await AcademicAPI.getAllSchoolSchedules({
       period_id: periode,
     });
     setSchoolSchedule(data.data);
   };
-
-  const getAllStudentGroup = async () => {
-    const { data } = await AcademicAPI.getAllStudentGroup();
-
-    setStudentGroup(data.data);
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      await Promise.all([getAllStudentGroup(), getAllClasses()]);
-      setIsLoading(false);
-    };
-
-    fetchData();
-  }, []);
 
   useEffect(() => {
     if (refetch === "true") {
@@ -230,7 +207,7 @@ function useJadwalKeseluruhanCalendar() {
     }
 
     updateQueryParam("rf", false);
-  }, [refetch, classData]);
+  }, [refetch]);
 
   useEffect(() => {
     if (periode) {
@@ -244,12 +221,11 @@ function useJadwalKeseluruhanCalendar() {
     if (!prodi) {
       data = [...formattedNonLearningSchedules];
     }
-  }, [periode, prodi, classData]);
+  }, [periode, prodi]);
 
   return {
     isLoading,
     setIsLoading,
-    setStudentGroup,
     studentGroupData,
     data,
     periode,
