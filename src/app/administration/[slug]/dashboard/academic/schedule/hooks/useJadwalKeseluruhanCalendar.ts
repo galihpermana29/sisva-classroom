@@ -5,6 +5,7 @@ import { useClasses } from "@/hooks/useClasses";
 import { useClassSchedules } from "@/hooks/useClassSchedules";
 import { useNonLearningSchedules } from "@/hooks/useNonLearningSchedules";
 import { useQueryParam } from "@/hooks/useQueryParam";
+import { useSchoolSchedules } from "@/hooks/useSchoolSchedules";
 import { useStudentGroups } from "@/hooks/useStudentGroups";
 import dayjs from "dayjs";
 import isoWeek from "dayjs/plugin/isoWeek";
@@ -64,12 +65,11 @@ function useJadwalKeseluruhanCalendar() {
     searchParams.get(JADWAL_KESELURUHAN_FIELD_NAME) ?? "true";
 
   const [isLoading, setIsLoading] = useState(false);
-  const [schoolSchedule, setSchoolSchedule] = useState([]);
-
   const { data: classSchedules } = useClassSchedules(periode);
   const { data: nonLearningSchedules } = useNonLearningSchedules(periode);
   const { data: classes } = useClasses();
   const { data: studentGroups } = useStudentGroups();
+  const { data: schoolSchedules } = useSchoolSchedules(periode);
 
   // Todo remove name key
   const formattedClassSchedules = classSchedules
@@ -123,7 +123,7 @@ function useJadwalKeseluruhanCalendar() {
 
   let workDays = Array.from(
     new Set(
-      schoolSchedule
+      schoolSchedules
         .filter(({ study_program_id, grade, day }) => {
           if (isJadwalKeseluruhan === "false") return true;
 
@@ -138,26 +138,26 @@ function useJadwalKeseluruhanCalendar() {
   );
 
   const scheduleStartTime = dayjs(
-    schoolSchedule.reduce((earliest, current) => {
+    schoolSchedules.reduce((earliest: string, current) => {
       const currentStartTime = dayjs(current.start_time, "h:mm A Z");
       const earliestTime = dayjs(earliest, "h:mm A Z");
 
       return !earliest || currentStartTime.isBefore(earliestTime)
         ? current.start_time
         : earliest;
-    }, null),
+    }, null) as string,
     "h:mm A Z"
   ).format("H:mm");
 
   const scheduleEndTime = dayjs(
-    schoolSchedule.reduce((latest, current) => {
+    schoolSchedules.reduce((latest: string, current) => {
       const currentEndTime = dayjs(current.end_time, "h:mm A Z");
       const latestTime = dayjs(latest, "h:mm A Z");
 
       return !latest || currentEndTime.isAfter(latestTime)
         ? current.end_time
         : latest;
-    }, null),
+    }, null) as string,
     "h:mm A Z"
   ).format("H:mm");
 
@@ -189,13 +189,6 @@ function useJadwalKeseluruhanCalendar() {
     });
   }, [searchParams]);
 
-  const getAllSchoolSchedule = async () => {
-    const { data } = await AcademicAPI.getAllSchoolSchedules({
-      period_id: periode,
-    });
-    setSchoolSchedule(data.data);
-  };
-
   useEffect(() => {
     if (refetch === "true") {
       const fetchData = async () => {
@@ -210,10 +203,6 @@ function useJadwalKeseluruhanCalendar() {
   }, [refetch]);
 
   useEffect(() => {
-    if (periode) {
-      getAllSchoolSchedule();
-    }
-
     if (!periode) {
       data = [];
     }

@@ -145,3 +145,14 @@ export type Class = {
   teacher_id: string;
   teacher_name: string;
 };
+
+export type SchoolSchedules = {
+  id: number;
+  period_id: number;
+  study_program_id: number;
+  grade: Grade;
+  status: string; //? active, inactive ???
+  day: Day;
+  start_time: string;
+  end_time: string;
+};
