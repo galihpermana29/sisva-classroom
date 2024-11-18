@@ -123,3 +123,14 @@ export type ClassSchedule = {
   start_time: string;
   end_time: string;
 };
+
+export type NonLearningSchedules = {
+  id: string;
+  name: string;
+  school_schedule_id: string;
+  study_program_id: string;
+  grade: Grade;
+  day: Day;
+  start_time: string;
+  end_time: string;
+};
