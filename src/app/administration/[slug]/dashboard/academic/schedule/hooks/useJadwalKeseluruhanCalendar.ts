@@ -8,7 +8,6 @@ import { useStudentGroups } from "@/hooks/useStudentGroups";
 import dayjs from "dayjs";
 import isoWeek from "dayjs/plugin/isoWeek";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
 import { HARI_FIELD_NAME } from "../components/filters/HariSelect";
 import { JADWAL_KESELURUHAN_FIELD_NAME } from "../components/filters/JadwalKeseluruhanSwitch";
 import { KELAS_FIELD_NAME } from "../components/filters/KelasSelect";
@@ -60,7 +59,6 @@ function useJadwalKeseluruhanCalendar() {
   const isJadwalKeseluruhan =
     searchParams.get(JADWAL_KESELURUHAN_FIELD_NAME) ?? "false";
 
-  const [isLoading, setIsLoading] = useState(false);
   const { data: classSchedules } = useClassSchedules(periodeId);
   const { data: nonLearningSchedules } = useNonLearningSchedules(periodeId);
   const { data: classes } = useClasses();
@@ -172,36 +170,7 @@ function useJadwalKeseluruhanCalendar() {
     return periodeMatch && prodiMatch && tingkatMatch && kelasMatch;
   });
 
-  useEffect(() => {
-    data = data.filter(({ type, grade, day, class_id }) => {
-      if (type === "non-learning") {
-        return (
-          (grade ? grade === tingkat : true) &&
-          (day ? day === parseInt(hari) : true)
-        );
-      } else {
-        return (
-          (grade ? grade === tingkat : true) &&
-          (day ? day === parseInt(hari) : true) &&
-          (class_id ? class_id === parseInt(kelasId) : true)
-        );
-      }
-    });
-  }, [searchParams]);
-
-  useEffect(() => {
-    if (!periodeId) {
-      data = [];
-    }
-
-    if (!prodiId) {
-      data = [...formattedNonLearningSchedules];
-    }
-  }, [periodeId, prodiId]);
-
   return {
-    isLoading,
-    setIsLoading,
     studentGroupData,
     data,
     periodeId,

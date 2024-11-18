@@ -11,7 +11,6 @@ export const JadwalKeseluruhanSchedule = () => {
   const {
     data,
     studentGroupData,
-    isLoading,
     periodeId,
     prodiId,
     isJadwalKeseluruhan,
@@ -68,18 +67,14 @@ export const JadwalKeseluruhanSchedule = () => {
 
   return (
     <>
-      {!isLoading ? (
-        <TimelineWeekSchedule
-          data={data}
-          classData={studentGroupData}
-          onEventClick={onEventClick}
-          workDays={workDays}
-          startTime={scheduleStartTime}
-          endTime={scheduleEndTime}
-        />
-      ) : (
-        <div className="h-[650px] w-full animate-pulse bg-gray-200" />
-      )}
+      <TimelineWeekSchedule
+        data={data}
+        classData={studentGroupData}
+        onEventClick={onEventClick}
+        workDays={workDays}
+        startTime={scheduleStartTime}
+        endTime={scheduleEndTime}
+      />
       <EditAktivitasNonKbmModal
         open={openEditNonKbm}
         handleClose={handleCloseEditNonKbm}
