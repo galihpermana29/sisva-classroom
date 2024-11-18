@@ -12,7 +12,6 @@ import {
   ViewsDirective,
 } from "@syncfusion/ej2-react-schedule";
 import dayjs from "dayjs";
-import { useMemo } from "react";
 
 const gradeDataSource = [
   { gradeText: "Kelas I", grade: "I" },
@@ -75,7 +74,9 @@ function TimelineWeekSchedule({
       height="100%"
       rowAutoHeight={true}
       workDays={workDays}
-      workHours={{ start: startTime, end: endTime }}
+      startHour={startTime}
+      endHour={endTime}
+      workHours={{ start: startTime, end: endTime, highlight: true }}
       selectedDate={dayjs().toDate()}
       dateHeaderTemplate={getDateHeaderText}
       showHeaderBar={false}
