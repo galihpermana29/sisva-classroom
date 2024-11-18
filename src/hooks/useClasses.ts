@@ -1,5 +1,6 @@
 import AcademicAPI from "@/api/academic";
 import type { Class } from "@/globalcomponents/BERespondTypes";
+import type { QueryClient } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 
 export const useClasses = () => {
@@ -8,4 +9,8 @@ export const useClasses = () => {
     queryFn: async () => (await AcademicAPI.getAllClasses()).data.data,
     placeholderData: [],
   });
+};
+
+export const invalidateClasses = (queryClient: QueryClient) => {
+  queryClient.invalidateQueries({ queryKey: ["class"] });
 };

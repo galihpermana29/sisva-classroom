@@ -1,9 +1,10 @@
 "use client";
 
 import AcademicAPI from "@/api/academic";
-import { useQueryParam } from "@/hooks/useQueryParam";
+import { invalidateNonLearningSchedules } from "@/hooks/useNonLearningSchedules";
 import { formatTime } from "@/utils/formatTime";
 import { Button, Stack } from "@mui/material";
+import { useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { useFormik } from "formik";
 import { useState } from "react";
@@ -41,7 +42,7 @@ const hasTimeConflict = (startTime, endTime, extStartTime, extEndTime) => {
 };
 
 export const AktivitasNonKbmForm = ({ handleClose, initialValues, edit }) => {
-  const { updateQueryParam } = useQueryParam();
+  const queryClient = useQueryClient();
 
   if (initialValues) {
     initialValues = {
@@ -160,8 +161,9 @@ export const AktivitasNonKbmForm = ({ handleClose, initialValues, edit }) => {
             await AcademicAPI.createNonLearningSchedule(newPayload);
           }
 
-          updateQueryParam("rf", true);
           handleClose();
+          invalidateNonLearningSchedules(queryClient);
+          console.log("test");
         }
       } catch (err) {
         console.log(err);

@@ -14,5 +14,5 @@ export const useStaffTeachers = () => {
 };
 
 export const invalidateStaffTeachers = (queryClient: QueryClient) => {
-  return queryClient.invalidateQueries({ queryKey: ["staff,teachers"] });
+  queryClient.invalidateQueries({ queryKey: ["staff,teachers"] });
 };

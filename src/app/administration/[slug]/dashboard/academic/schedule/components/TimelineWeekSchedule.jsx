@@ -69,6 +69,8 @@ function TimelineWeekSchedule({
     return data;
   }, [data]);
 
+  console.log(computedData);
+
   return (
     <ScheduleComponent
       timeFormat="HH:mm"

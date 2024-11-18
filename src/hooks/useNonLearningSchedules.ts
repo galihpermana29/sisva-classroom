@@ -1,5 +1,6 @@
 import AcademicAPI from "@/api/academic";
 import type { NonLearningSchedules } from "@/globalcomponents/BERespondTypes";
+import type { QueryClient } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 
 export const useNonLearningSchedules = (period_id: string) => {
@@ -13,5 +14,11 @@ export const useNonLearningSchedules = (period_id: string) => {
       ).data.data,
     enabled: !!period_id,
     placeholderData: [],
+  });
+};
+
+export const invalidateNonLearningSchedules = (queryClient: QueryClient) => {
+  queryClient.invalidateQueries({
+    queryKey: ["non-learning-schedules"],
   });
 };

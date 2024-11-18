@@ -1,9 +1,11 @@
 "use client";
 
 import AcademicAPI from "@/api/academic";
-import { useQueryParam } from "@/hooks/useQueryParam";
+import { invalidateClassSchedules } from "@/hooks/useClassSchedules";
+import { invalidateClasses } from "@/hooks/useClasses";
 import { formatTime } from "@/utils/formatTime";
 import { Button, Stack } from "@mui/material";
+import { useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { useFormik } from "formik";
 import { useSearchParams } from "next/navigation";
@@ -45,7 +47,7 @@ const hasTimeConflict = (startTime, endTime, extStartTime, extEndTime) => {
 };
 
 export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
-  const { updateQueryParam } = useQueryParam();
+  const queryClient = useQueryClient();
   const searchParams = useSearchParams();
   const periode = searchParams.get(PERIODE_FIELD_NAME);
 
@@ -220,8 +222,9 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
             await AcademicAPI.createClassSchedule(newPayload);
           }
 
-          updateQueryParam("rf", true);
           handleClose();
+          invalidateClassSchedules(queryClient);
+          invalidateClasses(queryClient);
         }
       } catch (err) {
         console.log(err);
