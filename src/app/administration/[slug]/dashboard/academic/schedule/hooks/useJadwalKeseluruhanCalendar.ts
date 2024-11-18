@@ -5,6 +5,7 @@ import { useClasses } from "@/hooks/useClasses";
 import { useClassSchedules } from "@/hooks/useClassSchedules";
 import { useNonLearningSchedules } from "@/hooks/useNonLearningSchedules";
 import { useQueryParam } from "@/hooks/useQueryParam";
+import { useStudentGroups } from "@/hooks/useStudentGroups";
 import dayjs from "dayjs";
 import isoWeek from "dayjs/plugin/isoWeek";
 import { useSearchParams } from "next/navigation";
@@ -72,18 +73,19 @@ function useJadwalKeseluruhanCalendar() {
   const { data: classSchedules } = useClassSchedules(periode);
   const { data: nonLearningSchedules } = useNonLearningSchedules(periode);
   const { data: classes } = useClasses();
+  const { data: studentGroups } = useStudentGroups();
 
+  // Todo remove name key
   const formattedClassSchedules = classSchedules
     .map((data) => {
       const startTimeWithDate = addDateToTime(data.day, data.start_time);
       const endTimeWithDate = addDateToTime(data.day, data.end_time);
-
       let sg_id = classes.find(
         (item) => item.id === data.class_id
       )?.student_group_id;
-
       return {
         ...data,
+        name: data.subject_name,
         start_time: startTimeWithDate.toDate(),
         end_time: endTimeWithDate.toDate(),
         type: "learning",
@@ -100,6 +102,22 @@ function useJadwalKeseluruhanCalendar() {
       const dayMatch = hari ? parseInt(hari) === day : true;
       return gradeMatch && classMatch && dayMatch;
     });
+
+  const formattedNonLearningSchedules = studentGroups.flatMap(({ grade, id }) =>
+    nonLearningSchedules
+      .map((data) => {
+        const startTimeWithDate = addDateToTime(data.day, data.start_time);
+        const endTimeWithDate = addDateToTime(data.day, data.end_time);
+        return {
+          ...data,
+          start_time: startTimeWithDate.toDate(),
+          end_time: endTimeWithDate.toDate(),
+          type: "non-learning",
+          sg_id: id,
+        };
+      })
+      .filter((data) => grade === data.grade)
+  );
 
   const learningScheduleData = learningSchedule.filter(
     ({ grade, sg_id, day }) => {
@@ -124,8 +142,8 @@ function useJadwalKeseluruhanCalendar() {
 
   let data =
     isJadwalKeseluruhan === "true"
-      ? [...nonLearningScheduleData, ...learningScheduleData]
-      : nonLearningScheduleData;
+      ? [...formattedNonLearningSchedules, ...formattedClassSchedules]
+      : formattedNonLearningSchedules;
 
   let workDays = Array.from(
     new Set(
