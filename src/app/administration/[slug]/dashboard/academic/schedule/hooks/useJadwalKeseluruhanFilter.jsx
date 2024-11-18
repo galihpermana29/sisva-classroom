@@ -112,6 +112,8 @@ function useJadwalKeseluruhanFilter() {
     }
   }, [periode]);
 
+  //! Harusnya update search params langsung dari event handler, bukan useEffect
+
   //* fetch grades data after selecting a study program
   useEffect(() => {
     if (prodi) getDetailProdi();

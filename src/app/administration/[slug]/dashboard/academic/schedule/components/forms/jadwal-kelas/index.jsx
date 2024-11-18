@@ -152,7 +152,7 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
 
               //* checks for teacher conflict
               if (
-                ext_day !== parseInt(day_num) &&
+                ext_day === parseInt(day_num) &&
                 ext_teacher_id === teacher_id &&
                 hasTimeConflict(
                   parsedStartTime,
