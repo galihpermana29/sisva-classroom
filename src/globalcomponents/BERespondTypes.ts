@@ -105,3 +105,21 @@ export type StudyProgram = {
   status: StudyProgramStatus;
   grades: Grade[];
 };
+
+export type Day = 1 | 2 | 3 | 4 | 5 | 6 | 7;
+
+export type ClassSchedule = {
+  id: string;
+  class_id: string;
+  class_name: string;
+  school_schedule_id: string;
+  study_program_id: string;
+  teacher_id: string;
+  teacher_name: string;
+  subject_id: string;
+  subject_name: string;
+  grade: Grade;
+  day: Day;
+  start_time: string;
+  end_time: string;
+};

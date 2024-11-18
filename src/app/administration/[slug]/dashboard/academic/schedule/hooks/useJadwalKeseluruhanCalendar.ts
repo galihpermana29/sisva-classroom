@@ -1,6 +1,7 @@
 "use client";
 
 import AcademicAPI from "@/api/academic";
+import { useClassSchedules } from "@/hooks/useClassSchedules";
 import { useQueryParam } from "@/hooks/useQueryParam";
 import dayjs from "dayjs";
 import isoWeek from "dayjs/plugin/isoWeek";
@@ -65,6 +66,8 @@ function useJadwalKeseluruhanCalendar() {
   const [learningSchedule, setLearningSchedule] = useState([]);
   const [schoolSchedule, setSchoolSchedule] = useState([]);
   const [nonLearningSchedule, setNonLearningSchedule] = useState([]);
+
+  const { data: classSchedules } = useClassSchedules(periode);
 
   const learningScheduleData = learningSchedule.filter(
     ({ grade, sg_id, day }) => {
