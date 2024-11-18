@@ -163,7 +163,6 @@ export const AktivitasNonKbmForm = ({ handleClose, initialValues, edit }) => {
 
           handleClose();
           invalidateNonLearningSchedules(queryClient);
-          console.log("test");
         }
       } catch (err) {
         console.log(err);

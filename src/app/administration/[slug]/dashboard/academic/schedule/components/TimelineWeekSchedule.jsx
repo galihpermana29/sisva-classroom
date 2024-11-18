@@ -65,14 +65,10 @@ function TimelineWeekSchedule({
   startTime,
   endTime,
 }) {
-  const computedData = useMemo(() => {
-    return data;
-  }, [data]);
-
-  console.log(computedData);
-
   return (
     <ScheduleComponent
+      //force rerendering ScheduleComponent
+      key={JSON.stringify(data)}
       timeFormat="HH:mm"
       showWeekend={false}
       width="100%"
@@ -84,7 +80,7 @@ function TimelineWeekSchedule({
       dateHeaderTemplate={getDateHeaderText}
       showHeaderBar={false}
       eventSettings={{
-        dataSource: computedData,
+        dataSource: data,
         fields: {
           subject: { title: "Name", name: "name" },
           startTime: { title: "StartTime", name: "start_time" },
