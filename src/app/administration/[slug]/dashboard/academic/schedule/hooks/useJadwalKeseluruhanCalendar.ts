@@ -55,8 +55,8 @@ function useJadwalKeseluruhanCalendar() {
   const searchParams = useSearchParams();
 
   const refetch = searchParams.get("rf") ?? "false";
-  const periode = searchParams.get(PERIODE_FIELD_NAME) ?? "-1";
-  const prodi = searchParams.get(PRODI_FIELD_NAME) ?? "-1";
+  const periode = searchParams.get(PERIODE_FIELD_NAME);
+  const prodi = searchParams.get(PRODI_FIELD_NAME);
   const tingkat = searchParams.get(TINGKAT_FIELD_NAME);
   const kelas = searchParams.get(KELAS_FIELD_NAME);
   const hari = searchParams.get(HARI_FIELD_NAME);
@@ -164,12 +164,10 @@ function useJadwalKeseluruhanCalendar() {
   ).format("H:mm");
 
   let studentGroupData = studentGroup.filter((sg) => {
-    if (periode === "-1") return false;
+    if (!periode) return false;
 
-    const periodeMatch =
-      periode !== "-1" ? sg.period_id === parseInt(periode) : true;
-    const prodiMatch =
-      prodi !== "-1" ? sg.study_program_id === parseInt(prodi) : true;
+    const periodeMatch = periode ? sg.period_id === parseInt(periode) : true;
+    const prodiMatch = prodi ? sg.study_program_id === parseInt(prodi) : true;
     const tingkatMatch = tingkat ? sg.grade === tingkat : true;
     const kelasMatch = kelas ? sg.id === parseInt(kelas) : true;
 
@@ -235,14 +233,15 @@ function useJadwalKeseluruhanCalendar() {
   }, [refetch, classData]);
 
   useEffect(() => {
-    if (periode !== "-1") {
+    if (periode) {
       getAllSchoolSchedule();
     }
 
-    if (periode === "-1") {
+    if (!periode) {
       data = [];
     }
-    if (prodi === "-1") {
+
+    if (!prodi) {
       data = [...formattedNonLearningSchedules];
     }
   }, [periode, prodi, classData]);
