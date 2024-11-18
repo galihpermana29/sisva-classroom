@@ -1,10 +1,8 @@
 "use client";
 
-import AcademicAPI from "@/api/academic";
 import { useClasses } from "@/hooks/useClasses";
 import { useClassSchedules } from "@/hooks/useClassSchedules";
 import { useNonLearningSchedules } from "@/hooks/useNonLearningSchedules";
-import { useQueryParam } from "@/hooks/useQueryParam";
 import { useSchoolSchedules } from "@/hooks/useSchoolSchedules";
 import { useStudentGroups } from "@/hooks/useStudentGroups";
 import dayjs from "dayjs";
@@ -52,10 +50,8 @@ const addDateToTime = (day, time) => {
 };
 
 function useJadwalKeseluruhanCalendar() {
-  const { updateQueryParam } = useQueryParam();
   const searchParams = useSearchParams();
 
-  const refetch = searchParams.get("rf") ?? "false";
   const periode = searchParams.get(PERIODE_FIELD_NAME);
   const prodi = searchParams.get(PRODI_FIELD_NAME);
   const tingkat = searchParams.get(TINGKAT_FIELD_NAME);
@@ -188,19 +184,6 @@ function useJadwalKeseluruhanCalendar() {
       }
     });
   }, [searchParams]);
-
-  useEffect(() => {
-    if (refetch === "true") {
-      const fetchData = async () => {
-        setIsLoading(true);
-        setIsLoading(false);
-      };
-
-      fetchData();
-    }
-
-    updateQueryParam("rf", false);
-  }, [refetch]);
 
   useEffect(() => {
     if (!periode) {
