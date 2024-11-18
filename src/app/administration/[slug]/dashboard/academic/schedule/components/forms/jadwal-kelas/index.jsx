@@ -70,7 +70,6 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
       study_program_id: "",
       grade: "",
       student_group_id: "",
-      class_id: "",
       day: "",
       start_time: null,
       end_time: null,
@@ -84,7 +83,6 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
       end_time,
       grade,
       day,
-      class_id,
       teacher_id,
       subject_id,
       student_group_id,
@@ -206,8 +204,7 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
             ).data.data;
 
           const newPayload = {
-            //* if form value has class_id (when editing), use it, otherwise use newClassId
-            class_id: class_id ? class_id : newClassId,
+            class_id: newClassId,
             school_schedule_id: parseInt(school_schedule_id),
             start_time: formatTime(formattedStartTime),
             end_time: formatTime(formattedEndTime),

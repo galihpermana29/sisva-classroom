@@ -19,7 +19,6 @@ function AddJadwalKelasModal() {
           study_program_id: parseInt(prodi) ?? "",
           grade: tingkat ?? "",
           student_group_id: Boolean(kelas) ? parseInt(kelas) : "",
-          class_id: "",
           day: parseInt(hari) ?? "",
           start_time: null,
           end_time: null,
