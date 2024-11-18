@@ -30,14 +30,14 @@ export type User = {
 };
 
 export type Extracurricular = {
-  id: string;
+  id: number;
   name: string;
   teacher_id: string;
   teacher_name: string;
 };
 
 export type ExtracurricularMember = {
-  extracurricular_id: string;
+  extracurricular_id: number;
   extracurricular_name: string;
   student_id: string;
   student_name: string;
@@ -46,27 +46,27 @@ export type ExtracurricularMember = {
 export type SubjectTeacher = {
   teacher_id: string;
   teacher_name: string;
-  subject_id: string;
+  subject_id: number;
   subject_name: string;
   grade: Grade;
   subject_detail: {
-    id: string;
+    id: number;
     name: string;
     type: string; //? mandatory etc ???
-    study_program_id: string;
+    study_program_id: number;
     study_program_name: string;
-    curriculum_id: string;
+    curriculum_id: number;
     curriculum_name: string;
   };
 };
 
 export type StudentGroup = {
-  id: string;
+  id: number;
   name: string;
   type: string; //? homeroom, elective ???
-  period_id: string;
+  period_id: number;
   period_name: string;
-  study_program_id: string;
+  study_program_id: number;
   study_program_name: string;
   grade: Grade;
   detail: {
@@ -78,20 +78,20 @@ export type StudentGroup = {
 export type StudentInStudentGroup = {
   student_id: string;
   student_name: string;
-  student_group_id: string;
+  student_group_id: number;
   student_group_name: string;
 };
 
 export type PeriodStatus = "active" | "inactive" | "finished" | "cancelled";
 
 export type Period = {
-  id: string;
+  id: number;
   name: string;
   start_time: string;
   end_time: string;
   status: PeriodStatus;
   study_programs: {
-    id: string;
+    id: number;
     code: string;
   };
 };
@@ -99,7 +99,7 @@ export type Period = {
 export type StudyProgramStatus = "active" | "inactive";
 
 export type StudyProgram = {
-  id: string;
+  id: number;
   name: string;
   code: string;
   status: StudyProgramStatus;
@@ -109,14 +109,14 @@ export type StudyProgram = {
 export type Day = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
 export type ClassSchedule = {
-  id: string;
-  class_id: string;
+  id: number;
+  class_id: number;
   class_name: string;
-  school_schedule_id: string;
-  study_program_id: string;
+  school_schedule_id: number;
+  study_program_id: number;
   teacher_id: string;
   teacher_name: string;
-  subject_id: string;
+  subject_id: number;
   subject_name: string;
   grade: Grade;
   day: Day;
@@ -125,10 +125,10 @@ export type ClassSchedule = {
 };
 
 export type NonLearningSchedules = {
-  id: string;
+  id: number;
   name: string;
-  school_schedule_id: string;
-  study_program_id: string;
+  school_schedule_id: number;
+  study_program_id: number;
   grade: Grade;
   day: Day;
   start_time: string;
@@ -136,11 +136,11 @@ export type NonLearningSchedules = {
 };
 
 export type Class = {
-  id: string;
+  id: number;
   name: string;
   student_group_id: number;
   student_group_name: string;
-  subject_id: string;
+  subject_id: number;
   subject_name: string;
   teacher_id: string;
   teacher_name: string;
