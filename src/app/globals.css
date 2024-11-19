@@ -92,28 +92,24 @@
     scrollbar-width: none; /* Firefox */
   }
 
-  .default-scrollbar {
-    /* Reset to default webkit scrollbar */
+  .thick-scrollbar {
     ::-webkit-scrollbar {
       width: 8px;
       height: 8px;
     }
 
-    ::-webkit-scrollbar-track {
-      background: initial;
-    }
-
     ::-webkit-scrollbar-thumb {
       background: #888;
-      border-radius: 0;
     }
 
     ::-webkit-scrollbar-thumb:hover {
       background: #555;
     }
+  }
 
-    /* Reset Firefox scrollbar */
-    scrollbar-width: auto;
-    scrollbar-color: #888 #f1f1f1;
+  .no-y-scrollbar {
+    ::-webkit-scrollbar {
+      width: 0;
+    }
   }
 }
