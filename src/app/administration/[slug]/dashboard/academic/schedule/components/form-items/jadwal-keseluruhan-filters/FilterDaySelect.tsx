@@ -22,7 +22,7 @@ function FilterDaySelect({ formik, name, label, placeholder, disabled, data }) {
         name={name}
         disabled={disabled}
         size="small"
-        defaultValue={defaultValue}
+        value={defaultValue}
         onChange={(event) => {
           formik.setFieldValue(name, event.target.value);
           handleChange(event.target.value);
