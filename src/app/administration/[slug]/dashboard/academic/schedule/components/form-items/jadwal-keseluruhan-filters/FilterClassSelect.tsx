@@ -5,14 +5,7 @@ import { MenuItem, Select, Stack, Typography } from "@mui/material";
 import { useSearchParams } from "next/navigation";
 import { KELAS_FIELD_NAME } from "../../filters/KelasSelect";
 
-function FilterClassSelect({
-  formik,
-  name,
-  label,
-  placeholder,
-  disabled,
-  data,
-}) {
+function FilterClassSelect({ name, label, placeholder, data }) {
   const searchParams = useSearchParams();
   const defaultValue = searchParams.get(KELAS_FIELD_NAME) ?? "";
 
@@ -27,11 +20,9 @@ function FilterClassSelect({
       <Select
         id={name}
         name={name}
-        disabled={disabled}
         size="small"
-        defaultValue={defaultValue}
+        value={defaultValue}
         onChange={(event) => {
-          formik.setFieldValue(name, event.target.value);
           handleChange(event.target.value);
         }}
         displayEmpty

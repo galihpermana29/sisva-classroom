@@ -5,7 +5,7 @@ import { MenuItem, Select, Stack, Typography } from "@mui/material";
 import { useSearchParams } from "next/navigation";
 import { HARI_FIELD_NAME } from "../../filters/HariSelect";
 
-function FilterDaySelect({ formik, name, label, placeholder, disabled, data }) {
+function FilterDaySelect({ name, label, placeholder, data }) {
   const searchParams = useSearchParams();
   const defaultValue = searchParams.get(HARI_FIELD_NAME) ?? "";
 
@@ -20,15 +20,11 @@ function FilterDaySelect({ formik, name, label, placeholder, disabled, data }) {
       <Select
         id={name}
         name={name}
-        disabled={disabled}
         size="small"
         value={defaultValue}
         onChange={(event) => {
-          formik.setFieldValue(name, event.target.value);
           handleChange(event.target.value);
         }}
-        onBlur={formik.handleBlur}
-        error={formik.touched[name] && Boolean(formik.errors[name])}
         displayEmpty
       >
         <MenuItem disabled value={""}>

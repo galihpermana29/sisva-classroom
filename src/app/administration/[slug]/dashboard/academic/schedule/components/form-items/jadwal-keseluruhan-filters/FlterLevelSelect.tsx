@@ -5,7 +5,7 @@ import { MenuItem, Select, Stack, Typography } from "@mui/material";
 import { useSearchParams } from "next/navigation";
 import { TINGKAT_FIELD_NAME } from "../../filters/TingkatSelect";
 
-function FilterLevelSelect({ formik, name, label, placeholder, data }) {
+function FilterLevelSelect({ name, label, placeholder, data }) {
   const searchParams = useSearchParams();
   const defaultValue = searchParams.get(TINGKAT_FIELD_NAME) ?? "";
 
@@ -21,13 +21,10 @@ function FilterLevelSelect({ formik, name, label, placeholder, data }) {
         id={name}
         name={name}
         size="small"
-        defaultValue={defaultValue}
+        value={defaultValue}
         onChange={(event) => {
-          formik.setFieldValue(name, event.target.value);
           handleChange(event.target.value);
         }}
-        onBlur={formik.handleBlur}
-        error={formik.touched[name] && Boolean(formik.errors[name])}
         displayEmpty
       >
         <MenuItem disabled value={""}>

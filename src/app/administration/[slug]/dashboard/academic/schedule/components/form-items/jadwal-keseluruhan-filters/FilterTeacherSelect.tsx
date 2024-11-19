@@ -1,23 +1,17 @@
 "use client";
 
+// ! this component is not used
 import { useQueryParam } from "@/hooks/useQueryParam";
 import { MenuItem, Select, Stack, Typography } from "@mui/material";
 import { useSearchParams } from "next/navigation";
 import { GURU_FIELD_NAME } from "../../filters/GuruSelect";
 
-function FilterTeacherSelect({
-  formik,
-  name,
-  label,
-  placeholder,
-  disabled,
-  data,
-}) {
+function FilterTeacherSelect({ name, label, placeholder, data }) {
   const searchParams = useSearchParams();
   const defaultValue = searchParams.get(GURU_FIELD_NAME) ?? "";
 
   const { updateQueryParam } = useQueryParam();
-  const handleChange = (value) => updateQueryParam(GURU_FIELD_NAMEU, value);
+  const handleChange = (value) => updateQueryParam(GURU_FIELD_NAME, value);
 
   return (
     <Stack spacing={1}>
@@ -27,15 +21,11 @@ function FilterTeacherSelect({
       <Select
         id={name}
         name={name}
-        disabled={disabled}
         size="small"
-        defaultValue={defaultValue}
+        value={defaultValue}
         onChange={(event) => {
-          formik.setFieldValue(name, event.target.value);
           handleChange(event.target.value);
         }}
-        onBlur={formik.handleBlur}
-        error={formik.touched[name] && Boolean(formik.errors[name])}
         displayEmpty
       >
         <MenuItem disabled value={""}>
