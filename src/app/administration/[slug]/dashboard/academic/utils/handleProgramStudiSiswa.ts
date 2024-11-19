@@ -66,13 +66,12 @@ export default async function handleProgramStudiSiswa(
     );
 
     const json_text_object = JSON.parse(student.detail.json_text);
-    json_text_object.study_program_id = programStudi.id;
-    json_text_object.study_program = programStudi.name;
 
     const payload = {
       detail: {
         grade: data.grade,
         json_text: JSON.stringify(json_text_object),
+        study_program_id: programStudi.id,
       },
     };
 

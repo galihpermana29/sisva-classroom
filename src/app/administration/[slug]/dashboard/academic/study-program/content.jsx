@@ -30,6 +30,7 @@ import StudyProgramTable from "./components/StudyProgramTable";
 
 import AcademicAPI from "@/api/academic";
 import UsersAPI from "@/api/users";
+import { useStudyPrograms } from "@/hooks/useStudyPrograms";
 import { useFormik } from "formik";
 import ImportXLSXAlert from "../../components/ImportXLSXAlert";
 import handleXLSXUploadAcademic from "../utils/handleXLSXUploadAcademic";
@@ -37,6 +38,7 @@ import { FormAddStudent } from "./components/FormAddStudent";
 import StudentTable from "./components/StudentTable";
 
 export default function StaffProfileContent() {
+  const { data: studyPrograms } = useStudyPrograms();
   const initialValues = {
     code: "",
     name: "",
@@ -78,14 +80,13 @@ export default function StaffProfileContent() {
 
           const detail = {
             ...values.detail,
-            study_program_id: values.study_program,
-            study_program: values.study_program_name,
           };
 
           const payload = {
             detail: {
               grade: values.grade,
               json_text: JSON.stringify(detail),
+              study_program_id: values.study_program,
             },
           };
 
@@ -146,12 +147,10 @@ export default function StaffProfileContent() {
 
   const deleteStudent = async (id, values) => {
     try {
-      delete values.study_program_id;
-      delete values.study_program;
-
       const payload = {
         detail: {
           json_text: JSON.stringify(values),
+          study_program_id: 0,
           grade: "",
         },
       };
@@ -234,36 +233,20 @@ export default function StaffProfileContent() {
       data: { data },
     } = await UsersAPI.getAllUsers("student");
 
-    const noGradeData = data
-      .filter((dt) => {
-        const details = JSON.parse(dt.detail.json_text);
-
-        if (
-          !details.study_program_id &&
-          dt.status == "active" &&
-          dt.detail.grade == ""
-        )
-          return dt;
-      })
-      .map((dt) => {
-        const json_text = JSON.parse(dt.detail.json_text);
-
-        const detail = {
-          json_text: json_text,
-          grade: dt.detail.grade,
-        };
-
-        return { ...dt, detail };
-      });
-
+    const noGradeData = data.filter((dt) => {
+      if (
+        !dt.detail.study_program_id &&
+        dt.status == "active" &&
+        dt.detail.grade == ""
+      )
+        return dt;
+    });
     setStudentList(noGradeData);
 
     const activeStudent = data
       .filter((dt) => {
-        const details = JSON.parse(dt.detail.json_text);
-
         if (
-          details.study_program_id &&
+          dt.detail.study_program_id &&
           dt.status == "active" &&
           dt.detail.grade !== ""
         )
@@ -276,8 +259,10 @@ export default function StaffProfileContent() {
         return {
           id: dt.id,
           name: dt.name,
-          study_program: details.study_program,
-          study_program_id: details.study_program_id,
+          study_program: studyPrograms.find(
+            (data) => data.id === dt.detail.study_program_id
+          )?.name,
+          study_program_id: dt.detail.study_program_id,
           grade: grade,
           profile_image_uri: dt.profile_image_uri,
           detail: details,
@@ -1002,8 +987,8 @@ export default function StaffProfileContent() {
                 activeTab === 0
                   ? setOpenCreateStudyProgramModal(true)
                   : activeTab === 1
-                    ? setOpenCreateGradeModal(true)
-                    : setOpenCreateStudentModal(true)
+                  ? setOpenCreateGradeModal(true)
+                  : setOpenCreateStudentModal(true)
               }
             >
               <Typography sx={{ fontSize: 14 }}>Tambah</Typography>
