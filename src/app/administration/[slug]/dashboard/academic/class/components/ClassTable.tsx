@@ -1,4 +1,5 @@
 import { BorderColorRounded, DeleteForeverRounded } from "@mui/icons-material";
+import type { Theme } from "@mui/material";
 import {
   Box,
   Button,
@@ -157,34 +158,6 @@ const columns = [
   },
 ];
 
-function ChipList({ params, compact }) {
-  return (
-    <Stack
-      sx={{
-        flexDirection: "row",
-        flexWrap: "wrap",
-        overflow: "hidden",
-        justifyContent: compact ? "flex-end" : "flex-start",
-        m: { xs: 0, lg: compact ? 0 : "8px 0" },
-      }}
-    >
-      {params.map((studyProgram, index) => {
-        return (
-          <Chip
-            key={index}
-            sx={{
-              m: { xs: "2px 0px 2px 4px", lg: "2px" },
-              fontSize: 12,
-            }}
-            label={studyProgram}
-            color="primary"
-          />
-        );
-      })}
-    </Stack>
-  );
-}
-
 function ActionButton({ params }) {
   return (
     <Stack
@@ -268,13 +241,15 @@ export default function ClassTable({
   periodList,
   teacherList,
   studyProgramList,
-  removeStudentGroup = () => {},
+  removeStudentGroup,
 }) {
-  const isMobile = useMediaQuery((theme) => theme.breakpoints.down("lg"));
+  const isMobile = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.down("lg")
+  );
 
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const [activeRow, setActiveRow] = useState({});
+  const [activeRow, setActiveRow] = useState<any>({});
 
   let rows = [];
 
