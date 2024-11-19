@@ -167,7 +167,10 @@ const roundAndFormatHour = (timestamp, type) => {
     // handles hour later than 23:xx
     if (hour >= 23) return timestamp.set("minute", 59).format("HH:mm");
     // else just round up to the nearest hour
-    return timestamp.set("minute", 0).set("hour", hour + 1);
+    return timestamp
+      .set("minute", 0)
+      .set("hour", hour + 1)
+      .format("HH:mm");
   }
 
   return timestamp.format("HH:mm");
