@@ -20,7 +20,7 @@ export const useAddStudentToStudentGroup = (queryClient: QueryClient) => {
       studentGroupId,
       studentId,
     }: {
-      studentGroupId: string;
+      studentGroupId: number | number;
       studentId: string;
     }) => {
       await AcademicAPI.insertStudentToStudentGroup(studentGroupId, {
@@ -53,8 +53,8 @@ export const useUpdateStudentInStudentGroup = (queryClient: QueryClient) => {
       oldStudentId,
       studentId,
     }: {
-      oldStudentGroupId: string;
-      newStudentGroupId: string;
+      oldStudentGroupId: number | string;
+      newStudentGroupId: number | string;
       oldStudentId: string;
       studentId: string;
     }) => {

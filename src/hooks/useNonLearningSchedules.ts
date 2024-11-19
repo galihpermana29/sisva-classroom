@@ -3,7 +3,7 @@ import type { NonLearningSchedules } from "@/globalcomponents/BERespondTypes";
 import type { QueryClient } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 
-export const useNonLearningSchedules = (period_id: string) => {
+export const useNonLearningSchedules = (period_id: string | number) => {
   return useQuery<NonLearningSchedules[]>({
     queryKey: ["non-learning-schedules", period_id],
     queryFn: async () =>

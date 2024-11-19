@@ -16,9 +16,9 @@ import type { SubmitHandler } from "react-hook-form";
 import { Controller, useForm } from "react-hook-form";
 
 type FormStudentInStudentGroup = {
-  periodId: string;
-  studyProgramId: string;
-  studentGroupId: string;
+  periodId: number;
+  studyProgramId: number;
+  studentGroupId: number;
   studentId: string;
 };
 
@@ -29,10 +29,11 @@ export default function FormStudentInStudentGroup({
   onClickSave,
 }: {
   studentId?: string;
-  studentGroupId?: string;
+  studentGroupId?: number;
   onClickCancel: () => void;
   onClickSave: () => void;
 }) {
+  console.log(typeof studentId, typeof studentGroupId);
   const queryClient = useQueryClient();
   const { data: periods } = usePeriods();
   const { data: students } = useStudents();
@@ -46,9 +47,9 @@ export default function FormStudentInStudentGroup({
 
   const { handleSubmit, control, watch } = useForm<FormStudentInStudentGroup>({
     defaultValues: {
-      periodId: "",
-      studyProgramId: "",
-      studentGroupId: studentGroupId || "",
+      periodId: 0,
+      studyProgramId: 0,
+      studentGroupId: studentGroupId || 0,
       studentId: studentId || "",
     },
   });

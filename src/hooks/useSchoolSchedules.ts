@@ -2,7 +2,7 @@ import AcademicAPI from "@/api/academic";
 import type { SchoolSchedules } from "@/globalcomponents/BERespondTypes";
 import { useQuery } from "@tanstack/react-query";
 
-export const useSchoolSchedules = (period_id: string) => {
+export const useSchoolSchedules = (period_id: string | number) => {
   return useQuery<SchoolSchedules[]>({
     queryKey: ["school-schedules", period_id],
     queryFn: async () =>

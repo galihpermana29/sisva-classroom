@@ -3,7 +3,7 @@ import type { ClassSchedule } from "@/globalcomponents/BERespondTypes";
 import type { QueryClient } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 
-export const useClassSchedules = (period_id: string) => {
+export const useClassSchedules = (period_id: string | number) => {
   return useQuery<ClassSchedule[]>({
     queryKey: ["class-schedules", period_id],
     queryFn: async () =>
