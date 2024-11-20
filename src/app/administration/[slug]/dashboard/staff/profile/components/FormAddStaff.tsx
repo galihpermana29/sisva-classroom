@@ -16,12 +16,18 @@ import {
 
 import { formAddStaffFields } from "@/globalcomponents/FormFields";
 import { permissions } from "@/globalcomponents/Variable";
+import { useDebouncedCallback } from "@mantine/hooks";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
 
 export const FormAddStaff = ({ formik }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+  const setFieldValue = useDebouncedCallback(
+    (fieldName, value) => formik.setFieldValue(fieldName, value),
+    50
+  );
+
   return (
     <>
       {formAddStaffFields.map((field) =>
@@ -34,8 +40,8 @@ export const FormAddStaff = ({ formik }) => {
               name={field.name}
               placeholder={field.placeholder}
               fullWidth
-              value={formik.values[field.name]}
-              onChange={(e) => formik.setFieldValue(field.name, e.target.value)}
+              defaultValue={formik.values[field.name]}
+              onChange={(e) => setFieldValue(field.name, e.target.value)}
             />
           </Stack>
         ) : field.type === "password" ? (
@@ -48,8 +54,8 @@ export const FormAddStaff = ({ formik }) => {
               name={field.name}
               placeholder={field.placeholder}
               fullWidth
-              value={formik.values[field.name]}
-              onChange={(e) => formik.setFieldValue(field.name, e.target.value)}
+              defaultValue={formik.values[field.name]}
+              onChange={(e) => setFieldValue(field.name, e.target.value)}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
