@@ -22,7 +22,7 @@ import {
   setSortField,
 } from "../utils/studentProfileSlice";
 
-export default function MobileFilterModal({ openSortModal, setOpenSortModal }) {
+export default function MobileSortModal({ openSortModal, setOpenSortModal }) {
   const dispatch = useAdministrationDispatch();
   const sortField = useAdministrationSelector(selectSortField);
   const sortDirection = useAdministrationSelector(selectSortDirection);

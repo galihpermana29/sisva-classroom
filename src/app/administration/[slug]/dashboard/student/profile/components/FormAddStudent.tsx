@@ -18,7 +18,7 @@ export const FormAddStudent = ({ formik }) => {
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
   const setFieldValue = useDebouncedCallback(
     (fieldName, value) => formik.setFieldValue(fieldName, value),
-    50
+    100
   );
 
   return (
