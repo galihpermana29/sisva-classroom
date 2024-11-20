@@ -18,7 +18,7 @@ export const JadwalKelasSchedule = () => {
     <Stack
       alignItems="center"
       justifyContent="center"
-      minWidth={shouldRender && 1280}
+      minWidth={shouldRender && 1400}
     >
       {!shouldRender && <FilterIncompleteState />}
       {shouldRender && (

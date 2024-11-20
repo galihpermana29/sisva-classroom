@@ -76,6 +76,7 @@ function TimelineWeekSchedule({
       showWeekend={false}
       width="100%"
       height="100%"
+      timeScale={{ enable: true, interval: 60, slotCount: 5 }}
       rowAutoHeight={true}
       workDays={workDays}
       startHour={startTime}

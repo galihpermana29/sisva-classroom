@@ -5,6 +5,8 @@ import { Internationalization } from "@syncfusion/ej2-base";
 import {
   Inject,
   ScheduleComponent,
+  ViewDirective,
+  ViewsDirective,
   Week,
 } from "@syncfusion/ej2-react-schedule";
 import dayjs from "dayjs";
@@ -40,6 +42,7 @@ const WeekGeneralSchedule = ({ data, cellTemplate }) => {
       workHours={workHours}
       width="100%"
       height="100%"
+      timeScale={{ enable: true, interval: 60, slotCount: 5 }}
       // setting first day of week to monday
       firstDayOfWeek={1}
       selectedDate={selectedDate}
@@ -58,6 +61,9 @@ const WeekGeneralSchedule = ({ data, cellTemplate }) => {
       // to customize .e-appointment (event card) styling
       eventRendered={onEventRendered}
     >
+      <ViewsDirective>
+        <ViewDirective option="Week" />
+      </ViewsDirective>
       <Inject services={[Week]} />
     </ScheduleComponent>
   );
