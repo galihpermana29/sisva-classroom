@@ -60,13 +60,15 @@ function getColumns(schoolId) {
                       mr: 1,
                     }}
                   >
-                    <Image
-                      alt="Web Image"
-                      fill
-                      sizes="100%"
-                      style={{ objectFit: "cover" }}
-                      src={`https://api-staging.sisva.id/file/v1/files/${params.value.data.profile_image_uri}?school_id=${schoolId}`}
-                    />
+                    {params.value.data.profile_image_uri && (
+                      <Image
+                        alt="Web Image"
+                        fill
+                        sizes="100%"
+                        style={{ objectFit: "cover" }}
+                        src={`https://api-staging.sisva.id/file/v1/files/${params.value.data.profile_image_uri}?school_id=${schoolId}`}
+                      />
+                    )}
                   </Avatar>
                   <Typography
                     sx={{
