@@ -2,6 +2,7 @@ import {
   useAdministrationDispatch,
   useAdministrationSelector,
 } from "@/app/administration/hooks";
+import { useDebouncedCallback } from "@mantine/hooks";
 import { Cancel, Search } from "@mui/icons-material";
 import { Hidden, InputAdornment, Stack, TextField } from "@mui/material";
 import { memo } from "react";
@@ -9,8 +10,12 @@ import { selectSearchText, setSearchText } from "../utils/staffProfileSlice";
 import Filters from "./Filters";
 
 function FilterBar() {
-  const searchText = useAdministrationSelector(selectSearchText);
+  const inputText = useAdministrationSelector(selectSearchText);
   const dispatch = useAdministrationDispatch();
+  const debouncedDispatchSetSearchText = useDebouncedCallback(
+    (text) => dispatch(setSearchText(text)),
+    250
+  );
 
   return (
     <Stack
@@ -32,12 +37,12 @@ function FilterBar() {
           borderRight: "1px solid rgb(0,0,0,0.12)",
           pr: 1,
         }}
-        value={searchText}
-        onChange={(e) => dispatch(setSearchText(e.target.value))}
+        defaultValue={inputText}
+        onChange={(e) => debouncedDispatchSetSearchText(e.target.value)}
         InputProps={{
-          startAdornment: searchText && (
+          startAdornment: inputText && (
             <Cancel
-              onClick={() => dispatch(setSearchText(""))}
+              onClick={() => debouncedDispatchSetSearchText("")}
               sx={{
                 fontSize: 14,
                 color: "base.base50",
