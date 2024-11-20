@@ -22,7 +22,6 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { FormAddStaff } from "./components/FormAddStaff";
 import DataTable from "./components/Table";
 
 import AcademicAPI from "@/api/academic";
@@ -101,8 +100,6 @@ export default function StaffProfileListContent() {
   const [isOpenXLSXAlert, setIsOpenImportXLSXAlert] = useState(false);
   const [reportText, setReportText] = useState([]);
   const [XLSXAlertTitle, setXLSXAlertTitle] = useState("");
-
-  const [openCreateModal, setOpenCreateModal] = useState(false);
 
   const getAllStudentAttendance = async () => {
     try {
@@ -312,65 +309,6 @@ export default function StaffProfileListContent() {
         title={XLSXAlertTitle}
         importReport={reportText}
       />
-      <Modal open={openCreateModal} onClose={() => setOpenCreateModal(false)}>
-        <Stack
-          component={Paper}
-          elevation={2}
-          sx={{
-            borderRadius: 2,
-            zIndex: 20,
-            margin: "auto",
-            position: "fixed",
-            height: "fit-content",
-            width: "360px",
-            maxWidth: "80%",
-            top: 0,
-            bottom: 0,
-            right: 0,
-            left: 0,
-          }}
-        >
-          <Box
-            sx={{
-              padding: 2,
-            }}
-          >
-            <Typography fontWeight={600} fontSize={16}></Typography>
-          </Box>
-          <Divider />
-          <Box sx={{ maxHeight: "70vh", overflowY: "auto", px: 2 }}>
-            <FormAddStaff formik={formik} />
-          </Box>
-          <Divider />
-          <Stack
-            sx={{
-              flexDirection: "row",
-              p: 2,
-            }}
-          >
-            <Button
-              variant="outlined"
-              sx={{ flex: 1, mr: 1 }}
-              onClick={() => {
-                setOpenCreateModal(false);
-                formik.setValues(initialData);
-              }}
-            >
-              Batal
-            </Button>
-            <Button
-              variant="contained"
-              sx={{ flex: 1 }}
-              onClick={() => {
-                setOpenCreateModal(false);
-                formik.setValues(initialData);
-              }}
-            >
-              Simpan
-            </Button>
-          </Stack>
-        </Stack>
-      </Modal>
       <Modal open={openSortModal} onClose={() => setOpenSortModal(false)}>
         <Stack
           component={Paper}
@@ -576,7 +514,6 @@ export default function StaffProfileListContent() {
                 display: { xs: "none", lg: "flex" },
                 width: "fit-content",
                 height: "100%",
-                width: 100,
                 mr: 1,
                 borderColor: "green",
                 backgroundColor: "white",
@@ -662,19 +599,6 @@ export default function StaffProfileListContent() {
                 </label>
               </MenuItem>
             </Menu>
-
-            {/* <Button
-              variant='contained'
-              color='primary'
-              startIcon={<Add />}
-              sx={{
-                width: 100,
-                height: '100%',
-              }}
-              onClick={() => setOpenCreateModal(true)}
-            >
-              <Typography sx={{ fontSize: 14 }}>Tambah</Typography>
-            </Button> */}
           </Stack>
         </Stack>
 

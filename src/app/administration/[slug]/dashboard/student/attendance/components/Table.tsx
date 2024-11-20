@@ -1,6 +1,7 @@
 import { useSchool } from "@/app/administration/[slug]/SchoolContext";
 import { permissions, types } from "@/globalcomponents/Variable";
 import { BorderColorRounded } from "@mui/icons-material";
+import type { Theme } from "@mui/material";
 import {
   Avatar,
   Box,
@@ -297,10 +298,12 @@ function ActionButton({ params }) {
 
 export default function DataTable({ data, formik }) {
   const school = useSchool();
-  const isMobile = useMediaQuery((theme) => theme.breakpoints.down("lg"));
+  const isMobile = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.down("lg")
+  );
 
   const [openEditModal, setOpenEditModal] = useState(false);
-  const [activeRow, setActiveRow] = useState({});
+  const [activeRow, setActiveRow] = useState<any>({});
 
   let rows = [];
 
