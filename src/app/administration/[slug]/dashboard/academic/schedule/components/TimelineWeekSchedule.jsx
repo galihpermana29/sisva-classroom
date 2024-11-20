@@ -12,6 +12,7 @@ import {
   ViewsDirective,
 } from "@syncfusion/ej2-react-schedule";
 import dayjs from "dayjs";
+import "./TimelineWeekSchedule.css";
 
 const gradeDataSource = [
   { gradeText: "Kelas I", grade: "I" },
