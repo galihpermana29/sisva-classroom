@@ -10,6 +10,7 @@ import {
   Modal,
   Paper,
   Stack,
+  Theme,
   Typography,
   useMediaQuery,
 } from "@mui/material";
@@ -147,39 +148,6 @@ function getColumns(schoolId) {
   return columns;
 }
 
-function ChipList({ params }) {
-  return (
-    <Stack
-      sx={{
-        flexDirection: "row",
-        flexWrap: "wrap",
-        overflow: "hidden",
-        m: "8px 0",
-      }}
-    >
-      {params.map((permission, index) => {
-        let tempPermission;
-        permissions.map((item) => {
-          if (item.slug === permission) {
-            tempPermission = item.title;
-          }
-        });
-        return (
-          <Chip
-            key={index}
-            sx={{
-              m: { xs: "2px 4px 2px 0", lg: "2px" },
-              fontSize: 12,
-            }}
-            label={tempPermission}
-            color="primary"
-          />
-        );
-      })}
-    </Stack>
-  );
-}
-
 function ActionButton({ params }) {
   const { slug } = useParams();
 
@@ -228,12 +196,14 @@ function ActionButton({ params }) {
   );
 }
 
-export default function DataTable({ data, deleteUser = () => {} }) {
+export default function DataTable({ data, deleteUser }) {
   const school = useSchool();
-  const isMobile = useMediaQuery((theme) => theme.breakpoints.down("lg"));
+  const isMobile = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.down("lg")
+  );
 
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const [activeRow, setActiveRow] = useState({});
+  const [activeRow, setActiveRow] = useState<any>({});
 
   let rows = [];
 

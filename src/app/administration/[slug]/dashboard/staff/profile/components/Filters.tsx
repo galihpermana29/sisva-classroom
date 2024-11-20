@@ -15,7 +15,7 @@ import {
 
 export default function Filters() {
   const roleFilter = useAdministrationSelector(selectRoleFilter);
-  const permissionFilter2 = useAdministrationSelector(selectPermissionFilter);
+  const permissionFilter = useAdministrationSelector(selectPermissionFilter);
   const dispatch = useAdministrationDispatch();
 
   return (
@@ -63,7 +63,7 @@ export default function Filters() {
         select
         size="small"
         label="Akses"
-        value={permissionFilter2}
+        value={permissionFilter}
         onChange={(e) =>
           dispatch(setPermissionFilter(e.target.value as Permission))
         }
@@ -75,7 +75,7 @@ export default function Filters() {
         }}
         InputProps={{
           sx: { minWidth: 100, width: { xs: "100%", lg: "fit-content" } },
-          startAdornment: permissionFilter2 && (
+          startAdornment: permissionFilter && (
             <Cancel
               onClick={() => dispatch(setPermissionFilter(""))}
               sx={{

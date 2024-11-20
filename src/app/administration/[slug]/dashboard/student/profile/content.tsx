@@ -1,12 +1,7 @@
 "use client";
 
 import { ExcelIcon, SortIcon } from "@/assets/SVGs";
-import {
-  Add,
-  Cancel,
-  DownloadRounded,
-  UploadFileRounded,
-} from "@mui/icons-material";
+import { Add, DownloadRounded, UploadFileRounded } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -16,7 +11,6 @@ import {
   Modal,
   Paper,
   Stack,
-  TextField,
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -27,20 +21,27 @@ import UsersAPI from "@/api/users";
 import { useAdministrationSelector } from "@/app/administration/hooks";
 import { useFormik } from "formik";
 import ImportXLSXAlert from "../../components/ImportXLSXAlert";
+import MobileFilterModal from "./components/MobileFilterModal";
 import { SearchTextFilter } from "./components/SearchTextFilter";
 import handleXLSXUploadStudent from "./utils/handleXLSXUploadStudent";
-import { selectSearchText } from "./utils/studentProfileSlice";
+import {
+  selectSearchText,
+  selectSortDirection,
+  selectSortField,
+} from "./utils/studentProfileSlice";
 
 export default function SchoolProfileListContent() {
   const search = useAdministrationSelector(selectSearchText);
+  const sortField = useAdministrationSelector(selectSortField);
+  const sortDirection = useAdministrationSelector(selectSortDirection);
 
-  const [initialData, setinitialData] = useState({
+  const initialData = {
     name: "",
     type: "student",
     permissions: [],
     password: "",
     password_confirm: "",
-  });
+  };
   const formik = useFormik({
     initialValues: { ...initialData },
 
@@ -81,15 +82,8 @@ export default function SchoolProfileListContent() {
   };
 
   const [studentData, setStudentData] = useState([]);
-
-  let [filteredData, setFilteredData] = useState([]);
-  const [sortBy, setSortBy] = useState("");
-  const [sortType, setSortType] = useState("ascending");
-  const [sortSettings, setSortSettings] = useState("");
   const [openSortModal, setOpenSortModal] = useState(false);
-
   const [openCreateModal, setOpenCreateModal] = useState(false);
-
   const [isOpenImportXLSXAlert, setIsOpenImportXLSXAlert] = useState(false);
   const [importXLSXAlertTitle, setImportXLSXAlertTitle] = useState("");
   const [importAlert, setImportAlert] = useState([]);
@@ -128,45 +122,40 @@ export default function SchoolProfileListContent() {
     getAllStudent();
   }, []);
 
-  useEffect(() => {
-    let temp = studentData.filter((item) => {
-      return (
-        item.name.toLowerCase().includes(search.toLowerCase()) ||
-        item.username.toLowerCase().includes(search.toLowerCase())
-      );
-    });
-    if (sortSettings && sortSettings.sortBy) {
-      temp = temp.sort(function (a, b) {
-        let x, y;
-        if (sortSettings.sortBy === "name") {
-          x = a.name.toLowerCase();
-          y = b.name.toLowerCase();
-        } else if (sortSettings.sortBy === "username") {
-          x = a.name.toLowerCase();
-          y = b.name.toLowerCase();
-        }
-
-        if (sortSettings.sortType === "ascending") {
-          if (x < y) {
-            return -1;
-          }
-          if (x > y) {
-            return 1;
-          }
-          return 0;
-        } else if (sortSettings.sortType === "descending") {
-          if (x > y) {
-            return -1;
-          }
-          if (x < y) {
-            return 1;
-          }
-          return 0;
-        }
-      });
+  let filteredData = studentData.filter((item) => {
+    return (
+      item.name.toLowerCase().includes(search.toLowerCase()) ||
+      item.username.toLowerCase().includes(search.toLowerCase())
+    );
+  });
+  filteredData = filteredData.sort(function (a, b) {
+    let x, y;
+    if (sortField === "name") {
+      x = a.name.toLowerCase();
+      y = b.name.toLowerCase();
+    } else if (sortField === "username") {
+      x = a.name.toLowerCase();
+      y = b.name.toLowerCase();
     }
-    setFilteredData(temp);
-  }, [studentData, search, sortSettings]);
+
+    if (sortDirection === "ascending") {
+      if (x < y) {
+        return -1;
+      }
+      if (x > y) {
+        return 1;
+      }
+      return 0;
+    } else if (sortDirection === "descending") {
+      if (x > y) {
+        return -1;
+      }
+      if (x < y) {
+        return 1;
+      }
+      return 0;
+    }
+  });
 
   return (
     <Stack sx={{ height: "100%", width: "100%", p: { xs: 0, lg: 4 } }}>
@@ -230,7 +219,6 @@ export default function SchoolProfileListContent() {
               onClick={() => {
                 setOpenCreateModal(false);
                 formik.handleSubmit();
-                // formik.setValues(initialData);
               }}
             >
               Simpan
@@ -238,109 +226,10 @@ export default function SchoolProfileListContent() {
           </Stack>
         </Stack>
       </Modal>
-      <Modal open={openSortModal} onClose={() => setOpenSortModal(false)}>
-        <Stack
-          component={Paper}
-          elevation={2}
-          sx={{
-            padding: 2,
-            borderRadius: 2,
-            zIndex: 20,
-            margin: "auto",
-            position: "fixed",
-            height: "fit-content",
-            width: "240px",
-            top: 0,
-            bottom: 0,
-            right: 0,
-            left: 0,
-          }}
-        >
-          <Typography fontWeight={600} fontSize={16}>
-            Urutkan
-          </Typography>
-          <TextField
-            select
-            size="small"
-            label="Data"
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-            sx={{ flex: 1, mt: 2 }}
-            InputProps={{
-              startAdornment: sortBy && (
-                <Cancel
-                  onClick={() => {
-                    setSortBy("");
-                  }}
-                  sx={{
-                    fontSize: 14,
-                    color: "base.base50",
-                    cursor: "pointer",
-                    transform: "translateX(-4px)",
-                    "&:hover": {
-                      color: "base.base60",
-                    },
-                  }}
-                />
-              ),
-            }}
-          >
-            {[
-              { title: "Nama", slug: "name" },
-              { title: "Username", slug: "username" },
-            ].map((option) => (
-              <MenuItem key={option.slug} value={option.slug}>
-                <Typography fontSize={14}>{option.title}</Typography>
-              </MenuItem>
-            ))}
-          </TextField>
-          <TextField
-            select
-            size="small"
-            label="Jenis Urutan"
-            value={sortType}
-            disabled={!sortBy}
-            onChange={(e) => setSortType(e.target.value)}
-            sx={{ flex: 1, mt: 2, mb: 2 }}
-          >
-            {[
-              { title: "A-Z", slug: "ascending" },
-              { title: "Z-A", slug: "descending" },
-            ].map((option) => (
-              <MenuItem key={option.slug} value={option.slug}>
-                <Typography fontSize={14}>{option.title}</Typography>
-              </MenuItem>
-            ))}
-          </TextField>
-          <Stack
-            sx={{
-              flexDirection: "row",
-            }}
-          >
-            <Button
-              variant="outlined"
-              sx={{ flex: 1, mr: 1 }}
-              onClick={() => {
-                setOpenSortModal(false);
-                setSortBy(sortSettings.sortBy);
-                setSortType(sortSettings.sortType);
-              }}
-            >
-              Batal
-            </Button>
-            <Button
-              variant="contained"
-              sx={{ flex: 1 }}
-              onClick={() => {
-                setOpenSortModal(false);
-                setSortSettings({ sortBy: sortBy, sortType: sortType });
-              }}
-            >
-              Simpan
-            </Button>
-          </Stack>
-        </Stack>
-      </Modal>
+      <MobileFilterModal
+        openSortModal={openSortModal}
+        setOpenSortModal={setOpenSortModal}
+      />
       <Stack
         sx={{
           flexDirection: "row",

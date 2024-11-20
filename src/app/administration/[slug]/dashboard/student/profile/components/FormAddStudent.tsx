@@ -12,7 +12,7 @@ import { formAddStudentFields } from "@/globalcomponents/FormFields";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
 
-export const FormAddStudent = ({ formik, editing }) => {
+export const FormAddStudent = ({ formik }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
   return (
@@ -43,8 +43,8 @@ export const FormAddStudent = ({ formik, editing }) => {
                     ? "text"
                     : "password"
                   : showPasswordConfirm
-                    ? "text"
-                    : "password"
+                  ? "text"
+                  : "password"
               }
               name={field.name}
               placeholder={field.placeholder}
