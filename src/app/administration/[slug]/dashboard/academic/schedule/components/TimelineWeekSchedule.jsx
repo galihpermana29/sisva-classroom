@@ -1,6 +1,6 @@
 "use client";
 
-import { Typography } from "@mui/material";
+import { Tooltip, Typography } from "@mui/material";
 import { Internationalization } from "@syncfusion/ej2-base";
 import {
   Inject,
@@ -48,11 +48,15 @@ const onEventRendered = (props) => {
 };
 
 const eventTemplate = (props) => {
+  function getTooltipText(name, teacher_name) {
+    if (!teacher_name) return name;
+    return `${name} - ${teacher_name}`;
+  }
   return (
-    <>
+    <Tooltip title={getTooltipText(props.name, props?.teacher_name)}>
       <h3 className="font-medium !text-xs !line-clamp-1">{props.name}</h3>
       <p className="text-[10px]">{props?.teacher_name}</p>
-    </>
+    </Tooltip>
   );
 };
 
