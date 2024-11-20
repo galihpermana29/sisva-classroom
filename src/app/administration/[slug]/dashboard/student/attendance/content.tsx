@@ -27,16 +27,22 @@ import DataTable from "./components/Table";
 import AcademicAPI from "@/api/academic";
 import AttendanceApi from "@/api/attendance";
 import UsersAPI from "@/api/users";
-import { useAdministrationDispatch } from "@/app/administration/hooks";
+import {
+  useAdministrationDispatch,
+  useAdministrationSelector,
+} from "@/app/administration/hooks";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
 import { useFormik } from "formik";
 import ImportXLSXAlert from "../../components/ImportXLSXAlert";
+import MobileSortModal from "./components/MobileSortModal";
 import StudentAttendanceProgressAlert from "./components/StudentProgressAlert";
 import handleXLSXUploadStudentAttendance from "./utils/handleXLSXUploadStudentAttendance";
 import {
+  selectSortDirection,
+  selectSortField,
   setProgress,
   setProgressLog,
   toggleProgressAlert,
@@ -44,6 +50,9 @@ import {
 
 export default function StaffProfileListContent() {
   const dispatch = useAdministrationDispatch();
+  const sortField = useAdministrationSelector(selectSortField);
+  const sortDirection = useAdministrationSelector(selectSortDirection);
+
   const [initialData, setinitialData] = useState({
     id: "",
     status: "present",
@@ -86,7 +95,6 @@ export default function StaffProfileListContent() {
   const [attendanceData, setStudentAttendanceData] = useState([]);
   const [pickedDate, setPickedDate] = useState(dayjs(new Date()));
 
-  let [filteredData, setFilteredData] = useState([]);
   const [statusFilter, setStatusFilter] = useState("");
   const [classFilter, setClassFilter] = useState("");
   const [search, setSearch] = useState("");
@@ -147,47 +155,43 @@ export default function StaffProfileListContent() {
     getAllStudentAttendance();
   }, [pickedDate]);
 
-  useEffect(() => {
-    let temp = attendanceData.filter((item) => {
-      return (
-        (item.name.toLowerCase().includes(search.toLowerCase()) ||
-          item.username.toLowerCase().includes(search.toLowerCase())) &&
-        item.class.toLowerCase().includes(classFilter.toLowerCase()) &&
-        item.status.toLowerCase().includes(statusFilter.toLowerCase())
-      );
-    });
-    if (sortSettings && sortSettings.sortBy) {
-      temp = temp.sort(function (a, b) {
-        let x, y;
-        if (sortSettings.sortBy === "name") {
-          x = a.name.toLowerCase();
-          y = b.name.toLowerCase();
-        } else if (sortSettings.sortBy === "username") {
-          x = a.name.toLowerCase();
-          y = b.name.toLowerCase();
-        }
+  let filteredData = attendanceData.filter((item) => {
+    return (
+      (item.name.toLowerCase().includes(search.toLowerCase()) ||
+        item.username.toLowerCase().includes(search.toLowerCase())) &&
+      item.class.toLowerCase().includes(classFilter.toLowerCase()) &&
+      item.status.toLowerCase().includes(statusFilter.toLowerCase())
+    );
+  });
 
-        if (sortSettings.sortType === "ascending") {
-          if (x < y) {
-            return -1;
-          }
-          if (x > y) {
-            return 1;
-          }
-          return 0;
-        } else if (sortSettings.sortType === "descending") {
-          if (x > y) {
-            return -1;
-          }
-          if (x < y) {
-            return 1;
-          }
-          return 0;
-        }
-      });
+  filteredData = filteredData.sort(function (a, b) {
+    let x, y;
+    if (sortField === "name") {
+      x = a.name.toLowerCase();
+      y = b.name.toLowerCase();
+    } else if (sortField === "username") {
+      x = a.name.toLowerCase();
+      y = b.name.toLowerCase();
     }
-    setFilteredData(temp);
-  }, [attendanceData, search, classFilter, statusFilter, sortSettings]);
+
+    if (sortDirection === "ascending") {
+      if (x < y) {
+        return -1;
+      }
+      if (x > y) {
+        return 1;
+      }
+      return 0;
+    } else if (sortDirection === "descending") {
+      if (x > y) {
+        return -1;
+      }
+      if (x < y) {
+        return 1;
+      }
+      return 0;
+    }
+  });
 
   function Filters() {
     return (
@@ -308,109 +312,10 @@ export default function StaffProfileListContent() {
         title={XLSXAlertTitle}
         importReport={reportText}
       />
-      <Modal open={openSortModal} onClose={() => setOpenSortModal(false)}>
-        <Stack
-          component={Paper}
-          elevation={2}
-          sx={{
-            padding: 2,
-            borderRadius: 2,
-            zIndex: 20,
-            margin: "auto",
-            position: "fixed",
-            height: "fit-content",
-            width: "240px",
-            top: 0,
-            bottom: 0,
-            right: 0,
-            left: 0,
-          }}
-        >
-          <Typography fontWeight={600} fontSize={16}>
-            Urutkan
-          </Typography>
-          <TextField
-            select
-            size="small"
-            label="Data"
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-            sx={{ flex: 1, mt: 2 }}
-            InputProps={{
-              startAdornment: sortBy && (
-                <Cancel
-                  onClick={() => {
-                    setSortBy("");
-                  }}
-                  sx={{
-                    fontSize: 14,
-                    color: "base.base50",
-                    cursor: "pointer",
-                    transform: "translateX(-4px)",
-                    "&:hover": {
-                      color: "base.base60",
-                    },
-                  }}
-                />
-              ),
-            }}
-          >
-            {[
-              { title: "Nama", slug: "name" },
-              { title: "Username", slug: "username" },
-            ].map((option) => (
-              <MenuItem key={option.slug} value={option.slug}>
-                <Typography fontSize={14}>{option.title}</Typography>
-              </MenuItem>
-            ))}
-          </TextField>
-          <TextField
-            select
-            size="small"
-            label="Jenis Urutan"
-            value={sortType}
-            disabled={!sortBy}
-            onChange={(e) => setSortType(e.target.value)}
-            sx={{ flex: 1, mt: 2, mb: 2 }}
-          >
-            {[
-              { title: "A-Z", slug: "ascending" },
-              { title: "Z-A", slug: "descending" },
-            ].map((option) => (
-              <MenuItem key={option.slug} value={option.slug}>
-                <Typography fontSize={14}>{option.title}</Typography>
-              </MenuItem>
-            ))}
-          </TextField>
-          <Stack
-            sx={{
-              flexDirection: "row",
-            }}
-          >
-            <Button
-              variant="outlined"
-              sx={{ flex: 1, mr: 1 }}
-              onClick={() => {
-                setOpenSortModal(false);
-                setSortBy(sortSettings.sortBy);
-                setSortType(sortSettings.sortType);
-              }}
-            >
-              Batal
-            </Button>
-            <Button
-              variant="contained"
-              sx={{ flex: 1 }}
-              onClick={() => {
-                setOpenSortModal(false);
-                setSortSettings({ sortBy: sortBy, sortType: sortType });
-              }}
-            >
-              Simpan
-            </Button>
-          </Stack>
-        </Stack>
-      </Modal>
+      <MobileSortModal
+        openSortModal={openSortModal}
+        setOpenSortModal={setOpenSortModal}
+      />
       <Stack
         sx={{
           flexDirection: "row",
