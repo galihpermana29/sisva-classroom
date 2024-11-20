@@ -19,7 +19,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import * as React from "react";
-import { useState } from "react";
+import { memo, useState } from "react";
 
 function getColumns(schoolId) {
   const columns = [
@@ -196,7 +196,7 @@ function ActionButton({ params }) {
   );
 }
 
-export default function DataTable({ data, deleteUser }) {
+function DataTable({ data, deleteUser }) {
   const school = useSchool();
   const isMobile = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down("lg")
@@ -419,3 +419,5 @@ export default function DataTable({ data, deleteUser }) {
     </div>
   );
 }
+
+export default memo(DataTable);
