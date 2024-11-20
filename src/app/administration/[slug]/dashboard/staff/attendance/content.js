@@ -4,7 +4,6 @@ import { ExcelIcon, SortIcon } from "@/assets/SVGs";
 import {
   Cancel,
   DownloadRounded,
-  Search,
   UploadFileRounded,
 } from "@mui/icons-material";
 import {
@@ -12,7 +11,6 @@ import {
   Button,
   Divider,
   Hidden,
-  InputAdornment,
   Menu,
   MenuItem,
   Modal,
@@ -26,22 +24,28 @@ import DataTable from "./components/Table";
 
 import AttendanceApi from "@/api/attendance";
 import UsersAPI from "@/api/users";
-import { useAdministrationDispatch } from "@/app/administration/hooks";
+import {
+  useAdministrationDispatch,
+  useAdministrationSelector,
+} from "@/app/administration/hooks";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
 import { useFormik } from "formik";
 import ImportXLSXAlert from "../../components/ImportXLSXAlert";
+import SearchFilter from "./components/SearchFilter";
 import StaffAttendanceProgressAlert from "./components/StaffAttendanceProgressAlert";
 import handleXLSXUploadStaffAttendance from "./utils/handleXLSXUploadStaffAttendance";
 import {
+  selectSearchText,
   setProgress,
   setProgressLog,
   toggleProgressAlert,
 } from "./utils/staffAttendanceSlice";
 
 export default function StaffProfileListContent() {
+  const searchText = useAdministrationSelector(selectSearchText);
   const dispatch = useAdministrationDispatch();
   const [initialData, setinitialData] = useState({
     id: "",
@@ -88,7 +92,6 @@ export default function StaffProfileListContent() {
 
   const [tableData, setTableData] = useState([]);
   let [filteredData, setFilteredData] = useState([]);
-  const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
   const [permissionFilter, setPermissionFilter] = useState("");
   const [sortBy, setSortBy] = useState("");
@@ -135,8 +138,8 @@ export default function StaffProfileListContent() {
   useEffect(() => {
     let temp = tableData?.filter((item) => {
       return (
-        (item?.name.toLowerCase().includes(search.toLowerCase()) ||
-          item.username.toLowerCase().includes(search.toLowerCase())) &&
+        (item?.name.toLowerCase().includes(searchText.toLowerCase()) ||
+          item.username.toLowerCase().includes(searchText.toLowerCase())) &&
         item.type.toLowerCase().includes(typeFilter.toLowerCase()) &&
         (!permissionFilter || item.permissions.includes(permissionFilter))
       );
@@ -172,7 +175,7 @@ export default function StaffProfileListContent() {
       });
     }
     setFilteredData(temp);
-  }, [tableData, search, typeFilter, permissionFilter, sortSettings]);
+  }, [tableData, searchText, typeFilter, permissionFilter, sortSettings]);
 
   function Filters() {
     return (
@@ -356,45 +359,7 @@ export default function StaffProfileListContent() {
               alignItems: "center",
             }}
           >
-            <TextField
-              // id="outlined-search"
-              placeholder="Cari Karyawan"
-              size="small"
-              type="text"
-              sx={{
-                maxWidth: { xs: "100%", lg: "200px" },
-                flex: 1,
-                width: "100%",
-                height: "100%",
-                borderRight: "1px solid rgb(0,0,0,0.12)",
-                pr: 1,
-              }}
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              InputProps={{
-                startAdornment: search && (
-                  <Cancel
-                    onClick={() => {
-                      setSearch("");
-                    }}
-                    sx={{
-                      fontSize: 14,
-                      color: "base.base50",
-                      cursor: "pointer",
-                      transform: "translateX(-4px)",
-                      "&:hover": {
-                        color: "base.base60",
-                      },
-                    }}
-                  />
-                ),
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <Search />
-                  </InputAdornment>
-                ),
-              }}
-            />
+            <SearchFilter />
             <Hidden lgDown>
               <Filters />
             </Hidden>

@@ -5,12 +5,14 @@ interface StaffAttendance {
   progress: string;
   progressLog: string;
   isOpenProgressAlert: boolean;
+  searchText: string;
 }
 
 const initialState: StaffAttendance = {
   progress: "0%",
   progressLog: "",
   isOpenProgressAlert: false,
+  searchText: "",
 };
 
 export const staffAttendanceSlice = createSlice({
@@ -26,11 +28,18 @@ export const staffAttendanceSlice = createSlice({
     toggleProgressAlert: (state, action: PayloadAction<boolean>) => {
       state.isOpenProgressAlert = action.payload;
     },
+    setSearchText: (state, action: PayloadAction<string>) => {
+      state.searchText = action.payload;
+    },
   },
 });
 
-export const { setProgress, setProgressLog, toggleProgressAlert } =
-  staffAttendanceSlice.actions;
+export const {
+  setProgress,
+  setProgressLog,
+  toggleProgressAlert,
+  setSearchText,
+} = staffAttendanceSlice.actions;
 
 export const selectProgress = (state: RootState) =>
   state.staffAttendance.progress;
@@ -38,5 +47,7 @@ export const selectProgressLog = (state: RootState) =>
   state.staffAttendance.progressLog;
 export const selectIsOpenProgressAlert = (state: RootState) =>
   state.staffAttendance.isOpenProgressAlert;
+export const selectSearchText = (state: RootState) =>
+  state.staffAttendance.searchText;
 
 export default staffAttendanceSlice.reducer;
