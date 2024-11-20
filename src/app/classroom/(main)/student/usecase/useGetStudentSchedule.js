@@ -1,12 +1,16 @@
+import { getDayName } from "@/app/classroom/shared/usecase/helper";
 import { getCookie } from "cookies-next";
 import { useEffect, useState } from "react";
 import {
-    getAllClasses,
-    getAllClassSchedules,
-    getStudentGroups,
+  getAllClasses,
+  getAllClassSchedules,
+  getStudentGroups,
 } from "../repository/apiService";
 
 export function useGetStudentSchedule() {
+  const currentDayName = new Date().toLocaleString("id-ID", {
+    weekday: "long",
+  });
   const [schedules, setSchedules] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -26,7 +30,7 @@ export function useGetStudentSchedule() {
         setIsLoading(false);
         return;
       }
-      
+
       const joinedStudentGroups = studentGroups.filter(
         (student) => student.student_id === user.id
       );
@@ -42,7 +46,6 @@ export function useGetStudentSchedule() {
         setIsLoading(false);
         return;
       }
-
 
       const classStudent = classes.filter((cls) =>
         joinedStudentGroups.some(
@@ -63,7 +66,10 @@ export function useGetStudentSchedule() {
       }
 
       const filteredSchedule = classStudent.flatMap((cls, i) => {
-        const schedule = schedules.filter((sch) => sch.class_id === cls.id);
+        const schedule = schedules.filter(
+          (sch) =>
+            sch.class_id === cls.id && getDayName(sch.day) == currentDayName
+        );
         return schedule.length > 0 ? schedule[i] : [];
       });
 
