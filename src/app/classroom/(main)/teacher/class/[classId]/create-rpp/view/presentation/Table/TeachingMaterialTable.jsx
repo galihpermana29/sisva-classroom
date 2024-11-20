@@ -52,7 +52,7 @@ const TeachingMaterialTable = ({
                   setModalState({
                     isOpen: true,
                     type: "delete-teaching-material",
-                    title: "Hapus Bahan Ajar",
+                    title: "Hapus Bahan Ajar dari Rencana Pembelajaran",
                     data: record,
                   });
                 }}
