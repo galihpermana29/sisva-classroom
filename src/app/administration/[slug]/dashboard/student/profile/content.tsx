@@ -5,14 +5,12 @@ import {
   Add,
   Cancel,
   DownloadRounded,
-  Search,
   UploadFileRounded,
 } from "@mui/icons-material";
 import {
   Box,
   Button,
   Divider,
-  InputAdornment,
   Menu,
   MenuItem,
   Modal,
@@ -26,11 +24,16 @@ import { FormAddStudent } from "./components/FormAddStudent";
 import DataTable from "./components/Table";
 
 import UsersAPI from "@/api/users";
+import { useAdministrationSelector } from "@/app/administration/hooks";
 import { useFormik } from "formik";
 import ImportXLSXAlert from "../../components/ImportXLSXAlert";
+import { SearchTextFilter } from "./components/SearchTextFilter";
 import handleXLSXUploadStudent from "./utils/handleXLSXUploadStudent";
+import { selectSearchText } from "./utils/studentProfileSlice";
 
 export default function SchoolProfileListContent() {
+  const search = useAdministrationSelector(selectSearchText);
+
   const [initialData, setinitialData] = useState({
     name: "",
     type: "student",
@@ -80,7 +83,6 @@ export default function SchoolProfileListContent() {
   const [studentData, setStudentData] = useState([]);
 
   let [filteredData, setFilteredData] = useState([]);
-  const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState("");
   const [sortType, setSortType] = useState("ascending");
   const [sortSettings, setSortSettings] = useState("");
@@ -381,45 +383,7 @@ export default function SchoolProfileListContent() {
               alignItems: "center",
             }}
           >
-            <TextField
-              // id="outlined-search"
-              placeholder="Cari Siswa"
-              size="small"
-              type="text"
-              sx={{
-                maxWidth: { xs: "100%", lg: "200px" },
-                flex: 1,
-                width: "100%",
-                height: "100%",
-                // borderRight: "1px solid rgb(0,0,0,0.12)",
-                pr: 1,
-              }}
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              InputProps={{
-                startAdornment: search && (
-                  <Cancel
-                    onClick={() => {
-                      setSearch("");
-                    }}
-                    sx={{
-                      fontSize: 14,
-                      color: "base.base50",
-                      cursor: "pointer",
-                      transform: "translateX(-4px)",
-                      "&:hover": {
-                        color: "base.base60",
-                      },
-                    }}
-                  />
-                ),
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <Search />
-                  </InputAdornment>
-                ),
-              }}
-            />
+            <SearchTextFilter />
           </Stack>
 
           <Stack
@@ -437,7 +401,6 @@ export default function SchoolProfileListContent() {
                 display: { xs: "none", lg: "flex" },
                 width: "fit-content",
                 height: "100%",
-                width: 100,
                 mr: 1,
                 borderColor: "green",
                 backgroundColor: "white",
