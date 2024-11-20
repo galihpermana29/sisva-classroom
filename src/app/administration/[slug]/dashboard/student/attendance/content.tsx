@@ -53,7 +53,7 @@ export default function StaffProfileListContent() {
 
     onSubmit: async (values) => {
       try {
-        const dateCode = dayjs(new Date(pickedDate))
+        const dateCode = pickedDate
           .toISOString()
           .split("T")[0]
           .split("-")
@@ -67,8 +67,7 @@ export default function StaffProfileListContent() {
         };
 
         await AttendanceApi.createStudentAttendance(id, payload);
-
-        getAllStudentAttendance(pickedDate);
+        getAllStudentAttendance();
       } catch (error) {
         console.log(error);
       }
@@ -103,7 +102,7 @@ export default function StaffProfileListContent() {
 
   const getAllStudentAttendance = async () => {
     try {
-      const dateCode = dayjs(new Date(pickedDate))
+      const dateCode = pickedDate
         .toISOString()
         .split("T")[0]
         .split("-")
