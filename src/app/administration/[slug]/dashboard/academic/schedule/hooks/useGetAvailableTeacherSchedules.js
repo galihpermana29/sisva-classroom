@@ -23,7 +23,8 @@ export const useGetAvailableTeacherSchedules = () => {
     return formatAndCombineSchedule(
       filteredLearning,
       countedNonLearning,
-      classes
+      classes,
+      true
     );
   }, [
     guru,
