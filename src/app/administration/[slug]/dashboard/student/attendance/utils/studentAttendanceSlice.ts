@@ -9,6 +9,7 @@ interface StudentAttendance {
   progress: string;
   progressLog: string;
   isOpenProgressAlert: boolean;
+  searchText: string;
   sortField: SortField;
   sortDirection: SortDirection;
   studentGroupFilter: string;
@@ -19,6 +20,7 @@ const initialState: StudentAttendance = {
   progress: "0%",
   progressLog: "",
   isOpenProgressAlert: false,
+  searchText: "",
   sortField: "",
   sortDirection: "",
   studentGroupFilter: "",
@@ -37,6 +39,9 @@ export const studentAttendanceSlice = createSlice({
     },
     toggleProgressAlert: (state, action: PayloadAction<boolean>) => {
       state.isOpenProgressAlert = action.payload;
+    },
+    setSearchText: (state, action: PayloadAction<string>) => {
+      state.searchText = action.payload;
     },
     setSortField: (state, action: PayloadAction<SortField>) => {
       state.sortField = action.payload;
@@ -57,6 +62,7 @@ export const {
   setProgress,
   setProgressLog,
   toggleProgressAlert,
+  setSearchText,
   setSortField,
   setSortDirection,
   setStudentGroupFilter,
@@ -69,6 +75,8 @@ export const selectProgressLog = (state: RootState) =>
   state.studentAttendance.progressLog;
 export const selectIsOpenProgressAlert = (state: RootState) =>
   state.studentAttendance.isOpenProgressAlert;
+export const selectSearchText = (state: RootState) =>
+  state.studentAttendance.searchText;
 export const selectSortField = (state: RootState) =>
   state.studentAttendance.sortField;
 export const selectSortDirection = (state: RootState) =>

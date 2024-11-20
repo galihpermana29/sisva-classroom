@@ -4,7 +4,6 @@ import { ExcelIcon, SortIcon } from "@/assets/SVGs";
 import {
   Cancel,
   DownloadRounded,
-  Search,
   UploadFileRounded,
 } from "@mui/icons-material";
 import {
@@ -12,10 +11,8 @@ import {
   Button,
   Divider,
   Hidden,
-  InputAdornment,
   Menu,
   MenuItem,
-  Modal,
   Paper,
   Stack,
   TextField,
@@ -38,9 +35,11 @@ import dayjs from "dayjs";
 import { useFormik } from "formik";
 import ImportXLSXAlert from "../../components/ImportXLSXAlert";
 import MobileSortModal from "./components/MobileSortModal";
+import SearchFilter from "./components/SearchFilter";
 import StudentAttendanceProgressAlert from "./components/StudentProgressAlert";
 import handleXLSXUploadStudentAttendance from "./utils/handleXLSXUploadStudentAttendance";
 import {
+  selectSearchText,
   selectSortDirection,
   selectSortField,
   setProgress,
@@ -52,6 +51,7 @@ export default function StaffProfileListContent() {
   const dispatch = useAdministrationDispatch();
   const sortField = useAdministrationSelector(selectSortField);
   const sortDirection = useAdministrationSelector(selectSortDirection);
+  const searchText = useAdministrationSelector(selectSearchText);
 
   const [initialData, setinitialData] = useState({
     id: "",
@@ -97,10 +97,6 @@ export default function StaffProfileListContent() {
 
   const [statusFilter, setStatusFilter] = useState("");
   const [classFilter, setClassFilter] = useState("");
-  const [search, setSearch] = useState("");
-  const [sortBy, setSortBy] = useState("");
-  const [sortType, setSortType] = useState("ascending");
-  const [sortSettings, setSortSettings] = useState("");
   const [openSortModal, setOpenSortModal] = useState(false);
   const [classOptions, setClassOptions] = useState([]);
 
@@ -157,8 +153,8 @@ export default function StaffProfileListContent() {
 
   let filteredData = attendanceData.filter((item) => {
     return (
-      (item.name.toLowerCase().includes(search.toLowerCase()) ||
-        item.username.toLowerCase().includes(search.toLowerCase())) &&
+      (item.name.toLowerCase().includes(searchText.toLowerCase()) ||
+        item.username.toLowerCase().includes(searchText.toLowerCase())) &&
       item.class.toLowerCase().includes(classFilter.toLowerCase()) &&
       item.status.toLowerCase().includes(statusFilter.toLowerCase())
     );
@@ -359,45 +355,7 @@ export default function StaffProfileListContent() {
               alignItems: "center",
             }}
           >
-            <TextField
-              // id="outlined-search"
-              placeholder="Cari Siswa"
-              size="small"
-              type="text"
-              sx={{
-                maxWidth: { xs: "100%", lg: "200px" },
-                flex: 1,
-                width: "100%",
-                height: "100%",
-                borderRight: "1px solid rgb(0,0,0,0.12)",
-                pr: 1,
-              }}
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              InputProps={{
-                startAdornment: search && (
-                  <Cancel
-                    onClick={() => {
-                      setSearch("");
-                    }}
-                    sx={{
-                      fontSize: 14,
-                      color: "base.base50",
-                      cursor: "pointer",
-                      transform: "translateX(-4px)",
-                      "&:hover": {
-                        color: "base.base60",
-                      },
-                    }}
-                  />
-                ),
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <Search />
-                  </InputAdornment>
-                ),
-              }}
-            />
+            <SearchFilter />
             <Hidden lgDown>
               <Filters />
             </Hidden>
