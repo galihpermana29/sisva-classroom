@@ -1,6 +1,6 @@
 import AcademicAPI from "@/api/academic";
-import type { SubjectTypeText } from "@/globalcomponents/types";
-import { getSubjectType } from "@/globalcomponents/types";
+import type { SubjectTypeText } from "@/types/types";
+import { getSubjectType } from "@/types/types";
 import { onlyUnique } from "@/utils/onlyUnique";
 import type {
   Curriculum,

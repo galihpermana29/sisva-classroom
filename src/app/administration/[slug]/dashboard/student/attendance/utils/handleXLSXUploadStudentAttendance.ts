@@ -1,8 +1,8 @@
 import AttendanceApi from "@/api/attendance";
 import UsersAPI from "@/api/users";
-import type { User } from "@/globalcomponents/BERespondTypes";
-import type { MonthText } from "@/globalcomponents/types";
-import { getAttendance, getMonthNumber } from "@/globalcomponents/types";
+import type { User } from "@/types/BERespondTypes";
+import type { MonthText } from "@/types/types";
+import { getAttendance, getMonthNumber } from "@/types/types";
 import dayjs from "dayjs";
 import * as XLSX from "xlsx";
 /*
@@ -90,7 +90,7 @@ export default function handleXLSXUploadStudentAttendance({
       const sheetNames = template.SheetNames.filter((sheetName) => {
         const [monthText, year] = sheetName.trim().split(" ") as [
           MonthText,
-          string,
+          string
         ];
         const months: MonthText[] = [
           "Januari",
@@ -119,7 +119,7 @@ export default function handleXLSXUploadStudentAttendance({
       for (const sheetName of sheetNames) {
         const [monthText, year] = sheetName.trim().split(" ") as [
           MonthText,
-          string,
+          string
         ];
         const month = getMonthNumber(monthText);
 

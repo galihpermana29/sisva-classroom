@@ -1,7 +1,7 @@
 import AuthAPI from "@/api/auth";
 import UsersAPI from "@/api/users";
-import type { User } from "@/globalcomponents/BERespondTypes";
-import type { Role } from "@/globalcomponents/types";
+import type { User } from "@/types/BERespondTypes";
+import type { Role } from "@/types/types";
 import {
   getEducationLevel,
   getGender,
@@ -11,7 +11,7 @@ import {
   getNationality,
   getRelationship,
   getReligion,
-} from "@/globalcomponents/types";
+} from "@/types/types";
 import * as XLSX from "xlsx";
 
 /*

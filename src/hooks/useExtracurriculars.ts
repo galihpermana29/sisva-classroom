@@ -1,10 +1,10 @@
-import AcademicAPI from '@/api/academic';
-import type { Extracurricular } from '@/globalcomponents/BERespondTypes';
-import { useQuery } from '@tanstack/react-query';
+import AcademicAPI from "@/api/academic";
+import type { Extracurricular } from "@/types/BERespondTypes";
+import { useQuery } from "@tanstack/react-query";
 
 export const useExtracurriculars = () => {
   return useQuery<Extracurricular[]>({
-    queryKey: ['extracurriculars'],
+    queryKey: ["extracurriculars"],
     queryFn: async () => (await AcademicAPI.getAllExtra()).data.data,
   });
 };

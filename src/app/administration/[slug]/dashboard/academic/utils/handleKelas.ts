@@ -1,7 +1,7 @@
 import AcademicAPI from "@/api/academic";
 import UsersAPI from "@/api/users";
 
-import type { ClassType } from "@/globalcomponents/types";
+import type { ClassType } from "@/types/types";
 import type {
   KelasInputData,
   Period,

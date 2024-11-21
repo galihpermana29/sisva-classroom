@@ -1,5 +1,5 @@
 import AcademicAPI from "@/api/academic";
-import type { Class } from "@/globalcomponents/BERespondTypes";
+import type { Class } from "@/types/BERespondTypes";
 import type { QueryClient } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 

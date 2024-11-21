@@ -2,8 +2,8 @@ import {
   useAdministrationDispatch,
   useAdministrationSelector,
 } from "@/app/administration/hooks";
-import type { Permission, Role } from "@/globalcomponents/types";
 import { permissions, types } from "@/globalcomponents/Variable";
+import type { Permission, Role } from "@/types/types";
 import { Cancel } from "@mui/icons-material";
 import { MenuItem, Stack, TextField, Typography } from "@mui/material";
 import {

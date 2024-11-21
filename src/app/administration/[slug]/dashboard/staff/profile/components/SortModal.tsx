@@ -2,7 +2,7 @@ import {
   useAdministrationDispatch,
   useAdministrationSelector,
 } from "@/app/administration/hooks";
-import type { SortDirection } from "@/globalcomponents/types";
+import type { SortDirection } from "@/types/types";
 import { Cancel } from "@mui/icons-material";
 import {
   Button,

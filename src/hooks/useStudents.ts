@@ -1,5 +1,5 @@
 import UsersAPI from "@/api/users";
-import type { User } from "@/globalcomponents/BERespondTypes";
+import type { User } from "@/types/BERespondTypes";
 import { useQuery } from "@tanstack/react-query";
 
 export const useStudents = () => {

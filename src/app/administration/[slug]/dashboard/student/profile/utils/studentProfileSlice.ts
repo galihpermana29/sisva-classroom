@@ -1,5 +1,5 @@
 import { RootState } from "@/app/administration/store";
-import type { Permission, Role, SortDirection } from "@/globalcomponents/types";
+import type { Permission, Role, SortDirection } from "@/types/types";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 

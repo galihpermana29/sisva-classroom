@@ -1,13 +1,13 @@
 import AuthAPI from "@/api/auth";
 import UsersAPI from "@/api/users";
-import type { User } from "@/globalcomponents/BERespondTypes";
+import type { User } from "@/types/BERespondTypes";
 import {
   getGender,
   getNationality,
   getPermissions,
   getReligion,
   getRole,
-} from "@/globalcomponents/types";
+} from "@/types/types";
 import * as XLSX from "xlsx";
 
 /*

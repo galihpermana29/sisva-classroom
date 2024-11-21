@@ -1,5 +1,5 @@
 import AcademicAPI from "@/api/academic";
-import type { Period } from "@/globalcomponents/BERespondTypes";
+import type { Period } from "@/types/BERespondTypes";
 import { useQuery } from "@tanstack/react-query";
 
 export const usePeriods = () => {

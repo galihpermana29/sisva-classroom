@@ -2,7 +2,7 @@ import AcademicAPI from "@/api/academic";
 import type {
   StudentGroup,
   StudentInStudentGroup,
-} from "@/globalcomponents/BERespondTypes";
+} from "@/types/BERespondTypes";
 import type { QueryClient } from "@tanstack/react-query";
 import { useMutation, useQuery } from "@tanstack/react-query";
 

@@ -1,5 +1,5 @@
 import AcademicAPI from "@/api/academic";
-import type { ClassSchedule } from "@/globalcomponents/BERespondTypes";
+import type { ClassSchedule } from "@/types/BERespondTypes";
 import type { QueryClient } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 
