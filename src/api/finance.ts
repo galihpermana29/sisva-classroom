@@ -1,82 +1,91 @@
-import axios from "axios";
-
 import { createQueryParam } from "@/utils/createQueryParam";
+import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { getBearerToken, getSchoolId, getUserId } from ".";
 
-const BEARER_TOKEN = getBearerToken();
-const USER_ID = getUserId();
-const SCHOOL_ID = getSchoolId();
+const FinanceAPI = new (class {
+  private api: AxiosInstance;
+  constructor() {
+    this.api = axios.create({
+      baseURL: "https://api-staging.sisva.id/finance/v1",
+    });
+  }
 
-const api = axios.create({
-  baseURL: "https://api-staging.sisva.id/finance/v1",
-});
+  private getRequestConfig(additionalHeaders: Record<string, string> = {}): AxiosRequestConfig {
+    const defaultHeaders = {
+      "X-Sisva-Source": "finance.test",
+      "X-Sisva-UserID": getUserId(),
+      "X-Sisva-SchoolID": getSchoolId(),
+      Authorization: `Bearer ${getBearerToken()}`,
+    };
 
-const headers = {
-  "X-Sisva-Source": "academic.curriculum.test",
-  "X-Sisva-UserID": USER_ID,
-  "X-Sisva-SchoolID": SCHOOL_ID,
-  Authorization: `Bearer ${BEARER_TOKEN}`,
-};
+    return {
+      headers: {
+        ...defaultHeaders,
+        ...additionalHeaders,
+      },
+    };
+  }
 
-export const FinanceAPI = {
   updateInvoice(id, payload) {
-    return api.patch(`/invoices/${id}`, payload, { headers });
-  },
+    return this.api.patch(`/invoices/${id}`, payload, this.getRequestConfig());
+  }
 
   updateBill(id, payload) {
-    return api.patch(`/bills/${id}`, payload, { headers });
-  },
+    return this.api.patch(`/bills/${id}`, payload, this.getRequestConfig());
+  }
 
   updatePaymentProof(id, payload) {
-    return api.patch(`/invoices/${id}/payment-proof`, payload, { headers });
-  },
+    return this.api.patch(`/invoices/${id}/payment-proof`, payload, this.getRequestConfig());
+  }
 
   createBill(payload) {
-    return api.post("/bills", payload, { headers });
-  },
+    return this.api.post("/bills", payload, this.getRequestConfig());
+  }
 
   createUserBill(payload) {
-    return api.post("/user-bills", payload, { headers });
-  },
+    return this.api.post("/user-bills", payload, this.getRequestConfig());
+  }
 
   createInvoice(payload) {
-    return api.post("/invoices", payload, { headers });
-  },
+    return this.api.post("/invoices", payload, this.getRequestConfig());
+  }
 
   getAllInvoices({ bill_id, user_id }) {
     const params = createQueryParam([
       { name: "bill_id", value: bill_id },
       { name: "user_id", value: user_id },
     ]);
-    return api.get(`/invoices?${params}`, { headers });
-  },
+    return this.api.get(`/invoices?${params}`, this.getRequestConfig());
+  }
 
   getAllBills({ bill_id }) {
     const params = createQueryParam({ name: "bill_id", value: bill_id });
-    return api.get(`/bills?${params}`, { headers });
-  },
+    return this.api.get(`/bills?${params}`, this.getRequestConfig());
+  }
 
   getBillById(id) {
-    return api.get(`/bills/${id}`, { headers });
-  },
+    return this.api.get(`/bills/${id}`, this.getRequestConfig());
+  }
 
   getInvoiceById(id) {
-    return api.get(`/invoices/${id}`, { headers });
-  },
+    return this.api.get(`/invoices/${id}`, this.getRequestConfig());
+  }
 
   getAllUserBill() {
-    return api.get("/user-bills", { headers });
-  },
+    return this.api.get("/user-bills", this.getRequestConfig());
+  }
 
   deleteInvoice(id) {
-    return api.delete(`/invoices/${id}`, { headers });
-  },
+    return this.api.delete(`/invoices/${id}`, this.getRequestConfig());
+  }
 
   deleteBill(id) {
-    return api.delete(`/bills/${id}`, { headers });
-  },
+    return this.api.delete(`/bills/${id}`, this.getRequestConfig());
+  }
 
   deleteUserBill(id) {
-    return api.delete(`/user-bills/${id}`, { headers });
-  },
-};
+    return this.api.delete(`/user-bills/${id}`, this.getRequestConfig());
+  }
+})();
+
+export default FinanceAPI;

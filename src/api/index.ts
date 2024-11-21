@@ -1,7 +1,5 @@
 "use client";
 
-import axios from "axios";
-
 export const getBearerToken = () => {
   if (typeof window !== "undefined" && window.localStorage.getItem("user")) {
     return JSON.parse(window.localStorage.getItem("user")).token;

@@ -1,6 +1,6 @@
 "use client";
 
-import { FinanceAPI } from "@/api/finance";
+import FinanceAPI from "@/api/finance";
 import { paginateData } from "@/utils/paginateData";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";

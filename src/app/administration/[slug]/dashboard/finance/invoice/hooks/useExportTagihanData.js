@@ -1,4 +1,4 @@
-import { FinanceAPI } from "@/api/finance";
+import FinanceAPI from "@/api/finance";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useGetTagihan } from "./useGetTagihan";
 

@@ -1,4 +1,4 @@
-import { FinanceAPI } from "@/api/finance";
+import FinanceAPI from "@/api/finance";
 import { useMutation } from "@tanstack/react-query";
 
 function useMutateDeleteTagihan(handleClose, refetch) {

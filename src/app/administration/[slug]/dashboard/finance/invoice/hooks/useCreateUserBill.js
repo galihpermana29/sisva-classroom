@@ -1,6 +1,6 @@
 "use client";
 
-import { FinanceAPI } from "@/api/finance";
+import FinanceAPI from "@/api/finance";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useCreateUserBill = ({ billId }) => {

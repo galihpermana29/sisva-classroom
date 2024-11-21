@@ -1,6 +1,6 @@
 "use client";
 
-import { FinanceAPI } from "@/api/finance";
+import FinanceAPI from "@/api/finance";
 import { useQuery } from "@tanstack/react-query";
 
 export const useGetInvoiceById = (id) => {

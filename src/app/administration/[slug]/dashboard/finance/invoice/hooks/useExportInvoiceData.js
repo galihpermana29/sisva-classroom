@@ -1,4 +1,4 @@
-import { FinanceAPI } from "@/api/finance";
+import FinanceAPI from "@/api/finance";
 import { useGetAllUsers } from "@/hooks/query/academic/useGetAllUsers";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useGetAllInvoices } from "./useGetAllInvoices";

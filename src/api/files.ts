@@ -1,8 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { getBearerToken, getSchoolId, getUserId } from ".";
 
-const defaultSource = "files.test";
-
 const FilesAPI = new (class {
   private api: AxiosInstance;
   constructor() {
@@ -13,7 +11,7 @@ const FilesAPI = new (class {
 
   private getRequestConfig(additionalHeaders: Record<string, string> = {}): AxiosRequestConfig {
     const defaultHeaders = {
-      "X-Sisva-Source": defaultSource,
+      "X-Sisva-Source": "files.test",
       "X-Sisva-UserID": getUserId(),
       "X-Sisva-SchoolID": getSchoolId(),
       Authorization: `Bearer ${getBearerToken()}`,
