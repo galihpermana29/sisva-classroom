@@ -1,6 +1,6 @@
 import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
+import TeachingPlanTitle from "@/app/classroom/shared/presentation/TitleBar/TeachingPlanTitle";
 import React from "react";
-import TeachingPlanTitle from "../../../TeachingPlan/view/presentation/TeachingPlanTitle";
 import AssignmentCard from "./AssignmentCard";
 import AssignmentCardSkeleton from "./AssignmentCardSkeleton";
 
