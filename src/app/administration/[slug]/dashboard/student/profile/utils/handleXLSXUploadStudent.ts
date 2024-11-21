@@ -1,6 +1,6 @@
 import AuthAPI from "@/api/auth";
 import UsersAPI from "@/api/users";
-import type { User } from "@/types/BERespondTypes";
+import type { User } from "@/types/apiTypes";
 import type { Role } from "@/types/types";
 import {
   getEducationLevel,

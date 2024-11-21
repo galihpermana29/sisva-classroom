@@ -1,8 +1,5 @@
 import AcademicAPI from "@/api/academic";
-import type {
-  StudentGroup,
-  StudentInStudentGroup,
-} from "@/types/BERespondTypes";
+import type { StudentGroup, StudentInStudentGroup } from "@/types/apiTypes";
 import type { QueryClient } from "@tanstack/react-query";
 import { useMutation, useQuery } from "@tanstack/react-query";
 

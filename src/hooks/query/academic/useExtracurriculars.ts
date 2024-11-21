@@ -1,5 +1,5 @@
 import AcademicAPI from "@/api/academic";
-import type { Extracurricular } from "@/types/BERespondTypes";
+import type { Extracurricular } from "@/types/apiTypes";
 import { useQuery } from "@tanstack/react-query";
 
 export const useExtracurriculars = () => {

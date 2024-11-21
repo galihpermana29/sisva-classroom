@@ -1,5 +1,5 @@
 import UsersAPI from "@/api/users";
-import type { User } from "@/types/BERespondTypes";
+import type { User } from "@/types/apiTypes";
 import { useLocalStorage } from "@mantine/hooks";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";

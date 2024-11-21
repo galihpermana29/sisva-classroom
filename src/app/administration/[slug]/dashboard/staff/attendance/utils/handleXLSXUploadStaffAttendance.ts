@@ -1,6 +1,6 @@
 import AttendanceApi from "@/api/attendance";
 import UsersAPI from "@/api/users";
-import type { User } from "@/types/BERespondTypes";
+import type { User } from "@/types/apiTypes";
 import type { MonthText } from "@/types/types";
 import { getAttendance, getMonthNumber } from "@/types/types";
 import dayjs from "dayjs";

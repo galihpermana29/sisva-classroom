@@ -1,5 +1,5 @@
 import AcademicAPI from "@/api/academic";
-import type { StudyProgram } from "@/types/BERespondTypes";
+import type { StudyProgram } from "@/types/apiTypes";
 import { useQuery } from "@tanstack/react-query";
 
 export const useStudyPrograms = () => {
