@@ -1,38 +1,47 @@
-import api, { getBearerToken, getUserId } from ".";
+import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import { getBearerToken, getSchoolId, getUserId } from ".";
 
-const BEARER_TOKEN = getBearerToken();
-const USER_ID = getUserId();
-const CmsAPI = {
+const defaultSource = "cms.test";
+
+const CMSAPI = new (class {
+  private api: AxiosInstance;
+  constructor() {
+    this.api = axios.create({
+      baseURL: "https://api-staging.sisva.id/tenant/v1",
+    });
+  }
+
+  private getRequestConfig(additionalHeaders: Record<string, string> = {}): AxiosRequestConfig {
+    const defaultHeaders = {
+      "X-Sisva-Source": defaultSource,
+      "X-Sisva-UserID": getUserId(),
+      "X-Sisva-SchoolID": getSchoolId(),
+      Authorization: `Bearer ${getBearerToken()}`,
+    };
+
+    return {
+      headers: {
+        ...defaultHeaders,
+        ...additionalHeaders,
+      },
+    };
+  }
+
   getSchoolById(id) {
     const headers = {
-      "X-Sisva-Source": "test",
+      "X-Sisva-Source": defaultSource,
     };
-
-    return api.get(`/schools/${id}`, { headers });
-  },
+    return this.api.get(`/schools/${id}`, { headers });
+  }
   getSchoolByCode(code) {
     const headers = {
-      "X-Sisva-Source": "test",
+      "X-Sisva-Source": defaultSource,
     };
-
-    return api.get(`/schools?code=${code}`, { headers });
-  },
+    return this.api.get(`/schools?code=${code}`, { headers });
+  }
   editSchoolById(id, payload) {
-    const headers = {
-      "X-Sisva-Source": "test",
-      "X-Sisva-UserID": USER_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.patch(`/schools/${id}`, payload, { headers });
-  },
-  updateUserPassword(payload) {
-    const headers = {
-      "X-Sisva-Source": "test",
-      "X-Sisva-UserID": USER_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.patch(`/user/password`, payload, { headers });
-  },
-};
+    return this.api.patch(`/schools/${id}`, payload, this.getRequestConfig());
+  }
+})();
 
-export default CmsAPI;
+export default CMSAPI;
