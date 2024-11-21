@@ -9,9 +9,7 @@ const UsersAPI = new (class {
     });
   }
 
-  private getRequestConfig(
-    additionalHeaders: Record<string, string> = {}
-  ): AxiosRequestConfig {
+  private getRequestConfig(additionalHeaders: Record<string, string> = {}): AxiosRequestConfig {
     const defaultHeaders = {
       "X-Sisva-Source": "tenant.user.test",
       "X-Sisva-UserID": getUserId(),

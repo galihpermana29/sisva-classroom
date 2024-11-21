@@ -9,9 +9,7 @@ const AttendanceAPI = new (class {
     });
   }
 
-  private getRequestConfig(
-    additionalHeaders: Record<string, string> = {}
-  ): AxiosRequestConfig {
+  private getRequestConfig(additionalHeaders: Record<string, string> = {}): AxiosRequestConfig {
     const defaultHeaders = {
       "X-Sisva-Source": "attendance.test",
       "X-Sisva-UserID": getUserId(),
@@ -32,10 +30,7 @@ const AttendanceAPI = new (class {
   }
 
   getStudentClassAttendanceByDateId(date_id) {
-    return this.api.get(
-      `/students?date_id=${date_id}`,
-      this.getRequestConfig()
-    );
+    return this.api.get(`/students?date_id=${date_id}`, this.getRequestConfig());
   }
 
   createStaffAttendance(id, payload) {

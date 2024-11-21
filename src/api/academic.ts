@@ -9,9 +9,7 @@ const AcademicAPI = new (class {
     });
   }
 
-  private getRequestConfig(
-    additionalHeaders: Record<string, string> = {}
-  ): AxiosRequestConfig {
+  private getRequestConfig(additionalHeaders: Record<string, string> = {}): AxiosRequestConfig {
     const defaultHeaders = {
       "X-Sisva-Source": "academic.test",
       "X-Sisva-UserID": getUserId(),
@@ -40,11 +38,7 @@ const AcademicAPI = new (class {
   }
 
   updateProdi(payload, id) {
-    return this.api.patch(
-      `/study-programs/${id}`,
-      payload,
-      this.getRequestConfig()
-    );
+    return this.api.patch(`/study-programs/${id}`, payload, this.getRequestConfig());
   }
 
   deleteProdi(id) {
@@ -64,11 +58,7 @@ const AcademicAPI = new (class {
   }
 
   updateCurriculum(payload, id) {
-    return this.api.patch(
-      `/curriculums/${id}`,
-      payload,
-      this.getRequestConfig()
-    );
+    return this.api.patch(`/curriculums/${id}`, payload, this.getRequestConfig());
   }
 
   deleteCurriculum(id) {
@@ -112,11 +102,7 @@ const AcademicAPI = new (class {
   }
 
   updateSilabus(payload, id) {
-    return this.api.patch(
-      `/syllabuses/${id}`,
-      payload,
-      this.getRequestConfig()
-    );
+    return this.api.patch(`/syllabuses/${id}`, payload, this.getRequestConfig());
   }
 
   getDetailSilabus(id) {
@@ -136,11 +122,7 @@ const AcademicAPI = new (class {
   }
 
   addCurriculumInPeriod(id, payload) {
-    return this.api.post(
-      `/periods/${id}/curriculums`,
-      payload,
-      this.getRequestConfig()
-    );
+    return this.api.post(`/periods/${id}/curriculums`, payload, this.getRequestConfig());
   }
 
   getAllPeriod() {
@@ -187,19 +169,11 @@ const AcademicAPI = new (class {
   }
 
   updateStudentGroup(id, payload) {
-    return this.api.patch(
-      `/student-groups/${id}`,
-      payload,
-      this.getRequestConfig()
-    );
+    return this.api.patch(`/student-groups/${id}`, payload, this.getRequestConfig());
   }
 
   insertStudentToStudentGroup(id, payload) {
-    return this.api.put(
-      `/student-groups/${id}/students`,
-      payload,
-      this.getRequestConfig()
-    );
+    return this.api.put(`/student-groups/${id}/students`, payload, this.getRequestConfig());
   }
 
   removeStudentGroup(id) {
@@ -226,18 +200,11 @@ const AcademicAPI = new (class {
   }
 
   updateAnnouncement(id, payload) {
-    return this.api.patch(
-      `/announcements/${id}`,
-      payload,
-      this.getRequestConfig()
-    );
+    return this.api.patch(`/announcements/${id}`, payload, this.getRequestConfig());
   }
 
   getSchoolSchedule(period_id) {
-    return this.api.get(
-      `/school-schedules?period_id=${period_id}`,
-      this.getRequestConfig()
-    );
+    return this.api.get(`/school-schedules?period_id=${period_id}`, this.getRequestConfig());
   }
 
   getCredit() {
@@ -253,11 +220,7 @@ const AcademicAPI = new (class {
   }
 
   editSchoolSchedule(payload, id) {
-    return this.api.patch(
-      `/school-schedules/${id}`,
-      payload,
-      this.getRequestConfig()
-    );
+    return this.api.patch(`/school-schedules/${id}`, payload, this.getRequestConfig());
   }
 
   deleteSchoolSchedule(id) {
@@ -265,54 +228,31 @@ const AcademicAPI = new (class {
   }
 
   getClassSchedule(period) {
-    return this.api.get(
-      `/class-schedules?period_id=${period}`,
-      this.getRequestConfig()
-    );
+    return this.api.get(`/class-schedules?period_id=${period}`, this.getRequestConfig());
   }
 
   getNonLearningSchedule(period) {
-    return this.api.get(
-      `/non-learning-schedules?period_id=${period}`,
-      this.getRequestConfig()
-    );
+    return this.api.get(`/non-learning-schedules?period_id=${period}`, this.getRequestConfig());
   }
 
   getAllClassSchedules(params) {
-    return this.api.get(
-      `/class-schedules?${new URLSearchParams(params)}`,
-      this.getRequestConfig()
-    );
+    return this.api.get(`/class-schedules?${new URLSearchParams(params)}`, this.getRequestConfig());
   }
 
   getAllSchoolSchedules(params) {
-    return this.api.get(
-      `/school-schedules?${new URLSearchParams(params)}`,
-      this.getRequestConfig()
-    );
+    return this.api.get(`/school-schedules?${new URLSearchParams(params)}`, this.getRequestConfig());
   }
 
   getAllNonLearningSchedules(params) {
-    return this.api.get(
-      `/non-learning-schedules?${new URLSearchParams(params)}`,
-      this.getRequestConfig()
-    );
+    return this.api.get(`/non-learning-schedules?${new URLSearchParams(params)}`, this.getRequestConfig());
   }
 
   createNonLearningSchedule(payload) {
-    return this.api.post(
-      `/non-learning-schedules`,
-      payload,
-      this.getRequestConfig()
-    );
+    return this.api.post(`/non-learning-schedules`, payload, this.getRequestConfig());
   }
 
   updateNonLearningSchedule(id, payload) {
-    return this.api.patch(
-      `/non-learning-schedules/${id}`,
-      payload,
-      this.getRequestConfig()
-    );
+    return this.api.patch(`/non-learning-schedules/${id}`, payload, this.getRequestConfig());
   }
 
   createClassSchedule(payload) {
@@ -320,11 +260,7 @@ const AcademicAPI = new (class {
   }
 
   updateClassSchedule(id, payload) {
-    return this.api.patch(
-      `/class-schedules/${id}`,
-      payload,
-      this.getRequestConfig()
-    );
+    return this.api.patch(`/class-schedules/${id}`, payload, this.getRequestConfig());
   }
 
   getAllExtra() {
@@ -336,11 +272,7 @@ const AcademicAPI = new (class {
   }
 
   updateExtra(id, payload) {
-    return this.api.patch(
-      `/extracurriculars/${id}`,
-      payload,
-      this.getRequestConfig()
-    );
+    return this.api.patch(`/extracurriculars/${id}`, payload, this.getRequestConfig());
   }
 
   deleteExtra(id) {
@@ -352,11 +284,7 @@ const AcademicAPI = new (class {
   }
 
   createStudentInExtra(id, payload) {
-    return this.api.post(
-      `/extracurriculars/${id}/students`,
-      payload,
-      this.getRequestConfig()
-    );
+    return this.api.post(`/extracurriculars/${id}/students`, payload, this.getRequestConfig());
   }
 
   deleteStudentInExtra(id, payload) {
