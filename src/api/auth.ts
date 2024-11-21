@@ -1,39 +1,48 @@
-import api, { getBearerToken, getSchoolId, getUserId } from ".";
+import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import { getBearerToken, getSchoolId, getUserId } from ".";
 
-const BEARER_TOKEN = getBearerToken();
-const USER_ID = getUserId();
-const SCHOOL_ID = getSchoolId();
+const defaultSource = "auth.test";
 
-const AuthAPI = {
+const AuthAPI = new (class {
+  private api: AxiosInstance;
+  constructor() {
+    this.api = axios.create({
+      baseURL: "https://api-staging.sisva.id/tenant/v1/",
+    });
+  }
+
+  private getRequestConfig(additionalHeaders: Record<string, string> = {}): AxiosRequestConfig {
+    const defaultHeaders = {
+      "X-Sisva-Source": defaultSource,
+      "X-Sisva-UserID": getUserId(),
+      "X-Sisva-SchoolID": getSchoolId(),
+      Authorization: `Bearer ${getBearerToken()}`,
+    };
+
+    return {
+      headers: {
+        ...defaultHeaders,
+        ...additionalHeaders,
+      },
+    };
+  }
+
   login(payload) {
     const headers = {
-      "X-Sisva-Source": "test",
+      "X-Sisva-Source": defaultSource,
     };
-
-    return api.post(`/user/login`, payload, { headers });
-  },
+    return this.api.post(`/user/login`, payload, {
+      headers,
+    });
+  }
 
   changeUserPass(payload) {
-    const headers = {
-      "X-Sisva-Source": "test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-
-    return api.patch(`/user/password`, payload, { headers });
-  },
+    return this.api.patch(`/user/password`, payload, this.getRequestConfig());
+  }
 
   resetUserPass(payload) {
-    const headers = {
-      "X-Sisva-Source": "test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-
-    return api.put(`/user/password`, payload, { headers });
-  },
-};
+    return this.api.put(`/user/password`, payload, this.getRequestConfig());
+  }
+})();
 
 export default AuthAPI;
