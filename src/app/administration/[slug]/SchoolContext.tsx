@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, ReactElement, useContext } from "react";
 
 type School = {
   abbreviation: string;
@@ -25,7 +25,7 @@ export default function SchoolIdProvider({
   schoolData,
 }: {
   schoolData: School;
-  children: React.ReactNode;
+  children: ReactElement;
 }) {
   return (
     <SchoolContext.Provider value={schoolData}>

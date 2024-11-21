@@ -185,6 +185,7 @@ function ActionButton({ params }) {
 }
 
 export default function DataTable({ data }) {
+  const school = useSchool();
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down("lg"));
 
   const [openDeleteModal, setOpenDeleteModal] = useState(false);

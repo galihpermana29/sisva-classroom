@@ -30,7 +30,8 @@ export const FormAddPeriod = ({ formik, editing }) => {
         startAdornment: props.value && (
           <Cancel
             onClick={() => {
-              setStudyProgramFilter("");
+              // ! is not defined
+              // setStudyProgramFilter("");
             }}
             sx={{
               fontSize: 14,

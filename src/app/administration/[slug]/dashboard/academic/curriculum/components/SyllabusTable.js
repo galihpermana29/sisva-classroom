@@ -17,185 +17,187 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useState } from "react";
 import { FormAddSyllabus } from "./FormAddSyllabus";
 
-const columns = [
-  {
-    field: "card",
-    headerName: "",
-    flex: 1,
-    sortable: false,
-    renderCell: (params) => {
-      let tempType;
-      subject_types.map((item) => {
-        if (item.slug === params.value.data.subject_type) {
-          tempType = item.title;
-        }
-      });
-      return (
-        <Box sx={{ width: "100%", mx: 2, py: 0.5 }}>
-          <Stack
-            component={Paper}
-            variant="outlined"
-            sx={{
-              justifyContent: "flex-start",
-              borderRadius: 2,
-              p: 2,
-            }}
-          >
-            <Stack sx={{ width: "100%" }}>
-              <Stack
-                sx={{
-                  width: "100%",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  borderBottom: "1px solid rgb(0,0,0,0.12)",
-                  px: 1,
-                  py: "10px",
-                  backgroundColor: "base.base10",
-                }}
-              >
-                <Typography
-                  sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
+function getColumns(school) {
+  return [
+    {
+      field: "card",
+      headerName: "",
+      flex: 1,
+      sortable: false,
+      renderCell: (params) => {
+        let tempType;
+        subject_types.map((item) => {
+          if (item.slug === params.value.data.subject_type) {
+            tempType = item.title;
+          }
+        });
+        return (
+          <Box sx={{ width: "100%", mx: 2, py: 0.5 }}>
+            <Stack
+              component={Paper}
+              variant="outlined"
+              sx={{
+                justifyContent: "flex-start",
+                borderRadius: 2,
+                p: 2,
+              }}
+            >
+              <Stack sx={{ width: "100%" }}>
+                <Stack
+                  sx={{
+                    width: "100%",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    borderBottom: "1px solid rgb(0,0,0,0.12)",
+                    px: 1,
+                    py: "10px",
+                    backgroundColor: "base.base10",
+                  }}
                 >
-                  Kurikulum
-                </Typography>
-                <Typography sx={{ fontSize: 14, textAlign: "right" }}>
-                  {params.value.data.name}
-                </Typography>
-              </Stack>
-
-              <Stack
-                sx={{
-                  width: "100%",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  borderBottom: "1px solid rgb(0,0,0,0.12)",
-                  px: 1,
-                  py: "10px",
-                  backgroundColor: "base.base20",
-                }}
-              >
-                <Typography
-                  sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
-                >
-                  Program Studi
-                </Typography>
-                {params.value.data.study_program}
-              </Stack>
-              <Stack
-                sx={{
-                  width: "100%",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  borderBottom: "1px solid rgb(0,0,0,0.12)",
-                  px: 1,
-                  py: "10px",
-                  backgroundColor: "base.base10",
-                }}
-              >
-                <Typography
-                  sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
-                >
-                  Mata Pelajaran
-                </Typography>
-                <Typography sx={{ fontSize: 14, textAlign: "right" }}>
-                  {params.value.data.subject}
-                </Typography>
-              </Stack>
-              <Stack
-                sx={{
-                  width: "100%",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  borderBottom: "1px solid rgb(0,0,0,0.12)",
-                  px: 1,
-                  py: "10px",
-                  backgroundColor: "base.base20",
-                }}
-              >
-                <Typography
-                  sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
-                >
-                  Tingkatan
-                </Typography>
-                <Typography sx={{ fontSize: 14, textAlign: "right" }}>
-                  {params.value.data.grade}
-                </Typography>
-              </Stack>
-              <Stack
-                sx={{
-                  width: "100%",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  borderBottom: "1px solid rgb(0,0,0,0.12)",
-                  px: 1,
-                  py: "10px",
-                  backgroundColor: "base.base10",
-                }}
-              >
-                <Typography
-                  sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
-                >
-                  Silabus
-                </Typography>
-                <Button size="small" variant="outlined" sx={{ fontSize: 13 }}>
-                  <a
-                    href="/17189757176d1d2d03182252039b56.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Typography
+                    sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
                   >
-                    Lihat
-                  </a>
-                </Button>
+                    Kurikulum
+                  </Typography>
+                  <Typography sx={{ fontSize: 14, textAlign: "right" }}>
+                    {params.value.data.name}
+                  </Typography>
+                </Stack>
+
+                <Stack
+                  sx={{
+                    width: "100%",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    borderBottom: "1px solid rgb(0,0,0,0.12)",
+                    px: 1,
+                    py: "10px",
+                    backgroundColor: "base.base20",
+                  }}
+                >
+                  <Typography
+                    sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
+                  >
+                    Program Studi
+                  </Typography>
+                  {params.value.data.study_program}
+                </Stack>
+                <Stack
+                  sx={{
+                    width: "100%",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    borderBottom: "1px solid rgb(0,0,0,0.12)",
+                    px: 1,
+                    py: "10px",
+                    backgroundColor: "base.base10",
+                  }}
+                >
+                  <Typography
+                    sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
+                  >
+                    Mata Pelajaran
+                  </Typography>
+                  <Typography sx={{ fontSize: 14, textAlign: "right" }}>
+                    {params.value.data.subject}
+                  </Typography>
+                </Stack>
+                <Stack
+                  sx={{
+                    width: "100%",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    borderBottom: "1px solid rgb(0,0,0,0.12)",
+                    px: 1,
+                    py: "10px",
+                    backgroundColor: "base.base20",
+                  }}
+                >
+                  <Typography
+                    sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
+                  >
+                    Tingkatan
+                  </Typography>
+                  <Typography sx={{ fontSize: 14, textAlign: "right" }}>
+                    {params.value.data.grade}
+                  </Typography>
+                </Stack>
+                <Stack
+                  sx={{
+                    width: "100%",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    borderBottom: "1px solid rgb(0,0,0,0.12)",
+                    px: 1,
+                    py: "10px",
+                    backgroundColor: "base.base10",
+                  }}
+                >
+                  <Typography
+                    sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
+                  >
+                    Silabus
+                  </Typography>
+                  <Button size="small" variant="outlined" sx={{ fontSize: 13 }}>
+                    <a
+                      href="/17189757176d1d2d03182252039b56.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Lihat
+                    </a>
+                  </Button>
+                </Stack>
               </Stack>
+              <ActionButton params={params} />
             </Stack>
-            <ActionButton params={params} />
-          </Stack>
-        </Box>
-      );
+          </Box>
+        );
+      },
     },
-  },
-  { field: "name", headerName: "Kurikulum", flex: 1.3 },
-  {
-    field: "study_program",
-    headerName: "Program Studi",
-    flex: 1,
-  },
-  { field: "subject", headerName: "Mata Pelajaran", flex: 1.5 },
-  {
-    field: "grade",
-    headerName: "Tingkatan",
-    flex: 1,
-  },
-  {
-    field: "syllabus_uri",
-    headerName: "Silabus",
-    sortable: false,
-    flex: 1,
-    renderCell: (params) => {
-      return (
-        <Button size="small" variant="outlined" sx={{ fontSize: 13 }}>
-          {" "}
-          <a
-            href={`https://api-staging.sisva.id/file/v1/files/${params.row.syllabus_uri}?school_id=${school.id}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Lihat
-          </a>
-        </Button>
-      );
+    { field: "name", headerName: "Kurikulum", flex: 1.3 },
+    {
+      field: "study_program",
+      headerName: "Program Studi",
+      flex: 1,
     },
-  },
-  {
-    field: "action",
-    headerName: "Aksi",
-    sortable: false,
-    width: 120,
-    renderCell: (params) => {
-      return <ActionButton params={params} />;
+    { field: "subject", headerName: "Mata Pelajaran", flex: 1.5 },
+    {
+      field: "grade",
+      headerName: "Tingkatan",
+      flex: 1,
     },
-  },
-];
+    {
+      field: "syllabus_uri",
+      headerName: "Silabus",
+      sortable: false,
+      flex: 1,
+      renderCell: (params) => {
+        return (
+          <Button size="small" variant="outlined" sx={{ fontSize: 13 }}>
+            {" "}
+            <a
+              href={`https://api-staging.sisva.id/file/v1/files/${params.row.syllabus_uri}?school_id=${school.id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Lihat
+            </a>
+          </Button>
+        );
+      },
+    },
+    {
+      field: "action",
+      headerName: "Aksi",
+      sortable: false,
+      width: 120,
+      renderCell: (params) => {
+        return <ActionButton params={params} />;
+      },
+    },
+  ];
+}
 
 function ActionButton({ params }) {
   return (
@@ -314,6 +316,8 @@ export default function SyllabusTable({
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [activeRow, setActiveRow] = useState({});
+
+  const columns = getColumns(school);
 
   let rows = [];
 

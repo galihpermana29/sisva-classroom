@@ -17,6 +17,8 @@ import { genders, nationalities, religions } from "@/globalcomponents/Variable";
 import { Cancel } from "@mui/icons-material";
 
 export const FormStudentBiodata = ({ formik, editing }) => {
+  const school = useSchool();
+
   function RenderGender({ value }) {
     let tempType;
     genders.map((item) => {
@@ -159,7 +161,8 @@ export const FormStudentBiodata = ({ formik, editing }) => {
                   startAdornment: formik.values[field.name] && (
                     <Cancel
                       onClick={() => {
-                        setTypeFilter("");
+                        // ! is not defined
+                        // setTypeFilter("");
                       }}
                       sx={{
                         fontSize: 14,

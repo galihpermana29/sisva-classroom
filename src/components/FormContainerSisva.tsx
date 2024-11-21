@@ -1,9 +1,10 @@
-import { Stack } from '@mui/material';
+import { Stack } from "@mui/material";
+import { ReactNode } from "react";
 
 export default function FormContainerSisva({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <Stack

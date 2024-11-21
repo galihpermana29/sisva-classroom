@@ -247,7 +247,8 @@ export const FormStudentParents = ({ formik, editing }) => {
                   startAdornment: formik.values[field.name] && (
                     <Cancel
                       onClick={() => {
-                        setTypeFilter("");
+                        // ! is not defined
+                        // setTypeFilter("");
                       }}
                       sx={{
                         fontSize: 14,

@@ -1,14 +1,15 @@
-import dayjs from 'dayjs';
-import 'dayjs/locale/id';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
-import timezone from 'dayjs/plugin/timezone';
+import dayjs from "dayjs";
+import "dayjs/locale/id";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
 
 dayjs.extend(customParseFormat);
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
 export function generalDateParser(dateString) {
-  const parsedDate = dayjs(dateString, 'DD/MM/YYYY hh:mm A Z');
+  const parsedDate = dayjs(dateString, "DD/MM/YYYY hh:mm A Z");
 
   return parsedDate;
 }
@@ -25,11 +26,11 @@ export function isBefore(date1, date2, format = DATE_RESPONSE_FORMAT) {
   return dayjs(dayjsDate1).isBefore(dayjs(dayjsDate2));
 }
 
-export const DATE_RESPONSE_FORMAT = 'DD/MM/YYYY h:mm A Z';
-export const DEADLINE_FORMAT_24 = 'DD/MM/YYYY HH:mm';
-export const DEADLINE_FORMAT = 'DD MMMM YYYY hh:mm A';
-export const TIME_FORMAT = 'hh:mm';
-export const TIME_FORMAT_24 = 'HH:mm';
+export const DATE_RESPONSE_FORMAT = "DD/MM/YYYY h:mm A Z";
+export const DEADLINE_FORMAT_24 = "DD/MM/YYYY HH:mm";
+export const DEADLINE_FORMAT = "DD MMMM YYYY hh:mm A";
+export const TIME_FORMAT = "hh:mm";
+export const TIME_FORMAT_24 = "HH:mm";
 
 export function generalTimeFormatter(timeString) {
   const time = dayjs(timeString, TIME_FORMAT);
@@ -38,7 +39,7 @@ export function generalTimeFormatter(timeString) {
 }
 
 export function getDayName(number) {
-  const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+  const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
 
   return days[number];
 }

@@ -165,7 +165,8 @@ export const FormStudentBiodata = ({
                   startAdornment: formik.values[field.name] && (
                     <Cancel
                       onClick={() => {
-                        setTypeFilter("");
+                        // ! is not defined
+                        // setTypeFilter("");
                       }}
                       sx={{
                         fontSize: 14,

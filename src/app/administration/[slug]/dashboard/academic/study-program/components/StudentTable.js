@@ -17,143 +17,145 @@ import Image from "next/image";
 import { useState } from "react";
 import { FormAddStudent } from "./FormAddStudent";
 
-const columns = [
-  {
-    field: "card",
-    headerName: "",
-    flex: 1,
-    sortable: false,
-    renderCell: (params) => {
-      return (
-        <Box sx={{ width: "100%", mx: 2, py: 0.5 }}>
-          <Stack
-            component={Paper}
-            variant="outlined"
-            sx={{
-              justifyContent: "flex-start",
-              borderRadius: 2,
-              p: 2,
-            }}
-          >
-            <Stack sx={{ width: "100%" }}>
-              <Stack
-                direction={"row"}
-                justifyContent={"space-between"}
-                flex={1}
-              >
-                <Stack direction={"row"} alignItems={"center"}>
-                  <Avatar
-                    sx={{
-                      width: "40px",
-                      height: "40px",
-                      position: "relative",
-                      mr: 1,
-                    }}
-                  >
-                    <Image
-                      alt="Web Image"
-                      fill
-                      sizes="100%"
-                      style={{ objectFit: "cover" }}
-                      src={`https://api-staging.sisva.id/file/v1/files/${params.value.data.profile_image_uri}?school_id=${school.id}`}
-                    />
-                  </Avatar>
+function getColumns(school) {
+  return [
+    {
+      field: "card",
+      headerName: "",
+      flex: 1,
+      sortable: false,
+      renderCell: (params) => {
+        return (
+          <Box sx={{ width: "100%", mx: 2, py: 0.5 }}>
+            <Stack
+              component={Paper}
+              variant="outlined"
+              sx={{
+                justifyContent: "flex-start",
+                borderRadius: 2,
+                p: 2,
+              }}
+            >
+              <Stack sx={{ width: "100%" }}>
+                <Stack
+                  direction={"row"}
+                  justifyContent={"space-between"}
+                  flex={1}
+                >
+                  <Stack direction={"row"} alignItems={"center"}>
+                    <Avatar
+                      sx={{
+                        width: "40px",
+                        height: "40px",
+                        position: "relative",
+                        mr: 1,
+                      }}
+                    >
+                      <Image
+                        alt="Web Image"
+                        fill
+                        sizes="100%"
+                        style={{ objectFit: "cover" }}
+                        src={`https://api-staging.sisva.id/file/v1/files/${params.value.data.profile_image_uri}?school_id=${school.id}`}
+                      />
+                    </Avatar>
+                    <Typography
+                      sx={{
+                        color: "black",
+                      }}
+                    >
+                      {params.value.data.name}
+                    </Typography>
+                  </Stack>
+                </Stack>
+
+                <Stack
+                  sx={{
+                    width: "100%",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    borderBottom: "1px solid rgb(0,0,0,0.12)",
+                    px: 1,
+                    py: "10px",
+                    backgroundColor: "base.base10",
+                  }}
+                >
                   <Typography
-                    sx={{
-                      color: "black",
-                    }}
+                    sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
                   >
-                    {params.value.data.name}
+                    Program Studi
+                  </Typography>
+                  <Typography sx={{ fontSize: 14, textAlign: "right" }}>
+                    {params.value.data.grades?.length}
+                  </Typography>
+                </Stack>
+
+                <Stack
+                  sx={{
+                    width: "100%",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    borderBottom: "1px solid rgb(0,0,0,0.12)",
+                    px: 1,
+                    py: "10px",
+                    backgroundColor: "base.base10",
+                  }}
+                >
+                  <Typography sx={{ color: "base.base50", fontSize: 12 }}>
+                    Tingkatan
                   </Typography>
                 </Stack>
               </Stack>
-
-              <Stack
-                sx={{
-                  width: "100%",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  borderBottom: "1px solid rgb(0,0,0,0.12)",
-                  px: 1,
-                  py: "10px",
-                  backgroundColor: "base.base10",
-                }}
-              >
-                <Typography
-                  sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
-                >
-                  Program Studi
-                </Typography>
-                <Typography sx={{ fontSize: 14, textAlign: "right" }}>
-                  {params.value.data.grades?.length}
-                </Typography>
-              </Stack>
-
-              <Stack
-                sx={{
-                  width: "100%",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  borderBottom: "1px solid rgb(0,0,0,0.12)",
-                  px: 1,
-                  py: "10px",
-                  backgroundColor: "base.base10",
-                }}
-              >
-                <Typography sx={{ color: "base.base50", fontSize: 12 }}>
-                  Tingkatan
-                </Typography>
-              </Stack>
+              <ActionButton params={params} />
             </Stack>
-            <ActionButton params={params} />
-          </Stack>
-        </Box>
-      );
+          </Box>
+        );
+      },
     },
-  },
-  {
-    field: "profile_image_uri",
-    headerName: "",
-    width: 70,
-    sortable: false,
-    renderCell: (params) => (
-      <Avatar
-        sx={{
-          width: 40,
-          height: 40,
-          my: 1.5,
-          ml: 2,
-          position: "relative",
-          display: "flex",
-        }}
-      >
-        {params.value[0] !== "" ? (
-          <Image
-            alt="Web Image"
-            fill
-            sizes="100%"
-            style={{ objectFit: "cover" }}
-            src={`https://api-staging.sisva.id/file/v1/files/${params.value[0]}?school_id=${school.id}`}
-          />
-        ) : (
-          params.value[1].toUpperCase().slice(0, 1)
-        )}
-      </Avatar>
-    ),
-  },
-  { field: "name", headerName: "Nama", flex: 1 },
-  { field: "study_program", headerName: "Program Studi", flex: 1 },
-  { field: "grade", headerName: "Tingkatan", flex: 1 },
-  {
-    field: "action",
-    headerName: "Aksi",
-    sortable: false,
-    width: 120,
-    renderCell: (params) => {
-      return <ActionButton params={params} />;
+    {
+      field: "profile_image_uri",
+      headerName: "",
+      width: 70,
+      sortable: false,
+      renderCell: (params) => (
+        <Avatar
+          sx={{
+            width: 40,
+            height: 40,
+            my: 1.5,
+            ml: 2,
+            position: "relative",
+            display: "flex",
+          }}
+        >
+          {params.value[0] !== "" ? (
+            <Image
+              alt="Web Image"
+              fill
+              sizes="100%"
+              style={{ objectFit: "cover" }}
+              src={`https://api-staging.sisva.id/file/v1/files/${params.value[0]}?school_id=${school.id}`}
+            />
+          ) : (
+            params.value[1].toUpperCase().slice(0, 1)
+          )}
+        </Avatar>
+      ),
     },
-  },
-];
+    { field: "name", headerName: "Nama", flex: 1 },
+    { field: "study_program", headerName: "Program Studi", flex: 1 },
+    { field: "grade", headerName: "Tingkatan", flex: 1 },
+    {
+      field: "action",
+      headerName: "Aksi",
+      sortable: false,
+      width: 120,
+      renderCell: (params) => {
+        return <ActionButton params={params} />;
+      },
+    },
+  ];
+}
 
 function ActionButton({ params }) {
   return (
@@ -242,6 +244,8 @@ export default function StudentTable({
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
   const [activeRow, setActiveRow] = useState({});
+
+  const columns = getColumns(school);
 
   let rows = [];
 

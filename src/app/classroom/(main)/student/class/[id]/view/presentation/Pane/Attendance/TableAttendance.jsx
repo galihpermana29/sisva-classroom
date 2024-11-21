@@ -1,4 +1,6 @@
+import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
 import { Avatar, Table } from "antd";
+import { Kumbh_Sans } from "next/font/google";
 import { useMemo } from "react";
 import { formatDateDay } from "../../../../usecase/dateFormatter";
 import { useAttendance } from "../../../../usecase/use-attendance";
@@ -47,7 +49,8 @@ export default function TableAttendances() {
       {
         title: (
           <div className="inline-flex items-center gap-1">
-            <Avatar src={profile_image_uri || placeholderImage.src} size={30} />
+            {/* // ! placeholderImage is not defined */}
+            {/* <Avatar src={profile_image_uri || placeholderImage.src} size={30} /> */}
             <span className="text-[#333333] font-normal text-sm">{name}</span>
           </div>
         ),
