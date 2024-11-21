@@ -223,7 +223,7 @@ export function getSubjectType(text: SubjectTypeText): SubjectType {
   }
 }
 
-export type PeriodStatus = "active" | "inactive" | "finished";
+export type PeriodStatus = "active" | "inactive" | "finished" | "cancelled";
 export type PeriodStatusText = "Aktif" | "Belum Aktif" | "Selesai";
 export function getPeriodStatus(text: PeriodStatusText): PeriodStatus {
   switch (text) {
@@ -318,3 +318,7 @@ export function getMonthNumber(text: MonthText): string {
       return "12";
   }
 }
+
+// TODO: export Text type and get function
+export type StudyProgramStatus = "active" | "inactive";
+export type Day = 1 | 2 | 3 | 4 | 5 | 6 | 7;

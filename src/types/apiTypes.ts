@@ -1,3 +1,5 @@
+import type { Day, PeriodStatus, StudyProgramStatus } from "./types";
+
 type Grade =
   //* actually could be any string
   | "I"
@@ -82,8 +84,6 @@ export type StudentInStudentGroup = {
   student_group_name: string;
 };
 
-export type PeriodStatus = "active" | "inactive" | "finished" | "cancelled";
-
 export type Period = {
   id: number;
   name: string;
@@ -96,8 +96,6 @@ export type Period = {
   };
 };
 
-export type StudyProgramStatus = "active" | "inactive";
-
 export type StudyProgram = {
   id: number;
   name: string;
@@ -105,8 +103,6 @@ export type StudyProgram = {
   status: StudyProgramStatus;
   grades: Grade[];
 };
-
-export type Day = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
 export type ClassSchedule = {
   id: number;
