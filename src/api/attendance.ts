@@ -1,55 +1,50 @@
-import axios from "axios";
-
+import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { getBearerToken, getSchoolId, getUserId } from ".";
 
-const BEARER_TOKEN = getBearerToken();
-const USER_ID = getUserId();
-const SCHOOL_ID = getSchoolId();
+const AttendanceAPI = new (class {
+  private api: AxiosInstance;
+  constructor() {
+    this.api = axios.create({
+      baseURL: "https://api-staging.sisva.id/attendance/v1",
+    });
+  }
 
-const api = axios.create({
-  baseURL: "https://api-staging.sisva.id/attendance/v1",
-});
-
-const AttendanceApi = {
-  getStaffAttendanceByDateId(date_id) {
-    const headers = {
-      "X-Sisva-Source": "attendance.staff.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
+  private getRequestConfig(
+    additionalHeaders: Record<string, string> = {}
+  ): AxiosRequestConfig {
+    const defaultHeaders = {
+      "X-Sisva-Source": "attendance.test",
+      "X-Sisva-UserID": getUserId(),
+      "X-Sisva-SchoolID": getSchoolId(),
+      Authorization: `Bearer ${getBearerToken()}`,
     };
-    return api.get(`/staff?date_id=${date_id}`, { headers });
-  },
+
+    return {
+      headers: {
+        ...defaultHeaders,
+        ...additionalHeaders,
+      },
+    };
+  }
+
+  getStaffAttendanceByDateId(date_id) {
+    return this.api.get(`/staff?date_id=${date_id}`, this.getRequestConfig());
+  }
 
   getStudentClassAttendanceByDateId(date_id) {
-    const headers = {
-      "X-Sisva-Source": "attendance.students.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.get(`/students?date_id=${date_id}`, { headers });
-  },
+    return this.api.get(
+      `/students?date_id=${date_id}`,
+      this.getRequestConfig()
+    );
+  }
 
   createStaffAttendance(id, payload) {
-    const headers = {
-      "X-Sisva-Source": "attendance.tasks.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.put(`/staff/${id}`, payload, { headers });
-  },
+    return this.api.put(`/staff/${id}`, payload, this.getRequestConfig());
+  }
 
   createStudentAttendance(id, payload) {
-    const headers = {
-      "X-Sisva-Source": "attendance.tasks.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.put(`/students/${id}`, payload, { headers });
-  },
-};
+    return this.api.put(`/students/${id}`, payload, this.getRequestConfig());
+  }
+})();
 
-export default AttendanceApi;
+export default AttendanceAPI;
