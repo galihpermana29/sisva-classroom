@@ -1,6 +1,6 @@
 "use client";
 
-import { useGetUserById } from "@/hooks/useGetUserById";
+import { useGetUserById } from "@/hooks/query/user/useGetUserById";
 import { formatToRupiah } from "@/utils/formatToRupiah";
 import { getUserTimezone } from "@/utils/getUserTimezone";
 

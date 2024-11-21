@@ -1,7 +1,7 @@
 import { useSchool } from "@/app/administration/[slug]/SchoolContext";
 import { useAdministrationSelector } from "@/app/administration/hooks";
 import { permissions, types } from "@/globalcomponents/Variable";
-import { useStaffTeachers } from "@/hooks/useStaffTeachers";
+import { useStaffTeachers } from "@/hooks/query/user/useStaffTeachers";
 import { BorderColorRounded, DeleteForeverRounded } from "@mui/icons-material";
 import type { Theme } from "@mui/material";
 import {

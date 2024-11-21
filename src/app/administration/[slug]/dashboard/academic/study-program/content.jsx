@@ -30,7 +30,7 @@ import StudyProgramTable from "./components/StudyProgramTable";
 
 import AcademicAPI from "@/api/academic";
 import UsersAPI from "@/api/users";
-import { useStudyPrograms } from "@/hooks/useStudyPrograms";
+import { useStudyPrograms } from "@/hooks/query/academic/useStudyPrograms";
 import { useFormik } from "formik";
 import ImportXLSXAlert from "../../components/ImportXLSXAlert";
 import handleXLSXUploadAcademic from "../utils/handleXLSXUploadAcademic";

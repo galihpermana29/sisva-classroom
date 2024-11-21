@@ -1,6 +1,6 @@
 "use client";
 
-import { useGetAllPeriods } from "@/hooks/useGetAllPeriods";
+import { useGetAllPeriods } from "@/hooks/query/academic/useGetAllPeriods";
 import dayjs from "dayjs";
 import { useMemo } from "react";
 

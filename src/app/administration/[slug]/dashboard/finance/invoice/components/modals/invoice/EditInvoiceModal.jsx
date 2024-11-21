@@ -2,7 +2,7 @@
 
 import { ModalBody } from "@/components/CustomModal";
 import { FieldLabel } from "@/components/FieldLabel";
-import { useGetUserById } from "@/hooks/useGetUserById";
+import { useGetUserById } from "@/hooks/query/user/useGetUserById";
 import { formatToRupiah } from "@/utils/formatToRupiah";
 import { ModeEdit } from "@mui/icons-material";
 import {

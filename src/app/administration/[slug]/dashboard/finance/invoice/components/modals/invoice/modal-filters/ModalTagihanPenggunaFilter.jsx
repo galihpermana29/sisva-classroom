@@ -1,6 +1,6 @@
 "use client";
 
-import { useGetAllUsers } from "@/hooks/useGetAllUsers";
+import { useGetAllUsers } from "@/hooks/query/academic/useGetAllUsers";
 import { MenuItem, Select, Stack, Typography } from "@mui/material";
 import { useGetAllUserBill } from "../../../../hooks/useGetAllUserBill";
 

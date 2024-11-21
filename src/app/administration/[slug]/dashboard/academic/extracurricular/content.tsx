@@ -4,10 +4,10 @@ import { Stack, Typography } from "@mui/material";
 import { useState } from "react";
 
 import AcademicAPI from "@/api/academic";
-import { useExtracurricularMembers } from "@/hooks/useExtracurricularMembers";
-import { useExtracurriculars } from "@/hooks/useExtracurriculars";
-import { useStudents } from "@/hooks/useStudents";
-import { useTeachers } from "@/hooks/useTeachers";
+import { useExtracurricularMembers } from "@/hooks/query/academic/useExtracurricularMembers";
+import { useExtracurriculars } from "@/hooks/query/academic/useExtracurriculars";
+import { useStudents } from "@/hooks/query/user/useStudents";
+import { useTeachers } from "@/hooks/query/user/useTeachers";
 import { useQueryClient } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import ClassTable from "./components/ClassTable";
@@ -152,9 +152,7 @@ export default function StaffProfileContent() {
     return <></>;
   }
 
-  const extraList = extracurriculars.sort(
-    (a, b) => parseInt(a.id) - parseInt(b.id)
-  );
+  const extraList = extracurriculars.sort((a, b) => a.id - b.id);
 
   const dataExtra = extraList.map((ed) => {
     const studentSum = extracurricularMembers.filter(

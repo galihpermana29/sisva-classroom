@@ -1,10 +1,10 @@
 "use client";
 
-import { useClasses } from "@/hooks/useClasses";
-import { useClassSchedules } from "@/hooks/useClassSchedules";
-import { useNonLearningSchedules } from "@/hooks/useNonLearningSchedules";
-import { useSchoolSchedules } from "@/hooks/useSchoolSchedules";
-import { useStudentGroups } from "@/hooks/useStudentGroups";
+import { useClasses } from "@/hooks/query/academic/useClasses";
+import { useClassSchedules } from "@/hooks/query/academic/useClassSchedules";
+import { useNonLearningSchedules } from "@/hooks/query/academic/useNonLearningSchedules";
+import { useSchoolSchedules } from "@/hooks/query/academic/useSchoolSchedules";
+import { useStudentGroups } from "@/hooks/query/academic/useStudentGroups";
 import dayjs from "dayjs";
 import isoWeek from "dayjs/plugin/isoWeek";
 import { useSearchParams } from "next/navigation";

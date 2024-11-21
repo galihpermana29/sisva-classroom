@@ -1,14 +1,14 @@
 "use client";
 
-import { useUploadFile } from "@/hooks/useUploadFile";
+import { useUploadFile } from "@/hooks/query/file/useUploadFile";
 import {
-    ArrowOutward,
-    CheckBox,
-    Download,
-    Edit,
-    Error,
-    FileUploadOutlined,
-    Folder,
+  ArrowOutward,
+  CheckBox,
+  Download,
+  Edit,
+  Error,
+  FileUploadOutlined,
+  Folder,
 } from "@mui/icons-material";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { Button, IconButton, useTheme } from "@mui/material";

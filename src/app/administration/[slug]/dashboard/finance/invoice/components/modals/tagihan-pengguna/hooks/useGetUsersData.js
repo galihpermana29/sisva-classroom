@@ -1,5 +1,5 @@
-import { useGetAllStudentGroups } from "@/hooks/useGetAllStudentGroups";
-import { useGetAllUsers } from "@/hooks/useGetAllUsers";
+import { useGetAllStudentGroups } from "@/hooks/query/academic/useGetAllStudentGroups";
+import { useGetAllUsers } from "@/hooks/query/academic/useGetAllUsers";
 import { paginateData } from "@/utils/paginateData";
 import { useGetStudentsInStudentGroup } from "../../../../hooks/useGetStudentsInStudentGroup";
 import { hasFilter } from "../utils/hasFilter";
@@ -37,8 +37,8 @@ export const useGetUsersData = ({
   const totalPage = shouldFetchStudents
     ? paginatedStudents.length
     : shouldFetchStaffs
-      ? paginatedStaffs.length
-      : 1;
+    ? paginatedStaffs.length
+    : 1;
 
   return {
     students: studentsData,

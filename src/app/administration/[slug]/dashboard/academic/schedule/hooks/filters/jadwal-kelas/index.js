@@ -1,8 +1,8 @@
 "use client";
 
-import { useGetAllPeriods } from "@/hooks/useGetAllPeriods";
-import { useGetAllStudentGroups } from "@/hooks/useGetAllStudentGroups";
-import { useGetAllStudyPrograms } from "@/hooks/useGetAllStudyPrograms";
+import { useGetAllPeriods } from "@/hooks/query/academic/useGetAllPeriods";
+import { useGetAllStudentGroups } from "@/hooks/query/academic/useGetAllStudentGroups";
+import { useGetAllStudyPrograms } from "@/hooks/query/academic/useGetAllStudyPrograms";
 import { useEnsureFilterOrder } from "../useEnsureFilterOrder";
 import { useFilterStatus } from "../useFilterStatus";
 import { useGetAvailableClasses } from "../useGetAvailableClasses";

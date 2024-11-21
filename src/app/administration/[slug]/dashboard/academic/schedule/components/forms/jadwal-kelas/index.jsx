@@ -1,8 +1,8 @@
 "use client";
 
 import AcademicAPI from "@/api/academic";
-import { invalidateClassSchedules } from "@/hooks/useClassSchedules";
-import { invalidateClasses } from "@/hooks/useClasses";
+import { invalidateClasses } from "@/hooks/query/academic/useClasses";
+import { invalidateClassSchedules } from "@/hooks/query/academic/useClassSchedules";
 import { formatTime } from "@/utils/formatTime";
 import { Button, Stack } from "@mui/material";
 import { useQueryClient } from "@tanstack/react-query";

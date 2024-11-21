@@ -1,6 +1,6 @@
 "use client";
 
-import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { useCurrentUser } from "@/hooks/query/user/useCurrentUser";
 import { Box } from "@mui/material";
 import { useParams } from "next/navigation";
 import Container from "./components/Container";

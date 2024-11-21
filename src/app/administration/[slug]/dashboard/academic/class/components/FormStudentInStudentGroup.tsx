@@ -1,15 +1,15 @@
 import FormButtonsContainerSisva from "@/components/FormButtonsContainerSisva";
 import FormContainerSisva from "@/components/FormContainerSisva";
 import FormLabelSisva from "@/components/FormLabelSisva";
-import { usePeriods } from "@/hooks/usePeriods";
+import { usePeriods } from "@/hooks/query/academic/usePeriods";
 import {
   useAddStudentToStudentGroup,
   useStudentGroups,
   useStudentInStudentGroups,
   useUpdateStudentInStudentGroup,
-} from "@/hooks/useStudentGroups";
-import { useStudents } from "@/hooks/useStudents";
-import { useStudyPrograms } from "@/hooks/useStudyPrograms";
+} from "@/hooks/query/academic/useStudentGroups";
+import { useStudyPrograms } from "@/hooks/query/academic/useStudyPrograms";
+import { useStudents } from "@/hooks/query/user/useStudents";
 import { Button, Divider, MenuItem, TextField } from "@mui/material";
 import { useQueryClient } from "@tanstack/react-query";
 import type { SubmitHandler } from "react-hook-form";

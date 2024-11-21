@@ -1,7 +1,7 @@
 "use client";
 
 import AcademicAPI from "@/api/academic";
-import { invalidateNonLearningSchedules } from "@/hooks/useNonLearningSchedules";
+import { invalidateNonLearningSchedules } from "@/hooks/query/academic/useNonLearningSchedules";
 import { formatTime } from "@/utils/formatTime";
 import { Button, Stack } from "@mui/material";
 import { useQueryClient } from "@tanstack/react-query";

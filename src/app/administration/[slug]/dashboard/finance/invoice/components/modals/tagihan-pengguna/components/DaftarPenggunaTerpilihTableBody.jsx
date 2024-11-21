@@ -1,5 +1,5 @@
 import { TableCellLoading, TableEmptyState } from "@/components/CustomTable";
-import { useGetUserById } from "@/hooks/useGetUserById";
+import { useGetUserById } from "@/hooks/query/user/useGetUserById";
 import { formatToRupiah } from "@/utils/formatToRupiah";
 import { Delete } from "@mui/icons-material";
 import {

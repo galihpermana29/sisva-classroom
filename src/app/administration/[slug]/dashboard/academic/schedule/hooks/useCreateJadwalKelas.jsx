@@ -1,7 +1,7 @@
 "use client";
 
 import AcademicAPI from "@/api/academic";
-import { useSubjectTeachers } from "@/hooks/useSubjectTeachers";
+import { useSubjectTeachers } from "@/hooks/query/academic/useSubjectTeachers";
 import { formatDayToLabel } from "@/utils/formatDay";
 import { getUniqueObjectsBy } from "@/utils/getUniqueObjectBy";
 import { useEffect, useState } from "react";
