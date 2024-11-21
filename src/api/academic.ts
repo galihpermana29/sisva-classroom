@@ -228,16 +228,6 @@ const AcademicAPI = {
     return api.get(`/syllabuses/${id}`, { headers });
   },
 
-  updateSilabus(payload, id) {
-    const headers = {
-      "X-Sisva-Source": "academic.curriculum.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.patch(`/syllabuses/${id}`, payload, { headers });
-  },
-
   deleteSilabus(id) {
     const headers = {
       "X-Sisva-Source": "academic.curriculum.test",
