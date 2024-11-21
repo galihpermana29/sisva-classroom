@@ -27,7 +27,8 @@ export const useNavbar = (userType) => {
       classData &&
       (pathname.startsWith(PATHS.CLASS) ||
         pathname.startsWith(PATHS.STUDENT_CLASS)) &&
-      pathname !== "/classroom/teacher/class"
+      pathname !== PATHS.CLASS &&
+      pathname !== PATHS.STUDENT_CLASS
     ) {
       newText = `${classData.subject_name} - ${classData.student_group_name}`;
     }
@@ -38,7 +39,8 @@ export const useNavbar = (userType) => {
       !isFetching &&
       (pathname.startsWith(PATHS.CLASS) ||
         pathname.startsWith(PATHS.STUDENT_CLASS)) &&
-      pathname !== "/classroom/teacher/class"
+      pathname !== PATHS.CLASS &&
+      pathname !== PATHS.STUDENT_CLASS
     ) {
       newDescription = classData.teacher_name;
     }

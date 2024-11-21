@@ -180,7 +180,7 @@ const CreateRppContainer = ({ initialData, headerText }) => {
                 setModalState({
                   isOpen: true,
                   type: "delete-rpp",
-                  title: "Hapus Bahan Ajar dari Rencana Pembelajaran",
+                  title: "Hapus Rencana Pembelajaran",
                 });
               }}
             >

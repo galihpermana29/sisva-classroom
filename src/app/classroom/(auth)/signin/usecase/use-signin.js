@@ -50,6 +50,16 @@ export const useSignIn = () => {
       );
 
       if (userResponse.success) {
+        if (
+          userResponse.data.type !== "teacher" &&
+          userResponse.data.type !== "student"
+        ) {
+          toast.error(
+            "Login Failed, Only Teacher and Student Can Access Classroom"
+          );
+          setIsLoading(false);
+          return;
+        }
         // const expirationTime = new Date(Date.now() + decodedToken.exp * 1000);
         const expirationTime = new Date(Date.now() + 24 * 60 * 60 * 1000);
 
