@@ -1,23 +1,35 @@
-import api, { getBearerToken, getSchoolId, getUserId } from ".";
+import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import { getBearerToken, getSchoolId, getUserId } from ".";
 
-const BEARER_TOKEN = getBearerToken();
-const USER_ID = getUserId();
-const SCHOOL_ID = getSchoolId();
+const defaultSource = "files.test";
 
-const FilesAPI = {
-  uploadimage(formData) {
-    const url = "https://api-staging.sisva.id/file/v1/files/";
-    const headers = {
-      "X-Sisva-Source": "test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
+const FilesAPI = new (class {
+  private api: AxiosInstance;
+  constructor() {
+    this.api = axios.create({
+      baseURL: "https://api-staging.sisva.id/file/v1",
+    });
+  }
+
+  private getRequestConfig(additionalHeaders: Record<string, string> = {}): AxiosRequestConfig {
+    const defaultHeaders = {
+      "X-Sisva-Source": defaultSource,
+      "X-Sisva-UserID": getUserId(),
+      "X-Sisva-SchoolID": getSchoolId(),
+      Authorization: `Bearer ${getBearerToken()}`,
     };
 
-    return api.post(url, formData, {
-      headers,
-    });
-  },
-};
+    return {
+      headers: {
+        ...defaultHeaders,
+        ...additionalHeaders,
+      },
+    };
+  }
+
+  uploadimage(formData) {
+    return this.api.post("/files/", formData, this.getRequestConfig());
+  }
+})();
 
 export default FilesAPI;
