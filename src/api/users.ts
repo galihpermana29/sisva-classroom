@@ -27,19 +27,19 @@ const UsersAPI = new (class {
     };
   }
 
-  async createUser(payload: any) {
+  createUser(payload: any) {
     return this.api.post("/users", payload, this.getRequestConfig());
   }
 
-  async getAllUsers(params: string = "staff,teacher,student") {
+  getAllUsers(params: string = "staff,teacher,student") {
     return this.api.get(`/users?types=${params}`, this.getRequestConfig());
   }
 
-  async getUserById(id: string | number) {
+  getUserById(id: string | number) {
     return this.api.get(`/users/${id}`, this.getRequestConfig());
   }
 
-  async updateUserById(payload: any, id: string) {
+  updateUserById(payload: any, id: string) {
     return this.api.patch(`/users/${id}`, payload, this.getRequestConfig());
   }
 })();

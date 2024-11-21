@@ -1,717 +1,378 @@
-import axios from "axios";
-
+import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { getBearerToken, getSchoolId, getUserId } from ".";
 
-const BEARER_TOKEN = getBearerToken();
-const USER_ID = getUserId();
-const SCHOOL_ID = getSchoolId();
+const AcademicAPI = new (class {
+  private api: AxiosInstance;
+  constructor() {
+    this.api = axios.create({
+      baseURL: "https://api-staging.sisva.id/academic/v1",
+    });
+  }
 
-const api = axios.create({
-  baseURL: "https://api-staging.sisva.id/academic/v1",
-});
-const AcademicAPI = {
-  /**
-   * @param {Object} payload
-   * @param {string} payload.name
-   * @param {string} payload.code
-   * @param {("active" | "inactive")} payload.status
-   * @param {string[]} payload.grades
-   * @returns {Promise}
-   */
-  createProdi(payload) {
-    const headers = {
+  private getRequestConfig(
+    additionalHeaders: Record<string, string> = {}
+  ): AxiosRequestConfig {
+    const defaultHeaders = {
       "X-Sisva-Source": "academic.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
+      "X-Sisva-UserID": getUserId(),
+      "X-Sisva-SchoolID": getSchoolId(),
+      Authorization: `Bearer ${getBearerToken()}`,
     };
-    return api.post(`/study-programs`, payload, { headers });
-  },
+
+    return {
+      headers: {
+        ...defaultHeaders,
+        ...additionalHeaders,
+      },
+    };
+  }
+
+  createProdi(payload) {
+    return this.api.post(`/study-programs`, payload, this.getRequestConfig());
+  }
 
   getDetailProdi(id) {
-    const headers = {
-      "X-Sisva-Source": "academic.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.get(`/study-programs/${id}`, { headers });
-  },
+    return this.api.get(`/study-programs/${id}`, this.getRequestConfig());
+  }
 
   getAllProdi() {
-    const headers = {
-      "X-Sisva-Source": "academic.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.get(`/study-programs`, { headers });
-  },
+    return this.api.get(`/study-programs`, this.getRequestConfig());
+  }
 
   updateProdi(payload, id) {
-    const headers = {
-      "X-Sisva-Source": "academic.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.patch(`/study-programs/${id}`, payload, { headers });
-  },
+    return this.api.patch(
+      `/study-programs/${id}`,
+      payload,
+      this.getRequestConfig()
+    );
+  }
 
   deleteProdi(id) {
-    const headers = {
-      "X-Sisva-Source": "academic.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.delete(`/study-programs/${id}`, { headers });
-  },
+    return this.api.delete(`/study-programs/${id}`, this.getRequestConfig());
+  }
 
   getAllCurriculum() {
-    const headers = {
-      "X-Sisva-Source": "academic.curriculum.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.get(`/curriculums`, { headers });
-  },
+    return this.api.get(`/curriculums`, this.getRequestConfig());
+  }
 
   createCurriculum(payload) {
-    const headers = {
-      "X-Sisva-Source": "academic.curriculum.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.post(`/curriculums`, payload, { headers });
-  },
+    return this.api.post(`/curriculums`, payload, this.getRequestConfig());
+  }
 
   getDetailCurriculum(id) {
-    const headers = {
-      "X-Sisva-Source": "academic.curriculum.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.get(`/curriculums/${id}`, { headers });
-  },
+    return this.api.get(`/curriculums/${id}`, this.getRequestConfig());
+  }
 
   updateCurriculum(payload, id) {
-    const headers = {
-      "X-Sisva-Source": "academic.curriculum.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.patch(`/curriculums/${id}`, payload, { headers });
-  },
+    return this.api.patch(
+      `/curriculums/${id}`,
+      payload,
+      this.getRequestConfig()
+    );
+  }
 
   deleteCurriculum(id) {
-    const headers = {
-      "X-Sisva-Source": "academic.curriculum.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.delete(`/curriculums/${id}`, { headers });
-  },
+    return this.api.delete(`/curriculums/${id}`, this.getRequestConfig());
+  }
 
   getPeriodCurr() {
-    const headers = {
-      "X-Sisva-Source": "academic.period.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.get(`/periods/curriculums`, { headers });
-  },
+    return this.api.get(`/periods/curriculums`, this.getRequestConfig());
+  }
 
   getAllSubject() {
-    const headers = {
-      "X-Sisva-Source": "academic.curriculum.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.get(`/subjects`, { headers });
-  },
+    return this.api.get(`/subjects`, this.getRequestConfig());
+  }
 
   createSubject(payload) {
-    const headers = {
-      "X-Sisva-Source": "academic.curriculum.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.post(`/subjects`, payload, { headers });
-  },
+    return this.api.post(`/subjects`, payload, this.getRequestConfig());
+  }
 
   getDetailSubject(id) {
-    const headers = {
-      "X-Sisva-Source": "academic.curriculum.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.get(`/subjects/${id}`, { headers });
-  },
+    return this.api.get(`/subjects/${id}`, this.getRequestConfig());
+  }
 
   updateSubject(payload, id) {
-    const headers = {
-      "X-Sisva-Source": "academic.curriculum.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.patch(`/subjects/${id}`, payload, { headers });
-  },
+    return this.api.patch(`/subjects/${id}`, payload, this.getRequestConfig());
+  }
 
   replaceSubjectTeacher(payload) {
-    const headers = {
-      "X-Sisva-Source": "academic.subjects.teachers.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.put(`/subjects/teachers`, payload, { headers });
-  },
+    return this.api.put(`/subjects/teachers`, payload, this.getRequestConfig());
+  }
 
   deleteSubject(id) {
-    const headers = {
-      "X-Sisva-Source": "academic.curriculum.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.delete(`/subjects/${id}`, { headers });
-  },
+    return this.api.delete(`/subjects/${id}`, this.getRequestConfig());
+  }
 
   getAllSilabus() {
-    const headers = {
-      "X-Sisva-Source": "academic.curriculum.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.get(`/syllabuses`, { headers });
-  },
+    return this.api.get(`/syllabuses`, this.getRequestConfig());
+  }
 
   createSilabus(payload) {
-    const headers = {
-      "X-Sisva-Source": "academic.curriculum.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.post(`/syllabuses`, payload, { headers });
-  },
+    return this.api.post(`/syllabuses`, payload, this.getRequestConfig());
+  }
 
   updateSilabus(payload, id) {
-    const headers = {
-      "X-Sisva-Source": "academic.curriculum.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.patch(`/syllabuses/${id}`, payload, { headers });
-  },
+    return this.api.patch(
+      `/syllabuses/${id}`,
+      payload,
+      this.getRequestConfig()
+    );
+  }
 
   getDetailSilabus(id) {
-    const headers = {
-      "X-Sisva-Source": "academic.curriculum.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.get(`/syllabuses/${id}`, { headers });
-  },
+    return this.api.get(`/syllabuses/${id}`, this.getRequestConfig());
+  }
 
   deleteSilabus(id) {
-    const headers = {
-      "X-Sisva-Source": "academic.curriculum.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.delete(`/syllabuses/${id}`, { headers });
-  },
+    return this.api.delete(`/syllabuses/${id}`, this.getRequestConfig());
+  }
 
   createPeriod(payload) {
-    const headers = {
-      "X-Sisva-Source": "academic.periods.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.post(`/periods`, payload, { headers });
-  },
+    return this.api.post(`/periods`, payload, this.getRequestConfig());
+  }
 
   getPeriodById(id) {
-    const headers = {
-      "X-Sisva-Source": "academic.periods.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.get(`/periods/${id}`, { headers });
-  },
+    return this.api.get(`/periods/${id}`, this.getRequestConfig());
+  }
 
   addCurriculumInPeriod(id, payload) {
-    const headers = {
-      "X-Sisva-Source": "academic.periods.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.post(`/periods/${id}/curriculums`, payload, { headers });
-  },
+    return this.api.post(
+      `/periods/${id}/curriculums`,
+      payload,
+      this.getRequestConfig()
+    );
+  }
 
   getAllPeriod() {
-    const headers = {
-      "X-Sisva-Source": "academic.periods.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.get(`/periods`, { headers });
-  },
+    return this.api.get(`/periods`, this.getRequestConfig());
+  }
 
   deletePeriod(id) {
-    const headers = {
-      "X-Sisva-Source": "academic.periods.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.delete(`/periods/${id}`, { headers });
-  },
+    return this.api.delete(`/periods/${id}`, this.getRequestConfig());
+  }
 
   updatePeriod(payload, id) {
-    const headers = {
-      "X-Sisva-Source": "academic.periods.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.patch(`/periods/${id}`, payload, { headers });
-  },
+    return this.api.patch(`/periods/${id}`, payload, this.getRequestConfig());
+  }
 
   deletePeriodCurr(id, payload) {
-    const headers = {
-      "X-Sisva-Source": "academic.period.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.delete(`/periods/${id}/curriculums`, {
-      headers: headers,
+    return this.api.delete(`/periods/${id}/curriculums`, {
+      headers: this.getRequestConfig().headers,
       data: payload,
     });
-  },
+  }
 
   getAllSubjectTeacher() {
-    const headers = {
-      "X-Sisva-Source": "academic.subjects.teachers.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.get(`/subjects/teachers`, { headers });
-  },
+    return this.api.get(`/subjects/teachers`, this.getRequestConfig());
+  }
 
   getAllClasses() {
-    const headers = {
-      "X-Sisva-Source": "academic.classes.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.get(`/classes`, { headers });
-  },
+    return this.api.get(`/classes`, this.getRequestConfig());
+  }
 
   createClass(payload) {
-    const headers = {
-      "X-Sisva-Source": "academic.classes.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.post(`/classes`, payload, { headers });
-  },
+    return this.api.post(`/classes`, payload, this.getRequestConfig());
+  }
 
   getAllStudentGroup() {
-    const headers = {
-      "X-Sisva-Source": "academic.studentgroups.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.get(`/student-groups`, { headers });
-  },
+    return this.api.get(`/student-groups`, this.getRequestConfig());
+  }
 
   getAllStudentInGroup() {
-    const headers = {
-      "X-Sisva-Source": "academic.period.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.get(`/student-groups/students`, { headers });
-  },
+    return this.api.get(`/student-groups/students`, this.getRequestConfig());
+  }
 
   createStudentGroup(payload) {
-    const headers = {
-      "X-Sisva-Source": "academic.studentgroups.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.post(`/student-groups`, payload, { headers });
-  },
+    return this.api.post(`/student-groups`, payload, this.getRequestConfig());
+  }
 
   updateStudentGroup(id, payload) {
-    const headers = {
-      "X-Sisva-Source": "academic.studentgroups.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.patch(`/student-groups/${id}`, payload, { headers });
-  },
+    return this.api.patch(
+      `/student-groups/${id}`,
+      payload,
+      this.getRequestConfig()
+    );
+  }
 
   insertStudentToStudentGroup(id, payload) {
-    const headers = {
-      "X-Sisva-Source": "academic.studentgroups.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.put(`/student-groups/${id}/students`, payload, { headers });
-  },
+    return this.api.put(
+      `/student-groups/${id}/students`,
+      payload,
+      this.getRequestConfig()
+    );
+  }
 
   removeStudentGroup(id) {
-    const headers = {
-      "X-Sisva-Source": "academic.studentgroups.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.delete(`/student-groups/${id}`, { headers });
-  },
+    return this.api.delete(`/student-groups/${id}`, this.getRequestConfig());
+  }
 
   removeStudentFromGroup(id, payload) {
-    const headers = {
-      "X-Sisva-Source": "academic.studentgroups.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.delete(`/student-groups/${id}/students`, {
-      headers: headers,
+    return this.api.delete(`/student-groups/${id}/students`, {
+      headers: this.getRequestConfig().headers,
       data: payload,
     });
-  },
+  }
 
   getAllAnnouncements() {
-    const headers = {
-      "X-Sisva-Source": "academic.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.get(`/announcements`, { headers });
-  },
+    return this.api.get(`/announcements`, this.getRequestConfig());
+  }
 
   deleteAnnouncement(id) {
-    const headers = {
-      "X-Sisva-Source": "academic.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.delete(`/announcements/${id}`, { headers });
-  },
+    return this.api.delete(`/announcements/${id}`, this.getRequestConfig());
+  }
 
   addAnnouncement(payload) {
-    const headers = {
-      "X-Sisva-Source": "academic.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.post(`/announcements`, payload, { headers });
-  },
+    return this.api.post(`/announcements`, payload, this.getRequestConfig());
+  }
 
   updateAnnouncement(id, payload) {
-    const headers = {
-      "X-Sisva-Source": "academic.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.patch(`/announcements/${id}`, payload, { headers });
-  },
+    return this.api.patch(
+      `/announcements/${id}`,
+      payload,
+      this.getRequestConfig()
+    );
+  }
 
   getSchoolSchedule(period_id) {
-    const headers = {
-      "X-Sisva-Source": "academic.curriculum.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-
-    return api.get(`/school-schedules?period_id=${period_id}`, { headers });
-  },
+    return this.api.get(
+      `/school-schedules?period_id=${period_id}`,
+      this.getRequestConfig()
+    );
+  }
 
   getCredit() {
-    const headers = {
-      "X-Sisva-Source": "academic.curriculum.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-
-    return api.get(`/credits`, { headers });
-  },
+    return this.api.get(`/credits`, this.getRequestConfig());
+  }
 
   createCredit(payload) {
-    const headers = {
-      "X-Sisva-Source": "academic.curriculum.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-
-    return api.post("/credits", payload, { headers });
-  },
+    return this.api.post("/credits", payload, this.getRequestConfig());
+  }
 
   createSchoolSchedule(payload) {
-    const headers = {
-      "X-Sisva-Source": "academic.curriculum.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-
-    return api.post("/school-schedules", payload, { headers });
-  },
+    return this.api.post("/school-schedules", payload, this.getRequestConfig());
+  }
 
   editSchoolSchedule(payload, id) {
-    const headers = {
-      "X-Sisva-Source": "academic.curriculum.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-
-    return api.patch(`/school-schedules/${id}`, payload, { headers });
-  },
+    return this.api.patch(
+      `/school-schedules/${id}`,
+      payload,
+      this.getRequestConfig()
+    );
+  }
 
   deleteSchoolSchedule(id) {
-    const headers = {
-      "X-Sisva-Source": "academic.curriculum.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-
-    return api.delete(`/school-schedules/${id}`, { headers });
-  },
+    return this.api.delete(`/school-schedules/${id}`, this.getRequestConfig());
+  }
 
   getClassSchedule(period) {
-    const headers = {
-      "X-Sisva-Source": "academic.curriculum.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-
-    return api.get(`/class-schedules?period_id=${period}`, { headers });
-  },
+    return this.api.get(
+      `/class-schedules?period_id=${period}`,
+      this.getRequestConfig()
+    );
+  }
 
   getNonLearningSchedule(period) {
-    const headers = {
-      "X-Sisva-Source": "academic.curriculum.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-
-    return api.get(`/non-learning-schedules?period_id=${period}`, { headers });
-  },
+    return this.api.get(
+      `/non-learning-schedules?period_id=${period}`,
+      this.getRequestConfig()
+    );
+  }
 
   getAllClassSchedules(params) {
-    const headers = {
-      "X-Sisva-Source": "academic.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-
-    return api.get(`/class-schedules?${new URLSearchParams(params)}`, {
-      headers,
-    });
-  },
+    return this.api.get(
+      `/class-schedules?${new URLSearchParams(params)}`,
+      this.getRequestConfig()
+    );
+  }
 
   getAllSchoolSchedules(params) {
-    const headers = {
-      "X-Sisva-Source": "academic.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.get(`/school-schedules?${new URLSearchParams(params)}`, {
-      headers,
-    });
-  },
+    return this.api.get(
+      `/school-schedules?${new URLSearchParams(params)}`,
+      this.getRequestConfig()
+    );
+  }
 
   getAllNonLearningSchedules(params) {
-    const headers = {
-      "X-Sisva-Source": "academic.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.get(`/non-learning-schedules?${new URLSearchParams(params)}`, {
-      headers,
-    });
-  },
+    return this.api.get(
+      `/non-learning-schedules?${new URLSearchParams(params)}`,
+      this.getRequestConfig()
+    );
+  }
 
   createNonLearningSchedule(payload) {
-    const headers = {
-      "X-Sisva-Source": "academic.periods.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.post(`/non-learning-schedules`, payload, { headers });
-  },
+    return this.api.post(
+      `/non-learning-schedules`,
+      payload,
+      this.getRequestConfig()
+    );
+  }
 
   updateNonLearningSchedule(id, payload) {
-    const headers = {
-      "X-Sisva-Source": "academic.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.patch(`/non-learning-schedules/${id}`, payload, { headers });
-  },
+    return this.api.patch(
+      `/non-learning-schedules/${id}`,
+      payload,
+      this.getRequestConfig()
+    );
+  }
 
   createClassSchedule(payload) {
-    const headers = {
-      "X-Sisva-Source": "academic.periods.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.post(`/class-schedules`, payload, { headers });
-  },
+    return this.api.post(`/class-schedules`, payload, this.getRequestConfig());
+  }
 
   updateClassSchedule(id, payload) {
-    const headers = {
-      "X-Sisva-Source": "academic.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.patch(`/class-schedules/${id}`, payload, { headers });
-  },
+    return this.api.patch(
+      `/class-schedules/${id}`,
+      payload,
+      this.getRequestConfig()
+    );
+  }
 
   getAllExtra() {
-    const headers = {
-      "X-Sisva-Source": "academic.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-
-    return api.get(`/extracurriculars`, { headers });
-  },
+    return this.api.get(`/extracurriculars`, this.getRequestConfig());
+  }
 
   createExtra(payload) {
-    const headers = {
-      "X-Sisva-Source": "academic.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.post(`/extracurriculars`, payload, { headers });
-  },
+    return this.api.post(`/extracurriculars`, payload, this.getRequestConfig());
+  }
 
   updateExtra(id, payload) {
-    const headers = {
-      "X-Sisva-Source": "academic.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.patch(`/extracurriculars/${id}`, payload, { headers });
-  },
+    return this.api.patch(
+      `/extracurriculars/${id}`,
+      payload,
+      this.getRequestConfig()
+    );
+  }
 
   deleteExtra(id) {
-    const headers = {
-      "X-Sisva-Source": "academic.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.delete(`/extracurriculars/${id}`, { headers });
-  },
+    return this.api.delete(`/extracurriculars/${id}`, this.getRequestConfig());
+  }
 
   getAllExtraStudent() {
-    const headers = {
-      "X-Sisva-Source": "academic.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.get(`/extracurriculars/students`, { headers });
-  },
+    return this.api.get(`/extracurriculars/students`, this.getRequestConfig());
+  }
 
   createStudentInExtra(id, payload) {
-    const headers = {
-      "X-Sisva-Source": "academic.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.post(`/extracurriculars/${id}/students`, payload, { headers });
-  },
+    return this.api.post(
+      `/extracurriculars/${id}/students`,
+      payload,
+      this.getRequestConfig()
+    );
+  }
 
   deleteStudentInExtra(id, payload) {
-    const headers = {
-      "X-Sisva-Source": "academic.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.delete(`/extracurriculars/${id}/students`, {
-      headers: headers,
+    return this.api.delete(`/extracurriculars/${id}/students`, {
+      headers: this.getRequestConfig().headers,
       data: payload,
     });
-  },
+  }
 
   getStudentsInStudentGroup() {
-    const headers = {
-      "X-Sisva-Source": "academic.curriculum.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.get("/student-groups/students", { headers });
-  },
+    return this.api.get("/student-groups/students", this.getRequestConfig());
+  }
+
   getAllTask() {
-    const headers = {
-      "X-Sisva-Source": "academic.curriculum.test",
-      "X-Sisva-UserID": USER_ID,
-      "X-Sisva-SchoolID": SCHOOL_ID,
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-    return api.get("/tasks", { headers });
-  },
-};
+    return this.api.get("/tasks", this.getRequestConfig());
+  }
+})();
 
 export default AcademicAPI;
