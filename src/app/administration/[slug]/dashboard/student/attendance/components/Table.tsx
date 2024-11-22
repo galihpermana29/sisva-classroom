@@ -1,4 +1,5 @@
 import { useSchool } from "@/app/administration/[slug]/SchoolContext";
+import { useAdministrationSelector } from "@/app/administration/hooks";
 import { permissions, types } from "@/globalcomponents/Variable";
 import { BorderColorRounded } from "@mui/icons-material";
 import type { Theme } from "@mui/material";
@@ -17,9 +18,11 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import dayjs from "dayjs";
 import Image from "next/image";
 import * as React from "react";
 import { useState } from "react";
+import { selectSelectedDate } from "../utils/studentAttendanceSlice";
 
 function getColumns(schoolId) {
   const columns = [
@@ -231,39 +234,6 @@ function getColumns(schoolId) {
   return columns;
 }
 
-function ChipList({ params }) {
-  return (
-    <Stack
-      sx={{
-        flexDirection: "row",
-        flexWrap: "wrap",
-        overflow: "hidden",
-        m: "8px 0",
-      }}
-    >
-      {params.map((permission, index) => {
-        let tempPermission;
-        permissions.map((item) => {
-          if (item.slug === permission) {
-            tempPermission = item.title;
-          }
-        });
-        return (
-          <Chip
-            key={index}
-            sx={{
-              m: { xs: "2px 4px 2px 0", lg: "2px" },
-              fontSize: 12,
-            }}
-            label={tempPermission}
-            color="primary"
-          />
-        );
-      })}
-    </Stack>
-  );
-}
-
 function ActionButton({ params }) {
   return (
     <Stack
@@ -299,6 +269,7 @@ function ActionButton({ params }) {
 }
 
 export default function DataTable({ data, formik }) {
+  const selectedDate = useAdministrationSelector(selectSelectedDate);
   const school = useSchool();
   const isMobile = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down("lg")
@@ -371,12 +342,7 @@ export default function DataTable({ data, formik }) {
           </Box>
 
           <Typography sx={{ mt: 1, fontSize: 14 }}>
-            {new Date().toLocaleDateString("id-ID", {
-              weekday: "long",
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
+            {dayjs(selectedDate).locale("id").format("dddd, DD MMMM YYYY")}
           </Typography>
           <Stack
             sx={{

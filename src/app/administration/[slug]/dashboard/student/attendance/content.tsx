@@ -23,6 +23,7 @@ import {
   useAdministrationDispatch,
   useAdministrationSelector,
 } from "@/app/administration/hooks";
+import generateDateCode from "@/utils/generateDateCode";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -38,11 +39,13 @@ import handleXLSXUploadStudentAttendance from "./utils/handleXLSXUploadStudentAt
 import {
   selectAttendanceFilter,
   selectSearchText,
+  selectSelectedDate,
   selectSortDirection,
   selectSortField,
   selectStudentGroupFilter,
   setProgress,
   setProgressLog,
+  setSelectedDate,
   toggleProgressAlert,
 } from "./utils/studentAttendanceSlice";
 
@@ -55,6 +58,7 @@ export default function StaffProfileListContent() {
     selectStudentGroupFilter
   );
   const attendanceFilter = useAdministrationSelector(selectAttendanceFilter);
+  const selectedDate = useAdministrationSelector(selectSelectedDate);
 
   const initialData = {
     id: "",
@@ -65,11 +69,7 @@ export default function StaffProfileListContent() {
 
     onSubmit: async (values) => {
       try {
-        const dateCode = pickedDate
-          .toISOString()
-          .split("T")[0]
-          .split("-")
-          .join("");
+        const dateCode = generateDateCode(dayjs(selectedDate));
 
         const id = values.id;
 
@@ -96,7 +96,6 @@ export default function StaffProfileListContent() {
   };
 
   const [attendanceData, setStudentAttendanceData] = useState([]);
-  const [pickedDate, setPickedDate] = useState(dayjs(new Date()));
 
   const [openSortModal, setOpenSortModal] = useState(false);
 
@@ -106,11 +105,7 @@ export default function StaffProfileListContent() {
 
   const getAllStudentAttendance = async () => {
     try {
-      const dateCode = pickedDate
-        .toISOString()
-        .split("T")[0]
-        .split("-")
-        .join("");
+      const dateCode = generateDateCode(dayjs(selectedDate));
 
       const {
         data: { data },
@@ -152,7 +147,7 @@ export default function StaffProfileListContent() {
 
   useEffect(() => {
     getAllStudentAttendance();
-  }, [pickedDate]);
+  }, [selectedDate]);
 
   let filteredData = attendanceData.filter((item) => {
     return (
@@ -212,9 +207,9 @@ export default function StaffProfileListContent() {
             sx={{ width: "160px", minWidth: 140 }}
             slotProps={{ textField: { size: "small" } }}
             label="Pilih Tanggal"
-            value={pickedDate}
+            value={dayjs(selectedDate)}
             onChange={(e) => {
-              setPickedDate(e);
+              dispatch(setSelectedDate(e.toISOString()));
             }}
           />
         </LocalizationProvider>

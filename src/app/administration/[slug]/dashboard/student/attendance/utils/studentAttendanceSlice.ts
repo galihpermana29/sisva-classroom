@@ -2,6 +2,7 @@ import { RootState } from "@/app/administration/store";
 import type { Attendance, SortDirection } from "@/types/types";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
+import dayjs from "dayjs";
 
 export type SortField = "name" | "username" | "";
 
@@ -14,6 +15,7 @@ interface StudentAttendance {
   sortDirection: SortDirection;
   studentGroupFilter: string;
   attendanceFilter: Attendance | "";
+  selectedDate: string;
 }
 
 const initialState: StudentAttendance = {
@@ -25,6 +27,7 @@ const initialState: StudentAttendance = {
   sortDirection: "",
   studentGroupFilter: "",
   attendanceFilter: "",
+  selectedDate: dayjs().toISOString(),
 };
 
 const studentAttendanceSlice = createSlice({
@@ -55,6 +58,9 @@ const studentAttendanceSlice = createSlice({
     setAttendanceFilter: (state, action: PayloadAction<Attendance | "">) => {
       state.attendanceFilter = action.payload;
     },
+    setSelectedDate: (state, action: PayloadAction<string>) => {
+      state.selectedDate = action.payload;
+    },
   },
 });
 
@@ -67,6 +73,7 @@ export const {
   setSortDirection,
   setStudentGroupFilter,
   setAttendanceFilter,
+  setSelectedDate,
 } = studentAttendanceSlice.actions;
 
 export const selectProgress = (state: RootState) =>
@@ -85,6 +92,8 @@ export const selectStudentGroupFilter = (state: RootState) =>
   state.studentAttendance.studentGroupFilter;
 export const selectAttendanceFilter = (state: RootState) =>
   state.studentAttendance.attendanceFilter;
+export const selectSelectedDate = (state: RootState) =>
+  state.studentAttendance.selectedDate;
 
 const studentAttendanceReducer = studentAttendanceSlice.reducer;
 export default studentAttendanceReducer;
