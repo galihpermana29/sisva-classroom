@@ -5,6 +5,7 @@ import {
 import { useDebouncedCallback } from "@mantine/hooks";
 import { Cancel, Search } from "@mui/icons-material";
 import { InputAdornment, TextField } from "@mui/material";
+import { useRef } from "react";
 import {
   selectCurriculumSearchText,
   selectGradeSearchText,
@@ -15,6 +16,7 @@ import {
 } from "../utils/curriculumSlice";
 
 export default function SearchFilter({ activeTab }: { activeTab: number }) {
+  const inputTextRef = useRef<HTMLInputElement>();
   const dispatch = useAdministrationDispatch();
   const curriculumSearchText = useAdministrationSelector(
     selectCurriculumSearchText
@@ -62,6 +64,7 @@ export default function SearchFilter({ activeTab }: { activeTab: number }) {
 
   return (
     <TextField
+      inputRef={inputTextRef}
       key={activeTab}
       placeholder={getPlaceholder()}
       size="small"
@@ -79,6 +82,7 @@ export default function SearchFilter({ activeTab }: { activeTab: number }) {
         startAdornment: getSearchText() && (
           <Cancel
             onClick={() => {
+              inputTextRef.current.value = "";
               debouncedSetSearchText("");
             }}
             sx={{

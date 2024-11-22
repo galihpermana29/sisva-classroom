@@ -5,11 +5,12 @@ import {
 import { useDebouncedCallback } from "@mantine/hooks";
 import { Cancel, Search } from "@mui/icons-material";
 import { Hidden, InputAdornment, Stack, TextField } from "@mui/material";
-import { memo } from "react";
+import { memo, useRef } from "react";
 import { selectSearchText, setSearchText } from "../utils/staffProfileSlice";
 import Filters from "./Filters";
 
 function FilterBar() {
+  const inputTextRef = useRef<HTMLInputElement>();
   const inputText = useAdministrationSelector(selectSearchText);
   const dispatch = useAdministrationDispatch();
   const debouncedDispatchSetSearchText = useDebouncedCallback(
@@ -26,6 +27,7 @@ function FilterBar() {
       }}
     >
       <TextField
+        inputRef={inputTextRef}
         placeholder="Cari Karyawan"
         size="small"
         type="text"
@@ -42,7 +44,10 @@ function FilterBar() {
         InputProps={{
           startAdornment: inputText && (
             <Cancel
-              onClick={() => debouncedDispatchSetSearchText("")}
+              onClick={() => {
+                inputTextRef.current.value = "";
+                debouncedDispatchSetSearchText("");
+              }}
               sx={{
                 fontSize: 14,
                 color: "base.base50",

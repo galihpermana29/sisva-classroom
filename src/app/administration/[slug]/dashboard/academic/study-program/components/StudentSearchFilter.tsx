@@ -5,12 +5,14 @@ import {
 import { useDebouncedCallback } from "@mantine/hooks";
 import { Cancel, Search } from "@mui/icons-material";
 import { InputAdornment, TextField } from "@mui/material";
+import { useRef } from "react";
 import {
   selectStudentSearchText,
   setStudentSearchText,
 } from "../utils/studyProgramSlice";
 
 export default function StudentSearchFilter() {
+  const inputTextRef = useRef<HTMLInputElement>();
   const dispatch = useAdministrationDispatch();
   const searchText = useAdministrationSelector(selectStudentSearchText);
   const debouncedSetSearchText = useDebouncedCallback(
@@ -20,6 +22,7 @@ export default function StudentSearchFilter() {
 
   return (
     <TextField
+      inputRef={inputTextRef}
       placeholder={`Cari Siswa`}
       size="small"
       type="text"
@@ -36,6 +39,7 @@ export default function StudentSearchFilter() {
         startAdornment: searchText && (
           <Cancel
             onClick={() => {
+              inputTextRef.current.value = "";
               debouncedSetSearchText("");
             }}
             sx={{
