@@ -30,14 +30,29 @@ import StudyProgramTable from "./components/StudyProgramTable";
 
 import AcademicAPI from "@/api/academic";
 import UsersAPI from "@/api/users";
+import { useAdministrationSelector } from "@/app/administration/hooks";
 import { useStudyPrograms } from "@/hooks/query/academic/useStudyPrograms";
 import { useFormik } from "formik";
 import ImportXLSXAlert from "../../components/ImportXLSXAlert";
 import handleXLSXUploadAcademic from "../utils/handleXLSXUploadAcademic";
 import { FormAddStudent } from "./components/FormAddStudent";
+import GradeSearchFilter from "./components/GradeSearchFilter";
+import StudentSearchFilter from "./components/StudentSearchFilter";
 import StudentTable from "./components/StudentTable";
+import StudyProgramSearchFilter from "./components/StudyProgramSearchFilter";
+import {
+  selectGradeSearchText,
+  selectStudentSearchText,
+  selectStudyProgramSearchText,
+} from "./utils/studyProgramSlice";
 
 export default function StaffProfileContent() {
+  const studyProgramSearchText = useAdministrationSelector(
+    selectStudyProgramSearchText
+  );
+  const gradeSearchText = useAdministrationSelector(selectGradeSearchText);
+  const studentSearchText = useAdministrationSelector(selectStudentSearchText);
+
   const { data: studyPrograms } = useStudyPrograms();
   const initialValues = {
     code: "",
@@ -116,7 +131,6 @@ export default function StaffProfileContent() {
   const [studentData, setStudentData] = useState([]);
   const [studentList, setStudentList] = useState([]);
 
-  const [filteredData, setFilteredData] = useState([]);
   const [search, setSearch] = useState("");
   const [studyProgramFilter, setStudyProgramFilter] = useState("");
   const [sortBy, setSortBy] = useState("");
@@ -163,6 +177,65 @@ export default function StaffProfileContent() {
     getAllStudent();
     getAllStudyProgram();
   };
+
+  let filteredData = [];
+  if (activeTab === 0) {
+    filteredData = tableData.filter((item) => {
+      return (
+        item.name
+          .toLowerCase()
+          .includes(studyProgramSearchText.toLowerCase()) ||
+        item.code.toLowerCase().includes(studyProgramSearchText.toLowerCase())
+      );
+    });
+  } else if (activeTab === 1) {
+    filteredData = dataTingkatan.filter((item) => {
+      return (
+        item.grade.toLowerCase().includes(gradeSearchText.toLowerCase()) &&
+        (item.code.toLowerCase() === studyProgramFilter.toLowerCase() ||
+          !studyProgramFilter)
+      );
+    });
+  } else if (activeTab === 2) {
+    filteredData = studentData.filter((item) => {
+      return item.name.toLowerCase().includes(studentSearchText.toLowerCase());
+    });
+  }
+  if (sortSettings && sortSettings.sortBy) {
+    filteredData = filteredData.sort(function (a, b) {
+      let x, y;
+      if (sortSettings.sortBy === "name") {
+        x = a.name.toLowerCase();
+        y = b.name.toLowerCase();
+      }
+      if (sortSettings.sortBy === "code") {
+        x = a.code.toLowerCase();
+        y = b.code.toLowerCase();
+      }
+
+      if (activeTab === 1 && sortSettings.sortBy === "grade") {
+        x = a.grade.toLowerCase();
+        y = b.grade.toLowerCase();
+      }
+      if (sortSettings.sortType === "ascending") {
+        if (x < y) {
+          return -1;
+        }
+        if (x > y) {
+          return 1;
+        }
+        return 0;
+      } else if (sortSettings.sortType === "descending") {
+        if (x > y) {
+          return -1;
+        }
+        if (x < y) {
+          return 1;
+        }
+        return 0;
+      }
+    });
+  }
 
   let tabs = [
     {
@@ -282,73 +355,6 @@ export default function StaffProfileContent() {
     getGradeData();
   }, [tableData]);
 
-  useEffect(() => {
-    let temp = [];
-    if (activeTab === 0) {
-      temp = tableData.filter((item) => {
-        return (
-          item.name.toLowerCase().includes(search.toLowerCase()) ||
-          item.code.toLowerCase().includes(search.toLowerCase())
-        );
-      });
-    } else if (activeTab === 1) {
-      temp = dataTingkatan.filter((item) => {
-        return (
-          item.grade.toLowerCase().includes(search.toLowerCase()) &&
-          (item.code.toLowerCase() === studyProgramFilter.toLowerCase() ||
-            !studyProgramFilter)
-        );
-      });
-    } else if (activeTab === 2) {
-      temp = studentData.filter((item) => {
-        return item.name.toLowerCase().includes(search.toLowerCase());
-      });
-    }
-    if (sortSettings && sortSettings.sortBy) {
-      temp = temp.sort(function (a, b) {
-        let x, y;
-        if (sortSettings.sortBy === "name") {
-          x = a.name.toLowerCase();
-          y = b.name.toLowerCase();
-        }
-        if (sortSettings.sortBy === "code") {
-          x = a.code.toLowerCase();
-          y = b.code.toLowerCase();
-        }
-
-        if (activeTab === 1 && sortSettings.sortBy === "grade") {
-          x = a.grade.toLowerCase();
-          y = b.grade.toLowerCase();
-        }
-        if (sortSettings.sortType === "ascending") {
-          if (x < y) {
-            return -1;
-          }
-          if (x > y) {
-            return 1;
-          }
-          return 0;
-        } else if (sortSettings.sortType === "descending") {
-          if (x > y) {
-            return -1;
-          }
-          if (x < y) {
-            return 1;
-          }
-          return 0;
-        }
-      });
-    }
-    setFilteredData(temp);
-  }, [
-    tableData,
-    search,
-    studyProgramFilter,
-    sortSettings,
-    activeTab,
-    studentData,
-  ]);
-
   function Filters() {
     if (activeTab === 1) {
       return (
@@ -408,6 +414,19 @@ export default function StaffProfileContent() {
           </Stack>
         </Stack>
       );
+    }
+  }
+
+  function SearchFilter() {
+    switch (activeTab) {
+      case 0:
+        return <StudyProgramSearchFilter />;
+      case 1:
+        return <GradeSearchFilter />;
+      case 2:
+        return <StudentSearchFilter />;
+      default:
+        return <></>;
     }
   }
 
@@ -781,7 +800,6 @@ export default function StaffProfileContent() {
                   setSortBy("");
                   setSortSettings("");
                   formik.setValues(initialValues);
-                  index === 0 ? setFilteredData(tableData) : null;
                 }}
               >
                 <Typography sx={{ fontWeight: 600, fontSize: 14 }}>
@@ -811,44 +829,7 @@ export default function StaffProfileContent() {
               alignItems: "center",
             }}
           >
-            <TextField
-              // id="outlined-search"
-              placeholder={`Cari ${tabs[activeTab].title}`}
-              size="small"
-              type="text"
-              sx={{
-                maxWidth: { xs: "100%", lg: "200px" },
-                flex: 1,
-                width: "100%",
-                height: "100%",
-                pr: 1,
-              }}
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              InputProps={{
-                startAdornment: search && (
-                  <Cancel
-                    onClick={() => {
-                      setSearch("");
-                    }}
-                    sx={{
-                      fontSize: 14,
-                      color: "base.base50",
-                      cursor: "pointer",
-                      transform: "translateX(-4px)",
-                      "&:hover": {
-                        color: "base.base60",
-                      },
-                    }}
-                  />
-                ),
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <Search />
-                  </InputAdornment>
-                ),
-              }}
-            />
+            <SearchFilter />
             <Hidden lgDown>
               <Box
                 sx={{
