@@ -1,8 +1,13 @@
 "use client";
 
+import { useDebouncedCallback } from "@mantine/hooks";
 import { Stack, TextField, Typography } from "@mui/material";
 
 export const FormAddCurriculum = ({ formik }) => {
+  const setFieldValue = useDebouncedCallback((fieldName, value) => {
+    formik.setFieldValue(fieldName, value);
+  }, 50);
+
   return (
     <>
       <Stack sx={{ my: 1 }}>
@@ -13,8 +18,8 @@ export const FormAddCurriculum = ({ formik }) => {
           name="curriculum"
           placeholder="Kurikulum"
           fullWidth
-          value={formik.values["name"]}
-          onChange={(e) => formik.setFieldValue("name", e.target.value)}
+          defaultValue={formik.values["name"]}
+          onChange={(e) => setFieldValue("name", e.target.value)}
         />
       </Stack>
     </>
