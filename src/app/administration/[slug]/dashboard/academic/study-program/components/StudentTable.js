@@ -51,13 +51,15 @@ function getColumns(school) {
                         mr: 1,
                       }}
                     >
-                      <Image
-                        alt="Web Image"
-                        fill
-                        sizes="100%"
-                        style={{ objectFit: "cover" }}
-                        src={`https://api-staging.sisva.id/file/v1/files/${params.value.data.profile_image_uri}?school_id=${school.id}`}
-                      />
+                      {params.value.data.profile_image_uri && (
+                        <Image
+                          alt="Web Image"
+                          fill
+                          sizes="100%"
+                          style={{ objectFit: "cover" }}
+                          src={`https://api-staging.sisva.id/file/v1/files/${params.value.data.profile_image_uri}?school_id=${school.id}`}
+                        />
+                      )}
                     </Avatar>
                     <Typography
                       sx={{
@@ -86,7 +88,7 @@ function getColumns(school) {
                     Program Studi
                   </Typography>
                   <Typography sx={{ fontSize: 14, textAlign: "right" }}>
-                    {params.value.data.grades?.length}
+                    {params.value.data.study_program}
                   </Typography>
                 </Stack>
 
@@ -101,8 +103,13 @@ function getColumns(school) {
                     backgroundColor: "base.base10",
                   }}
                 >
-                  <Typography sx={{ color: "base.base50", fontSize: 12 }}>
+                  <Typography
+                    sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}
+                  >
                     Tingkatan
+                  </Typography>
+                  <Typography sx={{ fontSize: 14, textAlign: "right" }}>
+                    {params.value.data.grade}
                   </Typography>
                 </Stack>
               </Stack>
@@ -546,6 +553,8 @@ export default function StudentTable({
                 type: false,
                 permissions: false,
                 action: false,
+                study_program: false,
+                grade: false,
               }
         }
       />
