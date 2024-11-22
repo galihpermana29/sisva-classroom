@@ -188,7 +188,7 @@ function ActionButton({ params }) {
 export default function StudyProgramTable({
   data,
   formik,
-  deleteStudyProgram = () => {},
+  deleteStudyProgram,
 }) {
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down("lg"));
 

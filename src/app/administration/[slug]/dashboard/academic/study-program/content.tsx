@@ -5,7 +5,6 @@ import {
   Add,
   Cancel,
   DownloadRounded,
-  Search,
   UploadFileRounded,
 } from "@mui/icons-material";
 import {
@@ -13,7 +12,6 @@ import {
   Button,
   Divider,
   Hidden,
-  InputAdornment,
   Menu,
   MenuItem,
   Modal,
@@ -33,19 +31,20 @@ import UsersAPI from "@/api/users";
 import { useAdministrationSelector } from "@/app/administration/hooks";
 import { useStudyPrograms } from "@/hooks/query/academic/useStudyPrograms";
 import { useFormik } from "formik";
-import { memo } from "react";
 import ImportXLSXAlert from "../../components/ImportXLSXAlert";
 import handleXLSXUploadAcademic from "../utils/handleXLSXUploadAcademic";
 import { FormAddStudent } from "./components/FormAddStudent";
-import GradeSearchFilter from "./components/GradeSearchFilter";
+import MobileSortModal from "./components/MobileSortModal";
 import SearchFilter from "./components/SearchFilter";
-import StudentSearchFilter from "./components/StudentSearchFilter";
 import StudentTable from "./components/StudentTable";
-import StudyProgramSearchFilter from "./components/StudyProgramSearchFilter";
 import {
   selectGradeSearchText,
+  selectGradeSortField,
+  selectSortDirection,
   selectStudentSearchText,
+  selectStudentSortField,
   selectStudyProgramSearchText,
+  selectStudyProgramSortField,
 } from "./utils/studyProgramSlice";
 
 export default function StaffProfileContent() {
@@ -54,9 +53,15 @@ export default function StaffProfileContent() {
   );
   const gradeSearchText = useAdministrationSelector(selectGradeSearchText);
   const studentSearchText = useAdministrationSelector(selectStudentSearchText);
+  const studyProgramSortField = useAdministrationSelector(
+    selectStudyProgramSortField
+  );
+  const gradeSortField = useAdministrationSelector(selectGradeSortField);
+  const studentSortField = useAdministrationSelector(selectStudentSortField);
+  const sortDirection = useAdministrationSelector(selectSortDirection);
 
   const { data: studyPrograms } = useStudyPrograms();
-  const initialValues = {
+  const initialValues: any = {
     code: "",
     name: "",
     status: "active",
@@ -133,11 +138,7 @@ export default function StaffProfileContent() {
   const [studentData, setStudentData] = useState([]);
   const [studentList, setStudentList] = useState([]);
 
-  const [search, setSearch] = useState("");
   const [studyProgramFilter, setStudyProgramFilter] = useState("");
-  const [sortBy, setSortBy] = useState("");
-  const [sortType, setSortType] = useState("ascending");
-  const [sortSettings, setSortSettings] = useState("");
   const [openSortModal, setOpenSortModal] = useState(false);
 
   const [openCreateStudyProgramModal, setOpenCreateStudyProgramModal] =
@@ -203,41 +204,64 @@ export default function StaffProfileContent() {
       return item.name.toLowerCase().includes(studentSearchText.toLowerCase());
     });
   }
-  if (sortSettings && sortSettings.sortBy) {
-    filteredData = filteredData.sort(function (a, b) {
-      let x, y;
-      if (sortSettings.sortBy === "name") {
-        x = a.name.toLowerCase();
-        y = b.name.toLowerCase();
-      }
-      if (sortSettings.sortBy === "code") {
-        x = a.code.toLowerCase();
-        y = b.code.toLowerCase();
-      }
-
-      if (activeTab === 1 && sortSettings.sortBy === "grade") {
-        x = a.grade.toLowerCase();
-        y = b.grade.toLowerCase();
-      }
-      if (sortSettings.sortType === "ascending") {
-        if (x < y) {
-          return -1;
+  filteredData = filteredData.sort(function (a, b) {
+    let x, y;
+    switch (activeTab) {
+      case 0:
+        if (studyProgramSortField === "name") {
+          x = a.name.toLowerCase();
+          y = b.name.toLowerCase();
         }
-        if (x > y) {
-          return 1;
+        if (studyProgramSortField === "code") {
+          x = a.code.toLowerCase();
+          y = b.code.toLowerCase();
         }
-        return 0;
-      } else if (sortSettings.sortType === "descending") {
-        if (x > y) {
-          return -1;
+        break;
+      case 1:
+        if (gradeSortField === "name") {
+          x = a.name.toLowerCase();
+          y = b.name.toLowerCase();
         }
-        if (x < y) {
-          return 1;
+        if (gradeSortField === "code") {
+          x = a.code.toLowerCase();
+          y = b.code.toLowerCase();
         }
-        return 0;
+        if (gradeSortField === "grade") {
+          x = a.grade.toLowerCase();
+          y = b.grade.toLowerCase();
+        }
+        break;
+      case 2:
+        if (studentSortField === "name") {
+          x = a.name.toLowerCase();
+          y = b.name.toLowerCase();
+        }
+        if (studentSortField === "grade") {
+          x = a.grade.toLowerCase();
+          y = b.grade.toLowerCase();
+        }
+        break;
+      default:
+        break;
+    }
+    if (sortDirection === "ascending") {
+      if (x < y) {
+        return -1;
       }
-    });
-  }
+      if (x > y) {
+        return 1;
+      }
+      return 0;
+    } else if (sortDirection === "descending") {
+      if (x > y) {
+        return -1;
+      }
+      if (x < y) {
+        return 1;
+      }
+      return 0;
+    }
+  });
 
   let tabs = [
     {
@@ -626,116 +650,13 @@ export default function StaffProfileContent() {
           </Stack>
         </Stack>
       </Modal>
-      <Modal open={openSortModal} onClose={() => setOpenSortModal(false)}>
-        <Stack
-          component={Paper}
-          elevation={2}
-          sx={{
-            padding: 2,
-            borderRadius: 2,
-            zIndex: 20,
-            margin: "auto",
-            position: "fixed",
-            height: "fit-content",
-            width: "240px",
-            top: 0,
-            bottom: 0,
-            right: 0,
-            left: 0,
-          }}
-        >
-          <Typography fontWeight={600} fontSize={16}>
-            Urutkan
-          </Typography>
-          <TextField
-            select
-            size="small"
-            label="Data"
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-            sx={{ flex: 1, mt: 2 }}
-            InputProps={{
-              startAdornment: sortBy && (
-                <Cancel
-                  onClick={() => {
-                    setSortBy("");
-                  }}
-                  sx={{
-                    fontSize: 14,
-                    color: "base.base50",
-                    cursor: "pointer",
-                    transform: "translateX(-4px)",
-                    "&:hover": {
-                      color: "base.base60",
-                    },
-                  }}
-                />
-              ),
-            }}
-          >
-            {(activeTab === 1
-              ? [
-                  { title: "Program Studi", slug: "name" },
-                  { title: "Kode", slug: "code" },
-                  { title: "Tingkatan", slug: "grade" },
-                ]
-              : [
-                  { title: "Program Studi", slug: "name" },
-                  { title: "Kode", slug: "code" },
-                ]
-            ).map((option) => (
-              <MenuItem key={option.slug} value={option.slug}>
-                <Typography fontSize={14}>{option.title}</Typography>
-              </MenuItem>
-            ))}
-          </TextField>
-          <TextField
-            select
-            size="small"
-            label="Jenis Urutan"
-            value={sortType}
-            disabled={!sortBy}
-            onChange={(e) => setSortType(e.target.value)}
-            sx={{ flex: 1, mt: 2, mb: 2 }}
-          >
-            {[
-              { title: "A-Z", slug: "ascending" },
-              { title: "Z-A", slug: "descending" },
-            ].map((option) => (
-              <MenuItem key={option.slug} value={option.slug}>
-                <Typography fontSize={14}>{option.title}</Typography>
-              </MenuItem>
-            ))}
-          </TextField>
-          <Stack
-            sx={{
-              flexDirection: "row",
-            }}
-          >
-            <Button
-              variant="outlined"
-              sx={{ flex: 1, mr: 1 }}
-              onClick={() => {
-                setOpenSortModal(false);
-                setSortBy(sortSettings.sortBy);
-                setSortType(sortSettings.sortType);
-              }}
-            >
-              Batal
-            </Button>
-            <Button
-              variant="contained"
-              sx={{ flex: 1 }}
-              onClick={() => {
-                setOpenSortModal(false);
-                setSortSettings({ sortBy: sortBy, sortType: sortType });
-              }}
-            >
-              Simpan
-            </Button>
-          </Stack>
-        </Stack>
-      </Modal>
+
+      <MobileSortModal
+        activeTab={activeTab}
+        openSortModal={openSortModal}
+        setOpenSortModal={setOpenSortModal}
+      />
+
       <Stack
         sx={{
           flexDirection: "row",
@@ -784,10 +705,6 @@ export default function StaffProfileContent() {
                 }}
                 onClick={() => {
                   setActiveTab(index);
-                  setStudyProgramFilter("");
-                  setSearch("");
-                  setSortBy("");
-                  setSortSettings("");
                   formik.setValues(initialValues);
                 }}
               >
@@ -863,7 +780,6 @@ export default function StaffProfileContent() {
                 display: { xs: "none", lg: "flex" },
                 width: "fit-content",
                 height: "100%",
-                width: 100,
                 mr: 1,
                 borderColor: "green",
                 backgroundColor: "white",

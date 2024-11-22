@@ -5,7 +5,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export type StudyProgramSortField = "name" | "code" | "";
 export type GradeSortField = "name" | "code" | "grade" | "";
-export type StudentSortField = "name" | "code" | "";
+export type StudentSortField = "name" | "grade" | "";
 
 type StudyProgramState = {
   studyProgramSearchText: string;

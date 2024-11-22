@@ -236,7 +236,7 @@ export default function StudentTable({
   formik,
   tableData,
   studentList,
-  deleteStudent = () => {},
+  deleteStudent,
 }) {
   const school = useSchool();
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down("lg"));
