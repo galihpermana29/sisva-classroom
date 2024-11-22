@@ -1,10 +1,15 @@
 "use client";
 
+import { useDebouncedCallback } from "@mantine/hooks";
 import { MenuItem, Stack, TextField, Typography } from "@mui/material";
 import { useMemo } from "react";
 
 // TODO: this from is very lag, please rework
 export const FormAddSubject = ({ formik, tableData, studyProgram }) => {
+  const setFieldValue = useDebouncedCallback((fieldName, value) => {
+    formik.setFieldValue(fieldName, value);
+  }, 250);
+
   const curriculumOptions = useMemo(() => {
     return tableData.map((td) => {
       return { slug: td.id, title: td.name };
@@ -69,8 +74,8 @@ export const FormAddSubject = ({ formik, tableData, studyProgram }) => {
           name="subject"
           placeholder="Mata Pelajaran"
           fullWidth
-          value={formik.values["subject"]}
-          onChange={(e) => formik.setFieldValue("subject", e.target.value)}
+          defaultValue={formik.values["subject"]}
+          onChange={(e) => setFieldValue("subject", e.target.value)}
         />
       </Stack>
       <Stack sx={{ my: 1 }}>
