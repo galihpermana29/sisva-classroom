@@ -3,11 +3,16 @@
 import { MenuItem, Stack, TextField, Typography } from "@mui/material";
 
 import { formAddPeriodFields } from "@/globalcomponents/FormFields";
+import { useDebouncedCallback } from "@mantine/hooks";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 export const FormAddPeriod = ({ formik }) => {
+  const setFieldValue = useDebouncedCallback((fieldName, value) => {
+    formik.setFieldValue(fieldName, value);
+  }, 200);
+
   return (
     <>
       {formAddPeriodFields.map((field) =>
@@ -20,8 +25,8 @@ export const FormAddPeriod = ({ formik }) => {
               name={field.name}
               placeholder={field.placeholder}
               fullWidth
-              value={formik.values[field.name]}
-              onChange={(e) => formik.setFieldValue(field.name, e.target.value)}
+              defaultValue={formik.values[field.name]}
+              onChange={(e) => setFieldValue(field.name, e.target.value)}
             />
           </Stack>
         ) : field.type === "select" ? (
