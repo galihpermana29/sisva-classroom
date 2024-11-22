@@ -35,11 +35,11 @@ import SubjectTable from "./components/SubjectTable";
 import SyllabusTable from "./components/SyllabusTable";
 
 export default function StaffProfileContent() {
-  const [emptyData, setEmptyData] = useState({});
+  const emptyData: any = {};
   const [studyProgram, setStudyProgram] = useState("");
 
   const formik = useFormik({
-    initialValues: { emptyData },
+    initialValues: emptyData,
 
     onSubmit: async (values) => {
       try {
@@ -291,9 +291,10 @@ export default function StaffProfileContent() {
   const [curriculumFilter, setCurriculumFilter] = useState("");
   const [subjectFilter, setSubjectFilter] = useState("");
   const [studyProgramFilter, setStudyProgramFilter] = useState("");
-  const [sortBy, setSortBy] = useState("");
-  const [sortType, setSortType] = useState("ascending");
-  const [sortSettings, setSortSettings] = useState("");
+  // TODO: refactor sort logic with types
+  const [sortBy, setSortBy] = useState<any>("");
+  const [sortType, setSortType] = useState<any>("ascending");
+  const [sortSettings, setSortSettings] = useState<any>("");
   const [openSortModal, setOpenSortModal] = useState(false);
 
   const [openCreateCurriculumModal, setOpenCreateCurriculumModal] =
@@ -948,18 +949,18 @@ export default function StaffProfileContent() {
             {(activeTab === 0
               ? [{ title: "Kurikulum", slug: "name" }]
               : activeTab === 1
-                ? [
-                    { title: "Kurikulum", slug: "name" },
-                    { title: "Program Studi", slug: "study_program" },
-                    { title: "Mata Pelajaran", slug: "subject" },
-                    { title: "Tipe", slug: "subject_type" },
-                  ]
-                : [
-                    { title: "Kurikulum", slug: "name" },
-                    { title: "Program Studi", slug: "study_program" },
-                    { title: "Mata Pelajaran", slug: "subject" },
-                    { title: "Tingkatan", slug: "grade" },
-                  ]
+              ? [
+                  { title: "Kurikulum", slug: "name" },
+                  { title: "Program Studi", slug: "study_program" },
+                  { title: "Mata Pelajaran", slug: "subject" },
+                  { title: "Tipe", slug: "subject_type" },
+                ]
+              : [
+                  { title: "Kurikulum", slug: "name" },
+                  { title: "Program Studi", slug: "study_program" },
+                  { title: "Mata Pelajaran", slug: "subject" },
+                  { title: "Tingkatan", slug: "grade" },
+                ]
             ).map((option) => (
               <MenuItem key={option.slug} value={option.slug}>
                 <Typography fontSize={14}>{option.title}</Typography>
@@ -1180,7 +1181,6 @@ export default function StaffProfileContent() {
                 display: { xs: "none", lg: "flex" },
                 width: "fit-content",
                 height: "100%",
-                width: 100,
                 mr: 1,
                 borderColor: "green",
                 backgroundColor: "white",
@@ -1255,10 +1255,10 @@ export default function StaffProfileContent() {
                 activeTab === 0
                   ? setOpenCreateCurriculumModal(true)
                   : activeTab === 1
-                    ? setOpenCreateSubjectModal(true)
-                    : activeTab === 2
-                      ? setOpenCreateSyllabusModal(true)
-                      : null
+                  ? setOpenCreateSubjectModal(true)
+                  : activeTab === 2
+                  ? setOpenCreateSyllabusModal(true)
+                  : null
               }
             >
               <Typography sx={{ fontSize: 14 }}>Tambah</Typography>

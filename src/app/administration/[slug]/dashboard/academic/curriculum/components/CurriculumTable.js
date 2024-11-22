@@ -225,11 +225,7 @@ function ChipList({ params }) {
   );
 }
 
-export default function CurriculumTable({
-  data,
-  formik,
-  deleteCurriculum = () => {},
-}) {
+export default function CurriculumTable({ data, formik, deleteCurriculum }) {
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down("lg"));
 
   const [openEditModal, setOpenEditModal] = useState(false);

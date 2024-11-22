@@ -13,7 +13,7 @@ export const FormAddSyllabus = ({
   tableData,
   studyProgram,
   subjectOpt,
-  handleFileChange = () => {},
+  handleFileChange,
 }) => {
   const [currId, setCurrId] = useState();
   const [studyProgramData, setStudyProgramData] = useState();

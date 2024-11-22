@@ -264,7 +264,7 @@ function ChipList({ params }) {
 export default function SubjectTable({
   data,
   formik,
-  deleteSubject = () => {},
+  deleteSubject,
   tableData,
   studyProgram,
 }) {

@@ -19,12 +19,7 @@ import { permissions } from "@/globalcomponents/Variable";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
 
-export const FormAddSubject = ({
-  formik,
-  editing,
-  tableData,
-  studyProgram,
-}) => {
+export const FormAddSubject = ({ formik, tableData, studyProgram }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
 

@@ -2,11 +2,7 @@
 
 import { Stack, TextField, Typography } from "@mui/material";
 
-import { useState } from "react";
-
-export const FormAddCurriculum = ({ formik, editing }) => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+export const FormAddCurriculum = ({ formik }) => {
   return (
     <>
       <Stack sx={{ my: 1 }}>

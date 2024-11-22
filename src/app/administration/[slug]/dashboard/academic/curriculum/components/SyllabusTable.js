@@ -308,7 +308,7 @@ export default function SyllabusTable({
   studyProgram,
   subjectOpt,
   handleFileChange,
-  deleteSyllabus = () => {},
+  deleteSyllabus,
 }) {
   const school = useSchool();
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down("lg"));
