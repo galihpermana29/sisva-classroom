@@ -1,4 +1,5 @@
 import { useSchool } from "@/app/administration/[slug]/SchoolContext";
+import { useAdministrationSelector } from "@/app/administration/hooks";
 import { permissions, types } from "@/globalcomponents/Variable";
 import { BorderColorRounded } from "@mui/icons-material";
 import {
@@ -16,9 +17,11 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import dayjs from "dayjs";
 import Image from "next/image";
 import * as React from "react";
 import { useState } from "react";
+import { selectSelectedDate } from "../utils/staffAttendanceSlice";
 
 function getColumns(schoolId) {
   const columns = [
@@ -299,6 +302,7 @@ function ActionButton({ params }) {
 }
 
 export default function DataTable({ data, formik }) {
+  const selectedDate = useAdministrationSelector(selectSelectedDate);
   const school = useSchool();
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down("lg"));
 
@@ -374,12 +378,7 @@ export default function DataTable({ data, formik }) {
           </Box>
 
           <Typography sx={{ mt: 1, fontSize: 14 }}>
-            {new Date().toLocaleDateString("id-ID", {
-              weekday: "long",
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
+            {dayjs(selectedDate).locale("id").format("dddd, DD MMMM YYYY")}
           </Typography>
           <Stack
             sx={{
