@@ -5,7 +5,6 @@ import {
   Add,
   Cancel,
   DownloadRounded,
-  Search,
   UploadFileRounded,
 } from "@mui/icons-material";
 import {
@@ -13,7 +12,6 @@ import {
   Button,
   Divider,
   Hidden,
-  InputAdornment,
   Menu,
   MenuItem,
   Modal,
@@ -26,15 +24,28 @@ import { useEffect, useState } from "react";
 
 import AcademicAPI from "@/api/academic";
 import FilesAPI from "@/api/files";
+import { useAdministrationSelector } from "@/app/administration/hooks";
 import { useFormik } from "formik";
 import CurriculumTable from "./components/CurriculumTable";
 import { FormAddCurriculum } from "./components/FormAddCurriculum";
 import { FormAddSubject } from "./components/FormAddSubject";
 import { FormAddSyllabus } from "./components/FormAddSyllabus";
+import SearchFilter from "./components/SearchFilter";
 import SubjectTable from "./components/SubjectTable";
 import SyllabusTable from "./components/SyllabusTable";
+import {
+  selectCurriculumSearchText,
+  selectGradeSearchText,
+  selectSubjectSearchText,
+} from "./utils/curriculumSlice";
 
 export default function StaffProfileContent() {
+  const curriculumSearchText = useAdministrationSelector(
+    selectCurriculumSearchText
+  );
+  const subjectSearchText = useAdministrationSelector(selectSubjectSearchText);
+  const gradeSearchText = useAdministrationSelector(selectGradeSearchText);
+
   const emptyData: any = {};
   const [studyProgram, setStudyProgram] = useState("");
 
@@ -286,8 +297,6 @@ export default function StaffProfileContent() {
     ),
   ];
 
-  let [filteredData, setFilteredData] = useState([]);
-  const [search, setSearch] = useState("");
   const [curriculumFilter, setCurriculumFilter] = useState("");
   const [subjectFilter, setSubjectFilter] = useState("");
   const [studyProgramFilter, setStudyProgramFilter] = useState("");
@@ -303,6 +312,106 @@ export default function StaffProfileContent() {
   const [openCreateSyllabusModal, setOpenCreateSyllabusModal] = useState(false);
 
   const [activeTab, setActiveTab] = useState(0);
+
+  let filteredData = [];
+
+  if (activeTab === 0) {
+    filteredData = tableData.filter((item) => {
+      return item.name
+        .toLowerCase()
+        .includes(curriculumSearchText.toLowerCase());
+    });
+  } else if (activeTab === 1) {
+    filteredData = dataSubject.filter((item) => {
+      return (
+        item.subject.toLowerCase().includes(subjectSearchText.toLowerCase()) &&
+        (item.name.toLowerCase() === curriculumFilter.toLowerCase() ||
+          !curriculumFilter) &&
+        (item.study_program.toLowerCase() ===
+          studyProgramFilter.toLowerCase() ||
+          !studyProgramFilter)
+      );
+    });
+  } else if (activeTab === 2) {
+    filteredData = dataSyllabus.filter((item) => {
+      return (
+        item.subject.toLowerCase().includes(gradeSearchText.toLowerCase()) &&
+        (item.name.toLowerCase() === curriculumFilter.toLowerCase() ||
+          !curriculumFilter) &&
+        (item.study_program.toLowerCase() ===
+          studyProgramFilter.toLowerCase() ||
+          !studyProgramFilter) &&
+        (item.subject.toLowerCase() === subjectFilter.toLowerCase() ||
+          !subjectFilter)
+      );
+    });
+  }
+  if (sortSettings && sortSettings.sortBy) {
+    filteredData = filteredData.sort(function (a, b) {
+      let x, y;
+      if (activeTab === 0) {
+        x = a.name.toLowerCase();
+        y = b.name.toLowerCase();
+      }
+
+      if (activeTab === 1) {
+        if (sortSettings.sortBy === "name") {
+          x = a.name.toLowerCase();
+          y = b.name.toLowerCase();
+        }
+        if (sortSettings.sortBy === "study_program") {
+          x = a.study_program.toLowerCase();
+          y = b.study_program.toLowerCase();
+        }
+        if (sortSettings.sortBy === "subject") {
+          x = a.subject.toLowerCase();
+          y = b.subject.toLowerCase();
+        }
+        if (sortSettings.sortBy === "subject_type") {
+          x = a.subject_type.toLowerCase();
+          y = b.subject_type.toLowerCase();
+        }
+      }
+
+      if (activeTab === 2) {
+        if (sortSettings.sortBy === "name") {
+          x = a.name.toLowerCase();
+          y = b.name.toLowerCase();
+        }
+        if (sortSettings.sortBy === "study_program") {
+          x = a.study_program.toLowerCase();
+          y = b.study_program.toLowerCase();
+        }
+        if (sortSettings.sortBy === "subject") {
+          x = a.subject.toLowerCase();
+          y = b.subject.toLowerCase();
+        }
+        if (sortSettings.sortBy === "grade") {
+          x = a.grade.toLowerCase();
+          y = b.grade.toLowerCase();
+        }
+      }
+
+      if (sortSettings.sortType === "ascending") {
+        if (x < y) {
+          return -1;
+        }
+        if (x > y) {
+          return 1;
+        }
+        return 0;
+      } else if (sortSettings.sortType === "descending") {
+        if (x > y) {
+          return -1;
+        }
+        if (x < y) {
+          return 1;
+        }
+        return 0;
+      }
+    });
+  }
+
   let tabs = [
     {
       title: "Kurikulum",
@@ -341,117 +450,6 @@ export default function StaffProfileContent() {
       ),
     },
   ];
-
-  useEffect(() => {
-    let temp = [];
-
-    if (activeTab === 0) {
-      temp = tableData.filter((item) => {
-        return item.name.toLowerCase().includes(search.toLowerCase());
-      });
-    } else if (activeTab === 1) {
-      temp = dataSubject.filter((item) => {
-        return (
-          item.subject.toLowerCase().includes(search.toLowerCase()) &&
-          (item.name.toLowerCase() === curriculumFilter.toLowerCase() ||
-            !curriculumFilter) &&
-          (item.study_program.toLowerCase() ===
-            studyProgramFilter.toLowerCase() ||
-            !studyProgramFilter)
-        );
-      });
-    } else if (activeTab === 2) {
-      temp = dataSyllabus.filter((item) => {
-        return (
-          item.subject.toLowerCase().includes(search.toLowerCase()) &&
-          (item.name.toLowerCase() === curriculumFilter.toLowerCase() ||
-            !curriculumFilter) &&
-          (item.study_program.toLowerCase() ===
-            studyProgramFilter.toLowerCase() ||
-            !studyProgramFilter) &&
-          (item.subject.toLowerCase() === subjectFilter.toLowerCase() ||
-            !subjectFilter)
-        );
-      });
-    }
-    if (sortSettings && sortSettings.sortBy) {
-      temp = temp.sort(function (a, b) {
-        let x, y;
-        if (activeTab === 0) {
-          x = a.name.toLowerCase();
-          y = b.name.toLowerCase();
-        }
-
-        if (activeTab === 1) {
-          if (sortSettings.sortBy === "name") {
-            x = a.name.toLowerCase();
-            y = b.name.toLowerCase();
-          }
-          if (sortSettings.sortBy === "study_program") {
-            x = a.study_program.toLowerCase();
-            y = b.study_program.toLowerCase();
-          }
-          if (sortSettings.sortBy === "subject") {
-            x = a.subject.toLowerCase();
-            y = b.subject.toLowerCase();
-          }
-          if (sortSettings.sortBy === "subject_type") {
-            x = a.subject_type.toLowerCase();
-            y = b.subject_type.toLowerCase();
-          }
-        }
-
-        if (activeTab === 2) {
-          if (sortSettings.sortBy === "name") {
-            x = a.name.toLowerCase();
-            y = b.name.toLowerCase();
-          }
-          if (sortSettings.sortBy === "study_program") {
-            x = a.study_program.toLowerCase();
-            y = b.study_program.toLowerCase();
-          }
-          if (sortSettings.sortBy === "subject") {
-            x = a.subject.toLowerCase();
-            y = b.subject.toLowerCase();
-          }
-          if (sortSettings.sortBy === "grade") {
-            x = a.grade.toLowerCase();
-            y = b.grade.toLowerCase();
-          }
-        }
-
-        if (sortSettings.sortType === "ascending") {
-          if (x < y) {
-            return -1;
-          }
-          if (x > y) {
-            return 1;
-          }
-          return 0;
-        } else if (sortSettings.sortType === "descending") {
-          if (x > y) {
-            return -1;
-          }
-          if (x < y) {
-            return 1;
-          }
-          return 0;
-        }
-      });
-    }
-    setFilteredData(temp);
-    formik.setValues(emptyData);
-  }, [
-    search,
-    curriculumFilter,
-    subjectFilter,
-    studyProgramFilter,
-    sortSettings,
-    activeTab,
-    tableData,
-    dataSubject,
-    dataSyllabus,
-  ]);
 
   function Filters() {
     if (activeTab === 1) {
@@ -1063,11 +1061,8 @@ export default function StaffProfileContent() {
                 onClick={() => {
                   setActiveTab(index);
                   setStudyProgramFilter("");
-                  setSearch("");
                   setSortBy("");
                   setSortSettings("");
-                  // formik.setValues(emptyData);
-                  index === 0 ? setFilteredData(tableData) : null;
                 }}
               >
                 <Typography sx={{ fontWeight: 600, fontSize: 14 }}>
@@ -1097,46 +1092,7 @@ export default function StaffProfileContent() {
               alignItems: "center",
             }}
           >
-            <TextField
-              // id="outlined-search"
-              placeholder={`Cari ${
-                activeTab !== 2 ? tabs[activeTab].title : "Mata Pelajaran"
-              }`}
-              size="small"
-              type="text"
-              sx={{
-                maxWidth: { xs: "100%", lg: "200px" },
-                flex: 1,
-                width: "100%",
-                height: "100%",
-                pr: 1,
-              }}
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              InputProps={{
-                startAdornment: search && (
-                  <Cancel
-                    onClick={() => {
-                      setSearch("");
-                    }}
-                    sx={{
-                      fontSize: 14,
-                      color: "base.base50",
-                      cursor: "pointer",
-                      transform: "translateX(-4px)",
-                      "&:hover": {
-                        color: "base.base60",
-                      },
-                    }}
-                  />
-                ),
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <Search />
-                  </InputAdornment>
-                ),
-              }}
-            />
+            <SearchFilter activeTab={activeTab} />
             <Hidden lgDown>
               <Box
                 sx={{
