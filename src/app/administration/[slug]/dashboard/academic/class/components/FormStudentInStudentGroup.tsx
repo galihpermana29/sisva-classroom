@@ -33,7 +33,6 @@ export default function FormStudentInStudentGroup({
   onClickCancel: () => void;
   onClickSave: () => void;
 }) {
-  console.log(typeof studentId, typeof studentGroupId);
   const queryClient = useQueryClient();
   const { data: periods } = usePeriods();
   const { data: students } = useStudents();

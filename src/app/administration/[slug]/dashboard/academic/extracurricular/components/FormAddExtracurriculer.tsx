@@ -1,10 +1,14 @@
 "use client";
 
+import { formAddExtracurriculer } from "@/globalcomponents/FormFields";
+import { useDebouncedCallback } from "@mantine/hooks";
 import { MenuItem, Stack, TextField, Typography } from "@mui/material";
 
-import { formAddExtracurriculer } from "@/globalcomponents/FormFields";
-
 export const FormAddExtracurriculer = ({ formik, teacherList }) => {
+  const setFieldValue = useDebouncedCallback((fieldName, value) => {
+    formik.setFieldValue(fieldName, value);
+  }, 100);
+
   return (
     <>
       {formAddExtracurriculer.map((field) =>
@@ -17,8 +21,8 @@ export const FormAddExtracurriculer = ({ formik, teacherList }) => {
               name={field.name}
               placeholder={field.placeholder}
               fullWidth
-              value={formik.values[field.name]}
-              onChange={(e) => formik.setFieldValue(field.name, e.target.value)}
+              defaultValue={formik.values[field.name]}
+              onChange={(e) => setFieldValue(field.name, e.target.value)}
             />
           </Stack>
         ) : field.type === "select" ? (
