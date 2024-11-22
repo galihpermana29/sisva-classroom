@@ -52,7 +52,7 @@ const studentAttendanceSlice = createSlice({
     setStudentGroupFilter: (state, action: PayloadAction<string>) => {
       state.studentGroupFilter = action.payload;
     },
-    setAttendanceFilter: (state, action: PayloadAction<Attendance>) => {
+    setAttendanceFilter: (state, action: PayloadAction<Attendance | "">) => {
       state.attendanceFilter = action.payload;
     },
   },

@@ -1,11 +1,7 @@
 "use client";
 
 import { ExcelIcon, SortIcon } from "@/assets/SVGs";
-import {
-  Cancel,
-  DownloadRounded,
-  UploadFileRounded,
-} from "@mui/icons-material";
+import { DownloadRounded, UploadFileRounded } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -15,7 +11,6 @@ import {
   MenuItem,
   Paper,
   Stack,
-  TextField,
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -34,12 +29,14 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
 import { useFormik } from "formik";
 import ImportXLSXAlert from "../../components/ImportXLSXAlert";
+import AttendanceStatusFilter from "./components/AttendanceStatusFilter";
 import MobileSortModal from "./components/MobileSortModal";
 import SearchFilter from "./components/SearchFilter";
 import StudentGroupFilter from "./components/StudentGroupFilter";
 import StudentAttendanceProgressAlert from "./components/StudentProgressAlert";
 import handleXLSXUploadStudentAttendance from "./utils/handleXLSXUploadStudentAttendance";
 import {
+  selectAttendanceFilter,
   selectSearchText,
   selectSortDirection,
   selectSortField,
@@ -57,6 +54,7 @@ export default function StaffProfileListContent() {
   const studentGroupFilter = useAdministrationSelector(
     selectStudentGroupFilter
   );
+  const attendanceFilter = useAdministrationSelector(selectAttendanceFilter);
 
   const initialData = {
     id: "",
@@ -100,7 +98,6 @@ export default function StaffProfileListContent() {
   const [attendanceData, setStudentAttendanceData] = useState([]);
   const [pickedDate, setPickedDate] = useState(dayjs(new Date()));
 
-  const [statusFilter, setStatusFilter] = useState("");
   const [openSortModal, setOpenSortModal] = useState(false);
 
   const [isOpenXLSXAlert, setIsOpenImportXLSXAlert] = useState(false);
@@ -164,7 +161,7 @@ export default function StaffProfileListContent() {
       (studentGroupFilter
         ? item.studentGroupId === studentGroupFilter
         : true) &&
-      item.status.toLowerCase().includes(statusFilter.toLowerCase())
+      item.status.toLowerCase().includes(attendanceFilter.toLowerCase())
     );
   });
 
@@ -222,50 +219,7 @@ export default function StaffProfileListContent() {
           />
         </LocalizationProvider>
         <StudentGroupFilter />
-        <TextField
-          select
-          size="small"
-          label="Status"
-          value={statusFilter}
-          onChange={(e) => {
-            setStatusFilter(e.target.value);
-          }}
-          sx={{
-            flex: { xs: 1, lg: 0 },
-            minWidth: "fit-content",
-            ml: 1,
-          }}
-          InputProps={{
-            sx: { minWidth: 140, width: { xs: "100%", lg: "fit-content" } },
-            startAdornment: statusFilter && (
-              <Cancel
-                onClick={() => {
-                  setStatusFilter("");
-                }}
-                sx={{
-                  fontSize: 14,
-                  color: "base.base50",
-                  cursor: "pointer",
-                  transform: "translateX(-4px)",
-                  "&:hover": {
-                    color: "base.base60",
-                  },
-                }}
-              />
-            ),
-          }}
-        >
-          {[
-            { slug: "present", show: "Hadir" },
-            { slug: "sick", show: "Sakit" },
-            { slug: "leave", show: "Izin" },
-            { slug: "absent", show: "Alpha" },
-          ].map((option, index) => (
-            <MenuItem key={index} value={option.slug}>
-              <Typography fontSize={14}>{option.show}</Typography>
-            </MenuItem>
-          ))}
-        </TextField>
+        <AttendanceStatusFilter />
       </Stack>
     );
   }
