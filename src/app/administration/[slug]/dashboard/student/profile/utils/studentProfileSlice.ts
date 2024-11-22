@@ -17,7 +17,7 @@ const initialState: StudentProfileState = {
   sortDirection: "",
 };
 
-export const studentProfileSlice = createSlice({
+const studentProfileSlice = createSlice({
   name: "student/profile",
   initialState,
   reducers: {
@@ -43,4 +43,5 @@ export const selectSortField = (state: RootState) =>
 export const selectSortDirection = (state: RootState) =>
   state.studentProfile.sortDirection;
 
-export const studentProfileReducer = studentProfileSlice.reducer;
+const studentProfileReducer = studentProfileSlice.reducer;
+export default studentProfileReducer;

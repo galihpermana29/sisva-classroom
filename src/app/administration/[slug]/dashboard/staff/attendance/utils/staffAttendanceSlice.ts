@@ -15,7 +15,7 @@ const initialState: StaffAttendance = {
   searchText: "",
 };
 
-export const staffAttendanceSlice = createSlice({
+const staffAttendanceSlice = createSlice({
   name: "staff/attendance",
   initialState,
   reducers: {
@@ -50,4 +50,5 @@ export const selectIsOpenProgressAlert = (state: RootState) =>
 export const selectSearchText = (state: RootState) =>
   state.staffAttendance.searchText;
 
-export default staffAttendanceSlice.reducer;
+const staffAttendanceReducer = staffAttendanceSlice.reducer;
+export default staffAttendanceReducer;

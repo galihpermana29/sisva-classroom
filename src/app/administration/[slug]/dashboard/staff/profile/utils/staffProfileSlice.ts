@@ -21,7 +21,7 @@ const initialState: StaffProfileState = {
   roleFilter: "",
 };
 
-export const staffProfileSlice = createSlice({
+const staffProfileSlice = createSlice({
   name: "staff/profile",
   initialState,
   reducers: {
@@ -62,4 +62,5 @@ export const selectPermissionFilter = (state: RootState) =>
 export const selectRoleFilter = (state: RootState) =>
   state.staffProfile.roleFilter;
 
-export const staffProfileReducer = staffProfileSlice.reducer;
+const staffProfileReducer = staffProfileSlice.reducer;
+export default staffProfileReducer;

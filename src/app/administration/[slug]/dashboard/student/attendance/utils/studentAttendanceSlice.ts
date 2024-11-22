@@ -27,7 +27,7 @@ const initialState: StudentAttendance = {
   attendanceFilter: "",
 };
 
-export const studentAttendanceSlice = createSlice({
+const studentAttendanceSlice = createSlice({
   name: "student/attendance",
   initialState,
   reducers: {
@@ -86,4 +86,5 @@ export const selectStudentGroupFilter = (state: RootState) =>
 export const selectAttendanceFilter = (state: RootState) =>
   state.studentAttendance.attendanceFilter;
 
-export default studentAttendanceSlice.reducer;
+const studentAttendanceReducer = studentAttendanceSlice.reducer;
+export default studentAttendanceReducer;
