@@ -36,12 +36,14 @@ import { useFormik } from "formik";
 import ImportXLSXAlert from "../../components/ImportXLSXAlert";
 import MobileSortModal from "./components/MobileSortModal";
 import SearchFilter from "./components/SearchFilter";
+import StudentGroupFilter from "./components/StudentGroupFilter";
 import StudentAttendanceProgressAlert from "./components/StudentProgressAlert";
 import handleXLSXUploadStudentAttendance from "./utils/handleXLSXUploadStudentAttendance";
 import {
   selectSearchText,
   selectSortDirection,
   selectSortField,
+  selectStudentGroupFilter,
   setProgress,
   setProgressLog,
   toggleProgressAlert,
@@ -52,11 +54,14 @@ export default function StaffProfileListContent() {
   const sortField = useAdministrationSelector(selectSortField);
   const sortDirection = useAdministrationSelector(selectSortDirection);
   const searchText = useAdministrationSelector(selectSearchText);
+  const studentGroupFilter = useAdministrationSelector(
+    selectStudentGroupFilter
+  );
 
-  const [initialData, setinitialData] = useState({
+  const initialData = {
     id: "",
     status: "present",
-  });
+  };
   const formik = useFormik({
     initialValues: { ...initialData },
 
@@ -96,9 +101,7 @@ export default function StaffProfileListContent() {
   const [pickedDate, setPickedDate] = useState(dayjs(new Date()));
 
   const [statusFilter, setStatusFilter] = useState("");
-  const [classFilter, setClassFilter] = useState("");
   const [openSortModal, setOpenSortModal] = useState(false);
-  const [classOptions, setClassOptions] = useState([]);
 
   const [isOpenXLSXAlert, setIsOpenImportXLSXAlert] = useState(false);
   const [reportText, setReportText] = useState([]);
@@ -115,32 +118,35 @@ export default function StaffProfileListContent() {
       const {
         data: { data },
       } = await AttendanceApi.getStudentClassAttendanceByDateId(dateCode);
-      const fetchStudent = await AcademicAPI.getAllStudentInGroup();
-
-      const studentData = fetchStudent.data.data;
+      const studentInStudentGroups = (await AcademicAPI.getAllStudentInGroup())
+        .data.data;
 
       const studentDetailData = await (
         await UsersAPI.getAllUsers("student")
       ).data.data.filter((dt) => dt.status == "active");
 
-      const newMappedData = studentDetailData.map((user) => {
-        const stats = data.find((dt) => user.id == dt.student_id)?.status;
-        const studentClass = studentData.find(
-          (sd) => sd.student_id == user.id
-        )?.student_group_name;
+      const newMappedData = studentDetailData
+        .filter((user) =>
+          studentInStudentGroups
+            .map((student) => student.student_id)
+            .includes(user.id)
+        )
+        .map((user) => {
+          const stats = data.find((dt) => user.id == dt.student_id)?.status;
+          const studentGroup = studentInStudentGroups.find(
+            (sd) => sd.student_id == user.id
+          );
 
-        return {
-          ...user,
-          status: stats ? stats : "present",
-          class: studentClass ? studentClass : "-",
-        };
-      });
+          return {
+            ...user,
+            status: stats ? stats : "present",
+            class: studentGroup.student_group_name
+              ? studentGroup.student_group_name
+              : "-",
+            studentGroupId: studentGroup.student_group_id,
+          };
+        });
 
-      const classes = [
-        ...new Set(studentData.map((sd) => sd.student_group_name)),
-      ];
-
-      setClassOptions(classes);
       setStudentAttendanceData(newMappedData);
     } catch (error) {
       console.log(error);
@@ -155,7 +161,9 @@ export default function StaffProfileListContent() {
     return (
       (item.name.toLowerCase().includes(searchText.toLowerCase()) ||
         item.username.toLowerCase().includes(searchText.toLowerCase())) &&
-      item.class.toLowerCase().includes(classFilter.toLowerCase()) &&
+      (studentGroupFilter
+        ? item.studentGroupId === studentGroupFilter
+        : true) &&
       item.status.toLowerCase().includes(statusFilter.toLowerCase())
     );
   });
@@ -213,44 +221,7 @@ export default function StaffProfileListContent() {
             }}
           />
         </LocalizationProvider>
-        <TextField
-          select
-          size="small"
-          label="Kelas"
-          value={classFilter}
-          onChange={(e) => setClassFilter(e.target.value)}
-          sx={{
-            flex: { xs: 1, lg: 0 },
-            minWidth: "fit-content",
-            ml: 1,
-          }}
-          InputProps={{
-            sx: { minWidth: 140, width: { xs: "100%", lg: "fit-content" } },
-            startAdornment: classFilter && (
-              <Cancel
-                onClick={() => {
-                  setClassFilter("");
-                }}
-                sx={{
-                  fontSize: 14,
-                  color: "base.base50",
-                  cursor: "pointer",
-                  transform: "translateX(-4px)",
-                  "&:hover": {
-                    color: "base.base60",
-                  },
-                }}
-              />
-            ),
-          }}
-        >
-          {classOptions &&
-            classOptions?.map((option, index) => (
-              <MenuItem key={index} value={option}>
-                <Typography fontSize={14}>{option}</Typography>
-              </MenuItem>
-            ))}
-        </TextField>
+        <StudentGroupFilter />
         <TextField
           select
           size="small"
