@@ -1,52 +1,13 @@
 "use client";
 
-import {
-  IconButton,
-  Input,
-  InputAdornment,
-  MenuItem,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { MenuItem, Stack, TextField, Typography } from "@mui/material";
 
 import { formAddPeriodFields } from "@/globalcomponents/FormFields";
-import { Cancel, Visibility, VisibilityOff } from "@mui/icons-material";
-import { useState } from "react";
-
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
-export const FormAddPeriod = ({ formik, editing }) => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
-
-  const renderInput = (props) => (
-    <Input
-      type="text"
-      inputProps={{
-        sx: { minWidth: 140, width: { xs: "100%", lg: "fit-content" } },
-        startAdornment: props.value && (
-          <Cancel
-            onClick={() => {
-              // ! is not defined
-              // setStudyProgramFilter("");
-            }}
-            sx={{
-              fontSize: 14,
-              color: "base.base50",
-              cursor: "pointer",
-              transform: "translateX(-4px)",
-              "&:hover": {
-                color: "base.base60",
-              },
-            }}
-          />
-        ),
-      }}
-    />
-  );
+export const FormAddPeriod = ({ formik }) => {
   return (
     <>
       {formAddPeriodFields.map((field) =>
@@ -61,46 +22,6 @@ export const FormAddPeriod = ({ formik, editing }) => {
               fullWidth
               value={formik.values[field.name]}
               onChange={(e) => formik.setFieldValue(field.name, e.target.value)}
-            />
-          </Stack>
-        ) : field.type === "password" ? (
-          <Stack sx={{ my: 1 }} key={field.name}>
-            <Typography variant="body2" fontWeight={600} mb={0.5}>
-              {field.label}
-            </Typography>
-            <TextField
-              type={showPassword ? "text" : "password"}
-              name={field.name}
-              placeholder={field.placeholder}
-              fullWidth
-              value={formik.values[field.name]}
-              onChange={(e) => formik.setFieldValue(field.name, e.target.value)}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      onClick={() =>
-                        field.name === "password"
-                          ? setShowPassword(!showPassword)
-                          : setShowPasswordConfirm(!showPasswordConfirm)
-                      }
-                    >
-                      {field.name === "password" &&
-                        (showPassword ? (
-                          <VisibilityOff sx={{ fontSize: 16 }} />
-                        ) : (
-                          <Visibility sx={{ fontSize: 16 }} />
-                        ))}
-                      {field.name === "password_confirm" &&
-                        (showPasswordConfirm ? (
-                          <VisibilityOff sx={{ fontSize: 16 }} />
-                        ) : (
-                          <Visibility sx={{ fontSize: 16 }} />
-                        ))}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
             />
           </Stack>
         ) : field.type === "select" ? (
@@ -130,9 +51,7 @@ export const FormAddPeriod = ({ formik, editing }) => {
                     Waktu Mulai
                   </Typography>
                   <DatePicker
-                    placeholder={"Waktu Mulai"}
                     views={["month", "year"]}
-                    renderInput={renderInput}
                     value={formik.values["start_time"]}
                     onChange={(value) =>
                       formik.setFieldValue("start_time", value)
@@ -146,9 +65,7 @@ export const FormAddPeriod = ({ formik, editing }) => {
                   </Typography>
 
                   <DatePicker
-                    placeholder={"Waktu Selesai"}
                     views={["month", "year"]}
-                    renderInput={renderInput}
                     value={formik.values["end_time"]}
                     onChange={(value) =>
                       formik.setFieldValue("end_time", value)
