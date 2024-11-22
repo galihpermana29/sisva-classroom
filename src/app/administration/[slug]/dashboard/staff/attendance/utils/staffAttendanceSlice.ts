@@ -1,11 +1,14 @@
 import { RootState } from "@/app/administration/store";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
+import dayjs from "dayjs";
+
 interface StaffAttendance {
   progress: string;
   progressLog: string;
   isOpenProgressAlert: boolean;
   searchText: string;
+  selectedDate: string;
 }
 
 const initialState: StaffAttendance = {
@@ -13,6 +16,7 @@ const initialState: StaffAttendance = {
   progressLog: "",
   isOpenProgressAlert: false,
   searchText: "",
+  selectedDate: dayjs().toISOString(),
 };
 
 const staffAttendanceSlice = createSlice({
@@ -31,6 +35,9 @@ const staffAttendanceSlice = createSlice({
     setSearchText: (state, action: PayloadAction<string>) => {
       state.searchText = action.payload;
     },
+    setSelectedDate: (state, action: PayloadAction<string>) => {
+      state.selectedDate = action.payload;
+    },
   },
 });
 
@@ -39,6 +46,7 @@ export const {
   setProgressLog,
   toggleProgressAlert,
   setSearchText,
+  setSelectedDate,
 } = staffAttendanceSlice.actions;
 
 export const selectProgress = (state: RootState) =>
@@ -49,6 +57,8 @@ export const selectIsOpenProgressAlert = (state: RootState) =>
   state.staffAttendance.isOpenProgressAlert;
 export const selectSearchText = (state: RootState) =>
   state.staffAttendance.searchText;
+export const selectSelectedDate = (state: RootState) =>
+  state.staffAttendance.selectedDate;
 
 const staffAttendanceReducer = staffAttendanceSlice.reducer;
 export default staffAttendanceReducer;

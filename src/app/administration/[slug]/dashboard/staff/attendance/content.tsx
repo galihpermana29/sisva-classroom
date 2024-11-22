@@ -28,6 +28,7 @@ import {
   useAdministrationDispatch,
   useAdministrationSelector,
 } from "@/app/administration/hooks";
+import generateDateCode from "@/utils/generateDateCode";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -39,31 +40,28 @@ import StaffAttendanceProgressAlert from "./components/StaffAttendanceProgressAl
 import handleXLSXUploadStaffAttendance from "./utils/handleXLSXUploadStaffAttendance";
 import {
   selectSearchText,
+  selectSelectedDate,
   setProgress,
   setProgressLog,
+  setSelectedDate,
   toggleProgressAlert,
 } from "./utils/staffAttendanceSlice";
 
 export default function StaffProfileListContent() {
-  const searchText = useAdministrationSelector(selectSearchText);
   const dispatch = useAdministrationDispatch();
+  const searchText = useAdministrationSelector(selectSearchText);
+  const selectedDate = useAdministrationSelector(selectSelectedDate);
   const [initialData, setinitialData] = useState({
     id: "",
     status: "present",
   });
-
-  const [pickedDate, setPickedDate] = useState(dayjs(new Date()));
 
   const formik = useFormik({
     initialValues: { ...initialData },
 
     onSubmit: async (values) => {
       try {
-        const dateCode = dayjs(new Date(pickedDate))
-          .toISOString()
-          .split("T")[0]
-          .split("-")
-          .join("");
+        const dateCode = generateDateCode(dayjs(selectedDate));
 
         const id = values.id;
 
@@ -74,7 +72,7 @@ export default function StaffProfileListContent() {
 
         await AttendanceApi.createStaffAttendance(id, payload);
 
-        fetchStaffAttendance(pickedDate);
+        fetchStaffAttendance(selectedDate);
       } catch (error) {
         console.log(error);
       }
@@ -103,13 +101,9 @@ export default function StaffProfileListContent() {
   const [reportText, setReportText] = useState([]);
   const [XLSXAlertTitle, setXLSXAlertTitle] = useState("");
 
-  const fetchStaffAttendance = async (pickedDate) => {
+  const fetchStaffAttendance = async (selectedDate) => {
     try {
-      const dateCode = dayjs(new Date(pickedDate))
-        .toISOString()
-        .split("T")[0]
-        .split("-")
-        .join("");
+      const dateCode = generateDateCode(dayjs(selectedDate));
 
       const {
         data: { data },
@@ -132,8 +126,8 @@ export default function StaffProfileListContent() {
   };
 
   useEffect(() => {
-    fetchStaffAttendance(pickedDate);
-  }, [pickedDate]);
+    fetchStaffAttendance(selectedDate);
+  }, [selectedDate]);
 
   useEffect(() => {
     let temp = tableData?.filter((item) => {
@@ -194,9 +188,9 @@ export default function StaffProfileListContent() {
             sx={{ width: { lg: "160px", xs: "100%" } }}
             slotProps={{ textField: { size: "small" } }}
             label="Pilih Tanggal"
-            value={pickedDate}
+            value={dayjs(selectedDate)}
             onChange={(e) => {
-              setPickedDate(e);
+              dispatch(setSelectedDate(e.toISOString()));
             }}
           />
         </LocalizationProvider>
@@ -380,7 +374,6 @@ export default function StaffProfileListContent() {
                 display: { xs: "none", lg: "flex" },
                 width: "fit-content",
                 height: "100%",
-                width: 100,
                 mr: 1,
                 borderColor: "green",
                 backgroundColor: "white",
