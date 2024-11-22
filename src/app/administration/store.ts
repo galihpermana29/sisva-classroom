@@ -4,6 +4,7 @@ import staffProfileReducer from "./[slug]/dashboard/staff/profile/utils/staffPro
 import studentAttendanceReducer from "./[slug]/dashboard/student/attendance/utils/studentAttendanceSlice";
 import studentProfileReducer from "./[slug]/dashboard/student/profile/utils/studentProfileSlice";
 
+import curriculumReducer from "./[slug]/dashboard/academic/curriculum/utils/curriculumSlice";
 import studyProgramReducer from "./[slug]/dashboard/academic/study-program/utils/studyProgramSlice";
 
 export const store = configureStore({
@@ -13,6 +14,7 @@ export const store = configureStore({
     staffProfile: staffProfileReducer,
     studentProfile: studentProfileReducer,
     studyProgram: studyProgramReducer,
+    curriculum: curriculumReducer,
   },
 });
 
