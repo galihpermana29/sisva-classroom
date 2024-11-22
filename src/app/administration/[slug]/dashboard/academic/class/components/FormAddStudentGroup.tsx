@@ -3,6 +3,7 @@
 import { MenuItem, Stack, TextField, Typography } from "@mui/material";
 
 import { formAddStudentGroup } from "@/globalcomponents/FormFields";
+import { useDebouncedCallback } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 
 export const FormAddStudentGroup = ({
@@ -12,7 +13,9 @@ export const FormAddStudentGroup = ({
   periodList,
   studyProgramList,
 }) => {
-  const [teacher, setTeacher] = useState(teacherList);
+  const setFieldValue = useDebouncedCallback((fieldName, value) => {
+    formik.setFieldValue(fieldName, value);
+  }, 200);
   const [studyProgram, setStudyProgram] = useState([]);
   const [grade, setGrade] = useState([]);
 
@@ -66,8 +69,8 @@ export const FormAddStudentGroup = ({
               name={field.name}
               placeholder={field.placeholder}
               fullWidth
-              value={formik.values[field.name]}
-              onChange={(e) => formik.setFieldValue(field.name, e.target.value)}
+              defaultValue={formik.values[field.name]}
+              onChange={(e) => setFieldValue(field.name, e.target.value)}
             />
           </Stack>
         ) : field.name === "homeroom_teacher_id" ? (
@@ -81,8 +84,8 @@ export const FormAddStudentGroup = ({
               onChange={(e) => formik.setFieldValue(field.name, e.target.value)}
               sx={{ flex: { xs: 1, lg: 0 } }}
             >
-              {teacher.length ? (
-                teacher.map((option) => (
+              {teacherList.length ? (
+                teacherList.map((option) => (
                   <MenuItem key={option.id} value={option.id}>
                     <Typography fontSize={14}>{option.name}</Typography>
                   </MenuItem>
