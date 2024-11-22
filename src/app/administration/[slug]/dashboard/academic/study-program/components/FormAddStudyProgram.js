@@ -13,7 +13,7 @@ import { formAddStudyProgramFields } from "@/globalcomponents/FormFields";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
 
-export const FormAddStudyProgram = ({ formik, editing }) => {
+export const FormAddStudyProgram = ({ formik }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
 

@@ -308,7 +308,7 @@ export default function StaffProfileContent() {
     getGradeData(activeProgram);
   };
 
-  const getGradeData = (activeProgram) => {
+  const getGradeData = (activeProgram?) => {
     let temp = [];
 
     (activeProgram ? activeProgram : tableData).map((studyProgram) => {

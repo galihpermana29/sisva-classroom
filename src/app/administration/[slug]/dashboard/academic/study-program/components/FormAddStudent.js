@@ -5,7 +5,12 @@ import { MenuItem, Stack, TextField, Typography } from "@mui/material";
 import { formAddStudent } from "@/globalcomponents/FormFields";
 import { useEffect, useState } from "react";
 
-export const FormAddStudent = ({ formik, editing, tableData, studentList }) => {
+export const FormAddStudent = ({
+  formik,
+  editing = false,
+  tableData,
+  studentList,
+}) => {
   const [gradeData, setGradeData] = useState();
 
   const updatedSubjectFields = formAddStudent.map((field) => {

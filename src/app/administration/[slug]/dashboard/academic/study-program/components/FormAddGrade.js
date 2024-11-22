@@ -10,7 +10,7 @@ import { DndProvider } from "react-dnd";
 import { MultiBackend } from "react-dnd-multi-backend";
 import { DragAndDropContainer } from "./DragAndDropContainer";
 
-export const FormAddGrade = ({ formik, editing, tableData }) => {
+export const FormAddGrade = ({ formik, editing = false, tableData }) => {
   let [gradeInput, setGradeInput] = useState("");
 
   const [cards, setCards] = useState([]);
