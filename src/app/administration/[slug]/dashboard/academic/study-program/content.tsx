@@ -33,10 +33,12 @@ import UsersAPI from "@/api/users";
 import { useAdministrationSelector } from "@/app/administration/hooks";
 import { useStudyPrograms } from "@/hooks/query/academic/useStudyPrograms";
 import { useFormik } from "formik";
+import { memo } from "react";
 import ImportXLSXAlert from "../../components/ImportXLSXAlert";
 import handleXLSXUploadAcademic from "../utils/handleXLSXUploadAcademic";
 import { FormAddStudent } from "./components/FormAddStudent";
 import GradeSearchFilter from "./components/GradeSearchFilter";
+import SearchFilter from "./components/SearchFilter";
 import StudentSearchFilter from "./components/StudentSearchFilter";
 import StudentTable from "./components/StudentTable";
 import StudyProgramSearchFilter from "./components/StudyProgramSearchFilter";
@@ -414,19 +416,6 @@ export default function StaffProfileContent() {
           </Stack>
         </Stack>
       );
-    }
-  }
-
-  function SearchFilter() {
-    switch (activeTab) {
-      case 0:
-        return <StudyProgramSearchFilter />;
-      case 1:
-        return <GradeSearchFilter />;
-      case 2:
-        return <StudentSearchFilter />;
-      default:
-        return <></>;
     }
   }
 
@@ -829,7 +818,7 @@ export default function StaffProfileContent() {
               alignItems: "center",
             }}
           >
-            <SearchFilter />
+            <SearchFilter activeTab={activeTab} />
             <Hidden lgDown>
               <Box
                 sx={{
