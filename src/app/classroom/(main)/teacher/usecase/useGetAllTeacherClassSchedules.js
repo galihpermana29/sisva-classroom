@@ -4,14 +4,16 @@ import {
   generalDateFormatter,
   getDayName,
   isBefore,
-  TIME_FORMAT
+  TIME_FORMAT,
 } from "@/app/classroom/shared/usecase/helper";
 
 import { getClassSchedules } from "../repositories/apiService";
 import { getUserDataCookie } from "./getUserDataCookie";
 
 export const useGetAllTeacherClassSchedules = () => {
-  const currentDayName = new Date().toLocaleString("id-ID", { weekday: "long" });
+  const currentDayName = new Date().toLocaleString("id-ID", {
+    weekday: "long",
+  });
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
@@ -31,7 +33,9 @@ export const useGetAllTeacherClassSchedules = () => {
       }
 
       const teachingSchedule = subjects?.filter(
-        (schedule) => schedule.teacher_id == teacherId && getDayName(schedule.day) == currentDayName
+        (schedule) =>
+          schedule.teacher_id == teacherId &&
+          getDayName(schedule.day) == currentDayName
       );
 
       teachingSchedule?.sort((a, b) => {

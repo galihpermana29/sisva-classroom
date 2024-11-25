@@ -4,7 +4,6 @@ import toast from "react-hot-toast";
 
 import { deleteTeachingPlan } from "../repository/teaching-plan-service";
 
-
 export const useDeleteTeachingPlan = () => {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);

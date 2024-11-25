@@ -94,7 +94,7 @@ export default function handleXLSXUploadStaffAttendance({
       const sheetNames = template.SheetNames.filter((sheetName) => {
         const [monthText, year] = sheetName.trim().split(" ") as [
           MonthText,
-          string
+          string,
         ];
         const months: MonthText[] = [
           "Januari",
@@ -123,7 +123,7 @@ export default function handleXLSXUploadStaffAttendance({
       for (const sheetName of sheetNames) {
         const [monthText, year] = sheetName.trim().split(" ") as [
           MonthText,
-          string
+          string,
         ];
         const month = getMonthNumber(monthText);
 

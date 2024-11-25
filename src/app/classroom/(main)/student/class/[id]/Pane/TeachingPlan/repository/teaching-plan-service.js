@@ -1,4 +1,4 @@
-'use server'
+"use server";
 
 import { AppFetchApi } from "@/app/classroom/shared/usecase/global-fetch-api";
 import { serverResponseHandler } from "@/app/classroom/shared/usecase/server-response-handler";

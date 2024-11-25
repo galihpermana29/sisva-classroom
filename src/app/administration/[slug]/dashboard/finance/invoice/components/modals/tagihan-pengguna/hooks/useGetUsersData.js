@@ -38,8 +38,8 @@ export const useGetUsersData = ({
   const totalPage = shouldFetchStudents
     ? paginatedStudents.length
     : shouldFetchStaffs
-    ? paginatedStaffs.length
-    : 1;
+      ? paginatedStaffs.length
+      : 1;
 
   return {
     students: studentsData,

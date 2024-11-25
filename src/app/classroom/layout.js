@@ -2,7 +2,7 @@
 
 import "../globals.css";
 
-import { createTheme,ThemeProvider } from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Check, X } from "@untitled-ui/icons-react";
 import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";

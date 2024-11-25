@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
 
 import {
-    getAllTasks,
-    getScoreByClassId,
-    getTaskById,
+  getAllTasks,
+  getScoreByClassId,
+  getTaskById,
 } from "../repository/score-service";
 import { parseDateTimeSort } from "./dateFormatter";
 import { useCalculateAverage } from "./use-average";

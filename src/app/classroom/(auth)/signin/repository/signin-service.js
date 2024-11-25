@@ -2,7 +2,6 @@
 
 import { serverResponseHandler } from "@/app/classroom/shared/usecase/server-response-handler";
 
-
 export async function getSchoolByCode(code) {
   try {
     const res = await fetch(

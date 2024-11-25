@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
 
 import {
-    getScoreByTaskId,
-    getSubmissionByTaskId,
+  getScoreByTaskId,
+  getSubmissionByTaskId,
 } from "../repository/task-submission-repository";
 
 export function useGetSubmission() {
@@ -25,9 +25,8 @@ export function useGetSubmission() {
       if (!successSubmission) {
         setLoading(false);
       }
-      const { data: scores, success: successScore } = await getScoreByTaskId(
-        task_id
-      );
+      const { data: scores, success: successScore } =
+        await getScoreByTaskId(task_id);
       if (!successScore) {
         setLoading(false);
       }

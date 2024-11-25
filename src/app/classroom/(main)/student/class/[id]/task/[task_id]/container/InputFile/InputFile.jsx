@@ -1,9 +1,9 @@
-import { File05, Trash01, UploadCloud02 } from '@untitled-ui/icons-react';
-import { Spin, Upload } from 'antd';
-import toast from 'react-hot-toast';
+import { File05, Trash01, UploadCloud02 } from "@untitled-ui/icons-react";
+import { Spin, Upload } from "antd";
+import toast from "react-hot-toast";
 
 const InputFile = ({
-  text = 'Upload Tugas',
+  text = "Upload Tugas",
   onFileSelect,
   fileList,
   setFileList,
@@ -11,19 +11,19 @@ const InputFile = ({
 }) => {
   const beforeUpload = (file) => {
     const isAcceptedType = [
-      'image/jpeg',
-      'image/png',
-      'application/pdf',
+      "image/jpeg",
+      "image/png",
+      "application/pdf",
     ].includes(file.type);
 
     if (!isAcceptedType) {
-      toast.error('You can only upload JPG/PNG/PDF files!');
+      toast.error("You can only upload JPG/PNG/PDF files!");
       return Upload.LIST_IGNORE;
     }
 
     const isLessThan5MB = file.size / 1024 / 1024 < 5;
     if (!isLessThan5MB) {
-      toast.error('File must be smaller than 5MB!');
+      toast.error("File must be smaller than 5MB!");
       return Upload.LIST_IGNORE;
     }
 
@@ -44,7 +44,7 @@ const InputFile = ({
   };
 
   const getFileName = (file) => {
-    if (typeof file === 'object' && file !== null) {
+    if (typeof file === "object" && file !== null) {
       return file.name;
     }
     return file;

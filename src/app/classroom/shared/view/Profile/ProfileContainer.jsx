@@ -11,8 +11,8 @@ import { useProfile } from "../../usecase/hooks/profile/use-profile";
 import { useSignOut } from "../../usecase/hooks/profile/use-signout";
 import { useTokenColor } from "../../usecase/use-token-color";
 
-const DeleteConfirmation = dynamic(() =>
-  import("@/app/classroom/shared/presentation/Modal/DeleteConfirmation")
+const DeleteConfirmation = dynamic(
+  () => import("@/app/classroom/shared/presentation/Modal/DeleteConfirmation")
 );
 
 const ProfileContainer = ({ initialData, profileMenus }) => {

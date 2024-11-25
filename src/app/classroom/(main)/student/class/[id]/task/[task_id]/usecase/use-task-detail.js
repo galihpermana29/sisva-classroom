@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
 
 import {
-    getAllClasses,
-    getStudentGroups,
-    getTaskById,
+  getAllClasses,
+  getStudentGroups,
+  getTaskById,
 } from "../repository/task-submission-repository";
 
 export function useTask() {

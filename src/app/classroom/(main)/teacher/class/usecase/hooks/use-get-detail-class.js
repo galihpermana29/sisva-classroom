@@ -3,8 +3,8 @@ import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-    setClassData,
-    setIsFetching,
+  setClassData,
+  setIsFetching,
 } from "@/app/classroom/shared/redux/classSlice";
 
 import { getClassDataById } from "../../repository/teacher-class-service";

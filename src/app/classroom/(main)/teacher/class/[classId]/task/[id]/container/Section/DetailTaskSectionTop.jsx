@@ -1,10 +1,10 @@
-import { Divider } from 'antd';
-import parse from 'html-react-parser';
+import { Divider } from "antd";
+import parse from "html-react-parser";
 
-import { dateFormatterDayName } from '../../usecase/dateFormatter';
-import CardFile from '../Card/CardFile';
-import InfoItem from '../InfoItem/InfoItem';
-import SkeletonDetailTaskSection from '../Skeleton/SkeletonDetailTaskSection';
+import { dateFormatterDayName } from "../../usecase/dateFormatter";
+import CardFile from "../Card/CardFile";
+import InfoItem from "../InfoItem/InfoItem";
+import SkeletonDetailTaskSection from "../Skeleton/SkeletonDetailTaskSection";
 
 export default function DetailTaskSectionTop({ task, loading }) {
   if (loading) {
@@ -23,8 +23,8 @@ export default function DetailTaskSectionTop({ task, loading }) {
           title="Tipe Submission"
           content={
             task.task_allow_submission
-              ? 'Allow Submission'
-              : 'Not Allow Submission'
+              ? "Allow Submission"
+              : "Not Allow Submission"
           }
         />
       </div>

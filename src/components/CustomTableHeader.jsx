@@ -3,8 +3,8 @@
 import { TableCell, TableRow, useTheme } from "@mui/material";
 
 import {
-    SORT_PARAM_NAME,
-    useSortKey,
+  SORT_PARAM_NAME,
+  useSortKey,
 } from "@/app/administration/[slug]/dashboard/finance/invoice/hooks/useSortKey";
 import { useQueryParam } from "@/hooks/useQueryParam";
 

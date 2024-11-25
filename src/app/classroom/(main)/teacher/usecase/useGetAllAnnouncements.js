@@ -23,9 +23,8 @@ export const useGetAllAnnouncements = () => {
         return;
       }
 
-      const filtered = announcements.filter(
-        (announcement) => 
-          announcement.target_user_types.includes("staff")
+      const filtered = announcements.filter((announcement) =>
+        announcement.target_user_types.includes("staff")
       );
       setData(announcements);
       setIsLoading(false);

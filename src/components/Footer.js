@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import React from 'react';
+import Image from "next/image";
+import React from "react";
 
 export default function Footer() {
   return (
@@ -12,7 +12,7 @@ export default function Footer() {
             <Image
               src="/images/Sisva-LogoType-Black.png"
               fill
-              style={{ objectFit: 'contain' }}
+              style={{ objectFit: "contain" }}
               alt=""
             />
           </div>
@@ -22,7 +22,7 @@ export default function Footer() {
             <br />
             Blok E28, Kota Depok, Jawa Barat
           </p>
-        </div>{' '}
+        </div>{" "}
         <div className="flex-[2] flex flex-wrap mx-[2vw]">
           <div className="flex-[1] font-light flex flex-col mt-[2svh] lg:mt-0  items-center lg:items-start">
             <h3 className="font-semibold text-[1.7svh] lg:text-[1.9svh] mb-[1svh] ">
@@ -89,7 +89,7 @@ export default function Footer() {
               <a href="https://wa.me/62811265665?text=Halo%2C+saya+tertarik+dengan+produk+Sisva.">
                 +62 811 265 665
               </a>
-            </div>{' '}
+            </div>{" "}
             <div className="flex items-center text-[1.7svh] lg:text-[1.9svh] mb-[.5svh]">
               <svg
                 className="h-[2.5svh] w-[2.5svh] mr-[1svh] hidden lg:flex"
@@ -145,7 +145,7 @@ export default function Footer() {
             </div>
             <div className="flex items-center text-[1.7svh] lg:text-[1.9svh] ">
               <a href="https://www.sisva.id/product">Produk</a>
-            </div>{' '}
+            </div>{" "}
             <div className="flex items-center text-[1.7svh] lg:text-[1.9svh] ">
               <a href="https://www.sisva.id/contact">Kontak</a>
             </div>

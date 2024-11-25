@@ -1,7 +1,6 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-
 /**
  * @typedef {Object} SisvaFetchOptions
  * @property {'GET'|'POST'|'PUT'|'DELETE'|'PATCH'} [method] - HTTP method

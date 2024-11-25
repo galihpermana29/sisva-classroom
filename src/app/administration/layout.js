@@ -2,7 +2,7 @@
 
 import "../globals.css";
 
-import { createTheme,ThemeProvider } from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Provider } from "react-redux";

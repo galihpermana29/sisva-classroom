@@ -1,7 +1,14 @@
 "use client";
 
 import { Edit03 } from "@untitled-ui/icons-react";
-import { ConfigProvider, Form, InputNumber, Popconfirm, Table, Typography } from "antd";
+import {
+  ConfigProvider,
+  Form,
+  InputNumber,
+  Popconfirm,
+  Table,
+  Typography,
+} from "antd";
 import { Kumbh_Sans } from "next/font/google";
 import Image from "next/image";
 import React, { useEffect, useMemo, useState } from "react";

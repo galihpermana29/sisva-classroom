@@ -17,21 +17,23 @@ import TaskTable from "../presentation/Table/TaskTable";
 import TeachingMaterialTable from "../presentation/Table/TeachingMaterialTable";
 import { useModal } from "./Provider/ModalProvider";
 
-const FormTaskModal = dynamic(() =>
-  import("@/app/classroom/shared/presentation/Modal/FormTaskModal")
+const FormTaskModal = dynamic(
+  () => import("@/app/classroom/shared/presentation/Modal/FormTaskModal")
 );
-const CreateTeachingMaterialModal = dynamic(() =>
-  import(
-    "@/app/classroom/shared/presentation/Modal/CreateTeachingMaterialModal"
-  )
+const CreateTeachingMaterialModal = dynamic(
+  () =>
+    import(
+      "@/app/classroom/shared/presentation/Modal/CreateTeachingMaterialModal"
+    )
 );
-const SelectTeachingMaterialModal = dynamic(() =>
-  import(
-    "@/app/classroom/shared/presentation/Modal/SelectTeachingMaterialModal"
-  )
+const SelectTeachingMaterialModal = dynamic(
+  () =>
+    import(
+      "@/app/classroom/shared/presentation/Modal/SelectTeachingMaterialModal"
+    )
 );
-const DeleteConfirmation = dynamic(() =>
-  import("@/app/classroom/shared/presentation/Modal/DeleteConfirmation")
+const DeleteConfirmation = dynamic(
+  () => import("@/app/classroom/shared/presentation/Modal/DeleteConfirmation")
 );
 
 const CreateRppContainer = ({ initialData, headerText }) => {

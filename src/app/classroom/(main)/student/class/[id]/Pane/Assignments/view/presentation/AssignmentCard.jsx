@@ -1,8 +1,8 @@
-import { useParams, useRouter } from 'next/navigation';
-import React from 'react';
+import { useParams, useRouter } from "next/navigation";
+import React from "react";
 
-import SisvaButton from '@/app/classroom/shared/presentation/Button/GlobalButton';
-import { generalDateFormatter } from '@/app/classroom/shared/usecase/helper';
+import SisvaButton from "@/app/classroom/shared/presentation/Button/GlobalButton";
+import { generalDateFormatter } from "@/app/classroom/shared/usecase/helper";
 
 const AssignmentCard = ({ assignment, assignmentName, desc, deadline }) => {
   const router = useRouter();
@@ -28,10 +28,10 @@ const AssignmentCard = ({ assignment, assignmentName, desc, deadline }) => {
         <CardSection title="Status Pengumpulan">
           <p
             className={`font-bold ${
-              isSubmitted ? 'text-green-500' : 'text-red-500'
+              isSubmitted ? "text-green-500" : "text-red-500"
             }`}
           >
-            {isSubmitted ? 'Sudah Dikumpulkan' : 'Belum Mengumpulkan'}
+            {isSubmitted ? "Sudah Dikumpulkan" : "Belum Mengumpulkan"}
           </p>
         </CardSection>
       </div>

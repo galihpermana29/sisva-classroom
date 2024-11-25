@@ -5,9 +5,9 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 
 import {
-    getSchoolByCode,
-    getUserById,
-    postLogin,
+  getSchoolByCode,
+  getUserById,
+  postLogin,
 } from "../repository/signin-service";
 
 export const useSignIn = () => {

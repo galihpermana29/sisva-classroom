@@ -2,9 +2,9 @@ import { useParams, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import {
-    getStudentScores,
-    getSubmissionTask,
-    getUserById,
+  getStudentScores,
+  getSubmissionTask,
+  getUserById,
 } from "../repository/scoring-submission-service";
 
 export function useSubmission() {

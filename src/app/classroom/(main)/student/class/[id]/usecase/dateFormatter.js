@@ -25,7 +25,6 @@ export function dateTimeFormatter(dateString) {
   return `${parseInt(day)}, ${months[parseInt(month) - 1]} ${year}`;
 }
 
-
 export function parseDateTimeSort(dateString) {
   const [datePart, timePart] = dateString.split(" ");
   const [day, month, year] = datePart.split("/").map(Number);

@@ -3,10 +3,10 @@ import toast from "react-hot-toast";
 
 import { useModal } from "../../class/[classId]/create-rpp/view/container/Provider/ModalProvider";
 import {
-    deleteTeachingMaterial,
-    patchTeachingMaterial,
-    postTeachingMaterial,
-    postUploadFile
+  deleteTeachingMaterial,
+  patchTeachingMaterial,
+  postTeachingMaterial,
+  postUploadFile,
 } from "../repository/teaching-material-service";
 import { generateRandomString } from "./custom-function";
 

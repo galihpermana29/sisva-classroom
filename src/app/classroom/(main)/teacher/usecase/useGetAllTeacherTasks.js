@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 import {
   generalDateFormatter,
   isBefore,
-} from '@/app/classroom/shared/usecase/helper';
+} from "@/app/classroom/shared/usecase/helper";
 
-import { isOverdue } from '../../student/class/usecase/date-helper';
-import { getAllClasses, getTeacherTasks } from '../repositories/apiService';
-import { getUserDataCookie } from './getUserDataCookie';
+import { isOverdue } from "../../student/class/usecase/date-helper";
+import { getAllClasses, getTeacherTasks } from "../repositories/apiService";
+import { getUserDataCookie } from "./getUserDataCookie";
 
 export const useGetAllTeacherTasks = () => {
   const [isLoading, setIsLoading] = useState(true);

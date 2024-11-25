@@ -1,8 +1,8 @@
 import {
-    DotsVertical,
-    Download01,
-    Edit01,
-    Trash01,
+  DotsVertical,
+  Download01,
+  Edit01,
+  Trash01,
 } from "@untitled-ui/icons-react";
 import { Card, Divider, Dropdown } from "antd";
 import Image from "next/image";

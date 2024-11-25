@@ -18,7 +18,10 @@ const AssignmentContainer = () => {
         onChange={(e) => handleFilterChange("search", e.target.value)}
       />
 
-      <AssignmentListGroup assignmentGroups={assignmentGroups} isLoading={isLoading} />
+      <AssignmentListGroup
+        assignmentGroups={assignmentGroups}
+        isLoading={isLoading}
+      />
     </div>
   );
 };

@@ -1,11 +1,11 @@
 import React from "react";
 
 import {
-    getAllCurriculum,
-    getAllStudyProgram,
-    getAllSubjectName,
-    getAllTeacher,
-    getTeachingMaterialList,
+  getAllCurriculum,
+  getAllStudyProgram,
+  getAllSubjectName,
+  getAllTeacher,
+  getTeachingMaterialList,
 } from "../../../teaching-material/repository/teaching-material-service";
 import CreateRppMainPage from "./view/container/CreateRppMainPage";
 

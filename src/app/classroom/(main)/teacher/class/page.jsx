@@ -2,8 +2,8 @@ import React from "react";
 
 import { getAllStudyProgram } from "../teaching-material/repository/teaching-material-service";
 import {
-    getPeriodDropdown,
-    getTeacherClassList,
+  getPeriodDropdown,
+  getTeacherClassList,
 } from "./repository/teacher-class-service";
 import TeacherClassContainer from "./view/container/ClassContainer";
 

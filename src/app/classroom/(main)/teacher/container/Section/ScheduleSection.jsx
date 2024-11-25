@@ -1,6 +1,5 @@
 "use client";
 
-
 import CardSchedule from "@/app/classroom/shared/presentation/Card/CardSchedule";
 import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
 import SectionLayout from "@/app/classroom/shared/presentation/Layouts/SectionLayout";
@@ -22,10 +21,8 @@ const ScheduleSection = () => {
                 <CardScheduleSkeleton key={index} />
               ))}
             </div>
-          ) : !schedules | schedules.length == 0 ? (
-            <div
-              className="mx-auto"
-            >
+          ) : !schedules | (schedules.length == 0) ? (
+            <div className="mx-auto">
               <EmptyState
                 title="Tidak ada jadwal"
                 description="Tidak ada jadwal kelas hari ini"

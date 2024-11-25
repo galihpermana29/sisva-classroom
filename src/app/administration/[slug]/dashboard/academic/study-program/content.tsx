@@ -874,8 +874,8 @@ export default function StaffProfileContent() {
                 activeTab === 0
                   ? setOpenCreateStudyProgramModal(true)
                   : activeTab === 1
-                  ? setOpenCreateGradeModal(true)
-                  : setOpenCreateStudentModal(true)
+                    ? setOpenCreateGradeModal(true)
+                    : setOpenCreateStudentModal(true)
               }
             >
               <Typography sx={{ fontSize: 14 }}>Tambah</Typography>

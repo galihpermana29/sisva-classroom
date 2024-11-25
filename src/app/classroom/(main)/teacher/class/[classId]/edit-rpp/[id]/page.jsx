@@ -2,11 +2,11 @@ import { notFound } from "next/navigation";
 import React from "react";
 
 import {
-    getAllCurriculum,
-    getAllStudyProgram,
-    getAllSubjectName,
-    getAllTeacher,
-    getTeachingMaterialList,
+  getAllCurriculum,
+  getAllStudyProgram,
+  getAllSubjectName,
+  getAllTeacher,
+  getTeachingMaterialList,
 } from "../../../../teaching-material/repository/teaching-material-service";
 import { getAllTaskList } from "../../../repository/teacher-class-service";
 import CreateRppMainPage from "../../create-rpp/view/container/CreateRppMainPage";

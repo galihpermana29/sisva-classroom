@@ -8,7 +8,7 @@ export const useGetAllSubjectsTeached = () => {
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
 
-  const {id: teacherId} = getUserDataCookie();
+  const { id: teacherId } = getUserDataCookie();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,8 +27,8 @@ export const useGetAllSubjectsTeached = () => {
       }
 
       const subjectsByTeacher = subjects
-      ?.filter((subject) => subject.teacher_id == teacherId)
-      .map((subject) => subject.subject_name);
+        ?.filter((subject) => subject.teacher_id == teacherId)
+        .map((subject) => subject.subject_name);
 
       setData(subjectsByTeacher);
       setIsLoading(false);

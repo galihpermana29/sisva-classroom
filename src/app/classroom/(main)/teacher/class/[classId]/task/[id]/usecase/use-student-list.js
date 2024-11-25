@@ -3,11 +3,11 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import {
-    getAllClasses,
-    getAllTasks,
-    getStudentInGroups,
-    getStudentScores,
-    getUserById,
+  getAllClasses,
+  getAllTasks,
+  getStudentInGroups,
+  getStudentScores,
+  getUserById,
 } from "../repository/scoring-submission-service";
 
 export function useGetStudentList() {

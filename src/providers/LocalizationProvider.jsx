@@ -11,10 +11,7 @@ dayjs.extend(customParseFormat);
 
 export const LocalizationProvider = ({ children }) => {
   return (
-    <MUILocalizationProvider
-      dateAdapter={AdapterDayjs}
-      adapterLocale="id"
-    >
+    <MUILocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="id">
       {children}
     </MUILocalizationProvider>
   );

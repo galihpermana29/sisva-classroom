@@ -29,9 +29,8 @@ export function useAttendance() {
       ) {
         const formattedDate = date.format("YYYYMMDD");
 
-        const { data, message, success } = await getAttendanceByDate(
-          formattedDate
-        );
+        const { data, message, success } =
+          await getAttendanceByDate(formattedDate);
 
         const attendanceClass = data.filter(
           (attendance) => attendance.class_id == classId

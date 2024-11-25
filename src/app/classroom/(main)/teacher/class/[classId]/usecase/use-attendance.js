@@ -5,10 +5,10 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 import {
-    getAttendanceStudent,
-    getStudentGroups,
-    getUserById,
-    setAttendanceStudent,
+  getAttendanceStudent,
+  getStudentGroups,
+  getUserById,
+  setAttendanceStudent,
 } from "../repository/teacher-attendance-service";
 import { getAllClasses } from "../repository/teacher-score-service";
 
@@ -59,9 +59,8 @@ export function useAttendance() {
 
           const { data: studentDetail } = await getUserById(student_id);
 
-          const { data, message, success } = await getAttendanceStudent(
-            formattedDate
-          );
+          const { data, message, success } =
+            await getAttendanceStudent(formattedDate);
 
           if (success && Array.isArray(data)) {
             const studentAttendance = data.find(

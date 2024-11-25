@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import {
   getAllTasks,
-  getAllTeachingPlan
+  getAllTeachingPlan,
 } from "../../repository/student-assignment-service";
 import { groupTaskByTeachingPlan, searchFilter } from "../data-mapper";
 
@@ -57,7 +57,7 @@ async function getTaskWithGrouping(classId) {
     const teachingPlans = teachingPlanRes?.data || [];
 
     const groupedTasks = groupTaskByTeachingPlan(tasks, teachingPlans);
-  
+
     return groupedTasks;
   } catch (error) {
     console.error("Error fetching tasks or teaching plans:", error);

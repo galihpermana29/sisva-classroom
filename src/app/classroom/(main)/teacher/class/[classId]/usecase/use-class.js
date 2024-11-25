@@ -26,11 +26,11 @@ export function useClass() {
         class_name: classDetail.student_group_name,
       });
     };
-    fetchData()
+    fetchData();
   }, []);
 
-  return{
+  return {
     loading,
-    classData
-  }
+    classData,
+  };
 }

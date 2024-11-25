@@ -9,12 +9,15 @@ import { useTeachingMaterialForm } from "../../usecase/use-teaching-material-for
 import TeachingMaterialCardList from "../presentation/TeachingMaterialCardList";
 import TeachingMaterialListFilter from "../presentation/TeachingMaterialListFilter";
 
-const CreateTeachingMaterialModal = dynamic(() =>
-  import("../../../../../shared/presentation/Modal/CreateTeachingMaterialModal")
+const CreateTeachingMaterialModal = dynamic(
+  () =>
+    import(
+      "../../../../../shared/presentation/Modal/CreateTeachingMaterialModal"
+    )
 );
 
-const DeleteConfirmation = dynamic(() =>
-  import("@/app/classroom/shared/presentation/Modal/DeleteConfirmation")
+const DeleteConfirmation = dynamic(
+  () => import("@/app/classroom/shared/presentation/Modal/DeleteConfirmation")
 );
 const TeachingMaterialContainer = ({ initialData }) => {
   const {

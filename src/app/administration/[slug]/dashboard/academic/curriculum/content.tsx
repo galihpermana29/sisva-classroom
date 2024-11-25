@@ -948,18 +948,18 @@ export default function StaffProfileContent() {
             {(activeTab === 0
               ? [{ title: "Kurikulum", slug: "name" }]
               : activeTab === 1
-              ? [
-                  { title: "Kurikulum", slug: "name" },
-                  { title: "Program Studi", slug: "study_program" },
-                  { title: "Mata Pelajaran", slug: "subject" },
-                  { title: "Tipe", slug: "subject_type" },
-                ]
-              : [
-                  { title: "Kurikulum", slug: "name" },
-                  { title: "Program Studi", slug: "study_program" },
-                  { title: "Mata Pelajaran", slug: "subject" },
-                  { title: "Tingkatan", slug: "grade" },
-                ]
+                ? [
+                    { title: "Kurikulum", slug: "name" },
+                    { title: "Program Studi", slug: "study_program" },
+                    { title: "Mata Pelajaran", slug: "subject" },
+                    { title: "Tipe", slug: "subject_type" },
+                  ]
+                : [
+                    { title: "Kurikulum", slug: "name" },
+                    { title: "Program Studi", slug: "study_program" },
+                    { title: "Mata Pelajaran", slug: "subject" },
+                    { title: "Tingkatan", slug: "grade" },
+                  ]
             ).map((option) => (
               <MenuItem key={option.slug} value={option.slug}>
                 <Typography fontSize={14}>{option.title}</Typography>
@@ -1212,10 +1212,10 @@ export default function StaffProfileContent() {
                 activeTab === 0
                   ? setOpenCreateCurriculumModal(true)
                   : activeTab === 1
-                  ? setOpenCreateSubjectModal(true)
-                  : activeTab === 2
-                  ? setOpenCreateSyllabusModal(true)
-                  : null
+                    ? setOpenCreateSubjectModal(true)
+                    : activeTab === 2
+                      ? setOpenCreateSyllabusModal(true)
+                      : null
               }
             >
               <Typography sx={{ fontSize: 14 }}>Tambah</Typography>

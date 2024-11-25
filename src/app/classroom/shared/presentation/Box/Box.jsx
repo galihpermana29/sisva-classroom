@@ -40,4 +40,3 @@ const BoxRight = () => {
 };
 
 export { BoxLeft, BoxRight, BoxTop };
-

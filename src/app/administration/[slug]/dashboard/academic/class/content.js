@@ -337,21 +337,21 @@ export default function StaffProfileContent() {
           );
         }))
       : activeTab === 1
-      ? (temp = studentGroupData.filter((item) => {
-          return (
-            item.class.toLowerCase().includes(search.toLowerCase()) &&
-            item.type === "elective"
-          );
-        }))
-      : (temp = studentData.filter((item) => {
-          return (
-            item.student.toLowerCase().includes(search.toLowerCase()) &&
-            (gradeFilter == ""
-              ? item
-              : item.grade.toLowerCase() == gradeFilter.toLowerCase()) &&
-            item.class.toLowerCase().includes(classFilter.toLowerCase())
-          );
-        }));
+        ? (temp = studentGroupData.filter((item) => {
+            return (
+              item.class.toLowerCase().includes(search.toLowerCase()) &&
+              item.type === "elective"
+            );
+          }))
+        : (temp = studentData.filter((item) => {
+            return (
+              item.student.toLowerCase().includes(search.toLowerCase()) &&
+              (gradeFilter == ""
+                ? item
+                : item.grade.toLowerCase() == gradeFilter.toLowerCase()) &&
+              item.class.toLowerCase().includes(classFilter.toLowerCase())
+            );
+          }));
     // if (sortSettings && sortSettings.sortBy) {
     //   temp = temp.sort(function (a, b) {
     //     let x, y;
@@ -1087,8 +1087,8 @@ export default function StaffProfileContent() {
                 activeTab === 0
                   ? setOpenCreateStudentGroupModal(true)
                   : activeTab === 1
-                  ? setOpenCreateClassModal(true)
-                  : setOpenInsertStudentModal(true)
+                    ? setOpenCreateClassModal(true)
+                    : setOpenInsertStudentModal(true)
               }
             >
               <Typography sx={{ fontSize: 14 }}>Tambah</Typography>

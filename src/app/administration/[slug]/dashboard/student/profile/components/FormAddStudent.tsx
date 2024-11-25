@@ -49,8 +49,8 @@ export const FormAddStudent = ({ formik }) => {
                     ? "text"
                     : "password"
                   : showPasswordConfirm
-                  ? "text"
-                  : "password"
+                    ? "text"
+                    : "password"
               }
               name={field.name}
               placeholder={field.placeholder}

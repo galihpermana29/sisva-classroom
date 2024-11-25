@@ -36,14 +36,13 @@ export async function groupTaskByTeachingPlan(tasks, teachingPlans) {
   return Array.from(groupedTasks.values());
 }
 
-
 export const searchFilter = (assignments, searchTerm) => {
   return assignments
     .map((assignment) => {
       const filteredTasks = assignment.tasks.filter(
         (task) =>
           task.name.toLowerCase().includes(searchTerm) ||
-          (task.description || '').toLowerCase().includes(searchTerm)
+          (task.description || "").toLowerCase().includes(searchTerm)
       );
 
       if (filteredTasks.length > 0) {

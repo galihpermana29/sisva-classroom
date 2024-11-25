@@ -3,10 +3,10 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
 
 import {
-    changePassword,
-    getProfileDetail,
-    resetPassword,
-    updateProfile,
+  changePassword,
+  getProfileDetail,
+  resetPassword,
+  updateProfile,
 } from "@/app/classroom/shared/repository/profile-detail-service";
 import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
 
