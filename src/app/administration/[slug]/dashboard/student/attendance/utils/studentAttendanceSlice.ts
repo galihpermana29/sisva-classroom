@@ -1,8 +1,9 @@
-import { RootState } from "@/app/administration/store";
-import type { Attendance, SortDirection } from "@/types/types";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 import dayjs from "dayjs";
+
+import { RootState } from "@/app/administration/store";
+import type { Attendance, SortDirection } from "@/types/types";
 
 export type SortField = "name" | "username" | "";
 
