@@ -16,9 +16,10 @@ export const FormAddSyllabus = ({
   handleFileChange,
 }) => {
   const [currId, setCurrId] = useState();
-  const [studyProgramData, setStudyProgramData] = useState();
-  const [subjectData, setSubjectData] = useState();
-  const [gradeData, setGradeData] = useState();
+  // TODO: Fix type
+  const [studyProgramData, setStudyProgramData] = useState<any>();
+  const [subjectData, setSubjectData] = useState<any>();
+  const [gradeData, setGradeData] = useState<any>();
 
   const updatedSubjectFields = formAddSyllabusFields.map((field) => {
     if (field.name == "curriculum_name") {
@@ -47,7 +48,7 @@ export const FormAddSyllabus = ({
     setStudyProgramData(secMap);
   };
 
-  const fetchSubject = async (val, currId2) => {
+  const fetchSubject = async (val, currId2?) => {
     const firstMap = subjectOpt.filter(
       (dt) =>
         dt.study_program_id == val &&
@@ -229,13 +230,7 @@ export const FormAddSyllabus = ({
             </Stack>
 
             <label htmlFor="syllabus_uri">
-              <Button
-                fullWidth
-                variant="outlined"
-                flexDirection={"row"}
-                alignItems={"center"}
-                sx={{ mb: 0.5 }}
-              >
+              <Button fullWidth variant="outlined" sx={{ mb: 0.5 }}>
                 {formik.values.syllabus_uri ? "Ubah" : "Upload"}
                 <input
                   name={"syllabus_uri"}
@@ -254,8 +249,6 @@ export const FormAddSyllabus = ({
             <Button
               fullWidth
               variant="outlined"
-              flexDirection={"row"}
-              alignItems={"center"}
               sx={{
                 mb: 1,
                 display: formik.values.syllabus_uri ? "flex" : "none",

@@ -95,7 +95,8 @@ export default function StaffProfileListContent() {
   const [permissionFilter, setPermissionFilter] = useState("");
   const [sortBy, setSortBy] = useState("");
   const [sortType, setSortType] = useState("ascending");
-  const [sortSettings, setSortSettings] = useState("");
+  // TODO: Fix type
+  const [sortSettings, setSortSettings] = useState<any>("");
   const [openSortModal, setOpenSortModal] = useState(false);
 
   const [isOpenXLSXAlert, setIsOpenImportXLSXAlert] = useState(false);

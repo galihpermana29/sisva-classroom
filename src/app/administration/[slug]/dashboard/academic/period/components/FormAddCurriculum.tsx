@@ -28,8 +28,9 @@ export const FormAddCurriculum = ({
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
-  const [studyProgramData, setStudyProgramData] = useState();
-  const [gradeData, setGradeData] = useState();
+  // TODO: Fix type
+  const [studyProgramData, setStudyProgramData] = useState<any>();
+  const [gradeData, setGradeData] = useState<any>();
   const [currId, setCurrId] = useState();
 
   const updatedSubjectFields = formAddCurriculumFields.map((field) => {
@@ -70,7 +71,7 @@ export const FormAddCurriculum = ({
     setStudyProgramData(mappedData);
   };
 
-  const fetchGrade = async (val, curr) => {
+  const fetchGrade = async (val, curr?) => {
     const findCurr = dataAllCurr.find(
       (dac) => dac.id == (currId ? currId : curr)
     )?.study_programs;

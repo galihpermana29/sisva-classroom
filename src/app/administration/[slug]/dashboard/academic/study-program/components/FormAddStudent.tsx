@@ -11,7 +11,8 @@ export const FormAddStudent = ({
   tableData,
   studentList,
 }) => {
-  const [gradeData, setGradeData] = useState();
+  // TODO: Fix type
+  const [gradeData, setGradeData] = useState<any>();
 
   const updatedSubjectFields = formAddStudent.map((field) => {
     if (field.name == "student") {

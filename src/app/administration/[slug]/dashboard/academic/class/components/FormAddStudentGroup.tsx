@@ -19,7 +19,7 @@ export const FormAddStudentGroup = ({
   const [studyProgram, setStudyProgram] = useState([]);
   const [grade, setGrade] = useState([]);
 
-  const fetchProgramStudy = (id, grade, editing) => {
+  const fetchProgramStudy = (id, grade?, editing?) => {
     const study_programs = periodList.find((pl) => pl.id == id)?.study_programs;
     if (!study_programs) return;
 
