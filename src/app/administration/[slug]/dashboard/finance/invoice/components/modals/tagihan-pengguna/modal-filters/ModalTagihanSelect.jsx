@@ -1,12 +1,10 @@
 import { MenuItem, Select } from "@mui/material";
 
-import { useGetAllBills } from "../../../../hooks/useGetAllBills";
+import { useBills } from "@/hooks/query/finance/useBills";
 
 export const ModalTagihanSelect = ({ value, setValue, setAvailableTarget }) => {
-  const { data: bills } = useGetAllBills();
-  const data = bills
-    ? bills.map((bill) => ({ value: bill.id, label: bill.name }))
-    : [];
+  const { data: bills } = useBills();
+  const data = bills.map((bill) => ({ value: bill.id, label: bill.name }));
 
   const handleChange = (event) => {
     const bill = bills?.find((bill) => bill.id === event.target.value);

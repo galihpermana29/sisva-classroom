@@ -1,15 +1,14 @@
 "use client";
 
-import { useGetAllBills } from "../../../hooks/useGetAllBills";
+import { useBills } from "@/hooks/query/finance/useBills";
+
 import { KategoriSelect } from "../KategoriSelect";
 
 export const TagihanPenggunaKategoriFilter = () => {
-  const { data: bills } = useGetAllBills();
-  const data = bills
-    ? bills
-        // .filter((bill) => bill.status === "published")
-        .map((bill) => ({ value: bill.id, label: bill.name }))
-    : [];
-
-  return <KategoriSelect data={data} />;
+  const { data: bills } = useBills();
+  return (
+    <KategoriSelect
+      data={bills.map((bill) => ({ value: bill.id, label: bill.name }))}
+    />
+  );
 };

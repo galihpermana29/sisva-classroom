@@ -4,9 +4,9 @@ import { useQuery } from "@tanstack/react-query";
 
 import FinanceAPI from "@/api/finance";
 import { useGetAllUsers } from "@/hooks/query/academic/useGetAllUsers";
+import { useBills } from "@/hooks/query/finance/useBills";
 import { paginateData } from "@/utils/paginateData";
 
-import { useGetAllBills } from "./useGetAllBills";
 import { useGetAllUserBill } from "./useGetAllUserBill";
 import { usePagination } from "./usePagination";
 import { useSortKey } from "./useSortKey";
@@ -40,7 +40,7 @@ const sortData = (data) => {
   const fields = useSortKey();
   const { data: userBills } = useGetAllUserBill({ paginated: false });
   const { data: users } = useGetAllUsers();
-  const { data: bills } = useGetAllBills();
+  const { data: bills } = useBills();
 
   return data?.sort((a, b) => {
     const userBillA = userBills?.find(

@@ -5,9 +5,9 @@ import dayjs from "dayjs";
 
 import FinanceAPI from "@/api/finance";
 import { useGetAllUsers } from "@/hooks/query/academic/useGetAllUsers";
+import { useBills } from "@/hooks/query/finance/useBills";
 import { paginateData } from "@/utils/paginateData";
 
-import { useGetAllBills } from "./useGetAllBills";
 import { useGetAllInvoices } from "./useGetAllInvoices";
 import { usePagination } from "./usePagination";
 import { useSortKey } from "./useSortKey";
@@ -38,7 +38,7 @@ export const useGetAllUserBill = ({
 const sortData = (data) => {
   const fields = useSortKey();
   const { data: users } = useGetAllUsers();
-  const { data: bills } = useGetAllBills();
+  const { data: bills } = useBills();
   const { data: invoices, isStale: invoicesIsStale } = useGetAllInvoices({
     paginated: false,
     withSort: false,
