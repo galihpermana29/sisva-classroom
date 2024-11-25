@@ -8,6 +8,7 @@ import { TAB_FIELD_NAME, TabsSelector } from "@/components/TabSelector";
 import { CURRENT_PAGE_NAME, INVOICE_TABS } from "../../constants";
 import { useActiveInvoiceTab } from "../../hooks/useActiveInvoiceTab";
 import { SORT_PARAM_NAME } from "../../hooks/useSortKey";
+import { STATUS_FIELD_NAME } from "../filters/StatusSelect";
 
 /** @description Component to display tab selector */
 export const InvoiceTabs = () => {
@@ -23,6 +24,7 @@ export const InvoiceTabs = () => {
       params.set(TAB_FIELD_NAME, tab);
       params.delete(SORT_PARAM_NAME);
       params.delete(CURRENT_PAGE_NAME);
+      params.delete(STATUS_FIELD_NAME);
 
       return params.toString();
     },
