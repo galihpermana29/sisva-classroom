@@ -1,4 +1,4 @@
-import type { Day, PeriodStatus, StudyProgramStatus } from "./types";
+import type { Day, PeriodStatus, Role, StudyProgramStatus } from "./types";
 
 type Grade =
   //* actually could be any string
@@ -153,6 +153,10 @@ export type SchoolSchedules = {
   end_time: string;
 };
 
+/* -------------------------------------------------------------------------- */
+/*                                   FINANCE                                  */
+/* -------------------------------------------------------------------------- */
+
 export type Invoice = {
   id: number;
   user_bill_id: number;
@@ -166,4 +170,15 @@ export type Invoice = {
     update_by: string;
     update_time: string;
   };
+};
+
+export type Bill = {
+  id: number;
+  custom_id: string;
+  name: string;
+  status: string; // ? draft, ... ???
+  target_user_types: Role[];
+  amount: number;
+  deadline: string;
+  description: string;
 };
