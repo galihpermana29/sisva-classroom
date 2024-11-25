@@ -25,10 +25,10 @@ export const InvoiceActions = () => {
 
   return (
     <Stack flexDirection="row" alignItems="center" gap={1}>
-      {isLoading || finalRows.length === 0 ? (
+      {isLoading ? (
         <Skeleton width={85} height={60} />
       ) : (
-        <ExcelButton onClick={exportToExcel} />
+        finalRows.length !== 0 && <ExcelButton onClick={exportToExcel} />
       )}
       <AddInvoiceModal />
     </Stack>
