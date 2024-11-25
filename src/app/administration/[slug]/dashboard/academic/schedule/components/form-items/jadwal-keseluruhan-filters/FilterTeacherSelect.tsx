@@ -1,9 +1,11 @@
 "use client";
 
 // ! this component is not used
-import { useQueryParam } from "@/hooks/useQueryParam";
 import { MenuItem, Select, Stack, Typography } from "@mui/material";
 import { useSearchParams } from "next/navigation";
+
+import { useQueryParam } from "@/hooks/useQueryParam";
+
 import { GURU_FIELD_NAME } from "../../filters/GuruSelect";
 
 function FilterTeacherSelect({ name, label, placeholder, data }) {

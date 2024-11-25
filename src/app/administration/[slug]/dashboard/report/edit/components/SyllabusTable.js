@@ -1,4 +1,3 @@
-import { subject_types } from "@/globalcomponents/Variable";
 import { BorderColorRounded, DeleteForeverRounded } from "@mui/icons-material";
 import {
   Box,
@@ -15,6 +14,9 @@ import {
 import { DataGrid } from "@mui/x-data-grid";
 import * as React from "react";
 import { useState } from "react";
+
+import { subject_types } from "@/globalcomponents/Variable";
+
 import { FormAddSyllabus } from "./FormAddSyllabus";
 
 const columns = [

@@ -1,8 +1,9 @@
 "use client";
 
+import { TableCell, Typography } from "@mui/material";
+
 import { TableCellLoading } from "@/components/CustomTable";
 import { useGetUserById } from "@/hooks/query/user/useGetUserById";
-import { TableCell, Typography } from "@mui/material";
 
 export const NamaCell = ({ userId }) => {
   const { data: userData, isLoading, isError } = useGetUserById(userId);

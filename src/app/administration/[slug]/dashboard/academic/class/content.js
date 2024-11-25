@@ -1,6 +1,5 @@
 "use client";
 
-import { ExcelIcon, SortIcon } from "@/assets/SVGs";
 import {
   Add,
   Cancel,
@@ -22,11 +21,13 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 
 import AcademicAPI from "@/api/academic";
 import UsersAPI from "@/api/users";
-import { useFormik } from "formik";
+import { ExcelIcon, SortIcon } from "@/assets/SVGs";
+
 import ClassElectiveTable from "./components/ClassElectiveTable";
 import ClassTable from "./components/ClassTable";
 import { FormAddStudentGroup } from "./components/FormAddStudentGroup";

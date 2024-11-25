@@ -2,10 +2,10 @@
 
 
 import CardSchedule from "@/app/classroom/shared/presentation/Card/CardSchedule";
-import SectionLayout from "@/app/classroom/shared/presentation/Layouts/SectionLayout";
-
 import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
+import SectionLayout from "@/app/classroom/shared/presentation/Layouts/SectionLayout";
 import CardScheduleSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardScheduleSkeleton";
+
 import { convertTime12To24 } from "../../usecase/convertTime12To24";
 import { useGetAllTeacherClassSchedules } from "../../usecase/useGetAllTeacherClassSchedules";
 

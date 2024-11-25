@@ -1,12 +1,13 @@
 "use client";
 
 import { useMemo } from "react";
-import { useFilterStatus } from "./filters/useFilterStatus";
-import { useGetClassSchedule } from "./useGetClassSchedule";
 
 import { useGetAllClasses } from "@/hooks/query/academic/useGetAllClasses";
+
 import { countConsecutiveAppearances } from "../utils/countScheduleConsecutiveAppearance";
 import { formatAndCombineSchedule } from "../utils/formatAndCombineSchedule";
+import { useFilterStatus } from "./filters/useFilterStatus";
+import { useGetClassSchedule } from "./useGetClassSchedule";
 import { useGetNonLearningSchedule } from "./useGetNonLearningSchedule";
 
 export const useGetAvailableTeacherSchedules = () => {

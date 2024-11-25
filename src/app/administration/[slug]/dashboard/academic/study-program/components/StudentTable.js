@@ -1,4 +1,3 @@
-import { useSchool } from "@/app/administration/[slug]/SchoolContext";
 import { BorderColorRounded, DeleteForeverRounded } from "@mui/icons-material";
 import {
   Avatar,
@@ -15,6 +14,9 @@ import {
 import { DataGrid } from "@mui/x-data-grid";
 import Image from "next/image";
 import { useState } from "react";
+
+import { useSchool } from "@/app/administration/[slug]/SchoolContext";
+
 import { FormAddStudent } from "./FormAddStudent";
 
 function getColumns(school) {

@@ -1,8 +1,9 @@
 "use client";
 
-import { formAddStudyProgramFields } from "@/globalcomponents/FormFields";
 import { useDebouncedCallback } from "@mantine/hooks";
 import { Stack, TextField, Typography } from "@mui/material";
+
+import { formAddStudyProgramFields } from "@/globalcomponents/FormFields";
 
 export const FormAddStudyProgram = ({ formik }) => {
   const setFieldValue = useDebouncedCallback((fieldName, value) => {

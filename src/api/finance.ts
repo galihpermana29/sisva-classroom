@@ -1,5 +1,7 @@
-import { createQueryParam } from "@/utils/createQueryParam";
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+
+import { createQueryParam } from "@/utils/createQueryParam";
+
 import { getBearerToken, getSchoolId, getUserId } from ".";
 
 const FinanceAPI = new (class {

@@ -1,7 +1,3 @@
-import { useSchool } from "@/app/administration/[slug]/SchoolContext";
-import { useAdministrationSelector } from "@/app/administration/hooks";
-import { permissions, types } from "@/globalcomponents/Variable";
-import { useStaffTeachers } from "@/hooks/query/user/useStaffTeachers";
 import { BorderColorRounded, DeleteForeverRounded } from "@mui/icons-material";
 import type { Theme } from "@mui/material";
 import {
@@ -19,6 +15,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { memo, useMemo, useState } from "react";
+
+import { useSchool } from "@/app/administration/[slug]/SchoolContext";
+import { useAdministrationSelector } from "@/app/administration/hooks";
+import { permissions, types } from "@/globalcomponents/Variable";
+import { useStaffTeachers } from "@/hooks/query/user/useStaffTeachers";
+
 import {
   selectPermissionFilter,
   selectRoleFilter,

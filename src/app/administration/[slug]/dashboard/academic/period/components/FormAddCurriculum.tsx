@@ -1,5 +1,6 @@
 "use client";
 
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Box,
   Chip,
@@ -13,11 +14,10 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useEffect, useState } from "react";
 
 import { formAddCurriculumFields } from "@/globalcomponents/FormFields";
 import { permissions } from "@/globalcomponents/Variable";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { useEffect, useState } from "react";
 
 export const FormAddCurriculum = ({
   formik,

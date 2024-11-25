@@ -1,4 +1,5 @@
 import AcademicAPI from "@/api/academic";
+
 import type { Subject, Syllabus, TingkatanDanSilabusInputData } from "./types";
 
 function getSubject(allSubject: Subject[], name: string) {

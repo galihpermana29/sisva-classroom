@@ -1,5 +1,6 @@
 "use client";
 
+import { ArrowBackIosNewRounded } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -24,7 +25,7 @@ import {
   StaffIcon,
   StudentIcon,
 } from "@/assets/SVGs";
-import { ArrowBackIosNewRounded } from "@mui/icons-material";
+
 import Header from "./Header";
 
 export const metadata = {

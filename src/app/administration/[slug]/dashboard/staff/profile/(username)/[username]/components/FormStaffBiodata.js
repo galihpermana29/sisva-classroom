@@ -1,5 +1,6 @@
 "use client";
 
+import { Cancel } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -11,11 +12,9 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 
+import { useSchool } from "@/app/administration/[slug]/SchoolContext";
 import { formStaffBiodataFields } from "@/globalcomponents/FormFields";
 import { genders, nationalities, religions } from "@/globalcomponents/Variable";
-import { Cancel } from "@mui/icons-material";
-
-import { useSchool } from "@/app/administration/[slug]/SchoolContext";
 
 export const FormStaffBiodata = ({
   formik,

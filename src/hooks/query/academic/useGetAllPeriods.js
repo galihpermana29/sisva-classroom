@@ -1,7 +1,8 @@
 "use client";
 
-import AcademicAPI from "@/api/academic";
 import { useQuery } from "@tanstack/react-query";
+
+import AcademicAPI from "@/api/academic";
 
 export const useGetAllPeriods = (param) => {
   const { data: queryResult, ...query } = useQuery({

@@ -1,4 +1,4 @@
-import { Tabs as AntdTabs, ConfigProvider } from "antd";
+import { ConfigProvider,Tabs as AntdTabs } from "antd";
 
 const Tabs = ({
   defaultActiveKey,

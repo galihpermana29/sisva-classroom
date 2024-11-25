@@ -1,6 +1,7 @@
+import { useQuery } from "@tanstack/react-query";
+
 import AcademicAPI from "@/api/academic";
 import type { ExtracurricularMember } from "@/types/apiTypes";
-import { useQuery } from "@tanstack/react-query";
 
 export const useExtracurricularMembers = () => {
   return useQuery<ExtracurricularMember[]>({

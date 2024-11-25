@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { useGetStudentTask } from "@/app/classroom/(main)/student/usecase/useGetStudentTask";
 import CardTask from "@/app/classroom/shared/presentation/Card/CardTask";
 import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
@@ -9,7 +11,6 @@ import {
   DEADLINE_FORMAT_24,
   generalDateFormatter,
 } from "@/app/classroom/shared/usecase/helper";
-import Link from "next/link";
 
 const StudentTaskSection = () => {
   const { tasks, isLoading } = useGetStudentTask();

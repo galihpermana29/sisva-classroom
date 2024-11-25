@@ -1,6 +1,10 @@
 "use client";
 
 import {
+  ArrowBackIosNewRounded,
+  BorderColorRounded,
+} from "@mui/icons-material";
+import {
   Avatar,
   Box,
   Button,
@@ -10,18 +14,12 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import Image from "next/image";
-import { useRef, useState } from "react";
-
-import {
-  ArrowBackIosNewRounded,
-  BorderColorRounded,
-} from "@mui/icons-material";
-
 import { useFormik } from "formik";
-
+import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { useRef, useState } from "react";
+
 import { FormStaffBasic } from "./components/FormStaffBasic";
 import { FormStaffBiodata } from "./components/FormStaffBiodata";
 import { FormStaffPassword } from "./components/FormStaffPassword";

@@ -1,5 +1,3 @@
-import { useSchool } from "@/app/administration/[slug]/SchoolContext";
-import { subject_types } from "@/globalcomponents/Variable";
 import { BorderColorRounded, DeleteForeverRounded } from "@mui/icons-material";
 import {
   Box,
@@ -15,6 +13,10 @@ import {
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useState } from "react";
+
+import { useSchool } from "@/app/administration/[slug]/SchoolContext";
+import { subject_types } from "@/globalcomponents/Variable";
+
 import { FormAddSyllabus } from "./FormAddSyllabus";
 
 function getColumns(school) {

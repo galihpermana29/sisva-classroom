@@ -10,9 +10,8 @@ import {
   XMarkIcon
 } from '@heroicons/react/24/outline';
 import Image from 'next/image';
-import { useState } from 'react';
-
 import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 
 const callsToAction = [
   { name: 'Watch demo', href: '#', icon: PlayCircleIcon },

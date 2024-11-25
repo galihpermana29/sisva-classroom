@@ -1,6 +1,8 @@
-import EmptyData from "@/app/classroom/shared/presentation/EmptyData";
 import Link from "next/link";
 import React from "react";
+
+import EmptyData from "@/app/classroom/shared/presentation/EmptyData";
+
 import ClassCard from "./ClassCard";
 import ClassCardSkeleton from "./ClassCardSkeleton";
 

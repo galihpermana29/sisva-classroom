@@ -1,7 +1,8 @@
 "use client";
 
-import UsersAPI from "@/api/users";
 import { useQuery } from "@tanstack/react-query";
+
+import UsersAPI from "@/api/users";
 
 export const useGetAllUsers = (params) => {
   const userTypes =

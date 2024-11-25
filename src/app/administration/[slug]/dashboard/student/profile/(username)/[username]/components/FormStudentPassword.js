@@ -1,5 +1,6 @@
 "use client";
 
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Avatar,
   Box,
@@ -14,14 +15,13 @@ import {
   Typography,
 } from "@mui/material";
 import Image from "next/image";
+import { useState } from "react";
 
 import { useSchool } from "@/app/administration/[slug]/SchoolContext";
 import {
   formChangePasswordFields,
   formResetPasswordFields,
 } from "@/globalcomponents/FormFields";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { useState } from "react";
 
 export const FormStudentPassword = ({
   formik,

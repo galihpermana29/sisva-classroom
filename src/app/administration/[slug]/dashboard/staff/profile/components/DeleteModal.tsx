@@ -1,4 +1,3 @@
-import { useSchool } from "@/app/administration/[slug]/SchoolContext";
 import {
   Avatar,
   Box,
@@ -10,6 +9,8 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import { Dispatch, memo, SetStateAction } from "react";
+
+import { useSchool } from "@/app/administration/[slug]/SchoolContext";
 
 interface DeleteModalProps {
   activeRow: any;

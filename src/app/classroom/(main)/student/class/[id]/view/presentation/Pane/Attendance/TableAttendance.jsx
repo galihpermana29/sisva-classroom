@@ -1,7 +1,9 @@
-import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
 import { Avatar, Table } from "antd";
 import { Kumbh_Sans } from "next/font/google";
 import { useMemo } from "react";
+
+import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
+
 import { formatDateDay } from "../../../../usecase/dateFormatter";
 import { useAttendance } from "../../../../usecase/use-attendance";
 import BadgeAttendance from "../../../container/BadgeAttendance/BadgeAttendance";

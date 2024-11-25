@@ -1,8 +1,10 @@
 "use client";
 
-import AcademicAPI from "@/api/academic";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
+
+import AcademicAPI from "@/api/academic";
+
 import { useFilterStatus } from "./filters/useFilterStatus";
 
 export const useGetClassSchedule = () => {

@@ -1,4 +1,5 @@
 import React from "react";
+
 import TeachingPlanContainer from "./view/container/TeachingPlanContainer";
 
 const TeachingPlanPane = () => {

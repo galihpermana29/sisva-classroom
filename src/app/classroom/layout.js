@@ -1,10 +1,12 @@
 "use client";
 
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import "../globals.css";
+
+import { createTheme,ThemeProvider } from "@mui/material/styles";
 import { Check, X } from "@untitled-ui/icons-react";
 import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
-import "../globals.css";
+
 import { store } from "./shared/store/classroom-store";
 import { themeConfig } from "./theme";
 

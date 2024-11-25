@@ -1,10 +1,12 @@
 "use client";
 
-import { formatToRupiah } from "@/utils/formatToRupiah";
 import { useTheme } from "@emotion/react";
 import { useMounted } from "@mantine/hooks";
 import { Box, Divider, Paper, Stack, Typography } from "@mui/material";
 import dayjs from "dayjs";
+
+import { formatToRupiah } from "@/utils/formatToRupiah";
+
 import { useGetTagihan } from "../../hooks/useGetTagihan";
 import { usePagination } from "../../hooks/usePagination";
 import JumlahPembayaranTagihan from "../tables/tagihan/JumlahPembayaranTagihan";

@@ -1,4 +1,5 @@
 import { CustomTable } from "@/components/CustomTable";
+
 import { TableBodyPengaturanJadwal } from "./TableBodyPengaturanJadwal";
 
 const columns = ["Hari", "Jam Mulai", "Jam Selesai", "Status", "Action"];

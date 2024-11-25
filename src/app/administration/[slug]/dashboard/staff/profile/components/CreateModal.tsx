@@ -7,7 +7,8 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { memo, type Dispatch, type SetStateAction } from "react";
+import { type Dispatch, memo, type SetStateAction } from "react";
+
 import { FormAddStaff } from "./FormAddStaff";
 
 interface CreateModalProps {

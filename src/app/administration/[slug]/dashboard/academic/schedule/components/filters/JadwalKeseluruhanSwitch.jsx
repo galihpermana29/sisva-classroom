@@ -1,6 +1,8 @@
-import { useQueryParam } from "@/hooks/useQueryParam";
 import { Stack, Switch, Typography } from "@mui/material";
 import { useSearchParams } from "next/navigation";
+
+import { useQueryParam } from "@/hooks/useQueryParam";
+
 import { PRODI_FIELD_NAME } from "./ProdiSelect";
 
 export const JADWAL_KESELURUHAN_FIELD_NAME = "jadwal_keseluruhan";

@@ -1,7 +1,8 @@
 "use client";
 
-import FilesAPI from "@/api/files";
 import { useMutation } from "@tanstack/react-query";
+
+import FilesAPI from "@/api/files";
 
 export const useUploadFile = ({ onSettled }) => {
   return useMutation({

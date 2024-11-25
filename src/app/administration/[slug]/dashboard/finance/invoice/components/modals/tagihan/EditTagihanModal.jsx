@@ -1,6 +1,5 @@
 "use client";
 
-import { ModalBody } from "@/components/CustomModal";
 import { ModeEdit } from "@mui/icons-material";
 import {
   Button,
@@ -18,6 +17,9 @@ import { useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { useFormik } from "formik";
 import { useState } from "react";
+
+import { ModalBody } from "@/components/CustomModal";
+
 import useMutateEditTagihan from "../../../hooks/useMutateEditTagihan";
 import { tagihanSchema } from "./tagihanSchema";
 

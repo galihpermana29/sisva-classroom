@@ -1,7 +1,7 @@
 import { Box, Divider, Paper, Stack } from "@mui/material";
-import DataTable from "../components/Table";
-
 import { memo } from "react";
+
+import DataTable from "../components/Table";
 import ButtonBar from "./ButtonBar";
 import FilterBar from "./FilterBar";
 import MobileFilterAndSortBar from "./MobileFilterAndSortBar";

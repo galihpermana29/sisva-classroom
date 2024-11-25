@@ -1,6 +1,8 @@
-import { ModalBody } from "@/components/CustomModal";
 import { Button, Modal } from "@mui/material";
 import { useState } from "react";
+
+import { ModalBody } from "@/components/CustomModal";
+
 import { useFilterStatus } from "../../hooks/filters/useFilterStatus";
 import { JadwalKelasForm } from "../forms/jadwal-kelas";
 

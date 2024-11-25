@@ -1,9 +1,10 @@
 import { UserCircle } from "@untitled-ui/icons-react";
 import { Avatar } from "antd";
 import React from "react";
+
+import { useTokenColor } from "../../usecase/use-token-color";
 import { BoxLeft, BoxRight, BoxTop } from "../Box/Box";
 import AvatarProfile from "../Profile/AvatarProfile";
-import { useTokenColor } from "../../usecase/use-token-color";
 
 const CardProfile = ({
   name,

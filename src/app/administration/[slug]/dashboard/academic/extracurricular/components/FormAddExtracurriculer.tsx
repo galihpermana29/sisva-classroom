@@ -1,8 +1,9 @@
 "use client";
 
-import { formAddExtracurriculer } from "@/globalcomponents/FormFields";
 import { useDebouncedCallback } from "@mantine/hooks";
 import { MenuItem, Stack, TextField, Typography } from "@mui/material";
+
+import { formAddExtracurriculer } from "@/globalcomponents/FormFields";
 
 export const FormAddExtracurriculer = ({ formik, teacherList }) => {
   const setFieldValue = useDebouncedCallback((fieldName, value) => {

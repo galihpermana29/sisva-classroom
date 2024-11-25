@@ -1,5 +1,6 @@
-import { useTokenColor } from "@/app/classroom/shared/usecase/use-token-color";
 import React from "react";
+
+import { useTokenColor } from "@/app/classroom/shared/usecase/use-token-color";
 
 const TopicBanner = ({ title }) => {
   const { tokenColor } = useTokenColor();

@@ -1,8 +1,10 @@
 "use client";
-import EmptyStateImg from "@/assets/svgs/empty-state.svg";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
+
+import EmptyStateImg from "@/assets/svgs/empty-state.svg";
+
 import SisvaButton from "./Button/GlobalButton";
 
 const NotFoundPageComponent = ({ title = "Halaman Tidak Ada" }) => {

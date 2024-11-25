@@ -1,9 +1,11 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
+
 import FinanceAPI from "@/api/finance";
 import { useGetAllUsers } from "@/hooks/query/academic/useGetAllUsers";
 import { paginateData } from "@/utils/paginateData";
-import { useQuery } from "@tanstack/react-query";
+
 import { useGetAllBills } from "./useGetAllBills";
 import { useGetAllUserBill } from "./useGetAllUserBill";
 import { usePagination } from "./usePagination";

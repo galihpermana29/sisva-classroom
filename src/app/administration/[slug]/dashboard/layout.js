@@ -1,8 +1,10 @@
 "use client";
 
-import { useCurrentUser } from "@/hooks/query/user/useCurrentUser";
 import { Box } from "@mui/material";
 import { useParams } from "next/navigation";
+
+import { useCurrentUser } from "@/hooks/query/user/useCurrentUser";
+
 import Container from "./components/Container";
 
 export default function RootLayout({ children }) {

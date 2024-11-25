@@ -1,5 +1,3 @@
-import { useSchool } from "@/app/administration/[slug]/SchoolContext";
-import { targets, types } from "@/globalcomponents/Variable";
 import { BorderColorRounded, DeleteForeverRounded } from "@mui/icons-material";
 import {
   Avatar,
@@ -17,6 +15,10 @@ import {
 import { DataGrid } from "@mui/x-data-grid";
 import Image from "next/image";
 import { useState } from "react";
+
+import { useSchool } from "@/app/administration/[slug]/SchoolContext";
+import { targets, types } from "@/globalcomponents/Variable";
+
 import { FormAddAnnouncement } from "./FormAddAnnouncement";
 
 function getColumns(schoolId) {

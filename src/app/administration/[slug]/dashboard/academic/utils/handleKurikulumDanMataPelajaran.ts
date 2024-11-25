@@ -2,6 +2,7 @@ import AcademicAPI from "@/api/academic";
 import type { SubjectTypeText } from "@/types/types";
 import { getSubjectType } from "@/types/types";
 import { onlyUnique } from "@/utils/onlyUnique";
+
 import type {
   Curriculum,
   KurikulumDanMataPelajaranInputData,

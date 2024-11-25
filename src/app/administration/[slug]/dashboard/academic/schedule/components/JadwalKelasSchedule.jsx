@@ -1,6 +1,7 @@
 "use client";
 
 import { Stack } from "@mui/material";
+
 import { useFilterStatus } from "../hooks/filters/useFilterStatus";
 import { useGetAvailableClassSchedules } from "../hooks/useGetAvailableClassSchedules";
 import { FilterIncompleteState } from "./FilterIncompleteState";

@@ -1,5 +1,7 @@
 "use client";
 
+import { useDebouncedCallback } from "@mantine/hooks";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   IconButton,
   InputAdornment,
@@ -7,11 +9,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useState } from "react";
 
 import { formAddStudentFields } from "@/globalcomponents/FormFields";
-import { useDebouncedCallback } from "@mantine/hooks";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { useState } from "react";
 
 export const FormAddStudent = ({ formik }) => {
   const [showPassword, setShowPassword] = useState(false);

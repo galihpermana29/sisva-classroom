@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { memo } from "react";
+
 import { FormAddExtracurriculer } from "./FormAddExtracurriculer";
 
 function CreateExtracurricularModal({

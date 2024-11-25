@@ -1,12 +1,14 @@
 "use client";
 
-import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
-import AverageImage from "@/assets/average-score.png";
-import placeholderImage from "@/assets/placeholder.jpg";
 import { Avatar, ConfigProvider, Table } from "antd";
 import { Kumbh_Sans } from "next/font/google";
 import Image from "next/image";
 import { useMemo } from "react";
+
+import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
+import AverageImage from "@/assets/average-score.png";
+import placeholderImage from "@/assets/placeholder.jpg";
+
 import { dateTimeFormatter } from "../../../../usecase/dateFormatter";
 import { useGetScores } from "../../../../usecase/use-scores";
 

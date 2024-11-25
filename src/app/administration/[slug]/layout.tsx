@@ -1,9 +1,11 @@
 "use client";
 
-import CmsAPI from "@/api/cms";
-import { Spinner } from "@/assets/svgs/Spinner";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
+
+import CmsAPI from "@/api/cms";
+import { Spinner } from "@/assets/svgs/Spinner";
+
 import SchoolIdProvider from "./SchoolContext";
 
 export default function Layout({ children }) {

@@ -1,6 +1,5 @@
 "use client";
 
-import { SortIcon } from "@/assets/SVGs";
 import { Add, Cancel, Search } from "@mui/icons-material";
 import {
   Box,
@@ -15,13 +14,15 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useFormik } from "formik";
 import { useEffect, useState } from "react";
-import { FormAddAnnouncement } from "./components/FormAddAnnouncement";
-import DataTable from "./components/Table";
 
 import AcademicAPI from "@/api/academic";
 import FilesAPI from "@/api/files";
-import { useFormik } from "formik";
+import { SortIcon } from "@/assets/SVGs";
+
+import { FormAddAnnouncement } from "./components/FormAddAnnouncement";
+import DataTable from "./components/Table";
 
 export default function AnnouncementsList() {
   const [initialData, setinitialData] = useState({

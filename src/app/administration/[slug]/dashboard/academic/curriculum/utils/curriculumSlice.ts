@@ -1,7 +1,8 @@
-import { RootState } from "@/app/administration/store";
-import type { SortDirection } from "@/types/types";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
+
+import { RootState } from "@/app/administration/store";
+import type { SortDirection } from "@/types/types";
 
 type CurriculumState = {
   curriculumSearchText: string;

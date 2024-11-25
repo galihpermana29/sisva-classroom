@@ -1,7 +1,6 @@
 "use client";
 
 import { Stack, TextField, Typography } from "@mui/material";
-
 import { useState } from "react";
 
 export const FormAddCurriculum = ({ formik, editing }) => {

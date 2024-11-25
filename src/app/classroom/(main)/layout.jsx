@@ -1,5 +1,6 @@
 import { ConfigProvider } from "antd";
 import { Kumbh_Sans } from "next/font/google";
+
 import SisvaNavbar from "../shared/presentation/Navbar/Navbar";
 import { useTheme } from "../shared/usecase/use-theme";
 

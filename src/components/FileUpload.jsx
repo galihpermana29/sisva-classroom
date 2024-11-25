@@ -1,6 +1,5 @@
 "use client";
 
-import { useUploadFile } from "@/hooks/query/file/useUploadFile";
 import {
   ArrowOutward,
   CheckBox,
@@ -14,6 +13,8 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 import { Button, IconButton, useTheme } from "@mui/material";
 import Link from "next/link";
 import { useState } from "react";
+
+import { useUploadFile } from "@/hooks/query/file/useUploadFile";
 
 export const FileUpload = ({ className, value, afterUpload, ...props }) => {
   const theme = useTheme();

@@ -1,6 +1,7 @@
+import "./style.css";
+
 import parse from "html-react-parser";
 import React from "react";
-import "./style.css";
 
 const HtmlRenderer = ({ htmlContent }) => {
   return (

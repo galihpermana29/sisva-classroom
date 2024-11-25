@@ -1,7 +1,9 @@
-import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
-import { SisvaInputSearch } from "@/app/classroom/shared/presentation/Input/SisvaInputField";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
+
+import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
+import { SisvaInputSearch } from "@/app/classroom/shared/presentation/Input/SisvaInputField";
+
 import { useGetStudentList } from "../../usecase/use-student-list";
 import StudentCardScore from "../Card/StudentCardScore";
 import SkeletonStudentCardScore from "../Skeleton/SkeletonStudentCardScore";

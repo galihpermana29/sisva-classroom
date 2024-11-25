@@ -1,5 +1,6 @@
 "use client";
 
+import { Cancel, Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Box,
   IconButton,
@@ -10,14 +11,12 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-
-import { formEditPeriodFields } from "@/globalcomponents/FormFields";
-import { Cancel, Visibility, VisibilityOff } from "@mui/icons-material";
-import { useState } from "react";
-
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { useState } from "react";
+
+import { formEditPeriodFields } from "@/globalcomponents/FormFields";
 
 export const FormEditPeriod = ({ formik, editing, status }) => {
   const [showPassword, setShowPassword] = useState(false);

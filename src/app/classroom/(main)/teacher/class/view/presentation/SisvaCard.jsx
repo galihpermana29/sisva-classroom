@@ -1,6 +1,7 @@
-import { useTokenColor } from "@/app/classroom/shared/usecase/use-token-color";
 import clsx from "clsx";
 import React from "react";
+
+import { useTokenColor } from "@/app/classroom/shared/usecase/use-token-color";
 
 const SisvaCard = ({ children, className, onClick }) => {
   const { tokenColor } = useTokenColor();

@@ -2,17 +2,17 @@
 import { registerLicense } from "@syncfusion/ej2-base";
 registerLicense(process.env.EJ2_SYNCFUSION_LICENSE_KEY);
 
-import { LocalizationProvider } from "@/providers/LocalizationProvider";
-import { QueryProvider } from "@/providers/QueryProvider";
-import clsx from "clsx";
 import "./globals.css";
 
+import clsx from "clsx";
 /** Dayjs extensions */
 import { extend } from "dayjs";
-
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
+
+import { LocalizationProvider } from "@/providers/LocalizationProvider";
+import { QueryProvider } from "@/providers/QueryProvider";
 
 extend(utc);
 extend(timezone);

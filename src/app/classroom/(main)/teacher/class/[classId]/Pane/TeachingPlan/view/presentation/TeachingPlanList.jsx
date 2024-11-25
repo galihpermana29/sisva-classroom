@@ -1,15 +1,15 @@
 import Image from "next/image";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 import { Fragment } from "react";
 
 import TeachingPlanTitle from "@/app/classroom/shared/presentation/TitleBar/TeachingPlanTitle";
-import PopOverActions from "./PopOverActions";
-import TeachingPlanSection from "./TeachingPlanSection";
-
 import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
 import MaterialIcon from "@/assets/images/teaching-plan/material.svg";
 import TaskIcon from "@/assets/images/teaching-plan/task.png";
-import Link from "next/link";
-import { useParams } from "next/navigation";
+
+import PopOverActions from "./PopOverActions";
+import TeachingPlanSection from "./TeachingPlanSection";
 
 const TeachingPlanList = ({
   id,

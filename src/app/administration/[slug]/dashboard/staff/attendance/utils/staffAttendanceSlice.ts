@@ -1,7 +1,8 @@
-import { RootState } from "@/app/administration/store";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 import dayjs from "dayjs";
+
+import { RootState } from "@/app/administration/store";
 
 interface StaffAttendance {
   progress: string;

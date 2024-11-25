@@ -1,10 +1,12 @@
+import { Cancel } from "@mui/icons-material";
+import { MenuItem, TextField, Typography } from "@mui/material";
+
 import {
   useAdministrationDispatch,
   useAdministrationSelector,
 } from "@/app/administration/hooks";
 import type { Attendance } from "@/types/types";
-import { Cancel } from "@mui/icons-material";
-import { MenuItem, TextField, Typography } from "@mui/material";
+
 import {
   selectAttendanceFilter,
   setAttendanceFilter,

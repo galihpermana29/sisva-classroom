@@ -1,6 +1,5 @@
 "use client";
 
-import { ExcelIcon, SortIcon } from "@/assets/SVGs";
 import {
   Add,
   Cancel,
@@ -22,15 +21,17 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
-import { FormAddPeriod } from "./components/FormAddPeriod";
-import PeriodTable from "./components/PeriodTable";
-
-import AcademicAPI from "@/api/academic";
 import dayjs from "dayjs";
 import { useFormik } from "formik";
+import { useEffect, useState } from "react";
+
+import AcademicAPI from "@/api/academic";
+import { ExcelIcon, SortIcon } from "@/assets/SVGs";
+
 import CurriculumTable from "./components/CurriculumTable";
 import { FormAddCurriculum } from "./components/FormAddCurriculum";
+import { FormAddPeriod } from "./components/FormAddPeriod";
+import PeriodTable from "./components/PeriodTable";
 export default function StaffProfileContent() {
   const [emptyData, setEmptyData] = useState({
     name: "",

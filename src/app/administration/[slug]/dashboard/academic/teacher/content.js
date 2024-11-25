@@ -1,7 +1,5 @@
 "use client";
 
-import { ExcelIcon, SortIcon } from "@/assets/SVGs";
-import { onlyUnique } from "@/utils/onlyUnique";
 import {
   Add,
   Cancel,
@@ -23,15 +21,18 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useFormik } from "formik";
 import { useEffect, useState } from "react";
-import { FormAddTeacher } from "./components/FormAddTeacher";
-import TeacherTable from "./components/TeacherTable";
 
 import AcademicAPI from "@/api/academic";
 import UsersAPI from "@/api/users";
-import { useFormik } from "formik";
+import { ExcelIcon, SortIcon } from "@/assets/SVGs";
+import { onlyUnique } from "@/utils/onlyUnique";
+
 import { FormAddSubjectTeacher } from "./components/FormAddSubjectTeacher";
+import { FormAddTeacher } from "./components/FormAddTeacher";
 import SubjectTable from "./components/SubjectTable";
+import TeacherTable from "./components/TeacherTable";
 export default function StaffProfileContent() {
   const [emptyData, setEmptyData] = useState({});
 

@@ -1,5 +1,7 @@
-import { ModalBody } from "@/components/CustomModal";
 import { Modal } from "@mui/material";
+
+import { ModalBody } from "@/components/CustomModal";
+
 import { AktivitasNonKbmForm } from "../forms/aktivitas-non-kbm";
 
 function EditAktivitasNonKbmModal({ data, open, handleClose }) {

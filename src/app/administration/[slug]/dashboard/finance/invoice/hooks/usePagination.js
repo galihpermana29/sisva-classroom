@@ -1,7 +1,9 @@
 "use client";
 
-import { useQueryParam } from "@/hooks/useQueryParam";
 import { useSearchParams } from "next/navigation";
+
+import { useQueryParam } from "@/hooks/useQueryParam";
+
 import {
   CURRENT_PAGE_NAME,
   DEFAULT_PAGE,

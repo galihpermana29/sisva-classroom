@@ -1,9 +1,11 @@
 "use client";
 
-import AcademicAPI from "@/api/academic";
-import { formatDayToLabel } from "@/utils/formatDay";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+
+import AcademicAPI from "@/api/academic";
+import { formatDayToLabel } from "@/utils/formatDay";
+
 import { JADWAL_KESELURUHAN_FIELD_NAME } from "../components/filters/JadwalKeseluruhanSwitch";
 import { KELAS_FIELD_NAME } from "../components/filters/KelasSelect";
 import { PERIODE_FIELD_NAME } from "../components/filters/PeriodeSelect";

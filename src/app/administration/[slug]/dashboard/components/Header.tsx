@@ -1,7 +1,9 @@
-import { MenuIcon } from "@/assets/SVGs";
 import { Box, Button, Paper, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+
+import { MenuIcon } from "@/assets/SVGs";
+
 import { useSchool } from "../../SchoolContext";
 import UserMenu from "./UserMenu";
 

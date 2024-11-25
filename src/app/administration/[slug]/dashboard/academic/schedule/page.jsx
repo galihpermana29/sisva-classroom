@@ -1,5 +1,6 @@
 import { Divider, Paper, Stack } from "@mui/material";
 import { Suspense } from "react";
+
 import { BobotSKS } from "./components/BobotSKS";
 import { JadwalGuru } from "./components/tabs/JadwalGuru";
 import { JadwalKelas } from "./components/tabs/JadwalKelas";

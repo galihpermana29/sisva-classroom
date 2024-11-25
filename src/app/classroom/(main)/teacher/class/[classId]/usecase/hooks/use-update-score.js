@@ -1,5 +1,6 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
+
 import { updateScore } from "../../repository/teacher-score-service";
 
 export function useUpdateScore() {

@@ -1,6 +1,5 @@
 "use client";
 
-import { SortIcon } from "@/assets/SVGs";
 import { Add, Cancel, Search } from "@mui/icons-material";
 import {
   Box,
@@ -15,11 +14,13 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useFormik } from "formik";
 import { useEffect, useState } from "react";
+
+import { SortIcon } from "@/assets/SVGs";
+
 import { FormAddStaff } from "./components/FormAddStaff";
 import DataTable from "./components/Table";
-
-import { useFormik } from "formik";
 
 export default function StaffProfileListContent() {
   const [initialData, setinitialData] = useState({

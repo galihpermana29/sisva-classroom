@@ -1,8 +1,8 @@
+import { UserCircle } from "@untitled-ui/icons-react";
 import { Avatar } from "antd";
 import SkeletonAvatar from "antd/es/skeleton/Avatar";
-
-import { UserCircle } from "@untitled-ui/icons-react";
 import React, { useEffect, useState } from "react";
+
 import { getClientSession } from "../../usecase/session/get-client-session";
 
 const AvatarProfile = ({ url, size = 60 }) => {

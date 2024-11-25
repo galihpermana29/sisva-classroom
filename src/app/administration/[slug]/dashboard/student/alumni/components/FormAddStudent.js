@@ -1,5 +1,6 @@
 "use client";
 
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   IconButton,
   InputAdornment,
@@ -7,10 +8,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useState } from "react";
 
 import { formAddStudentFields } from "@/globalcomponents/FormFields";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { useState } from "react";
 
 export const FormAddStudent = ({ formik, editing }) => {
   const [showPassword, setShowPassword] = useState(false);

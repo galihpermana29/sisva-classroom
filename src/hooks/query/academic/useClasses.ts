@@ -1,7 +1,8 @@
-import AcademicAPI from "@/api/academic";
-import type { Class } from "@/types/apiTypes";
 import type { QueryClient } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
+
+import AcademicAPI from "@/api/academic";
+import type { Class } from "@/types/apiTypes";
 
 export const useClasses = () => {
   return useQuery<Class[]>({

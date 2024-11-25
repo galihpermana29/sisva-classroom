@@ -1,8 +1,10 @@
-import { useModal } from "@/app/classroom/(main)/teacher/class/[classId]/create-rpp/view/container/Provider/ModalProvider";
-import { useTeachingMaterial } from "@/app/classroom/(main)/teacher/teaching-material/usecase/use-teaching-material";
 import { FilterFunnel01 } from "@untitled-ui/icons-react";
 import { Modal } from "antd";
 import { useEffect, useState } from "react";
+
+import { useModal } from "@/app/classroom/(main)/teacher/class/[classId]/create-rpp/view/container/Provider/ModalProvider";
+import { useTeachingMaterial } from "@/app/classroom/(main)/teacher/teaching-material/usecase/use-teaching-material";
+
 import TeachingMaterialTable from "../../../(main)/teacher/class/[classId]/create-rpp/view/presentation/Table/TeachingMaterialTable";
 import SisvaButton from "../Button/GlobalButton";
 import { SisvaSelect } from "../Input/SelectField";

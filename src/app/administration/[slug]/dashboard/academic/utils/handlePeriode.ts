@@ -1,5 +1,7 @@
-import AcademicAPI from "@/api/academic";
 import dayjs from "dayjs";
+
+import AcademicAPI from "@/api/academic";
+
 import type { Period, PeriodeInputData } from "./types";
 
 function getPeriod(allPeriod: Period[], name: string) {

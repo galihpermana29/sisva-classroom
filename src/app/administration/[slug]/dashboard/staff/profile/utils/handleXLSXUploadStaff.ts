@@ -1,3 +1,5 @@
+import * as XLSX from "xlsx";
+
 import AuthAPI from "@/api/auth";
 import UsersAPI from "@/api/users";
 import type { User } from "@/types/apiTypes";
@@ -8,7 +10,6 @@ import {
   getReligion,
   getRole,
 } from "@/types/types";
-import * as XLSX from "xlsx";
 
 /*
 # Array structure

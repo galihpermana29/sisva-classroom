@@ -1,7 +1,8 @@
-import AcademicAPI from "@/api/academic";
-import type { StudentGroup, StudentInStudentGroup } from "@/types/apiTypes";
 import type { QueryClient } from "@tanstack/react-query";
 import { useMutation, useQuery } from "@tanstack/react-query";
+
+import AcademicAPI from "@/api/academic";
+import type { StudentGroup, StudentInStudentGroup } from "@/types/apiTypes";
 
 export const useStudentGroups = () => {
   return useQuery<StudentGroup[]>({

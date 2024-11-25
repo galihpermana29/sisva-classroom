@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import Cardtask from "@/app/classroom/shared/presentation/Card/CardTask";
 import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
 import SectionLayout from "@/app/classroom/shared/presentation/Layouts/SectionLayout";
@@ -8,7 +10,7 @@ import {
   DEADLINE_FORMAT_24,
   generalDateFormatter,
 } from "@/app/classroom/shared/usecase/helper";
-import Link from "next/link";
+
 import { useGetAllTeacherTasks } from "../../usecase/useGetAllTeacherTasks";
 
 const TaskSection = () => {

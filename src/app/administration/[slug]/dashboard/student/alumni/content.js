@@ -1,6 +1,5 @@
 "use client";
 
-import { ExcelIcon, SortIcon } from "@/assets/SVGs";
 import {
   Cancel,
   DownloadRounded,
@@ -21,12 +20,14 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
-import DataTable from "./components/Table";
-// import { FormAddStaff } from "./components/FormAddStaff";
-
-import UsersAPI from "@/api/users";
 import { useFormik } from "formik";
+import { useEffect, useState } from "react";
+
+// import { FormAddStaff } from "./components/FormAddStaff";
+import UsersAPI from "@/api/users";
+import { ExcelIcon, SortIcon } from "@/assets/SVGs";
+
+import DataTable from "./components/Table";
 
 export default function StaffProfileListContent() {
   const [initialData, setinitialData] = useState({

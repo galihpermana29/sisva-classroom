@@ -1,6 +1,8 @@
-import { getDayName } from "@/app/classroom/shared/usecase/helper";
 import { getCookie } from "cookies-next";
 import { useEffect, useState } from "react";
+
+import { getDayName } from "@/app/classroom/shared/usecase/helper";
+
 import {
   getAllClasses,
   getAllClassSchedules,

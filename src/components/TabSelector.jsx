@@ -1,7 +1,8 @@
 "use client";
 
-import { useQueryParam } from "@/hooks/useQueryParam";
 import { Button, Stack, Typography } from "@mui/material";
+
+import { useQueryParam } from "@/hooks/useQueryParam";
 
 export const TAB_FIELD_NAME = "tab";
 

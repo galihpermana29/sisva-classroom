@@ -1,11 +1,13 @@
-import {
-  useAdministrationDispatch,
-  useAdministrationSelector,
-} from "@/app/administration/hooks";
 import { useDebouncedCallback } from "@mantine/hooks";
 import { Cancel, Search } from "@mui/icons-material";
 import { Hidden, InputAdornment, Stack, TextField } from "@mui/material";
 import { memo, useRef } from "react";
+
+import {
+  useAdministrationDispatch,
+  useAdministrationSelector,
+} from "@/app/administration/hooks";
+
 import { selectSearchText, setSearchText } from "../utils/staffProfileSlice";
 import Filters from "./Filters";
 

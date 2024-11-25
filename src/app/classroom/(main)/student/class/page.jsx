@@ -1,4 +1,5 @@
 import React from "react";
+
 import StudentClassContainer from "./view/container/ClassContainer";
 
 const StudentClassPage = () => {

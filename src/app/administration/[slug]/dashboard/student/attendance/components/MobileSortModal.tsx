@@ -1,8 +1,3 @@
-import {
-  useAdministrationDispatch,
-  useAdministrationSelector,
-} from "@/app/administration/hooks";
-import type { SortDirection } from "@/types/types";
 import { Cancel } from "@mui/icons-material";
 import {
   Button,
@@ -14,6 +9,13 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
+
+import {
+  useAdministrationDispatch,
+  useAdministrationSelector,
+} from "@/app/administration/hooks";
+import type { SortDirection } from "@/types/types";
+
 import type { SortField } from "../utils/studentAttendanceSlice";
 import {
   selectSortDirection,

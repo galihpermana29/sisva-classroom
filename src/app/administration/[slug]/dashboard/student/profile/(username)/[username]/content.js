@@ -1,6 +1,10 @@
 "use client";
 
 import {
+  ArrowBackIosNewRounded,
+  BorderColorRounded,
+} from "@mui/icons-material";
+import {
   Avatar,
   Box,
   Button,
@@ -10,22 +14,17 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-
-import {
-  ArrowBackIosNewRounded,
-  BorderColorRounded,
-} from "@mui/icons-material";
-
 import { useFormik } from "formik";
+import Image from "next/image";
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
 import AuthAPI from "@/api/auth";
 import FilesAPI from "@/api/files";
 import UsersAPI from "@/api/users";
 import { useSchool } from "@/app/administration/[slug]/SchoolContext";
-import Link from "next/link";
-import { useParams } from "next/navigation";
+
 import { FormStudentBasic } from "./components/FormStudentBasic";
 import { FormStudentBiodata } from "./components/FormStudentBiodata";
 import { FormStudentParents } from "./components/FormStudentParents";

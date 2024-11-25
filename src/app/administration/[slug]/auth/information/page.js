@@ -1,10 +1,9 @@
 "use client";
-import { Button, List, ListItem, Stack, Typography } from "@mui/material";
-import React from "react";
-
 import { ArrowBackIosNewRounded } from "@mui/icons-material";
+import { Button, List, ListItem, Stack, Typography } from "@mui/material";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import React from "react";
 
 export default function Home() {
   const { slug } = useParams();

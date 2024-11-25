@@ -1,5 +1,3 @@
-import { useSchool } from "@/app/administration/[slug]/SchoolContext";
-import { permissions, types } from "@/globalcomponents/Variable";
 import { BorderColorRounded, DeleteForeverRounded } from "@mui/icons-material";
 import {
   Avatar,
@@ -18,6 +16,9 @@ import dayjs from "dayjs";
 import Image from "next/image";
 import * as React from "react";
 import { useState } from "react";
+
+import { useSchool } from "@/app/administration/[slug]/SchoolContext";
+import { permissions, types } from "@/globalcomponents/Variable";
 
 const columns = [
   {

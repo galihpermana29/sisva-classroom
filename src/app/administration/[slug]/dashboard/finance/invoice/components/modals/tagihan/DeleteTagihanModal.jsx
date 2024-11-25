@@ -1,6 +1,5 @@
 "use client";
 
-import { ModalBody } from "@/components/CustomModal";
 import { Delete } from "@mui/icons-material";
 import {
   Button,
@@ -12,6 +11,9 @@ import {
 } from "@mui/material";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+
+import { ModalBody } from "@/components/CustomModal";
+
 import useMutateDeleteTagihan from "../../../hooks/useMutateDeleteTagihan";
 
 export const DeleteTagihanModal = ({ id }) => {

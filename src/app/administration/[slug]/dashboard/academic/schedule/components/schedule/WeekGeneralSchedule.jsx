@@ -1,6 +1,7 @@
 "use client";
 
 import "@/app/syncfusion.css";
+
 import { Typography } from "@mui/material";
 import { Internationalization } from "@syncfusion/ej2-base";
 import {

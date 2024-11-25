@@ -1,5 +1,3 @@
-import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
-import PdfIcon from "@/assets/classroom/teacher/PDFIcon.png";
 import {
     DotsVertical,
     Download01,
@@ -8,12 +6,15 @@ import {
 } from "@untitled-ui/icons-react";
 import { Card, Divider, Dropdown } from "antd";
 import Image from "next/image";
-
+import { usePathname } from "next/navigation";
 import React, { useMemo } from "react";
+
+import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
+import { useTokenColor } from "@/app/classroom/shared/usecase/use-token-color";
+import PdfIcon from "@/assets/classroom/teacher/PDFIcon.png";
+
 import { useModal } from "../../../../class/[classId]/create-rpp/view/container/Provider/ModalProvider";
 import { generateRandomColor } from "../../../usecase/custom-function";
-import { usePathname } from "next/navigation";
-import { useTokenColor } from "@/app/classroom/shared/usecase/use-token-color";
 
 const MaterialCard = ({ item }) => {
   const { setModalState } = useModal();

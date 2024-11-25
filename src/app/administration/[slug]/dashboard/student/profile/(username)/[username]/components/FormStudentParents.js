@@ -1,5 +1,6 @@
 "use client";
 
+import { Cancel } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -22,7 +23,6 @@ import {
   relationships,
   religions,
 } from "@/globalcomponents/Variable";
-import { Cancel } from "@mui/icons-material";
 
 export const FormStudentParents = ({ formik, editing }) => {
   const school = useSchool();

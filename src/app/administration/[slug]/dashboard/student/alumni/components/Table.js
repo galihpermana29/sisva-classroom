@@ -1,5 +1,3 @@
-import { useSchool } from "@/app/administration/[slug]/SchoolContext";
-import { permissions, types } from "@/globalcomponents/Variable";
 import { BorderColorRounded, DeleteForeverRounded } from "@mui/icons-material";
 import {
   Avatar,
@@ -19,6 +17,9 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import * as React from "react";
 import { useState } from "react";
+
+import { useSchool } from "@/app/administration/[slug]/SchoolContext";
+import { permissions, types } from "@/globalcomponents/Variable";
 
 function getColumns(schoolId) {
   const columns = [

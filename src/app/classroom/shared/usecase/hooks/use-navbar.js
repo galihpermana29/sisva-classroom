@@ -1,7 +1,7 @@
 import { Home05, User01, Users01 } from "@untitled-ui/icons-react";
 import { usePathname } from "next/navigation";
-import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const PATHS = {
   TEACHING_MATERIAL: `/classroom/teacher/teaching-material`,

@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { memo } from "react";
+
 import { FormAddMembers } from "./FormAddMembers";
 
 function CreateExtracurricularMemberModal({

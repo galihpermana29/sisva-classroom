@@ -3,9 +3,8 @@
 import { Button, MenuItem, Stack, TextField, Typography } from "@mui/material";
 import Image from "next/image";
 
-import { formAddSyllabusFields } from "@/globalcomponents/FormFields";
-
 import PDFIcon from "@/assets/icon-PDF.svg";
+import { formAddSyllabusFields } from "@/globalcomponents/FormFields";
 
 export const FormAddSyllabus = ({ formik, editing }) => {
   return (

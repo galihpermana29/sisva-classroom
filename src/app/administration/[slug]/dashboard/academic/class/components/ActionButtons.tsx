@@ -1,6 +1,7 @@
-import { usePeriods } from "@/hooks/query/academic/usePeriods";
 import { BorderColorRounded, DeleteForeverRounded } from "@mui/icons-material";
 import { IconButton, Stack, Typography } from "@mui/material";
+
+import { usePeriods } from "@/hooks/query/academic/usePeriods";
 
 export default function ActionButtons({ params }) {
   const { data: periods } = usePeriods();

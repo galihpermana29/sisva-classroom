@@ -1,6 +1,8 @@
+import Image from 'next/image';
+
 import SisvaButton from '@/app/classroom/shared/presentation/Button/GlobalButton';
 import TrashIcon from '@/assets/icons/trash.png';
-import Image from 'next/image';
+
 import CustomModal from './CustomModal';
 
 const DeleteConfirmationModal = ({

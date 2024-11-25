@@ -1,6 +1,7 @@
-import ProfileContainer from "@/app/classroom/shared/view/Profile/ProfileContainer";
 import { User01, UserSquare } from "@untitled-ui/icons-react";
 import React from "react";
+
+import ProfileContainer from "@/app/classroom/shared/view/Profile/ProfileContainer";
 
 const TeacherProfileContainer = ({ initialData }) => {
   const profileMenus = [

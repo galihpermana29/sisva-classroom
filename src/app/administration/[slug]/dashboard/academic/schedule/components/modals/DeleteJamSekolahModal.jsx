@@ -1,6 +1,5 @@
 "use client";
 
-import { ModalBody } from "@/components/CustomModal";
 import { Delete } from "@mui/icons-material";
 import {
   Button,
@@ -11,6 +10,9 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
+
+import { ModalBody } from "@/components/CustomModal";
+
 import { useFilterStatus } from "../../hooks/filters/useFilterStatus";
 import { useDeleteSchoolSchedule } from "../../hooks/useDeleteSchoolSchedule";
 

@@ -1,4 +1,3 @@
-import { ExcelIcon, SortIcon } from "@/assets/SVGs";
 import {
   Add,
   Cancel,
@@ -20,6 +19,9 @@ import {
   Typography,
 } from "@mui/material";
 import { memo } from "react";
+
+import { ExcelIcon, SortIcon } from "@/assets/SVGs";
+
 import Filters from "./Filters";
 
 function TableParent({

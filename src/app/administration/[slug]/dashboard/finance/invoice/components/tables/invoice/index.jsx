@@ -1,4 +1,5 @@
 import { CustomTable } from "@/components/CustomTable";
+
 import { invoiceSorts } from "../../../constants";
 import { TableBodyInvoice } from "./TableBodyInvoice";
 

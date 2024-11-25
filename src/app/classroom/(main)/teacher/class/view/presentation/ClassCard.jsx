@@ -1,6 +1,5 @@
 import Image from "next/image";
 import React from "react";
-import SisvaCard from "./SisvaCard";
 
 import AvatarProfile from "@/app/classroom/shared/presentation/Profile/AvatarProfile";
 import {
@@ -8,6 +7,8 @@ import {
   getDayName,
 } from "@/app/classroom/shared/usecase/helper";
 import NoTask from "@/assets/classroom/images/NoTask.png";
+
+import SisvaCard from "./SisvaCard";
 const ClassCard = ({
   onClick,
   subject,

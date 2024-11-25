@@ -2,6 +2,7 @@
 import { Skeleton } from "antd";
 import { Kumbh_Sans } from "next/font/google";
 import { useRouter } from "next/navigation";
+
 import { useNavbar } from "../../usecase/hooks/use-navbar";
 import { getClientSession } from "../../usecase/session/get-client-session";
 import { useTokenColor } from "../../usecase/use-token-color";

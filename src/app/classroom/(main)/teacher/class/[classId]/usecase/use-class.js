@@ -1,5 +1,6 @@
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+
 import { getAllClasses } from "../repository/teacher-score-service";
 
 export function useClass() {

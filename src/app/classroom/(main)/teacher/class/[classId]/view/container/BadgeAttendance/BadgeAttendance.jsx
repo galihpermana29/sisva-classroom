@@ -1,6 +1,7 @@
-import { useTokenColor } from "@/app/classroom/shared/usecase/use-token-color";
 import { Edit01 } from "@untitled-ui/icons-react";
 import clsx from "clsx";
+
+import { useTokenColor } from "@/app/classroom/shared/usecase/use-token-color";
 
 const BadgeAttendance = ({ status }) => {
   const { tokenColor } = useTokenColor();

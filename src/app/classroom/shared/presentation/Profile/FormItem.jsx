@@ -1,4 +1,5 @@
 import { Form } from "antd";
+
 import NoDataProvided from "./NoDataProvided";
 
 const FormItem = ({ name, label, isEdit, formData, children }) => (

@@ -1,4 +1,3 @@
-import { types } from "@/globalcomponents/Variable";
 import { BorderColorRounded } from "@mui/icons-material";
 import {
   Box,
@@ -13,6 +12,9 @@ import {
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useState } from "react";
+
+import { types } from "@/globalcomponents/Variable";
+
 import { FormAddGrade } from "./FormAddGrade";
 
 const columns = [

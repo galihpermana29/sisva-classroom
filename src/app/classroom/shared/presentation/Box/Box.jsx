@@ -1,5 +1,6 @@
-import BoxRightImg from "@/assets/svgs/box-right.svg";
 import Image from "next/image";
+
+import BoxRightImg from "@/assets/svgs/box-right.svg";
 
 const BoxLeft = () => {
   return (

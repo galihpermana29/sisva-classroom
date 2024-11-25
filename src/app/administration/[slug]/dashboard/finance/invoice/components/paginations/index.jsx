@@ -2,6 +2,7 @@
 
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import { Stack, Typography } from "@mui/material";
+
 import { usePagination } from "../../hooks/usePagination";
 import { PaginationButton } from "./PaginationButton";
 import { RowsPerPage } from "./RowsPerPage";

@@ -1,6 +1,7 @@
+import { useQuery } from "@tanstack/react-query";
+
 import UsersAPI from "@/api/users";
 import type { User } from "@/types/apiTypes";
-import { useQuery } from "@tanstack/react-query";
 
 export const useStudents = () => {
   return useQuery<User[]>({

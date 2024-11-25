@@ -4,6 +4,7 @@ import { Box, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 
 import LogoSisva from "@/assets/Sisva-LogoType-Black.png";
+
 import { useSchool } from "../SchoolContext";
 
 export default function RootLayout({ children }) {

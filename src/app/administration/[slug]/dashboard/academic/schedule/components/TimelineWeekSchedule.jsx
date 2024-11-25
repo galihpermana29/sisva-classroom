@@ -1,6 +1,8 @@
 "use client";
 
 import "@/app/syncfusion.css";
+import "./TimelineWeekSchedule.css";
+
 import { Tooltip, Typography } from "@mui/material";
 import { Internationalization } from "@syncfusion/ej2-base";
 import {
@@ -13,7 +15,6 @@ import {
   ViewsDirective,
 } from "@syncfusion/ej2-react-schedule";
 import dayjs from "dayjs";
-import "./TimelineWeekSchedule.css";
 
 const gradeDataSource = [
   { gradeText: "Kelas I", grade: "I" },

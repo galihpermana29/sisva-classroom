@@ -1,5 +1,7 @@
-import { BoxTop } from "@/app/classroom/shared/presentation/Box/Box";
 import { Divider } from "antd";
+
+import { BoxTop } from "@/app/classroom/shared/presentation/Box/Box";
+
 import { generalDateFormatter } from "../../usecase/helper";
 import { useTokenColor } from "../../usecase/use-token-color";
 import AvatarProfile from "../Profile/AvatarProfile";

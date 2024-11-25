@@ -1,13 +1,15 @@
 "use client";
 
+import dayjs from "dayjs";
+import isoWeek from "dayjs/plugin/isoWeek";
+import { useSearchParams } from "next/navigation";
+
 import { useClasses } from "@/hooks/query/academic/useClasses";
 import { useClassSchedules } from "@/hooks/query/academic/useClassSchedules";
 import { useNonLearningSchedules } from "@/hooks/query/academic/useNonLearningSchedules";
 import { useSchoolSchedules } from "@/hooks/query/academic/useSchoolSchedules";
 import { useStudentGroups } from "@/hooks/query/academic/useStudentGroups";
-import dayjs from "dayjs";
-import isoWeek from "dayjs/plugin/isoWeek";
-import { useSearchParams } from "next/navigation";
+
 import { HARI_FIELD_NAME } from "../components/filters/HariSelect";
 import { JADWAL_KESELURUHAN_FIELD_NAME } from "../components/filters/JadwalKeseluruhanSwitch";
 import { KELAS_FIELD_NAME } from "../components/filters/KelasSelect";

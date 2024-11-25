@@ -1,4 +1,16 @@
 import * as XLSX from "xlsx";
+
+import handleAnggota from "./handleAnggota";
+import handleEkstrakulikuler from "./handleEkstrakulikuler";
+import handleGuru from "./handleGuru";
+import handleKelas from "./handleKelas";
+import handleKurikulumDanMataPelajaran from "./handleKurikulumDanMataPelajaran";
+import handleMurid from "./handleMurid";
+import handlePeriode from "./handlePeriode";
+import handlePeriodeDanKurikulum from "./handlePeriodeDanKurikulum";
+import handleProgramStudi from "./handleProgramStudi";
+import handleProgramStudiSiswa from "./handleProgramStudiSiswa";
+import handleTingkatanDanSilabus from "./handleTingkatanDanSilabus";
 import type {
   AnggotaInputData,
   EkstrakulikulerInputData,
@@ -13,18 +25,6 @@ import type {
   Sheet,
   TingkatanDanSilabusInputData,
 } from "./types";
-
-import handleAnggota from "./handleAnggota";
-import handleEkstrakulikuler from "./handleEkstrakulikuler";
-import handleGuru from "./handleGuru";
-import handleKelas from "./handleKelas";
-import handleKurikulumDanMataPelajaran from "./handleKurikulumDanMataPelajaran";
-import handleMurid from "./handleMurid";
-import handlePeriode from "./handlePeriode";
-import handlePeriodeDanKurikulum from "./handlePeriodeDanKurikulum";
-import handleProgramStudi from "./handleProgramStudi";
-import handleProgramStudiSiswa from "./handleProgramStudiSiswa";
-import handleTingkatanDanSilabus from "./handleTingkatanDanSilabus";
 
 const MAX_ROW = 1000;
 

@@ -1,9 +1,11 @@
 "use client";
 
-import { useQueryParam } from "@/hooks/useQueryParam";
 import { useMounted } from "@mantine/hooks";
 import { MenuItem, Select } from "@mui/material";
 import { useSearchParams } from "next/navigation";
+
+import { useQueryParam } from "@/hooks/useQueryParam";
+
 import { FilterNotMounted } from "./FilterNotMounted";
 
 export const PRODI_FIELD_NAME = "prodi";

@@ -1,6 +1,5 @@
 "use client";
 
-import { SortIcon } from "@/assets/SVGs";
 import { Cancel, Search } from "@mui/icons-material";
 import {
   Box,
@@ -14,15 +13,17 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
-import { FormAddStaff } from "./components/FormAddStaff";
-import DataTable from "./components/Table";
-
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
 import { useFormik } from "formik";
+import { useEffect, useState } from "react";
+
+import { SortIcon } from "@/assets/SVGs";
+
+import { FormAddStaff } from "./components/FormAddStaff";
+import DataTable from "./components/Table";
 
 export default function StaffProfileListContent() {
   const [initialData, setinitialData] = useState({

@@ -1,6 +1,8 @@
-import { CustomTable, TableEmptyState } from "@/components/CustomTable";
 import { Search } from "@mui/icons-material";
 import { Stack, TextField, Typography } from "@mui/material";
+
+import { CustomTable, TableEmptyState } from "@/components/CustomTable";
+
 import { useGetUsersData } from "../hooks/useGetUsersData";
 import { useModalPagination } from "../hooks/useModalPagination";
 import { ModalSiswaFilter } from "../modal-filters/ModalSiswaFilter";

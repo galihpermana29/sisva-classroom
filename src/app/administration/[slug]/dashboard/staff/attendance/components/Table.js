@@ -1,6 +1,3 @@
-import { useSchool } from "@/app/administration/[slug]/SchoolContext";
-import { useAdministrationSelector } from "@/app/administration/hooks";
-import { permissions, types } from "@/globalcomponents/Variable";
 import { BorderColorRounded } from "@mui/icons-material";
 import {
   Avatar,
@@ -21,6 +18,11 @@ import dayjs from "dayjs";
 import Image from "next/image";
 import * as React from "react";
 import { useState } from "react";
+
+import { useSchool } from "@/app/administration/[slug]/SchoolContext";
+import { useAdministrationSelector } from "@/app/administration/hooks";
+import { permissions, types } from "@/globalcomponents/Variable";
+
 import { selectSelectedDate } from "../utils/staffAttendanceSlice";
 
 function getColumns(schoolId) {

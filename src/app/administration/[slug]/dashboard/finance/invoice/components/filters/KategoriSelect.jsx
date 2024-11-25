@@ -1,9 +1,11 @@
 "use client";
 
-import { FilterNotMounted } from "@/components/FilterNotMounted";
 import { useMounted } from "@mantine/hooks";
 import { MenuItem, Select } from "@mui/material";
 import { useSearchParams } from "next/navigation";
+
+import { FilterNotMounted } from "@/components/FilterNotMounted";
+
 import { useInvoiceFilters } from "../../hooks/useInvoiceFilters";
 
 /** Use this field name to get or modify kategori filter value elsewhere */

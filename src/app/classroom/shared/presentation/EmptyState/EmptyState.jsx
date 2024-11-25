@@ -1,5 +1,6 @@
-import EmptyStateGif from "@/assets/empty-state.gif";
 import Image from "next/image";
+
+import EmptyStateGif from "@/assets/empty-state.gif";
 
 const EmptyState = ({ title, description }) => {
   return (

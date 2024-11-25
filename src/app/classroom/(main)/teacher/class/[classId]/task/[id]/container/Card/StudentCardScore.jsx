@@ -1,7 +1,8 @@
-import PlaceholderImage from "@/assets/placeholder.jpg";
 import { Avatar } from "antd";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
+
+import PlaceholderImage from "@/assets/placeholder.jpg";
 
 const StudentCardScore = ({ selected, image, name, score, id }) => {
   const pathname = usePathname();

@@ -1,8 +1,3 @@
-import {
-  useAdministrationDispatch,
-  useAdministrationSelector,
-} from "@/app/administration/hooks";
-import type { SortDirection } from "@/types/types";
 import { Cancel } from "@mui/icons-material";
 import {
   Button,
@@ -13,12 +8,19 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useCallback, useEffect, useState } from "react";
+
+import {
+  useAdministrationDispatch,
+  useAdministrationSelector,
+} from "@/app/administration/hooks";
+import type { SortDirection } from "@/types/types";
+
 import type {
   GradeSortField,
   StudentSortField,
   StudyProgramSortField,
 } from "../utils/studyProgramSlice";
-
 import {
   selectGradeSortField,
   selectSortDirection,
@@ -29,8 +31,6 @@ import {
   setStudentSortField,
   setStudyProgramSortField,
 } from "../utils/studyProgramSlice";
-
-import { useCallback, useEffect, useState } from "react";
 
 export default function MobileSortModal({
   activeTab,

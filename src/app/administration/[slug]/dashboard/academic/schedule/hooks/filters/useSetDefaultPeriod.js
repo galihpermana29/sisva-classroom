@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
+
 import { PERIODE_FIELD_NAME } from "../../components/filters/PeriodeSelect";
 import { useGetDefaultPeriod } from "./useGetDefaultPeriod";
 

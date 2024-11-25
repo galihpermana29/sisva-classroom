@@ -1,5 +1,6 @@
 import { Box, Divider, Paper, Stack } from "@mui/material";
 import { Suspense } from "react";
+
 import { InvoiceTabs } from "./components/layouts/InvoiceTabs";
 import { TabActions } from "./components/layouts/TabActions";
 import { TabFilters } from "./components/layouts/TabFilters";

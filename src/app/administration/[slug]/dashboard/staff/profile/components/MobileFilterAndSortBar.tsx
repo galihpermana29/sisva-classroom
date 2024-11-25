@@ -1,6 +1,8 @@
-import { SortIcon } from "@/assets/SVGs";
 import { Button, Divider, Stack } from "@mui/material";
 import { memo } from "react";
+
+import { SortIcon } from "@/assets/SVGs";
+
 import Filters from "./Filters";
 
 function MobileFilterAndSortBar({ setOpenSortModal }) {

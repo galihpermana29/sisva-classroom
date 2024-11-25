@@ -1,6 +1,5 @@
 "use client";
 
-import { ExcelIcon, SortIcon } from "@/assets/SVGs";
 import {
   Add,
   Cancel,
@@ -20,12 +19,14 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 
 import AcademicAPI from "@/api/academic";
 import FilesAPI from "@/api/files";
 import { useAdministrationSelector } from "@/app/administration/hooks";
-import { useFormik } from "formik";
+import { ExcelIcon, SortIcon } from "@/assets/SVGs";
+
 import CurriculumTable from "./components/CurriculumTable";
 import { FormAddCurriculum } from "./components/FormAddCurriculum";
 import { FormAddSubject } from "./components/FormAddSubject";

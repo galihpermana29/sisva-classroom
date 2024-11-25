@@ -1,8 +1,10 @@
 "use client";
 
-import { useQueryParam } from "@/hooks/useQueryParam";
 import { MenuItem, Select, Stack, Typography } from "@mui/material";
 import { useSearchParams } from "next/navigation";
+
+import { useQueryParam } from "@/hooks/useQueryParam";
+
 import { KELAS_FIELD_NAME } from "../../filters/KelasSelect";
 
 function FilterClassSelect({ name, label, placeholder, data }) {

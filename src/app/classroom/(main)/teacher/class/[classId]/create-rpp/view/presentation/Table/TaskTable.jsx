@@ -1,9 +1,11 @@
-import DowndloadableFileLabel from "@/app/classroom/shared/presentation/DowndloadableFileLabel";
-import pdfIcon from "@/assets/classroom/teacher/PDFIcon.png";
 import { Edit01, Trash01 } from "@untitled-ui/icons-react";
 import DOMPurify from "dompurify";
 import Image from "next/image";
 import React from "react";
+
+import DowndloadableFileLabel from "@/app/classroom/shared/presentation/DowndloadableFileLabel";
+import pdfIcon from "@/assets/classroom/teacher/PDFIcon.png";
+
 import { useModal } from "../../container/Provider/ModalProvider";
 import CustomRppTable from "./CustomRppTable";
 

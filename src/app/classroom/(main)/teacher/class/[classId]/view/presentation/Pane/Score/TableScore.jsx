@@ -1,12 +1,14 @@
 "use client";
 
-import AvatarProfile from "@/app/classroom/shared/presentation/Profile/AvatarProfile";
-import AverageImage from "@/assets/average-score.png";
 import { Edit03 } from "@untitled-ui/icons-react";
 import { ConfigProvider, Form, InputNumber, Popconfirm, Table, Typography } from "antd";
 import { Kumbh_Sans } from "next/font/google";
 import Image from "next/image";
 import React, { useEffect, useMemo, useState } from "react";
+
+import AvatarProfile from "@/app/classroom/shared/presentation/Profile/AvatarProfile";
+import AverageImage from "@/assets/average-score.png";
+
 import { dateTimeFormatter } from "../../../../usecase/dateFormatter";
 import { useGetScores } from "../../../../usecase/hooks/use-scores";
 import { useUpdateScore } from "../../../../usecase/hooks/use-update-score";

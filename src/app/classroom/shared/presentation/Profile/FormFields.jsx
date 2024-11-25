@@ -1,3 +1,5 @@
+import "./style.css";
+
 import { usePathname } from "next/navigation";
 import React from "react";
 
@@ -5,7 +7,6 @@ import AccountSection from "./FormSection/AccountSection";
 import BiodataSection from "./FormSection/BiodataSection";
 import GuardianSection from "./FormSection/GuardianSection";
 import PasswordSection from "./FormSection/PasswordSection";
-import "./style.css";
 
 const FormFields = ({
   imageLoading,

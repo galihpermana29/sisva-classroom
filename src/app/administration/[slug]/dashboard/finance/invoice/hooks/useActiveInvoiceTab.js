@@ -1,7 +1,9 @@
 "use client";
 
-import { TAB_FIELD_NAME } from "@/components/TabSelector";
 import { useSearchParams } from "next/navigation";
+
+import { TAB_FIELD_NAME } from "@/components/TabSelector";
+
 import { DEFAULT_INVOICE_TAB, INVOICE_TABS } from "../constants";
 import { isValidInvoiceTab } from "../utils/isValidInvoiceTab";
 

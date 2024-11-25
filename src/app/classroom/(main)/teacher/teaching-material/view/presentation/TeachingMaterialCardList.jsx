@@ -1,7 +1,9 @@
-import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
-import CardGridSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardGridSkeleton";
 import { Card } from "antd";
 import React from "react";
+
+import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
+import CardGridSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardGridSkeleton";
+
 import MaterialCard from "./TeachingMaterialCard/MaterialCard";
 import TopicBanner from "./TopicBanner";
 

@@ -1,4 +1,3 @@
-import { useCurrentUser } from "@/hooks/query/user/useCurrentUser";
 import { LogoutRounded, SettingsOutlined } from "@mui/icons-material";
 import {
   Avatar,
@@ -13,6 +12,8 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+
+import { useCurrentUser } from "@/hooks/query/user/useCurrentUser";
 export default function UserMenu({ slug, school }) {
   const { data: currentUser, isLoading } = useCurrentUser();
   const [anchorEl, setAnchorEl] = React.useState(null);

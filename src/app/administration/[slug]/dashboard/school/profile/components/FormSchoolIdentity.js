@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import {
   Box,
   Button,
@@ -9,11 +7,11 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-
-import checklist from "@/assets/Checklist.png";
+import Image from "next/image";
+import { useState } from "react";
 
 import { useSchool } from "@/app/administration/[slug]/SchoolContext";
-import Image from "next/image";
+import checklist from "@/assets/Checklist.png";
 
 export const FormSchoolIdentity = ({
   formik,

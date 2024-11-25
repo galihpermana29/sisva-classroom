@@ -1,5 +1,6 @@
 "use client";
 
+import { BorderColorRounded } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -9,18 +10,16 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { useFormik } from "formik";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
+import CmsAPI from "@/api/cms";
+import FilesAPI from "@/api/files";
 import formThreeIcon from "@/assets/Icon-Document.svg";
 import formTwoIcon from "@/assets/Icon-Media.svg";
 import formOneIcon from "@/assets/Icon-Paragraph.svg";
-import { BorderColorRounded } from "@mui/icons-material";
 
-import { useFormik } from "formik";
-
-import CmsAPI from "@/api/cms";
-import FilesAPI from "@/api/files";
 import { useSchool } from "../../../SchoolContext";
 import { FormSchoolDetails } from "./components/FormSchoolDetails";
 import { FormSchoolIdentity } from "./components/FormSchoolIdentity";

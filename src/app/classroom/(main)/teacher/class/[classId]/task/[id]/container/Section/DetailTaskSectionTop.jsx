@@ -1,5 +1,6 @@
 import { Divider } from 'antd';
 import parse from 'html-react-parser';
+
 import { dateFormatterDayName } from '../../usecase/dateFormatter';
 import CardFile from '../Card/CardFile';
 import InfoItem from '../InfoItem/InfoItem';
