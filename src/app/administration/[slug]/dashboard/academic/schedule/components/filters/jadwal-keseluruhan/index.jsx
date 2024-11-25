@@ -1,10 +1,11 @@
 "use client";
 
+import SyncIcon from "@mui/icons-material/Sync";
 import { Button, Stack, Typography } from "@mui/material";
 import useTheme from "@mui/material/styles/useTheme";
+
 import { useFilterStatus } from "../../../hooks/filters/useFilterStatus";
 import useJadwalKeseluruhanFilter from "../../../hooks/useJadwalKeseluruhanFilter";
-import ResetIcon from "../../icons/ResetIcon";
 import AddAktivitasNonKbmModal from "../../modals/AddAktivitasNonKbmModal";
 import AddJadwalKelasModal from "../../modals/AddJadwalKelasModal";
 import JadwalKeseluruhanOptionalFiltersModal from "../JadwalKeseluruhanOptionalFiltersModal";
@@ -52,7 +53,7 @@ function JadwalKeseluruhanFilters() {
 
         <Button ml={"12px"} onClick={handleReset}>
           <Stack flexDirection={"row"} alignItems={"center"} gap={"4px"}>
-            <ResetIcon color={theme.palette.primary.main} />
+            <SyncIcon />
             <Typography
               fontWeight={"600"}
               fontSize={"13px"}

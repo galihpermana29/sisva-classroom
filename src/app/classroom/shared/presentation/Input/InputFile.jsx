@@ -1,10 +1,11 @@
-import { Spin, Upload } from "antd";
 import { File05, SearchMd, Trash01 } from "@untitled-ui/icons-react";
-import SisvaButton from "../Button/GlobalButton";
-import toast from "react-hot-toast";
-import DowndloadableFileLabel from "../DowndloadableFileLabel";
+import { Spin, Upload } from "antd";
 import { useState } from "react";
+import toast from "react-hot-toast";
+
 import { useTokenColor } from "../../usecase/use-token-color";
+import SisvaButton from "../Button/GlobalButton";
+import DowndloadableFileLabel from "../DowndloadableFileLabel";
 
 const SisvaInputFile = ({
   text = "Upload file here",

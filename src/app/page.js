@@ -1,8 +1,8 @@
+import Image from "next/image";
+
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-
-import Image from "next/image";
 
 export const metadata = {
   title: "Demo Aplikasi | Sisva",

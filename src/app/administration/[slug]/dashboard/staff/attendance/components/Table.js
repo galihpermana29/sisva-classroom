@@ -1,12 +1,9 @@
-import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import Image from 'next/image';
+import { BorderColorRounded } from "@mui/icons-material";
 import {
   Avatar,
   Box,
   Button,
   Chip,
-  Divider,
   IconButton,
   MenuItem,
   Modal,
@@ -15,223 +12,238 @@ import {
   TextField,
   Typography,
   useMediaQuery,
-} from '@mui/material';
-import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
-import Link from 'next/link';
-import { types, permissions } from '@/globalcomponents/Variable';
-import { useState } from 'react';
+} from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
+import dayjs from "dayjs";
+import Image from "next/image";
+import * as React from "react";
+import { useState } from "react";
 
-const columns = [
-  {
-    field: 'card',
-    headerName: '',
-    flex: 1,
-    sortable: false,
-    renderCell: (params) => {
-      let tempType;
-      types.map((item) => {
-        if (item.slug === params.value.data.type) {
-          tempType = item.title;
-        }
-      });
-      return (
-        <Box sx={{ width: '100%', mx: 2, py: 0.5 }}>
-          <Stack
-            component={Paper}
-            variant='outlined'
-            sx={{
-              justifyContent: 'flex-start',
-              borderRadius: 2,
-              p: 2,
-            }}
-          >
-            <Stack direction={'row'} justifyContent={'space-between'} flex={1}>
-              <Stack direction={'row'} alignItems={'center'}>
-                <Avatar
-                  sx={{
-                    width: '40px',
-                    height: '40px',
-                    position: 'relative',
-                    mr: 1,
-                  }}
-                >
-                  {params.value.data.profile_image_uri !== '' ? (
-                    <Image
-                      alt='Web Image'
-                      fill
-                      sizes='100%'
-                      style={{ objectFit: 'cover' }}
-                      src={`https://api-staging.sisva.id/file/v1/files/${params.value.data.profile_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
-                    />
-                  ) : (
-                    params.value.data.nametoUpperCase().slice(0, 1)
-                  )}
-                </Avatar>
-                <Typography
-                  sx={{
-                    color: 'black',
-                  }}
-                >
-                  {params.value.data.name}
-                </Typography>
-              </Stack>
-              <ActionButton params={params} />
-            </Stack>
+import { useSchool } from "@/app/administration/[slug]/SchoolContext";
+import { useAdministrationSelector } from "@/app/administration/hooks";
+import { permissions, types } from "@/globalcomponents/Variable";
 
+import { selectSelectedDate } from "../utils/staffAttendanceSlice";
+
+function getColumns(schoolId) {
+  const columns = [
+    {
+      field: "card",
+      headerName: "",
+      flex: 1,
+      sortable: false,
+      renderCell: (params) => {
+        let tempType;
+        types.map((item) => {
+          if (item.slug === params.value.data.type) {
+            tempType = item.title;
+          }
+        });
+        return (
+          <Box sx={{ width: "100%", mx: 2, py: 0.5 }}>
             <Stack
+              component={Paper}
+              variant="outlined"
               sx={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                mt: 2,
+                justifyContent: "flex-start",
+                borderRadius: 2,
+                p: 2,
               }}
             >
-              <Stack sx={{ flex: 1 }}>
-                <Typography sx={{ color: 'base.base50', fontSize: 12 }}>
-                  Username
-                </Typography>
-                <Typography sx={{ fontSize: 14, lineHeight: '14px' }}>
-                  {params.value.data.username}
-                </Typography>
+              <Stack
+                direction={"row"}
+                justifyContent={"space-between"}
+                flex={1}
+              >
+                <Stack direction={"row"} alignItems={"center"}>
+                  <Avatar
+                    sx={{
+                      width: "40px",
+                      height: "40px",
+                      position: "relative",
+                      mr: 1,
+                    }}
+                  >
+                    {params.value.data.profile_image_uri !== "" ? (
+                      <Image
+                        alt="Web Image"
+                        fill
+                        sizes="100%"
+                        style={{ objectFit: "cover" }}
+                        src={`https://api-staging.sisva.id/file/v1/files/${params.value.data.profile_image_uri}?school_id=${schoolId}`}
+                      />
+                    ) : (
+                      params.value.data.name.toUpperCase().slice(0, 1)
+                    )}
+                  </Avatar>
+                  <Typography
+                    sx={{
+                      color: "black",
+                    }}
+                  >
+                    {params.value.data.name}
+                  </Typography>
+                </Stack>
+                <ActionButton params={params} />
               </Stack>
-              {/* <Stack sx={{ flex: 1 }}> */}
-              {/* <Typography sx={{ color: "base.base50", fontSize: 12 }}>
-                  Status
-                </Typography> */}
-              {params.value.data.status === 'sick' ? (
-                <Chip
-                  sx={{
-                    fontSize: 12,
-                    width: 60,
-                    color: 'white',
-                    backgroundColor: 'orange',
-                  }}
-                  label='Sakit'
-                />
-              ) : params.value.data.status === 'absent' ? (
-                <Chip
-                  sx={{
-                    fontSize: 12,
-                    width: 60,
-                    color: 'white',
-                    backgroundColor: 'warning.main',
-                  }}
-                  label='Alpa'
-                />
-              ) : params.value.data.status === 'sick' ? (
-                <Chip
-                  sx={{
-                    fontSize: 12,
-                    width: 60,
-                    color: 'white',
-                    backgroundColor: 'orange',
-                  }}
-                  label='Sakit'
-                />
-              ) : null}
+
+              <Stack
+                sx={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  mt: 2,
+                }}
+              >
+                <Stack sx={{ flex: 1 }}>
+                  <Typography sx={{ color: "base.base50", fontSize: 12 }}>
+                    Username
+                  </Typography>
+                  <Typography sx={{ fontSize: 14, lineHeight: "14px" }}>
+                    {params.value.data.username}
+                  </Typography>
+                </Stack>
+                {/* <Stack sx={{ flex: 1 }}> */}
+                {/* <Typography sx={{ color: "base.base50", fontSize: 12 }}>
+                    Status
+                  </Typography> */}
+                {params.value.data.status === "sick" ? (
+                  <Chip
+                    sx={{
+                      fontSize: 12,
+                      width: 60,
+                      color: "white",
+                      backgroundColor: "orange",
+                    }}
+                    label="Sakit"
+                  />
+                ) : params.value.data.status === "absent" ? (
+                  <Chip
+                    sx={{
+                      fontSize: 12,
+                      width: 60,
+                      color: "white",
+                      backgroundColor: "warning.main",
+                    }}
+                    label="Alpa"
+                  />
+                ) : params.value.data.status === "sick" ? (
+                  <Chip
+                    sx={{
+                      fontSize: 12,
+                      width: 60,
+                      color: "white",
+                      backgroundColor: "orange",
+                    }}
+                    label="Sakit"
+                  />
+                ) : null}
+              </Stack>
+              {/* </Stack> */}
             </Stack>
-            {/* </Stack> */}
-          </Stack>
-        </Box>
-      );
-    },
-  },
-  {
-    field: 'profile_image_uri',
-    headerName: '',
-    width: 70,
-    sortable: false,
-    renderCell: (params) => (
-      <Avatar
-        sx={{
-          width: 40,
-          height: 40,
-          my: 1.5,
-          ml: 2,
-          position: 'relative',
-          display: 'flex',
-          // justifyContent: 'flex-end',
-        }}
-      >
-        {params.value.profile_image_uri !== '' ? (
-          <Image
-            alt='Web Image'
-            fill
-            sizes='100%'
-            style={{ objectFit: 'cover' }}
-            src={`https://api-staging.sisva.id/file/v1/files/${params.value.profile_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
-          />
-        ) : (
-          params.value.name.toUpperCase().slice(0, 1)
-        )}
-      </Avatar>
-    ),
-  },
-  { field: 'name', headerName: 'Nama', flex: 1 },
-  { field: 'username', headerName: 'Username', flex: 1 },
-  {
-    field: 'status',
-    headerName: 'Status',
-    width: 70,
-    flex: 1,
-    renderCell: (params) => {
-      if (params.value === 'sick') {
-        return (
-          <Chip
-            sx={{
-              fontSize: 12,
-              width: 60,
-              color: 'white',
-              backgroundColor: 'orange',
-            }}
-            label='Sakit'
-          />
+          </Box>
         );
-      } else if (params.value === 'absent') {
-        return (
-          <Chip
-            sx={{
-              fontSize: 12,
-              width: 60,
-              color: 'white',
-              backgroundColor: 'warning.main',
-            }}
-            label='Alpa'
-          />
-        );
-      } else if (params.value === 'leave') {
-        return (
-          <Chip
-            sx={{
-              fontSize: 12,
-              width: 60,
-              color: 'white',
-              backgroundColor: 'orange',
-            }}
-            label='Izin'
-          />
-        );
-      } else return null;
+      },
     },
-  },
-  {
-    field: 'action',
-    headerName: 'Aksi',
-    sortable: false,
-    width: 120,
-    renderCell: (params) => {
-      return <ActionButton params={params} />;
+    {
+      field: "profile_image_uri",
+      headerName: "",
+      width: 70,
+      sortable: false,
+      renderCell: (params) => (
+        <Avatar
+          sx={{
+            width: 40,
+            height: 40,
+            my: 1.5,
+            ml: 2,
+            position: "relative",
+            display: "flex",
+            // justifyContent: 'flex-end',
+          }}
+        >
+          {params.value.profile_image_uri !== "" ? (
+            <Image
+              alt="Web Image"
+              fill
+              sizes="100%"
+              style={{ objectFit: "cover" }}
+              src={`https://api-staging.sisva.id/file/v1/files/${params.value.profile_image_uri}?school_id=${schoolId}`}
+            />
+          ) : (
+            params.value.name.toUpperCase().slice(0, 1)
+          )}
+        </Avatar>
+      ),
     },
-  },
-];
+    { field: "name", headerName: "Nama", flex: 1 },
+    { field: "username", headerName: "Username", flex: 1 },
+    {
+      field: "status",
+      headerName: "Status",
+      width: 70,
+      flex: 1,
+      renderCell: (params) => {
+        if (params.value === "sick") {
+          return (
+            <Chip
+              sx={{
+                fontSize: 12,
+                width: 60,
+                color: "white",
+                backgroundColor: "orange",
+              }}
+              label="Sakit"
+            />
+          );
+        } else if (params.value === "absent") {
+          return (
+            <Chip
+              sx={{
+                fontSize: 12,
+                width: 60,
+                color: "white",
+                backgroundColor: "warning.main",
+              }}
+              label="Alpa"
+            />
+          );
+        } else if (params.value === "leave") {
+          return (
+            <Chip
+              sx={{
+                fontSize: 12,
+                width: 60,
+                color: "white",
+                backgroundColor: "orange",
+              }}
+              label="Izin"
+            />
+          );
+        } else return null;
+      },
+    },
+    {
+      field: "action",
+      headerName: "Aksi",
+      sortable: false,
+      width: 120,
+      renderCell: (params) => {
+        return <ActionButton params={params} />;
+      },
+    },
+  ];
+
+  return columns;
+}
 
 function ChipList({ params }) {
   return (
     <Stack
       sx={{
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        overflow: 'hidden',
-        m: '8px 0',
+        flexDirection: "row",
+        flexWrap: "wrap",
+        overflow: "hidden",
+        m: "8px 0",
       }}
     >
       {params.map((permission, index) => {
@@ -245,11 +257,11 @@ function ChipList({ params }) {
           <Chip
             key={index}
             sx={{
-              m: { xs: '2px 4px 2px 0', lg: '2px' },
+              m: { xs: "2px 4px 2px 0", lg: "2px" },
               fontSize: 12,
             }}
             label={tempPermission}
-            color='primary'
+            color="primary"
           />
         );
       })}
@@ -261,18 +273,18 @@ function ActionButton({ params }) {
   return (
     <Stack
       sx={{
-        flexDirection: 'row',
-        alignItems: 'center',
+        flexDirection: "row",
+        alignItems: "center",
       }}
     >
       <IconButton
         sx={{
           borderRadius: 2,
-          backgroundColor: 'base.base30',
-          '&:hover': {
-            backgroundColor: 'base.base40',
+          backgroundColor: "base.base30",
+          "&:hover": {
+            backgroundColor: "base.base40",
           },
-          height: 'fit-content',
+          height: "fit-content",
         }}
         onClick={() => {
           params.value.setOpenEditModal(true);
@@ -284,7 +296,7 @@ function ActionButton({ params }) {
         }}
       >
         <BorderColorRounded
-          sx={{ fontSize: { xs: 15, lg: 18 }, color: 'base.base50' }}
+          sx={{ fontSize: { xs: 15, lg: 18 }, color: "base.base50" }}
         />
       </IconButton>
     </Stack>
@@ -292,7 +304,9 @@ function ActionButton({ params }) {
 }
 
 export default function DataTable({ data, formik }) {
-  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('lg'));
+  const selectedDate = useAdministrationSelector(selectSelectedDate);
+  const school = useSchool();
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down("lg"));
 
   const [openEditModal, setOpenEditModal] = useState(false);
   const [activeRow, setActiveRow] = useState({});
@@ -326,19 +340,19 @@ export default function DataTable({ data, formik }) {
   });
 
   const absentOpt = [
-    { slug: 'present', show: 'Hadir' },
-    { slug: 'sick', show: 'Sakit' },
-    { slug: 'leave', show: 'Izin' },
-    { slug: 'absent', show: 'Alpha' },
+    { slug: "present", show: "Hadir" },
+    { slug: "sick", show: "Sakit" },
+    { slug: "leave", show: "Izin" },
+    { slug: "absent", show: "Alpha" },
   ];
 
   return (
-    <div style={{ height: '100%', width: '100%' }}>
+    <div style={{ height: "100%", width: "100%" }}>
       <Modal
         open={openEditModal}
         onClose={() => {
           setOpenEditModal(false);
-          formik.setFieldValue('status', '');
+          formik.setFieldValue("status", "");
         }}
       >
         <Stack
@@ -347,11 +361,11 @@ export default function DataTable({ data, formik }) {
           sx={{
             borderRadius: 2,
             zIndex: 20,
-            margin: 'auto',
-            position: 'fixed',
-            height: 'fit-content',
-            width: '360px',
-            maxWidth: '80%',
+            margin: "auto",
+            position: "fixed",
+            height: "fit-content",
+            width: "360px",
+            maxWidth: "80%",
             top: 0,
             bottom: 0,
             right: 0,
@@ -366,64 +380,59 @@ export default function DataTable({ data, formik }) {
           </Box>
 
           <Typography sx={{ mt: 1, fontSize: 14 }}>
-            {new Date().toLocaleDateString('id-ID', {
-              weekday: 'long',
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })}
+            {dayjs(selectedDate).locale("id").format("dddd, DD MMMM YYYY")}
           </Typography>
           <Stack
             sx={{
-              backgroundColor: 'base.base20',
+              backgroundColor: "base.base20",
               p: 1,
               borderRadius: 2,
-              flexDirection: 'row',
-              alignItems: 'center',
+              flexDirection: "row",
+              alignItems: "center",
               mt: 1,
               mb: 1,
             }}
           >
             <Avatar
               sx={{
-                width: '40px',
-                height: '40px',
-                position: 'relative',
+                width: "40px",
+                height: "40px",
+                position: "relative",
                 mr: 1,
               }}
             >
-              {activeRow.profile_image_uri !== '' ? (
+              {activeRow.profile_image_uri !== "" ? (
                 <Image
-                  alt='Image'
-                  src={`https://api-staging.sisva.id/file/v1/files/${activeRow.profile_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
-                  layout={'fill'}
-                  objectFit={'cover'}
+                  alt="Image"
+                  src={`https://api-staging.sisva.id/file/v1/files/${activeRow.profile_image_uri}?school_id=${school.id}`}
+                  layout={"fill"}
+                  objectFit={"cover"}
                 />
               ) : (
                 activeRow?.name.toUpperCase().slice(0, 1)
               )}
             </Avatar>
-            <Stack justifyContent={'center'}>
+            <Stack justifyContent={"center"}>
               <Typography
                 sx={{
-                  color: 'black',
+                  color: "black",
                   fontWeight: 600,
                 }}
               >
                 {activeRow.name}
               </Typography>
-              <Typography sx={{ fontSize: 14, lineHeight: '16px' }}>
+              <Typography sx={{ fontSize: 14, lineHeight: "16px" }}>
                 {activeRow.username}
               </Typography>
             </Stack>
           </Stack>
-          <Stack sx={{ mb: 1 }} key={'status'}>
+          <Stack sx={{ mb: 1 }} key={"status"}>
             <TextField
               select
               value={formik.values.status}
               onChange={(e) => {
-                formik.setFieldValue('id', activeRow.id);
-                formik.setFieldValue('status', e.target.value);
+                formik.setFieldValue("id", activeRow.id);
+                formik.setFieldValue("status", e.target.value);
               }}
               sx={{ flex: { xs: 1, lg: 0 } }}
             >
@@ -436,26 +445,26 @@ export default function DataTable({ data, formik }) {
           </Stack>
           <Stack
             sx={{
-              flexDirection: 'row',
+              flexDirection: "row",
             }}
           >
             <Button
-              variant='outlined'
+              variant="outlined"
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenEditModal(false);
-                formik.setFieldValue('status', '');
+                formik.setFieldValue("status", "");
               }}
             >
               Batal
             </Button>
             <Button
-              variant='contained'
+              variant="contained"
               sx={{
                 flex: 1,
-                backgroundColor: 'warning.main',
-                '&:hover': {
-                  backgroundColor: 'warning.dark',
+                backgroundColor: "warning.main",
+                "&:hover": {
+                  backgroundColor: "warning.dark",
                 },
               }}
               onClick={() => {
@@ -518,8 +527,8 @@ export default function DataTable({ data, formik }) {
       )}
       <DataGrid
         rows={rows}
-        getRowHeight={() => 'auto'}
-        columns={columns}
+        getRowHeight={() => "auto"}
+        columns={getColumns(school.id)}
         initialState={{
           pagination: {
             paginationModel: { page: 0, pageSize: 20 },
@@ -527,7 +536,7 @@ export default function DataTable({ data, formik }) {
         }}
         pageSizeOptions={[10, 20, 50]}
         getRowClassName={(params) =>
-          params.indexRelativeToCurrentPage % 2 === 0 ? 'Mui-even' : 'Mui-odd'
+          params.indexRelativeToCurrentPage % 2 === 0 ? "Mui-even" : "Mui-odd"
         }
         disableRowSelectionOnClick
         disableColumnMenu

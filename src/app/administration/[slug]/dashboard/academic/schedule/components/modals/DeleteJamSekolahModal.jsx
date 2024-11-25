@@ -1,5 +1,6 @@
 "use client";
 
+import { Delete } from "@mui/icons-material";
 import {
   Button,
   IconButton,
@@ -9,10 +10,11 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
+
 import { ModalBody } from "@/components/CustomModal";
-import { Delete } from "@mui/icons-material";
-import { useDeleteSchoolSchedule } from "../../hooks/useDeleteSchoolSchedule";
+
 import { useFilterStatus } from "../../hooks/filters/useFilterStatus";
+import { useDeleteSchoolSchedule } from "../../hooks/useDeleteSchoolSchedule";
 
 export const DeleteJamSekolahModal = ({ data }) => {
   const [open, setOpen] = useState(false);
@@ -51,12 +53,7 @@ export const DeleteJamSekolahModal = ({ data }) => {
         <ModalBody
           maxWidth={400}
           handleClose={handleClose}
-          content={
-            <ModalContent
-              id={data.id}
-              handleClose={handleClose}
-            />
-          }
+          content={<ModalContent id={data.id} handleClose={handleClose} />}
         />
       </Modal>
     </>
@@ -69,36 +66,22 @@ const ModalContent = ({ id, handleClose }) => {
   const handleSubmit = () => mutate();
 
   return (
-    <Stack
-      textAlign="center"
-      justifyContent="center"
-      alignItems="center"
-    >
+    <Stack textAlign="center" justifyContent="center" alignItems="center">
       <iframe
         className="border-0"
         src="https://lottie.host/embed/6d4a2abf-582d-43ab-bf7b-bcef061d5319/2JJjyKCiUO.json"
       ></iframe>
       <Stack gap={3}>
         <Stack gap={1}>
-          <Typography
-            variant="h5"
-            fontWeight={500}
-          >
+          <Typography variant="h5" fontWeight={500}>
             Hapus Jadwal
           </Typography>
-          <Typography
-            variant="body1"
-            className="text-pretty text-gray-400"
-          >
+          <Typography variant="body1" className="text-pretty text-gray-400">
             Anda akan menghapus jadwal ini dari tabel jam sekolah. Apakah anda
             yakin?
           </Typography>
         </Stack>
-        <Stack
-          width="100%"
-          flexDirection="row"
-          gap={2}
-        >
+        <Stack width="100%" flexDirection="row" gap={2}>
           <Button
             sx={{ color: "lightslategray" }}
             type="button"

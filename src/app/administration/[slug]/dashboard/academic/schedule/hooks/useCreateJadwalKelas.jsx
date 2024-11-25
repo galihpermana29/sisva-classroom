@@ -1,18 +1,29 @@
 "use client";
 
-import AcademicAPI from "@/api/academic";
-import { formatDayToLabel } from "@/utils/formatDay";
 import { useEffect, useState } from "react";
 
+import AcademicAPI from "@/api/academic";
+import { useSubjectTeachers } from "@/hooks/query/academic/useSubjectTeachers";
+import { formatDayToLabel } from "@/utils/formatDay";
+import { getUniqueObjectsBy } from "@/utils/getUniqueObjectBy";
+
 function useCreateJadwalKelas(formik) {
-  const { period_id, study_program_id, grade, student_group_id, class_id } =
-    formik.values;
+  const {
+    period_id,
+    study_program_id,
+    grade,
+    student_group_id,
+    class_id,
+    subject_id,
+  } = formik.values;
 
   const [kelasData, setKelasData] = useState([]);
   const [periodeData, setPeriodeData] = useState([]);
   const [prodiData, setProdiData] = useState([]);
   const [schoolScheduleData, setSchoolScheduleData] = useState([]);
   const [studentGroupData, setStudentGroupData] = useState([]);
+  const [subjectData, setSubjectData] = useState([]);
+  const { data: subjectTeachersData } = useSubjectTeachers();
 
   //* data for period select filter
   const periodeSelectData = periodeData?.map(({ id, name }) => ({
@@ -84,6 +95,29 @@ function useCreateJadwalKelas(formik) {
       value: `${id}:${day}`,
     }));
 
+  //* data for subject select filter
+  const subjectSelectData = subjectData
+    ?.filter(
+      ({ study_program_id }) =>
+        studentGroupData.find(({ id }) => id === student_group_id)
+          ?.study_program_id === study_program_id
+    )
+    .map(({ id, name }) => ({
+      label: name,
+      value: id,
+    }));
+
+  //* data for teacher select filter
+  const teacherSelectData = getUniqueObjectsBy(
+    subjectTeachersData
+      ?.filter((data) => data.subject_id === subject_id)
+      .map(({ teacher_id, teacher_name }) => ({
+        label: teacher_name,
+        value: teacher_id,
+      })) || [],
+    "value"
+  );
+
   const getAllPeriode = async () => {
     const { data } = await AcademicAPI.getAllPeriod();
     setPeriodeData(data.data);
@@ -112,6 +146,11 @@ function useCreateJadwalKelas(formik) {
     setStudentGroupData(data.data);
   };
 
+  const getAllSubjects = async () => {
+    const { data } = await AcademicAPI.getAllSubject();
+    setSubjectData(data.data);
+  };
+
   const handleReset = () => formik.resetForm();
 
   //* handle initial period data fetching
@@ -121,6 +160,7 @@ function useCreateJadwalKelas(formik) {
         getAllPeriode(),
         getAllClasses(),
         getAllStudentGroups(),
+        getAllSubjects(),
       ]);
     };
 
@@ -182,6 +222,8 @@ function useCreateJadwalKelas(formik) {
     tingkatanSelectData,
     kelasSelectData,
     hariSelectData,
+    subjectSelectData,
+    teacherSelectData,
   };
 }
 

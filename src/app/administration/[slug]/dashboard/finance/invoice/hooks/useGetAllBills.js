@@ -1,9 +1,11 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { usePagination } from "./usePagination";
+
+import FinanceAPI from "@/api/finance";
 import { paginateData } from "@/utils/paginateData";
-import { FinanceAPI } from "@/api/finance";
+
+import { usePagination } from "./usePagination";
 
 export const useGetAllBills = (props) => {
   const { rowsPerPage } = usePagination();

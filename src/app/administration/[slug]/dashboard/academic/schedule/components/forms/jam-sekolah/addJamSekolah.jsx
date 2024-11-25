@@ -1,14 +1,14 @@
 "use client";
 
+import { Alert, Button, Stack } from "@mui/material";
 import { useFormik } from "formik";
 
-import { Alert, Button, Stack } from "@mui/material";
+import { useFilterStatus } from "../../../hooks/filters/useFilterStatus";
+import { useCreateSchoolSchedule } from "../../../hooks/useCreateSchoolSchedule";
+import { useGetActiveSchoolSchedule } from "../../../hooks/useGetActiveSchoolSchedule";
 import { DaySelect } from "../../DaySelect";
 import { TimeSelect } from "../../TimeSelect";
-import { useCreateSchoolSchedule } from "../../../hooks/useCreateSchoolSchedule";
 import { getAddJamSekolahSchema } from "./addJamSekolahSchema";
-import { useGetActiveSchoolSchedule } from "../../../hooks/useGetActiveSchoolSchedule";
-import { useFilterStatus } from "../../../hooks/filters/useFilterStatus";
 
 export const AddJamSekolahForm = ({ handleClose }) => {
   const { data } = useGetActiveSchoolSchedule();
@@ -32,10 +32,7 @@ export const AddJamSekolahForm = ({ handleClose }) => {
   });
 
   return (
-    <form
-      className="flex flex-col gap-6"
-      onSubmit={formik.handleSubmit}
-    >
+    <form className="flex flex-col gap-6" onSubmit={formik.handleSubmit}>
       <Stack gap={2}>
         <Stack gap={2}>
           <DaySelect
@@ -81,10 +78,7 @@ export const AddJamSekolahForm = ({ handleClose }) => {
         )}
       </Stack>
 
-      <Stack
-        flexDirection="row"
-        gap={2}
-      >
+      <Stack flexDirection="row" gap={2}>
         <Button
           type="button"
           fullWidth
@@ -93,11 +87,7 @@ export const AddJamSekolahForm = ({ handleClose }) => {
         >
           Batal
         </Button>
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-        >
+        <Button type="submit" fullWidth variant="contained">
           Simpan
         </Button>
       </Stack>

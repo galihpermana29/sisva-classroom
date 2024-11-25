@@ -1,18 +1,19 @@
 "use client";
 
-import { useGetAllPeriods } from "@/hooks/useGetAllPeriods";
+import { useGetAllPeriods } from "@/hooks/query/academic/useGetAllPeriods";
+import { useGetAllStudentGroups } from "@/hooks/query/academic/useGetAllStudentGroups";
+import { useGetAllStudyPrograms } from "@/hooks/query/academic/useGetAllStudyPrograms";
+
+import { useEnsureFilterOrder } from "../useEnsureFilterOrder";
 import { useFilterStatus } from "../useFilterStatus";
-import { useGetShowFilterStatus } from "../useGetShowFilterStatus";
-import { useGetAvailableStudyPrograms } from "../useGetAvailableStudyPrograms";
-import { useGetAllStudyPrograms } from "@/hooks/useGetAllStudyPrograms";
+import { useGetAvailableClasses } from "../useGetAvailableClasses";
 import { useGetAvailableGrades } from "../useGetAvailableGrades";
+import { useGetAvailableStudyPrograms } from "../useGetAvailableStudyPrograms";
+import { useGetShowFilterStatus } from "../useGetShowFilterStatus";
 import { useResetFilterOnPeriodeChange } from "../useResetFilterOnPeriodeChange";
 import { useResetFilterOnProdiChange } from "../useResetFilterOnProdiChange";
-import { useEnsureFilterOrder } from "../useEnsureFilterOrder";
-import { useSetDefaultPeriod } from "../useSetDefaultPeriod";
-import { useGetAvailableClasses } from "../useGetAvailableClasses";
 import { useResetFilterOnTingkatChange } from "../useResetFilterOnTingkatChange";
-import { useGetAllStudentGroups } from "@/hooks/useGetAllStudentGroups";
+import { useSetDefaultPeriod } from "../useSetDefaultPeriod";
 
 export const useGetFilterJadwalKelas = () => {
   const { periode, prodi, tingkat } = useFilterStatus();

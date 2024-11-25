@@ -1,15 +1,16 @@
 "use client";
 
-import { useGetAllPeriods } from "@/hooks/useGetAllPeriods";
-import { useFilterStatus } from "../useFilterStatus";
-import { useGetShowFilterStatus } from "../useGetShowFilterStatus";
-import { useGetAvailableStudyPrograms } from "../useGetAvailableStudyPrograms";
+import { useGetAllPeriods } from "@/hooks/query/academic/useGetAllPeriods";
+
 import { useGetClassSchedule } from "../../useGetClassSchedule";
+import { useEnsureFilterOrder } from "../useEnsureFilterOrder";
+import { useFilterStatus } from "../useFilterStatus";
+import { useGetAvailableStudyPrograms } from "../useGetAvailableStudyPrograms";
+import { useGetAvailableTeachers } from "../useGetAvailableTeachers";
+import { useGetShowFilterStatus } from "../useGetShowFilterStatus";
 import { useResetFilterOnPeriodeChange } from "../useResetFilterOnPeriodeChange";
 import { useResetFilterOnProdiChange } from "../useResetFilterOnProdiChange";
-import { useEnsureFilterOrder } from "../useEnsureFilterOrder";
 import { useSetDefaultPeriod } from "../useSetDefaultPeriod";
-import { useGetAvailableTeachers } from "../useGetAvailableTeachers";
 
 export const useGetFilterJadwalGuru = () => {
   const { periode, prodi } = useFilterStatus();

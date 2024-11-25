@@ -1,19 +1,23 @@
-import React from "react";
-import SisvaButton from "../../../../../shared/presentation/Button/GlobalButton";
 import { Plus } from "@untitled-ui/icons-react";
-import TeachingMaterialListFilter from "../presentation/TeachingMaterialListFilter";
-import { useTeachingMaterial } from "../../usecase/use-teaching-material";
-import TeachingMaterialCardList from "../presentation/TeachingMaterialCardList";
-import { useModal } from "../../../class/[classId]/create-rpp/view/container/Provider/ModalProvider";
-import { useTeachingMaterialForm } from "../../usecase/use-teaching-material-form";
 import dynamic from "next/dynamic";
+import React from "react";
 
-const CreateTeachingMaterialModal = dynamic(() =>
-  import("../../../../../shared/presentation/Modal/CreateTeachingMaterialModal")
+import SisvaButton from "../../../../../shared/presentation/Button/GlobalButton";
+import { useModal } from "../../../class/[classId]/create-rpp/view/container/Provider/ModalProvider";
+import { useTeachingMaterial } from "../../usecase/use-teaching-material";
+import { useTeachingMaterialForm } from "../../usecase/use-teaching-material-form";
+import TeachingMaterialCardList from "../presentation/TeachingMaterialCardList";
+import TeachingMaterialListFilter from "../presentation/TeachingMaterialListFilter";
+
+const CreateTeachingMaterialModal = dynamic(
+  () =>
+    import(
+      "../../../../../shared/presentation/Modal/CreateTeachingMaterialModal"
+    )
 );
 
-const DeleteConfirmation = dynamic(() =>
-  import("@/app/classroom/shared/presentation/Modal/DeleteConfirmation")
+const DeleteConfirmation = dynamic(
+  () => import("@/app/classroom/shared/presentation/Modal/DeleteConfirmation")
 );
 const TeachingMaterialContainer = ({ initialData }) => {
   const {

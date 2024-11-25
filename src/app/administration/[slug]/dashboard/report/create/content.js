@@ -1,19 +1,12 @@
 "use client";
 
-import {
-  Add,
-  Cancel,
-  DownloadRounded,
-  Search,
-  UploadFileRounded,
-} from "@mui/icons-material";
+import { Add, Cancel, Search } from "@mui/icons-material";
 import {
   Box,
   Button,
   Divider,
   Hidden,
   InputAdornment,
-  Menu,
   MenuItem,
   Modal,
   Paper,
@@ -21,19 +14,13 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import DataTable from "./components/Table";
-import { ExcelIcon, ExportIcon, SortIcon } from "@/assets/SVGs";
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import { permissions, types } from "@/globalcomponents/Variable";
-import { FormAddStaff } from "./components/FormAddStaff";
-
 import { useFormik } from "formik";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import dayjs from "dayjs";
+import { useEffect, useState } from "react";
+
+import { SortIcon } from "@/assets/SVGs";
+
+import { FormAddStaff } from "./components/FormAddStaff";
+import DataTable from "./components/Table";
 
 export default function StaffProfileListContent() {
   const [initialData, setinitialData] = useState({
@@ -266,7 +253,7 @@ export default function StaffProfileListContent() {
             </MenuItem>
           ))}
         </TextField>
-       
+
         <TextField
           select
           size="small"

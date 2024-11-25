@@ -1,6 +1,7 @@
-import { Box, Button, Divider, Modal, Stack, Typography } from "@mui/material";
-import { ModalBody } from "@/components/CustomModal";
+import { Box, Button, Modal, Stack, Typography } from "@mui/material";
 import Image from "next/image";
+
+import { ModalBody } from "@/components/CustomModal";
 
 function ErrorJadwalKelasModal({ open, handleClose }) {
   return (

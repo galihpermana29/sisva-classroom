@@ -1,12 +1,14 @@
-import { Stack, TextField, Typography } from "@mui/material";
-import { ModalSiswaFilter } from "../modal-filters/ModalSiswaFilter";
-import { CustomTable, TableEmptyState } from "@/components/CustomTable";
-import { DaftarPenggunaStaffTableBody } from "./DaftarPenggunaStaffTableBody";
-import { DaftarPenggunaSiswaTableBody } from "./DaftarPenggunaSiswaTableBody";
-import { ModalPagination } from "./ModalPagination";
 import { Search } from "@mui/icons-material";
+import { Stack, TextField, Typography } from "@mui/material";
+
+import { CustomTable, TableEmptyState } from "@/components/CustomTable";
+
 import { useGetUsersData } from "../hooks/useGetUsersData";
 import { useModalPagination } from "../hooks/useModalPagination";
+import { ModalSiswaFilter } from "../modal-filters/ModalSiswaFilter";
+import { DaftarPenggunaSiswaTableBody } from "./DaftarPenggunaSiswaTableBody";
+import { DaftarPenggunaStaffTableBody } from "./DaftarPenggunaStaffTableBody";
+import { ModalPagination } from "./ModalPagination";
 
 export const DaftarPenggunaSection = ({
   target,
@@ -71,10 +73,7 @@ export const DaftarPenggunaSection = ({
         width="100%"
         gap={1}
       >
-        <Typography
-          fontSize="1em"
-          fontWeight={600}
-        >
+        <Typography fontSize="1em" fontWeight={600}>
           Daftar Pengguna
         </Typography>
         <Stack
@@ -91,10 +90,7 @@ export const DaftarPenggunaSection = ({
             onChange={onSearch}
           />
           {targetIsSiswa && (
-            <ModalSiswaFilter
-              filters={userFilter}
-              setFilters={setUserFilter}
-            />
+            <ModalSiswaFilter filters={userFilter} setFilters={setUserFilter} />
           )}
         </Stack>
       </Stack>
@@ -125,11 +121,7 @@ const DaftarPenggunaTable = ({
 
   return (
     <>
-      <CustomTable
-        minWidth={240}
-        columns={columns}
-        body={tableBody}
-      />
+      <CustomTable minWidth={240} columns={columns} body={tableBody} />
       <ModalPagination
         page={currentPage}
         totalPage={totalPage}

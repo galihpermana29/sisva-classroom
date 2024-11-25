@@ -1,8 +1,5 @@
-import * as React from "react";
-import { DataGrid } from "@mui/x-data-grid";
-import Image from "next/image";
+import { BorderColorRounded, DeleteForeverRounded } from "@mui/icons-material";
 import {
-  Avatar,
   Box,
   Button,
   Chip,
@@ -11,14 +8,13 @@ import {
   Modal,
   Paper,
   Stack,
-  TextField,
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import { BorderColorRounded, DeleteForeverRounded } from "@mui/icons-material";
-import Link from "next/link";
-import { types, permissions } from "@/globalcomponents/Variable";
+import { DataGrid } from "@mui/x-data-grid";
+import * as React from "react";
 import { useState } from "react";
+
 import { FormAddCurriculum } from "./FormAddCurriculum";
 
 const columns = [
@@ -113,11 +109,7 @@ const columns = [
     sortable: false,
     flex: 1,
     renderCell: (params) => {
-      return params.value.length > 0 ? (
-        <ChipList params={params.value} />
-      ) : (
-        "-"
-      );
+      return params.value.length > 0 ? <ChipList params={params.value} /> : "-";
     },
   },
   // { field: "subjects", headerName: "Jumlah Mata Pelajaran", flex: 1 },
@@ -210,7 +202,7 @@ function ChipList({ params }) {
         flexDirection: "row",
         flexWrap: "wrap",
         overflow: "hidden",
-        m: {xs:0, lg:"8px 0"},
+        m: { xs: 0, lg: "8px 0" },
       }}
     >
       {params.map((studyProgram, index) => {
@@ -381,7 +373,7 @@ export default function CurriculumTable({ data, formik }) {
                 {activeRow.name}
               </Typography>
             </Stack>
-            </Stack>
+          </Stack>
 
           <Stack
             sx={{

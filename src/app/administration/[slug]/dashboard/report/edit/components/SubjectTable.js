@@ -1,8 +1,5 @@
-import * as React from "react";
-import { DataGrid } from "@mui/x-data-grid";
-import Image from "next/image";
+import { BorderColorRounded, DeleteForeverRounded } from "@mui/icons-material";
 import {
-  Avatar,
   Box,
   Button,
   Chip,
@@ -11,15 +8,16 @@ import {
   Modal,
   Paper,
   Stack,
-  TextField,
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import { BorderColorRounded, DeleteForeverRounded } from "@mui/icons-material";
-import Link from "next/link";
-import { types, permissions, subject_types } from "@/globalcomponents/Variable";
+import { DataGrid } from "@mui/x-data-grid";
+import * as React from "react";
 import { useState } from "react";
-import { FormAddCurriculum, FormAddSubject } from "./FormAddSubject";
+
+import { subject_types } from "@/globalcomponents/Variable";
+
+import { FormAddSubject } from "./FormAddSubject";
 
 const columns = [
   {
@@ -431,7 +429,7 @@ export default function SubjectTable({ data, formik }) {
                 Tipe
               </Typography>
               <Typography sx={{ fontSize: 14, textAlign: "right" }}>
-                {activeRow.subject_type==="mandatory"?"Wajib":"Pilihan"}
+                {activeRow.subject_type === "mandatory" ? "Wajib" : "Pilihan"}
               </Typography>
             </Stack>
             <Stack

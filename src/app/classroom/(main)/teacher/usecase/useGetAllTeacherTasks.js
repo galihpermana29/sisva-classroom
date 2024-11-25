@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
+
+import {
+  generalDateFormatter,
+  isBefore,
+} from "@/app/classroom/shared/usecase/helper";
+
 import { isOverdue } from "../../student/class/usecase/date-helper";
 import { getAllClasses, getTeacherTasks } from "../repositories/apiService";
 import { getUserDataCookie } from "./getUserDataCookie";
-import { generalDateFormatter, isBefore } from "@/app/classroom/shared/usecase/helper";
 
 export const useGetAllTeacherTasks = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -51,7 +56,6 @@ export const useGetAllTeacherTasks = () => {
             subject_name,
           };
         });
-
 
       finalData.sort((a, b) => {
         return isBefore(a.deadline, b.deadline) ? -1 : 1;

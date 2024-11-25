@@ -1,6 +1,7 @@
-import { CustomTable, TableEmptyState } from "@/components/CustomTable";
 import { TableCell, TableRow } from "@mui/material";
 import dynamic from "next/dynamic";
+
+import { CustomTable, TableEmptyState } from "@/components/CustomTable";
 
 // disable prerendering to avoid hydration error
 // no idea why we should do this
@@ -8,7 +9,7 @@ const ActionButtons = dynamic(
   () => import("./ActionButtons").then(({ ActionButtons }) => ActionButtons),
   {
     ssr: false,
-  },
+  }
 );
 
 export const PengaturanJadwalTable = () => {

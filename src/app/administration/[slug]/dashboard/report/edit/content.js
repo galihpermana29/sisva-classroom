@@ -12,7 +12,6 @@ import {
   Button,
   Divider,
   Hidden,
-  IconButton,
   InputAdornment,
   Menu,
   MenuItem,
@@ -22,19 +21,17 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import StudyProgramTable from "./components/StudyProgramTable";
-import { ExcelIcon, ExportIcon, SortIcon } from "@/assets/SVGs";
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import { permissions, types } from "@/globalcomponents/Variable";
-
 import { useFormik } from "formik";
+import { useEffect, useState } from "react";
+
+import { ExcelIcon, SortIcon } from "@/assets/SVGs";
+
 import CurriculumTable from "./components/CurriculumTable";
 import { FormAddCurriculum } from "./components/FormAddCurriculum";
-import SubjectTable from "./components/SubjectTable";
 import { FormAddSubject } from "./components/FormAddSubject";
-import SyllabusTable from "./components/SyllabusTable";
 import { FormAddSyllabus } from "./components/FormAddSyllabus";
+import SubjectTable from "./components/SubjectTable";
+import SyllabusTable from "./components/SyllabusTable";
 export default function StaffProfileContent() {
   const [emptyData, setEmptyData] = useState({
     name: "",
@@ -844,18 +841,18 @@ export default function StaffProfileContent() {
             {(activeTab === 0
               ? [{ title: "Kurikulum", slug: "name" }]
               : activeTab === 1
-              ? [
-                  { title: "Kurikulum", slug: "name" },
-                  { title: "Program Studi", slug: "study_program" },
-                  { title: "Mata Pelajaran", slug: "subject" },
-                  { title: "Tipe", slug: "subject_type" },
-                ]
-              : [
-                  { title: "Kurikulum", slug: "name" },
-                  { title: "Program Studi", slug: "study_program" },
-                  { title: "Mata Pelajaran", slug: "subject" },
-                  { title: "Tingkatan", slug: "grade" },
-                ]
+                ? [
+                    { title: "Kurikulum", slug: "name" },
+                    { title: "Program Studi", slug: "study_program" },
+                    { title: "Mata Pelajaran", slug: "subject" },
+                    { title: "Tipe", slug: "subject_type" },
+                  ]
+                : [
+                    { title: "Kurikulum", slug: "name" },
+                    { title: "Program Studi", slug: "study_program" },
+                    { title: "Mata Pelajaran", slug: "subject" },
+                    { title: "Tingkatan", slug: "grade" },
+                  ]
             ).map((option) => (
               <MenuItem key={option.slug} value={option.slug}>
                 <Typography fontSize={14}>{option.title}</Typography>
@@ -1151,10 +1148,10 @@ export default function StaffProfileContent() {
                 activeTab === 0
                   ? setOpenCreateCurriculumModal(true)
                   : activeTab === 1
-                  ? setOpenCreateSubjectModal(true)
-                  : activeTab === 2
-                  ? setOpenCreateSyllabusModal(true)
-                  : null
+                    ? setOpenCreateSubjectModal(true)
+                    : activeTab === 2
+                      ? setOpenCreateSyllabusModal(true)
+                      : null
               }
             >
               <Typography sx={{ fontSize: 14 }}>Tambah</Typography>

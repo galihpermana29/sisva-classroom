@@ -1,6 +1,3 @@
-import { useForm } from "antd/es/form/Form";
-import { useEffect } from "react";
-
 export const useProfileForm = () => {
   const jenisKelaminDropdown = [
     {

@@ -1,19 +1,19 @@
 "use client";
 
+import dayjs from "dayjs";
 import { useState } from "react";
+
 import useJadwalKeseluruhanCalendar from "../hooks/useJadwalKeseluruhanCalendar";
 import EditAktivitasNonKbmModal from "./modals/EditAktivitasNonKbmModal";
-import TimelineWeekSchedule from "./TimelineWeekSchedule";
-import dayjs from "dayjs";
 import EditJadwalKelasModal from "./modals/EditJadwalKelasModal";
+import TimelineWeekSchedule from "./TimelineWeekSchedule";
 
 export const JadwalKeseluruhanSchedule = () => {
   const {
     data,
     studentGroupData,
-    isLoading,
-    periode,
-    prodi,
+    periodeId,
+    prodiId,
     isJadwalKeseluruhan,
     workDays,
     scheduleStartTime,
@@ -52,9 +52,12 @@ export const JadwalKeseluruhanSchedule = () => {
     ></iframe>
   );
 
+  const isDataEmpty = data.length === 0;
   const isStudentGroupDataEmpty = studentGroupData?.length === 0;
-  const isPeriodeInvalid = parseInt(periode) === -1;
-  const isProdiInvalid = parseInt(prodi) === -1;
+  const isPeriodeInvalid = !periodeId;
+  const isProdiInvalid = !prodiId;
+
+  if (isDataEmpty) return emptyState;
 
   if (isJadwalKeseluruhan === "true") {
     if (isStudentGroupDataEmpty || isPeriodeInvalid || isProdiInvalid)
@@ -65,18 +68,14 @@ export const JadwalKeseluruhanSchedule = () => {
 
   return (
     <>
-      {!isLoading ? (
-        <TimelineWeekSchedule
-          data={data}
-          classData={studentGroupData}
-          onEventClick={onEventClick}
-          workDays={workDays}
-          startTime={scheduleStartTime}
-          endTime={scheduleEndTime}
-        />
-      ) : (
-        <div className="h-[650px] w-full animate-pulse bg-gray-200" />
-      )}
+      <TimelineWeekSchedule
+        data={data}
+        classData={studentGroupData}
+        onEventClick={onEventClick}
+        workDays={workDays}
+        startTime={scheduleStartTime}
+        endTime={scheduleEndTime}
+      />
       <EditAktivitasNonKbmModal
         open={openEditNonKbm}
         handleClose={handleCloseEditNonKbm}

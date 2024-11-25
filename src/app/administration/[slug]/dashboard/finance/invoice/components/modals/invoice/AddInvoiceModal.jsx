@@ -1,16 +1,18 @@
 "use client";
 
-import { Alert, Button, Modal, Stack } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import { Alert, Button, Modal, Stack } from "@mui/material";
+import { useFormik } from "formik";
 import { useEffect, useState } from "react";
+
 import { ModalBody } from "@/components/CustomModal";
+
+import { useCreateInvoice } from "../../../hooks/useCreateInvoice";
+import { AddInvoiceForm } from "../../forms/add-invoice";
+import { addInvoiceSchema } from "../../forms/add-invoice/addInvoiceSchema";
+import { BillDetails } from "./BillDetails";
 import { ModalTagihanFilter } from "./modal-filters/ModalTagihanFilter";
 import { ModalTagihanPenggunaFilter } from "./modal-filters/ModalTagihanPenggunaFilter";
-import { useCreateInvoice } from "../../../hooks/useCreateInvoice";
-import { useFormik } from "formik";
-import { addInvoiceSchema } from "../../forms/add-invoice/addInvoiceSchema";
-import { AddInvoiceForm } from "../../forms/add-invoice";
-import { BillDetails } from "./BillDetails";
 
 export const AddInvoiceModal = () => {
   const [open, setOpen] = useState(false);
@@ -72,29 +74,13 @@ const ModalContent = ({ handleClose }) => {
   });
 
   return (
-    <Stack
-      width="100%"
-      gap={3}
-    >
-      <Stack
-        width="100%"
-        flexDirection="row"
-        gap={1}
-      >
-        <ModalTagihanFilter
-          value={filters}
-          setValue={setFilters}
-        />
-        <ModalTagihanPenggunaFilter
-          value={filters}
-          setValue={setFilters}
-        />
+    <Stack width="100%" gap={3}>
+      <Stack width="100%" flexDirection="row" gap={1}>
+        <ModalTagihanFilter value={filters} setValue={setFilters} />
+        <ModalTagihanPenggunaFilter value={filters} setValue={setFilters} />
       </Stack>
       {filterError ? (
-        <Alert
-          variant="filled"
-          severity="error"
-        >
+        <Alert variant="filled" severity="error">
           {filterError}
         </Alert>
       ) : null}
@@ -102,10 +88,7 @@ const ModalContent = ({ handleClose }) => {
         billId={filters.tagihan}
         userBillId={filters.tagihanPengguna}
       />
-      <AddInvoiceForm
-        formik={formik}
-        handleClose={handleClose}
-      />
+      <AddInvoiceForm formik={formik} handleClose={handleClose} />
     </Stack>
   );
 };

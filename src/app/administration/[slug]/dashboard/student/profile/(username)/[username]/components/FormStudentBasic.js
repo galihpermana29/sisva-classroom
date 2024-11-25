@@ -1,26 +1,8 @@
 "use client";
 
-import {
-  Avatar,
-  Box,
-  Button,
-  Chip,
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
-import Image from "next/image";
+import { Grid, TextField, Typography } from "@mui/material";
 
 import { formStudentBasicFields } from "@/globalcomponents/FormFields";
-import { Cancel } from "@mui/icons-material";
-import { useState } from "react";
-import { permissions, types } from "@/globalcomponents/Variable";
 
 export const FormStudentBasic = ({ formik, editing }) => {
   if (!editing) {

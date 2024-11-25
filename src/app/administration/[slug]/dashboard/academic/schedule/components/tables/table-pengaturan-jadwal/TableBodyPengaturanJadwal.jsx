@@ -1,16 +1,18 @@
 "use client";
 
+import { useMounted } from "@mantine/hooks";
+import { Stack, TableCell, TableRow } from "@mui/material";
+
 import { TableBodyLoading, TableEmptyState } from "@/components/CustomTable";
 import { formatDayToLabel } from "@/utils/formatDay";
-import { Stack, TableCell, TableRow } from "@mui/material";
-import { EditJamSekolahModal } from "../../modals/EditJamSekolahModal";
-import { DeleteJamSekolahModal } from "../../modals/DeleteJamSekolahModal";
-import { useGetSchoolSchedule } from "../../../hooks/useGetSchoolSchedule";
 import { timeStringToDayjs } from "@/utils/formatTimeString";
-import { useMounted } from "@mantine/hooks";
-import { toTitleCase } from "@/utils/toTitleCase";
-import { FilterIncompleteState } from "../../FilterIncompleteState";
 import { getUserTimezone } from "@/utils/getUserTimezone";
+import { toTitleCase } from "@/utils/toTitleCase";
+
+import { useGetSchoolSchedule } from "../../../hooks/useGetSchoolSchedule";
+import { FilterIncompleteState } from "../../FilterIncompleteState";
+import { DeleteJamSekolahModal } from "../../modals/DeleteJamSekolahModal";
+import { EditJamSekolahModal } from "../../modals/EditJamSekolahModal";
 
 export const TableBodyPengaturanJadwal = ({ columnCount }) => {
   const mounted = useMounted();
@@ -24,10 +26,7 @@ export const TableBodyPengaturanJadwal = ({ columnCount }) => {
 
   return rows && rows.length > 0 ? (
     rows.map((row) => (
-      <TableRow
-        hover
-        key={row.id}
-      >
+      <TableRow hover key={row.id}>
         <TableCell>{formatDayToLabel(row.day)}</TableCell>
         <TableCell>
           {`${timeStringToDayjs(row.start_time).format(
@@ -39,11 +38,7 @@ export const TableBodyPengaturanJadwal = ({ columnCount }) => {
         )} ${userTimezone}`}</TableCell>
         <TableCell>{toTitleCase(statusMap[row.status])}</TableCell>
         <TableCell>
-          <Stack
-            flexDirection="row"
-            maxWidth="fit-content"
-            gap={1}
-          >
+          <Stack flexDirection="row" maxWidth="fit-content" gap={1}>
             <EditJamSekolahModal data={row} />
             <DeleteJamSekolahModal data={row} />
           </Stack>

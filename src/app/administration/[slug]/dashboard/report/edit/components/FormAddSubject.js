@@ -1,15 +1,12 @@
 "use client";
 
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
-  Avatar,
   Box,
-  Button,
   Chip,
   FormControl,
-  Grid,
   IconButton,
   InputAdornment,
-  InputLabel,
   MenuItem,
   OutlinedInput,
   Select,
@@ -17,11 +14,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import Image from "next/image";
-
-import { formAddStaffFields, formAddStudyProgramFields, formAddSubjectFields } from "@/globalcomponents/FormFields";
-import { Cancel, Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
+
+import { formAddSubjectFields } from "@/globalcomponents/FormFields";
 import { permissions } from "@/globalcomponents/Variable";
 
 export const FormAddSubject = ({ formik, editing }) => {

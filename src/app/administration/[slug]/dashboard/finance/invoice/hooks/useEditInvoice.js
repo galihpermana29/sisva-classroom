@@ -1,7 +1,8 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { FinanceAPI } from "@/api/finance";
+
+import FinanceAPI from "@/api/finance";
 
 export const useEditInvoice = ({ invoiceId, userBillId }) => {
   const queryClient = useQueryClient();

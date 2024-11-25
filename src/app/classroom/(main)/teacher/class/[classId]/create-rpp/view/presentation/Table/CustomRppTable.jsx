@@ -1,5 +1,5 @@
 import { Table } from "antd";
-import React, { useState } from "react";
+import React from "react";
 
 const CustomRppTable = ({ columns, data, ...props }) => {
   return (

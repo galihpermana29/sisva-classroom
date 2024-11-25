@@ -1,6 +1,7 @@
 import { CustomTable } from "@/components/CustomTable";
-import { TableBodyInvoice } from "./TableBodyInvoice";
+
 import { invoiceSorts } from "../../../constants";
+import { TableBodyInvoice } from "./TableBodyInvoice";
 
 export const TableInvoice = () => {
   const sortKeys = invoiceSorts.map((sort) => sort.value);

@@ -1,9 +1,11 @@
 "use client";
 
-import { FilterNotMounted } from "@/components/FilterNotMounted";
 import { useMounted } from "@mantine/hooks";
 import { MenuItem, Select } from "@mui/material";
 import { useSearchParams } from "next/navigation";
+
+import { FilterNotMounted } from "@/components/FilterNotMounted";
+
 import { useInvoiceFilters } from "../../hooks/useInvoiceFilters";
 
 /** Use this field name to get or modify status filter value elsewhere */
@@ -30,17 +32,11 @@ export const StatusSelect = ({ data, disabled }) => {
       size="small"
       displayEmpty
     >
-      <MenuItem
-        disabled
-        value=""
-      >
+      <MenuItem disabled value="">
         Status
       </MenuItem>
       {selectData.map(({ value, label }) => (
-        <MenuItem
-          key={`${value}${label}`}
-          value={value}
-        >
+        <MenuItem key={`${value}${label}`} value={value}>
           {label}
         </MenuItem>
       ))}

@@ -9,16 +9,18 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { usePagination } from "../../hooks/usePagination";
-import { InvoiceStatusBadge } from "./InvoiceStatusBadge";
-import { InvoiceRowActions } from "./InvoiceRowActions";
+
+import { useGetUserById } from "@/hooks/query/user/useGetUserById";
+import { formatToRupiah } from "@/utils/formatToRupiah";
+
+import { useFilterStatus } from "../../hooks/useFilterStatus";
 import { useGetAllInvoices } from "../../hooks/useGetAllInvoices";
 import { useGetAllUserBill } from "../../hooks/useGetAllUserBill";
-import { useFilterStatus } from "../../hooks/useFilterStatus";
 import { useGetBillById } from "../../hooks/useGetBillById";
-import { useGetUserById } from "@/hooks/useGetUserById";
+import { usePagination } from "../../hooks/usePagination";
 import { LoadingDataCard } from "../LoadingDataCard";
-import { formatToRupiah } from "@/utils/formatToRupiah";
+import { InvoiceRowActions } from "./InvoiceRowActions";
+import { InvoiceStatusBadge } from "./InvoiceStatusBadge";
 
 export const InvoiceData = () => {
   const theme = useTheme();
@@ -29,8 +31,9 @@ export const InvoiceData = () => {
   if (isLoading || !mounted)
     return (
       <Stack gap={2}>
-        {[...Array(3)].map(() => (
+        {[...Array(3)].map((i) => (
           <Box
+            key={i}
             className={`w-full h-52 rounded-lg animate-pulse`}
             sx={{ backgroundColor: theme.palette.base.base30 }}
           />
@@ -54,11 +57,7 @@ export const InvoiceData = () => {
     </Stack>
   ) : (
     // TODO: add empty state here
-    <Stack
-      component={Paper}
-      alignItems="center"
-      padding={3}
-    >
+    <Stack component={Paper} alignItems="center" padding={3}>
       No data found
     </Stack>
   );
@@ -118,39 +117,20 @@ const DataCard = ({ id, user_bill_id, amount, status }) => {
         alignItems="center"
         gap={2}
       >
-        <Typography
-          fontWeight={600}
-          variant="body1"
-        >
+        <Typography fontWeight={600} variant="body1">
           Invoice #{id}
         </Typography>
 
-        <InvoiceRowActions
-          id={id}
-          status={status}
-        />
+        <InvoiceRowActions id={id} status={status} />
       </Stack>
 
       <Divider orientation="horizontal" />
 
-      <Stack
-        flexDirection="column"
-        gap={2}
-      >
-        <Stack
-          flexDirection="column"
-          gap={1}
-        >
-          <Stack
-            flexDirection="row"
-            alignItems="center"
-            gap={1}
-          >
+      <Stack flexDirection="column" gap={2}>
+        <Stack flexDirection="column" gap={1}>
+          <Stack flexDirection="row" alignItems="center" gap={1}>
             <Typography variant="body1">{userData.name}</Typography>
-            <Typography
-              variant="body2"
-              color="gray"
-            >
+            <Typography variant="body2" color="gray">
               {userTypeMap[userData.type]}
             </Typography>
           </Stack>
@@ -162,21 +142,12 @@ const DataCard = ({ id, user_bill_id, amount, status }) => {
           justifyContent="space-between"
           alignItems="center"
         >
-          <Stack
-            flexDirection="column"
-            gap={0}
-          >
-            <Typography
-              variant="caption"
-              color="gray"
-            >
+          <Stack flexDirection="column" gap={0}>
+            <Typography variant="caption" color="gray">
               Nilai Invoice:
             </Typography>
 
-            <Typography
-              variant="body1"
-              fontWeight={600}
-            >
+            <Typography variant="body1" fontWeight={600}>
               {formatToRupiah(amount)}
             </Typography>
           </Stack>

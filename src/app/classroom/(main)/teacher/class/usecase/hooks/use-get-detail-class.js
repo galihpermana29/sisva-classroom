@@ -1,11 +1,13 @@
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { getClassDataById } from "../../repository/teacher-class-service";
+
 import {
   setClassData,
   setIsFetching,
 } from "@/app/classroom/shared/redux/classSlice";
-import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+
+import { getClassDataById } from "../../repository/teacher-class-service";
 
 export const useGetDetailClass = (id) => {
   const classData = useSelector((state) => state.classData.detailClass);

@@ -1,13 +1,32 @@
 "use client";
 
-import { useQueryParam } from "@/hooks/useQueryParam";
 import { Button, Stack, Typography } from "@mui/material";
+
+import { useQueryParam } from "@/hooks/useQueryParam";
+
+import { JADWAL_KESELURUHAN_FIELD_NAME } from "./filters/JadwalKeseluruhanSwitch";
+import { KELAS_FIELD_NAME } from "./filters/KelasSelect";
+import { PRODI_FIELD_NAME } from "./filters/ProdiSelect";
+import { TINGKAT_FIELD_NAME } from "./filters/TingkatSelect";
 
 export const TAB_FIELD_NAME = "tab";
 
 export const TabsSelector = ({ tabs, activeTab }) => {
   const { updateQueryParam } = useQueryParam();
-  const changeTab = (value) => updateQueryParam(TAB_FIELD_NAME, value);
+  const changeTab = (value) => {
+    // if tab is Jadwal Keseluruhan
+    if (value === 1) {
+      updateQueryParam({
+        [TAB_FIELD_NAME]: value,
+        [TINGKAT_FIELD_NAME]: "",
+        [PRODI_FIELD_NAME]: "",
+        [KELAS_FIELD_NAME]: "",
+        [JADWAL_KESELURUHAN_FIELD_NAME]: "true",
+      });
+    } else {
+      updateQueryParam(TAB_FIELD_NAME, value);
+    }
+  };
 
   return (
     <Stack

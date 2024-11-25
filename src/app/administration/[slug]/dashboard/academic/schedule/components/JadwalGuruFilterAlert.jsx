@@ -1,6 +1,7 @@
 "use client";
 
 import { Alert, AlertTitle, Box } from "@mui/material";
+
 import { useFilterStatus } from "../hooks/filters/useFilterStatus";
 
 export const JadwalGuruFilterAlert = () => {
@@ -11,10 +12,7 @@ export const JadwalGuruFilterAlert = () => {
 
   return (
     <Box paddingX={3}>
-      <Alert
-        sx={{ borderRadius: "0.5rem" }}
-        severity="warning"
-      >
+      <Alert sx={{ borderRadius: "0.5rem" }} severity="warning">
         <AlertTitle>Peringatan: Filter Belum Lengkap!</AlertTitle>
         Untuk menampilkan data pada tabel, Anda perlu memilih keempat filter
         yang tersedia: <b>periode</b>, <b>program studi</b>, dan <b>guru</b>.

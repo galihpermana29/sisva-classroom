@@ -1,14 +1,17 @@
 "use client";
 
+import "@/app/syncfusion.css";
+
+import { Typography } from "@mui/material";
+import { Internationalization } from "@syncfusion/ej2-base";
 import {
   Inject,
   ScheduleComponent,
+  ViewDirective,
+  ViewsDirective,
   Week,
 } from "@syncfusion/ej2-react-schedule";
-import { Internationalization } from "@syncfusion/ej2-base";
-import { Typography } from "@mui/material";
 import dayjs from "dayjs";
-import { font } from "@/app/layout";
 
 const WeekGeneralSchedule = ({ data, cellTemplate }) => {
   const instance = new Internationalization();
@@ -41,6 +44,7 @@ const WeekGeneralSchedule = ({ data, cellTemplate }) => {
       workHours={workHours}
       width="100%"
       height="100%"
+      timeScale={{ enable: true, interval: 60, slotCount: 5 }}
       // setting first day of week to monday
       firstDayOfWeek={1}
       selectedDate={selectedDate}
@@ -59,6 +63,9 @@ const WeekGeneralSchedule = ({ data, cellTemplate }) => {
       // to customize .e-appointment (event card) styling
       eventRendered={onEventRendered}
     >
+      <ViewsDirective>
+        <ViewDirective option="Week" />
+      </ViewsDirective>
       <Inject services={[Week]} />
     </ScheduleComponent>
   );
@@ -82,11 +89,7 @@ const formatDateHeaderToBahasa = (day) => {
 
 const getDateHeaderText = (props, instance) => {
   return (
-    <Typography
-      className="text-center"
-      variant="body2"
-      fontWeight={600}
-    >
+    <Typography className="text-center" variant="body2" fontWeight={600}>
       {/* this change the date header to only day, and then translates it to bahasa */}
       {formatDateHeaderToBahasa(
         instance.formatDate(props.date, { format: "EEEE" })
@@ -102,7 +105,7 @@ const onRenderCell = (args) => {
   ) {
     let target = args.element;
     // setting jam column name on the top left
-    target.innerHTML = `<div class="font-semibold text-sm text-center ${font.className}">Jam</div>`;
+    target.innerHTML = `<div class="font-semibold text-sm text-center font-kumbh">Jam</div>`;
   }
 };
 
@@ -172,7 +175,10 @@ const roundAndFormatHour = (timestamp, type) => {
     // handles hour later than 23:xx
     if (hour >= 23) return timestamp.set("minute", 59).format("HH:mm");
     // else just round up to the nearest hour
-    return timestamp.set("minute", 0).set("hour", hour + 1);
+    return timestamp
+      .set("minute", 0)
+      .set("hour", hour + 1)
+      .format("HH:mm");
   }
 
   return timestamp.format("HH:mm");

@@ -1,13 +1,14 @@
 "use client";
 
 import { useMemo } from "react";
+
+import { useGetAllClasses } from "@/hooks/query/academic/useGetAllClasses";
+
+import { countConsecutiveAppearances } from "../utils/countScheduleConsecutiveAppearance";
+import { formatAndCombineSchedule } from "../utils/formatAndCombineSchedule";
 import { useFilterStatus } from "./filters/useFilterStatus";
 import { useGetClassSchedule } from "./useGetClassSchedule";
-
 import { useGetNonLearningSchedule } from "./useGetNonLearningSchedule";
-import { formatAndCombineSchedule } from "../utils/formatAndCombineSchedule";
-import { countConsecutiveAppearances } from "../utils/countScheduleConsecutiveAppearance";
-import { useGetAllClasses } from "@/hooks/useGetAllClasses";
 
 export const useGetAvailableClassSchedules = () => {
   const { kelas: studentGroupFilter } = useFilterStatus();
@@ -36,9 +37,12 @@ export const useGetAvailableClassSchedules = () => {
 };
 
 const filterLearningSchedule = (schedules, studentGroupFilter, classes) => {
-  const matchingClass = classes?.find(
-    (kelas) => kelas.student_group_id === parseInt(studentGroupFilter)
+  const matchingClassIds = classes
+    ?.filter((kelas) => kelas.student_group_id === parseInt(studentGroupFilter))
+    .map((kelas) => kelas.id);
+
+  if (!schedules || !matchingClassIds) return [];
+  return schedules.filter((schedule) =>
+    matchingClassIds.includes(schedule.class_id)
   );
-  if (!schedules || !matchingClass) return [];
-  return schedules.filter((schedule) => schedule.class_id === matchingClass.id);
 };

@@ -1,10 +1,11 @@
 import { Box, Divider, Paper, Stack } from "@mui/material";
 import { Suspense } from "react";
-import { TabLayoutTitle } from "./components/layouts/TabLayoutTitle";
-import { TabActions } from "./components/layouts/TabActions";
+
 import { InvoiceTabs } from "./components/layouts/InvoiceTabs";
-import { TabSearch } from "./components/layouts/TabSearch";
+import { TabActions } from "./components/layouts/TabActions";
 import { TabFilters } from "./components/layouts/TabFilters";
+import { TabLayoutTitle } from "./components/layouts/TabLayoutTitle";
+import { TabSearch } from "./components/layouts/TabSearch";
 
 export default function InvoiceLayout({ children }) {
   return (
@@ -13,10 +14,7 @@ export default function InvoiceLayout({ children }) {
       display={{ xs: "flex", lg: "contents" }}
       gap={0}
     >
-      <Stack
-        padding={{ xs: 0, lg: "2rem" }}
-        gap={3}
-      >
+      <Stack padding={{ xs: 0, lg: "2rem" }} gap={3}>
         <Stack
           gap={4}
           display={{ xs: "none", lg: "flex" }}

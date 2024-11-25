@@ -1,6 +1,5 @@
 "use client";
 
-import { ModalBody } from "@/components/CustomModal";
 import { ModeEdit } from "@mui/icons-material";
 import {
   IconButton,
@@ -10,19 +9,22 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
+import { useFormik } from "formik";
 import { useState } from "react";
-import { useGetInvoiceById } from "../../../hooks/useGetInvoiceById";
-import { BillDetails } from "./BillDetails";
+
+import { ModalBody } from "@/components/CustomModal";
+import { FieldLabel } from "@/components/FieldLabel";
+import { useGetUserById } from "@/hooks/query/user/useGetUserById";
+import { formatToRupiah } from "@/utils/formatToRupiah";
+
+import { useEditInvoice } from "../../../hooks/useEditInvoice";
 import { useGetAllUserBill } from "../../../hooks/useGetAllUserBill";
 import { useGetBillById } from "../../../hooks/useGetBillById";
-import { useGetUserById } from "@/hooks/useGetUserById";
-import { useFormik } from "formik";
-import { EditInvoiceForm } from "../../forms/edit-invoice";
-import { FieldLabel } from "@/components/FieldLabel";
-import { getEditInvoiceSchema } from "../../forms/edit-invoice/editInvoiceSchema";
-import { useEditInvoice } from "../../../hooks/useEditInvoice";
-import { formatToRupiah } from "@/utils/formatToRupiah";
+import { useGetInvoiceById } from "../../../hooks/useGetInvoiceById";
 import { useUpdatePayment } from "../../../hooks/useUpdatePayment";
+import { EditInvoiceForm } from "../../forms/edit-invoice";
+import { getEditInvoiceSchema } from "../../forms/edit-invoice/editInvoiceSchema";
+import { BillDetails } from "./BillDetails";
 
 export const EditInvoiceModal = ({ id }) => {
   const [open, setOpen] = useState(false);
@@ -32,11 +34,7 @@ export const EditInvoiceModal = ({ id }) => {
 
   return (
     <>
-      <IconButton
-        onClick={handleOpen}
-        aria-label="edit"
-        size="small"
-      >
+      <IconButton onClick={handleOpen} aria-label="edit" size="small">
         <ModeEdit />
       </IconButton>
       <Modal
@@ -49,12 +47,7 @@ export const EditInvoiceModal = ({ id }) => {
           maxWidth={600}
           title="Ubah Invoice"
           handleClose={handleClose}
-          content={
-            <ModalContent
-              id={id}
-              handleClose={handleClose}
-            />
-          }
+          content={<ModalContent id={id} handleClose={handleClose} />}
         />
       </Modal>
     </>
@@ -116,36 +109,19 @@ const ModalContent = ({ id, handleClose }) => {
       width="100%"
       gap={3}
     >
-      <Stack
-        width="100%"
-        flexDirection="row"
-        gap={1}
-      >
+      <Stack width="100%" flexDirection="row" gap={1}>
         <FieldLabel name="Tagihan">
-          <Select
-            value={billId}
-            size="small"
-            disabled
-            fullWidth
-          >
+          <Select value={billId} size="small" disabled fullWidth>
             <MenuItem value={billId}>{bill?.name}</MenuItem>
           </Select>
         </FieldLabel>
         <FieldLabel name="Tagihan Pengguna">
-          <Select
-            value={userBillId}
-            size="small"
-            disabled
-            fullWidth
-          >
+          <Select value={userBillId} size="small" disabled fullWidth>
             <MenuItem value={userBillId}>{user?.name}</MenuItem>
           </Select>
         </FieldLabel>
       </Stack>
-      <BillDetails
-        billId={billId}
-        userBillId={userBillId}
-      />
+      <BillDetails billId={billId} userBillId={userBillId} />
       <FieldLabel name="Nilai Invoice">
         <TextField
           value={formatToRupiah(invoice?.amount)}
@@ -153,10 +129,7 @@ const ModalContent = ({ id, handleClose }) => {
           disabled
         />
       </FieldLabel>
-      <EditInvoiceForm
-        handleClose={handleClose}
-        formik={formik}
-      />
+      <EditInvoiceForm handleClose={handleClose} formik={formik} />
     </Stack>
   );
 };

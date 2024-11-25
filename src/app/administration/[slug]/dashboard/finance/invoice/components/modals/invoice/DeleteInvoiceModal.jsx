@@ -1,5 +1,6 @@
 "use client";
 
+import { Delete } from "@mui/icons-material";
 import {
   Button,
   IconButton,
@@ -9,8 +10,9 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
+
 import { ModalBody } from "@/components/CustomModal";
-import { Delete } from "@mui/icons-material";
+
 import { useDeleteInvoice } from "../../../hooks/useDeleteInvoice";
 
 export const DeleteInvoiceModal = ({ id, isDisabled }) => {
@@ -48,12 +50,7 @@ export const DeleteInvoiceModal = ({ id, isDisabled }) => {
         <ModalBody
           maxWidth={400}
           handleClose={handleClose}
-          content={
-            <ModalContent
-              id={id}
-              handleClose={handleClose}
-            />
-          }
+          content={<ModalContent id={id} handleClose={handleClose} />}
         />
       </Modal>
     </>
@@ -75,33 +72,17 @@ const ModalContent = ({ id, handleClose }) => {
         className="border-0"
         src="https://lottie.host/embed/6d4a2abf-582d-43ab-bf7b-bcef061d5319/2JJjyKCiUO.json"
       ></iframe>
-      <Stack
-        width="100%"
-        gap={3}
-      >
-        <Stack
-          width="100%"
-          gap={1}
-        >
-          <Typography
-            variant="h5"
-            fontWeight={500}
-          >
+      <Stack width="100%" gap={3}>
+        <Stack width="100%" gap={1}>
+          <Typography variant="h5" fontWeight={500}>
             Hapus Invoice
           </Typography>
-          <Typography
-            variant="body1"
-            className="text-pretty text-gray-400"
-          >
+          <Typography variant="body1" className="text-pretty text-gray-400">
             Anda akan menghapus invoice ini. <br />
             Apakah Anda yakin?
           </Typography>
         </Stack>
-        <Stack
-          width="100%"
-          flexDirection="row"
-          gap={2}
-        >
+        <Stack width="100%" flexDirection="row" gap={2}>
           <Button
             onClick={handleClose}
             sx={{ color: "lightslategray" }}

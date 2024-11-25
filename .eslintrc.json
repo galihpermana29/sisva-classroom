@@ -1,0 +1,25 @@
+{
+  "extends": [
+    "next/core-web-vitals",
+    "next/typescript",
+    "plugin:@tanstack/query/recommended"
+  ],
+  "plugins": ["simple-import-sort"],
+  "rules": {
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "prefer-const": "off",
+    "@typescript-eslint/no-unused-expressions": "off",
+    "no-undef": "error",
+    // run 'npx next lint --fix' to fix imports
+    "simple-import-sort/imports": "warn",
+    "simple-import-sort/exports": "warn"
+  },
+  "env": {
+    "es2020": true
+  },
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": "latest"
+  }
+}

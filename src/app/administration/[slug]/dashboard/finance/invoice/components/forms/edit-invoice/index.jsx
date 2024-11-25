@@ -1,17 +1,15 @@
 "use client";
 
-import { FieldLabel } from "@/components/FieldLabel";
-import { FileUpload } from "@/components/FileUpload";
-import { getImageUrl } from "@/utils/getImageUrl";
 import { Button, MenuItem, Select, Stack, TextField } from "@mui/material";
 import Image from "next/image";
 
+import { FieldLabel } from "@/components/FieldLabel";
+import { FileUpload } from "@/components/FileUpload";
+import { getImageUrl } from "@/utils/getImageUrl";
+
 export const EditInvoiceForm = ({ formik, handleClose }) => {
   return (
-    <form
-      className="flex flex-col gap-6"
-      onSubmit={formik.handleSubmit}
-    >
+    <form className="flex flex-col gap-6" onSubmit={formik.handleSubmit}>
       <FieldLabel name="Status">
         <LocalStatusSelect
           id="status"
@@ -66,6 +64,7 @@ export const EditInvoiceForm = ({ formik, handleClose }) => {
               width={600}
               src={formik.values["payment_proof_uri"]}
               style={{ height: "max-content", width: "100%" }}
+              alt=""
             />
           </div>
         ) : null}
@@ -104,11 +103,7 @@ export const EditInvoiceForm = ({ formik, handleClose }) => {
         >
           Batal
         </Button>
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-        >
+        <Button type="submit" fullWidth variant="contained">
           Simpan
         </Button>
       </Stack>
@@ -118,15 +113,8 @@ export const EditInvoiceForm = ({ formik, handleClose }) => {
 
 const LocalStatusSelect = (props) => {
   return (
-    <Select
-      size="small"
-      displayEmpty
-      {...props}
-    >
-      <MenuItem
-        disabled
-        value=""
-      >
+    <Select size="small" displayEmpty {...props}>
+      <MenuItem disabled value="">
         Status
       </MenuItem>
       <MenuItem value="done">Lunas</MenuItem>

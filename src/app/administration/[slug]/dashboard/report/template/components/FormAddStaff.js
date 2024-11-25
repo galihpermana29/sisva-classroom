@@ -1,15 +1,12 @@
 "use client";
 
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
-  Avatar,
   Box,
-  Button,
   Chip,
   FormControl,
-  Grid,
   IconButton,
   InputAdornment,
-  InputLabel,
   MenuItem,
   OutlinedInput,
   Select,
@@ -17,11 +14,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import Image from "next/image";
+import { useState } from "react";
 
 import { formAddStaffFields } from "@/globalcomponents/FormFields";
-import { Cancel, Visibility, VisibilityOff } from "@mui/icons-material";
-import { useState } from "react";
 import { permissions } from "@/globalcomponents/Variable";
 
 export const FormAddStaff = ({ formik, editing }) => {
@@ -92,7 +87,7 @@ export const FormAddStaff = ({ formik, editing }) => {
               select
               value={formik.values[field.name]}
               onChange={(e) => formik.setFieldValue(field.name, e.target.value)}
-              sx={{ flex: { xs: 1, lg: 0 }}}
+              sx={{ flex: { xs: 1, lg: 0 } }}
             >
               {field.data.map((option) => (
                 <MenuItem key={option.slug} value={option.slug}>

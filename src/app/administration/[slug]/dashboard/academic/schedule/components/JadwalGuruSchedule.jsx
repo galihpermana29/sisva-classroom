@@ -1,12 +1,13 @@
 "use client";
 
 import { Stack } from "@mui/material";
+
 import { useFilterStatus } from "../hooks/filters/useFilterStatus";
-import { FilterIncompleteState } from "./FilterIncompleteState";
 import { useGetAvailableTeacherSchedules } from "../hooks/useGetAvailableTeacherSchedules";
-import WeekGeneralSchedule from "./schedule/WeekGeneralSchedule";
-import { NonLearningCell } from "./schedule/NonLearningCell";
+import { FilterIncompleteState } from "./FilterIncompleteState";
 import { GuruLearningCell } from "./schedule/GuruLearningCell";
+import { NonLearningCell } from "./schedule/NonLearningCell";
+import WeekGeneralSchedule from "./schedule/WeekGeneralSchedule";
 
 export const JadwalGuruSchedule = () => {
   const { periode, prodi, guru } = useFilterStatus();
@@ -18,14 +19,11 @@ export const JadwalGuruSchedule = () => {
     <Stack
       alignItems="center"
       justifyContent="center"
-      minWidth={shouldRender && 1280}
+      minWidth={shouldRender && 1400}
     >
       {!shouldRender && <FilterIncompleteState />}
       {shouldRender && (
-        <WeekGeneralSchedule
-          data={data}
-          cellTemplate={getTemplate}
-        />
+        <WeekGeneralSchedule data={data} cellTemplate={getTemplate} />
       )}
     </Stack>
   );

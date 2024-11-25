@@ -1,6 +1,7 @@
 import { ChevronRight } from "@untitled-ui/icons-react";
 import clsx from "clsx";
 import React from "react";
+
 import { useTokenColor } from "../../usecase/use-token-color";
 
 const MenuItem = ({ icon, title, subtitle, active, onClick }) => {

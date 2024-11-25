@@ -1,4 +1,7 @@
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+
 import {
   getAllClasses,
   getAllTasks,
@@ -6,8 +9,6 @@ import {
   getStudentScores,
   getUserById,
 } from "../repository/scoring-submission-service";
-import { useParams } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
 
 export function useGetStudentList() {
   const [students, setStudents] = useState([]);

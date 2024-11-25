@@ -1,21 +1,22 @@
+import { useDebouncedValue } from "@mantine/hooks";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useDebounce } from "use-debounce";
-import {
-  getSubjectById,
-  getTeachingMaterialList,
-} from "../repository/teaching-material-service";
-import {
-  searchFilter,
-  restructureTeachingMaterialList,
-} from "../model/data-mapper";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
+
 import {
   getGradeDropdownById,
   getStudentGroupList,
 } from "../../class/repository/teacher-class-service";
 import { createDropdown } from "../../class/usecase/data-mapper-service";
+import {
+  restructureTeachingMaterialList,
+  searchFilter,
+} from "../model/data-mapper";
+import {
+  getSubjectById,
+  getTeachingMaterialList,
+} from "../repository/teaching-material-service";
 import { generateRandomString } from "./custom-function";
-import { useSelector } from "react-redux";
-import toast from "react-hot-toast";
 
 export const useTeachingMaterial = (initialData) => {
   const [teachingMaterialData, setTeachingMaterialData] = useState(
@@ -46,7 +47,7 @@ export const useTeachingMaterial = (initialData) => {
     [queryFilter]
   );
 
-  const [debouncedQueryFilter] = useDebounce(queryFilter, 200);
+  const [debouncedQueryFilter] = useDebouncedValue(queryFilter, 200);
 
   const classData = useSelector((state) => state.classData.detailClass);
 

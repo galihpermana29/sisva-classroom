@@ -1,9 +1,12 @@
+import "../../../style.css";
+
 import Image from "next/image";
 import React from "react";
+
 import LayoutBg from "@/assets/classroom/images/Auth/BGLoginSVG.svg";
 import BrandLogo from "@/assets/classroom/images/Auth/BrandLogo.svg";
+
 import LoginForm from "../presentation/LoginForm";
-import "../../../style.css";
 
 const SignInContainer = () => {
   return (

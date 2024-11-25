@@ -1,76 +1,74 @@
-'use client';
+"use client";
 
-import { Box, Button, OutlinedInput, Stack, Typography } from '@mui/material';
-import { SchoolCodeIllustration } from '@/assets/SVGs';
-import useTheme from '@mui/material/styles/useTheme';
+import { Button, OutlinedInput, Stack, Typography } from "@mui/material";
+import useTheme from "@mui/material/styles/useTheme";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-import Link from 'next/link';
-
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { SchoolCodeIllustration } from "@/assets/SVGs";
 
 export default function InsertSchoolCode() {
   const theme = useTheme();
   const router = useRouter();
 
-  let [code, setCode] = useState('');
+  let [code, setCode] = useState("");
   return (
     <Stack
       sx={{
-        width: '100%',
-        height: '100vh',
-        justifyContent: 'center',
-        alignItems: 'center',
+        width: "100%",
+        height: "100vh",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
       <Stack
         sx={{
-          maxWidth: '600px',
-          width: '100%',
-          height: '100%',
-          justifyContent: 'center',
-          p: '0 24px',
-          alignItems: 'center',
+          maxWidth: "600px",
+          width: "100%",
+          height: "100%",
+          justifyContent: "center",
+          p: "0 24px",
+          alignItems: "center",
         }}
       >
         <SchoolCodeIllustration
-          color={'#008CD5'}
-          sx={{ maxWidth: '90%', objectFit: 'cover', fontSize: 300 }}
+          color={"#008CD5"}
+          sx={{ maxWidth: "90%", objectFit: "cover", fontSize: 300 }}
         />
         <Typography
           sx={{
-            textAlign: 'center',
+            textAlign: "center",
             fontWeight: 700,
             fontSize: 24,
-            color: '#008CD5',
+            color: "#008CD5",
             mt: 2,
           }}
         >
           Hai, Selamat Datang di Sisva!
         </Typography>
-        <Typography sx={{ textAlign: 'center', mb: 3 }}>
+        <Typography sx={{ textAlign: "center", mb: 3 }}>
           Masukkan kode sekolah untuk melanjutkan.
         </Typography>
 
         <OutlinedInput
           value={code}
           onChange={(e) => setCode(e.target.value)}
-          sx={{ maxWidth: '280px', width: '100%' }}
-          placeholder='Masukkan Kode Sekolah'
+          sx={{ maxWidth: "280px", width: "100%" }}
+          placeholder="Masukkan Kode Sekolah"
           onKeyDown={(e) => {
-            if (e.key == 'Enter') {
+            if (e.key == "Enter") {
               router.push(`/administration/${code}/auth/login`);
             }
           }}
         />
         <Button
-          sx={{ maxWidth: '280px', width: '100%', mt: 1 }}
-          variant='contained'
+          sx={{ maxWidth: "280px", width: "100%", mt: 1 }}
+          variant="contained"
           onClick={() => {
             router.push(`/administration/${code}/auth/login`);
           }}
         >
-          <Typography textTransform={'none'}>Lanjutkan</Typography>
+          <Typography textTransform={"none"}>Lanjutkan</Typography>
         </Button>
       </Stack>
     </Stack>

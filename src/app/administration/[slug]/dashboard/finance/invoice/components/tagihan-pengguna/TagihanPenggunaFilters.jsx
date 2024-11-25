@@ -1,18 +1,14 @@
 import { Divider, Stack } from "@mui/material";
 
 import { DateRangeSelect } from "../filters/DateRangeSelect";
-import { TagihanPenggunaKategoriFilter } from "../filters/tagihan-pengguna/TagihanPenggunaKategoriFilter";
 import FilterReset from "../filters/FilterReset";
+import { TagihanPenggunaKategoriFilter } from "../filters/tagihan-pengguna/TagihanPenggunaKategoriFilter";
 import { TagihanPenggunaSort } from "./TagihanPenggunaSort";
 
 /** @description Component for handling tagihan pengguna tab's filters */
 export const TagihanPenggunaFilters = () => {
   return (
-    <Stack
-      flexDirection="row"
-      alignItems="center"
-      gap={1}
-    >
+    <Stack flexDirection="row" alignItems="center" gap={1}>
       <TagihanPenggunaSort />
       <Divider
         orientation="vertical"

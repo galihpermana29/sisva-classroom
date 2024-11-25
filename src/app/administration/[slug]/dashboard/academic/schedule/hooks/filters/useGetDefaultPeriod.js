@@ -1,8 +1,9 @@
 "use client";
 
-import { useGetAllPeriods } from "@/hooks/useGetAllPeriods";
 import dayjs from "dayjs";
 import { useMemo } from "react";
+
+import { useGetAllPeriods } from "@/hooks/query/academic/useGetAllPeriods";
 
 export const useGetDefaultPeriod = () => {
   const { data: periods, isStale: periodIsStale } = useGetAllPeriods();

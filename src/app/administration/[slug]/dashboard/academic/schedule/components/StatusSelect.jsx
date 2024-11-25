@@ -9,14 +9,8 @@ export const StatusSelect = ({
   withError = true,
 }) => {
   return (
-    <Stack
-      width="100%"
-      spacing={1}
-    >
-      <Typography
-        fontWeight={600}
-        variant="body2"
-      >
+    <Stack width="100%" spacing={1}>
+      <Typography fontWeight={600} variant="body2">
         {label}
       </Typography>
       <Select
@@ -29,17 +23,11 @@ export const StatusSelect = ({
         error={formik.touched[name] && Boolean(formik.errors[name])}
         displayEmpty
       >
-        <MenuItem
-          disabled
-          value={""}
-        >
+        <MenuItem disabled value={""}>
           {placeholder}
         </MenuItem>
         {statuses.map(({ label, value }) => (
-          <MenuItem
-            key={`${label}${value}`}
-            value={value}
-          >
+          <MenuItem key={`${label}${value}`} value={value}>
             {label}
           </MenuItem>
         ))}

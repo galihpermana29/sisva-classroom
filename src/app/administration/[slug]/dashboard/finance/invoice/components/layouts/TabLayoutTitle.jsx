@@ -1,6 +1,7 @@
 "use client";
 
 import { Typography } from "@mui/material";
+
 import { useActiveInvoiceTab } from "../../hooks/useActiveInvoiceTab";
 
 /** @description Component for top level invoice layout title */

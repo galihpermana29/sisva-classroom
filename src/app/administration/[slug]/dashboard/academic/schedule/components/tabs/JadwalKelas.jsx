@@ -1,15 +1,13 @@
 import { Stack, TableContainer } from "@mui/material";
-import { JadwalKelasFilters } from "../filters/jadwal-kelas";
 import { Suspense } from "react";
-import { JadwalKelasSchedule } from "../JadwalKelasSchedule";
+
+import { JadwalKelasFilters } from "../filters/jadwal-kelas";
 import { JadwalKelasFilterAlert } from "../JadwalKelasFilterAlert";
+import { JadwalKelasSchedule } from "../JadwalKelasSchedule";
 
 export const JadwalKelas = () => {
   return (
-    <Stack
-      paddingTop={3}
-      spacing={3}
-    >
+    <Stack paddingTop={3} spacing={3} className="thick-scrollbar">
       <Suspense>
         <JadwalKelasFilterAlert />
       </Suspense>

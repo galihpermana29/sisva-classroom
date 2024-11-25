@@ -1,11 +1,16 @@
-'use client';
+"use client";
 
-import CmsAPI from '@/api/cms';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import '../globals.css';
-import { themeConfig } from './theme';
+import "../globals.css";
+
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Provider } from "react-redux";
+
+import CmsAPI from "@/api/cms";
+
+import { store } from "./store";
+import { themeConfig } from "./theme";
 
 export default function RootLayout({ children }) {
   const { slug } = useParams();
@@ -31,10 +36,8 @@ export default function RootLayout({ children }) {
   }, [slug]);
 
   return (
-    <html lang='en'>
-      <body suppressHydrationWarning={true}>
-        <ThemeProvider theme={theme}>{children}</ThemeProvider>
-      </body>
-    </html>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+    </Provider>
   );
 }

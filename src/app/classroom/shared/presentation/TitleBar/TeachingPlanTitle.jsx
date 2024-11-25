@@ -10,9 +10,12 @@ const TeachingPlanTitle = ({ title, className, prefix }) => {
         backgroundColor: tokenColor + "20",
       }}
     >
-      <div className="absolute top-0 bottom-0 left-0 w-[3px] my-auto  h-[60%] rounded-full" style={{
-        backgroundColor: tokenColor
-      }} />
+      <div
+        className="absolute top-0 bottom-0 left-0 w-[3px] my-auto  h-[60%] rounded-full"
+        style={{
+          backgroundColor: tokenColor,
+        }}
+      />
 
       <h2 className="ml-1 text-sm font-medium font-kumbh">{title}</h2>
 

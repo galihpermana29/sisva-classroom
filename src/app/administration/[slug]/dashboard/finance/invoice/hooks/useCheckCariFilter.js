@@ -1,6 +1,7 @@
 "use client";
 
-import { useGetUserById } from "@/hooks/useGetUserById";
+import { useGetUserById } from "@/hooks/query/user/useGetUserById";
+
 import { useFilterStatus } from "./useFilterStatus";
 
 export const useCheckCariFilter = (user_id) => {

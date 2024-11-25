@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+
+import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
+
 import {
   getAllTasks,
   getScoreByClassId,
   getTaskById,
 } from "../repository/score-service";
 import { parseDateTimeSort } from "./dateFormatter";
-import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
 import { useCalculateAverage } from "./use-average";
 
 export function useGetScores() {

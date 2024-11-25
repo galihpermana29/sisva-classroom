@@ -4,6 +4,7 @@
  * @returns {boolean}
  */
 export function isOverdue(dateTime) {
+  console.log(dateTime);
   const [day, month, yearAndTime] = dateTime.split("/");
   const [year, time] = yearAndTime.split(" ");
   const formatted = `${month}/${day}/${year} ${time}`;

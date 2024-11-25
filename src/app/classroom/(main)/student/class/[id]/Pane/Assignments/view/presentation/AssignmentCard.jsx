@@ -1,6 +1,7 @@
-import React from "react";
-import SisvaButton from "@/app/classroom/shared/presentation/Button/GlobalButton";
 import { useParams, useRouter } from "next/navigation";
+import React from "react";
+
+import SisvaButton from "@/app/classroom/shared/presentation/Button/GlobalButton";
 import { generalDateFormatter } from "@/app/classroom/shared/usecase/helper";
 
 const AssignmentCard = ({ assignment, assignmentName, desc, deadline }) => {
@@ -25,10 +26,12 @@ const AssignmentCard = ({ assignment, assignmentName, desc, deadline }) => {
         </CardSection>
 
         <CardSection title="Status Pengumpulan">
-          <p className={`font-bold ${isSubmitted ? "text-green-500" : "text-red-500"}`}>
-            {isSubmitted
-              ? "Sudah Dikumpulkan"
-              : "Belum Mengumpulkan"}
+          <p
+            className={`font-bold ${
+              isSubmitted ? "text-green-500" : "text-red-500"
+            }`}
+          >
+            {isSubmitted ? "Sudah Dikumpulkan" : "Belum Mengumpulkan"}
           </p>
         </CardSection>
       </div>

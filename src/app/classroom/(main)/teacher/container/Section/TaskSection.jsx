@@ -1,11 +1,16 @@
 "use client";
 
+import Link from "next/link";
+
 import Cardtask from "@/app/classroom/shared/presentation/Card/CardTask";
 import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
 import SectionLayout from "@/app/classroom/shared/presentation/Layouts/SectionLayout";
 import CardTaskSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardTaskSkeleton";
-import { DEADLINE_FORMAT_24, generalDateFormatter } from "@/app/classroom/shared/usecase/helper";
-import Link from "next/link";
+import {
+  DEADLINE_FORMAT_24,
+  generalDateFormatter,
+} from "@/app/classroom/shared/usecase/helper";
+
 import { useGetAllTeacherTasks } from "../../usecase/useGetAllTeacherTasks";
 
 const TaskSection = () => {
@@ -30,10 +35,16 @@ const TaskSection = () => {
             </div>
           ) : (
             tasks.map((task, index) => (
-              <Link key={'task_'+task.id} href={`/classroom/teacher/class/${task.class_id}/task/${task.id}`}>
+              <Link
+                key={"task_" + task.id}
+                href={`/classroom/teacher/class/${task.class_id}/task/${task.id}`}
+              >
                 <Cardtask
                   key={task.id || index}
-                  deadline={generalDateFormatter(task.deadline, DEADLINE_FORMAT_24)}
+                  deadline={generalDateFormatter(
+                    task.deadline,
+                    DEADLINE_FORMAT_24
+                  )}
                   teacherName={task.teacher_name}
                   taskName={task.name}
                   lessonName={task.subject_name}

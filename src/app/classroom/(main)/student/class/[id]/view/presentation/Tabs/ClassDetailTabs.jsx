@@ -1,15 +1,16 @@
 "use client";
 
-import Tabs from "@/app/classroom/shared/presentation/Tabs/Tabs";
-import { useQueryParam } from "@/hooks/useQueryParam";
 import { useSearchParams } from "next/navigation";
-import { useMediaQuery } from "@/app/classroom/shared/usecase/hooks/use-mediaquery";
-import TableScore from "../Pane/Score/TableScore";
-import TableAttendances from "../Pane/Attendance/TableAttendance";
-import TeachingPlanPane from "../../../Pane/TeachingPlan";
-import AssignmentPane from "../../../Pane/Assignments";
-import TeachingMaterialTabs from "@/app/classroom/shared/presentation/RppTeachingMaterial/TeachingMaterialTabs";
 
+import TeachingMaterialTabs from "@/app/classroom/shared/presentation/RppTeachingMaterial/TeachingMaterialTabs";
+import Tabs from "@/app/classroom/shared/presentation/Tabs/Tabs";
+import { useMediaQuery } from "@/app/classroom/shared/usecase/hooks/use-mediaquery";
+import { useQueryParam } from "@/hooks/useQueryParam";
+
+import AssignmentPane from "../../../Pane/Assignments";
+import TeachingPlanPane from "../../../Pane/TeachingPlan";
+import TableAttendances from "../Pane/Attendance/TableAttendance";
+import TableScore from "../Pane/Score/TableScore";
 
 const ClassDetailTabs = ({ initialData }) => {
   const searchParams = useSearchParams();
@@ -51,12 +52,14 @@ const ClassDetailTabs = ({ initialData }) => {
     {
       key: "kehadiran",
       label: "Kehadiran",
-      children:      <div>
-        <h1 className="text-base text-base90 font-bold mb-6 ">
-          List Kehadiran Siswa
-        </h1>
-        <TableAttendances />
-      </div>
+      children: (
+        <div>
+          <h1 className="text-base text-base90 font-bold mb-6 ">
+            List Kehadiran Siswa
+          </h1>
+          <TableAttendances />
+        </div>
+      ),
     },
   ];
 

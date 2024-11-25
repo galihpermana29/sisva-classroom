@@ -1,8 +1,9 @@
 "use client";
 
 import { useMounted } from "@mantine/hooks";
-import { Paginations } from "../paginations";
+
 import { useGetAllInvoices } from "../../hooks/useGetAllInvoices";
+import { Paginations } from "../paginations";
 
 export const InvoicePagination = () => {
   const mounted = useMounted();

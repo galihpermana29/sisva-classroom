@@ -3,8 +3,9 @@
 import { Box, Stack, TableContainer } from "@mui/material";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
-import { JadwalKeseluruhanFilterAlert } from "../JadwalKeseluruhanFilterAlert";
+
 import JadwalKeseluruhanFilters from "../filters/jadwal-keseluruhan";
+import { JadwalKeseluruhanFilterAlert } from "../JadwalKeseluruhanFilterAlert";
 
 const JadwalKeseluruhanSchedule = dynamic(
   () =>
@@ -21,7 +22,7 @@ const JadwalKeseluruhanSchedule = dynamic(
 
 function JadwalKeseluruhan() {
   return (
-    <Stack paddingY={3} spacing={3}>
+    <Stack paddingY={3} spacing={3} className="thick-scrollbar no-y-scrollbar">
       <Suspense>
         <JadwalKeseluruhanFilterAlert />
       </Suspense>
@@ -36,11 +37,7 @@ function JadwalKeseluruhan() {
           <JadwalKeseluruhanFilters />
         </Suspense>
       </Stack>
-      <TableContainer>
-        <Box minWidth={764}>
-          <JadwalKeseluruhanSchedule />
-        </Box>
-      </TableContainer>
+      <JadwalKeseluruhanSchedule />
     </Stack>
   );
 }

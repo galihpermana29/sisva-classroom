@@ -1,14 +1,14 @@
+import { Edit05, UserCircle } from "@untitled-ui/icons-react";
 import { Avatar, Divider, Form, Upload } from "antd";
 import SkeletonAvatar from "antd/es/skeleton/Avatar";
-import React from "react";
+
+import { useProfileForm } from "../../../usecase/hooks/profile/use-profile-form";
+import { useTokenColor } from "../../../usecase/use-token-color";
+import SisvaButton from "../../Button/GlobalButton";
+import { SisvaSelect } from "../../Input/SelectField";
+import { SisvaInput } from "../../Input/SisvaInputField";
 import AvatarProfile from "../AvatarProfile";
 import FormItem from "../FormItem";
-import { SisvaInput } from "../../Input/SisvaInputField";
-import { useProfileForm } from "../../../usecase/hooks/profile/use-profile-form";
-import { SisvaSelect } from "../../Input/SelectField";
-import SisvaButton from "../../Button/GlobalButton";
-import { Edit05 } from "@untitled-ui/icons-react";
-import { useTokenColor } from "../../../usecase/use-token-color";
 
 const BiodataSection = ({
   form,

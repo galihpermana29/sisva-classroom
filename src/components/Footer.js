@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-
 import Image from "next/image";
+import React from "react";
 
 export default function Footer() {
   return (
@@ -14,6 +13,7 @@ export default function Footer() {
               src="/images/Sisva-LogoType-Black.png"
               fill
               style={{ objectFit: "contain" }}
+              alt=""
             />
           </div>
 
@@ -25,7 +25,9 @@ export default function Footer() {
         </div>{" "}
         <div className="flex-[2] flex flex-wrap mx-[2vw]">
           <div className="flex-[1] font-light flex flex-col mt-[2svh] lg:mt-0  items-center lg:items-start">
-            <h3 className="font-semibold text-[1.7svh] lg:text-[1.9svh] mb-[1svh] ">Kontak</h3>
+            <h3 className="font-semibold text-[1.7svh] lg:text-[1.9svh] mb-[1svh] ">
+              Kontak
+            </h3>
             <div className="flex items-center text-[1.7svh] lg:text-[1.9svh] mb-[.5svh]">
               <svg
                 className="h-[2.5svh] w-[2.5svh] mr-[1svh] hidden lg:flex"
@@ -134,7 +136,9 @@ export default function Footer() {
             </div>
           </div>
           <div className="flex-[1] font-light mt-[2svh] lg:mt-0 flex flex-col items-center lg:items-start">
-            <h3 className="font-semibold text-[1.7svh] lg:text-[1.9svh] mb-[.5svh] ">Sisva</h3>
+            <h3 className="font-semibold text-[1.7svh] lg:text-[1.9svh] mb-[.5svh] ">
+              Sisva
+            </h3>
             {/* <div className='d-flex flex-xs-flex flex-lg-column align-items-start'> */}
             <div className="flex items-center text-[1.7svh] lg:text-[1.9svh] ">
               <a href="https://www.sisva.id/about">Tentang Sisva</a>

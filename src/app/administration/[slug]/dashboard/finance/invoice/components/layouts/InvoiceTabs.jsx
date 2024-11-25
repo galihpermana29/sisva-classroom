@@ -1,10 +1,12 @@
 "use client";
 
-import { TAB_FIELD_NAME, TabsSelector } from "@/components/TabSelector";
-import { useActiveInvoiceTab } from "../../hooks/useActiveInvoiceTab";
-import { CURRENT_PAGE_NAME, INVOICE_TABS } from "../../constants";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
+
+import { TAB_FIELD_NAME, TabsSelector } from "@/components/TabSelector";
+
+import { CURRENT_PAGE_NAME, INVOICE_TABS } from "../../constants";
+import { useActiveInvoiceTab } from "../../hooks/useActiveInvoiceTab";
 import { SORT_PARAM_NAME } from "../../hooks/useSortKey";
 
 /** @description Component to display tab selector */

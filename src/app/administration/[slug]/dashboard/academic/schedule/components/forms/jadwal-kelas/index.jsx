@@ -1,24 +1,29 @@
 "use client";
 
-import AcademicAPI from "@/api/academic";
-import { useQueryParam } from "@/hooks/useQueryParam";
-import { formatTime } from "@/utils/formatTime";
 import { Button, Stack } from "@mui/material";
+import { useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { useFormik } from "formik";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
+
+import AcademicAPI from "@/api/academic";
+import { invalidateClasses } from "@/hooks/query/academic/useClasses";
+import { invalidateClassSchedules } from "@/hooks/query/academic/useClassSchedules";
+import { formatTime } from "@/utils/formatTime";
+
 import useCreateJadwalKelas from "../../../hooks/useCreateJadwalKelas";
 import { PERIODE_FIELD_NAME } from "../../filters/PeriodeSelect";
-import { ClassSelect } from "../../form-items/ClassSelect";
 import { DaySelectDynamic } from "../../form-items/DaySelectDynamic";
 import { LevelSelect } from "../../form-items/LevelSelect";
 import { PeriodSelect } from "../../form-items/PeriodSelect";
+import { StudentGroupSelect } from "../../form-items/StudentGroupSelect";
 import { StudyProgramSelect } from "../../form-items/StudyProgramSelect";
+import { SubjectSelect } from "../../form-items/SubjectSelect";
+import { TeacherSelect } from "../../form-items/TeacherSelect";
+import { TimeSelect } from "../../form-items/TimeSelect";
 import ErrorJadwalKelasModal from "../../modals/ErrorJadwalKelasModal";
 import { jadwalKelasSchema } from "./jadwalKelasSchema";
-import { StudentGroupSelect } from "../../form-items/StudentGroupSelect";
-import { TimeSelect } from "../../form-items/TimeSelect";
 
 function parseTime(timeString) {
   return dayjs(timeString, "h:mm A Z");
@@ -44,7 +49,7 @@ const hasTimeConflict = (startTime, endTime, extStartTime, extEndTime) => {
 };
 
 export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
-  const { updateQueryParam } = useQueryParam();
+  const queryClient = useQueryClient();
   const searchParams = useSearchParams();
   const periode = searchParams.get(PERIODE_FIELD_NAME);
 
@@ -67,14 +72,23 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
       study_program_id: "",
       grade: "",
       student_group_id: "",
-      class_id: "",
       day: "",
       start_time: null,
       end_time: null,
+      subject_id: "",
+      teacher_id: "",
     },
     enableReinitialize: true,
     validationSchema: jadwalKelasSchema,
-    onSubmit: async ({ start_time, end_time, class_id, day, grade }) => {
+    onSubmit: async ({
+      start_time,
+      end_time,
+      grade,
+      day,
+      teacher_id,
+      subject_id,
+      student_group_id,
+    }) => {
       const [school_schedule_id, day_num] = day.split(":");
 
       let errorDetected = false;
@@ -91,26 +105,13 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
       const parsedStartTime = parseTime(formatTime(formattedStartTime));
       const parsedEndTime = parseTime(formatTime(formattedEndTime));
 
-      const newPayload = {
-        class_id,
-        school_schedule_id: parseInt(school_schedule_id),
-        start_time: formatTime(formattedStartTime),
-        end_time: formatTime(formattedEndTime),
-      };
-
       try {
         const [nonLearningScheduleData, classScheduleData, classData] =
           await Promise.all([
             AcademicAPI.getAllNonLearningSchedules({ period_id: periode }),
             AcademicAPI.getAllClassSchedules({ period_id: periode }),
-            AcademicAPI.getAllClasses({
-              periode,
-            }),
+            AcademicAPI.getAllClasses(),
           ]);
-
-        const teacher_id = classData?.data?.data.find(
-          (item) => item.id === 3
-        )?.teacher_id;
 
         if (nonLearningScheduleData && classScheduleData && classData) {
           nonLearningScheduleData?.data?.data?.forEach(
@@ -153,7 +154,7 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
 
               //* checks for teacher conflict
               if (
-                ext_day !== parseInt(day_num) &&
+                ext_day === parseInt(day_num) &&
                 ext_teacher_id === teacher_id &&
                 hasTimeConflict(
                   parsedStartTime,
@@ -187,6 +188,30 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
             return;
           }
 
+          //* get class id if it exists, otherwise create new class
+          const newClassId =
+            classData?.data?.data.find(
+              (data) =>
+                data.student_group_id === student_group_id &&
+                data.subject_id === subject_id &&
+                data.teacher_id === teacher_id
+            )?.id ??
+            (
+              await AcademicAPI.createClass({
+                name: `${subject_id} - ${teacher_id} - ${student_group_id}`,
+                subject_id,
+                teacher_id,
+                student_group_id,
+              })
+            ).data.data;
+
+          const newPayload = {
+            class_id: newClassId,
+            school_schedule_id: parseInt(school_schedule_id),
+            start_time: formatTime(formattedStartTime),
+            end_time: formatTime(formattedEndTime),
+          };
+
           if (edit) {
             await AcademicAPI.updateClassSchedule(
               formik.initialValues?.id,
@@ -196,8 +221,9 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
             await AcademicAPI.createClassSchedule(newPayload);
           }
 
-          updateQueryParam("rf", true);
           handleClose();
+          invalidateClassSchedules(queryClient);
+          invalidateClasses(queryClient);
         }
       } catch (err) {
         console.log(err);
@@ -210,8 +236,9 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
     prodiSelectData,
     tingkatanSelectData,
     studentGroupSelectData,
-    kelasSelectData,
     hariSelectData,
+    subjectSelectData,
+    teacherSelectData,
   } = useCreateJadwalKelas(formik);
 
   return (
@@ -258,13 +285,21 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
               data={studentGroupSelectData}
               disabled={!edit && formik.values.grade === ""}
             />
-            <ClassSelect
-              label={"Kelas Mapel"}
-              placeholder={"Pilih kelas mapel"}
+            <SubjectSelect
+              label={"Mata Pelajaran"}
+              placeholder={"Pilih mata pelajaran"}
               formik={formik}
-              name={"class_id"}
-              data={kelasSelectData}
+              name={"subject_id"}
+              data={subjectSelectData}
               disabled={!edit && formik.values.student_group_id === ""}
+            />
+            <TeacherSelect
+              label={"Guru"}
+              placeholder={"Pilih guru"}
+              formik={formik}
+              name={"teacher_id"}
+              data={teacherSelectData}
+              disabled={!edit && formik.values.subject_id === ""}
             />
             <DaySelectDynamic
               label="Hari"
@@ -272,7 +307,7 @@ export const JadwalKelasForm = ({ handleClose, initialValues, edit }) => {
               formik={formik}
               name="day"
               data={hariSelectData}
-              disabled={!edit && formik.values.class_id === ""}
+              disabled={!edit && formik.values.teacher_id === ""}
             />
             <Stack
               width="100%"

@@ -1,11 +1,11 @@
+import { useDebouncedValue } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 
-import { useDebounce } from "use-debounce";
 import { getUserDataCookie } from "../../../../teacher/usecase/getUserDataCookie";
 import {
   getAllClasses,
   getAllStudentsInStudentGroups,
-  getClassSchedules
+  getClassSchedules,
 } from "../../repository/student-class-service";
 import {
   createDropdown,
@@ -31,7 +31,7 @@ export const useStudentClass = () => {
     subject: [],
     teacherName: [],
   });
-  const [debouncedFilter] = useDebounce(filter, 500);
+  const [debouncedFilter] = useDebouncedValue(filter, 500);
 
   async function fetchClasses() {
     try {
@@ -56,7 +56,7 @@ export const useStudentClass = () => {
         setClasses([]);
       } else {
         // const classesWithTasks = await fetchTasksForClasses(joinedClasses);
-        const classesWithSchedules =  await fetchClassSchedules(joinedClasses);
+        const classesWithSchedules = await fetchClassSchedules(joinedClasses);
         setInitialClasses(classesWithSchedules);
         setClasses(classesWithSchedules);
 
@@ -138,12 +138,10 @@ export const useStudentClass = () => {
 const fetchClassSchedules = async (classes) => {
   try {
     const schedulesPromises = classes.map(async (classItem) => {
-      const {
-        data,
-        success,
-        message,
-      } = await getClassSchedules();
-      const schedules = data.filter((schedule) => schedule.class_id == classItem.id);
+      const { data, success, message } = await getClassSchedules();
+      const schedules = data.filter(
+        (schedule) => schedule.class_id == classItem.id
+      );
 
       if (!success) {
         throw new Error(message);
@@ -160,7 +158,7 @@ const fetchClassSchedules = async (classes) => {
   } catch (error) {
     throw new Error("Error fetching schedules for classes" + error);
   }
-}
+};
 
 // const fetchTasksForClasses = async (classes) => {
 //   try {

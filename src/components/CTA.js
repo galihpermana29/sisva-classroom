@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-
 import Image from "next/image";
+import React from "react";
 
 export default function CTA() {
   return (
@@ -17,13 +16,14 @@ export default function CTA() {
           fill
           src="/images/CTA-Illustration.png"
           style={{ objectFit: "contain", objectPosition: "bottom" }}
+          alt=""
         />
       </div>
       <div className="flex flex-wrap flex-col sm:flex-row text-center sm:text-left items-center max-w-[85vw] sm:max-w-[70vw]">
         <div className="flex text-white sm:mr-[4svh] my-[1svh] text-[2.2svh] lg:text-[2.4svh]">
           <i>Tunggu apa lagi? Ayo permudah semua urusan sekolah anda!</i>
         </div>
-        
+
         <a href="https://www.sisva.id/contact">
           <button
             className="mt-[1svh] px-[3svh] py-[1.25svh] text-[2svh] lg:text-[2.2svh] font-semibold text-white kumb-sans rounded-[8svh]"

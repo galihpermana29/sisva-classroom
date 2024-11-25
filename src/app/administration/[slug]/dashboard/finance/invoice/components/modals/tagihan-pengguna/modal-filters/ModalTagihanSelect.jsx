@@ -1,4 +1,5 @@
 import { MenuItem, Select } from "@mui/material";
+
 import { useGetAllBills } from "../../../../hooks/useGetAllBills";
 
 export const ModalTagihanSelect = ({ value, setValue, setAvailableTarget }) => {
@@ -26,18 +27,12 @@ export const ModalTagihanSelect = ({ value, setValue, setAvailableTarget }) => {
       displayEmpty
       onChange={handleChange}
     >
-      <MenuItem
-        disabled
-        value=""
-      >
+      <MenuItem disabled value="">
         Tagihan
       </MenuItem>
       {data
         ? data.map(({ label, value }) => (
-            <MenuItem
-              key={`${label}-${value}`}
-              value={value}
-            >
+            <MenuItem key={`${label}-${value}`} value={value}>
               {label}
             </MenuItem>
           ))

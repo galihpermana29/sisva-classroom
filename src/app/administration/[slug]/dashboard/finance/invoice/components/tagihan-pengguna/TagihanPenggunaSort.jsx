@@ -1,7 +1,5 @@
 "use client";
 
-import { SortIcon } from "@/assets/SVGs";
-import { useQueryParam } from "@/hooks/useQueryParam";
 import { Close, KeyboardArrowDown } from "@mui/icons-material";
 import {
   Button,
@@ -15,8 +13,12 @@ import {
 } from "@mui/material";
 import { useFormik } from "formik";
 import { useState } from "react";
-import { useSortKey } from "../../hooks/useSortKey";
+
+import { SortIcon } from "@/assets/SVGs";
+import { useQueryParam } from "@/hooks/useQueryParam";
+
 import { userBillSorts } from "../../constants";
+import { useSortKey } from "../../hooks/useSortKey";
 
 export const TagihanPenggunaSort = () => {
   const theme = useTheme();
@@ -115,10 +117,7 @@ const DrawerContent = ({ closeDrawer }) => {
         alignItems={"center"}
         justifyContent={"space-between"}
       >
-        <Typography
-          fontWeight={600}
-          fontSize={"18px"}
-        >
+        <Typography fontWeight={600} fontSize={"18px"}>
           Urutkan
         </Typography>
         <IconButton
@@ -131,8 +130,8 @@ const DrawerContent = ({ closeDrawer }) => {
       <Divider sx={{ marginY: "16px" }} />
       <form onSubmit={formik.handleSubmit}>
         <Stack gap={"16px"}>
-          {userBillSorts.map(({ label, value }) => (
-            <Stack gap={"16px"}>
+          {userBillSorts.map(({ label, value }, i) => (
+            <Stack gap={"16px"} key={i}>
               <Stack
                 flexDirection={"row"}
                 justifyContent={"space-between"}
@@ -154,23 +153,11 @@ const DrawerContent = ({ closeDrawer }) => {
             </Stack>
           ))}
         </Stack>
-        <Stack
-          flexDirection={"row"}
-          gap={"12px"}
-          marginTop={"32px"}
-        >
-          <Button
-            onClick={closeDrawer}
-            variant="outlined"
-            fullWidth
-          >
+        <Stack flexDirection={"row"} gap={"12px"} marginTop={"32px"}>
+          <Button onClick={closeDrawer} variant="outlined" fullWidth>
             Batal
           </Button>
-          <Button
-            type="submit"
-            variant="contained"
-            fullWidth
-          >
+          <Button type="submit" variant="contained" fullWidth>
             Simpan
           </Button>
         </Stack>

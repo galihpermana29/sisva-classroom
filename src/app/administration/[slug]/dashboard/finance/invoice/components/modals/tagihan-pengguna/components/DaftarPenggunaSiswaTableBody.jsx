@@ -1,8 +1,9 @@
-import { TableEmptyState, TableRowLoading } from "@/components/CustomTable";
 import { Checkbox, TableCell, TableRow, Typography } from "@mui/material";
-import { toggleUniqueIds } from "../utils/toggleUniqueIds";
+
+import { TableEmptyState, TableRowLoading } from "@/components/CustomTable";
+
 import { useGetAllUserBill } from "../../../../hooks/useGetAllUserBill";
-import { useId } from "react";
+import { toggleUniqueIds } from "../utils/toggleUniqueIds";
 
 export const DaftarPenggunaSiswaTableBody = ({
   data,
@@ -45,10 +46,7 @@ export const DaftarPenggunaSiswaTableBody = ({
         <div className="flex flex-col">
           <Typography variant="body2">{student.student_name}</Typography>
           {student.student_group_name && (
-            <Typography
-              variant="caption"
-              color="gray"
-            >
+            <Typography variant="caption" color="gray">
               {student.student_group_name}
             </Typography>
           )}

@@ -1,10 +1,10 @@
 import { Plus } from "@untitled-ui/icons-react";
 import Image from "next/image";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 
 import SisvaButton from "@/app/classroom/shared/presentation/Button/GlobalButton";
 import EmptyStateImg from "@/assets/svgs/empty-state.svg";
-import Link from "next/link";
-import { useParams } from "next/navigation";
 
 const EmptyState = ({ className }) => {
   const { classId } = useParams();

@@ -1,8 +1,9 @@
 import { Skeleton } from "antd";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { getClientSession } from "../usecase/session/get-client-session";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+
+import { getClientSession } from "../usecase/session/get-client-session";
 
 const BrandLogo = ({ url }) => {
   const [schoolId, setSchoolId] = useState(null);

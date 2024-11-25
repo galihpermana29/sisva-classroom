@@ -1,8 +1,10 @@
 "use client";
 
 import { TableCell } from "@mui/material";
-import { useGetBillById } from "../../../../hooks/useGetBillById";
+
 import { TableCellLoading } from "@/components/CustomTable";
+
+import { useGetBillById } from "../../../../hooks/useGetBillById";
 
 export const IdTagihanCell = ({ billId }) => {
   const { data, isLoading, isError } = useGetBillById(billId);

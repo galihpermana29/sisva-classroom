@@ -1,8 +1,10 @@
 import React from "react";
-import AssignmentCard from "./AssignmentCard";
-import AssignmentCardSkeleton from "./AssignmentCardSkeleton";
+
 import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
 import TeachingPlanTitle from "@/app/classroom/shared/presentation/TitleBar/TeachingPlanTitle";
+
+import AssignmentCard from "./AssignmentCard";
+import AssignmentCardSkeleton from "./AssignmentCardSkeleton";
 
 const AssignmentListGroup = ({ assignmentGroups, isLoading }) => {
   return (

@@ -1,14 +1,14 @@
-import { Fragment } from "react";
 import Image from "next/image";
-
-import TeachingPlanSection from "./TeachingPlanSection";
-
-import MaterialIcon from "@/assets/images/teaching-plan/material.svg";
-import TaskIcon from "@/assets/images/teaching-plan/task.png";
-import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { Fragment } from "react";
+
 import TeachingPlanTitle from "@/app/classroom/shared/presentation/TitleBar/TeachingPlanTitle";
+import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
+import MaterialIcon from "@/assets/images/teaching-plan/material.svg";
+import TaskIcon from "@/assets/images/teaching-plan/task.png";
+
+import TeachingPlanSection from "./TeachingPlanSection";
 
 const TeachingPlanList = ({
   id,
@@ -52,9 +52,11 @@ const TeachingPlanList = ({
         content={
           <div className="grid gap-3 mt-2">
             {tasks?.map((task, idx) => (
-              <Link 
+              <Link
                 href={`/classroom/student/class/${classId}/task/${task.id}`}
-              key={"tasks_" + idx} className="flex items-center gap-2">
+                key={"tasks_" + idx}
+                className="flex items-center gap-2"
+              >
                 <Image src={TaskIcon} alt="Tugas" width={20} height={20} />
                 <span className="font-medium">{task.name}</span>
               </Link>

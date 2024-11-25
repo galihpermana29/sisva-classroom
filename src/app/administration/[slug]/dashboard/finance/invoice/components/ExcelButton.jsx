@@ -1,5 +1,6 @@
-import { ExcelIcon } from "@/assets/SVGs";
 import { Button, Typography } from "@mui/material";
+
+import { ExcelIcon } from "@/assets/SVGs";
 
 /** @description Custom button for excel export */
 export const ExcelButton = ({ ...props }) => {

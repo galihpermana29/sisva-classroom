@@ -1,22 +1,16 @@
 import { Divider, Stack } from "@mui/material";
+
 import { DateRangeSelect } from "../filters/DateRangeSelect";
-import { StatusSelect } from "../filters/StatusSelect";
-import { InvoiceKategoriFilter } from "../filters/invoice/InvoiceKategoriFilter";
 import FilterReset from "../filters/FilterReset";
+import { InvoiceKategoriFilter } from "../filters/invoice/InvoiceKategoriFilter";
+import { StatusSelect } from "../filters/StatusSelect";
 import { InvoiceSort } from "./InvoiceSort";
 
 /** @description Component for handling invoice tab's filters */
 export const InvoiceFilters = () => {
   return (
-    <Stack
-      className="no-scrollbar"
-      sx={{ overflow: "hidden" }}
-    >
-      <Stack
-        flexDirection="row"
-        alignItems="center"
-        gap={1}
-      >
+    <Stack className="no-scrollbar" sx={{ overflow: "hidden" }}>
+      <Stack flexDirection="row" alignItems="center" gap={1}>
         <InvoiceSort />
         <Divider
           orientation="vertical"

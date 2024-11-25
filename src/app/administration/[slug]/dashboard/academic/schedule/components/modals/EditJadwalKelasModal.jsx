@@ -1,5 +1,7 @@
-import { ModalBody } from "@/components/CustomModal";
 import { Modal } from "@mui/material";
+
+import { ModalBody } from "@/components/CustomModal";
+
 import { JadwalKelasForm } from "../forms/jadwal-kelas";
 
 function EditJadwalKelasModal({ data, open, handleClose }) {

@@ -1,7 +1,9 @@
-import SisvaButton from "@/app/classroom/shared/presentation/Button/GlobalButton";
-import CustomModal from "./CustomModal";
-import TrashIcon from "@/assets/icons/trash.png";
 import Image from "next/image";
+
+import SisvaButton from "@/app/classroom/shared/presentation/Button/GlobalButton";
+import TrashIcon from "@/assets/icons/trash.png";
+
+import CustomModal from "./CustomModal";
 
 const DeleteConfirmationModal = ({
   isModalVisible,
@@ -15,14 +17,11 @@ const DeleteConfirmationModal = ({
       open={isModalVisible}
       onCancel={handleCancel}
       footer={[
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-2" key={1}>
           <SisvaButton onClick={handleCancel} btn_type="secondary">
             Batal
           </SisvaButton>
-          <SisvaButton
-            onClick={handleDeleteTeachingPlan}
-            disabled={isDeleting}
-          >
+          <SisvaButton onClick={handleDeleteTeachingPlan} disabled={isDeleting}>
             Hapus
           </SisvaButton>
         </div>,

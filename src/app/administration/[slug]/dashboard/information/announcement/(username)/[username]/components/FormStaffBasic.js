@@ -1,13 +1,10 @@
 "use client";
 
 import {
-  Avatar,
   Box,
-  Button,
   Chip,
   FormControl,
   Grid,
-  InputLabel,
   MenuItem,
   OutlinedInput,
   Select,
@@ -15,11 +12,8 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import Image from "next/image";
 
 import { formStaffBasicFields } from "@/globalcomponents/FormFields";
-import { Cancel } from "@mui/icons-material";
-import { useState } from "react";
 import { permissions, types } from "@/globalcomponents/Variable";
 
 export const FormStaffBasic = ({ formik, editing }) => {
@@ -39,7 +33,7 @@ export const FormStaffBasic = ({ formik, editing }) => {
           flexDirection: "row",
           flexWrap: "wrap",
           overflow: "hidden",
-          mt:.5
+          mt: 0.5,
         }}
       >
         {params.map((permission, index) => {
@@ -54,7 +48,7 @@ export const FormStaffBasic = ({ formik, editing }) => {
               key={index}
               sx={{
                 mr: "4px",
-                mb:"4px",
+                mb: "4px",
                 fontSize: 12,
               }}
               label={tempPermission}

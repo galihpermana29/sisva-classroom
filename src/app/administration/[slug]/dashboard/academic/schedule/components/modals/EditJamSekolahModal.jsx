@@ -1,9 +1,11 @@
 "use client";
 
+import { ModeEdit } from "@mui/icons-material";
 import { IconButton, Modal, Tooltip } from "@mui/material";
 import { useState } from "react";
+
 import { ModalBody } from "@/components/CustomModal";
-import { ModeEdit } from "@mui/icons-material";
+
 import { EditJamSekolahForm } from "../forms/jam-sekolah/editJamSekolah";
 
 export const EditJamSekolahModal = ({ data }) => {
@@ -15,11 +17,7 @@ export const EditJamSekolahModal = ({ data }) => {
   return (
     <>
       <Tooltip title="Ubah jadwal">
-        <IconButton
-          onClick={handleOpen}
-          aria-label="edit"
-          size="small"
-        >
+        <IconButton onClick={handleOpen} aria-label="edit" size="small">
           <ModeEdit />
         </IconButton>
       </Tooltip>

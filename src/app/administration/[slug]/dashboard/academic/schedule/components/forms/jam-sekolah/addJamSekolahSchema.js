@@ -1,4 +1,5 @@
 import * as yup from "yup";
+
 import { timeStringToDayjs } from "@/utils/formatTimeString";
 
 export const getAddJamSekolahSchema = ({
@@ -22,7 +23,7 @@ export const getAddJamSekolahSchema = ({
       .required("Wajib mengisi tingkatan!")
       .default(tingkat ?? null),
     day: yup
-      .number("Harap masukkan hari yang valid!")
+      .string("Harap masukkan hari yang valid!")
       .min(0, { message: "Harap masukkan hari yang valid!" })
       .required("Wajib mengisi hari!")
       .default("")
@@ -50,8 +51,9 @@ export const getAddJamSekolahSchema = ({
       .default(null)
       .test(
         "end_time_later",
-        "Waktu berakhir haruslah sebelum waktu mulai!",
-        function (value, context) {
+        "Waktu berakhir minimal 1 jam setelah waktu mulai!",
+        (value, context) => {
+          console.log(value, context);
           const { start_time } = context.parent;
           return timeStringToDayjs(start_time).isBefore(
             timeStringToDayjs(value),

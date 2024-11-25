@@ -9,11 +9,12 @@ import {
   FileUploadOutlined,
   Folder,
 } from "@mui/icons-material";
-import { Button, IconButton, useTheme } from "@mui/material";
-import { useState } from "react";
-import Link from "next/link";
-import { useUploadFile } from "@/hooks/useUploadFile";
 import RefreshIcon from "@mui/icons-material/Refresh";
+import { Button, IconButton, useTheme } from "@mui/material";
+import Link from "next/link";
+import { useState } from "react";
+
+import { useUploadFile } from "@/hooks/query/file/useUploadFile";
 
 export const FileUpload = ({ className, value, afterUpload, ...props }) => {
   const theme = useTheme();

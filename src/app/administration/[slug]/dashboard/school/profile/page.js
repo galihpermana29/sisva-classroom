@@ -9,7 +9,7 @@ export const metadata = {
 
 export default function Home() {
   return (
-    <Box sx={{height:"100%", width:"100%"}}>
+    <Box sx={{ height: "100%", width: "100%" }}>
       <SchoolProfileContent />
     </Box>
   );

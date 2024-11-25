@@ -1,8 +1,7 @@
-import TeachingPlanList from "../presentation/TeachingPlanList";
-import TeachingPlanListSkeleton from "../presentation/TeachingPlanListSkeleton";
-import { useParams } from "next/navigation";
 import { useTeachingPlan } from "../../usecase/use-teaching-plan";
 import EmptyState from "../presentation/TeachingPlanEmptyState";
+import TeachingPlanList from "../presentation/TeachingPlanList";
+import TeachingPlanListSkeleton from "../presentation/TeachingPlanListSkeleton";
 
 const TeachingPlanContainer = () => {
   const { teachingPlans, isLoading } = useTeachingPlan();

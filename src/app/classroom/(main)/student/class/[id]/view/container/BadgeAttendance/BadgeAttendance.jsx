@@ -1,5 +1,6 @@
-import { useTokenColor } from "@/app/classroom/shared/usecase/use-token-color";
 import clsx from "clsx";
+
+import { useTokenColor } from "@/app/classroom/shared/usecase/use-token-color";
 
 const BadgeAttendance = ({ status }) => {
   const statusLabel = {

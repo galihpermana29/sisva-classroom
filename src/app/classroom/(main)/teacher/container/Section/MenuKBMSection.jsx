@@ -1,7 +1,8 @@
+import Link from "next/link";
+
 import BahanAjarIcon from "@/assets/classroom/teacher/BahanAjarIcon";
 import PerizinanIcon from "@/assets/classroom/teacher/PerizinanIcon";
 import TugasIcon from "@/assets/classroom/teacher/TugasIcon";
-import Link from "next/link";
 
 const MenuKBMSection = () => {
   return (

@@ -1,10 +1,12 @@
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+
+import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
+
 import {
   getScoreByTaskId,
   getSubmissionByTaskId,
 } from "../repository/task-submission-repository";
-import { useParams } from "next/navigation";
-import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
 
 export function useGetSubmission() {
   const [submission, setSubmission] = useState({});
@@ -23,9 +25,8 @@ export function useGetSubmission() {
       if (!successSubmission) {
         setLoading(false);
       }
-      const { data: scores, success: successScore } = await getScoreByTaskId(
-        task_id
-      );
+      const { data: scores, success: successScore } =
+        await getScoreByTaskId(task_id);
       if (!successScore) {
         setLoading(false);
       }

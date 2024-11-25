@@ -1,4 +1,5 @@
 import Image from "next/image";
+
 import BoxRightImg from "@/assets/svgs/box-right.svg";
 
 const BoxLeft = () => {
@@ -38,4 +39,4 @@ const BoxRight = () => {
   );
 };
 
-export { BoxLeft, BoxTop, BoxRight };
+export { BoxLeft, BoxRight, BoxTop };

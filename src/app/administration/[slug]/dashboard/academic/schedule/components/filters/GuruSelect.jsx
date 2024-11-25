@@ -1,9 +1,11 @@
 "use client";
 
-import { useQueryParam } from "@/hooks/useQueryParam";
 import { useMounted } from "@mantine/hooks";
 import { MenuItem, Select } from "@mui/material";
 import { useSearchParams } from "next/navigation";
+
+import { useQueryParam } from "@/hooks/useQueryParam";
+
 import { FilterNotMounted } from "./FilterNotMounted";
 
 export const GURU_FIELD_NAME = "guru";
@@ -28,18 +30,12 @@ export const GuruSelect = ({ data, disabled }) => {
       value={value}
       onChange={(event) => handleChange(event.target.value)}
     >
-      <MenuItem
-        disabled
-        value=""
-      >
+      <MenuItem disabled value="">
         Guru
       </MenuItem>
       {data
         ? data.map(({ teacher_id, teacher_name }) => (
-            <MenuItem
-              key={`${teacher_id}${teacher_name}`}
-              value={teacher_id}
-            >
+            <MenuItem key={`${teacher_id}${teacher_name}`} value={teacher_id}>
               {teacher_name}
             </MenuItem>
           ))

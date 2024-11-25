@@ -1,7 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import teachingMaterialsReducer from "../redux/teachingMaterialSlice";
-import tasksReducer from "../redux/taskSlice";
+
 import classReducer from "../redux/classSlice";
+import tasksReducer from "../redux/taskSlice";
+import teachingMaterialsReducer from "../redux/teachingMaterialSlice";
 
 export const store = configureStore({
   reducer: {

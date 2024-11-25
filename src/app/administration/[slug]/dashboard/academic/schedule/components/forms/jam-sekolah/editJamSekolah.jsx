@@ -1,15 +1,15 @@
 "use client";
 
+import { Alert, Button, Stack } from "@mui/material";
 import { useFormik } from "formik";
 
-import { Alert, Button, Stack } from "@mui/material";
-import { DaySelect } from "../../DaySelect";
-import { TimeSelect } from "../../TimeSelect";
-import { useEditSchoolSchedule } from "../../../hooks/useEditSchoolSchedule";
-import { getEditJamSekolahSchema } from "./editJamSekolahSchema";
-import { StatusSelect } from "../../StatusSelect";
-import { useGetActiveSchoolSchedule } from "../../../hooks/useGetActiveSchoolSchedule";
 import { useFilterStatus } from "../../../hooks/filters/useFilterStatus";
+import { useEditSchoolSchedule } from "../../../hooks/useEditSchoolSchedule";
+import { useGetActiveSchoolSchedule } from "../../../hooks/useGetActiveSchoolSchedule";
+import { DaySelect } from "../../DaySelect";
+import { StatusSelect } from "../../StatusSelect";
+import { TimeSelect } from "../../TimeSelect";
+import { getEditJamSekolahSchema } from "./editJamSekolahSchema";
 
 export const EditJamSekolahForm = ({ handleClose, initialValues, id }) => {
   const { data } = useGetActiveSchoolSchedule();
@@ -38,10 +38,7 @@ export const EditJamSekolahForm = ({ handleClose, initialValues, id }) => {
   });
 
   return (
-    <form
-      className="flex flex-col gap-6"
-      onSubmit={formik.handleSubmit}
-    >
+    <form className="flex flex-col gap-6" onSubmit={formik.handleSubmit}>
       <Stack gap={2}>
         <Stack gap={2}>
           <DaySelect
@@ -96,10 +93,7 @@ export const EditJamSekolahForm = ({ handleClose, initialValues, id }) => {
         )}
       </Stack>
 
-      <Stack
-        flexDirection="row"
-        gap={2}
-      >
+      <Stack flexDirection="row" gap={2}>
         <Button
           type="button"
           fullWidth
@@ -108,11 +102,7 @@ export const EditJamSekolahForm = ({ handleClose, initialValues, id }) => {
         >
           Batal
         </Button>
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-        >
+        <Button type="submit" fullWidth variant="contained">
           Simpan
         </Button>
       </Stack>

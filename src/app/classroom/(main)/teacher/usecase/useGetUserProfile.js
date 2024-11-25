@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import { getUserById } from "../repositories/apiService";
 import { getUserDataCookie } from "./getUserDataCookie";
 
@@ -7,7 +8,7 @@ export const useGetUserProfile = () => {
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
 
-  const {id: teacherId} = getUserDataCookie()
+  const { id: teacherId } = getUserDataCookie();
 
   useEffect(() => {
     const fetchData = async () => {

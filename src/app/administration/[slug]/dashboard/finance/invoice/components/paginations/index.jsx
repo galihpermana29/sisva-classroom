@@ -2,9 +2,10 @@
 
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import { Stack, Typography } from "@mui/material";
-import { RowsPerPage } from "./RowsPerPage";
-import { PaginationButton } from "./PaginationButton";
+
 import { usePagination } from "../../hooks/usePagination";
+import { PaginationButton } from "./PaginationButton";
+import { RowsPerPage } from "./RowsPerPage";
 
 export const Paginations = ({ totalPage, withRowSetting = true }) => {
   const { page, goToPrevPage, goToNextPage } = usePagination();

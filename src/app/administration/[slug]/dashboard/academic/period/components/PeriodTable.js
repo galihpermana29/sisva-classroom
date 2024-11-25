@@ -1,4 +1,4 @@
-import { BorderColorRounded, DeleteForeverRounded } from '@mui/icons-material';
+import { BorderColorRounded, DeleteForeverRounded } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -10,40 +10,41 @@ import {
   Stack,
   Typography,
   useMediaQuery,
-} from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
-import dayjs from 'dayjs';
-import { useState } from 'react';
-import { FormEditPeriod } from './FormEditPeriod';
+} from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
+import dayjs from "dayjs";
+import { useState } from "react";
+
+import { FormEditPeriod } from "./FormEditPeriod";
 
 const columns = [
   {
-    field: 'card',
-    headerName: '',
+    field: "card",
+    headerName: "",
     flex: 1,
     sortable: false,
     renderCell: (params) => {
       return (
-        <Box sx={{ width: '100%', mx: 2, py: 0.5 }}>
+        <Box sx={{ width: "100%", mx: 2, py: 0.5 }}>
           <Stack
             component={Paper}
-            variant='outlined'
+            variant="outlined"
             sx={{
-              justifyContent: 'flex-start',
+              justifyContent: "flex-start",
               borderRadius: 2,
               p: 2,
             }}
           >
-            <Stack sx={{ width: '100%' }}>
+            <Stack sx={{ width: "100%" }}>
               <Stack
                 sx={{
-                  width: '100%',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  borderBottom: '1px solid rgb(0,0,0,0.12)',
+                  width: "100%",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  borderBottom: "1px solid rgb(0,0,0,0.12)",
                   px: 1,
-                  py: '10px',
-                  backgroundColor: 'base.base10',
+                  py: "10px",
+                  backgroundColor: "base.base10",
                 }}
               >
                 <Typography
@@ -51,19 +52,19 @@ const columns = [
                 >
                   Periode
                 </Typography>
-                <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
-                  {params.value.data.period_name}
+                <Typography sx={{ fontSize: 14, textAlign: "right" }}>
+                  {params.value.data.name}
                 </Typography>
               </Stack>
               <Stack
                 sx={{
-                  width: '100%',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  borderBottom: '1px solid rgb(0,0,0,0.12)',
+                  width: "100%",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  borderBottom: "1px solid rgb(0,0,0,0.12)",
                   px: 1,
-                  py: '10px',
-                  backgroundColor: 'base.base20',
+                  py: "10px",
+                  backgroundColor: "base.base20",
                 }}
               >
                 <Typography
@@ -71,17 +72,17 @@ const columns = [
                 >
                   Program Studi
                 </Typography>
-                <ChipList params={params.value.data.study_program} />
+                <ChipList params={params.value.data.study_programs} />
               </Stack>
               <Stack
                 sx={{
-                  width: '100%',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  borderBottom: '1px solid rgb(0,0,0,0.12)',
+                  width: "100%",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  borderBottom: "1px solid rgb(0,0,0,0.12)",
                   px: 1,
-                  py: '10px',
-                  backgroundColor: 'base.base10',
+                  py: "10px",
+                  backgroundColor: "base.base10",
                 }}
               >
                 <Typography
@@ -89,43 +90,43 @@ const columns = [
                 >
                   Rentang Waktu
                 </Typography>
-                <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
-                  {dayjs(params.value.data.start_time).format('MMMM YYYY') +
-                    ' - ' +
-                    dayjs(params.value.data.end_time).format('MMMM YYYY')}
+                <Typography sx={{ fontSize: 14, textAlign: "right" }}>
+                  {dayjs(params.value.data.start_time).format("MMMM YYYY") +
+                    " - " +
+                    dayjs(params.value.data.end_time).format("MMMM YYYY")}
                 </Typography>
               </Stack>
             </Stack>
             <Stack
               sx={{
-                width: '100%',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                borderBottom: '1px solid rgb(0,0,0,0.12)',
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                borderBottom: "1px solid rgb(0,0,0,0.12)",
                 px: 1,
-                py: '10px',
-                backgroundColor: 'base.base20',
+                py: "10px",
+                backgroundColor: "base.base20",
               }}
             >
               <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
                 Status
               </Typography>
-              <Stack sx={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Stack sx={{ flexDirection: "row", alignItems: "center" }}>
                 <Box
                   sx={{
                     height: 8,
                     width: 8,
                     borderRadius: 10,
                     mr: 0.5,
-                    backgroundColor: 'green',
+                    backgroundColor: "green",
                     display:
-                      params.value.data.status === 'active' ? 'flex' : 'none',
+                      params.value.data.status === "active" ? "flex" : "none",
                   }}
                 />
                 <Typography
                   sx={{
                     fontWeight:
-                      params.value.data.status === 'active' ? 500 : 400,
+                      params.value.data.status === "active" ? 500 : 400,
                     fontSize: 13,
                   }}
                 >
@@ -139,61 +140,61 @@ const columns = [
       );
     },
   },
-  { field: 'period_name', headerName: 'Periode', flex: 1 },
+  { field: "period_name", headerName: "Periode", flex: 1 },
   {
-    field: 'study_program',
-    headerName: 'Program Studi',
+    field: "study_program",
+    headerName: "Program Studi",
     sortable: false,
     flex: 1,
     renderCell: (params) => {
       return params?.value?.length > 0 ? (
         <ChipList params={params?.value} />
       ) : (
-        '-'
+        "-"
       );
     },
   },
   {
-    field: 'period',
-    headerName: 'Rentang Waktu',
+    field: "period",
+    headerName: "Rentang Waktu",
     flex: 1,
   },
   {
-    field: 'status',
-    headerName: 'Status',
+    field: "status",
+    headerName: "Status",
     flex: 1,
     renderCell: (params) => {
       return (
-        <Stack sx={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Stack sx={{ flexDirection: "row", alignItems: "center" }}>
           <Box
             sx={{
               height: 8,
               width: 8,
               borderRadius: 10,
               mr: 0.5,
-              backgroundColor: 'green',
-              display: params.value === 'active' ? 'flex' : 'none',
+              backgroundColor: "green",
+              display: params.value === "active" ? "flex" : "none",
             }}
           />
           <Typography
             sx={{
-              fontWeight: params.value === 'active' ? 500 : 400,
+              fontWeight: params.value === "active" ? 500 : 400,
               fontSize: 13,
             }}
           >
-            {params.value === 'active'
-              ? 'Aktif'
-              : params.value === 'inactive'
-              ? 'Tidak Aktif'
-              : 'Selesai'}
+            {params.value === "active"
+              ? "Aktif"
+              : params.value === "inactive"
+                ? "Belum Aktif"
+                : "Selesai"}
           </Typography>
         </Stack>
       );
     },
   },
   {
-    field: 'action',
-    headerName: 'Aksi',
+    field: "action",
+    headerName: "Aksi",
     sortable: false,
     width: 120,
     renderCell: (params) => {
@@ -206,11 +207,11 @@ function ChipList({ params, compact }) {
   return (
     <Stack
       sx={{
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        overflow: 'hidden',
-        justifyContent: compact ? 'flex-end' : 'flex-start',
-        m: { xs: 0, lg: compact ? 0 : '8px 0' },
+        flexDirection: "row",
+        flexWrap: "wrap",
+        overflow: "hidden",
+        justifyContent: compact ? "flex-end" : "flex-start",
+        m: { xs: 0, lg: compact ? 0 : "8px 0" },
       }}
     >
       {params.map((studyProgram, index) => {
@@ -218,11 +219,11 @@ function ChipList({ params, compact }) {
           <Chip
             key={index}
             sx={{
-              m: { xs: '2px 0px 2px 4px', lg: '2px' },
+              m: { xs: "2px 0px 2px 4px", lg: "2px" },
               fontSize: 12,
             }}
             label={studyProgram.code}
-            color='primary'
+            color="primary"
           />
         );
       })}
@@ -234,22 +235,22 @@ function ActionButton({ params }) {
   return (
     <Stack
       sx={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        alignSelf: 'flex-end',
+        flexDirection: "row",
+        alignItems: "center",
+        alignSelf: "flex-end",
         mt: { xs: 2, lg: 0 },
       }}
     >
       <IconButton
         sx={{
           borderRadius: 2,
-          backgroundColor: 'base.base30',
-          '&:hover': {
-            backgroundColor: 'base.base40',
+          backgroundColor: "base.base30",
+          "&:hover": {
+            backgroundColor: "base.base40",
           },
-          height: 'fit-content',
-          width: { xs: 90, lg: 'fit-content' },
-          display: params.value.data.status === 'finished' ? 'none' : 'flex',
+          height: "fit-content",
+          width: { xs: 90, lg: "fit-content" },
+          display: params.value.data.status === "finished" ? "none" : "flex",
         }}
         onClick={() => {
           params.value.setOpenEditModal(true);
@@ -264,10 +265,10 @@ function ActionButton({ params }) {
         }}
       >
         <BorderColorRounded
-          sx={{ fontSize: { xs: 15, lg: 18 }, color: 'base.base50' }}
+          sx={{ fontSize: { xs: 15, lg: 18 }, color: "base.base50" }}
         />
         <Typography
-          sx={{ fontSize: 14, ml: 1, display: { xs: 'flex', lg: 'none' } }}
+          sx={{ fontSize: 14, ml: 1, display: { xs: "flex", lg: "none" } }}
         >
           Edit
         </Typography>
@@ -276,12 +277,12 @@ function ActionButton({ params }) {
         sx={{
           borderRadius: 2,
           ml: 1,
-          backgroundColor: 'warning.main',
-          '&:hover': {
-            backgroundColor: 'warning.dark',
+          backgroundColor: "warning.main",
+          "&:hover": {
+            backgroundColor: "warning.dark",
           },
-          width: { xs: 90, lg: 'fit-content' },
-          display: params.value.data.status !== 'inactive' ? 'none' : 'flex',
+          width: { xs: 90, lg: "fit-content" },
+          display: params.value.data.status !== "inactive" ? "none" : "flex",
         }}
         onClick={() => {
           params.value.setOpenDeleteModal(true);
@@ -289,14 +290,14 @@ function ActionButton({ params }) {
         }}
       >
         <DeleteForeverRounded
-          sx={{ color: 'white', fontSize: { xs: 16, lg: 18 } }}
+          sx={{ color: "white", fontSize: { xs: 16, lg: 18 } }}
         />
         <Typography
           sx={{
             fontSize: 14,
             ml: 1,
-            display: { xs: 'flex', lg: 'none' },
-            color: 'white',
+            display: { xs: "flex", lg: "none" },
+            color: "white",
           }}
         >
           Delete
@@ -311,7 +312,7 @@ export default function StudyProgramTable({
   formik,
   deletePeriod = () => {},
 }) {
-  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('lg'));
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down("lg"));
 
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -325,9 +326,9 @@ export default function StudyProgramTable({
       period_name: data.name,
       study_program: data.study_programs,
       period:
-        dayjs(data.start_time).format('MMMM YYYY') +
-        ' - ' +
-        dayjs(data.end_time).format('MMMM YYYY'),
+        dayjs(data.start_time).format("MMMM YYYY") +
+        " - " +
+        dayjs(data.end_time).format("MMMM YYYY"),
       status: data.status,
       action: {
         data: data,
@@ -348,12 +349,12 @@ export default function StudyProgramTable({
   });
 
   return (
-    <div style={{ height: '100%', width: '100%' }}>
+    <div style={{ height: "100%", width: "100%" }}>
       <Modal
         open={openEditModal}
         onClose={() => {
           setOpenEditModal(false);
-          formik.setValues({ name: '', code: '' });
+          formik.setValues({ name: "", code: "" });
         }}
       >
         <Stack
@@ -362,11 +363,11 @@ export default function StudyProgramTable({
           sx={{
             borderRadius: 2,
             zIndex: 20,
-            margin: 'auto',
-            position: 'fixed',
-            height: 'fit-content',
-            width: '360px',
-            maxWidth: '80%',
+            margin: "auto",
+            position: "fixed",
+            height: "fit-content",
+            width: "360px",
+            maxWidth: "80%",
             top: 0,
             bottom: 0,
             right: 0,
@@ -383,56 +384,56 @@ export default function StudyProgramTable({
             </Typography>
           </Box>
           <Divider />
-          <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
+          <Box sx={{ maxHeight: "70vh", overflowY: "auto", px: 2 }}>
             <FormEditPeriod formik={formik} status={activeRow.status} />
           </Box>
           <Divider />
           <Stack
             sx={{
-              flexDirection: 'row',
+              flexDirection: "row",
               p: 2,
             }}
           >
             <Button
-              variant='outlined'
+              variant="outlined"
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenEditModal(false);
-                formik.setValues({ name: '', code: '' });
+                formik.setValues({ name: "", code: "" });
               }}
             >
               Batal
             </Button>
             <Button
-              variant='contained'
+              variant="contained"
               sx={{
                 flex: 1,
                 backgroundColor:
-                  formik.values['status'] !== 'inactive'
-                    ? 'primary.main'
-                    : 'warning.main',
-                '&:hover': {
+                  formik.values["status"] !== "inactive"
+                    ? "primary.main"
+                    : "warning.main",
+                "&:hover": {
                   backgroundColor:
-                    formik.values['status'] !== 'active' ? 'warning.dark' : '',
+                    formik.values["status"] !== "active" ? "warning.dark" : "",
                 },
               }}
               onClick={() => {
                 setOpenEditModal(false);
 
-                if (activeRow.status == 'active') {
+                if (activeRow.status == "active") {
                   formik.setValues({
                     id: activeRow.id,
                     period_name: activeRow.name,
                     start_time: dayjs(activeRow.start_time),
                     end_time: dayjs(activeRow.end_time),
-                    status: 'finished',
+                    status: "finished",
                   });
                 }
 
                 formik.handleSubmit();
               }}
             >
-              {activeRow.status !== 'active' ? 'Simpan' : 'Akhiri Periode'}
+              {activeRow.status !== "active" ? "Simpan" : "Akhiri Periode"}
             </Button>
           </Stack>
         </Stack>
@@ -444,11 +445,11 @@ export default function StudyProgramTable({
           sx={{
             borderRadius: 2,
             zIndex: 20,
-            margin: 'auto',
-            position: 'fixed',
-            height: 'fit-content',
-            width: '360px',
-            maxWidth: '80%',
+            margin: "auto",
+            position: "fixed",
+            height: "fit-content",
+            width: "360px",
+            maxWidth: "80%",
             top: 0,
             bottom: 0,
             right: 0,
@@ -466,35 +467,35 @@ export default function StudyProgramTable({
             Anda akan menghapus periode berikut:
           </Typography>
           <Stack
-            sx={{ width: '100%', my: 1, overflow: 'hidden', borderRadius: 2 }}
+            sx={{ width: "100%", my: 1, overflow: "hidden", borderRadius: 2 }}
           >
             <Stack
               sx={{
-                width: '100%',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                borderBottom: '1px solid rgb(0,0,0,0.12)',
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                borderBottom: "1px solid rgb(0,0,0,0.12)",
                 px: 1,
-                py: '10px',
-                backgroundColor: 'base.base10',
+                py: "10px",
+                backgroundColor: "base.base10",
               }}
             >
               <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
                 Periode
               </Typography>
-              <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
+              <Typography sx={{ fontSize: 14, textAlign: "right" }}>
                 {activeRow.name}
               </Typography>
             </Stack>
             <Stack
               sx={{
-                width: '100%',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                borderBottom: '1px solid rgb(0,0,0,0.12)',
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                borderBottom: "1px solid rgb(0,0,0,0.12)",
                 px: 1,
-                py: '10px',
-                backgroundColor: 'base.base20',
+                py: "10px",
+                backgroundColor: "base.base20",
               }}
             >
               <Typography sx={{ fontSize: 14, fontWeight: 600, minWidth: 130 }}>
@@ -506,11 +507,11 @@ export default function StudyProgramTable({
 
           <Stack
             sx={{
-              flexDirection: 'row',
+              flexDirection: "row",
             }}
           >
             <Button
-              variant='outlined'
+              variant="outlined"
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenDeleteModal(false);
@@ -519,12 +520,12 @@ export default function StudyProgramTable({
               Batal
             </Button>
             <Button
-              variant='contained'
+              variant="contained"
               sx={{
                 flex: 1,
-                backgroundColor: 'warning.main',
-                '&:hover': {
-                  backgroundColor: 'warning.dark',
+                backgroundColor: "warning.main",
+                "&:hover": {
+                  backgroundColor: "warning.dark",
                 },
               }}
               onClick={() => {
@@ -587,7 +588,7 @@ export default function StudyProgramTable({
       )}
       <DataGrid
         rows={rows}
-        getRowHeight={() => 'auto'}
+        getRowHeight={() => "auto"}
         columns={columns}
         initialState={{
           pagination: {
@@ -596,7 +597,7 @@ export default function StudyProgramTable({
         }}
         pageSizeOptions={[10, 20, 50]}
         getRowClassName={(params) =>
-          params.indexRelativeToCurrentPage % 2 === 0 ? 'Mui-even' : 'Mui-odd'
+          params.indexRelativeToCurrentPage % 2 === 0 ? "Mui-even" : "Mui-odd"
         }
         disableRowSelectionOnClick
         disableColumnMenu

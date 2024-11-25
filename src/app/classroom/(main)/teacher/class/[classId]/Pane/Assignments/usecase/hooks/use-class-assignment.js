@@ -1,15 +1,18 @@
+import { useDebouncedValue } from "@mantine/hooks";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { useDebounce } from "use-debounce";
 
-import { getAllTasks, getAllTeachingPlan } from "../../repository/class-assignment-service";
+import {
+  getAllTasks,
+  getAllTeachingPlan,
+} from "../../repository/class-assignment-service";
 import { groupTaskByTeachingPlan, searchFilter } from "../data-mapper-service";
 
 export const useClassAssignment = (classId) => {
   const [filter, setFilter] = useState({
     search: "",
   });
-  const [debouncedFilter] = useDebounce(filter, 500);
+  const [debouncedFilter] = useDebouncedValue(filter, 500);
 
   const {
     data: assignmentGroups = [],
@@ -19,7 +22,7 @@ export const useClassAssignment = (classId) => {
   } = useQuery({
     queryKey: ["teacher-class-assignments", classId],
     queryFn: () => getTaskWithGrouping(classId),
-    select: ( data ) => {
+    select: (data) => {
       if (!debouncedFilter.search) return data;
       return searchFilter(data, debouncedFilter.search.toLowerCase());
     },

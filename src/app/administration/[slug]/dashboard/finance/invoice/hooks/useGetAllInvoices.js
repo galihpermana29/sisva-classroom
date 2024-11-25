@@ -1,12 +1,14 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { usePagination } from "./usePagination";
-import { FinanceAPI } from "@/api/finance";
+
+import FinanceAPI from "@/api/finance";
+import { useGetAllUsers } from "@/hooks/query/academic/useGetAllUsers";
 import { paginateData } from "@/utils/paginateData";
-import { useGetAllUserBill } from "./useGetAllUserBill";
-import { useGetAllUsers } from "@/hooks/useGetAllUsers";
+
 import { useGetAllBills } from "./useGetAllBills";
+import { useGetAllUserBill } from "./useGetAllUserBill";
+import { usePagination } from "./usePagination";
 import { useSortKey } from "./useSortKey";
 
 export const useGetAllInvoices = ({

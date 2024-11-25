@@ -1,82 +1,69 @@
-@import "../../node_modules/@syncfusion/ej2-base/styles/material.css";
-@import "../../node_modules/@syncfusion/ej2-buttons/styles/material.css";
-@import "../../node_modules/@syncfusion/ej2-calendars/styles/material.css";
-@import "../../node_modules/@syncfusion/ej2-dropdowns/styles/material.css";
-@import "../../node_modules/@syncfusion/ej2-inputs/styles/material.css";
-@import "../../node_modules/@syncfusion/ej2-lists/styles/material.css";
-@import "../../node_modules/@syncfusion/ej2-navigations/styles/material.css";
-@import "../../node_modules/@syncfusion/ej2-popups/styles/material.css";
-@import "../../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css";
-@import "../../node_modules/@syncfusion/ej2-react-schedule/styles/material.css";
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-html {
-  scroll-behavior: smooth;
-}
-body {
-  min-height: 100vh;
-  font-family: "Kumbh Sans", sans-serif;
-  font-weight: 400;
-  font-size: 16px;
-}
+@layer base {
+  * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    min-height: 100vh;
+    font-family: "Kumbh Sans", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+  }
 
-button {
-  background: none;
-  color: inherit;
-  border: none;
-  font: inherit;
-  cursor: pointer;
-  outline: inherit;
-  padding: 8px 16px;
-  border-radius: 8px;
-  color: white;
-  font-weight: 600;
-  font-size: 13px;
-}
-a {
-  background: none;
-  color: inherit;
-  border: none;
-  padding: 0;
-  font: inherit;
-  cursor: pointer;
-  outline: inherit;
-  text-decoration: none;
-  height: "100%";
-  width: "100%";
-}
-input {
-  all: unset;
-}
+  button {
+    background: none;
+    color: inherit;
+    border: none;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    padding: 8px 16px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  a {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    text-decoration: none;
+    height: "100%";
+    width: "100%";
+  }
+  input {
+    all: unset;
+  }
 
-.e-current-day {
-  color: #008cd5 !important;
-}
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 2px;
+  }
 
-::-webkit-scrollbar {
-  width: 4px;
-  height: 2px;
-}
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
 
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
+  ::-webkit-scrollbar-thumb {
+    background: rgb(170, 170, 170, 0.4);
+    border-radius: 5px;
+  }
 
-::-webkit-scrollbar-thumb {
-  background: rgb(170, 170, 170, 0.4);
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #888;
+  ::-webkit-scrollbar-thumb:hover {
+    background: #888;
+  }
 }
 
 @layer utilities {
@@ -88,5 +75,26 @@ input {
   .no-scrollbar {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
+  }
+
+  .thick-scrollbar {
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #888;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+  }
+
+  .no-y-scrollbar {
+    ::-webkit-scrollbar {
+      width: 0;
+    }
   }
 }

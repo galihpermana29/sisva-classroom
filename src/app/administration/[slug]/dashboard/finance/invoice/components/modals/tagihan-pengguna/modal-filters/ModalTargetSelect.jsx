@@ -16,18 +16,12 @@ export const ModalTargetSelect = ({ data, value, setValue, disabled }) => {
       displayEmpty
       onChange={handleChange}
     >
-      <MenuItem
-        disabled
-        value=""
-      >
+      <MenuItem disabled value="">
         Target
       </MenuItem>
       {data
         ? data.map(({ label, value }) => (
-            <MenuItem
-              key={`${label}-${value}`}
-              value={value}
-            >
+            <MenuItem key={`${label}-${value}`} value={value}>
               {label}
             </MenuItem>
           ))

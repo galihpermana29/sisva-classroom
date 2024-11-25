@@ -1,0 +1,15 @@
+{
+  "singleQuote": false,
+  "trailingComma": "es5",
+  "semi": true,
+  "tabWidth": 2,
+  "printWidth": 80,
+  "overrides": [
+    {
+      "files": "src/api/*.ts",
+      "options": {
+        "printWidth": 140
+      }
+    }
+  ]
+}

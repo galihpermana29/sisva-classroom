@@ -12,24 +12,24 @@ export const themeConfig = {
   },
   palette: {
     primary: {
-      main: '#98A2B3',
+      main: "#98A2B3",
     },
     warning: {
-      main: '#F96756',
-      dark: '#E95746',
+      main: "#F96756",
+      dark: "#E95746",
     },
     base: {
-      main: '#98A2B3',
-      base100: '#101828',
-      base90: '#1D2939',
-      base80: '#344054',
-      base70: '#475467',
-      base60: '#667085',
-      base50: '#98A2B3',
-      base40: '#D0D5DD',
-      base30: '#EAECF0',
-      base20: '#F2F4F7',
-      base10: '#F9FAFB',
+      main: "#98A2B3",
+      base100: "#101828",
+      base90: "#1D2939",
+      base80: "#344054",
+      base70: "#475467",
+      base60: "#667085",
+      base50: "#98A2B3",
+      base40: "#D0D5DD",
+      base30: "#EAECF0",
+      base20: "#F2F4F7",
+      base10: "#F9FAFB",
     },
   },
   breakpoints: {
@@ -45,7 +45,7 @@ export const themeConfig = {
     MuiButton: {
       styleOverrides: {
         root: {
-          textTransform: 'none',
+          textTransform: "none",
           minWidth: 0,
           fontSize: 14,
         },

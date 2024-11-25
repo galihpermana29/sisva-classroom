@@ -1,15 +1,17 @@
 "use client";
 
-import { Button, Modal, Stack, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import { Button, Modal, Stack, Typography } from "@mui/material";
 import { useState } from "react";
+
 import { ModalBody } from "@/components/CustomModal";
 import { CustomTable } from "@/components/CustomTable";
-import { DaftarPenggunaTerpilihTableBody } from "./components/DaftarPenggunaTerpilihTableBody";
-import { ModalFilters } from "./modal-filters";
-import { useUserFilter } from "./hooks/useUserFilter";
-import { DaftarPenggunaSection } from "./components/DaftarPenggunaSection";
+
 import { useCreateUserBill } from "../../../hooks/useCreateUserBill";
+import { DaftarPenggunaSection } from "./components/DaftarPenggunaSection";
+import { DaftarPenggunaTerpilihTableBody } from "./components/DaftarPenggunaTerpilihTableBody";
+import { useUserFilter } from "./hooks/useUserFilter";
+import { ModalFilters } from "./modal-filters";
 
 export const AddTagihanPenggunaModal = () => {
   const [open, setOpen] = useState(false);
@@ -107,14 +109,8 @@ const ModalContent = ({ handleClose }) => {
           setBundledUsers={setBundledInvoiceUsers}
         />
       )}
-      <Stack
-        width="100%"
-        gap={1}
-      >
-        <Typography
-          fontSize="1em"
-          fontWeight={600}
-        >
+      <Stack width="100%" gap={1}>
+        <Typography fontSize="1em" fontWeight={600}>
           Daftar Pengguna Terpilih
         </Typography>
         <CustomTable
@@ -147,12 +143,7 @@ const ModalContent = ({ handleClose }) => {
         >
           Batal
         </Button>
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          onClick={onSubmit}
-        >
+        <Button type="submit" fullWidth variant="contained" onClick={onSubmit}>
           Buat
         </Button>
       </Stack>

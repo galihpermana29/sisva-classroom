@@ -1,15 +1,17 @@
 "use client";
 
+import { useTheme } from "@emotion/react";
 import { useMounted } from "@mantine/hooks";
 import { Box, Divider, Paper, Stack, Typography } from "@mui/material";
+import dayjs from "dayjs";
+
+import { formatToRupiah } from "@/utils/formatToRupiah";
+
 import { useGetTagihan } from "../../hooks/useGetTagihan";
 import { usePagination } from "../../hooks/usePagination";
-import { TagihanRowActions } from "./TagihanRowActions";
-import dayjs from "dayjs";
-import { formatToRupiah } from "@/utils/formatToRupiah";
-import { TagihanStatusBadge } from "./TagihanStatusBadge";
-import { useTheme } from "@emotion/react";
 import JumlahPembayaranTagihan from "../tables/tagihan/JumlahPembayaranTagihan";
+import { TagihanRowActions } from "./TagihanRowActions";
+import { TagihanStatusBadge } from "./TagihanStatusBadge";
 
 export const TagihanData = () => {
   const theme = useTheme();
@@ -20,8 +22,9 @@ export const TagihanData = () => {
   if (isLoading || !mounted)
     return (
       <Stack gap={2}>
-        {[...Array(3)].map(() => (
+        {[...Array(3)].map((i) => (
           <Box
+            key={i}
             className={`w-full h-52 rounded-lg animate-pulse`}
             sx={{ backgroundColor: theme.palette.base.base30 }}
           ></Box>

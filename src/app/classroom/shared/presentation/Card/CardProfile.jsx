@@ -1,11 +1,10 @@
-import React from "react";
-import { BoxLeft, BoxRight, BoxTop } from "../Box/Box";
-import Image from "next/image";
-import { Avatar, Divider } from "antd";
-import DummyProfile from "@/assets/classroom/images/DummyProfile.png";
 import { UserCircle } from "@untitled-ui/icons-react";
-import AvatarProfile from "../Profile/AvatarProfile";
+import { Avatar } from "antd";
+import React from "react";
+
 import { useTokenColor } from "../../usecase/use-token-color";
+import { BoxLeft, BoxRight, BoxTop } from "../Box/Box";
+import AvatarProfile from "../Profile/AvatarProfile";
 
 const CardProfile = ({
   name,

@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
-import { getAllClasses } from "../repository/teacher-score-service";
 import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+
+import { getAllClasses } from "../repository/teacher-score-service";
 
 export function useClass() {
   const [loading, setLoading] = useState(true);
@@ -25,11 +26,11 @@ export function useClass() {
         class_name: classDetail.student_group_name,
       });
     };
-    fetchData()
+    fetchData();
   }, []);
 
-  return{
+  return {
     loading,
-    classData
-  }
+    classData,
+  };
 }

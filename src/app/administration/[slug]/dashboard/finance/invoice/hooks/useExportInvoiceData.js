@@ -1,8 +1,10 @@
-import { FinanceAPI } from "@/api/finance";
-import { useGetAllUsers } from "@/hooks/useGetAllUsers";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useGetAllUserBill } from "./useGetAllUserBill";
+
+import FinanceAPI from "@/api/finance";
+import { useGetAllUsers } from "@/hooks/query/academic/useGetAllUsers";
+
 import { useGetAllInvoices } from "./useGetAllInvoices";
+import { useGetAllUserBill } from "./useGetAllUserBill";
 
 /**
  * Custom hook to fetch and format the rows for Tagihan

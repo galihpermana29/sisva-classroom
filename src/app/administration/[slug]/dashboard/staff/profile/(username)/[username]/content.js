@@ -1,62 +1,57 @@
-'use client';
-
-import { useEffect, useState, useRef } from 'react';
-import Image from 'next/image';
-import {
-  Avatar,
-  Box,
-  Button,
-  Divider,
-  Grid,
-  IconButton,
-  OutlinedInput,
-  Paper,
-  Stack,
-  Typography,
-} from '@mui/material';
-import SchoolLogo from '@/assets/School-Logo-Blue.png';
-import LandingImage from '@/assets/Login-Library.png';
+"use client";
 
 import {
   ArrowBackIosNewRounded,
   BorderColorRounded,
-} from '@mui/icons-material';
+} from "@mui/icons-material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  Paper,
+  Stack,
+  Typography,
+} from "@mui/material";
+import { useFormik } from "formik";
+import Image from "next/image";
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
-import { useFormik } from 'formik';
+import AuthAPI from "@/api/auth";
+import FilesAPI from "@/api/files";
+import UsersAPI from "@/api/users";
+import { useSchool } from "@/app/administration/[slug]/SchoolContext";
 
-import { FormStaffBasic } from './components/FormStaffBasic';
-import { FormStaffBiodata } from './components/FormStaffBiodata';
-import { FormStaffPassword } from './components/FormStaffPassword';
-import Link from 'next/link';
-import UsersAPI from '@/api/users';
-import { object } from 'yup';
-import AuthAPI from '@/api/auth';
-import FilesAPI from '@/api/files';
-import { useParams } from 'next/navigation';
+import { FormStaffBasic } from "./components/FormStaffBasic";
+import { FormStaffBiodata } from "./components/FormStaffBiodata";
+import { FormStaffPassword } from "./components/FormStaffPassword";
 
 export default function StaffProfileContent({ user_id }) {
+  const school = useSchool();
   const { slug } = useParams();
   const containerRef = useRef(null);
   const [activeTab, setActiveTab] = useState(0);
 
   const [initialData, setinitialData] = useState({
-    name: '',
-    username: '',
-    type: '',
+    name: "",
+    type: "",
     permissions: [],
-    email: '',
-    phone: '',
-    gender: '',
-    nationality: '',
-    personal_id: '',
-    education_id: '',
-    religion: '',
-    address: '',
-    profile_image_uri: '',
-    old_password: '',
-    confirm_old_password: '',
-    new_password: '',
-    confirm_new_password: '',
+    email: "",
+    phone: "",
+    gender: "",
+    nationality: "",
+    personal_id: "",
+    education_id: "",
+    religion: "",
+    address: "",
+    profile_image_uri: "",
+    old_password: "",
+    confirm_old_password: "",
+    new_password: "",
+    confirm_new_password: "",
   });
   const formik = useFormik({
     initialValues: { ...initialData },
@@ -65,7 +60,6 @@ export default function StaffProfileContent({ user_id }) {
       let changePassData = {};
 
       let json_text = {
-        username: values.username,
         email: values.email,
         phone: values.phone,
         gender: values.gender,
@@ -76,7 +70,6 @@ export default function StaffProfileContent({ user_id }) {
         personal_id: values.personal_id,
       };
 
-      delete values.username;
       delete values.email;
       delete values.phone;
       delete values.gender;
@@ -91,7 +84,7 @@ export default function StaffProfileContent({ user_id }) {
       };
 
       for (const keys in values) {
-        if (keys.includes('password')) {
+        if (keys.includes("password")) {
           changePassData = { ...changePassData, [`${keys}`]: values[keys] };
         }
       }
@@ -102,7 +95,7 @@ export default function StaffProfileContent({ user_id }) {
 
           fetchProfile(user_id);
         } catch (error) {
-          console.log(error, 'update user');
+          console.log(error, "update user");
         }
       } else {
         try {
@@ -112,20 +105,20 @@ export default function StaffProfileContent({ user_id }) {
           delete changePassData.id;
           delete changePassData.new_password_confirm;
 
-          if (Object.keys(changePassData).includes('current_password')) {
+          if (Object.keys(changePassData).includes("current_password")) {
             try {
               await AuthAPI.changeUserPass(changePassData);
             } catch (error) {
-              console.log(error, 'change user password');
+              console.log(error, "change user password");
             }
           } else if (
-            Object.keys(changePassData).includes('new_password') &&
-            !Object.keys(changePassData).includes('current_password')
+            Object.keys(changePassData).includes("new_password") &&
+            !Object.keys(changePassData).includes("current_password")
           ) {
             try {
               await AuthAPI.resetUserPass(changePassData);
             } catch (error) {
-              console.log(error, 'reset user password');
+              console.log(error, "reset user password");
             }
           }
         } catch (error) {
@@ -148,7 +141,7 @@ export default function StaffProfileContent({ user_id }) {
       const file = e.target.files[0];
       const formData = new FormData();
 
-      formData.append('file', file);
+      formData.append("file", file);
 
       const {
         data: { data },
@@ -156,7 +149,7 @@ export default function StaffProfileContent({ user_id }) {
 
       formik.setFieldValue(name, data);
     } catch (error) {
-      console.log(error, 'error upload user profile');
+      console.log(error, "error upload user profile");
     }
   };
 
@@ -166,18 +159,13 @@ export default function StaffProfileContent({ user_id }) {
         data: { data },
       } = await UsersAPI.getUserById(userId);
 
-      if (updateCurrentUser) {
-        localStorage.setItem('current_user', JSON.stringify(data));
-        return;
-      }
-
       const additionalJson = JSON.parse(data.detail.json_text);
       delete data.detail.json_text;
 
       setinitialData({ ...data, ...additionalJson });
       formik.setValues({ ...data, ...additionalJson });
     } catch (error) {
-      console.log(error, 'error fetch profile');
+      console.log(error, "error fetch profile");
     }
   };
 
@@ -187,11 +175,11 @@ export default function StaffProfileContent({ user_id }) {
 
   let tabs = [
     {
-      title: 'Akun',
+      title: "Akun",
       component: <FormStaffBasic formik={formik} editing={editing} />,
     },
     {
-      title: 'Biodata',
+      title: "Biodata",
       component: (
         <FormStaffBiodata
           formik={formik}
@@ -201,7 +189,7 @@ export default function StaffProfileContent({ user_id }) {
       ),
     },
     {
-      title: 'Password',
+      title: "Password",
       component: (
         <FormStaffPassword
           formik={formik}
@@ -215,13 +203,13 @@ export default function StaffProfileContent({ user_id }) {
   ];
 
   return (
-    <Stack sx={{ height: '100%', width: '100%', p: { xs: 2, lg: 4 } }}>
+    <Stack sx={{ height: "100%", width: "100%", p: { xs: 2, lg: 4 } }}>
       <Stack
         sx={{
-          flexDirection: 'row',
-          display: { xs: 'none', lg: 'flex' },
+          flexDirection: "row",
+          display: { xs: "none", lg: "flex" },
           mb: 2,
-          alignItems: 'center',
+          alignItems: "center",
         }}
       >
         <IconButton
@@ -237,22 +225,22 @@ export default function StaffProfileContent({ user_id }) {
       </Stack>
       <Stack
         component={Paper}
-        variant='outlined'
+        variant="outlined"
         sx={{
-          padding: { xs: '16px', md: '16px 32px' },
+          padding: { xs: "16px", md: "16px 32px" },
           borderRadius: 2,
-          flexDirection: 'row',
-          alignItems: 'center',
+          flexDirection: "row",
+          alignItems: "center",
           mb: 2,
         }}
       >
-        <Avatar sx={{ height: 70, width: 70, position: 'relative', mr: 2 }}>
-          {initialData.profile_image_uri !== '' ? (
+        <Avatar sx={{ height: 70, width: 70, position: "relative", mr: 2 }}>
+          {initialData.profile_image_uri !== "" ? (
             <Image
-              alt='Image'
-              src={`https://api-staging.sisva.id/file/v1/files/${initialData.profile_image_uri}?school_id=0a49a174-9ff5-464d-86c2-3eb1cd0b284e`}
-              layout={'fill'}
-              objectFit={'cover'}
+              alt="Image"
+              src={`https://api-staging.sisva.id/file/v1/files/${initialData.profile_image_uri}?school_id=${school.id}`}
+              layout={"fill"}
+              objectFit={"cover"}
             />
           ) : (
             initialData.name.toUpperCase().slice(0, 1)
@@ -270,20 +258,20 @@ export default function StaffProfileContent({ user_id }) {
       <Stack
         component={Paper}
         ref={containerRef}
-        variant='outlined'
+        variant="outlined"
         sx={{
           borderRadius: 2,
           flex: 1,
-          overflowY: 'hidden',
-          maxHeight: '100%',
+          overflowY: "hidden",
+          maxHeight: "100%",
         }}
       >
         <Stack
           sx={{
-            flexDirection: 'row',
-            borderBottom: '1px solid rgb(0,0,0,0.12)',
+            flexDirection: "row",
+            borderBottom: "1px solid rgb(0,0,0,0.12)",
             // height: 54,
-            overflowX: 'auto',
+            overflowX: "auto",
           }}
         >
           {tabs.map((item, index) => {
@@ -291,14 +279,14 @@ export default function StaffProfileContent({ user_id }) {
               <Button
                 key={index}
                 sx={{
-                  p: { xs: '16px 12px', lg: 2 },
+                  p: { xs: "16px 12px", lg: 2 },
                   minWidth: { xs: 100, lg: 110 },
                   // height: 54,
-                  borderBottom: '2px solid',
+                  borderBottom: "2px solid",
                   borderBottomLeftRadius: 0,
                   borderBottomRightRadius: 0,
                   borderColor:
-                    activeTab === index ? 'primary.main' : 'transparent',
+                    activeTab === index ? "primary.main" : "transparent",
                 }}
                 onClick={() => {
                   setActiveTab(index);
@@ -312,19 +300,19 @@ export default function StaffProfileContent({ user_id }) {
         </Stack>
         <Stack
           ref={containerRef}
-          variant='outlined'
+          variant="outlined"
           sx={{
             flex: 1,
-            overflowY: 'scroll',
-            maxHeight: '100%',
-            position: 'relative',
+            overflowY: "scroll",
+            maxHeight: "100%",
+            position: "relative",
             pb: 2,
           }}
         >
-          {' '}
+          {" "}
           <Button
-            variant='outlined'
-            size='small'
+            variant="outlined"
+            size="small"
             fullWidth={false}
             startIcon={<BorderColorRounded />}
             onClick={() => {
@@ -332,26 +320,26 @@ export default function StaffProfileContent({ user_id }) {
               containerRef.current.scrollTo({ top: 0 });
             }}
             sx={{
-              display: !editing && activeTab !== 2 ? 'flex' : 'none',
-              padding: '8px 14px',
-              position: 'fixed',
-              width: 'fit-content',
-              justifySelf: 'flex-end',
+              display: !editing && activeTab !== 2 ? "flex" : "none",
+              padding: "8px 14px",
+              position: "fixed",
+              width: "fit-content",
+              justifySelf: "flex-end",
               right: { xs: 32, md: 48, lg: 64 },
               mt: 2,
-              backgroundColor: 'white',
+              backgroundColor: "white",
             }}
           >
-            <Box component={'span'}>Edit</Box>
+            <Box component={"span"}>Edit</Box>
           </Button>
-          <Stack width='100%'>
+          <Stack width="100%">
             <Grid container>
               <Grid item xs={12}>
                 <Grid
                   container
-                  justifyContent={'space-between'}
+                  justifyContent={"space-between"}
                   sx={{
-                    padding: '16px',
+                    padding: "16px",
                     mt: 1,
                   }}
                 >
@@ -369,15 +357,15 @@ export default function StaffProfileContent({ user_id }) {
             </Grid>
             <Stack
               sx={{
-                display: editing && activeTab !== 2 ? 'flex' : 'none',
-                flexDirection: 'row',
-                justifyContent: 'flex-end',
-                p: { sm: '0 16px', md: '0 32px' },
+                display: editing && activeTab !== 2 ? "flex" : "none",
+                flexDirection: "row",
+                justifyContent: "flex-end",
+                p: { sm: "0 16px", md: "0 32px" },
                 mb: 2,
               }}
             >
               <Button
-                variant='outlined'
+                variant="outlined"
                 sx={{ mr: 1, width: 120 }}
                 onClick={() => {
                   setEditing(false);
@@ -388,7 +376,7 @@ export default function StaffProfileContent({ user_id }) {
                 Batal
               </Button>
               <Button
-                variant='contained'
+                variant="contained"
                 sx={{ width: 120 }}
                 onClick={() => {
                   setEditing(false);

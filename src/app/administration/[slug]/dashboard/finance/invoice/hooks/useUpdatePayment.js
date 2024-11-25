@@ -1,7 +1,8 @@
 "use client";
 
-import { FinanceAPI } from "@/api/finance";
 import { useMutation } from "@tanstack/react-query";
+
+import FinanceAPI from "@/api/finance";
 
 export const useUpdatePayment = ({ invoiceId }) => {
   return useMutation({
@@ -11,10 +12,11 @@ export const useUpdatePayment = ({ invoiceId }) => {
       return FinanceAPI.updatePaymentProof(invoiceId, paymentPayload);
     },
     onSettled: () => {
-      queryClient.refetchQueries({ queryKey: ["invoice", { id: invoiceId }] });
-      queryClient.refetchQueries({
-        queryKey: ["invoices", { bill_id: undefined, user_id: undefined }],
-      });
+      // ! queryClient is not defined
+      // queryClient.refetchQueries({ queryKey: ["invoice", { id: invoiceId }] });
+      // queryClient.refetchQueries({
+      //   queryKey: ["invoices", { bill_id: undefined, user_id: undefined }],
+      // });
     },
   });
 };

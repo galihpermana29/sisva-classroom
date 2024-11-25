@@ -8,9 +8,7 @@ const TeachingPlanSection = ({ title, content, htmlContent }) => {
       </div>
 
       <div>
-        {content && (
-          <div className="pb-2 text-sm font-normal">{content}</div>
-        )}
+        {content && <div className="pb-2 text-sm font-normal">{content}</div>}
 
         {htmlContent && <HtmlRenderer htmlContent={htmlContent} />}
       </div>

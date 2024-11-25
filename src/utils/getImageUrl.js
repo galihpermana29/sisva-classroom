@@ -1,6 +1,7 @@
 "use client";
 
 import { getSchoolId } from "@/api";
+
 import { createQueryParam } from "./createQueryParam";
 
 export const getImageUrl = (image) => {

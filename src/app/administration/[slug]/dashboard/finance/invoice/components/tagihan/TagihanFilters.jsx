@@ -1,7 +1,7 @@
 "use client";
 
-import { SortIcon } from "@/assets/SVGs";
 import { Close } from "@mui/icons-material";
+import SyncIcon from "@mui/icons-material/Sync";
 import {
   Button,
   Checkbox,
@@ -12,8 +12,14 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import { useFormik } from "formik";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+
+import { SortIcon } from "@/assets/SVGs";
+import { useQueryParam } from "@/hooks/useQueryParam";
+
+import { tagihanSorts } from "../../constants";
 import { useGetTagihan } from "../../hooks/useGetTagihan";
 import {
   DateRangeSelect,
@@ -22,10 +28,6 @@ import {
 import FilterReset from "../filters/FilterReset";
 import { KATEGORI_FIELD_NAME, KategoriSelect } from "../filters/KategoriSelect";
 import { STATUS_FIELD_NAME, StatusSelect } from "../filters/StatusSelect";
-import ResetIcon from "../icons/ResetIcon";
-import { useFormik } from "formik";
-import { useQueryParam } from "@/hooks/useQueryParam";
-import { tagihanSorts } from "../../constants";
 
 const statusFilters = [
   {
@@ -75,11 +77,7 @@ export const TagihanFilters = () => {
 
   return (
     <>
-      <Stack
-        flexDirection="row"
-        alignItems="center"
-        gap={1}
-      >
+      <Stack flexDirection="row" alignItems="center" gap={1}>
         <IconButton
           sx={{
             borderRadius: 2,
@@ -100,10 +98,7 @@ export const TagihanFilters = () => {
             },
           }}
         >
-          <DrawerContent
-            closeDrawer={closeDrawer}
-            sortQuery={sort}
-          />
+          <DrawerContent closeDrawer={closeDrawer} sortQuery={sort} />
         </Drawer>
         <Divider
           orientation="vertical"
@@ -138,7 +133,7 @@ export const TagihanFilters = () => {
       {showMobileReset && (
         <Button
           sx={{ display: { xs: "flex", lg: "none", fontWeight: 600 } }}
-          startIcon={<ResetIcon color={theme.palette.primary.main} />}
+          startIcon={<SyncIcon />}
           onClick={handleResetFilters}
         >
           Reset
@@ -190,10 +185,7 @@ const DrawerContent = ({ closeDrawer, sortQuery }) => {
         alignItems={"center"}
         justifyContent={"space-between"}
       >
-        <Typography
-          fontWeight={600}
-          fontSize={"18px"}
-        >
+        <Typography fontWeight={600} fontSize={"18px"}>
           Urutkan
         </Typography>
         <IconButton
@@ -206,8 +198,8 @@ const DrawerContent = ({ closeDrawer, sortQuery }) => {
       <Divider sx={{ marginY: "16px" }} />
       <form onSubmit={formik.handleSubmit}>
         <Stack gap={"16px"}>
-          {tagihanSorts.map(({ label, value }) => (
-            <Stack gap={"16px"}>
+          {tagihanSorts.map(({ label, value }, i) => (
+            <Stack gap={"16px"} key={i}>
               <Stack
                 flexDirection={"row"}
                 justifyContent={"space-between"}
@@ -229,23 +221,11 @@ const DrawerContent = ({ closeDrawer, sortQuery }) => {
             </Stack>
           ))}
         </Stack>
-        <Stack
-          flexDirection={"row"}
-          gap={"12px"}
-          marginTop={"32px"}
-        >
-          <Button
-            onClick={closeDrawer}
-            variant="outlined"
-            fullWidth
-          >
+        <Stack flexDirection={"row"} gap={"12px"} marginTop={"32px"}>
+          <Button onClick={closeDrawer} variant="outlined" fullWidth>
             Batal
           </Button>
-          <Button
-            type="submit"
-            variant="contained"
-            fullWidth
-          >
+          <Button type="submit" variant="contained" fullWidth>
             Simpan
           </Button>
         </Stack>

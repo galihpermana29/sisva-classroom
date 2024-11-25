@@ -1,11 +1,11 @@
 "use client";
 
+import { useGetFilterJadwalKelas } from "../../../hooks/filters/jadwal-kelas";
+import { useGetShowFilterStatus } from "../../../hooks/filters/useGetShowFilterStatus";
+import { KelasSelect } from "../KelasSelect";
 import { PeriodeSelect } from "../PeriodeSelect";
 import { ProdiSelect } from "../ProdiSelect";
 import { TingkatSelect } from "../TingkatSelect";
-import { KelasSelect } from "../KelasSelect";
-import { useGetShowFilterStatus } from "../../../hooks/filters/useGetShowFilterStatus";
-import { useGetFilterJadwalKelas } from "../../../hooks/filters/jadwal-kelas";
 
 export const JadwalKelasFilters = () => {
   const { showProdi, showGrade, showKelas } = useGetShowFilterStatus();
@@ -19,18 +19,9 @@ export const JadwalKelasFilters = () => {
   return (
     <>
       <PeriodeSelect data={availablePeriods} />
-      <ProdiSelect
-        data={availableStudyPrograms}
-        disabled={!showProdi}
-      />
-      <TingkatSelect
-        data={availableGrades}
-        disabled={!showGrade}
-      />
-      <KelasSelect
-        data={availableClasses}
-        disabled={!showKelas}
-      />
+      <ProdiSelect data={availableStudyPrograms} disabled={!showProdi} />
+      <TingkatSelect data={availableGrades} disabled={!showGrade} />
+      <KelasSelect data={availableClasses} disabled={!showKelas} />
     </>
   );
 };

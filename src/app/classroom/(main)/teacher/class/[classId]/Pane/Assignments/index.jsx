@@ -1,4 +1,3 @@
-
 import { ModalProvider } from "../../create-rpp/view/container/Provider/ModalProvider";
 import AssignmentContainer from "./view/AssignmentContainer";
 

@@ -1,5 +1,6 @@
+import { notFound } from "next/navigation";
 import React from "react";
-import { getRppById } from "./repository/edit-rpp-service";
+
 import {
   getAllCurriculum,
   getAllStudyProgram,
@@ -7,9 +8,9 @@ import {
   getAllTeacher,
   getTeachingMaterialList,
 } from "../../../../teaching-material/repository/teaching-material-service";
-import CreateRppMainPage from "../../create-rpp/view/container/CreateRppMainPage";
 import { getAllTaskList } from "../../../repository/teacher-class-service";
-import { notFound } from "next/navigation";
+import CreateRppMainPage from "../../create-rpp/view/container/CreateRppMainPage";
+import { getRppById } from "./repository/edit-rpp-service";
 
 async function getEditRppPageData(id) {
   const [

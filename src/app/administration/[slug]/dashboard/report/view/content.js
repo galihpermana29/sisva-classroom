@@ -1,19 +1,11 @@
 "use client";
 
-import {
-  Add,
-  Cancel,
-  DownloadRounded,
-  Search,
-  UploadFileRounded,
-} from "@mui/icons-material";
+import { Cancel, Search } from "@mui/icons-material";
 import {
   Box,
   Button,
   Divider,
-  Hidden,
   InputAdornment,
-  Menu,
   MenuItem,
   Modal,
   Paper,
@@ -21,19 +13,17 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import DataTable from "./components/Table";
-import { ExcelIcon, ExportIcon, SortIcon } from "@/assets/SVGs";
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import { permissions, types } from "@/globalcomponents/Variable";
-import { FormAddStaff } from "./components/FormAddStaff";
-
-import { useFormik } from "formik";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
+import { useFormik } from "formik";
+import { useEffect, useState } from "react";
+
+import { SortIcon } from "@/assets/SVGs";
+
+import { FormAddStaff } from "./components/FormAddStaff";
+import DataTable from "./components/Table";
 
 export default function StaffProfileListContent() {
   const [initialData, setinitialData] = useState({
@@ -367,9 +357,7 @@ export default function StaffProfileListContent() {
               ),
             }}
           >
-            {[
-              { title: "Nama", slug: "name" }
-            ].map((option) => (
+            {[{ title: "Nama", slug: "name" }].map((option) => (
               <MenuItem key={option.slug} value={option.slug}>
                 <Typography fontSize={14}>{option.title}</Typography>
               </MenuItem>
@@ -612,14 +600,14 @@ export default function StaffProfileListContent() {
           }}
         >
           {/* <Filters /> */}
-          <Stack sx={{ flexDirection: "row", py: 1, flex:1 }}>
+          <Stack sx={{ flexDirection: "row", py: 1, flex: 1 }}>
             {/* <Divider orientation="vertical" sx={{ mx: 1 }} /> */}
             <Button
               sx={{
                 backgroundColor: "base.base30",
                 color: "base.base50",
                 fontSize: 18,
-                flex:1,
+                flex: 1,
                 "&:hover": {
                   backgroundColor: "base.base40",
                 },

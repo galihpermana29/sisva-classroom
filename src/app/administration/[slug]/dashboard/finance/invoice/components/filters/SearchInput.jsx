@@ -4,6 +4,7 @@ import { useDebouncedCallback } from "@mantine/hooks";
 import SearchIcon from "@mui/icons-material/Search";
 import { InputAdornment, TextField } from "@mui/material";
 import { useSearchParams } from "next/navigation";
+
 import { useInvoiceFilters } from "../../hooks/useInvoiceFilters";
 
 /** Use this field name to get or modify search filter value elsewhere */

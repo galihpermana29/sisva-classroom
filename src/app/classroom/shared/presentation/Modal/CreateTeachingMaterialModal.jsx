@@ -1,11 +1,13 @@
+import { Col, Form, Modal, Row } from "antd";
 import React, { useEffect, useState } from "react";
-import { Modal, Form, Row, Col } from "antd";
-import { SisvaSelect } from "../Input/SelectField";
-import SisvaButton from "../Button/GlobalButton";
-import { SisvaInput } from "../Input/SisvaInputField";
-import SisvaInputFile from "@/app/classroom/shared/presentation/Input/InputFile";
+
 import { useModal } from "@/app/classroom/(main)/teacher/class/[classId]/create-rpp/view/container/Provider/ModalProvider";
 import { useGetDetailTeachingMaterial } from "@/app/classroom/(main)/teacher/teaching-material/usecase/use-get-detail-material";
+import SisvaInputFile from "@/app/classroom/shared/presentation/Input/InputFile";
+
+import SisvaButton from "../Button/GlobalButton";
+import { SisvaSelect } from "../Input/SelectField";
+import { SisvaInput } from "../Input/SisvaInputField";
 
 const CreateTeachingMaterialModal = ({
   open,

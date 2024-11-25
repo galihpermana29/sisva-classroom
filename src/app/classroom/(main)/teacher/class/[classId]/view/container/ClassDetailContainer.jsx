@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+
 import { ModalProvider } from "../../create-rpp/view/container/Provider/ModalProvider";
 import ClassDetailTabs from "../presentation/Tabs/ClassDetailTabs";
 

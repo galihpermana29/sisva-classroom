@@ -1,6 +1,5 @@
-import { Upload } from "antd";
 import { File05, Trash01, UploadCloud02 } from "@untitled-ui/icons-react";
-
+import { Spin, Upload } from "antd";
 import toast from "react-hot-toast";
 
 const InputFile = ({

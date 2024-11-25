@@ -1,15 +1,15 @@
-import { Fragment } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import { Fragment } from "react";
+
+import TeachingPlanTitle from "@/app/classroom/shared/presentation/TitleBar/TeachingPlanTitle";
+import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
+import MaterialIcon from "@/assets/images/teaching-plan/material.svg";
+import TaskIcon from "@/assets/images/teaching-plan/task.png";
 
 import PopOverActions from "./PopOverActions";
 import TeachingPlanSection from "./TeachingPlanSection";
-import TeachingPlanTitle from "@/app/classroom/shared/presentation/TitleBar/TeachingPlanTitle";
-
-import MaterialIcon from "@/assets/images/teaching-plan/material.svg";
-import TaskIcon from "@/assets/images/teaching-plan/task.png";
-import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
-import Link from "next/link";
-import { useParams } from "next/navigation";
 
 const TeachingPlanList = ({
   id,
@@ -24,7 +24,7 @@ const TeachingPlanList = ({
   const userData = getClientSession();
   const schoolId = userData?.school_id;
   const { classId } = useParams();
-  
+
   return (
     <Fragment>
       <TeachingPlanTitle title={title} prefix={<PopOverActions id={id} />} />
@@ -55,6 +55,7 @@ const TeachingPlanList = ({
             {tasks?.map((task, idx) => (
               <Link
                 href={`/classroom/teacher/class/${classId}/task/${task.id}`}
+                key={idx}
               >
                 <div key={"tasks_" + idx} className="flex items-center gap-2">
                   <Image src={TaskIcon} alt="Tugas" width={20} height={20} />

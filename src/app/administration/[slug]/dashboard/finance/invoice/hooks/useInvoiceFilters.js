@@ -1,8 +1,9 @@
 "use client";
 
-import { CURRENT_PAGE_NAME } from "@/app/administration/[slug]/dashboard/finance/invoice/constants";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
+
+import { CURRENT_PAGE_NAME } from "@/app/administration/[slug]/dashboard/finance/invoice/constants";
 
 /** Hooks to create a new filter string, or update current filter string, followed by resetting current page to `page = 1`
  * @description This hook is an extension to `useQueryParam`. Setting a `null` value to `value` param would delete the provided param with a name `name`.

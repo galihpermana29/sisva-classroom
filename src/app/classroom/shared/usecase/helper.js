@@ -1,9 +1,9 @@
-import dayjs from "dayjs";
-import customParseFormat from "dayjs/plugin/customParseFormat";
-import utc from "dayjs/plugin/utc";
-import timezone from "dayjs/plugin/timezone";
 import "dayjs/locale/id";
 
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
 
 dayjs.extend(customParseFormat);
 dayjs.extend(utc);
@@ -15,7 +15,7 @@ export function generalDateParser(dateString) {
   return parsedDate;
 }
 
-export function generalDateFormatter(dateString, pattern = DEADLINE_FORMAT ) {
+export function generalDateFormatter(dateString, pattern = DEADLINE_FORMAT) {
   const date = dayjs(dateString, DATE_RESPONSE_FORMAT);
 
   return date.format(pattern);

@@ -1,12 +1,18 @@
+"use client";
+
 import { Box } from "@mui/material";
+import { useParams } from "next/navigation";
+
+import { useCurrentUser } from "@/hooks/query/user/useCurrentUser";
+
 import Container from "./components/Container";
 
-export const metadata = {
-  title: "Beranda | Sisva",
-  description: "Sisva | Solusi Digitalisasi dan Modernisasi Sekolah",
-};
-
 export default function RootLayout({ children }) {
+  const { slug } = useParams();
+  const { data: currentUser, isLoading } = useCurrentUser(slug);
+
+  if (isLoading || !currentUser) return <></>;
+
   return (
     <Box
       sx={{
@@ -16,7 +22,7 @@ export default function RootLayout({ children }) {
       }}
     >
       <Container>
-        <div className="max-h-[90vh] overflow-auto">{children}</div>
+        <div className="max-h-[90vh] overflow-auto h-full">{children}</div>
       </Container>
     </Box>
   );

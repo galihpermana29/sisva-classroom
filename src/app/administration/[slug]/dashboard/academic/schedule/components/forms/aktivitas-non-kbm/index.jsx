@@ -1,24 +1,24 @@
 "use client";
 
-import AcademicAPI from "@/api/academic";
-import { useQueryParam } from "@/hooks/useQueryParam";
-import { formatDayToLabel } from "@/utils/formatDay";
-import { formatTime } from "@/utils/formatTime";
 import { Button, Stack } from "@mui/material";
+import { useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { useFormik } from "formik";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { PERIODE_FIELD_NAME } from "../../filters/PeriodeSelect";
+import { useState } from "react";
+
+import AcademicAPI from "@/api/academic";
+import { invalidateNonLearningSchedules } from "@/hooks/query/academic/useNonLearningSchedules";
+import { formatTime } from "@/utils/formatTime";
+
+import { useFilterStatus } from "../../../hooks/filters/useFilterStatus";
+import useCreateAktivitasNonKbm from "../../../hooks/useCreateAktivitasNonKbm";
 import { ActivityNameInput } from "../../form-items/ActivityNameInput";
 import { DaySelectDynamic } from "../../form-items/DaySelectDynamic";
+import { LevelSelect } from "../../form-items/LevelSelect";
+import { StudyProgramSelect } from "../../form-items/StudyProgramSelect";
 import { TimeSelect } from "../../form-items/TimeSelect";
 import ErrorJadwalKelasModal from "../../modals/ErrorJadwalKelasModal";
 import { aktivitasNonKbmSchema } from "./aktivitasNonKbmSchema";
-import useCreateAktivitasNonKbm from "../../../hooks/useCreateAktivitasNonKbm";
-import { StudyProgramSelect } from "../../form-items/StudyProgramSelect";
-import { LevelSelect } from "../../form-items/LevelSelect";
-import { useFilterStatus } from "../../../hooks/filters/useFilterStatus";
 
 function parseTime(timeString) {
   return dayjs(timeString, "h:mm A Z");
@@ -44,7 +44,7 @@ const hasTimeConflict = (startTime, endTime, extStartTime, extEndTime) => {
 };
 
 export const AktivitasNonKbmForm = ({ handleClose, initialValues, edit }) => {
-  const { updateQueryParam } = useQueryParam();
+  const queryClient = useQueryClient();
 
   if (initialValues) {
     initialValues = {
@@ -163,8 +163,8 @@ export const AktivitasNonKbmForm = ({ handleClose, initialValues, edit }) => {
             await AcademicAPI.createNonLearningSchedule(newPayload);
           }
 
-          updateQueryParam("rf", true);
           handleClose();
+          invalidateNonLearningSchedules(queryClient);
         }
       } catch (err) {
         console.log(err);

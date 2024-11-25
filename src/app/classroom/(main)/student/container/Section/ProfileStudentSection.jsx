@@ -1,13 +1,17 @@
 "use client";
 
+import { Bell01 } from "@untitled-ui/icons-react/build/cjs";
+import { Badge } from "antd";
+
+import { useGetStudentProfile } from "@/app/classroom/(main)/student/usecase/useGetStudentProfile";
 import {
   BoxLeft,
   BoxRight,
   BoxTop,
 } from "@/app/classroom/shared/presentation/Box/Box";
-import { useGetStudentProfile } from "@/app/classroom/(main)/student/usecase/useGetStudentProfile";
 import AvatarProfile from "@/app/classroom/shared/presentation/Profile/AvatarProfile";
 import { useTokenColor } from "@/app/classroom/shared/usecase/use-token-color";
+import PlaceholderProfile from "@/assets/placeholder.jpg";
 
 const ProfileStudentSection = () => {
   const { tokenColor } = useTokenColor();

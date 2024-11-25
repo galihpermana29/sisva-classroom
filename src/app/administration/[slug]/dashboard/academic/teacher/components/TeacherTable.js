@@ -1,4 +1,4 @@
-import { BorderColorRounded } from '@mui/icons-material';
+import { BorderColorRounded } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -10,40 +10,40 @@ import {
   Stack,
   Typography,
   useMediaQuery,
-} from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
-import { useState } from 'react';
-import { FormEditPeriod } from './FormEditPeriod';
-import { FormAddSubjectTeacher } from './FormAddSubjectTeacher';
+} from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
+import { useState } from "react";
+
+import { FormAddSubjectTeacher } from "./FormAddSubjectTeacher";
 
 const columns = [
   {
-    field: 'card',
-    headerName: '',
+    field: "card",
+    headerName: "",
     flex: 1,
     sortable: false,
     renderCell: (params) => {
       return (
-        <Box sx={{ width: '100%', mx: 2, py: 0.5 }}>
+        <Box sx={{ width: "100%", mx: 2, py: 0.5 }}>
           <Stack
             component={Paper}
-            variant='outlined'
+            variant="outlined"
             sx={{
-              justifyContent: 'flex-start',
+              justifyContent: "flex-start",
               borderRadius: 2,
               p: 2,
             }}
           >
-            <Stack sx={{ width: '100%' }}>
+            <Stack sx={{ width: "100%" }}>
               <Stack
                 sx={{
-                  width: '100%',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  borderBottom: '1px solid rgb(0,0,0,0.12)',
+                  width: "100%",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  borderBottom: "1px solid rgb(0,0,0,0.12)",
                   px: 1,
-                  py: '10px',
-                  backgroundColor: 'base.base10',
+                  py: "10px",
+                  backgroundColor: "base.base10",
                 }}
               >
                 <Typography
@@ -51,19 +51,19 @@ const columns = [
                 >
                   Guru
                 </Typography>
-                <Typography sx={{ fontSize: 14, textAlign: 'right' }}>
-                  {/* {params.value.data.teacher} */}
+                <Typography sx={{ fontSize: 14, textAlign: "right" }}>
+                  {params.value.data.name}
                 </Typography>
               </Stack>
               <Stack
                 sx={{
-                  width: '100%',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  borderBottom: '1px solid rgb(0,0,0,0.12)',
+                  width: "100%",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  borderBottom: "1px solid rgb(0,0,0,0.12)",
                   px: 1,
-                  py: '10px',
-                  backgroundColor: 'base.base20',
+                  py: "10px",
+                  backgroundColor: "base.base20",
                 }}
               >
                 <Typography
@@ -77,13 +77,13 @@ const columns = [
               </Stack>
               <Stack
                 sx={{
-                  width: '100%',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  borderBottom: '1px solid rgb(0,0,0,0.12)',
+                  width: "100%",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  borderBottom: "1px solid rgb(0,0,0,0.12)",
                   px: 1,
-                  py: '10px',
-                  backgroundColor: 'base.base10',
+                  py: "10px",
+                  backgroundColor: "base.base10",
                 }}
               >
                 <Typography
@@ -103,39 +103,39 @@ const columns = [
     },
   },
   {
-    field: 'teacher',
-    headerName: 'Guru',
+    field: "teacher",
+    headerName: "Guru",
     flex: 1,
   },
   {
-    field: 'grades',
-    headerName: 'Tingkatan',
+    field: "grades",
+    headerName: "Tingkatan",
     flex: 1,
     sortable: false,
     renderCell: (params) => {
       return params?.value?.length > 0 ? (
         <ChipList params={params.value} />
       ) : (
-        '-'
+        "-"
       );
     },
   },
   {
-    field: 'subjects',
-    headerName: 'Mata Pelajaran',
+    field: "subjects",
+    headerName: "Mata Pelajaran",
     flex: 2,
     sortable: false,
     renderCell: (params) => {
       return params?.value?.length > 0 ? (
         <ChipList params={params.value} />
       ) : (
-        '-'
+        "-"
       );
     },
   },
   {
-    field: 'action',
-    headerName: 'Aksi',
+    field: "action",
+    headerName: "Aksi",
     sortable: false,
     width: 120,
     renderCell: (params) => {
@@ -148,11 +148,11 @@ function ChipList({ params, compact }) {
   return (
     <Stack
       sx={{
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        overflow: 'hidden',
-        justifyContent: compact ? 'flex-end' : 'flex-start',
-        m: { xs: 0, lg: compact ? 0 : '8px 0' },
+        flexDirection: "row",
+        flexWrap: "wrap",
+        overflow: "hidden",
+        justifyContent: compact ? "flex-end" : "flex-start",
+        m: { xs: 0, lg: compact ? 0 : "8px 0" },
       }}
     >
       {params.map((datum, index) => {
@@ -160,11 +160,11 @@ function ChipList({ params, compact }) {
           <Chip
             key={index}
             sx={{
-              m: { xs: '2px 0px 2px 4px', lg: '2px' },
+              m: { xs: "2px 0px 2px 4px", lg: "2px" },
               fontSize: 12,
             }}
             label={datum.subject_name ? datum.subject_name : datum}
-            color='primary'
+            color="primary"
           />
         );
       })}
@@ -176,27 +176,26 @@ function ActionButton({ params }) {
   return (
     <Stack
       sx={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        alignSelf: 'flex-end',
+        flexDirection: "row",
+        alignItems: "center",
+        alignSelf: "flex-end",
         mt: { xs: 2, lg: 0 },
       }}
     >
       <IconButton
         sx={{
           borderRadius: 2,
-          backgroundColor: 'base.base30',
-          '&:hover': {
-            backgroundColor: 'base.base40',
+          backgroundColor: "base.base30",
+          "&:hover": {
+            backgroundColor: "base.base40",
           },
-          height: 'fit-content',
-          width: { xs: 90, lg: 'fit-content' },
-          display: params.value.data.status === 'Selesai' ? 'none' : 'flex',
+          height: "fit-content",
+          width: { xs: 90, lg: "fit-content" },
+          display: params.value.data.status === "Selesai" ? "none" : "flex",
         }}
         onClick={() => {
           params.value.setOpenEditModal(true);
           params.value.setActiveRow(params.value.data);
-          console.log(params.value.data);
           params.value.formik.setValues({
             grades: params.value.data.grades,
             subjects: params.value.data.subjects,
@@ -205,10 +204,10 @@ function ActionButton({ params }) {
         }}
       >
         <BorderColorRounded
-          sx={{ fontSize: { xs: 15, lg: 18 }, color: 'base.base50' }}
+          sx={{ fontSize: { xs: 15, lg: 18 }, color: "base.base50" }}
         />
         <Typography
-          sx={{ fontSize: 14, ml: 1, display: { xs: 'flex', lg: 'none' } }}
+          sx={{ fontSize: 14, ml: 1, display: { xs: "flex", lg: "none" } }}
         >
           Edit
         </Typography>
@@ -224,7 +223,7 @@ export default function TeacherTable({
   gradeList,
   dataTeacher,
 }) {
-  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('lg'));
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down("lg"));
 
   const [openCreateTeacherModal, setOpenCreateTeacherModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
@@ -255,12 +254,12 @@ export default function TeacherTable({
   });
 
   return (
-    <div style={{ height: '100%', width: '100%' }}>
+    <div style={{ height: "100%", width: "100%" }}>
       <Modal
         open={openCreateTeacherModal}
         onClose={() => {
           setOpenCreateTeacherModal(false);
-          formik.setValues({ subject: '', grade: '', teachers: '' });
+          formik.setValues({ subject: "", grade: "", teachers: "" });
         }}
       >
         <Stack
@@ -269,11 +268,11 @@ export default function TeacherTable({
           sx={{
             borderRadius: 2,
             zIndex: 20,
-            margin: 'auto',
-            position: 'fixed',
-            height: 'fit-content',
-            width: '360px',
-            maxWidth: '80%',
+            margin: "auto",
+            position: "fixed",
+            height: "fit-content",
+            width: "360px",
+            maxWidth: "80%",
             top: 0,
             bottom: 0,
             right: 0,
@@ -290,7 +289,7 @@ export default function TeacherTable({
             </Typography>
           </Box>
           <Divider />
-          <Box sx={{ maxHeight: '70vh', overflowY: 'auto', px: 2 }}>
+          <Box sx={{ maxHeight: "70vh", overflowY: "auto", px: 2 }}>
             <FormAddSubjectTeacher
               editing={true}
               formik={formik}
@@ -302,22 +301,22 @@ export default function TeacherTable({
           <Divider />
           <Stack
             sx={{
-              flexDirection: 'row',
+              flexDirection: "row",
               p: 2,
             }}
           >
             <Button
-              variant='outlined'
+              variant="outlined"
               sx={{ flex: 1, mr: 1 }}
               onClick={() => {
                 setOpenCreateTeacherModal(false);
-                formik.setValues({ subject: '', grade: '', teachers: '' });
+                formik.setValues({ subject: "", grade: "", teachers: "" });
               }}
             >
               Batal
             </Button>
             <Button
-              variant='contained'
+              variant="contained"
               sx={{ flex: 1 }}
               onClick={() => {
                 setOpenCreateTeacherModal(false);
@@ -380,7 +379,7 @@ export default function TeacherTable({
       )}
       <DataGrid
         rows={rows}
-        getRowHeight={() => 'auto'}
+        getRowHeight={() => "auto"}
         columns={columns}
         initialState={{
           pagination: {
@@ -389,7 +388,7 @@ export default function TeacherTable({
         }}
         pageSizeOptions={[20, 50, 100]}
         getRowClassName={(params) =>
-          params.indexRelativeToCurrentPage % 2 === 0 ? 'Mui-even' : 'Mui-odd'
+          params.indexRelativeToCurrentPage % 2 === 0 ? "Mui-even" : "Mui-odd"
         }
         disableRowSelectionOnClick
         disableColumnMenu

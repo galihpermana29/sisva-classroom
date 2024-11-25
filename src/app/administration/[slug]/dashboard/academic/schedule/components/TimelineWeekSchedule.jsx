@@ -1,27 +1,34 @@
 "use client";
 
-import { Typography } from "@mui/material";
+import "@/app/syncfusion.css";
+import "./TimelineWeekSchedule.css";
+
+import { Tooltip, Typography } from "@mui/material";
 import { Internationalization } from "@syncfusion/ej2-base";
 import {
-  Agenda,
   Inject,
-  Month,
   ResourceDirective,
   ResourcesDirective,
   ScheduleComponent,
-  TimelineMonth,
   TimelineViews,
   ViewDirective,
   ViewsDirective,
-  Week,
 } from "@syncfusion/ej2-react-schedule";
 import dayjs from "dayjs";
-import { useMemo } from "react";
 
-const groupData = [
-  { GroupText: "Kelas X", Id: 1, GroupColor: "#FFDBCB" },
-  { GroupText: "Kelas XI", Id: 2, GroupColor: "#FFDBCB" },
-  { GroupText: "Kelas XII", Id: 3, GroupColor: "#FFDBCB" },
+const gradeDataSource = [
+  { gradeText: "Kelas I", grade: "I" },
+  { gradeText: "Kelas II", grade: "II" },
+  { gradeText: "Kelas III", grade: "III" },
+  { gradeText: "Kelas IV", grade: "IV" },
+  { gradeText: "Kelas V", grade: "V" },
+  { gradeText: "Kelas VI", grade: "VI" },
+  { gradeText: "Kelas VII", grade: "VII" },
+  { gradeText: "Kelas VIII", grade: "VIII" },
+  { gradeText: "Kelas IX", grade: "IX" },
+  { gradeText: "Kelas X", grade: "X" },
+  { gradeText: "Kelas XI", grade: "XI" },
+  { gradeText: "Kelas XII", grade: "XII" },
 ];
 
 const instance = new Internationalization();
@@ -37,7 +44,6 @@ const getDateHeaderText = (props) => {
 
 const onEventRendered = (props) => {
   const target = props.element;
-
   target.style.color = "#1D2939";
   target.style.paddingTop = "2px";
   target.style.backgroundColor =
@@ -45,11 +51,15 @@ const onEventRendered = (props) => {
 };
 
 const eventTemplate = (props) => {
+  function getTooltipText(name, teacher_name) {
+    if (!teacher_name) return name;
+    return `${name} - ${teacher_name}`;
+  }
   return (
-    <>
+    <Tooltip title={getTooltipText(props.name, props?.teacher_name)}>
       <h3 className="font-medium !text-xs !line-clamp-1">{props.name}</h3>
       <p className="text-[10px]">{props?.teacher_name}</p>
-    </>
+    </Tooltip>
   );
 };
 
@@ -61,24 +71,25 @@ function TimelineWeekSchedule({
   startTime,
   endTime,
 }) {
-  const computedData = useMemo(() => {
-    return data;
-  }, [data]);
-
   return (
     <ScheduleComponent
+      //force rerendering ScheduleComponent
+      key={JSON.stringify(data)}
       timeFormat="HH:mm"
       showWeekend={false}
       width="100%"
       height="100%"
+      timeScale={{ enable: true, interval: 60, slotCount: 5 }}
       rowAutoHeight={true}
       workDays={workDays}
-      workHours={{ start: startTime, end: endTime }}
+      startHour={startTime}
+      endHour={endTime}
+      workHours={{ start: startTime, end: endTime, highlight: true }}
       selectedDate={dayjs().toDate()}
       dateHeaderTemplate={getDateHeaderText}
       showHeaderBar={false}
       eventSettings={{
-        dataSource: computedData,
+        dataSource: data,
         fields: {
           subject: { title: "Name", name: "name" },
           startTime: { title: "StartTime", name: "start_time" },
@@ -87,7 +98,7 @@ function TimelineWeekSchedule({
         },
         template: eventTemplate,
       }}
-      group={{ byGroupID: true, resources: ["Group", "StudentGroup"] }}
+      group={{ byGroupID: true, resources: ["Grade", "StudentGroup"] }}
       cellClick={(args) => {
         args.cancel = true;
       }}
@@ -96,7 +107,6 @@ function TimelineWeekSchedule({
       }}
       eventClick={onEventClick}
       eventRendered={onEventRendered}
-      className="[&_.e-appointment]:!rounded-md [&_.e-appointment]:!h-[58.5px] [&_.e-appointment]:!-translate-y-[2px] [&_.e-work-hours]:!h-[60px] [&_.e-resource-cells]:!h-[60px]"
     >
       <ViewsDirective>
         <ViewDirective option="TimelineWeek" />
@@ -106,26 +116,22 @@ function TimelineWeekSchedule({
           field="sg_id"
           title="StudentGroup"
           name="StudentGroup"
-          groupIDField="group_id"
-          allowMultiple={false}
+          groupIDField="grade"
           dataSource={classData}
           textField="name"
           idField="id"
           colorField="group_color"
         />
-
         <ResourceDirective
-          field="group_id"
-          title="Group"
-          name="Group"
-          allowMultiple={false}
-          dataSource={groupData}
-          textField="GroupText"
-          idField="Id"
-          colorField="GroupColor"
+          field="grade"
+          title="Grade"
+          name="Grade"
+          dataSource={gradeDataSource}
+          textField="gradeText"
+          idField="grade"
         />
       </ResourcesDirective>
-      <Inject services={[Week, Month, TimelineViews, TimelineMonth, Agenda]} />
+      <Inject services={[TimelineViews]} />
     </ScheduleComponent>
   );
 }

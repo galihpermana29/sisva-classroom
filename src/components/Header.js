@@ -1,23 +1,11 @@
 "use client";
 
-import { Fragment, useState } from "react";
-import { Dialog, Disclosure, Popover, Transition } from "@headlessui/react";
-import {
-  ArrowPathIcon,
-  Bars3Icon,
-  ChartPieIcon,
-  CursorArrowRaysIcon,
-  FingerPrintIcon,
-  SquaresPlusIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
-import {
-  ChevronDownIcon,
-  PhoneIcon,
-  PlayCircleIcon,
-} from "@heroicons/react/20/solid";
-
+import { Dialog, Popover } from "@headlessui/react";
+import { PhoneIcon, PlayCircleIcon } from "@heroicons/react/20/solid";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 const callsToAction = [
   { name: "Watch demo", href: "#", icon: PlayCircleIcon },
@@ -41,10 +29,12 @@ export default function Header() {
       >
         <div className="flex lg:flex-1">
           <a href="https://www.sisva.id/" className="-m-1.5 p-1.5">
-            <img
+            <Image
               className="h-8 w-auto"
               src="/images/Sisva-LogoType-Black.png"
               alt=""
+              width={1007}
+              height={526}
             />
           </a>
         </div>
@@ -84,13 +74,18 @@ export default function Header() {
 
           <div className="hidden lg:flex ml-[2svh]">
             <a href="https://demo.sisva.id">
-              <button className="text-[1.9svh] font-semibold leading-6 text-[#F96756] px-[1.5svh] py-[.75svh] rounded-[.75svh] mr-[1svh]  transition-all duration-200 hover:bg-[#F96756] hover:text-white" 
-              style={{border:"1.5px solid #F96756"}}>
+              <button
+                className="text-[1.9svh] font-semibold leading-6 text-[#F96756] px-[1.5svh] py-[.75svh] rounded-[.75svh] mr-[1svh]  transition-all duration-200 hover:bg-[#F96756] hover:text-white"
+                style={{ border: "1.5px solid #F96756" }}
+              >
                 Demo Aplikasi
               </button>
             </a>
             <a href="https://www.sisva.id/contact">
-              <button style={{border:"1.5px solid #208CD3"}} className="text-[1.9svh] font-semibold leading-6 text-[#208CD3]  px-[1.5svh] py-[.75svh] rounded-[.75svh] transition-all 2uration-300 hover:bg-[#208CD3] hover:text-white">
+              <button
+                style={{ border: "1.5px solid #208CD3" }}
+                className="text-[1.9svh] font-semibold leading-6 text-[#208CD3]  px-[1.5svh] py-[.75svh] rounded-[.75svh] transition-all 2uration-300 hover:bg-[#208CD3] hover:text-white"
+              >
                 Hubungi Kami
               </button>
             </a>
@@ -108,10 +103,12 @@ export default function Header() {
           <div className="flex items-center justify-between">
             <a href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
-              <img
+              <Image
                 className="h-8 w-auto"
                 src="/images/Sisva-LogoType-Black.png"
                 alt=""
+                height={526}
+                width={1007}
               />
             </a>
             <button

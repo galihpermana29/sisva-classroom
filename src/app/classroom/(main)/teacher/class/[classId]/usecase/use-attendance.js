@@ -1,14 +1,15 @@
-import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import isoWeek from "dayjs/plugin/isoWeek";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+
 import {
   getAttendanceStudent,
   getStudentGroups,
   getUserById,
   setAttendanceStudent,
 } from "../repository/teacher-attendance-service";
-import { useParams } from "next/navigation";
 import { getAllClasses } from "../repository/teacher-score-service";
 
 dayjs.extend(isoWeek);
@@ -58,9 +59,8 @@ export function useAttendance() {
 
           const { data: studentDetail } = await getUserById(student_id);
 
-          const { data, message, success } = await getAttendanceStudent(
-            formattedDate
-          );
+          const { data, message, success } =
+            await getAttendanceStudent(formattedDate);
 
           if (success && Array.isArray(data)) {
             const studentAttendance = data.find(

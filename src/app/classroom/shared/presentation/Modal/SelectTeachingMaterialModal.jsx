@@ -1,12 +1,14 @@
+import { FilterFunnel01 } from "@untitled-ui/icons-react";
 import { Modal } from "antd";
-import React, { useEffect, useState } from "react";
-import { SisvaInputSearch } from "../Input/SisvaInputField";
-import { SisvaSelect } from "../Input/SelectField";
+import { useEffect, useState } from "react";
+
+import { useModal } from "@/app/classroom/(main)/teacher/class/[classId]/create-rpp/view/container/Provider/ModalProvider";
+import { useTeachingMaterial } from "@/app/classroom/(main)/teacher/teaching-material/usecase/use-teaching-material";
+
 import TeachingMaterialTable from "../../../(main)/teacher/class/[classId]/create-rpp/view/presentation/Table/TeachingMaterialTable";
 import SisvaButton from "../Button/GlobalButton";
-import { FilterFunnel01 } from "@untitled-ui/icons-react";
-import { useTeachingMaterial } from "@/app/classroom/(main)/teacher/teaching-material/usecase/use-teaching-material";
-import { useModal } from "@/app/classroom/(main)/teacher/class/[classId]/create-rpp/view/container/Provider/ModalProvider";
+import { SisvaSelect } from "../Input/SelectField";
+import { SisvaInputSearch } from "../Input/SisvaInputField";
 
 const SelectTeachingMaterialModal = ({
   open,

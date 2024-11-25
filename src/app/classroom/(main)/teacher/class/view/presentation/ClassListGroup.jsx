@@ -1,9 +1,9 @@
-import React from "react";
-import CardGridSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardGridSkeleton";
-import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
 import Link from "next/link";
-import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
+
 import ClassCard from "@/app/classroom/(main)/student/class/view/presentation/ClassCard";
+import EmptyState from "@/app/classroom/shared/presentation/EmptyState/EmptyState";
+import CardGridSkeleton from "@/app/classroom/shared/presentation/Skeletons/CardGridSkeleton";
+import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
 
 const ClassListGroup = ({ classData, isLoading }) => {
   if (isLoading) {

@@ -1,20 +1,21 @@
-import { useState, useEffect, useMemo } from "react";
-import { Table, Modal, Divider } from "antd";
-import { ConfigProvider } from "antd";
+import { Check } from "@untitled-ui/icons-react";
+import { ConfigProvider, Divider, Modal, Table } from "antd";
+import clsx from "clsx";
 import { Kumbh_Sans } from "next/font/google";
-import placeholderImage from "@/assets/placeholder.jpg";
+import { useEffect, useMemo, useState } from "react";
+
+import SisvaButton from "@/app/classroom/shared/presentation/Button/GlobalButton";
+import AvatarProfile from "@/app/classroom/shared/presentation/Profile/AvatarProfile";
+import { useTokenColor } from "@/app/classroom/shared/usecase/use-token-color";
+import { default as placeholderImage } from "@/assets/placeholder.jpg";
+
+import { formatDateDay } from "../../../../usecase/dateFormatter";
 import {
   useAttendance,
   useUpdateAttendance,
 } from "../../../../usecase/use-attendance";
-import { Check } from "@untitled-ui/icons-react";
-import SisvaButton from "@/app/classroom/shared/presentation/Button/GlobalButton";
-import clsx from "clsx";
-import BadgeAttendance from "../../../container/BadgeAttendance/BadgeAttendance";
 import { useClass } from "../../../../usecase/use-class";
-import AvatarProfile from "@/app/classroom/shared/presentation/Profile/AvatarProfile";
-import { formatDateDay } from "../../../../usecase/dateFormatter";
-import { useTokenColor } from "@/app/classroom/shared/usecase/use-token-color";
+import BadgeAttendance from "../../../container/BadgeAttendance/BadgeAttendance";
 
 const kumbh = Kumbh_Sans({ subsets: ["latin"] });
 

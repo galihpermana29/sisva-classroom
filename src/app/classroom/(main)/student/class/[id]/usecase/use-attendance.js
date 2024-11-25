@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
-import { getAttendanceByDate } from "../repository/attendance-service";
-import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
 import dayjs from "dayjs";
 import isoWeek from "dayjs/plugin/isoWeek";
 import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+
+import { getClientSession } from "@/app/classroom/shared/usecase/session/get-client-session";
+
+import { getAttendanceByDate } from "../repository/attendance-service";
 dayjs.extend(isoWeek);
 
 export function useAttendance() {
@@ -27,9 +29,8 @@ export function useAttendance() {
       ) {
         const formattedDate = date.format("YYYYMMDD");
 
-        const { data, message, success } = await getAttendanceByDate(
-          formattedDate
-        );
+        const { data, message, success } =
+          await getAttendanceByDate(formattedDate);
 
         const attendanceClass = data.filter(
           (attendance) => attendance.class_id == classId

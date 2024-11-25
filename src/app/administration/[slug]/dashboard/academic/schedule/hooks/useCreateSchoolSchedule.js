@@ -1,5 +1,6 @@
-import AcademicAPI from "@/api/academic";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+import AcademicAPI from "@/api/academic";
 
 export const useCreateSchoolSchedule = ({ handleClose, periode }) => {
   const queryClient = useQueryClient();

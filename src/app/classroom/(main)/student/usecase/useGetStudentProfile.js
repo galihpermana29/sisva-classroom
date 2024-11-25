@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
 import { getCookie } from "cookies-next";
+import { useEffect, useState } from "react";
+
 import { getStudentGroups, getUserById } from "../repository/apiService";
 
 export function useGetStudentProfile() {

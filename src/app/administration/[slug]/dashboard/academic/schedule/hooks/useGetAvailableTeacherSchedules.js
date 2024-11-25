@@ -1,13 +1,14 @@
 "use client";
 
 import { useMemo } from "react";
+
+import { useGetAllClasses } from "@/hooks/query/academic/useGetAllClasses";
+
+import { countConsecutiveAppearances } from "../utils/countScheduleConsecutiveAppearance";
+import { formatAndCombineSchedule } from "../utils/formatAndCombineSchedule";
 import { useFilterStatus } from "./filters/useFilterStatus";
 import { useGetClassSchedule } from "./useGetClassSchedule";
-
 import { useGetNonLearningSchedule } from "./useGetNonLearningSchedule";
-import { formatAndCombineSchedule } from "../utils/formatAndCombineSchedule";
-import { countConsecutiveAppearances } from "../utils/countScheduleConsecutiveAppearance";
-import { useGetAllClasses } from "@/hooks/useGetAllClasses";
 
 export const useGetAvailableTeacherSchedules = () => {
   const { guru } = useFilterStatus();
@@ -23,7 +24,8 @@ export const useGetAvailableTeacherSchedules = () => {
     return formatAndCombineSchedule(
       filteredLearning,
       countedNonLearning,
-      classes
+      classes,
+      true
     );
   }, [
     guru,

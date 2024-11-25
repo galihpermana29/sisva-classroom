@@ -7,8 +7,8 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { Suspense } from "react";
 import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
 const CustomTableHeader = dynamic(() => import("./CustomTableHeader"), {
   ssr: false,

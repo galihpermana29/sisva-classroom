@@ -1,8 +1,8 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteTeachingPlan } from "../repository/teaching-plan-service";
 
+import { deleteTeachingPlan } from "../repository/teaching-plan-service";
 
 export const useDeleteTeachingPlan = () => {
   const [isPopupVisible, setIsPopupVisible] = useState(false);

@@ -1,6 +1,7 @@
 "use client";
-import { Button } from "antd";
 import "./styles.css";
+
+import { Button } from "antd";
 
 const SisvaButton = ({
   btn_size = "md",

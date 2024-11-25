@@ -1,9 +1,11 @@
 "use client";
 
-import { useQueryParam } from "@/hooks/useQueryParam";
 import { useMounted } from "@mantine/hooks";
 import { MenuItem, Select } from "@mui/material";
 import { useSearchParams } from "next/navigation";
+
+import { useQueryParam } from "@/hooks/useQueryParam";
+
 import { FilterNotMounted } from "./FilterNotMounted";
 
 export const PERIODE_FIELD_NAME = "periode";
@@ -28,18 +30,12 @@ export const PeriodeSelect = ({ data, disabled }) => {
       value={value}
       onChange={(event) => handleChange(event.target.value)}
     >
-      <MenuItem
-        disabled
-        value=""
-      >
+      <MenuItem disabled value="">
         Periode
       </MenuItem>
       {data
         ? data.map(({ id, name }) => (
-            <MenuItem
-              key={`${id}${name}`}
-              value={id}
-            >
+            <MenuItem key={`${id}${name}`} value={id}>
               {name}
             </MenuItem>
           ))

@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { getCookie } from "cookies-next";
+import { useEffect, useState } from "react";
+
+import { isBefore } from "@/app/classroom/shared/usecase/helper";
+
 import {
   getAllClasses,
   getAllTasks,
   getStudentGroups,
 } from "../repository/apiService";
-import { getCookie } from "cookies-next";
-import { isBefore } from "@/app/classroom/shared/usecase/helper";
 
 export function useGetStudentTask() {
   const [tasks, setTasks] = useState([]);
@@ -84,10 +86,9 @@ export function useGetStudentTask() {
           return new Date(deadline) > new Date();
         });
 
-
-        filteredTask.sort((a, b) => {
-          return isBefore(a.deadline, b.deadline) ? -1 : 1;
-        });
+      filteredTask.sort((a, b) => {
+        return isBefore(a.deadline, b.deadline) ? -1 : 1;
+      });
 
       setTasks(filteredTask);
       setIsLoading(false);
