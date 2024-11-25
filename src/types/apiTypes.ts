@@ -182,3 +182,9 @@ export type Bill = {
   deadline: string;
   description: string;
 };
+
+export type UserBill = {
+  id: number;
+  bill_id: number;
+  user_id: string;
+};
