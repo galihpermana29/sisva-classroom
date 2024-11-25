@@ -31,7 +31,7 @@ export const InvoiceData = () => {
   if (isLoading || !mounted)
     return (
       <Stack gap={2}>
-        {[...Array(3)].map((i) => (
+        {[...Array(3)].map((_, i) => (
           <Box
             key={i}
             className={`w-full h-52 rounded-lg animate-pulse`}
