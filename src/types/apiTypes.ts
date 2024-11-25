@@ -147,8 +147,23 @@ export type SchoolSchedules = {
   period_id: number;
   study_program_id: number;
   grade: Grade;
-  status: string; //? active, inactive ???
+  status: string; // ? active, inactive ???
   day: Day;
   start_time: string;
   end_time: string;
+};
+
+export type Invoice = {
+  id: number;
+  user_bill_id: number;
+  status: string; // ? pending, ... ???
+  amount: number;
+  note: string;
+  payment_proof: {
+    invoice_id: number;
+    uri: string;
+    note: string;
+    update_by: string;
+    update_time: string;
+  };
 };

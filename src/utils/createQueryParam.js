@@ -1,7 +1,7 @@
 /**
  * Converts an array of name-value pairs (or just a single name-value pair) into a URL query string.
  *
- * @param {Array<{ name: string, value?: string }> | {name: string, value?: string}} params - An object (or array of objects) containing `name` and optional `value` fields.
+ * @param {Array<{ name: string, value?: string | number }> | {name: string, value?: string | number }} params - An object (or array of objects) containing `name` and optional `value` fields.
  * @returns {string} A URL query string generated from the provided parameters.
  *
  * @example

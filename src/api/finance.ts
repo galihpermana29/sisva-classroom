@@ -52,7 +52,7 @@ const FinanceAPI = new (class {
     return this.api.post("/invoices", payload, this.getRequestConfig());
   }
 
-  getAllInvoices({ bill_id, user_id }) {
+  getAllInvoices({ bill_id, user_id }: { bill_id?: string | number; user_id?: string | number }) {
     const params = createQueryParam([
       { name: "bill_id", value: bill_id },
       { name: "user_id", value: user_id },
