@@ -25,7 +25,20 @@ export const useGetAllInvoices = ({
   });
 
   const queryResult = data ? data.data.data : undefined;
-  const queryData = withSort ? sortData(queryResult) : queryResult;
+
+  const fields = useSortKey();
+  const { data: userBills } = useUserBills();
+  const { data: users } = useUsers();
+  const { data: bills } = useBills();
+  const queryData = withSort
+    ? sortData({
+        data: queryResult,
+        fields,
+        userBills,
+        users,
+        bills,
+      })
+    : queryResult;
 
   if (!paginated) {
     return { data: queryData, ...query };
@@ -37,12 +50,7 @@ export const useGetAllInvoices = ({
   return { data: paginatedData, totalPage, ...query };
 };
 
-const sortData = (data) => {
-  const fields = useSortKey();
-  const { data: userBills } = useUserBills();
-  const { data: users } = useUsers();
-  const { data: bills } = useBills();
-
+const sortData = ({ data, fields, userBills, users, bills }) => {
   return data?.sort((a, b) => {
     const userBillA = userBills?.find(
       (userBill) => userBill.id === a.user_bill_id

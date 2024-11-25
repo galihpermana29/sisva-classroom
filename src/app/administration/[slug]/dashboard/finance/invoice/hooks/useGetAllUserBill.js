@@ -25,8 +25,21 @@ export const useGetAllUserBill = ({
     queryFn: () => FinanceAPI.getAllUserBill({ bill_id }),
   });
 
+  const fields = useSortKey();
+  const { data: users } = useUsers();
+  const { data: bills } = useBills();
+  const { data: invoices, isStale: invoicesIsStale } = useInvoices();
   const queryResult = data ? data.data.data : undefined;
-  const queryData = withSort ? sortData(queryResult) : queryResult;
+  const queryData = withSort
+    ? sortData({
+        data: queryResult,
+        fields,
+        users,
+        bills,
+        invoices,
+        invoicesIsStale,
+      })
+    : queryResult;
   if (!paginated) {
     return { data: queryData, ...query };
   }
@@ -37,12 +50,14 @@ export const useGetAllUserBill = ({
   return { data: paginatedData, totalPage, ...query };
 };
 
-const sortData = (data) => {
-  const fields = useSortKey();
-  const { data: users } = useUsers();
-  const { data: bills } = useBills();
-  const { data: invoices, isStale: invoicesIsStale } = useInvoices();
-
+const sortData = ({
+  data,
+  fields,
+  users,
+  bills,
+  invoices,
+  invoicesIsStale,
+}) => {
   const amountPaid = (invoices) => {
     const paidInvoices =
       invoices?.filter((invoice) => invoice.status === "done") ?? [];
