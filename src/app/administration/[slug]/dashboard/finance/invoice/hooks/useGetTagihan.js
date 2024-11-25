@@ -25,7 +25,7 @@ export const useGetTagihan = () => {
   const sortKeys = searchParams.get("sort")?.split(",") ?? [];
 
   const getAllBills = async () => {
-    const { data } = await FinanceAPI.getAllBills({});
+    const { data } = await FinanceAPI.getAllBills();
 
     return data.data;
   };

@@ -11,7 +11,7 @@ export const useGetAllBills = (props) => {
   const { rowsPerPage } = usePagination();
   const { data, ...query } = useQuery({
     queryKey: ["bills"],
-    queryFn: () => FinanceAPI.getAllBills({ bill_id: null }),
+    queryFn: () => FinanceAPI.getAllBills(),
   });
 
   const queryData = data ? data.data.data : undefined;

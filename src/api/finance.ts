@@ -60,9 +60,8 @@ const FinanceAPI = new (class {
     return this.api.get(`/invoices?${params}`, this.getRequestConfig());
   }
 
-  getAllBills({ bill_id }) {
-    const params = createQueryParam({ name: "bill_id", value: bill_id });
-    return this.api.get(`/bills?${params}`, this.getRequestConfig());
+  getAllBills() {
+    return this.api.get(`/bills`, this.getRequestConfig());
   }
 
   getBillById(id) {
