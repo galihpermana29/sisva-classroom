@@ -78,7 +78,7 @@ export default function useFilteredInvoices() {
         },
         {
           name: "amount",
-          getFn: (invoice) => invoice.id.toString(),
+          getFn: (invoice) => invoice.amount.toString(),
         },
       ],
     });

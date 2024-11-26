@@ -1,4 +1,3 @@
-"use client";
 import { Divider, Paper, Stack } from "@mui/material";
 
 import useFilteredInvoices from "../../hooks/useFilteredInvoices";
