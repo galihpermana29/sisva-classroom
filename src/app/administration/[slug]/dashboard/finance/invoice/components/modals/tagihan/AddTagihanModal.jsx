@@ -246,7 +246,7 @@ const ModalContent = ({ handleClose }) => {
                     .map(({ label }, index) => (
                       <Stack
                         key={index}
-                        bgcolor={theme.palette.base.base30}
+                        bgcolor={"base.base30"}
                         paddingY={"4px"}
                         paddingX={"8px"}
                         borderRadius={"4px"}

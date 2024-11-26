@@ -33,7 +33,7 @@ export const TagihanPenggunaData = () => {
           <Box
             key={i}
             className={`w-full h-52 rounded-lg animate-pulse`}
-            sx={{ backgroundColor: theme.palette.base.base30 }}
+            sx={{ backgroundColor: "base.base30" }}
           />
         ))}
       </Stack>
