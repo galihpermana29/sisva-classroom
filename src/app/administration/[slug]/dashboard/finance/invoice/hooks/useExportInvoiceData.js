@@ -4,7 +4,6 @@ import FinanceAPI from "@/api/finance";
 import { useGetAllUsers } from "@/hooks/query/academic/useGetAllUsers";
 import { useInvoices } from "@/hooks/query/finance/useInvoices";
 
-import { useGetAllInvoices } from "./useGetAllInvoices";
 import { useGetAllUserBill } from "./useGetAllUserBill";
 
 /**
