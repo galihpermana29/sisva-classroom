@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import curriculumReducer from "./[slug]/dashboard/academic/curriculum/utils/curriculumSlice";
 import studyProgramReducer from "./[slug]/dashboard/academic/study-program/utils/studyProgramSlice";
+import invoiceReducer from "./[slug]/dashboard/finance/invoice/utils/invoiceSlice";
 import staffAttendanceReducer from "./[slug]/dashboard/staff/attendance/utils/staffAttendanceSlice";
 import staffProfileReducer from "./[slug]/dashboard/staff/profile/utils/staffProfileSlice";
 import studentAttendanceReducer from "./[slug]/dashboard/student/attendance/utils/studentAttendanceSlice";
@@ -15,6 +16,8 @@ export const store = configureStore({
     studentProfile: studentProfileReducer,
     studyProgram: studyProgramReducer,
     curriculum: curriculumReducer,
+    //
+    invoice: invoiceReducer,
   },
 });
 
