@@ -1,15 +1,19 @@
 "use client";
 
-import { useMounted } from "@mantine/hooks";
+import { paginateData } from "@/utils/paginateData";
 
-import { useGetAllInvoices } from "../../hooks/useGetAllInvoices";
+import useFilteredInvoices from "../../hooks/useFilteredInvoices";
+import { usePagination } from "../../hooks/usePagination";
 import { Paginations } from "../paginations";
 
 export const InvoicePagination = () => {
-  const mounted = useMounted();
-  const { totalPage, isLoading } = useGetAllInvoices({ paginated: true });
+  const { rowsPerPage } = usePagination();
 
-  if (isLoading || !mounted) return null;
+  const filteredInvoices = useFilteredInvoices();
+  const paginatedInvoices = paginateData(filteredInvoices, rowsPerPage);
+
+  const totalPage =
+    paginatedInvoices.length === 0 ? 1 : paginatedInvoices.length;
 
   return <Paginations totalPage={totalPage} />;
 };

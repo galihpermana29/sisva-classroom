@@ -8,8 +8,6 @@ import { TableInvoice } from "../tables/invoice";
 /** @description Component showing the main content of tagihan pengguna tab */
 
 export const Invoice = () => {
-  const filteredInvoices = useFilteredInvoices();
-
   return (
     <Stack flexDirection="column" flexGrow={1}>
       <Divider sx={{ display: { xs: "none", lg: "block" } }} />
