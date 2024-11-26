@@ -3,6 +3,7 @@
  * @param {number} rowsPerPage - Number of data in each page
  * @returns Paginated data where each page contains `rowsPerPage` number of data
  *
+ * @deprecated use segmentArray instead
  * @example const data = [
  * {name: "A"},
  * {name: "B"},
@@ -21,3 +22,26 @@ export const paginateData = (rowData, rowsPerPage) => {
   }
   return paginatedData;
 };
+
+/** Segment array into array of array with defined length
+ * @example const data = [
+ * {name: "A"},
+ * {name: "B"},
+ * {name: "C"}
+ * ];
+ *
+ * const segmented = segmentArray(data, 2);
+ * console.log(paginated); // [[{name: "A"}, {name: "B"}], [{name: "C"}]]
+ */
+export function segmentArray<T>(arr: T[], segmentLength: number): T[][] {
+  return arr.reduce((result: T[][], item: T, index: number) => {
+    const segmentIndex = Math.floor(index / segmentLength);
+
+    if (!result[segmentIndex]) {
+      result[segmentIndex] = [];
+    }
+
+    result[segmentIndex].push(item);
+    return result;
+  }, []);
+}

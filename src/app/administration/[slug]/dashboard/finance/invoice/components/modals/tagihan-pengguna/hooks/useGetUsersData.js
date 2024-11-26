@@ -1,6 +1,6 @@
 import { useGetAllStudentGroups } from "@/hooks/query/academic/useGetAllStudentGroups";
 import { useGetAllUsers } from "@/hooks/query/academic/useGetAllUsers";
-import { paginateData } from "@/utils/paginateData";
+import { segmentArray } from "@/utils/segmentArray";
 
 import { useGetStudentsInStudentGroup } from "../../../../hooks/useGetStudentsInStudentGroup";
 import { hasFilter } from "../utils/hasFilter";
@@ -29,8 +29,8 @@ export const useGetUsersData = ({
   const staffs = filterStaffs(staffsResult, userFilter);
 
   const rowsPerPage = 5;
-  const paginatedStudents = paginateData(students, rowsPerPage);
-  const paginatedStaffs = paginateData(staffs, rowsPerPage);
+  const paginatedStudents = segmentArray(students, rowsPerPage);
+  const paginatedStaffs = segmentArray(staffs, rowsPerPage);
 
   const studentsData = paginatedStudents[page - 1];
   const staffData = paginatedStaffs[page - 1];
@@ -38,8 +38,8 @@ export const useGetUsersData = ({
   const totalPage = shouldFetchStudents
     ? paginatedStudents.length
     : shouldFetchStaffs
-      ? paginatedStaffs.length
-      : 1;
+    ? paginatedStaffs.length
+    : 1;
 
   return {
     students: studentsData,

@@ -7,7 +7,7 @@ import FinanceAPI from "@/api/finance";
 import { useBills } from "@/hooks/query/finance/useBills";
 import { useInvoices } from "@/hooks/query/finance/useInvoices";
 import { useUsers } from "@/hooks/query/user/useUsers";
-import { paginateData } from "@/utils/paginateData";
+import { segmentArray } from "@/utils/segmentArray";
 
 import { usePagination } from "./usePagination";
 import { useSortKey } from "./useSortKey";
@@ -42,7 +42,7 @@ export const useGetAllUserBill = ({
     return { data: queryData, ...query };
   }
 
-  const paginatedData = paginateData(queryData, rowsPerPage);
+  const paginatedData = segmentArray(queryData, rowsPerPage);
   const totalPage = paginatedData.length > 0 ? paginatedData.length : 1;
 
   return { data: paginatedData, totalPage, ...query };

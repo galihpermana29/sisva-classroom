@@ -7,7 +7,7 @@ import { useGetAllUsers } from "@/hooks/query/academic/useGetAllUsers";
 import { useBills } from "@/hooks/query/finance/useBills";
 import { useUserBills } from "@/hooks/query/finance/useUserBills";
 import { useUsers } from "@/hooks/query/user/useUsers";
-import { paginateData } from "@/utils/paginateData";
+import { segmentArray } from "@/utils/segmentArray";
 
 import { usePagination } from "./usePagination";
 import { useSortKey } from "./useSortKey";
@@ -44,7 +44,7 @@ export const useGetAllInvoices = ({
     return { data: queryData, ...query };
   }
 
-  const paginatedData = paginateData(queryData, rowsPerPage);
+  const paginatedData = segmentArray(queryData, rowsPerPage);
   const totalPage = paginatedData.length > 0 ? paginatedData.length : 1;
 
   return { data: paginatedData, totalPage, ...query };
