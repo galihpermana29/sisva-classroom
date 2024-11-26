@@ -8,7 +8,7 @@ import useFilteredInvoices from "./useFilteredInvoices";
 export default function usePaginatedFilteredInvoices() {
   const { filteredInvoices, isFetching } = useFilteredInvoices();
   const [rowsPerPage] = useQueryState(
-    InvoiceQueryKey.sort,
+    InvoiceQueryKey.rows,
     parseAsInteger.withDefault(5)
   );
 
