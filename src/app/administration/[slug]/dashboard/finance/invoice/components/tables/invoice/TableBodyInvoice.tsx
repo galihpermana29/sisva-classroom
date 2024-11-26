@@ -6,12 +6,8 @@ import { TableCell, TableRow } from "@mui/material";
 import { TableBodyLoading, TableEmptyState } from "@/components/CustomTable";
 
 import { DEFAULT_ROWS_PER_PAGE } from "../../../constants";
-import { useCheckCariFilter } from "../../../hooks/useCheckCariFilter";
-import { useCheckKategoriFilter } from "../../../hooks/useCheckKategoriFilter";
-import { useCheckStatusFilter } from "../../../hooks/useCheckStatusFilter";
-import { useCheckTanggalFilter } from "../../../hooks/useCheckTanggalFilter";
-import { useGetAllInvoices } from "../../../hooks/useGetAllInvoices";
 import { useGetAllUserBill } from "../../../hooks/useGetAllUserBill";
+import usePaginatedFilteredInvoices from "../../../hooks/usePaginatedFilteredInvoices";
 import { usePagination } from "../../../hooks/usePagination";
 import { InvoiceRowActions } from "../../invoice/InvoiceRowActions";
 import { IdInvoiceCell } from "./cells/IdInvoiceCell";
@@ -24,10 +20,8 @@ import { TotalHargaCell } from "./cells/TotalHargaCell";
 export const TableBodyInvoice = ({ columnCount }) => {
   const mounted = useMounted();
   const { page } = usePagination();
-  const { data: rows, isLoading } = useGetAllInvoices({
-    paginated: true,
-    withSort: true,
-  });
+  const { paginatedInvoices: rows, isFetching: isLoading } =
+    usePaginatedFilteredInvoices();
 
   if (isLoading || !mounted)
     return (
@@ -43,6 +37,8 @@ export const TableBodyInvoice = ({ columnCount }) => {
     return <TableEmptyState columnCount={columnCount} />;
   }
 
+  console.log(data);
+
   return data.map((row) => (
     <TableRowInvoice
       key={row.id}
@@ -50,11 +46,12 @@ export const TableBodyInvoice = ({ columnCount }) => {
       user_bill_id={row.user_bill_id}
       amount={row.amount}
       status={row.status}
+      row={row}
     />
   ));
 };
 
-const TableRowInvoice = ({ id, user_bill_id, amount, status }) => {
+const TableRowInvoice = ({ id, user_bill_id, amount, status, row }) => {
   const { data: userBills } = useGetAllUserBill({ paginated: false });
   const userBill = userBills
     ? userBills.find((userBill) => userBill.id === user_bill_id)
@@ -63,29 +60,16 @@ const TableRowInvoice = ({ id, user_bill_id, amount, status }) => {
   const userId = userBill?.user_id;
   const billId = userBill?.bill_id;
 
-  const cariFilterPass = useCheckCariFilter(userId);
-  const kategoriFilterPass = useCheckKategoriFilter(billId);
-  const tanggalFilterPass = useCheckTanggalFilter(billId);
-  const statusFilterPass = useCheckStatusFilter(id);
-
-  if (
-    !cariFilterPass ||
-    !tanggalFilterPass ||
-    !kategoriFilterPass ||
-    !statusFilterPass
-  )
-    return null;
-
   return (
     <TableRow hover>
-      <IdInvoiceCell id={id} />
-      <NamaCell userId={userId} />
-      <PembayaranCell billId={billId} />
-      <TotalHargaCell billId={billId} />
-      <NilaiInvoiceCell amount={amount} />
-      <InvoiceStatusCell status={status} />
+      <IdInvoiceCell id={row.id} />
+      <NamaCell userId={row.user_bill.user.id} />
+      <PembayaranCell billId={row.user_bill.bill.id} />
+      <TotalHargaCell billId={row.user_bill.bill.id} />
+      <NilaiInvoiceCell amount={row.amount} />
+      <InvoiceStatusCell status={row.status} />
       <TableCell>
-        <InvoiceRowActions id={id} status={status} />
+        <InvoiceRowActions id={row.id} status={row.status} />
       </TableCell>
     </TableRow>
   );
