@@ -2,11 +2,15 @@ import { parseAsInteger, useQueryState } from "nuqs";
 
 import { paginateData } from "@/utils/paginateData";
 
+import { InvoiceQueryKey } from "../utils/types";
 import useFilteredInvoices from "./useFilteredInvoices";
 
 export default function usePaginatedFilteredInvoices() {
   const filteredInvoices = useFilteredInvoices();
-  const [rowsPerPage] = useQueryState("rows", parseAsInteger.withDefault(5));
+  const [rowsPerPage] = useQueryState(
+    InvoiceQueryKey.sort,
+    parseAsInteger.withDefault(5)
+  );
 
   const paginatedInvoices = paginateData(filteredInvoices, rowsPerPage);
   const totalPage =

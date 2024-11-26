@@ -17,6 +17,7 @@ import { useFilterStatus } from "../../hooks/useFilterStatus";
 import { useGetAllInvoices } from "../../hooks/useGetAllInvoices";
 import { useGetAllUserBill } from "../../hooks/useGetAllUserBill";
 import { useGetBillById } from "../../hooks/useGetBillById";
+import usePaginatedFilteredInvoices from "../../hooks/usePaginatedFilteredInvoices";
 import { usePagination } from "../../hooks/usePagination";
 import { LoadingDataCard } from "../LoadingDataCard";
 import { InvoiceRowActions } from "./InvoiceRowActions";
@@ -26,9 +27,9 @@ export const InvoiceData = () => {
   const theme = useTheme();
   const mounted = useMounted();
   const { page } = usePagination();
-  const { data: rows, isLoading } = useGetAllInvoices({ paginated: true });
+  const { paginatedInvoices: rows } = usePaginatedFilteredInvoices();
 
-  if (isLoading || !mounted)
+  if (!mounted)
     return (
       <Stack gap={2}>
         {[...Array(3)].map((_, i) => (

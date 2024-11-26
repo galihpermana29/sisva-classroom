@@ -4,6 +4,7 @@ export enum InvoiceQueryKey {
   status = "status",
   cari = "cari",
   sort = "sort",
+  rows = "rows",
 }
 
 export type InvoiceSortKey =
