@@ -1,9 +1,10 @@
-export type InvoiceQueryKey =
-  | "tanggal"
-  | "kategori"
-  | "status"
-  | "cari"
-  | "sort";
+export enum InvoiceQueryKey {
+  tanggal = "tanggal",
+  kategori = "kategori",
+  status = "status",
+  cari = "cari",
+  sort = "sort",
+}
 
 export type InvoiceSortKey =
   | "id"
