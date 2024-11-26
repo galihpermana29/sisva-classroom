@@ -1,6 +1,7 @@
 "use client";
 import { Divider, Paper, Stack } from "@mui/material";
 import dayjs from "dayjs";
+import { sort as fastSort } from "fast-sort";
 import Fuse from "fuse.js";
 import { useQueryState } from "nuqs";
 
@@ -99,6 +100,29 @@ export const Invoice = () => {
       ],
     });
     filteredInvoices = fuse.search(cari).map((data) => data.item);
+  }
+
+  console.log(filteredInvoices);
+
+  if (sort) {
+    filteredInvoices = fastSort(filteredInvoices).asc((invoice) => {
+      switch (sort as InvoiceSortKey) {
+        case "id":
+          return invoice.id;
+        case "name":
+          return invoice.user_bill.user.name;
+        case "category":
+          return invoice.user_bill.bill.name;
+        case "totalPrice":
+          return invoice.user_bill.bill.amount;
+        case "amount":
+          return invoice.amount;
+        case "status":
+          return invoice.status;
+        default:
+          return invoice.id;
+      }
+    });
   }
 
   console.log(filteredInvoices);
