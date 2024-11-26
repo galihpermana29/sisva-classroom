@@ -1,6 +1,7 @@
 "use client";
 import { Divider, Paper, Stack } from "@mui/material";
 import dayjs from "dayjs";
+import Fuse from "fuse.js";
 import { useQueryState } from "nuqs";
 
 import { useBills } from "@/hooks/query/finance/useBills";
@@ -50,7 +51,7 @@ export const Invoice = () => {
   const [status] = useQueryState(InvoiceQueryKey.status);
   const [cari] = useQueryState(InvoiceQueryKey.cari);
 
-  const filteredInvoices = invoicesWithMoreData.filter((invoice) => {
+  let filteredInvoices = invoicesWithMoreData.filter((invoice) => {
     function checkKategori() {
       if (!kategori) return true;
       return invoice.user_bill?.bill_id === Number(kategori);
@@ -80,6 +81,25 @@ export const Invoice = () => {
 
     return checkKategori() && checkStatus() && checkTanggal();
   });
+
+  console.log(filteredInvoices);
+
+  if (cari) {
+    const fuse = new Fuse(filteredInvoices, {
+      keys: [
+        "user_bill.user.name",
+        {
+          name: "user_bill.bill.amount",
+          getFn: (invoice) => invoice.user_bill.bill.amount.toString(),
+        },
+        {
+          name: "amount",
+          getFn: (invoice) => invoice.id.toString(),
+        },
+      ],
+    });
+    filteredInvoices = fuse.search(cari).map((data) => data.item);
+  }
 
   console.log(filteredInvoices);
 
