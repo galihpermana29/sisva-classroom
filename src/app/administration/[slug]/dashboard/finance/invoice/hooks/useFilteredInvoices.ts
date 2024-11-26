@@ -21,10 +21,12 @@ type invoiceWithMoreData = Invoice & {
 };
 
 export default function useFilteredInvoices() {
-  const { data: invoices } = useInvoices();
-  const { data: userBills } = useUserBills();
-  const { data: bills } = useBills();
-  const { data: users } = useUsers();
+  const { data: invoices, isFetching: isFetching1 } = useInvoices();
+  const { data: userBills, isFetching: isFetching2 } = useUserBills();
+  const { data: bills, isFetching: isFetching3 } = useBills();
+  const { data: users, isFetching: isFetching4 } = useUsers();
+
+  const isFetching = isFetching1 || isFetching2 || isFetching3 || isFetching4;
 
   const invoicesWithMoreData = invoices.map((invoice: invoiceWithMoreData) => {
     invoice.user_bill = userBills.find(
@@ -113,5 +115,5 @@ export default function useFilteredInvoices() {
     });
   }
 
-  return filteredInvoices;
+  return { filteredInvoices, isFetching };
 }

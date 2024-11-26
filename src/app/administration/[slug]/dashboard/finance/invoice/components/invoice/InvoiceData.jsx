@@ -27,9 +27,10 @@ export const InvoiceData = () => {
   const theme = useTheme();
   const mounted = useMounted();
   const { page } = usePagination();
-  const { paginatedInvoices: rows } = usePaginatedFilteredInvoices();
+  const { paginatedInvoices: rows, isFetching } =
+    usePaginatedFilteredInvoices();
 
-  if (!mounted)
+  if (isFetching || !mounted)
     return (
       <Stack gap={2}>
         {[...Array(3)].map((_, i) => (
