@@ -24,7 +24,7 @@ export const useGetAllInvoices = ({
     queryFn: () => FinanceAPI.getAllInvoices({ user_id, bill_id }),
   });
 
-  const queryResult = data ? data.data.data : undefined;
+  const queryResult = data ? data.data.data : [];
 
   const fields = useSortKey();
   const { data: userBills } = useUserBills();

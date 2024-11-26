@@ -27,7 +27,7 @@ export const useGetAllUserBill = ({
   const { data: users } = useUsers();
   const { data: bills } = useBills();
   const { data: invoices, isStale: invoicesIsStale } = useInvoices();
-  const queryResult = data ? data.data.data : undefined;
+  const queryResult = data ? data.data.data : [];
   const queryData = withSort
     ? sortData({
         data: queryResult,

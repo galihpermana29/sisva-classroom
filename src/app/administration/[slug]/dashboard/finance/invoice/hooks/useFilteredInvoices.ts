@@ -7,18 +7,9 @@ import { useBills } from "@/hooks/query/finance/useBills";
 import { useInvoices } from "@/hooks/query/finance/useInvoices";
 import { useUserBills } from "@/hooks/query/finance/useUserBills";
 import { useUsers } from "@/hooks/query/user/useUsers";
-import { Bill, Invoice, User, UserBill } from "@/types/apiTypes";
+import type { invoiceWithMoreData } from "@/types/apiTypes";
 
 import { InvoiceQueryKey, InvoiceSortKey } from "../utils/types";
-
-type UserBillWithMoreData = UserBill & {
-  user?: User;
-  bill?: Bill;
-};
-
-type invoiceWithMoreData = Invoice & {
-  user_bill?: UserBillWithMoreData;
-};
 
 export default function useFilteredInvoices() {
   const { data: invoices, isFetching: isFetching1 } = useInvoices();

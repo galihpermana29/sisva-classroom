@@ -188,3 +188,16 @@ export type UserBill = {
   bill_id: number;
   user_id: string;
 };
+
+/* -------------------------------------------------------------------------- */
+/*                                   Custom                                   */
+/* -------------------------------------------------------------------------- */
+
+export type UserBillWithMoreData = UserBill & {
+  user?: User;
+  bill?: Bill;
+};
+
+export type invoiceWithMoreData = Invoice & {
+  user_bill?: UserBillWithMoreData;
+};

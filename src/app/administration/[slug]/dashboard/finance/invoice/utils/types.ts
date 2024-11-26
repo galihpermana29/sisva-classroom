@@ -14,3 +14,11 @@ export type InvoiceSortKey =
   | "totalPrice"
   | "amount"
   | "status";
+
+export type UserBillSortKey =
+  | "id"
+  | "deadline"
+  | "name"
+  | "category"
+  | "totalPrice"
+  | "amountPaid";
