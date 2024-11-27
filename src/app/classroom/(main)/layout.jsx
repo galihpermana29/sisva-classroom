@@ -2,13 +2,17 @@ import { ConfigProvider } from "antd";
 import { Kumbh_Sans } from "next/font/google";
 
 import SisvaNavbar from "../shared/presentation/Navbar/Navbar";
-import { useTheme } from "../shared/usecase/use-theme";
+import { getSchoolById } from "../shared/repository/theme-service";
+import { getServerSession } from "../shared/usecase/session/get-server-session";
 
 const kumbh = Kumbh_Sans({
   subsets: ["latin"],
 });
 export default async function MainLayout({ children }) {
-  const theme = await useTheme();
+  const { school_id } = await getServerSession();
+  const { data } = await getSchoolById(school_id);
+  const theme = data.theme_json_text;
+
   return (
     <ConfigProvider
       theme={{
