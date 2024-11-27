@@ -76,8 +76,8 @@ export default function useFilteredUserBills() {
         case "id":
           return userBill.id;
         case "deadline":
-          // TODO sort as date
-          return userBill.bill?.deadline;
+          // * https://github.com/snovakovic/fast-sort/issues/41
+          return dayjs(userBill.bill?.deadline, "DD/MM/YYYY h:mm A Z").toDate();
         case "name":
           return userBill.user?.name;
         case "category":
