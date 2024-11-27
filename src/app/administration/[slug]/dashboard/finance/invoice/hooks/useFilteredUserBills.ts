@@ -4,18 +4,20 @@ import Fuse from "fuse.js";
 import { useQueryState } from "nuqs";
 
 import { useBills } from "@/hooks/query/finance/useBills";
+import { useInvoices } from "@/hooks/query/finance/useInvoices";
 import { useUserBills } from "@/hooks/query/finance/useUserBills";
 import { useUsers } from "@/hooks/query/user/useUsers";
-import { UserBillWithMoreData } from "@/types/apiTypes";
+import type { Invoice, UserBillWithMoreData } from "@/types/apiTypes";
 
 import { InvoiceQueryKey, UserBillSortKey } from "../utils/types";
 
 export default function useFilteredUserBills() {
+  const { data: invoices, isFetching: isFetching1 } = useInvoices();
   const { data: userBills, isFetching: isFetching2 } = useUserBills();
   const { data: bills, isFetching: isFetching3 } = useBills();
   const { data: users, isFetching: isFetching4 } = useUsers();
 
-  const isFetching = isFetching2 || isFetching3 || isFetching4;
+  const isFetching = isFetching1 || isFetching2 || isFetching3 || isFetching4;
 
   const userBillsWithMoreData = userBills.map(
     (userBill: UserBillWithMoreData) => {
@@ -23,6 +25,26 @@ export default function useFilteredUserBills() {
       const bill = bills.find((bill) => bill.id === userBill.bill_id);
       userBill.user = user;
       userBill.bill = bill;
+
+      const thisUserBillInvoices = invoices.filter(
+        (invoice) => invoice.user_bill_id == userBill.id
+      );
+
+      const getAmountPaid = (thisUserBillInvoices: Invoice[]) => {
+        const paidInvoices =
+          thisUserBillInvoices?.filter(
+            (invoice) => invoice.status === "done"
+          ) ?? [];
+        const amountPaid = paidInvoices.reduce(
+          (acc, invoice) => acc + invoice.amount,
+          0
+        );
+
+        return amountPaid;
+      };
+
+      userBill.amountPaid = getAmountPaid(thisUserBillInvoices);
+
       return userBill;
     }
   );
@@ -84,9 +106,8 @@ export default function useFilteredUserBills() {
           return userBill.bill?.name;
         case "totalPrice":
           return userBill.bill?.amount;
-        // TODO add amountPaid
-        // case "amountPaid":
-        // return userBill.amountPaid
+        case "amountPaid":
+          return userBill.amountPaid;
       }
     });
   }

@@ -196,6 +196,7 @@ export type UserBill = {
 export type UserBillWithMoreData = UserBill & {
   user?: User;
   bill?: Bill;
+  amountPaid?: number;
 };
 
 export type invoiceWithMoreData = Invoice & {
