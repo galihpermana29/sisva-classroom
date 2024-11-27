@@ -9,7 +9,6 @@ import {
   IconButton,
   Stack,
   Typography,
-  useTheme,
 } from "@mui/material";
 import { useFormik } from "formik";
 import { useState } from "react";
@@ -21,7 +20,6 @@ import { invoiceSorts } from "../../constants";
 import { useSortKey } from "../../hooks/useSortKey";
 
 export const InvoiceSort = () => {
-  const theme = useTheme();
   const [showDrawer, setShowDrawer] = useState(false);
 
   const openDrawer = () => setShowDrawer(true);
@@ -36,7 +34,7 @@ export const InvoiceSort = () => {
           display: { sm: "flex", md: "none" },
         }}
       >
-        <SortIcon sx={{ color: theme.palette.primary.main }} />
+        <SortIcon sx={{ color: "primary.main" }} />
       </IconButton>
       <Drawer
         anchor="bottom"
@@ -55,7 +53,7 @@ export const InvoiceSort = () => {
         fullWidth
         variant="outlined"
         className="justify-between"
-        startIcon={<SortIcon sx={{ color: theme.palette.primary.main }} />}
+        startIcon={<SortIcon sx={{ color: "primary.main" }} />}
         endIcon={
           <KeyboardArrowDown sx={{ display: { xs: "none", md: "block" } }} />
         }

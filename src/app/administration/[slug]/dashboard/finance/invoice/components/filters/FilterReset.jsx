@@ -1,6 +1,5 @@
 "use client";
 
-import { useTheme } from "@emotion/react";
 import SyncIcon from "@mui/icons-material/Sync";
 import { Button, Stack, Typography } from "@mui/material";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -9,7 +8,6 @@ function FilterReset() {
   const pathName = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
-  const theme = useTheme();
 
   const tab = searchParams.get("tab") ?? 0;
 

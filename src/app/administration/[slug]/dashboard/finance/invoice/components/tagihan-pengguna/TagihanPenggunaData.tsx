@@ -1,14 +1,7 @@
 "use client";
 
 import { useMounted } from "@mantine/hooks";
-import {
-  Box,
-  Divider,
-  Paper,
-  Stack,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Box, Divider, Paper, Stack, Typography } from "@mui/material";
 import dayjs from "dayjs";
 
 import { formatToRupiah } from "@/utils/formatToRupiah";
@@ -19,7 +12,6 @@ import { usePagination } from "../../hooks/usePagination";
 import { DeleteTagihanPenggunaModal } from "../modals/tagihan-pengguna/DeleteTagihanPenggunaModal";
 
 export const TagihanPenggunaData = () => {
-  const theme = useTheme();
   const mounted = useMounted();
   const { page } = usePagination();
   const { paginatedUserBills: rows, isFetching } =

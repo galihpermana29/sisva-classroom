@@ -1,20 +1,12 @@
 "use client";
 
 import { useMounted } from "@mantine/hooks";
-import {
-  Box,
-  Divider,
-  Paper,
-  Stack,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Box, Divider, Paper, Stack, Typography } from "@mui/material";
 
 import { useGetUserById } from "@/hooks/query/user/useGetUserById";
 import { formatToRupiah } from "@/utils/formatToRupiah";
 
 import { useFilterStatus } from "../../hooks/useFilterStatus";
-import { useGetAllInvoices } from "../../hooks/useGetAllInvoices";
 import { useGetAllUserBill } from "../../hooks/useGetAllUserBill";
 import { useGetBillById } from "../../hooks/useGetBillById";
 import usePaginatedFilteredInvoices from "../../hooks/usePaginatedFilteredInvoices";
@@ -24,7 +16,6 @@ import { InvoiceRowActions } from "./InvoiceRowActions";
 import { InvoiceStatusBadge } from "./InvoiceStatusBadge";
 
 export const InvoiceData = () => {
-  const theme = useTheme();
   const mounted = useMounted();
   const { page } = usePagination();
   const { paginatedInvoices: rows, isFetching } =

@@ -1,14 +1,12 @@
 "use client";
 
 import { Button, OutlinedInput, Stack, Typography } from "@mui/material";
-import useTheme from "@mui/material/styles/useTheme";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { SchoolCodeIllustration } from "@/assets/SVGs";
 
 export default function InsertSchoolCode() {
-  const theme = useTheme();
   const router = useRouter();
 
   let [code, setCode] = useState("");
@@ -32,7 +30,7 @@ export default function InsertSchoolCode() {
         }}
       >
         <SchoolCodeIllustration
-          color={theme.palette.primary.main}
+          color={"primary.main"}
           sx={{ maxWidth: "90%", objectFit: "cover", fontSize: 300 }}
         />
         <Typography

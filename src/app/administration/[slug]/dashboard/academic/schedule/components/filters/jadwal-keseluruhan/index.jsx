@@ -2,7 +2,6 @@
 
 import SyncIcon from "@mui/icons-material/Sync";
 import { Button, Stack, Typography } from "@mui/material";
-import useTheme from "@mui/material/styles/useTheme";
 
 import { useFilterStatus } from "../../../hooks/filters/useFilterStatus";
 import useJadwalKeseluruhanFilter from "../../../hooks/useJadwalKeseluruhanFilter";
@@ -18,8 +17,6 @@ function JadwalKeseluruhanFilters() {
 
   const showProdi = Boolean(periode);
   const showOptionalFilters = Boolean(prodi);
-
-  const theme = useTheme();
 
   const {
     handleReset,

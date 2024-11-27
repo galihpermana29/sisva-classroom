@@ -1,6 +1,6 @@
 "use client";
 
-import { TableCell, TableRow, useTheme } from "@mui/material";
+import { TableCell, TableRow } from "@mui/material";
 
 import {
   SORT_PARAM_NAME,
@@ -9,7 +9,6 @@ import {
 import { useQueryParam } from "@/hooks/useQueryParam";
 
 const CustomTableHeader = ({ columns, sortKeys }) => {
-  const theme = useTheme();
   const keys = useSortKey();
   const { updateQueryParam } = useQueryParam();
 
@@ -36,9 +35,7 @@ const CustomTableHeader = ({ columns, sortKeys }) => {
           key={`column-${index}-head`}
           sx={{
             fontWeight: 600,
-            color: columnIsSorted(index)
-              ? theme.palette.primary.main
-              : "inherit",
+            color: columnIsSorted(index) ? "primary.main" : "inherit",
           }}
           onClick={sortKeys ? () => onSort(index) : undefined}
         >

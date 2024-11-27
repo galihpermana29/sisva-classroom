@@ -1,6 +1,5 @@
 "use client";
 
-import { useTheme } from "@emotion/react";
 import { useMounted } from "@mantine/hooks";
 import { Box, Divider, Paper, Stack, Typography } from "@mui/material";
 import dayjs from "dayjs";
@@ -14,7 +13,6 @@ import { TagihanRowActions } from "./TagihanRowActions";
 import { TagihanStatusBadge } from "./TagihanStatusBadge";
 
 export const TagihanData = () => {
-  const theme = useTheme();
   const mounted = useMounted();
   const { data: rows, isLoading } = useGetTagihan();
   const { page } = usePagination();

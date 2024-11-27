@@ -10,7 +10,6 @@ import {
   Stack,
   TextField,
   Typography,
-  useTheme,
 } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 import { useQueryClient } from "@tanstack/react-query";
@@ -77,7 +76,6 @@ const MenuProps = {
 };
 
 const ModalContent = ({ handleClose, initialValues }) => {
-  const theme = useTheme();
   const queryClient = useQueryClient();
 
   const refetchTagihan = () => queryClient.refetchQueries(["tagihan"]);
@@ -116,7 +114,7 @@ const ModalContent = ({ handleClose, initialValues }) => {
               error={formik.touched.name && Boolean(formik.errors.name)}
             />
             {formik.touched.name && formik.errors.name && (
-              <Typography color={theme.palette.error.main} fontSize={"12px"}>
+              <Typography color={"error.main"} fontSize={"12px"}>
                 {formik.errors.name}
               </Typography>
             )}
@@ -165,7 +163,7 @@ const ModalContent = ({ handleClose, initialValues }) => {
               error={formik.touched.amount && Boolean(formik.errors.amount)}
             />
             {formik.touched.amount && formik.errors.amount && (
-              <Typography color={theme.palette.error.main} fontSize={"12px"}>
+              <Typography color={"error.main"} fontSize={"12px"}>
                 {formik.errors.amount}
               </Typography>
             )}
@@ -238,7 +236,7 @@ const ModalContent = ({ handleClose, initialValues }) => {
           </FormControl>
           {formik.touched.target_user_types &&
             formik.errors.target_user_types && (
-              <Typography color={theme.palette.error.main} fontSize={"12px"}>
+              <Typography color={"error.main"} fontSize={"12px"}>
                 {formik.errors.target_user_types}
               </Typography>
             )}
