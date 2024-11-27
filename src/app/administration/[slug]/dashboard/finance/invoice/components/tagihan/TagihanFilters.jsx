@@ -211,6 +211,7 @@ const DrawerContent = ({ closeDrawer, sortQuery }) => {
                       : false
                   }
                   onChange={(e) => {
+                    formik.resetForm();
                     formik.setFieldValue(value, e.target.checked);
                   }}
                 />

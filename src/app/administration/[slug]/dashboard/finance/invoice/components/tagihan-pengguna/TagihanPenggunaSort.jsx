@@ -143,6 +143,7 @@ const DrawerContent = ({ closeDrawer }) => {
                       : false
                   }
                   onChange={(e) => {
+                    formik.resetForm();
                     formik.setFieldValue(value, e.target.checked);
                   }}
                 />
