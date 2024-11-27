@@ -17,14 +17,13 @@ const CustomTableHeader = ({ columns, sortKeys }) => {
       ? keys.includes(sortKeys[index])
       : false;
   const onSort = (index) => {
-    const set = new Set([...keys]);
     const newSortKey = sortKeys ? sortKeys[index] : undefined;
     if (!newSortKey) return;
-
-    set.has(newSortKey) ? set.delete(newSortKey) : set.add(newSortKey);
-    const newSortKeysArray = Array.from(set);
-
-    updateQueryParam(SORT_PARAM_NAME, newSortKeysArray.join(","));
+    if (keys[0] === newSortKey) {
+      updateQueryParam(SORT_PARAM_NAME, null);
+      return;
+    }
+    updateQueryParam(SORT_PARAM_NAME, newSortKey);
   };
 
   return (
