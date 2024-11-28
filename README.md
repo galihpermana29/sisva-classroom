@@ -1,36 +1,115 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Sisva
 
-## Getting Started
+## Stack
 
-First, run the development server:
+- Next.js 13
+- BE written in Golang (separate repo)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## UI Tools
+
+- [MUI v5](https://v5.mui.com/material-ui/getting-started/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Ant Design](https://ant.design/)
+
+## Some usefull libraries, please use if possible
+
+### [Mantine Hooks](https://mantine.dev/hooks/use-debounced-callback/)
+
+Beberapa custom hook yang sering digunakan
+
+- [useDebouncedCallback](https://mantine.dev/hooks/use-debounced-callback/)
+- [useDebouncedState](https://mantine.dev/hooks/use-debounced-state/)
+- [useDebouncedValue](https://mantine.dev/hooks/use-debounced-value/)
+- [useMounted](https://mantine.dev/hooks/use-mounted/)
+- [useLocalStorage](https://mantine.dev/hooks/use-local-storage/)
+
+Please avoid using ~~useFootGun~~ useEffect as much as possible.
+
+### [nuqs v1](https://nuqs.47ng.com/)
+
+Type-safe search params state manager for React frameworks - Like useState, but stored in the URL query string.
+
+### [fast-sort](https://github.com/snovakovic/fast-sort)
+
+Blazing fast array sorting with TypeScript support.
+
+### [fuse-js](https://www.fusejs.io/)
+
+Powerful, lightweight fuzzy-search library, with zero dependencies.
+
+### [reack-hook-form](https://www.react-hook-form.com/)
+
+Performant, flexible and extensible forms with easy-to-use validation.
+
+#### [yup](https://github.com/jquense/yup)
+
+Ada yup untuk schema validation
+
+#### [formik](https://formik.org/)
+
+Sebelumnya pakai formik, tapi untuk fitur baru lebih baik pakai react-hook-form
+
+### [axios](https://axios-http.com/)
+
+Promise based HTTP client for the browser and node.js
+
+### [Tanstack Query](https://tanstack.com/query/latest)
+
+Powerful asynchronous state management for TS/JS, React, Solid, Vue, Svelte and Angular
+
+### [Redux](https://redux.js.org/) with [Redux Toolkit](https://redux-toolkit.js.org/)
+
+A JS library for predictable and maintainable global state management
+
+### Others
+
+`dayjs`, `clsx`, `xlsx`, See [package.json](package.json) for more.
+
+## Typescript, Eslint, Prettier
+
+Project ini awalnya didevelop tanpa Typescript dan Eslint, jadi banyak technical debt nya.
+Jika ada ada config yang serasa kurang cocok bisa didiskusi dulu,
+misalnya rule `react-hooks/exhaustive-deps`
+
+### Typescript
+
+Untuk fitur baru, lebih baik mulai pakai Typescript `.ts` atau `.tsx`, supaya dapat code intellisense dan linting.
+
+### Eslint
+
+Ada [eslint-plugin-simple-import-sort](https://github.com/lydell/eslint-plugin-simple-import-sort) untuk ngerapihin import. Pengguna VSCode bisa pasang setting ini untuk auto fix import saat save.
+
+```json
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "svelte"
+  ]
+}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Script
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+See [package.json](package.json) for more.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### `npm run dev`
 
-## Learn More
+Start the development server.
 
-To learn more about Next.js, take a look at the following resources:
+### `npm run lint`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Check code style and linting.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### `npm run knip`
 
-## Deploy on Vercel
+Check unused code.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### `npx next lint --fix`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Fix linting error.
