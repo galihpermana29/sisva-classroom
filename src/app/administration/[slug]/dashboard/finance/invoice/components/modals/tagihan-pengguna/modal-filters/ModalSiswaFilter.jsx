@@ -1,5 +1,5 @@
 import SyncIcon from "@mui/icons-material/Sync";
-import { Button, Stack, Typography, useTheme } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 
 import { useGetAllPeriods } from "@/hooks/query/academic/useGetAllPeriods";
 import { useGetAllStudentGroups } from "@/hooks/query/academic/useGetAllStudentGroups";
@@ -56,7 +56,6 @@ export const ModalSiswaFilter = ({ filters, setFilters }) => {
 
   const initialFilter = { period: "", studyProgram: "", grade: "", kelas: "" };
   const onReset = () => setFilters(initialFilter);
-  const theme = useTheme();
 
   return (
     <Stack

@@ -1,4 +1,4 @@
-import type { Day, PeriodStatus, StudyProgramStatus } from "./types";
+import type { Day, PeriodStatus, Role, StudyProgramStatus } from "./types";
 
 type Grade =
   //* actually could be any string
@@ -147,8 +147,58 @@ export type SchoolSchedules = {
   period_id: number;
   study_program_id: number;
   grade: Grade;
-  status: string; //? active, inactive ???
+  status: string; // ? active, inactive ???
   day: Day;
   start_time: string;
   end_time: string;
+};
+
+/* -------------------------------------------------------------------------- */
+/*                                   FINANCE                                  */
+/* -------------------------------------------------------------------------- */
+
+export type Invoice = {
+  id: number;
+  user_bill_id: number;
+  status: string; // ? pending, ... ???
+  amount: number;
+  note: string;
+  payment_proof: {
+    invoice_id: number;
+    uri: string;
+    note: string;
+    update_by: string;
+    update_time: string;
+  };
+};
+
+export type Bill = {
+  id: number;
+  custom_id: string;
+  name: string;
+  status: string; // ? draft, ... ???
+  target_user_types: Role[];
+  amount: number;
+  deadline: string;
+  description: string;
+};
+
+export type UserBill = {
+  id: number;
+  bill_id: number;
+  user_id: string;
+};
+
+/* -------------------------------------------------------------------------- */
+/*                                   Custom                                   */
+/* -------------------------------------------------------------------------- */
+
+export type UserBillWithMoreData = UserBill & {
+  user?: User;
+  bill?: Bill;
+  amountPaid?: number;
+};
+
+export type invoiceWithMoreData = Invoice & {
+  user_bill?: UserBillWithMoreData;
 };

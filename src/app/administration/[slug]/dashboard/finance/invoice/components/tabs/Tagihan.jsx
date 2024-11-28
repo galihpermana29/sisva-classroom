@@ -8,7 +8,7 @@ function Tagihan() {
   return (
     <Stack flexDirection="column" flexGrow={1}>
       <Divider sx={{ display: { xs: "none", lg: "block" } }} />
-      <Stack display={{ xs: "none", lg: "flex" }}>
+      <Stack display={{ xs: "none", lg: "flex" }} className="thick-scrollbar">
         <TableTagihan />
       </Stack>
       <Stack display={{ xs: "flex", lg: "none" }} padding={2} flexGrow={1}>

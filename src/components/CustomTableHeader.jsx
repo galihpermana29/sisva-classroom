@@ -1,6 +1,6 @@
 "use client";
 
-import { TableCell, TableRow, useTheme } from "@mui/material";
+import { TableCell, TableRow } from "@mui/material";
 
 import {
   SORT_PARAM_NAME,
@@ -9,7 +9,6 @@ import {
 import { useQueryParam } from "@/hooks/useQueryParam";
 
 const CustomTableHeader = ({ columns, sortKeys }) => {
-  const theme = useTheme();
   const keys = useSortKey();
   const { updateQueryParam } = useQueryParam();
 
@@ -18,14 +17,13 @@ const CustomTableHeader = ({ columns, sortKeys }) => {
       ? keys.includes(sortKeys[index])
       : false;
   const onSort = (index) => {
-    const set = new Set([...keys]);
     const newSortKey = sortKeys ? sortKeys[index] : undefined;
     if (!newSortKey) return;
-
-    set.has(newSortKey) ? set.delete(newSortKey) : set.add(newSortKey);
-    const newSortKeysArray = Array.from(set);
-
-    updateQueryParam(SORT_PARAM_NAME, newSortKeysArray.join(","));
+    if (keys[0] === newSortKey) {
+      updateQueryParam(SORT_PARAM_NAME, null);
+      return;
+    }
+    updateQueryParam(SORT_PARAM_NAME, newSortKey);
   };
 
   return (
@@ -36,9 +34,7 @@ const CustomTableHeader = ({ columns, sortKeys }) => {
           key={`column-${index}-head`}
           sx={{
             fontWeight: 600,
-            color: columnIsSorted(index)
-              ? theme.palette.primary.main
-              : "inherit",
+            color: columnIsSorted(index) ? "primary.main" : "inherit",
           }}
           onClick={sortKeys ? () => onSort(index) : undefined}
         >

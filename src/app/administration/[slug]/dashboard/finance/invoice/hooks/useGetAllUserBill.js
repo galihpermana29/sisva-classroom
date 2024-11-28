@@ -4,11 +4,11 @@ import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 
 import FinanceAPI from "@/api/finance";
-import { useGetAllUsers } from "@/hooks/query/academic/useGetAllUsers";
-import { paginateData } from "@/utils/paginateData";
+import { useBills } from "@/hooks/query/finance/useBills";
+import { useInvoices } from "@/hooks/query/finance/useInvoices";
+import { useUsers } from "@/hooks/query/user/useUsers";
+import { segmentArray } from "@/utils/segmentArray";
 
-import { useGetAllBills } from "./useGetAllBills";
-import { useGetAllInvoices } from "./useGetAllInvoices";
 import { usePagination } from "./usePagination";
 import { useSortKey } from "./useSortKey";
 
@@ -23,27 +23,39 @@ export const useGetAllUserBill = ({
     queryFn: () => FinanceAPI.getAllUserBill({ bill_id }),
   });
 
-  const queryResult = data ? data.data.data : undefined;
-  const queryData = withSort ? sortData(queryResult) : queryResult;
+  const fields = useSortKey();
+  const { data: users } = useUsers();
+  const { data: bills } = useBills();
+  const { data: invoices, isStale: invoicesIsStale } = useInvoices();
+  const queryResult = data ? data.data.data : [];
+  const queryData = withSort
+    ? sortData({
+        data: queryResult,
+        fields,
+        users,
+        bills,
+        invoices,
+        invoicesIsStale,
+      })
+    : queryResult;
   if (!paginated) {
     return { data: queryData, ...query };
   }
 
-  const paginatedData = paginateData(queryData, rowsPerPage);
+  const paginatedData = segmentArray(queryData, rowsPerPage);
   const totalPage = paginatedData.length > 0 ? paginatedData.length : 1;
 
   return { data: paginatedData, totalPage, ...query };
 };
 
-const sortData = (data) => {
-  const fields = useSortKey();
-  const { data: users } = useGetAllUsers();
-  const { data: bills } = useGetAllBills();
-  const { data: invoices, isStale: invoicesIsStale } = useGetAllInvoices({
-    paginated: false,
-    withSort: false,
-  });
-
+const sortData = ({
+  data,
+  fields,
+  users,
+  bills,
+  invoices,
+  invoicesIsStale,
+}) => {
   const amountPaid = (invoices) => {
     const paidInvoices =
       invoices?.filter((invoice) => invoice.status === "done") ?? [];

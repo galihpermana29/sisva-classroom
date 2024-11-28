@@ -2,8 +2,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 import FinanceAPI from "@/api/finance";
 import { useGetAllUsers } from "@/hooks/query/academic/useGetAllUsers";
+import { useInvoices } from "@/hooks/query/finance/useInvoices";
 
-import { useGetAllInvoices } from "./useGetAllInvoices";
 import { useGetAllUserBill } from "./useGetAllUserBill";
 
 /**
@@ -11,9 +11,7 @@ import { useGetAllUserBill } from "./useGetAllUserBill";
  * @returns {Object} - { finalRows, isLoading }
  */
 export const useExportInvoiceData = () => {
-  const { data: invoiceData, isLoading: isInvoiceLoading } = useGetAllInvoices({
-    paginated: false,
-  });
+  const { data: invoiceData, isLoading: isInvoiceLoading } = useInvoices();
   const { data: userData, isLoading: isUserLoading } = useGetAllUsers({
     paginated: false,
   });

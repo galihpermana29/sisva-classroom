@@ -4,10 +4,11 @@ import { useQuery } from "@tanstack/react-query";
 
 import FinanceAPI from "@/api/finance";
 import { useGetAllUsers } from "@/hooks/query/academic/useGetAllUsers";
-import { paginateData } from "@/utils/paginateData";
+import { useBills } from "@/hooks/query/finance/useBills";
+import { useUserBills } from "@/hooks/query/finance/useUserBills";
+import { useUsers } from "@/hooks/query/user/useUsers";
+import { segmentArray } from "@/utils/segmentArray";
 
-import { useGetAllBills } from "./useGetAllBills";
-import { useGetAllUserBill } from "./useGetAllUserBill";
 import { usePagination } from "./usePagination";
 import { useSortKey } from "./useSortKey";
 
@@ -23,25 +24,33 @@ export const useGetAllInvoices = ({
     queryFn: () => FinanceAPI.getAllInvoices({ user_id, bill_id }),
   });
 
-  const queryResult = data ? data.data.data : undefined;
-  const queryData = withSort ? sortData(queryResult) : queryResult;
+  const queryResult = data ? data.data.data : [];
+
+  const fields = useSortKey();
+  const { data: userBills } = useUserBills();
+  const { data: users } = useUsers();
+  const { data: bills } = useBills();
+  const queryData = withSort
+    ? sortData({
+        data: queryResult,
+        fields,
+        userBills,
+        users,
+        bills,
+      })
+    : queryResult;
 
   if (!paginated) {
     return { data: queryData, ...query };
   }
 
-  const paginatedData = paginateData(queryData, rowsPerPage);
+  const paginatedData = segmentArray(queryData, rowsPerPage);
   const totalPage = paginatedData.length > 0 ? paginatedData.length : 1;
 
   return { data: paginatedData, totalPage, ...query };
 };
 
-const sortData = (data) => {
-  const fields = useSortKey();
-  const { data: userBills } = useGetAllUserBill({ paginated: false });
-  const { data: users } = useGetAllUsers();
-  const { data: bills } = useGetAllBills();
-
+const sortData = ({ data, fields, userBills, users, bills }) => {
   return data?.sort((a, b) => {
     const userBillA = userBills?.find(
       (userBill) => userBill.id === a.user_bill_id

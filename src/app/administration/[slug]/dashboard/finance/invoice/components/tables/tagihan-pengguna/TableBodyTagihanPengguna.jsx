@@ -10,6 +10,7 @@ import { useCheckCariFilter } from "../../../hooks/useCheckCariFilter";
 import { useCheckKategoriFilter } from "../../../hooks/useCheckKategoriFilter";
 import { useCheckTanggalFilter } from "../../../hooks/useCheckTanggalFilter";
 import { useGetAllUserBill } from "../../../hooks/useGetAllUserBill";
+import usePaginatedFilteredUserBills from "../../../hooks/usePaginatedFilteredUserBills";
 import { usePagination } from "../../../hooks/usePagination";
 import { DeleteTagihanPenggunaModal } from "../../modals/tagihan-pengguna/DeleteTagihanPenggunaModal";
 import { IdTagihanCell } from "./cells/IdTagihanCell";
@@ -22,12 +23,10 @@ import { TotalHargaCell } from "./cells/TotalHargaCell";
 export const TableBodyTagihanPengguna = ({ columnCount }) => {
   const mounted = useMounted();
   const { page } = usePagination();
-  const { data: rows, isLoading } = useGetAllUserBill({
-    paginated: true,
-    withSort: true,
-  });
+  const { paginatedUserBills: rows, isFetching } =
+    usePaginatedFilteredUserBills();
 
-  if (isLoading || !mounted)
+  if (isFetching || !mounted)
     return (
       <TableBodyLoading
         rowCount={DEFAULT_ROWS_PER_PAGE}
@@ -41,27 +40,21 @@ export const TableBodyTagihanPengguna = ({ columnCount }) => {
     return <TableEmptyState columnCount={columnCount} />;
   }
 
-  return data.map((row) => <TableRowTagihanPengguna key={row.id} {...row} />);
-};
-
-const TableRowTagihanPengguna = ({ id, user_id, bill_id }) => {
-  const cariFilterPass = useCheckCariFilter(user_id);
-  const kategoriFilterPass = useCheckKategoriFilter(bill_id);
-  const tanggalFilterPass = useCheckTanggalFilter(bill_id);
-
-  if (!cariFilterPass || !tanggalFilterPass || !kategoriFilterPass) return null;
-
-  return (
-    <TableRow hover key={id}>
-      <IdTagihanCell billId={bill_id} />
-      <TanggalTagihanCell billId={bill_id} />
-      <NamaCell userId={user_id} />
-      <PembayaranCell billId={bill_id} />
-      <TotalHargaCell billId={bill_id} />
-      <JumlahTerbayarCell userId={user_id} />
+  return data.map((row) => (
+    <TableRow hover key={row.id}>
+      <IdTagihanCell billId={row.bill_id} />
+      <TanggalTagihanCell billId={row.bill_id} />
+      <NamaCell userId={row.user_id} />
+      <PembayaranCell billId={row.bill_id} />
+      <TotalHargaCell billId={row.bill_id} />
+      <JumlahTerbayarCell userId={row.user_id} />
       <TableCell>
-        <DeleteTagihanPenggunaModal id={id} billId={bill_id} userId={user_id} />
+        <DeleteTagihanPenggunaModal
+          id={row.id}
+          billId={row.bill_id}
+          userId={row.user_id}
+        />
       </TableCell>
     </TableRow>
-  );
+  ));
 };

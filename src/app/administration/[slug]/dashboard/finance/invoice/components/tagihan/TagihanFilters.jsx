@@ -10,7 +10,6 @@ import {
   IconButton,
   Stack,
   Typography,
-  useTheme,
 } from "@mui/material";
 import { useFormik } from "formik";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -42,7 +41,6 @@ const statusFilters = [
 
 /** @description Component for handling tagihan tab's filters */
 export const TagihanFilters = () => {
-  const theme = useTheme();
   const router = useRouter();
   const pathName = usePathname();
   const searchParams = useSearchParams();
@@ -85,7 +83,7 @@ export const TagihanFilters = () => {
           }}
           onClick={openDrawer}
         >
-          <SortIcon sx={{ color: theme.palette.primary.main }} />
+          <SortIcon sx={{ color: "primary.main" }} />
         </IconButton>
         <Drawer
           anchor="bottom"
@@ -213,6 +211,7 @@ const DrawerContent = ({ closeDrawer, sortQuery }) => {
                       : false
                   }
                   onChange={(e) => {
+                    formik.resetForm();
                     formik.setFieldValue(value, e.target.checked);
                   }}
                 />

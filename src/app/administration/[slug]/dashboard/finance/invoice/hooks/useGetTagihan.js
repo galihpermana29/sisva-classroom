@@ -8,7 +8,7 @@ import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import { useSearchParams } from "next/navigation";
 
 import FinanceAPI from "@/api/finance";
-import { paginateData } from "@/utils/paginateData";
+import { segmentArray } from "@/utils/segmentArray";
 
 import { useFilterStatus } from "./useFilterStatus";
 import { usePagination } from "./usePagination";
@@ -25,7 +25,7 @@ export const useGetTagihan = () => {
   const sortKeys = searchParams.get("sort")?.split(",") ?? [];
 
   const getAllBills = async () => {
-    const { data } = await FinanceAPI.getAllBills({});
+    const { data } = await FinanceAPI.getAllBills();
 
     return data.data;
   };
@@ -42,7 +42,7 @@ export const useGetTagihan = () => {
     status,
     sortKeys,
   });
-  const paginatedData = paginateData(results, rowsPerPage);
+  const paginatedData = segmentArray(results, rowsPerPage);
   const totalPage = paginatedData.length > 0 ? paginatedData.length : 1;
 
   return { data: paginatedData, totalPage, ...query };

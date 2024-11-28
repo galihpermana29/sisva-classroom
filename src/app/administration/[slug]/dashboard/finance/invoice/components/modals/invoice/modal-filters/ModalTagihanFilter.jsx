@@ -2,15 +2,15 @@
 
 import { MenuItem, Select, Stack, Typography } from "@mui/material";
 
-import { useGetAllBills } from "../../../../hooks/useGetAllBills";
+import { useBills } from "@/hooks/query/finance/useBills";
+
+useBills;
 
 export const ModalTagihanFilter = ({ value, setValue }) => {
-  const { data: bills } = useGetAllBills();
+  const { data: bills } = useBills();
 
   const selectValue = value?.tagihan ?? "";
-  const billsData = bills
-    ? bills.map((bill) => ({ label: bill.name, value: bill.id }))
-    : [];
+  const billsData = bills.map((bill) => ({ label: bill.name, value: bill.id }));
 
   const handleChange = (e) =>
     setValue({ tagihan: e.target.value, tagihanPengguna: "" });

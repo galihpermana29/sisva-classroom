@@ -1,0 +1,52 @@
+"use client";
+
+import { useMounted } from "@mantine/hooks";
+import { TableCell, TableRow } from "@mui/material";
+
+import { TableBodyLoading, TableEmptyState } from "@/components/CustomTable";
+
+import { DEFAULT_ROWS_PER_PAGE } from "../../../constants";
+import usePaginatedFilteredInvoices from "../../../hooks/usePaginatedFilteredInvoices";
+import { usePagination } from "../../../hooks/usePagination";
+import { InvoiceRowActions } from "../../invoice/InvoiceRowActions";
+import { IdInvoiceCell } from "./cells/IdInvoiceCell";
+import { InvoiceStatusCell } from "./cells/InvoiceStatusCell";
+import { NamaCell } from "./cells/NamaCell";
+import { NilaiInvoiceCell } from "./cells/NilaiInvoiceCell";
+import { PembayaranCell } from "./cells/PembayaranCell";
+import { TotalHargaCell } from "./cells/TotalHargaCell";
+
+export const TableBodyInvoice = ({ columnCount }) => {
+  const mounted = useMounted();
+  const { page } = usePagination();
+  const { paginatedInvoices: rows, isFetching: isLoading } =
+    usePaginatedFilteredInvoices();
+
+  if (isLoading || !mounted)
+    return (
+      <TableBodyLoading
+        rowCount={DEFAULT_ROWS_PER_PAGE}
+        columnCount={columnCount}
+      />
+    );
+
+  const data = rows[page - 1];
+
+  if (!data || data.length <= 0) {
+    return <TableEmptyState columnCount={columnCount} />;
+  }
+
+  return data.map((row) => (
+    <TableRow hover key={row.id}>
+      <IdInvoiceCell id={row.id} />
+      <NamaCell userId={row.user_bill.user.id} />
+      <PembayaranCell billId={row.user_bill.bill.id} />
+      <TotalHargaCell billId={row.user_bill.bill.id} />
+      <NilaiInvoiceCell amount={row.amount} />
+      <InvoiceStatusCell status={row.status} />
+      <TableCell>
+        <InvoiceRowActions id={row.id} status={row.status} />
+      </TableCell>
+    </TableRow>
+  ));
+};

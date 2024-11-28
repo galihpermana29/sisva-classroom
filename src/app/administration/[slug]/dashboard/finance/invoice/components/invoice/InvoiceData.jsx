@@ -1,41 +1,34 @@
 "use client";
 
 import { useMounted } from "@mantine/hooks";
-import {
-  Box,
-  Divider,
-  Paper,
-  Stack,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Box, Divider, Paper, Stack, Typography } from "@mui/material";
 
 import { useGetUserById } from "@/hooks/query/user/useGetUserById";
 import { formatToRupiah } from "@/utils/formatToRupiah";
 
 import { useFilterStatus } from "../../hooks/useFilterStatus";
-import { useGetAllInvoices } from "../../hooks/useGetAllInvoices";
 import { useGetAllUserBill } from "../../hooks/useGetAllUserBill";
 import { useGetBillById } from "../../hooks/useGetBillById";
+import usePaginatedFilteredInvoices from "../../hooks/usePaginatedFilteredInvoices";
 import { usePagination } from "../../hooks/usePagination";
 import { LoadingDataCard } from "../LoadingDataCard";
 import { InvoiceRowActions } from "./InvoiceRowActions";
 import { InvoiceStatusBadge } from "./InvoiceStatusBadge";
 
 export const InvoiceData = () => {
-  const theme = useTheme();
   const mounted = useMounted();
   const { page } = usePagination();
-  const { data: rows, isLoading } = useGetAllInvoices({ paginated: true });
+  const { paginatedInvoices: rows, isFetching } =
+    usePaginatedFilteredInvoices();
 
-  if (isLoading || !mounted)
+  if (isFetching || !mounted)
     return (
       <Stack gap={2}>
-        {[...Array(3)].map((i) => (
+        {[...Array(3)].map((_, i) => (
           <Box
             key={i}
             className={`w-full h-52 rounded-lg animate-pulse`}
-            sx={{ backgroundColor: theme.palette.base.base30 }}
+            sx={{ backgroundColor: "base.base30" }}
           />
         ))}
       </Stack>

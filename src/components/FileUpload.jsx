@@ -10,14 +10,13 @@ import {
   Folder,
 } from "@mui/icons-material";
 import RefreshIcon from "@mui/icons-material/Refresh";
-import { Button, IconButton, useTheme } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import Link from "next/link";
 import { useState } from "react";
 
 import { useUploadFile } from "@/hooks/query/file/useUploadFile";
 
 export const FileUpload = ({ className, value, afterUpload, ...props }) => {
-  const theme = useTheme();
   const [isView, setIsView] = useState(Boolean(value));
   const [file, setFile] = useState([]);
   const {
@@ -108,7 +107,7 @@ export const FileUpload = ({ className, value, afterUpload, ...props }) => {
             <span className="!line-clamp-1 text-left flex w-full">{value}</span>
           </Button>
           <IconButton
-            color={theme.palette.primary.main}
+            color={"primary.main"}
             onClick={() => setIsView((prev) => !prev)}
           >
             <Edit />

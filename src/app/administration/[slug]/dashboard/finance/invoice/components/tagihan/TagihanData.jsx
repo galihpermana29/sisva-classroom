@@ -1,6 +1,5 @@
 "use client";
 
-import { useTheme } from "@emotion/react";
 import { useMounted } from "@mantine/hooks";
 import { Box, Divider, Paper, Stack, Typography } from "@mui/material";
 import dayjs from "dayjs";
@@ -14,7 +13,6 @@ import { TagihanRowActions } from "./TagihanRowActions";
 import { TagihanStatusBadge } from "./TagihanStatusBadge";
 
 export const TagihanData = () => {
-  const theme = useTheme();
   const mounted = useMounted();
   const { data: rows, isLoading } = useGetTagihan();
   const { page } = usePagination();
@@ -22,11 +20,11 @@ export const TagihanData = () => {
   if (isLoading || !mounted)
     return (
       <Stack gap={2}>
-        {[...Array(3)].map((i) => (
+        {[...Array(3)].map((_, i) => (
           <Box
             key={i}
             className={`w-full h-52 rounded-lg animate-pulse`}
-            sx={{ backgroundColor: theme.palette.base.base30 }}
+            sx={{ backgroundColor: "base.base30" }}
           ></Box>
         ))}
       </Stack>
