@@ -15,7 +15,7 @@ import { useGetAllTeacherTasks } from "../../usecase/useGetAllTeacherTasks";
 
 const TaskSection = () => {
   const { data: tasks, isLoading } = useGetAllTeacherTasks();
-
+  console.log(tasks, "tasks??");
   return (
     <SectionLayout title="Tugasku">
       <div className={`md:h-[225px] overflow-y-auto`}>

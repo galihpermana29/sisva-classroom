@@ -1,4 +1,3 @@
-import { UserCircle } from "@untitled-ui/icons-react";
 import { Avatar } from "antd";
 import SkeletonAvatar from "antd/es/skeleton/Avatar";
 import React, { useEffect, useState } from "react";
@@ -19,7 +18,7 @@ const AvatarProfile = ({ url, size = 60 }) => {
   return (
     <>
       {!url ? (
-        <Avatar size={size} icon={<UserCircle />} />
+        <Avatar size={size}>XX</Avatar>
       ) : (
         <Avatar
           size={size}

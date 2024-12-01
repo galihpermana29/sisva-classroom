@@ -1,4 +1,4 @@
-import { Edit05, UserCircle } from "@untitled-ui/icons-react";
+import { Edit05 } from "@untitled-ui/icons-react";
 import { Avatar, Divider, Form, Upload } from "antd";
 import SkeletonAvatar from "antd/es/skeleton/Avatar";
 
@@ -41,7 +41,7 @@ const BiodataSection = ({
         ) : (
           <>
             {formData?.profile_image_uri === "" ? (
-              <Avatar size={60} icon={<UserCircle />} />
+              <Avatar size={60}>XX</Avatar>
             ) : (
               <AvatarProfile url={formData?.profile_image_uri} />
             )}

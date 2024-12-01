@@ -1,4 +1,3 @@
-import { UserCircle } from "@untitled-ui/icons-react";
 import { Avatar } from "antd";
 import React from "react";
 
@@ -30,7 +29,7 @@ const CardProfile = ({
       <div className="flex items-center flex-col gap-2">
         <h2 className="text-lg font-semibold mb-4">Profilku</h2>
         {profilePic === "" ? (
-          <Avatar size={60} icon={<UserCircle />} />
+          <Avatar size={60}>XX</Avatar>
         ) : (
           <AvatarProfile url={profilePic} />
         )}

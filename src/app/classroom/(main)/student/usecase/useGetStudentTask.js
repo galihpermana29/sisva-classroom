@@ -8,6 +8,7 @@ import {
   getAllTasks,
   getStudentGroups,
 } from "../repository/apiService";
+import { isOverdue } from "../class/usecase/date-helper";
 
 export function useGetStudentTask() {
   const [tasks, setTasks] = useState([]);
@@ -64,6 +65,7 @@ export function useGetStudentTask() {
       }
 
       const filteredTask = tasks
+        .filter((task) => !isOverdue(task.deadline))
         .map((task) => {
           const classData = classStudent.find((cls) => cls.id == task.class_id);
           if (classData) {
@@ -78,18 +80,11 @@ export function useGetStudentTask() {
           }
           return null;
         })
-        .filter((task) => task != null)
-        .filter((task) => {
-          const [day, month, yearAndTime] = task.deadline.split("/");
-          const [year, time] = yearAndTime.split(" ");
-          const deadline = `${month}/${day}/${year} ${time}`;
-          return new Date(deadline) > new Date();
-        });
+        .filter((task) => task != null);
 
       filteredTask.sort((a, b) => {
         return isBefore(a.deadline, b.deadline) ? -1 : 1;
       });
-
       setTasks(filteredTask);
       setIsLoading(false);
     };
